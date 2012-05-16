@@ -3,11 +3,12 @@
     <RecentFiles>
       <File id="2563F726-8DC3-4244-BEA7-F11068EA7AB9/d:channels/d:publishing/f:when_publishing_a_message_with_no_published_event_subscribers.cs" caret="0" fromTop="0" />
       <File id="2563F726-8DC3-4244-BEA7-F11068EA7AB9/d:channels/f:TestDistributor.cs" caret="0" fromTop="0" />
-      <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:Channels/d:Recieving/d:Http/f:MessageListener.cs" caret="0" fromTop="0" />
       <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/f:IConsume.cs" caret="0" fromTop="0" />
       <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:Channels/f:IPipe.cs" caret="81" fromTop="4" />
-      <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:Channels/d:Recieving/f:MessageReciever.cs" caret="204" fromTop="7" />
       <File id="0A171956-E662-4B58-A2CC-5BA49B63F349/f:Configuration.cs" caret="0" fromTop="0" />
+      <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:Channels/d:Recieving/f:MessageReciever.cs" caret="0" fromTop="0" />
+      <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:Channels/d:Recieving/d:Http/f:IMessageListener.cs" caret="0" fromTop="0" />
+      <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:Channels/d:Recieving/d:Http/f:MessageListener.cs" caret="454" fromTop="15" />
     </RecentFiles>
     <RecentEdits>
       <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:Channels/d:Recieving/f:MessageReciever.cs" caret="435" fromTop="13" />
