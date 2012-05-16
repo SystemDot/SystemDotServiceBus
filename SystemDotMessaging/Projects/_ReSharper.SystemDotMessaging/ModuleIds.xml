@@ -1,0 +1,10 @@
+<Modules>
+  <Module PersistentId="2563F726-8DC3-4244-BEA7-F11068EA7AB9" ModuleId="Rapid.Messaging.Specifications" />
+  <Module PersistentId="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842" ModuleId="Rapid.Messaging" />
+  <Module PersistentId="51BFA365-0CFE-458B-AAD6-3718F0E59075" ModuleId="Rapid.Messaging.TestServer" />
+  <Module PersistentId="70598EB3-7AA8-429B-8E9D-3ADCAD2D377B" ModuleId="Rapid.Messaging.TestClient" />
+  <Module PersistentId="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ModuleId="mscorlib" />
+  <Module PersistentId="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ModuleId="System" />
+  <Module PersistentId="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ModuleId="mscorlib_1" />
+  <Module PersistentId="0A171956-E662-4B58-A2CC-5BA49B63F349" ModuleId="Rapid.Messaging.Configuration" />
+</Modules>
