@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using SystemDot.Messaging.Channels.Recieving;
 
 namespace SystemDot.Messaging.TestSubscriber
 {

@@ -43,34 +43,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="blocking_queue\when_dequeueing_with_no_items.cs" />
-    <Compile Include="blocking_queue\when_item_is_queued_delayed_on_another_thread.cs" />
-    <Compile Include="blocking_queue\when_queuing_two_items.cs" />
-    <Compile Include="blocking_queue\when_queuing_an_item.cs" />
-    <Compile Include="channels\http_sending\when_sending_a_message_over_http.cs" />
-    <Compile Include="channels\publishing\when_publishing_a_message_with_no_published_event_subscribers.cs" />
-    <Compile Include="channels\publishing\when_publishing_two_messages.cs" />
-    <Compile Include="channels\receiving\when_stopping_recieving_messages.cs" />
-    <Compile Include="channels\publishing\when_stopping_publishing_messages_from_a_channel.cs" />
-    <Compile Include="channels\TestDistributor.cs" />
-    <Compile Include="channels\receiving\TestMessageListener.cs" />
-    <Compile Include="channels\receiving\when_receiving_a_message_into_a_pipe_using_http.cs" />
-    <Compile Include="channels\publishing\TestMessageWebRequestor.cs" />
-    <Compile Include="channels\publishing\when_publishing_a_message.cs" />
-    <Compile Include="channels\message_consumption\when_broadcasting_a_message_from_a_pipe_to_two_consumers_of_differing_messages.cs" />
-    <Compile Include="channels\message_consumption\TestConsumer.cs" />
-    <Compile Include="channels\message_consumption\when_broadcasting_a_message_from_a_pipe_to_two_consumers.cs" />
-    <Compile Include="channels\message_consumption\when_broadcasting_a_message_from_a_pipe_to_a_consumer.cs" />
+    <Compile Include="message_bus\when_sending_a_message_on_the_bus.cs" />
+    <Compile Include="TestWorkCoordinator.cs" />
+    <Compile Include="message_consumption\when_broadcasting_a_message_from_a_pipe_to_two_consumers_of_differing_messages.cs" />
+    <Compile Include="message_consumption\TestConsumer.cs" />
+    <Compile Include="message_consumption\when_broadcasting_a_message_from_a_pipe_to_two_consumers.cs" />
+    <Compile Include="message_consumption\when_broadcasting_a_message_from_a_pipe_to_a_consumer.cs" />
+    <Compile Include="message_pump\when_pumping_messages_on_a_with_no_published_message_listener.cs" />
+    <Compile Include="message_pump\when_pumping_two_messages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="threaded_distribution\TestThreader.cs" />
-    <Compile Include="threaded_distribution\when_distributing_an_object.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SystemDot.Messaging\SystemDot.Messaging.csproj">
       <Project>{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}</Project>
       <Name>SystemDot.Messaging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SystemDot\SystemDot.csproj">
+      <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>
+      <Name>SystemDot</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -6,5 +6,8 @@
   <Module PersistentId="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ModuleId="mscorlib" />
   <Module PersistentId="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ModuleId="System" />
   <Module PersistentId="0A171956-E662-4B58-A2CC-5BA49B63F349" ModuleId="Rapid.Messaging.Configuration" />
-  <Module PersistentId="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ModuleId="System_1" />
+  <Module PersistentId="62DCD467-1E9C-49E8-880A-00A077BF7BB8" ModuleId="SystemDot.Messaging.TestRequestReply.Sender" />
+  <Module PersistentId="B75A7B93-6CE5-4FAB-805C-DF714693AFEB" ModuleId="SystemDot.Messaging.TestRequestReply.Reciever" />
+  <Module PersistentId="DED30506-F4EC-4528-B535-8FA9373C5B52" ModuleId="SystemDot" />
+  <Module PersistentId="C35328BB-3E59-4DC8-8397-C0A7BB2F2E5E" ModuleId="SystemDot.Specifications" />
 </Modules>

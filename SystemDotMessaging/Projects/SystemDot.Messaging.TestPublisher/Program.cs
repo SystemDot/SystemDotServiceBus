@@ -8,13 +8,8 @@ namespace SystemDot.Messaging.TestPublisher
     {
         static void Main(string[] args)
         {
-            Channel channel = Configuration.Configuration
-                .ListeningOn("http://localhost/test/server/")
-                .WorkerThreads(1)
-                .OpenChannel("Test")
-                    .DeliveringTo("http://localhost/test/client/")
-                    .Build()
-                .BuildSender();
+            IPipe channel = null;
+
             do
             {
                 Console.WriteLine("Press a key to send message..");
