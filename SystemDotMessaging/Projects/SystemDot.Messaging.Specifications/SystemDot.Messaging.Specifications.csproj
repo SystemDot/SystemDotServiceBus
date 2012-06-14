@@ -44,13 +44,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="message_bus\when_sending_a_message_on_the_bus.cs" />
-    <Compile Include="TestWorkCoordinator.cs" />
-    <Compile Include="message_consumption\when_broadcasting_a_message_from_a_pipe_to_two_consumers_of_differing_messages.cs" />
-    <Compile Include="message_consumption\TestConsumer.cs" />
-    <Compile Include="message_consumption\when_broadcasting_a_message_from_a_pipe_to_two_consumers.cs" />
-    <Compile Include="message_consumption\when_broadcasting_a_message_from_a_pipe_to_a_consumer.cs" />
+    <Compile Include="TestThreadPool.cs" />
+    <Compile Include="message_handling\when_routing_a_message_from_a_pipe_to_two_handlers_of_differing_messages.cs" />
+    <Compile Include="message_handling\TestMessageHandler.cs" />
+    <Compile Include="message_handling\when_routing_a_message_from_a_pipe_to_two_handlers.cs" />
+    <Compile Include="message_handling\when_routing_a_message_from_a_pipe_to_a_handler.cs" />
     <Compile Include="message_pump\when_pumping_messages_on_a_with_no_published_message_listener.cs" />
-    <Compile Include="message_pump\when_pumping_two_messages.cs" />
+    <Compile Include="message_pump\when_pumping_a_message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

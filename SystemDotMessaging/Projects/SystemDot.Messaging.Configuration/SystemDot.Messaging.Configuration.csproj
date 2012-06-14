@@ -40,13 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RequestReply\Client\ChannelConfiguration.cs" />
-    <Compile Include="RequestReply\Client\ConsumerConfiguration.cs" />
+    <Compile Include="Local\LocalConfiguration.cs" />
+    <Compile Include="Remote\UsingDefaultsConfiguration.cs" />
+    <Compile Include="Remote\RemoteConfiguration.cs" />
+    <Compile Include="Local\UsingDefaultsConfiguration.cs" />
+    <Compile Include="Remote\MessageHandlerConfiguration.cs" />
     <Compile Include="Configure.cs" />
-    <Compile Include="RequestReply\Client\ClientConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RequestReply\Server\ChannelConfiguration.cs" />
-    <Compile Include="RequestReply\Server\ServerConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SystemDot.Messaging\SystemDot.Messaging.csproj">
@@ -58,6 +58,7 @@
       <Name>SystemDot</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

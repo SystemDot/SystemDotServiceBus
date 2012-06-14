@@ -8,10 +8,10 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
         static void Main(string[] args)
         {
             Configure
-                .RequestReplyClient()
-                .OnChannelNamed("test")
-                .OnLocalMachine()
-                .ConsumingMessagesWith(new MessageConsumer());
+                .Remote()
+                .UsingDefaults()
+                .HandlingMessagesWith(new MessageConsumer())
+                .Initialise();
 
             Console.WriteLine("Started listening..");
 

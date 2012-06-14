@@ -6,21 +6,21 @@ using SystemDot.Messaging.Pipes;
 
 namespace SystemDot.Messaging.Recieving
 {
-    public class ConsumerMessageBroadcaster
+    public class MessageHandlerRouter
     {
-        readonly List<IConsume> consumers;
+        readonly List<IMessageHandler> handlers;
 
-        public ConsumerMessageBroadcaster(IPipe pipe)
+        public MessageHandlerRouter(IPipe pipe)
         {
             Contract.Requires(pipe != null);
             
-            this.consumers = new List<IConsume>();
+            this.handlers = new List<IMessageHandler>();
             pipe.MessagePublished += BroadcastMessageToConsumers;
         }
 
         void BroadcastMessageToConsumers(object message)
         {
-            this.consumers.ForEach(c =>
+            this.handlers.ForEach(c =>
             {
                 if (GetConsumerTypeForMessageType(message.GetType()).IsInstanceOfType(c))
                     Invoke(c, message);
@@ -29,24 +29,24 @@ namespace SystemDot.Messaging.Recieving
 
         Type GetConsumerTypeForMessageType(Type messageType)
         {
-            return typeof(IConsume<>).MakeGenericType(messageType);
+            return typeof(IMessageHandler<>).MakeGenericType(messageType);
         }
 
-        static void Invoke(IConsume consumer, object message)
+        static void Invoke(IMessageHandler handler, object message)
         {
-            GetConsumerMethodInfo(consumer, message).Invoke(consumer, new[] { message });
+            GetConsumerMethodInfo(handler, message).Invoke(handler, new[] { message });
         }
 
-        static MethodInfo GetConsumerMethodInfo(IConsume consumer, object message)
+        static MethodInfo GetConsumerMethodInfo(IMessageHandler consumer, object message)
         {
-            return consumer.GetType().GetMethod("Consume", new [] { message.GetType() });
+            return consumer.GetType().GetMethod("Handle", new [] { message.GetType() });
         }
 
-        public void RegisterConsumer(IConsume toRegister)
+        public void RegisterHandler(IMessageHandler toRegister)
         {
             Contract.Requires(toRegister != null);
 
-            this.consumers.Add(toRegister);
+            this.handlers.Add(toRegister);
         }
     }
 }

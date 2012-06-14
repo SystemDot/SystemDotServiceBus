@@ -40,13 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Threading\IWorkCoordinator.cs" />
+    <Compile Include="Disposable.cs" />
+    <Compile Include="Logging\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Threading\BlockingQueue.cs" />
     <Compile Include="Threading\IThreader.cs" />
+    <Compile Include="Threading\IThreadPool.cs" />
     <Compile Include="Threading\IWorker.cs" />
     <Compile Include="Threading\ThreadedWorkCoordinator.cs" />
     <Compile Include="Threading\Threader.cs" />
+    <Compile Include="Threading\ThreadPool.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

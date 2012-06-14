@@ -1,50 +1,48 @@
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace SystemDot.Threading
 {
-    public class ThreadedWorkCoordinator : IWorkCoordinator
+    public class ThreadedWorkCoordinator : Disposable
     {
-        readonly int workerThreads;
         readonly IThreader threader;
         readonly List<IWorker> workers;
-        bool isRunning;
-        
-        public ThreadedWorkCoordinator(int workerThreads, IThreader threader)
+        bool isStarted;
+
+        public ThreadedWorkCoordinator(IThreader threader)
         {
-            this.workerThreads = workerThreads;
+            Contract.Requires(threader != null);
+            
             this.threader = threader;
             this.workers = new List<IWorker>();
         }
 
-        void PerformWork()
-        {
-            do
-            {
-                this.workers.ForEach(p => p.PerformWork());
-            } 
-            while (this.isRunning);
-        }
-
         public void Start()
         {
-            this.workers.ForEach(p => p.OnWorkStarted());
-        
-            for (int i = 0; i < this.workerThreads; i++)
-            {
-                this.threader.Start(PerformWork);
-            }
-            this.isRunning = true;
+            this.isStarted = true;
+            this.workers.ForEach(StartWorkOnWorker);
         }
 
         public void RegisterWorker(IWorker worker)
         {
+            Contract.Requires(worker != null);
+
             this.workers.Add(worker);
+            if(this.isStarted) StartWorkOnWorker(worker);
         }
 
-        public void Dispose()
+        void StartWorkOnWorker(IWorker worker)
         {
-            this.workers.ForEach(p => p.OnWorkStopped());
-            this.isRunning = false;
+            worker.StartWork();
+            this.threader.RunActionOnNewThread(worker.PerformWork);
+        }
+
+        protected override void DisposeOfManagedResources()
+        {
+            this.workers.ForEach(w => w.StopWork());
+            this.threader.Stop();
+
+            base.DisposeOfManagedResources();
         }
     }
 }

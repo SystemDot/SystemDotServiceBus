@@ -3,51 +3,29 @@ using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Formatters.Binary;
 using SystemDot.Messaging.Pipes;
+using SystemDot.Messaging.Servers;
 using SystemDot.Threading;
 
 namespace SystemDot.Messaging.Recieving
 {
-    public class MessageReciever : IWorker
+    public class MessageReciever : IHttpHandler
     {
-        readonly HttpListener listener;
         readonly IPipe pipe;
-        bool isStopped;
-
-        public MessageReciever(IPipe pipe, string address)
+        
+        public MessageReciever(IPipe pipe)
         {
             Contract.Requires(pipe != null);
-            Contract.Requires(!string.IsNullOrEmpty(address));
             
             this.pipe = pipe;
-            this.listener = new HttpListener();
-            this.listener.Prefixes.Add(address);
         }
 
-        public void OnWorkStarted()
+        public void HandleRequest(Stream inputStream)
         {
-            this.listener.Start();
+            this.pipe.Publish(DeserialiseMessage(inputStream));
         }
 
-        public void PerformWork()
+        public void Respond(Stream outputStream)
         {
-            if (this.isStopped) return;
-            if (!this.listener.IsListening) return;
-
-            try
-            {
-                HttpListenerContext context = this.listener.GetContext();
-
-                this.pipe.Publish(DeserialiseMessage(context.Request.InputStream));
-
-                context.Response.StatusCode = (int) HttpStatusCode.OK;
-                context.Response.Close();
-            }
-            catch(HttpListenerException) {}
-        }
-
-        public void OnWorkStopped()
-        {
-            this.isStopped = true;
         }
 
         static object DeserialiseMessage(Stream toDeserialise)

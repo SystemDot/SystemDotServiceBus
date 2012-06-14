@@ -2,8 +2,8 @@ namespace SystemDot.Threading
 {
     public interface IWorker
     {
-        void OnWorkStarted();
+        void StartWork();
         void PerformWork();
-        void OnWorkStopped();
+        void StopWork();
     }
 }

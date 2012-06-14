@@ -8,9 +8,9 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
         static void Main(string[] args)
         {
             Configure
-                .RequestReplyServer()
-                .OnChannelNamed("test")
-                .SendingToLocalMachine();
+                .Local()
+                .UsingDefaults()
+                .Initialise();
 
             do
             {

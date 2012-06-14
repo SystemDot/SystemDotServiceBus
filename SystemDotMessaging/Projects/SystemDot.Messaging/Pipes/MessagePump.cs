@@ -3,36 +3,20 @@ using SystemDot.Threading;
 
 namespace SystemDot.Messaging.Pipes
 {
-    public class MessagePump : IPipe, IWorker
+    public class MessagePump : IPipe
     {
-        readonly BlockingQueue<object> queue;
-
+        readonly IThreadPool threadPool;
+        
         public event Action<object> MessagePublished;
 
-        public MessagePump()
+        public MessagePump(IThreadPool threadPool)
         {
-            this.queue = new BlockingQueue<object>(new TimeSpan(0, 0, 1));
+            this.threadPool = threadPool;
         }
 
         public void Publish(object message)
         {
-            this.queue.Enqueue(message);
-        }
-
-        public void OnWorkStarted()
-        {
-        }
-
-        public void PerformWork()
-        {
-            foreach (object toDistribute in this.queue.DequeueAll())
-            {
-                OnMessagePublished(toDistribute);
-            }
-        }
-
-        public void OnWorkStopped()
-        {
+            this.threadPool.QueueTask(() => OnMessagePublished(message));
         }
 
         void OnMessagePublished(object message)

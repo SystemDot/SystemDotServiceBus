@@ -4,6 +4,7 @@ namespace SystemDot.Threading
 {
     public interface IThreader
     {
-        void Start(Action action);
+        void RunActionOnNewThread(Action toStart);
+        void Stop();
     }
 }

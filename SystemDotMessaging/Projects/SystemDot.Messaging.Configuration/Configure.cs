@@ -1,5 +1,5 @@
-using SystemDot.Messaging.Configuration.RequestReply.Client;
-using SystemDot.Messaging.Configuration.RequestReply.Server;
+using SystemDot.Messaging.Configuration.Local;
+using SystemDot.Messaging.Configuration.Remote;
 using SystemDot.Threading;
 
 namespace SystemDot.Messaging.Configuration
@@ -8,19 +8,18 @@ namespace SystemDot.Messaging.Configuration
     {
         const int DefaultWorkerThreads = 4;
 
-        public static ClientConfiguration RequestReplyClient()
+        static readonly ThreadPool threadPool = new ThreadPool(DefaultWorkerThreads);
+        static readonly ThreadedWorkCoordinator WorkCoordinator = new ThreadedWorkCoordinator(new Threader());
+
+        public static RemoteConfiguration Remote()
         {
-            return new ClientConfiguration(GetThreadedWorkCoordinator());
+            return new RemoteConfiguration(WorkCoordinator, threadPool);
         }
 
-        public static ServerConfiguration RequestReplyServer()
+        public static LocalConfiguration Local()
         {
-            return new ServerConfiguration(GetThreadedWorkCoordinator());
+            return new LocalConfiguration(threadPool);
         }
 
-        static ThreadedWorkCoordinator GetThreadedWorkCoordinator()
-        {
-            return new ThreadedWorkCoordinator(DefaultWorkerThreads, new Threader());
-        }
     }
 }

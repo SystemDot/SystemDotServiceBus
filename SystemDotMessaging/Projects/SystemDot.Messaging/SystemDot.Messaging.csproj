@@ -44,11 +44,13 @@
     <Compile Include="MessageBus.cs" />
     <Compile Include="Pipes\IPipe.cs" />
     <Compile Include="Pipes\Pipe.cs" />
-    <Compile Include="Recieving\IConsume.cs" />
+    <Compile Include="Recieving\IMessageHandler.cs" />
     <Compile Include="Recieving\MessageReciever.cs" />
     <Compile Include="Sending\MessageSender.cs" />
-    <Compile Include="Recieving\ConsumerMessageBroadcaster.cs" />
+    <Compile Include="Recieving\MessageHandlerRouter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Servers\HttpServer.cs" />
+    <Compile Include="Servers\IHttpHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">
