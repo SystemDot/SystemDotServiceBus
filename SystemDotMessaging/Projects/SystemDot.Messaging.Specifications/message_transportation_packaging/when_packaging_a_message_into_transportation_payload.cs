@@ -6,6 +6,7 @@ using SystemDot.Messaging.Recieving;
 using SystemDot.Messaging.Sending;
 using SystemDot.Messaging.Specifications.message_handling;
 using SystemDot.Pipes;
+using SystemDot.Serialisation;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.message_transportation_packaging
@@ -15,18 +16,20 @@ namespace SystemDot.Messaging.Specifications.message_transportation_packaging
         static MessagePayloadPackager packager;
         static Pipe<object> inputPipe;
         static Pipe<MessagePayload> outputPipe;
+        static ISerialiser serialiser;
         static MessagePayload pushedPayload;
-        static object message;
+        static string message;
         
         Establish context = () =>
         {
             inputPipe = new Pipe<object>();
             outputPipe = new Pipe<MessagePayload>();
             outputPipe.ItemPushed += i => pushedPayload = i;
+            serialiser = new JsonSerialiser();
 
-            packager = new MessagePayloadPackager(inputPipe, outputPipe);
+            packager = new MessagePayloadPackager(inputPipe, outputPipe, serialiser);
             
-            message = new object();
+            message = "test";
         };
 
         Because of = () => inputPipe.Push(message);
@@ -35,6 +38,8 @@ namespace SystemDot.Messaging.Specifications.message_transportation_packaging
             pushedPayload.Address.ShouldEqual("http://localhost/Default/");
 
         It should_send_the_message_to_the_bus_output_pipe = () =>
-            pushedPayload.Headers.OfType<BodyMessageHeader>().First().Body.ShouldBeTheSameAs(message);
+            serialiser.Deserialise(pushedPayload.Headers.OfType<BodyMessageHeader>().First().Body).ShouldEqual(message);
+
+        
     }
 }

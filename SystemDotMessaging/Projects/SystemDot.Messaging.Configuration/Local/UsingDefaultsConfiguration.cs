@@ -5,6 +5,7 @@ using SystemDot.Http;
 using SystemDot.Messaging.MessageTransportation;
 using SystemDot.Messaging.Sending;
 using SystemDot.Pipes;
+using SystemDot.Serialisation;
 using SystemDot.Threading;
 
 namespace SystemDot.Messaging.Configuration.Local
@@ -45,7 +46,7 @@ namespace SystemDot.Messaging.Configuration.Local
 
         private static void BuildPayloadPackager(IPipe<object> inputPipe, IPipe<MessagePayload> outputPipe)
         {
-            new MessagePayloadPackager(inputPipe, outputPipe);
+            new MessagePayloadPackager(inputPipe, outputPipe, new JsonSerialiser());
         }
 
         private void BuildMessageSender(IPipe<MessagePayload> pipe)

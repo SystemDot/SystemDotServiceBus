@@ -5,11 +5,11 @@ namespace SystemDot.Messaging.MessageTransportation.Headers
     [Serializable]
     public class BodyMessageHeader : IMessageHeader
     {
-        public BodyMessageHeader(object body)
+        public BodyMessageHeader(byte[] body)
         {
             Body = body;
         }
 
-        public object Body { get; private set; }
+        public byte[] Body { get; private set; }
     }
 }

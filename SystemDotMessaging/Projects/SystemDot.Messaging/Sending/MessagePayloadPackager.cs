@@ -2,6 +2,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Messaging.MessageTransportation;
 using SystemDot.Messaging.MessageTransportation.Headers;
 using SystemDot.Pipes;
+using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Sending
 {
@@ -9,20 +10,23 @@ namespace SystemDot.Messaging.Sending
     {
         const string DefaultChannelName = "Default";
         readonly IPipe<MessagePayload> outputPipe;
+        private readonly ISerialiser serialiser;
 
-        public MessagePayloadPackager(IPipe<object> inputPipe, IPipe<MessagePayload> outputPipe)
+        public MessagePayloadPackager(IPipe<object> inputPipe, IPipe<MessagePayload> outputPipe, ISerialiser serialiser)
         {
             Contract.Requires(inputPipe != null);
             Contract.Requires(outputPipe != null);
+            Contract.Requires(serialiser != null);
 
             inputPipe.ItemPushed += OnInputPipeItemPushed;
             this.outputPipe = outputPipe;
+            this.serialiser = serialiser;
         }
 
         void OnInputPipeItemPushed(object message)
         {
             var messagePayload = new MessagePayload("http://localhost/" + DefaultChannelName + "/");
-            messagePayload.AddHeader(new BodyMessageHeader(message));
+            messagePayload.AddHeader(new BodyMessageHeader(this.serialiser.Serialise(message)));
 
             this.outputPipe.Push(messagePayload);
         }

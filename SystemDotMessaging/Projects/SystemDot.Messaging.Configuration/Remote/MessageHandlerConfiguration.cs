@@ -5,6 +5,7 @@ using SystemDot.Http;
 using SystemDot.Messaging.MessageTransportation;
 using SystemDot.Messaging.Recieving;
 using SystemDot.Pipes;
+using SystemDot.Serialisation;
 using SystemDot.Threading;
 
 namespace SystemDot.Messaging.Configuration.Remote
@@ -61,7 +62,7 @@ namespace SystemDot.Messaging.Configuration.Remote
 
         private static void BuildPayloadPackager(IPipe<MessagePayload> inputPipe, IPipe<object> outputPipe)
         {
-            new MessagePayloadUnpackager(inputPipe, outputPipe);
+            new MessagePayloadUnpackager(inputPipe, outputPipe, new JsonSerialiser());
         }
 
         void BuildHandlerRouter(IPipe<object> pipe, IMessageHandler register)
