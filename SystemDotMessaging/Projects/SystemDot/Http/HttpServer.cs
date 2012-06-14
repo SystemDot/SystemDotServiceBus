@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.Contracts;
 using System.Net;
 using SystemDot.Logging;
@@ -37,7 +38,7 @@ namespace SystemDot.Http
 
             try
             {
-                HandleRequest();
+                listener.BeginGetContext(BeginGetContextCallback, listener);
             }
             catch (HttpListenerException e)
             {
@@ -45,14 +46,13 @@ namespace SystemDot.Http
             }
         }
 
-        private void HandleRequest()
+        private void BeginGetContextCallback(IAsyncResult ar)
         {
-            HttpListenerContext context = this.listener.GetContext();
+            HttpListenerContext context = this.listener.EndGetContext(ar);
 
-            this.handler.HandleRequest(context.Request.InputStream);
-            this.handler.Respond(context.Response.OutputStream);
+            this.handler.HandleRequest(context.Request.InputStream, context.Response.OutputStream);
 
-            context.Response.StatusCode = (int) HttpStatusCode.OK;
+            context.Response.StatusCode = (int)HttpStatusCode.OK;
             context.Response.Close();
         }
 

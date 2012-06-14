@@ -3,6 +3,7 @@ using Machine.Specifications;
 
 namespace SystemDot.Specifications.threading
 {
+    [Subject("Threading")]
     public class when_starting_work_coordination_on_two_workers
     {
         static ThreadedWorkCoordinator threadedWorkCoordinator;

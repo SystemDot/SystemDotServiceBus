@@ -1,8 +1,9 @@
 ﻿using SystemDot.Pipes;
 using Machine.Specifications;
 
-namespace SystemDot.Specifications.pump
+namespace SystemDot.Specifications.item_pumping
 {
+    [Subject("Item pumping")]
     public class when_pumping_an_item
     {
         static Pump<object> pump;

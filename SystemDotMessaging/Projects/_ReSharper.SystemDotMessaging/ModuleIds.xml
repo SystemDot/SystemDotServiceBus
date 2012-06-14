@@ -10,4 +10,5 @@
   <Module PersistentId="C35328BB-3E59-4DC8-8397-C0A7BB2F2E5E" ModuleId="SystemDot.Specifications" />
   <Module PersistentId="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ModuleId="mscorlib_1" />
   <Module PersistentId="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ModuleId="System.Core" />
+  <Module PersistentId="B715C167-2A09-47CB-83DA-741AA7CAD36D" ModuleId="SystemDot.Messaging.MessagingServer" />
 </Modules>

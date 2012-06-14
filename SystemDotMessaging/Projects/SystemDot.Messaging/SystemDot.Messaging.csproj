@@ -40,10 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Servers\IMessagingServerHandler.cs" />
     <Compile Include="MessageBus.cs" />
     <Compile Include="MessageTransportation\Headers\BodyMessageHeader.cs" />
     <Compile Include="MessageTransportation\Headers\MessagePayloadExtensions.cs" />
     <Compile Include="MessageTransportation\IMessageHeader.cs" />
+    <Compile Include="Servers\HttpMessagingServer.cs" />
     <Compile Include="Recieving\IMessageHandler.cs" />
     <Compile Include="Recieving\MessagePayloadUnpackager.cs" />
     <Compile Include="Recieving\MessageReciever.cs" />

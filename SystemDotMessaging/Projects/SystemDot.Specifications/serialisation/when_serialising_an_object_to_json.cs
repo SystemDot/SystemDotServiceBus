@@ -3,6 +3,7 @@ using Machine.Specifications;
 
 namespace SystemDot.Specifications.serialisation
 {
+    [Subject("Serialisation")]
     public class when_serialising_an_object_to_json
     {
         static JsonSerialiser serialiser;

@@ -47,6 +47,7 @@
     <Compile Include="Http\IWebRequestor.cs" />
     <Compile Include="Http\WebRequestor.cs" />
     <Compile Include="Logging\Logger.cs" />
+    <Compile Include="ObjectExtensions.cs" />
     <Compile Include="Pipes\IPipe.cs" />
     <Compile Include="Pipes\Pipe.cs" />
     <Compile Include="Pipes\Pump.cs" />

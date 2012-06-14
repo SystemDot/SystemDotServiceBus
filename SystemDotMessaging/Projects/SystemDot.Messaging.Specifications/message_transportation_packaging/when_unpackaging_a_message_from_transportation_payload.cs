@@ -8,6 +8,7 @@ using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.message_transportation_packaging
 {
+    [Subject("Message transportation packaging")]
     public class when_unpackaging_a_message_from_transportation_payload
     {
         static MessagePayloadUnpackager packager;

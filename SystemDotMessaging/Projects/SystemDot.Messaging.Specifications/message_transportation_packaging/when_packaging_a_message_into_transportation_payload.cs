@@ -1,16 +1,14 @@
-﻿using System.Diagnostics.Contracts;
-using System.Linq;
+﻿using System.Linq;
 using SystemDot.Messaging.MessageTransportation;
 using SystemDot.Messaging.MessageTransportation.Headers;
-using SystemDot.Messaging.Recieving;
 using SystemDot.Messaging.Sending;
-using SystemDot.Messaging.Specifications.message_handling;
 using SystemDot.Pipes;
 using SystemDot.Serialisation;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.message_transportation_packaging
 {
+    [Subject("Message transportation packaging")]
     public class when_packaging_a_message_into_transportation_payload
     {
         static MessagePayloadPackager packager;

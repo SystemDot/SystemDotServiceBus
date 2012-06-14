@@ -4,6 +4,7 @@ using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.message_handling
 {
+    [Subject("Message handling")]
     public class when_routing_a_message_from_a_pipe_to_a_handler
     {
         static Pipe<object> pipe;

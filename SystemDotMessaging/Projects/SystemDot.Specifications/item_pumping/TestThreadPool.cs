@@ -1,7 +1,7 @@
 using System;
 using SystemDot.Threading;
 
-namespace SystemDot.Specifications.pump
+namespace SystemDot.Specifications.item_pumping
 {
     public class TestThreadPool : IThreadPool 
     {

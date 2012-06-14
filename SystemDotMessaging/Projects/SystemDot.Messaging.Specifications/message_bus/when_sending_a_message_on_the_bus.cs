@@ -3,6 +3,7 @@ using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.message_bus
 {
+    [Subject("Message bus")]
     public class when_sending_a_message_on_the_bus
     {
         static Pipe<object> pipe; 

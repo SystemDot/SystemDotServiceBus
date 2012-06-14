@@ -2,8 +2,9 @@
 using SystemDot.Pipes;
 using Machine.Specifications;
 
-namespace SystemDot.Specifications.pump
+namespace SystemDot.Specifications.item_pumping
 {
+    [Subject("Item pumping")]
     public class when_pumping_items_on_a_with_no_pushed_item_listener
     {
         static Exception exception; 
