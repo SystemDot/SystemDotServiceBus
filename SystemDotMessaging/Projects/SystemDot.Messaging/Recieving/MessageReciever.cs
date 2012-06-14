@@ -1,36 +1,38 @@
 using System.Diagnostics.Contracts;
 using System.IO;
-using System.Net;
-using System.Runtime.Serialization.Formatters.Binary;
-using SystemDot.Messaging.Pipes;
-using SystemDot.Messaging.Servers;
-using SystemDot.Threading;
+using System.Runtime.Serialization;
+using SystemDot.Http;
+using SystemDot.Messaging.MessageTransportation;
+using SystemDot.Pipes;
 
 namespace SystemDot.Messaging.Recieving
 {
     public class MessageReciever : IHttpHandler
     {
-        readonly IPipe pipe;
-        
-        public MessageReciever(IPipe pipe)
+        readonly IPipe<MessagePayload> pipe;
+        readonly IFormatter serialiser;
+
+        public MessageReciever(IPipe<MessagePayload> pipe, IFormatter serialiser)
         {
             Contract.Requires(pipe != null);
+            Contract.Requires(serialiser != null);
             
             this.pipe = pipe;
+            this.serialiser = serialiser;
         }
 
         public void HandleRequest(Stream inputStream)
         {
-            this.pipe.Publish(DeserialiseMessage(inputStream));
+            this.pipe.Push(DeserializePayload(inputStream));
+        }
+
+        private MessagePayload DeserializePayload(Stream inputStream)
+        {
+            return (MessagePayload)this.serialiser.Deserialize(inputStream);
         }
 
         public void Respond(Stream outputStream)
         {
-        }
-
-        static object DeserialiseMessage(Stream toDeserialise)
-        {
-            return new BinaryFormatter().Deserialize(toDeserialise);
         }
     }
 }

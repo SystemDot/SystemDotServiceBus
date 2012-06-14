@@ -1,5 +1,4 @@
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Configuration.Local;
 using SystemDot.Threading;
 
 namespace SystemDot.Messaging.Configuration.Remote
@@ -13,7 +12,7 @@ namespace SystemDot.Messaging.Configuration.Remote
         {
             Contract.Requires(workCoordinator != null);
             Contract.Requires(threadPool != null);
-
+            
             this.workCoordinator = workCoordinator;
             this.threadPool = threadPool;
         }

@@ -1,42 +1,31 @@
-using System;
 using System.Diagnostics.Contracts;
-using System.Net;
-using System.Runtime.Serialization.Formatters.Binary;
-using SystemDot.Messaging.Pipes;
+using System.Runtime.Serialization;
+using SystemDot.Http;
+using SystemDot.Messaging.MessageTransportation;
+using SystemDot.Pipes;
 
 namespace SystemDot.Messaging.Sending
 {
     public class MessageSender 
     {
-        readonly string address;
-        readonly BinaryFormatter formatter;
+        readonly IFormatter formatter;
+        readonly IWebRequestor requestor;
 
-        public MessageSender(IPipe pipe, string address)
+        public MessageSender(IPipe<MessagePayload> pipe, IFormatter formatter, IWebRequestor requestor)
         {
             Contract.Requires(pipe != null);
-            Contract.Requires(!string.IsNullOrEmpty(address));
+            Contract.Requires(formatter != null);
+            Contract.Requires(requestor != null);
+            
+            this.formatter = formatter;
+            this.requestor = requestor;
 
-            this.address = address;
-            pipe.MessagePublished += OnMessagePublishedToPipe;
-            this.formatter = new BinaryFormatter();
+            pipe.ItemPushed += OnItemPushedToPipe;
         }
 
-        private void OnMessagePublishedToPipe(object message)
+        private void OnItemPushedToPipe(MessagePayload message)
         {
-            var request = (HttpWebRequest)WebRequest.Create(address);
-            request.Method = "PUT";
-            request.ConnectionGroupName = Guid.NewGuid().ToString();
-
-            try
-            {
-                using (var stream = request.GetRequestStream())
-                    formatter.Serialize(stream, message);
-
-                request.GetResponse().Close();
-            }
-            catch(WebException)
-            {
-            }
+            this.requestor.SendPut(message.Address, s => this.formatter.Serialize(s, message));
         }
     }
 }

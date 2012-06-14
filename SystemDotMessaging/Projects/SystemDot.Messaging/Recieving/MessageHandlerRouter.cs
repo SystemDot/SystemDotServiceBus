@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Reflection;
-using SystemDot.Messaging.Pipes;
+using SystemDot.Pipes;
 
 namespace SystemDot.Messaging.Recieving
 {
@@ -10,24 +10,24 @@ namespace SystemDot.Messaging.Recieving
     {
         readonly List<IMessageHandler> handlers;
 
-        public MessageHandlerRouter(IPipe pipe)
+        public MessageHandlerRouter(IPipe<object> pipe)
         {
             Contract.Requires(pipe != null);
             
             this.handlers = new List<IMessageHandler>();
-            pipe.MessagePublished += BroadcastMessageToConsumers;
+            pipe.ItemPushed += RouteMessageToHandlers;
         }
 
-        void BroadcastMessageToConsumers(object message)
+        void RouteMessageToHandlers(object message)
         {
             this.handlers.ForEach(c =>
             {
-                if (GetConsumerTypeForMessageType(message.GetType()).IsInstanceOfType(c))
+                if (GetHandlerTypeForMessageType(message.GetType()).IsInstanceOfType(c))
                     Invoke(c, message);
             });
         }
 
-        Type GetConsumerTypeForMessageType(Type messageType)
+        Type GetHandlerTypeForMessageType(Type messageType)
         {
             return typeof(IMessageHandler<>).MakeGenericType(messageType);
         }
