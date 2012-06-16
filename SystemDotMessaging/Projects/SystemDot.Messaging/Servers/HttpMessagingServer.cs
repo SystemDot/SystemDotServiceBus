@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Runtime.Serialization;
@@ -22,19 +23,17 @@ namespace SystemDot.Messaging.Servers
 
         public void HandleRequest(Stream inputStream, Stream outputStream)
         {
-            MessagePayload message = DeserialiseMessage(inputStream);
+            object deserialised = this.formatter.Deserialize(inputStream);
 
+            if (!(deserialised is MessagePayload)) return;
+
+            var message = deserialised.As<MessagePayload>();
+            var outgoingMessages = new List<MessagePayload>();
+             
             foreach (IMessagingServerHandler handler in this.handlers)
-            {
-                if (handler.ShouldHandleMessage(message)) handler.HandleMessage(message);
+                handler.HandleMessage(message, outgoingMessages);
 
-                this.formatter.Serialize(outputStream, handler.Reply());
-            }
-        }
-
-        private MessagePayload DeserialiseMessage(Stream inputStream)
-        {
-            return (MessagePayload) this.formatter.Deserialize(inputStream);
+            this.formatter.Serialize(outputStream, outgoingMessages);
         }
     }
 }

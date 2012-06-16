@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Specifications.message_transportation_packaging
             
             message = "Test";
             messagePayload = new MessagePayload("TestAddress");
-            messagePayload.AddHeader(new BodyMessageHeader(serialiser.Serialise(message))); 
+            messagePayload.SetBody(serialiser.Serialise(message)); 
         };
 
         Because of = () => inputPipe.Push(messagePayload);

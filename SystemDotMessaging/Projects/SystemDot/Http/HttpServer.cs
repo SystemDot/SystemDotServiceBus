@@ -33,12 +33,13 @@ namespace SystemDot.Http
 
         public void PerformWork()
         {
-            if (this.isStopped || !this.listener.IsListening) 
+            if (this.isStopped || !this.listener.IsListening)
                 return;
 
             try
             {
-                listener.BeginGetContext(BeginGetContextCallback, listener);
+                var result = listener.BeginGetContext(BeginGetContextCallback, listener);
+                result.AsyncWaitHandle.WaitOne();
             }
             catch (HttpListenerException e)
             {

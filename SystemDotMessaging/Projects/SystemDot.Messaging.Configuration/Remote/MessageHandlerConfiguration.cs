@@ -1,5 +1,4 @@
 using System.Diagnostics.Contracts;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using SystemDot.Http;
 using SystemDot.Messaging.MessageTransportation;
@@ -37,11 +36,11 @@ namespace SystemDot.Messaging.Configuration.Remote
             IPipe<MessagePayload> payloadPipe = BuildPayloadPipe();
             IPipe<object> messagePipe = BuildMessagePipe();
 
-            HttpServer messageRecieverServer = BuildHttpMessageRecieverServer(payloadPipe);
+            LongPollReciever longPollReciever = BuildLongPollReciever("http://localhost:8090/" + DefaultChannelName + '/', payloadPipe);
             BuildPayloadPackager(payloadPipe, messagePipe);
             BuildHandlerRouter(messagePipe, this.toRegister);
             
-            this.workCoordinator.RegisterWorker(messageRecieverServer);
+            this.workCoordinator.RegisterWorker(longPollReciever);
             this.workCoordinator.Start();
         }
 
@@ -55,9 +54,9 @@ namespace SystemDot.Messaging.Configuration.Remote
             return new Pump<MessagePayload>(this.threadPool);
         }
 
-        HttpServer BuildHttpMessageRecieverServer(IPipe<MessagePayload> pipe)
+        LongPollReciever BuildLongPollReciever(string address, IPipe<MessagePayload> pipe)
         {
-            return new HttpServer("http://localhost/" + DefaultChannelName + "/", new MessageReciever(pipe, new BinaryFormatter()));
+            return new LongPollReciever(address, pipe, new WebRequestor(), new BinaryFormatter());
         }
 
         private static void BuildPayloadPackager(IPipe<MessagePayload> inputPipe, IPipe<object> outputPipe)

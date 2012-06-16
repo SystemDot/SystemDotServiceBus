@@ -7,5 +7,6 @@ namespace SystemDot.Http
     {
         void SendPut(string address, Action<Stream> performOnRequestStream);
         void SendPut(string address, Action<Stream> performOnRequestStream, Action<Stream> performOnResponseStream);
+        
     }
 }

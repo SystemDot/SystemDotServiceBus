@@ -12,7 +12,10 @@ namespace SystemDot.Http
             SendPut(address, performOnRequestStream, s => { });
         }
 
-        public void SendPut(string address, Action<Stream> performOnRequestStream, Action<Stream> performOnResponseStream)
+        public void SendPut(
+            string address, 
+            Action<Stream> performOnRequestStream, 
+            Action<Stream> performOnResponseStream)
         {
             var request = (HttpWebRequest)WebRequest.Create(address);
             request.Method = "PUT";

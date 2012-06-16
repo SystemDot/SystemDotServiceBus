@@ -56,6 +56,7 @@
     <Compile Include="Http\IHttpHandler.cs" />
     <Compile Include="Serialisation\ISerialiser.cs" />
     <Compile Include="Serialisation\JsonSerialiser.cs" />
+    <Compile Include="Threading\BlockingQueue.cs" />
     <Compile Include="Threading\IThreader.cs" />
     <Compile Include="Threading\IThreadPool.cs" />
     <Compile Include="Threading\IWorker.cs" />

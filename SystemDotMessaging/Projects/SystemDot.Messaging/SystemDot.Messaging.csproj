@@ -40,20 +40,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MessageTransportation\Headers\LongPollRequestHeader.cs" />
     <Compile Include="Servers\IMessagingServerHandler.cs" />
     <Compile Include="MessageBus.cs" />
-    <Compile Include="MessageTransportation\Headers\BodyMessageHeader.cs" />
+    <Compile Include="MessageTransportation\Headers\BodyHeader.cs" />
     <Compile Include="MessageTransportation\Headers\MessagePayloadExtensions.cs" />
     <Compile Include="MessageTransportation\IMessageHeader.cs" />
     <Compile Include="Servers\HttpMessagingServer.cs" />
     <Compile Include="Recieving\IMessageHandler.cs" />
     <Compile Include="Recieving\MessagePayloadUnpackager.cs" />
-    <Compile Include="Recieving\MessageReciever.cs" />
+    <Compile Include="Recieving\LongPollReciever.cs" />
     <Compile Include="MessageTransportation\MessagePayload.cs" />
     <Compile Include="Sending\MessagePayloadPackager.cs" />
     <Compile Include="Sending\MessageSender.cs" />
     <Compile Include="Recieving\MessageHandlerRouter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Servers\LongPollHandler.cs" />
+    <Compile Include="Servers\MessagePayloadQueue.cs" />
+    <Compile Include="Servers\SentMessageHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">

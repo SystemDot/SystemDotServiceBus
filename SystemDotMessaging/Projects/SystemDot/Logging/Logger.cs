@@ -6,7 +6,7 @@ namespace SystemDot.Logging
     {
         public static void Log(string message)
         {
-            Console.Write(message);
+            Console.WriteLine(message);
         }
     }
 }

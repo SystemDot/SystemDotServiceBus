@@ -43,6 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="blocking_queue\when_dequeueing_with_no_items.cs" />
+    <Compile Include="blocking_queue\when_item_is_queued_delayed_on_another_thread.cs" />
+    <Compile Include="blocking_queue\when_queuing_an_item.cs" />
+    <Compile Include="blocking_queue\when_queuing_two_items.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="item_pumping\TestThreadPool.cs" />
     <Compile Include="item_pumping\when_pumping_an_item.cs" />

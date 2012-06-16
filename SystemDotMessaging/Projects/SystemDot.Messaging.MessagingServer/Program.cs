@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.MessagingServer
         {
             var coordinator = new ThreadedWorkCoordinator(new Threader());
             coordinator.RegisterWorker(BuildMessagingServer());
-            BuildMessagingServer().StartWork();
+            coordinator.Start();
 
             Console.Write("I am the message server. Press any key to exit.");
             Console.Read();
@@ -22,9 +22,22 @@ namespace SystemDot.Messaging.MessagingServer
 
         private static HttpServer BuildMessagingServer()
         {
-            return new HttpServer(
-                "http://localhost/" + DefaultChannelName + "/",
-                new HttpMessagingServer(new BinaryFormatter(), null));
+            return new HttpServer(GetServerListenUrl(), BuildMessagingServerHandler());
+        }
+
+        static string GetServerListenUrl()
+        {
+            return "http://localhost:8090/" + DefaultChannelName + "/";
+        }
+
+        static HttpMessagingServer BuildMessagingServerHandler()
+        {
+            var messagePayloadQueue = new MessagePayloadQueue(new TimeSpan(0, 0, 4));
+
+            return new HttpMessagingServer(
+                new BinaryFormatter(),
+                new SentMessageHandler(messagePayloadQueue),
+                new LongPollHandler(messagePayloadQueue));
         }
     }
 }

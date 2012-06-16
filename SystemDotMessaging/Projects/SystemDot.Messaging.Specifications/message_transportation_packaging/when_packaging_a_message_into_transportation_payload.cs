@@ -33,10 +33,10 @@ namespace SystemDot.Messaging.Specifications.message_transportation_packaging
         Because of = () => inputPipe.Push(message);
 
         It should_set_the_default_address_of_the_message = () =>
-            pushedPayload.Address.ShouldEqual("http://localhost/Default/");
+            pushedPayload.Address.ShouldEqual("http://localhost:8090/Default/");
 
         It should_send_the_message_to_the_bus_output_pipe = () =>
-            serialiser.Deserialise(pushedPayload.Headers.OfType<BodyMessageHeader>().First().Body).ShouldEqual(message);
+            serialiser.Deserialise(pushedPayload.Headers.OfType<BodyHeader>().First().Body).ShouldEqual(message);
 
         
     }
