@@ -36,25 +36,25 @@ namespace SystemDot.Http
             if (this.isStopped || !this.listener.IsListening)
                 return;
 
+            var result = listener.BeginGetContext(BeginGetContextCallback, listener);
+            result.AsyncWaitHandle.WaitOne();
+        }
+
+        private void BeginGetContextCallback(IAsyncResult ar)
+        {
             try
             {
-                var result = listener.BeginGetContext(BeginGetContextCallback, listener);
-                result.AsyncWaitHandle.WaitOne();
+                HttpListenerContext context = this.listener.EndGetContext(ar);
+
+                this.handler.HandleRequest(context.Request.InputStream, context.Response.OutputStream);
+
+                context.Response.StatusCode = (int)HttpStatusCode.OK;
+                context.Response.Close();
             }
             catch (HttpListenerException e)
             {
                 Logger.Log(e.Message);
             }
-        }
-
-        private void BeginGetContextCallback(IAsyncResult ar)
-        {
-            HttpListenerContext context = this.listener.EndGetContext(ar);
-
-            this.handler.HandleRequest(context.Request.InputStream, context.Response.OutputStream);
-
-            context.Response.StatusCode = (int)HttpStatusCode.OK;
-            context.Response.Close();
         }
 
         public void StopWork()

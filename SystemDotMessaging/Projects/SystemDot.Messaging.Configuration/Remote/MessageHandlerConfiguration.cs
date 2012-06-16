@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Configuration.Remote
             IPipe<MessagePayload> payloadPipe = BuildPayloadPipe();
             IPipe<object> messagePipe = BuildMessagePipe();
 
-            LongPollReciever longPollReciever = BuildLongPollReciever("http://localhost:8090/" + DefaultChannelName + '/', payloadPipe);
+            LongPollReciever longPollReciever = BuildLongPollReciever(Address.Default, payloadPipe);
             BuildPayloadPackager(payloadPipe, messagePipe);
             BuildHandlerRouter(messagePipe, this.toRegister);
             
@@ -54,7 +54,7 @@ namespace SystemDot.Messaging.Configuration.Remote
             return new Pump<MessagePayload>(this.threadPool);
         }
 
-        LongPollReciever BuildLongPollReciever(string address, IPipe<MessagePayload> pipe)
+        LongPollReciever BuildLongPollReciever(Address address, IPipe<MessagePayload> pipe)
         {
             return new LongPollReciever(address, pipe, new WebRequestor(), new BinaryFormatter());
         }

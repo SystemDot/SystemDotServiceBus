@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.Specifications.long_polling
     [Subject("Long polling")]
     public class when_sending_a_long_poll_request
     {
-        static string address; 
+        static Address address; 
         static TestWebRequestor requestor;
         static Pipe<MessagePayload> pipe;
         static BinaryFormatter formatter;
@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.long_polling
             formatter = new BinaryFormatter();
             requestor = new TestWebRequestor();
 
-            address = "Address";
+            address = new Address("Address");
             reciever = new LongPollReciever(address, pipe, requestor, formatter);
         };
 
@@ -41,6 +41,6 @@ namespace SystemDot.Messaging.Specifications.long_polling
             requestor.RequestStream.Deserialise<MessagePayload>(formatter).Address.ShouldEqual(address);
 
         It should_send_the_long_poll_request_to_the_correct_address = () =>
-            requestor.AddressUsed.ShouldEqual(address);
+            requestor.AddressUsed.ShouldEqual(address.Url);
     }
 }

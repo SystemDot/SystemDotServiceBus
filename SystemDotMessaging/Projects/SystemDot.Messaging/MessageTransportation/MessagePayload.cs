@@ -9,7 +9,7 @@ namespace SystemDot.Messaging.MessageTransportation
     {
         readonly List<IMessageHeader> headers;
 
-        public string Address { get; private set; }
+        public Address Address { get; private set; }
 
         public IEnumerable<IMessageHeader> Headers 
         { 
@@ -18,10 +18,10 @@ namespace SystemDot.Messaging.MessageTransportation
                 return this.headers;
             }
         }
-        
-        public MessagePayload(string address)
+
+        public MessagePayload(Address address)
         {
-            Contract.Requires(!string.IsNullOrEmpty(address));
+            Contract.Requires(address != Address.Empty);
 
             Address = address;
             this.headers = new List<IMessageHeader>();

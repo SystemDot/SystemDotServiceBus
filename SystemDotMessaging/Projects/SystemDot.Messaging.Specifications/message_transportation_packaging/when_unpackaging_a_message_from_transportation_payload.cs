@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.message_transportation_packaging
             packager = new MessagePayloadUnpackager(inputPipe, outputPipe, serialiser);
             
             message = "Test";
-            messagePayload = new MessagePayload("TestAddress");
+            messagePayload = new MessagePayload(new Address("TestAddress"));
             messagePayload.SetBody(serialiser.Serialise(message)); 
         };
 

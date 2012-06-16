@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Sending
 
         private void OnItemPushedToPipe(MessagePayload message)
         {
-            this.requestor.SendPut(message.Address, s => this.formatter.Serialize(s, message));
+            this.requestor.SendPut(message.Address.Url, s => this.formatter.Serialize(s, message));
         }
     }
 }

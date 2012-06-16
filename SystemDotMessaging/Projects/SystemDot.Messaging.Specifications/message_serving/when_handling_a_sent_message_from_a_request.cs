@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.message_serving
                 new SentMessageHandler(outgoingQueue),
                 new LongPollHandler(outgoingQueue));
             
-            sentMessage = new MessagePayload("Message");
+            sentMessage = new MessagePayload(new Address("Message"));
             sentMessage.SetBody(new byte[0]);
 
             stream.Serialise(sentMessage, formatter);           

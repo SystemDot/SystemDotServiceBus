@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MessageTransportation\Address.cs" />
     <Compile Include="MessageTransportation\Headers\LongPollRequestHeader.cs" />
     <Compile Include="Servers\IMessagingServerHandler.cs" />
     <Compile Include="MessageBus.cs" />

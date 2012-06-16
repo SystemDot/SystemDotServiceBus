@@ -14,9 +14,11 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
 
             do
             {
-                Console.WriteLine("Press a key to send message..");
+                Console.WriteLine("I am the sender. Press enter to send messages..");
                 Console.ReadLine();
+                
                 Console.WriteLine("Sending message");
+
                 MessageBus.Send("Hello");
                 MessageBus.Send("Hello1");
                 MessageBus.Send("Hello2");

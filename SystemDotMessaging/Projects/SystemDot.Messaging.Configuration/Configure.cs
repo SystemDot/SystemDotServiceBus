@@ -11,17 +11,15 @@ namespace SystemDot.Messaging.Configuration
         const int DefaultWorkerThreads = 4;
 
         static readonly ThreadPool threadPool = new ThreadPool(DefaultWorkerThreads);
-        static readonly ThreadedWorkCoordinator workCoordinator = new ThreadedWorkCoordinator(new Threader());
         
         public static RemoteConfiguration Remote()
         {
-            return new RemoteConfiguration(workCoordinator, threadPool);
+            return new RemoteConfiguration(new ThreadedWorkCoordinator(new Threader()), threadPool);
         }
 
         public static LocalConfiguration Local()
         {
             return new LocalConfiguration(threadPool);
         }
-
     }
 }

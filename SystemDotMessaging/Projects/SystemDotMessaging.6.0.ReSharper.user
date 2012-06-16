@@ -1,11 +1,15 @@
 <Configuration>
   <RecentFiles>
     <RecentFiles>
-      <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:Channels/d:Recieving/d:Http/f:MessageListener.cs" caret="0" fromTop="0" />
-      <File id="2563F726-8DC3-4244-BEA7-F11068EA7AB9/d:channels/d:publishing/f:when_publishing_a_message_with_no_published_event_subscribers.cs" caret="0" fromTop="0" />
-      <File id="2563F726-8DC3-4244-BEA7-F11068EA7AB9/d:channels/f:TestDistributor.cs" caret="0" fromTop="0" />
+      <File id="DED30506-F4EC-4528-B535-8FA9373C5B52/d:Http/f:HttpServer.cs" caret="847" fromTop="19" />
+      <File id="B715C167-2A09-47CB-83DA-741AA7CAD36D/f:Program.cs" caret="0" fromTop="0" />
+      <File id="B75A7B93-6CE5-4FAB-805C-DF714693AFEB/f:Program.cs" caret="479" fromTop="17" />
+      <File id="62DCD467-1E9C-49E8-880A-00A077BF7BB8/f:Program.cs" caret="497" fromTop="19" />
     </RecentFiles>
-    <RecentEdits />
+    <RecentEdits>
+      <File id="B75A7B93-6CE5-4FAB-805C-DF714693AFEB/f:Program.cs" caret="479" fromTop="17" />
+      <File id="62DCD467-1E9C-49E8-880A-00A077BF7BB8/f:Program.cs" caret="497" fromTop="19" />
+    </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
     <NAntPath value="" />

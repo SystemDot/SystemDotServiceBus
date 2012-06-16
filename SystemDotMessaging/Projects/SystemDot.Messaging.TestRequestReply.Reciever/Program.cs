@@ -13,7 +13,7 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
                 .HandlingMessagesWith(new MessageConsumer())
                 .Initialise();
 
-            Console.WriteLine("Started listening..");
+            Console.WriteLine("I am the reciever. Press enter to exit");
 
             Console.ReadLine();
         }

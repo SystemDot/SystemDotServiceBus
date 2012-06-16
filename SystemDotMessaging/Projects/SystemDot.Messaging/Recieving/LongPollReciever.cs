@@ -12,18 +12,18 @@ namespace SystemDot.Messaging.Recieving
 {
     public class LongPollReciever : IWorker
     {
-        readonly string address;
+        readonly Address address;
         readonly IPipe<MessagePayload> pipe;
         readonly IWebRequestor requestor;
         readonly IFormatter formatter;
 
         public LongPollReciever(
-            string address, 
+            Address address, 
             IPipe<MessagePayload> pipe, 
             IWebRequestor requestor, 
             IFormatter formatter)
         {
-            Contract.Requires(string.IsNullOrEmpty(address));
+            Contract.Requires(address != Address.Empty);
             Contract.Requires(pipe != null);
             Contract.Requires(requestor != null);
             Contract.Requires(formatter != null);
@@ -40,7 +40,7 @@ namespace SystemDot.Messaging.Recieving
 
         public void PerformWork()
         {
-            this.requestor.SendPut(this.address, SendRequest, RecieveResponse);
+            this.requestor.SendPut(this.address.Url, SendRequest, RecieveResponse);
         }
 
         void SendRequest(Stream requestStream)

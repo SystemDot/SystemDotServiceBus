@@ -9,15 +9,13 @@ namespace SystemDot.Messaging.Servers
 {
     public class MessagePayloadQueue
     {
-        readonly Dictionary<string, BlockingQueue<MessagePayload>> queues;
         readonly TimeSpan blockingTimeout;
-
+        readonly Dictionary<Address, BlockingQueue<MessagePayload>> queues;
+        
         public MessagePayloadQueue(TimeSpan blockingTimeout)
         {
-            Contract.Requires(blockingTimeout != null);
-
             this.blockingTimeout = blockingTimeout;
-            this.queues = new Dictionary<string, BlockingQueue<MessagePayload>>();
+            this.queues = new Dictionary<Address, BlockingQueue<MessagePayload>>();
         }
 
         public void Enqueue(MessagePayload toEnqueue)
@@ -29,17 +27,17 @@ namespace SystemDot.Messaging.Servers
             this.queues[toEnqueue.Address].Enqueue(toEnqueue);
         }
 
-        public IEnumerable<MessagePayload> DequeueAll(string address)
+        public IEnumerable<MessagePayload> DequeueAll(Address address)
         {
+            Contract.Requires(address != Address.Empty);
+            
             CreateQueueIfNonExistant(address);
             
             return this.queues[address].DequeueAll();
         }
 
-        void CreateQueueIfNonExistant(string address)
+        void CreateQueueIfNonExistant(Address address)
         {
-            Contract.Requires(!string.IsNullOrEmpty(address));
-            
             if (!this.queues.ContainsKey(address))
             {
                 this.queues[address] = new BlockingQueue<MessagePayload>(blockingTimeout);

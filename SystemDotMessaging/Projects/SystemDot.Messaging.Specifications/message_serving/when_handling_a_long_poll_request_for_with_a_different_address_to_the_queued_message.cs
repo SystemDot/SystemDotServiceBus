@@ -33,10 +33,10 @@ namespace SystemDot.Messaging.Specifications.message_serving
                 new SentMessageHandler(outgoingQueue),
                 new LongPollHandler(outgoingQueue));
 
-            sentMessageInQueue = new MessagePayload("Address1");
+            sentMessageInQueue = new MessagePayload(new Address("Address1"));
             outgoingQueue.Enqueue(sentMessageInQueue);
 
-            longPollRequest = new MessagePayload("Address2");
+            longPollRequest = new MessagePayload(new Address("Address2"));
             longPollRequest.SetLongPollRequest();
 
             inputStream.Serialise(longPollRequest, formatter);

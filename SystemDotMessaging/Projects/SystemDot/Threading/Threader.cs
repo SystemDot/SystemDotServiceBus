@@ -16,7 +16,10 @@ namespace SystemDot.Threading
 
         public void RunActionOnNewThread(Action toStart)
         {
-            var thread = new Thread(() => DoWork(toStart));
+            var thread = new Thread(() => DoWork(toStart))
+            {
+                IsBackground = true
+            };
             thread.Start();
             threads.Add(thread);
         }

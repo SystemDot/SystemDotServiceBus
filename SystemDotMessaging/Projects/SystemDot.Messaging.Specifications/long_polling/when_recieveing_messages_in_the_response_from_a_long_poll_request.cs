@@ -26,8 +26,8 @@ namespace SystemDot.Messaging.Specifications.long_polling
         Establish context = () =>
         {
             messagePayloads = new List<MessagePayload>();
-            messagePayload1 = new MessagePayload("Address1");
-            messagePayload2 = new MessagePayload("Address2");
+            messagePayload1 = new MessagePayload(new Address("Address1"));
+            messagePayload2 = new MessagePayload(new Address("Address2"));
             messagePayloads.Add(messagePayload1);
             messagePayloads.Add(messagePayload2);
 
@@ -37,7 +37,7 @@ namespace SystemDot.Messaging.Specifications.long_polling
             formatter = new BinaryFormatter();
             requestor = new TestWebRequestor(messagePayloads);
 
-            reciever = new LongPollReciever("Address", pipe, requestor, formatter);
+            reciever = new LongPollReciever(new Address("Address"), pipe, requestor, formatter);
         };
 
         Because of = () => reciever.PerformWork();

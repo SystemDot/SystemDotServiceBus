@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Sending
 
         void OnInputPipeItemPushed(object message)
         {
-            var messagePayload = new MessagePayload("http://localhost:8090/" + DefaultChannelName + "/");
+            var messagePayload = new MessagePayload(Address.Default);
             messagePayload.SetBody(this.serialiser.Serialise(message));
 
             this.outputPipe.Push(messagePayload);
