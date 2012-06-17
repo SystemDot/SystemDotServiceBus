@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.Messaging", "SystemDot.Messaging\SystemDot.Messaging.csproj", "{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.Messaging.Configuration", "SystemDot.Messaging.Configuration\SystemDot.Messaging.Configuration.csproj", "{0A171956-E662-4B58-A2CC-5BA49B63F349}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.Messaging.Specifications", "SystemDot.Messaging.Specifications\SystemDot.Messaging.Specifications.csproj", "{2563F726-8DC3-4244-BEA7-F11068EA7AB9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.Messaging.TestRequestReply.Sender", "SystemDot.Messaging.TestRequestReply.Sender\SystemDot.Messaging.TestRequestReply.Sender.csproj", "{62DCD467-1E9C-49E8-880A-00A077BF7BB8}"
@@ -41,16 +39,6 @@ Global
 		{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}.Release|x86.ActiveCfg = Release|Any CPU
-		{0A171956-E662-4B58-A2CC-5BA49B63F349}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0A171956-E662-4B58-A2CC-5BA49B63F349}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0A171956-E662-4B58-A2CC-5BA49B63F349}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{0A171956-E662-4B58-A2CC-5BA49B63F349}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{0A171956-E662-4B58-A2CC-5BA49B63F349}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{0A171956-E662-4B58-A2CC-5BA49B63F349}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0A171956-E662-4B58-A2CC-5BA49B63F349}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0A171956-E662-4B58-A2CC-5BA49B63F349}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{0A171956-E662-4B58-A2CC-5BA49B63F349}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{0A171956-E662-4B58-A2CC-5BA49B63F349}.Release|x86.ActiveCfg = Release|Any CPU
 		{2563F726-8DC3-4244-BEA7-F11068EA7AB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2563F726-8DC3-4244-BEA7-F11068EA7AB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2563F726-8DC3-4244-BEA7-F11068EA7AB9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -126,8 +114,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{EAABD53D-7507-4F76-A538-0264D7294422} = {9FFC7D45-E954-4F3E-8132-A3C27440B412}
 		{B75A7B93-6CE5-4FAB-805C-DF714693AFEB} = {9FFC7D45-E954-4F3E-8132-A3C27440B412}
+		{EAABD53D-7507-4F76-A538-0264D7294422} = {9FFC7D45-E954-4F3E-8132-A3C27440B412}
 		{62DCD467-1E9C-49E8-880A-00A077BF7BB8} = {9FFC7D45-E954-4F3E-8132-A3C27440B412}
 	EndGlobalSection
 EndGlobal

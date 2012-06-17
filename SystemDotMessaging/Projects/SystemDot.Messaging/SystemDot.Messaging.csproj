@@ -40,6 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\Configure.cs" />
+    <Compile Include="Configuration\Local\LocalConfiguration.cs" />
+    <Compile Include="Configuration\Local\UsingDefaultsConfiguration.cs" />
+    <Compile Include="Configuration\Remote\MessageHandlerConfiguration.cs" />
+    <Compile Include="Configuration\Remote\RemoteConfiguration.cs" />
+    <Compile Include="Configuration\Remote\UsingDefaultsConfiguration.cs" />
     <Compile Include="MessageTransportation\Address.cs" />
     <Compile Include="MessageTransportation\Headers\LongPollRequestHeader.cs" />
     <Compile Include="Servers\IMessagingServerHandler.cs" />

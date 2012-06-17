@@ -47,10 +47,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SystemDot.Messaging.Configuration\SystemDot.Messaging.Configuration.csproj">
-      <Project>{0A171956-E662-4B58-A2CC-5BA49B63F349}</Project>
-      <Name>SystemDot.Messaging.Configuration</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SystemDot.Messaging.Test.Messages\SystemDot.Messaging.Test.Messages.csproj">
       <Project>{EAABD53D-7507-4F76-A538-0264D7294422}</Project>
       <Name>SystemDot.Messaging.Test.Messages</Name>
