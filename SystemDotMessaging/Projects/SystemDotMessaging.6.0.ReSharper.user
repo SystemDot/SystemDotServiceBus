@@ -30,10 +30,9 @@
       <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:Sending/f:MessagePayloadPackager.cs" caret="0" fromTop="0" />
       <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:Sending/f:MessageSender.cs" caret="0" fromTop="0" />
       <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:Servers/f:MessagePayloadQueue.cs" caret="0" fromTop="0" />
-      <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:Recieving/f:MessageHandlerRouter.cs" caret="137" fromTop="5" />
+      <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:Recieving/f:MessageHandlerRouter.cs" caret="0" fromTop="0" />
     </RecentFiles>
     <RecentEdits>
-      <File id="0A171956-E662-4B58-A2CC-5BA49B63F349/f:Configure.cs" caret="444" fromTop="13" />
       <File id="0A171956-E662-4B58-A2CC-5BA49B63F349/f:Configure.cs" caret="750" fromTop="22" />
       <File id="B75A7B93-6CE5-4FAB-805C-DF714693AFEB/f:Program.cs" caret="484" fromTop="17" />
       <File id="B75A7B93-6CE5-4FAB-805C-DF714693AFEB/f:Program.cs" caret="209" fromTop="9" />
@@ -63,6 +62,7 @@
       <File id="2563F726-8DC3-4244-BEA7-F11068EA7AB9/d:message_transportation_packaging/f:when_packaging_a_message_into_transportation_payload.cs" caret="1059" fromTop="26" />
       <File id="2563F726-8DC3-4244-BEA7-F11068EA7AB9/d:message_transportation_packaging/f:when_unpackaging_a_message_from_transportation_payload.cs" caret="1092" fromTop="27" />
       <File id="2563F726-8DC3-4244-BEA7-F11068EA7AB9/d:message_transportation_packaging/f:when_unpackaging_a_message_from_transportation_payload.cs" caret="0" fromTop="0" />
+      <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:Recieving/f:MessageHandlerRouter.cs" caret="1300" fromTop="5" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
