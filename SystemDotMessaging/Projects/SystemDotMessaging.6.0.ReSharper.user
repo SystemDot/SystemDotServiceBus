@@ -1,14 +1,68 @@
 <Configuration>
   <RecentFiles>
     <RecentFiles>
-      <File id="DED30506-F4EC-4528-B535-8FA9373C5B52/d:Http/f:HttpServer.cs" caret="847" fromTop="19" />
+      <File id="2563F726-8DC3-4244-BEA7-F11068EA7AB9/d:message_transportation_packaging/f:when_unpackaging_a_message_from_transportation_payload.cs" caret="0" fromTop="0" />
+      <File id="2563F726-8DC3-4244-BEA7-F11068EA7AB9/d:message_transportation_packaging/f:when_packaging_a_message_into_transportation_payload.cs" caret="0" fromTop="0" />
+      <File id="0A171956-E662-4B58-A2CC-5BA49B63F349/d:Remote/f:MessageHandlerConfiguration.cs" caret="0" fromTop="0" />
+      <File id="0A171956-E662-4B58-A2CC-5BA49B63F349/d:Local/f:UsingDefaultsConfiguration.cs" caret="0" fromTop="0" />
+      <File id="C35328BB-3E59-4DC8-8397-C0A7BB2F2E5E/d:serialisation/f:when_serialising_an_object_to_json.cs" caret="0" fromTop="0" />
+      <File id="DED30506-F4EC-4528-B535-8FA9373C5B52/d:Serialisation/f:BinarySerialiser.cs" caret="0" fromTop="0" />
+      <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:MessageTransportation/f:MessagePayload.cs" caret="0" fromTop="0" />
+      <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:MessageTransportation/d:Headers/f:MessagePayloadExtensions.cs" caret="0" fromTop="0" />
+      <File id="DED30506-F4EC-4528-B535-8FA9373C5B52/d:Http/f:HttpServer.cs" caret="0" fromTop="0" />
+      <File id="B75A7B93-6CE5-4FAB-805C-DF714693AFEB/f:Program.cs" caret="0" fromTop="0" />
+      <File id="B75A7B93-6CE5-4FAB-805C-DF714693AFEB/f:MessageConsumer.cs" caret="0" fromTop="0" />
+      <File id="EAABD53D-7507-4F76-A538-0264D7294422/f:TestMessage.cs" caret="0" fromTop="0" />
+      <File id="62DCD467-1E9C-49E8-880A-00A077BF7BB8/f:Program.cs" caret="0" fromTop="0" />
+      <File id="DED30506-F4EC-4528-B535-8FA9373C5B52/d:Http/f:WebRequestor.cs" caret="0" fromTop="0" />
       <File id="B715C167-2A09-47CB-83DA-741AA7CAD36D/f:Program.cs" caret="0" fromTop="0" />
-      <File id="B75A7B93-6CE5-4FAB-805C-DF714693AFEB/f:Program.cs" caret="479" fromTop="17" />
-      <File id="62DCD467-1E9C-49E8-880A-00A077BF7BB8/f:Program.cs" caret="497" fromTop="19" />
+      <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:Servers/f:HttpMessagingServer.cs" caret="0" fromTop="0" />
+      <File id="DED30506-F4EC-4528-B535-8FA9373C5B52/d:Threading/f:Threader.cs" caret="0" fromTop="0" />
+      <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:MessageTransportation/f:Address.cs" caret="0" fromTop="0" />
+      <File id="0A171956-E662-4B58-A2CC-5BA49B63F349/f:Configure.cs" caret="0" fromTop="0" />
+      <File id="DED30506-F4EC-4528-B535-8FA9373C5B52/d:Threading/f:BlockingQueue.cs" caret="0" fromTop="0" />
+      <File id="2563F726-8DC3-4244-BEA7-F11068EA7AB9/d:long_polling/f:when_sending_a_long_poll_request.cs" caret="0" fromTop="0" />
+      <File id="2563F726-8DC3-4244-BEA7-F11068EA7AB9/d:message_serving/f:when_handling_a_long_poll_request_for_messages_with_two_messages_in_the_queue.cs" caret="0" fromTop="0" />
+      <File id="2563F726-8DC3-4244-BEA7-F11068EA7AB9/d:message_serving/f:when_handling_a_long_poll_request_for_with_a_different_address_to_the_queued_message.cs" caret="0" fromTop="0" />
+      <File id="2563F726-8DC3-4244-BEA7-F11068EA7AB9/d:message_serving/f:when_handling_a_sent_message_from_a_request.cs" caret="0" fromTop="0" />
+      <File id="2563F726-8DC3-4244-BEA7-F11068EA7AB9/d:long_polling/f:when_recieveing_messages_in_the_response_from_a_long_poll_request.cs" caret="0" fromTop="0" />
+      <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:Recieving/f:LongPollReciever.cs" caret="0" fromTop="0" />
+      <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:Sending/f:MessagePayloadPackager.cs" caret="0" fromTop="0" />
+      <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:Sending/f:MessageSender.cs" caret="0" fromTop="0" />
+      <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:Servers/f:MessagePayloadQueue.cs" caret="0" fromTop="0" />
+      <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:Recieving/f:MessageHandlerRouter.cs" caret="137" fromTop="5" />
     </RecentFiles>
     <RecentEdits>
-      <File id="B75A7B93-6CE5-4FAB-805C-DF714693AFEB/f:Program.cs" caret="479" fromTop="17" />
-      <File id="62DCD467-1E9C-49E8-880A-00A077BF7BB8/f:Program.cs" caret="497" fromTop="19" />
+      <File id="0A171956-E662-4B58-A2CC-5BA49B63F349/f:Configure.cs" caret="444" fromTop="13" />
+      <File id="0A171956-E662-4B58-A2CC-5BA49B63F349/f:Configure.cs" caret="750" fromTop="22" />
+      <File id="B75A7B93-6CE5-4FAB-805C-DF714693AFEB/f:Program.cs" caret="484" fromTop="17" />
+      <File id="B75A7B93-6CE5-4FAB-805C-DF714693AFEB/f:Program.cs" caret="209" fromTop="9" />
+      <File id="B715C167-2A09-47CB-83DA-741AA7CAD36D/f:Program.cs" caret="861" fromTop="28" />
+      <File id="0CDFED39-1AA2-464B-8F6A-3B8E19BA6842/d:MessageTransportation/f:Address.cs" caret="312" fromTop="9" />
+      <File id="62DCD467-1E9C-49E8-880A-00A077BF7BB8/f:Program.cs" caret="504" fromTop="17" />
+      <File id="DED30506-F4EC-4528-B535-8FA9373C5B52/d:Threading/f:Threader.cs" caret="531" fromTop="19" />
+      <File id="DED30506-F4EC-4528-B535-8FA9373C5B52/d:Threading/f:Threader.cs" caret="515" fromTop="21" />
+      <File id="DED30506-F4EC-4528-B535-8FA9373C5B52/d:Http/f:HttpServer.cs" caret="1701" fromTop="38" />
+      <File id="DED30506-F4EC-4528-B535-8FA9373C5B52/d:Http/f:HttpServer.cs" caret="1702" fromTop="49" />
+      <File id="DED30506-F4EC-4528-B535-8FA9373C5B52/d:Http/f:HttpServer.cs" caret="1150" fromTop="22" />
+      <File id="B715C167-2A09-47CB-83DA-741AA7CAD36D/f:Program.cs" caret="678" fromTop="20" />
+      <File id="EAABD53D-7507-4F76-A538-0264D7294422/f:TestMessage.cs" caret="13" fromTop="0" />
+      <File id="EAABD53D-7507-4F76-A538-0264D7294422/f:TestMessage.cs" caret="261" fromTop="12" />
+      <File id="62DCD467-1E9C-49E8-880A-00A077BF7BB8/f:Program.cs" caret="1058" fromTop="29" />
+      <File id="62DCD467-1E9C-49E8-880A-00A077BF7BB8/f:Program.cs" caret="1068" fromTop="28" />
+      <File id="B75A7B93-6CE5-4FAB-805C-DF714693AFEB/f:MessageConsumer.cs" caret="244" fromTop="7" />
+      <File id="B75A7B93-6CE5-4FAB-805C-DF714693AFEB/f:MessageConsumer.cs" caret="430" fromTop="13" />
+      <File id="DED30506-F4EC-4528-B535-8FA9373C5B52/d:Serialisation/f:BinarySerialiser.cs" caret="637" fromTop="18" />
+      <File id="DED30506-F4EC-4528-B535-8FA9373C5B52/d:Serialisation/f:BinarySerialiser.cs" caret="961" fromTop="25" />
+      <File id="DED30506-F4EC-4528-B535-8FA9373C5B52/d:Serialisation/f:BinarySerialiser.cs" caret="365" fromTop="14" />
+      <File id="DED30506-F4EC-4528-B535-8FA9373C5B52/d:Serialisation/f:BinarySerialiser.cs" caret="246" fromTop="10" />
+      <File id="DED30506-F4EC-4528-B535-8FA9373C5B52/d:Serialisation/f:BinarySerialiser.cs" caret="108" fromTop="2" />
+      <File id="C35328BB-3E59-4DC8-8397-C0A7BB2F2E5E/d:serialisation/f:when_serialising_an_object_to_json.cs" caret="528" fromTop="16" />
+      <File id="0A171956-E662-4B58-A2CC-5BA49B63F349/d:Local/f:UsingDefaultsConfiguration.cs" caret="1618" fromTop="27" />
+      <File id="0A171956-E662-4B58-A2CC-5BA49B63F349/d:Remote/f:MessageHandlerConfiguration.cs" caret="2356" fromTop="27" />
+      <File id="2563F726-8DC3-4244-BEA7-F11068EA7AB9/d:message_transportation_packaging/f:when_packaging_a_message_into_transportation_payload.cs" caret="1059" fromTop="26" />
+      <File id="2563F726-8DC3-4244-BEA7-F11068EA7AB9/d:message_transportation_packaging/f:when_unpackaging_a_message_from_transportation_payload.cs" caret="1092" fromTop="27" />
+      <File id="2563F726-8DC3-4244-BEA7-F11068EA7AB9/d:message_transportation_packaging/f:when_unpackaging_a_message_from_transportation_payload.cs" caret="0" fromTop="0" />
     </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
@@ -29,4 +83,64 @@
       <setting name="SolutionAnalysisEnabled">False</setting>
     </boolean>
   </SettingsComponent>
+  <CompletionStatisticsManager>
+    <ItemStatistics item="CSharpCodeCompletionContext">
+      <Item value="public" priority="63" />
+      <Item value="struct" priority="31" />
+      <Item value="static" priority="95" />
+      <Item value="return" priority="63" />
+      <Item value="null" priority="63" />
+      <Item value="new" priority="127" />
+      <Item value="Address" priority="121" />
+      <Item value="Address`0" priority="254" />
+      <Item value="other" priority="31" />
+      <Item value="string" priority="61" />
+      <Item value="Url" priority="31" />
+      <Item value="Serializable" priority="16" />
+      <Item value="IEquatable" priority="31" />
+      <Item value="threadPool" priority="31" />
+      <Item value="workCoordinator" priority="31" />
+      <Item value="void" priority="31" />
+      <Item value="Configure`0" priority="31" />
+      <Item value="address" priority="31" />
+      <Item value="thread" priority="31" />
+      <Item value="true" priority="31" />
+      <Item value="prop" priority="31" />
+      <Item value="this" priority="31" />
+      <Item value="stream" priority="63" />
+      <Item value="toSerialise" priority="31" />
+      <Item value="BinaryFormatter" priority="28" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:SystemDot.Messaging.MessageTransportation.Address">
+      <Item value="Url" priority="107" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.String">
+      <Item value="GetHashCode`0" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@SystemDot.Messaging.MessageTransportation.Address">
+      <Item value="Empty" priority="53" />
+      <Item value="Default" priority="80" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.TimeSpan">
+      <Item value="MinValue" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:SystemDot.Threading.ThreadedWorkCoordinator">
+      <Item value="Dispose`0" priority="54" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@SystemDot.Messaging.Configuration.Configure">
+      <Item value="Cleanup`0" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Threading.Thread">
+      <Item value="IsBackground" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:SystemDot.Messaging.Test.Messages.TestMessage">
+      <Item value="Text" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:SystemDot.Serialisation.JsonSerialiser">
+      <Item value="serialiser" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter">
+      <Item value="Serialize`0" priority="26" />
+    </ItemStatistics>
+  </CompletionStatisticsManager>
 </Configuration>

@@ -61,7 +61,7 @@ namespace SystemDot.Messaging.Configuration.Remote
 
         private static void BuildPayloadPackager(IPipe<MessagePayload> inputPipe, IPipe<object> outputPipe)
         {
-            new MessagePayloadUnpackager(inputPipe, outputPipe, new JsonSerialiser());
+            new MessagePayloadUnpackager(inputPipe, outputPipe, new BinarySerialiser(new BinaryFormatter()));
         }
 
         void BuildHandlerRouter(IPipe<object> pipe, IMessageHandler register)

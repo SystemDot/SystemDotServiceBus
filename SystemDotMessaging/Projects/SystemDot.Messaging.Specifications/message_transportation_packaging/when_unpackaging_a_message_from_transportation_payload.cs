@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.Contracts;
+﻿using System.Runtime.Serialization.Formatters.Binary;
 using SystemDot.Messaging.MessageTransportation;
 using SystemDot.Messaging.MessageTransportation.Headers;
 using SystemDot.Messaging.Recieving;
@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Specifications.message_transportation_packaging
             inputPipe = new Pipe<MessagePayload>();
             outputPipe = new Pipe<object>();
             outputPipe.ItemPushed += i => pushedMessage = (string)i;
-            serialiser = new JsonSerialiser();
+            serialiser = new BinarySerialiser(new BinaryFormatter());
             packager = new MessagePayloadUnpackager(inputPipe, outputPipe, serialiser);
             
             message = "Test";

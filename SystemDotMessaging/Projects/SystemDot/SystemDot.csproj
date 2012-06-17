@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\Dependencies\Newtonsoft\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -55,7 +52,7 @@
     <Compile Include="Http\HttpServer.cs" />
     <Compile Include="Http\IHttpHandler.cs" />
     <Compile Include="Serialisation\ISerialiser.cs" />
-    <Compile Include="Serialisation\JsonSerialiser.cs" />
+    <Compile Include="Serialisation\BinarySerialiser.cs" />
     <Compile Include="Threading\BlockingQueue.cs" />
     <Compile Include="Threading\IThreader.cs" />
     <Compile Include="Threading\IThreadPool.cs" />

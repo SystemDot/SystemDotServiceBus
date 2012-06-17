@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using SystemDot.Messaging.MessageTransportation;
 using SystemDot.Messaging.MessageTransportation.Headers;
 using SystemDot.Messaging.Sending;
@@ -23,7 +24,7 @@ namespace SystemDot.Messaging.Specifications.message_transportation_packaging
             inputPipe = new Pipe<object>();
             outputPipe = new Pipe<MessagePayload>();
             outputPipe.ItemPushed += i => pushedPayload = i;
-            serialiser = new JsonSerialiser();
+            serialiser = new BinarySerialiser(new BinaryFormatter());
 
             packager = new MessagePayloadPackager(inputPipe, outputPipe, serialiser);
             

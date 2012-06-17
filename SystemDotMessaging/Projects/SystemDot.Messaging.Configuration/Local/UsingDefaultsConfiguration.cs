@@ -46,7 +46,7 @@ namespace SystemDot.Messaging.Configuration.Local
 
         private static void BuildPayloadPackager(IPipe<object> inputPipe, IPipe<MessagePayload> outputPipe)
         {
-            new MessagePayloadPackager(inputPipe, outputPipe, new JsonSerialiser());
+            new MessagePayloadPackager(inputPipe, outputPipe, new BinarySerialiser(new BinaryFormatter()));
         }
 
         private void BuildMessageSender(IPipe<MessagePayload> pipe)

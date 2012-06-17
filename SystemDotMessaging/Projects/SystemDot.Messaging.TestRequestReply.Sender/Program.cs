@@ -1,5 +1,6 @@
 ﻿using System;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Test.Messages;
 
 namespace SystemDot.Messaging.TestRequestReply.Sender
 {
@@ -19,14 +20,14 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
                 
                 Console.WriteLine("Sending message");
 
-                MessageBus.Send("Hello");
-                MessageBus.Send("Hello1");
-                MessageBus.Send("Hello2");
-                MessageBus.Send("Hello3");
-                MessageBus.Send("Hello4");
-                MessageBus.Send("Hello5");
-                MessageBus.Send("Hello6");
-                MessageBus.Send("Hello7");
+                MessageBus.Send(new TestMessage("Hello"));
+                MessageBus.Send(new TestMessage("Hello1"));
+                MessageBus.Send(new TestMessage("Hello2"));
+                MessageBus.Send(new TestMessage("Hello3"));
+                MessageBus.Send(new TestMessage("Hello4"));
+                MessageBus.Send(new TestMessage("Hello5"));
+                MessageBus.Send(new TestMessage("Hello6"));
+                MessageBus.Send(new TestMessage("Hello7"));
             }
             while (true);
         }

@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.Specifications", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.Messaging.MessagingServer", "SystemDot.Messaging.MessagingServer\SystemDot.Messaging.MessagingServer.csproj", "{B715C167-2A09-47CB-83DA-741AA7CAD36D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.Messaging.Test.Messages", "SystemDot.Messaging.Test.Messages\SystemDot.Messaging.Test.Messages.csproj", "{EAABD53D-7507-4F76-A538-0264D7294422}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{9FFC7D45-E954-4F3E-8132-A3C27440B412}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,8 +111,23 @@ Global
 		{B715C167-2A09-47CB-83DA-741AA7CAD36D}.Release|Mixed Platforms.Build.0 = Release|x86
 		{B715C167-2A09-47CB-83DA-741AA7CAD36D}.Release|x86.ActiveCfg = Release|x86
 		{B715C167-2A09-47CB-83DA-741AA7CAD36D}.Release|x86.Build.0 = Release|x86
+		{EAABD53D-7507-4F76-A538-0264D7294422}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAABD53D-7507-4F76-A538-0264D7294422}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAABD53D-7507-4F76-A538-0264D7294422}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{EAABD53D-7507-4F76-A538-0264D7294422}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{EAABD53D-7507-4F76-A538-0264D7294422}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EAABD53D-7507-4F76-A538-0264D7294422}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAABD53D-7507-4F76-A538-0264D7294422}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAABD53D-7507-4F76-A538-0264D7294422}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{EAABD53D-7507-4F76-A538-0264D7294422}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{EAABD53D-7507-4F76-A538-0264D7294422}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EAABD53D-7507-4F76-A538-0264D7294422} = {9FFC7D45-E954-4F3E-8132-A3C27440B412}
+		{B75A7B93-6CE5-4FAB-805C-DF714693AFEB} = {9FFC7D45-E954-4F3E-8132-A3C27440B412}
+		{62DCD467-1E9C-49E8-880A-00A077BF7BB8} = {9FFC7D45-E954-4F3E-8132-A3C27440B412}
 	EndGlobalSection
 EndGlobal
