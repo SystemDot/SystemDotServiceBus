@@ -1,9 +1,9 @@
 using System.Diagnostics.Contracts;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 using SystemDot.Http;
+using SystemDot.Messaging.Configuration.Channels;
 using SystemDot.Messaging.MessageTransportation;
 using SystemDot.Messaging.Recieving;
-using SystemDot.Pipes;
 using SystemDot.Serialisation;
 using SystemDot.Threading;
 
@@ -11,62 +11,47 @@ namespace SystemDot.Messaging.Configuration.Remote
 {
     public class MessageHandlerConfiguration
     {
-        const string DefaultChannelName = "Default";
-
-        readonly ThreadedWorkCoordinator workCoordinator;
-        readonly ThreadPool threadPool;
         readonly IMessageHandler toRegister;
         
-        public MessageHandlerConfiguration(
-            ThreadedWorkCoordinator workCoordinator, 
-            ThreadPool threadPool, 
-            IMessageHandler toRegister)
+        public MessageHandlerConfiguration(IMessageHandler toRegister)
         {
-            Contract.Requires(workCoordinator != null);
-            Contract.Requires(threadPool != null);
             Contract.Requires(toRegister != null);
-
-            this.workCoordinator = workCoordinator;
-            this.threadPool = threadPool;
             this.toRegister = toRegister;
         }
 
         public void Initialise()
         {
-            IPipe<MessagePayload> payloadPipe = BuildPayloadPipe();
-            IPipe<object> messagePipe = BuildMessagePipe();
+            ChannelBuilder
+                .StartsWith(BuildLongPollReciever(Address.Default))
+                .Pump()
+                .ToProcessor(BuildPayloadPackager())
+                .ThenToEndPoint(BuildHandlerRouter(this.toRegister));
 
-            LongPollReciever longPollReciever = BuildLongPollReciever(Address.Default, payloadPipe);
-            BuildPayloadPackager(payloadPipe, messagePipe);
-            BuildHandlerRouter(messagePipe, this.toRegister);
-            
-            this.workCoordinator.RegisterWorker(longPollReciever);
-            this.workCoordinator.Start();
+            MessagingEnvironment.GetComponent<ThreadedWorkCoordinator>().Start();
         }
 
-        private IPipe<object> BuildMessagePipe()
+        LongPollReciever BuildLongPollReciever(Address address)
         {
-            return new Pipe<object>();
+            var longPollReciever = new LongPollReciever(
+                address, 
+                MessagingEnvironment.GetComponent<IWebRequestor>(),
+                MessagingEnvironment.GetComponent<IFormatter>());
+
+            MessagingEnvironment.GetComponent<ThreadedWorkCoordinator>().RegisterWorker(longPollReciever);
+
+            return longPollReciever;
         }
 
-        private IPipe<MessagePayload> BuildPayloadPipe()
+        private static MessagePayloadUnpackager BuildPayloadPackager()
         {
-            return new Pump<MessagePayload>(this.threadPool);
+            return new MessagePayloadUnpackager(MessagingEnvironment.GetComponent<ISerialiser>());
         }
 
-        LongPollReciever BuildLongPollReciever(Address address, IPipe<MessagePayload> pipe)
+        MessageHandlerRouter BuildHandlerRouter(IMessageHandler register)
         {
-            return new LongPollReciever(address, pipe, new WebRequestor(), new BinaryFormatter());
-        }
-
-        private static void BuildPayloadPackager(IPipe<MessagePayload> inputPipe, IPipe<object> outputPipe)
-        {
-            new MessagePayloadUnpackager(inputPipe, outputPipe, new BinarySerialiser(new BinaryFormatter()));
-        }
-
-        void BuildHandlerRouter(IPipe<object> pipe, IMessageHandler register)
-        {
-            new MessageHandlerRouter(pipe).RegisterHandler(register);
+            var router = new MessageHandlerRouter();
+            router.RegisterHandler(register);
+            return router;
         }
     }
 }

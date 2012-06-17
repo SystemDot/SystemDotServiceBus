@@ -40,18 +40,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\Channels\ChannelBuilder.cs" />
+    <Compile Include="Configuration\Channels\StartPointBuilder.cs" />
     <Compile Include="Configuration\Configure.cs" />
     <Compile Include="Configuration\Local\LocalConfiguration.cs" />
     <Compile Include="Configuration\Local\UsingDefaultsConfiguration.cs" />
+    <Compile Include="Configuration\MessagingEnvironment.cs" />
+    <Compile Include="Configuration\Channels\ProcessorBuilder.cs" />
+    <Compile Include="Configuration\Channels\PumpBuilder.cs" />
     <Compile Include="Configuration\Remote\MessageHandlerConfiguration.cs" />
     <Compile Include="Configuration\Remote\RemoteConfiguration.cs" />
     <Compile Include="Configuration\Remote\UsingDefaultsConfiguration.cs" />
+    <Compile Include="IMessageEndPoint.cs" />
+    <Compile Include="IMessageStartPoint.cs" />
+    <Compile Include="IMessageProcessor.cs" />
     <Compile Include="MessageTransportation\Address.cs" />
     <Compile Include="MessageTransportation\Headers\LongPollRequestHeader.cs" />
+    <Compile Include="MessageTransportation\Headers\MessagePayloadLongPollRequestExtensions.cs" />
+    <Compile Include="Pump.cs" />
+    <Compile Include="Sending\PublisherHub.cs" />
     <Compile Include="Servers\IMessagingServerHandler.cs" />
     <Compile Include="MessageBus.cs" />
     <Compile Include="MessageTransportation\Headers\BodyHeader.cs" />
-    <Compile Include="MessageTransportation\Headers\MessagePayloadExtensions.cs" />
+    <Compile Include="MessageTransportation\Headers\MessagePayloadBodyExtensions.cs" />
     <Compile Include="MessageTransportation\IMessageHeader.cs" />
     <Compile Include="Servers\HttpMessagingServer.cs" />
     <Compile Include="Recieving\IMessageHandler.cs" />

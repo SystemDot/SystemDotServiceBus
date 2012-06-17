@@ -45,9 +45,6 @@
     <Compile Include="Http\WebRequestor.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="ObjectExtensions.cs" />
-    <Compile Include="Pipes\IPipe.cs" />
-    <Compile Include="Pipes\Pipe.cs" />
-    <Compile Include="Pipes\Pump.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Http\HttpServer.cs" />
     <Compile Include="Http\IHttpHandler.cs" />
@@ -61,7 +58,9 @@
     <Compile Include="Threading\Threader.cs" />
     <Compile Include="Threading\ThreadPool.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Pipes\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

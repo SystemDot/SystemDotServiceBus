@@ -1,34 +1,29 @@
+using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.MessageTransportation;
 using SystemDot.Messaging.MessageTransportation.Headers;
-using SystemDot.Pipes;
 using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Sending
 {
-    public class MessagePayloadPackager
+    public class MessagePayloadPackager : IMessageProcessor<object, MessagePayload>
     {
-        const string DefaultChannelName = "Default";
-        readonly IPipe<MessagePayload> outputPipe;
         private readonly ISerialiser serialiser;
 
-        public MessagePayloadPackager(IPipe<object> inputPipe, IPipe<MessagePayload> outputPipe, ISerialiser serialiser)
-        {
-            Contract.Requires(inputPipe != null);
-            Contract.Requires(outputPipe != null);
-            Contract.Requires(serialiser != null);
+        public event Action<MessagePayload> MessageProcessed;
 
-            inputPipe.ItemPushed += OnInputPipeItemPushed;
-            this.outputPipe = outputPipe;
+        public MessagePayloadPackager(ISerialiser serialiser)
+        {
+            Contract.Requires(serialiser != null);
             this.serialiser = serialiser;
         }
 
-        void OnInputPipeItemPushed(object message)
+        public void InputMessage(object toInput)
         {
             var messagePayload = new MessagePayload(Address.Default);
-            messagePayload.SetBody(this.serialiser.Serialise(message));
+            messagePayload.SetBody(this.serialiser.Serialise(toInput));
 
-            this.outputPipe.Push(messagePayload);
+            MessageProcessed(messagePayload);
         }
     }
 }

@@ -43,14 +43,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="configuration\ITestComponent.cs" />
+    <Compile Include="configuration\TestComponent.cs" />
+    <Compile Include="configuration\when_setting_a_component_in_the_environment.cs" />
+    <Compile Include="item_pumping\TestThreadPool.cs" />
+    <Compile Include="item_pumping\when_pumping_an_item.cs" />
+    <Compile Include="item_pumping\when_pumping_items_on_a_with_no_pushed_item_listener.cs" />
     <Compile Include="long_polling\when_recieveing_messages_in_the_response_from_a_long_poll_request.cs" />
     <Compile Include="long_polling\TestWebRequestor.cs" />
     <Compile Include="long_polling\when_sending_a_long_poll_request.cs" />
     <Compile Include="message_bus\when_sending_a_message_on_the_bus.cs" />
-    <Compile Include="message_handling\when_routing_a_message_from_a_pipe_to_two_handlers_of_differing_messages.cs" />
+    <Compile Include="message_handling\when_routing_a_message_to_two_handlers_of_differing_messages.cs" />
     <Compile Include="message_handling\TestMessageHandler.cs" />
-    <Compile Include="message_handling\when_routing_a_message_from_a_pipe_to_two_handlers.cs" />
-    <Compile Include="message_handling\when_routing_a_message_from_a_pipe_to_a_handler.cs" />
+    <Compile Include="message_handling\when_routing_a_message_to_two_handlers.cs" />
+    <Compile Include="message_handling\when_routing_a_message_to_a_handler.cs" />
+    <Compile Include="message_publishing\when_routing_a_message_to_a_handler.cs" />
     <Compile Include="message_serving\when_handling_a_request_containing_an_object_other_than_a_message_payload.cs" />
     <Compile Include="message_serving\when_handling_a_long_poll_request_for_with_a_different_address_to_the_queued_message.cs" />
     <Compile Include="StreamExtensions.cs" />

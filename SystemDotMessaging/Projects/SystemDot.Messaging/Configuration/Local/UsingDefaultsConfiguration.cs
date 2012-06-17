@@ -1,57 +1,37 @@
-using System.Diagnostics.Contracts;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using SystemDot.Http;
-using SystemDot.Messaging.MessageTransportation;
+using SystemDot.Messaging.Configuration.Channels;
 using SystemDot.Messaging.Sending;
-using SystemDot.Pipes;
 using SystemDot.Serialisation;
-using SystemDot.Threading;
 
 namespace SystemDot.Messaging.Configuration.Local
 {
     public class UsingDefaultsConfiguration
     {
-        readonly ThreadPool threadPool;
-        
-        public UsingDefaultsConfiguration(ThreadPool threadPool)
-        {
-            Contract.Requires(threadPool != null);
-            this.threadPool = threadPool;
-        }
-
         public void Initialise()
         {
-            IPipe<object> messagePipe = BuildMessagePipe();
-            IPipe<MessagePayload> payloadPipe = BuildPayloadPipe();
-            BuildMessageBus(messagePipe);
-            BuildPayloadPackager(messagePipe, payloadPipe);
-            BuildMessageSender(payloadPipe);
+            ChannelBuilder
+               .StartsWith(BuildMessageBus())
+               .Pump()
+               .ToProcessor(BuildPayloadPackager())
+               .ThenToEndPoint(BuildMessageSender());
         }
 
-        private IPipe<object> BuildMessagePipe()
+        private static MessageBus BuildMessageBus()
         {
-            return new Pipe<object>();
+            return new MessageBus();
         }
 
-        private IPipe<MessagePayload> BuildPayloadPipe()
+        private static MessagePayloadPackager BuildPayloadPackager()
         {
-            return new Pump<MessagePayload>(this.threadPool);
+            return new MessagePayloadPackager(MessagingEnvironment.GetComponent<ISerialiser>());
         }
 
-        private static void BuildMessageBus(IPipe<object> pipe)
+        private MessageSender BuildMessageSender()
         {
-            MessageBus.Initialise(pipe);
-        }
-
-        private static void BuildPayloadPackager(IPipe<object> inputPipe, IPipe<MessagePayload> outputPipe)
-        {
-            new MessagePayloadPackager(inputPipe, outputPipe, new BinarySerialiser(new BinaryFormatter()));
-        }
-
-        private void BuildMessageSender(IPipe<MessagePayload> pipe)
-        {    
-            new MessageSender(pipe, new BinaryFormatter(), new WebRequestor());
+            return new MessageSender(
+                MessagingEnvironment.GetComponent<IFormatter>(), 
+                MessagingEnvironment.GetComponent<IWebRequestor>());
         }
     }
 }

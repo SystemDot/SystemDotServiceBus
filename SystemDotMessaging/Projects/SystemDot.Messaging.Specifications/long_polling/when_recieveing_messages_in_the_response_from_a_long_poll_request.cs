@@ -1,13 +1,8 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using SystemDot.Http;
 using SystemDot.Messaging.MessageTransportation;
-using SystemDot.Messaging.MessageTransportation.Headers;
 using SystemDot.Messaging.Recieving;
-using SystemDot.Messaging.Specifications.message_serving;
-using SystemDot.Pipes;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.long_polling
@@ -16,7 +11,6 @@ namespace SystemDot.Messaging.Specifications.long_polling
     public class when_recieveing_messages_in_the_response_from_a_long_poll_request
     {
         static TestWebRequestor requestor;
-        static Pipe<MessagePayload> pipe;
         static BinaryFormatter formatter;
         static LongPollReciever reciever;
         static List<MessagePayload> messagePayloads;
@@ -28,26 +22,21 @@ namespace SystemDot.Messaging.Specifications.long_polling
             messagePayloads = new List<MessagePayload>();
             messagePayload1 = new MessagePayload(new Address("Address1"));
             messagePayload2 = new MessagePayload(new Address("Address2"));
-            messagePayloads.Add(messagePayload1);
-            messagePayloads.Add(messagePayload2);
-
-            pipe = new Pipe<MessagePayload>();
-            pipe.ItemPushed += payload => messagePayloads.Add(payload);
             
             formatter = new BinaryFormatter();
-            requestor = new TestWebRequestor(messagePayloads);
+            requestor = new TestWebRequestor();
+            requestor.ResponseStream.Serialise(new List<MessagePayload> { messagePayload1, messagePayload2 }, formatter);
 
-            reciever = new LongPollReciever(new Address("Address"), pipe, requestor, formatter);
+            reciever = new LongPollReciever(new Address("Address"), requestor, formatter);
+            reciever.MessageProcessed += payload => messagePayloads.Add(payload);
         };
 
         Because of = () => reciever.PerformWork();
 
-        It should_recieve_the_first_message_onto_the_pipe = () =>
-            requestor.ResponseStream.Deserialise<IEnumerable<MessagePayload>>(formatter)
-                .First().Address.ShouldEqual(messagePayload1.Address);
-        
-        It should_recieve_the_second_message_onto_the_pipe = () =>
-             requestor.ResponseStream.Deserialise<IEnumerable<MessagePayload>>(formatter)
-                .Last().Address.ShouldEqual(messagePayload2.Address);
+        It should_output_the_first_recieved_message = () =>
+            messagePayloads.First().Address.ShouldEqual(messagePayload1.Address);
+
+        It should_output_the_second_recieved_message = () =>
+             messagePayloads.Last().Address.ShouldEqual(messagePayload2.Address);
     }
 }

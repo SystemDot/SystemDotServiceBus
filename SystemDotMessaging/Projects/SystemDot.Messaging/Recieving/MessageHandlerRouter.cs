@@ -2,20 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Reflection;
-using SystemDot.Pipes;
 
 namespace SystemDot.Messaging.Recieving
 {
-    public class MessageHandlerRouter
+    public class MessageHandlerRouter : IMessageEndPoint<object>
     {
         readonly List<IMessageHandler> handlers;
 
-        public MessageHandlerRouter(IPipe<object> pipe)
+        public MessageHandlerRouter()
         {
-            Contract.Requires(pipe != null);
-            
             this.handlers = new List<IMessageHandler>();
-            pipe.ItemPushed += RouteMessageToHandlers;
+        }
+
+        public void InputMessage(object toInput)
+        {
+            RouteMessageToHandlers(toInput);
         }
 
         void RouteMessageToHandlers(object message)

@@ -1,14 +1,15 @@
 ﻿using System.Diagnostics.Contracts;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace SystemDot.Serialisation
 {
     public class BinarySerialiser : ISerialiser
     {
-        readonly BinaryFormatter formatter;
+        readonly IFormatter formatter;
 
-        public BinarySerialiser(BinaryFormatter formatter)
+        public BinarySerialiser(IFormatter formatter)
         {
             this.formatter = formatter;
         }

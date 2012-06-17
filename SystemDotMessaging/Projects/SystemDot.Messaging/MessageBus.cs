@@ -1,16 +1,11 @@
+using System;
 using System.Diagnostics.Contracts;
-using SystemDot.Pipes;
 
 namespace SystemDot.Messaging
 {
-    public class MessageBus
+    public class MessageBus : IMessageStartPoint<object>
     {
-        public static void Initialise(IPipe<object> outputPipe)
-        {
-            Contract.Requires(outputPipe != null);
-
-            instance = new MessageBus(outputPipe);
-        }
+        static MessageBus instance;
 
         public static void Send(object message)
         {
@@ -19,17 +14,16 @@ namespace SystemDot.Messaging
             instance.SendMessage(message);
         }
 
-        readonly IPipe<object> outputPipe;
-        static MessageBus instance;
+        public event Action<object> MessageProcessed;
 
-        MessageBus(IPipe<object> outputPipe)
+        public MessageBus()
         {
-            this.outputPipe = outputPipe;
+            instance = this;
         }
 
         void SendMessage(object message)
         {
-            this.outputPipe.Push(message);
-        }
+            MessageProcessed(message);
+        }        
     }
 }

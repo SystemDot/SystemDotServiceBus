@@ -1,8 +1,8 @@
 ﻿using System;
-using SystemDot.Pipes;
+using SystemDot.Specifications.item_pumping;
 using Machine.Specifications;
 
-namespace SystemDot.Specifications.item_pumping
+namespace SystemDot.Messaging.Specifications.item_pumping
 {
     [Subject("Item pumping")]
     public class when_pumping_items_on_a_with_no_pushed_item_listener
@@ -18,7 +18,7 @@ namespace SystemDot.Specifications.item_pumping
             pump = new Pump<object>(new TestThreadPool());
         };
 
-        Because of = () => exception = Catch.Exception(() => pump.Push(message));
+        Because of = () => exception = Catch.Exception(() => pump.InputMessage(message));
 
         It should_not_fail = () => exception.ShouldBeNull();
     }

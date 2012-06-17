@@ -1,13 +1,8 @@
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using SystemDot.Http;
 using SystemDot.Messaging.MessageTransportation;
 using SystemDot.Messaging.MessageTransportation.Headers;
 using SystemDot.Messaging.Recieving;
-using SystemDot.Messaging.Specifications.message_serving;
-using SystemDot.Pipes;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.long_polling
@@ -17,18 +12,17 @@ namespace SystemDot.Messaging.Specifications.long_polling
     {
         static Address address; 
         static TestWebRequestor requestor;
-        static Pipe<MessagePayload> pipe;
         static BinaryFormatter formatter;
         static LongPollReciever reciever;
         
         Establish context = () =>
         {
-            pipe = new Pipe<MessagePayload>();
             formatter = new BinaryFormatter();
             requestor = new TestWebRequestor();
+            requestor.ResponseStream.Serialise(new List<MessagePayload>(), formatter);
 
             address = new Address("Address");
-            reciever = new LongPollReciever(address, pipe, requestor, formatter);
+            reciever = new LongPollReciever(address, requestor, formatter);
         };
 
         Because of = () => reciever.PerformWork();

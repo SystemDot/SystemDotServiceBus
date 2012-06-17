@@ -1,7 +1,7 @@
-﻿using SystemDot.Pipes;
+﻿using SystemDot.Specifications.item_pumping;
 using Machine.Specifications;
 
-namespace SystemDot.Specifications.item_pumping
+namespace SystemDot.Messaging.Specifications.item_pumping
 {
     [Subject("Item pumping")]
     public class when_pumping_an_item
@@ -15,10 +15,10 @@ namespace SystemDot.Specifications.item_pumping
             item = new object();
             
             pump = new Pump<object>(new TestThreadPool());
-            pump.ItemPushed += m => pushedItem = m;
+            pump.MessageProcessed += m => pushedItem = m;
         };
 
-        Because of = () => pump.Push(item);
+        Because of = () => pump.InputMessage(item);
 
         It should_pump_the_item = () => pushedItem.ShouldBeTheSameAs(item);
     }
