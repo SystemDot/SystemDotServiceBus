@@ -1,7 +1,7 @@
 using System.Runtime.Serialization;
 using SystemDot.Http;
+using SystemDot.Messaging.Channels.Local;
 using SystemDot.Messaging.Configuration.Channels;
-using SystemDot.Messaging.Sending;
 using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Configuration.Local

@@ -1,3 +1,5 @@
+using SystemDot.Messaging.Channels;
+
 namespace SystemDot.Messaging.Configuration.Channels
 {
     public class PumpBuilder<T>

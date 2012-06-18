@@ -1,9 +1,10 @@
 using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Channels;
 
 namespace SystemDot.Messaging
 {
-    public class MessageBus : IMessageStartPoint<object>
+    public class MessageBus : IChannelStartPoint<object>
     {
         static MessageBus instance;
 

@@ -1,7 +1,7 @@
 using System;
 using SystemDot.Threading;
 
-namespace SystemDot.Messaging
+namespace SystemDot.Messaging.Channels
 {
     public class Pump<T> : IMessageProcessor<T, T>
     {

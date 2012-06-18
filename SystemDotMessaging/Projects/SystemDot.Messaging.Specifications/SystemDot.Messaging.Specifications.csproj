@@ -31,7 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Machine.Specifications">
+    <Reference Include="Machine.Fakes">
+      <HintPath>..\..\Dependencies\Mspec\Machine.Fakes.dll</HintPath>
+    </Reference>
+    <Reference Include="Machine.Fakes.Adapters.RhinoMocks">
+      <HintPath>..\..\Dependencies\Mspec\Machine.Fakes.Adapters.RhinoMocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Machine.Specifications, Version=0.4.24.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dependencies\Mspec\Machine.Specifications.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -57,7 +64,8 @@
     <Compile Include="message_handling\TestMessageHandler.cs" />
     <Compile Include="message_handling\when_routing_a_message_to_two_handlers.cs" />
     <Compile Include="message_handling\when_routing_a_message_to_a_handler.cs" />
-    <Compile Include="message_publishing\when_routing_a_message_to_a_handler.cs" />
+    <Compile Include="message_publishing\when_publishing_a_message_to_a_distributor_with_a_registered_subscriber.cs" />
+    <Compile Include="message_publishing\when_publishing_a_message_to_a_distributor_with_two_registered_subscribers.cs" />
     <Compile Include="message_serving\when_handling_a_request_containing_an_object_other_than_a_message_payload.cs" />
     <Compile Include="message_serving\when_handling_a_long_poll_request_for_with_a_different_address_to_the_queued_message.cs" />
     <Compile Include="StreamExtensions.cs" />

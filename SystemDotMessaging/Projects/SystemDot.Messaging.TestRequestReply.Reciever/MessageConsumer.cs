@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-using SystemDot.Messaging.Recieving;
+using SystemDot.Messaging.Channels.Remote;
 using SystemDot.Messaging.Test.Messages;
 
 namespace SystemDot.Messaging.TestRequestReply.Reciever

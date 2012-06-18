@@ -1,12 +1,13 @@
+using SystemDot.Messaging.Channels;
 using SystemDot.Threading;
 
 namespace SystemDot.Messaging.Configuration.Channels
 {
     public class StartPointBuilder<T>
     {
-        private readonly IMessageStartPoint<T> startPoint;
+        private readonly IChannelStartPoint<T> startPoint;
 
-        public StartPointBuilder(IMessageStartPoint<T> startPoint)
+        public StartPointBuilder(IChannelStartPoint<T> startPoint)
         {
             this.startPoint = startPoint;
         }

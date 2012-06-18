@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
+using SystemDot.Messaging.Channels.Remote;
 using SystemDot.Messaging.MessageTransportation;
 using SystemDot.Messaging.MessageTransportation.Headers;
-using SystemDot.Messaging.Recieving;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.long_polling

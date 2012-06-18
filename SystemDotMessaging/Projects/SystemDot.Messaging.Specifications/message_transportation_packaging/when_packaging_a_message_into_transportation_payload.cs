@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using SystemDot.Messaging.Channels.Local;
 using SystemDot.Messaging.MessageTransportation;
 using SystemDot.Messaging.MessageTransportation.Headers;
-using SystemDot.Messaging.Sending;
 using SystemDot.Serialisation;
 using Machine.Specifications;
 

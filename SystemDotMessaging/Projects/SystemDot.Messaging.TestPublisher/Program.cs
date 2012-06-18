@@ -8,21 +8,21 @@ namespace SystemDot.Messaging.TestPublisher
     {
         static void Main(string[] args)
         {
-            IPipe channel = null;
+            Configure.Local().UsingDefaults().Initialise();
 
             do
             {
                 Console.WriteLine("Press a key to send message..");
                 Console.ReadLine();
                 Console.WriteLine("Sending message");
-                channel.Publish("Hello");
-                channel.Publish("Hello1");
-                channel.Publish("Hello2");
-                channel.Publish("Hello3");
-                channel.Publish("Hello4");
-                channel.Publish("Hello5");
-                channel.Publish("Hello6");
-                channel.Publish("Hello7");
+                MessageBus.Send("Hello");
+                MessageBus.Send("Hello1");
+                MessageBus.Send("Hello2");
+                MessageBus.Send("Hello3");
+                MessageBus.Send("Hello4");
+                MessageBus.Send("Hello5");
+                MessageBus.Send("Hello6");
+                MessageBus.Send("Hello7");
             }
             while (true);
         }

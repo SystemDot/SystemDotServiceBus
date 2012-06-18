@@ -1,3 +1,5 @@
+using SystemDot.Messaging.Channels;
+
 namespace SystemDot.Messaging.Configuration.Channels
 {
     public class ProcessorBuilder<TIn, TOut>
@@ -9,7 +11,7 @@ namespace SystemDot.Messaging.Configuration.Channels
             this.processor = processor;
         }
 
-        public void ThenToEndPoint(IMessageEndPoint<TOut> endPoint)
+        public void ThenToEndPoint(IChannelEndPoint<TOut> endPoint)
         {
             processor.MessageProcessed += endPoint.InputMessage;
         }

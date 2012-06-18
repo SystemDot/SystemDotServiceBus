@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization.Formatters.Binary;
+using SystemDot.Messaging.Channels.Remote;
 using SystemDot.Messaging.MessageTransportation;
 using SystemDot.Messaging.MessageTransportation.Headers;
-using SystemDot.Messaging.Recieving;
 using SystemDot.Serialisation;
 using Machine.Specifications;
 

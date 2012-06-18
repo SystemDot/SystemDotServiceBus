@@ -4,7 +4,7 @@ using SystemDot.Messaging.MessageTransportation;
 using SystemDot.Messaging.MessageTransportation.Headers;
 using SystemDot.Serialisation;
 
-namespace SystemDot.Messaging.Sending
+namespace SystemDot.Messaging.Channels.Local
 {
     public class MessagePayloadPackager : IMessageProcessor<object, MessagePayload>
     {

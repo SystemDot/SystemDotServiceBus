@@ -1,6 +1,6 @@
 using System.Diagnostics.Contracts;
 using System.Runtime.Serialization;
-using SystemDot.Messaging.Recieving;
+using SystemDot.Messaging.Channels.Remote;
 using SystemDot.Threading;
 
 namespace SystemDot.Messaging.Configuration.Remote

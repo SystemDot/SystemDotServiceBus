@@ -1,6 +1,6 @@
 using System;
 
-namespace SystemDot.Messaging
+namespace SystemDot.Messaging.Channels
 {
     public interface IMessageProcessor<in TIn, out TOut>
     {

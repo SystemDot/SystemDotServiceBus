@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Linq;
 using SystemDot.Messaging.MessageTransportation;
 using SystemDot.Messaging.MessageTransportation.Headers;
 

@@ -1,4 +1,4 @@
-using SystemDot.Messaging.Recieving;
+using SystemDot.Messaging.Channels.Remote;
 
 namespace SystemDot.Messaging.Specifications.message_handling
 {
