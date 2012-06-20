@@ -57,10 +57,10 @@
     <Compile Include="MessageTransportation\Address.cs" />
     <Compile Include="MessageTransportation\Headers\LongPollRequestHeader.cs" />
     <Compile Include="MessageTransportation\Headers\MessagePayloadLongPollRequestExtensions.cs" />
-    <Compile Include="Channels\Pump.cs" />
+    <Compile Include="Channels\Distribution\Pump.cs" />
     <Compile Include="MessageTransportation\MessagePayloadCopier.cs" />
-    <Compile Include="Channels\Local\Publishing\PublisherDistributor.cs" />
-    <Compile Include="Channels\Local\Publishing\Subscriber.cs" />
+    <Compile Include="Channels\Distribution\Distributor.cs" />
+    <Compile Include="Channels\Distribution\DistributionSubscriber.cs" />
     <Compile Include="Servers\IMessagingServerHandler.cs" />
     <Compile Include="MessageBus.cs" />
     <Compile Include="MessageTransportation\Headers\BodyHeader.cs" />

@@ -1,6 +1,14 @@
 ﻿using System;
-using SystemDot.Messaging.Channels;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using SystemDot.Http;
+using SystemDot.Messaging.Channels.Distribution;
+using SystemDot.Messaging.Channels.Local;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Configuration.Channels;
+using SystemDot.Messaging.MessageTransportation;
+using SystemDot.Serialisation;
+using SystemDot.Threading;
 
 namespace SystemDot.Messaging.TestPublisher
 {
@@ -8,7 +16,19 @@ namespace SystemDot.Messaging.TestPublisher
     {
         static void Main(string[] args)
         {
-            Configure.Local().UsingDefaults().Initialise();
+            MessagingEnvironment.SetComponent<IThreadPool>(new ThreadPool(4));
+            MessagingEnvironment.SetComponent<IThreader>(new Threader());
+            MessagingEnvironment.SetComponent(new ThreadedWorkCoordinator(MessagingEnvironment.GetComponent<IThreader>()));
+            MessagingEnvironment.SetComponent<IWebRequestor>(new WebRequestor());
+            MessagingEnvironment.SetComponent<IFormatter>(new BinaryFormatter());
+            MessagingEnvironment.SetComponent<ISerialiser>(new BinarySerialiser(MessagingEnvironment.GetComponent<IFormatter>()));
+            MessagingEnvironment.SetComponent<MessagePayloadCopier>(new MessagePayloadCopier());
+            
+            ChannelBuilder
+               .StartsWith(new MessageBus())
+               .Pump()
+               .ToProcessor(new MessagePayloadPackager(MessagingEnvironment.GetComponent<ISerialiser>()))
+               .ThenToEndPoint(new Distributor(MessagingEnvironment.GetComponent<MessagePayloadCopier>()));
 
             do
             {

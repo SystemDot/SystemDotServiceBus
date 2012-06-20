@@ -1,24 +1,24 @@
-﻿using SystemDot.Messaging.Channels.Local.Publishing;
+﻿using SystemDot.Messaging.Channels.Distribution;
 using SystemDot.Messaging.MessageTransportation;
 using Machine.Fakes;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.message_publishing
+namespace SystemDot.Messaging.Specifications.message_distribution
 {
-    [Subject("Message publishing")]
-    public class when_publishing_a_message_to_a_distributor_with_a_registered_subscriber : WithSubject<PublisherDistributor>
+    [Subject("Message distribution")]
+    public class when_publishing_a_message_to_a_distributor_with_a_registered_subscriber : WithSubject<Distributor>
     {
         static MessagePayload inputMessage;
-        static Subscriber subscriber;
+        static DistributionSubscriber distributionSubscriber;
         static MessagePayload publishedMessage;
         static MessagePayload message;
 
         Establish context = () =>
         {
             Configure<MessagePayloadCopier>(new MessagePayloadCopier());
-            subscriber = new Subscriber();
-            subscriber.MessageProcessed += m => publishedMessage = m;
-            Subject.Subscribe(subscriber);
+            distributionSubscriber = new DistributionSubscriber();
+            distributionSubscriber.MessageProcessed += m => publishedMessage = m;
+            Subject.Subscribe(distributionSubscriber);
 
             message = new MessagePayload(new Address("TestAddress"));
             inputMessage = message;

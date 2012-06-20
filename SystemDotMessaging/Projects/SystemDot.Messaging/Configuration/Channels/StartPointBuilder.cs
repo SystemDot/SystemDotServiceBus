@@ -1,4 +1,5 @@
 using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Distribution;
 using SystemDot.Threading;
 
 namespace SystemDot.Messaging.Configuration.Channels

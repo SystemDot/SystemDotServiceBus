@@ -1,7 +1,7 @@
 using System;
 using SystemDot.Threading;
 
-namespace SystemDot.Specifications.item_pumping
+namespace SystemDot.Messaging.Specifications.message_distribution
 {
     public class TestThreadPool : IThreadPool 
     {

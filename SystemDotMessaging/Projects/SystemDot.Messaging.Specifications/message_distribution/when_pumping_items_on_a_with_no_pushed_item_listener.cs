@@ -1,11 +1,10 @@
 ﻿using System;
-using SystemDot.Messaging.Channels;
-using SystemDot.Specifications.item_pumping;
+using SystemDot.Messaging.Channels.Distribution;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.item_pumping
+namespace SystemDot.Messaging.Specifications.message_distribution
 {
-    [Subject("Item pumping")]
+    [Subject("Message distribution")]
     public class when_pumping_items_on_a_with_no_pushed_item_listener
     {
         static Exception exception; 

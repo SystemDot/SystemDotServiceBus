@@ -12,9 +12,12 @@ namespace SystemDot.Messaging.MessageTransportation
             
             using (var stream = new MemoryStream())
             {
-                new BinaryFormatter().Serialize(stream, toCopy);
+                var binaryFormatter = new BinaryFormatter();
+
+                binaryFormatter.Serialize(stream, toCopy);
                 stream.Seek(0, 0);
-                return new BinaryFormatter().Deserialize(stream).As<MessagePayload>();
+
+                return binaryFormatter.Deserialize(stream).As<MessagePayload>();
             }
         }
     }

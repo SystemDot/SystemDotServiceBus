@@ -2,9 +2,9 @@ using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.MessageTransportation;
 
-namespace SystemDot.Messaging.Channels.Local.Publishing
+namespace SystemDot.Messaging.Channels.Distribution
 {
-    public class Subscriber : IChannelStartPoint<MessagePayload>
+    public class DistributionSubscriber : IChannelStartPoint<MessagePayload>
     {
         public void Update(MessagePayload message)
         {

@@ -18,10 +18,7 @@ namespace SystemDot.Messaging.Channels.Remote
 
         public event Action<MessagePayload> MessageProcessed;
 
-        public LongPollReciever(
-            Address address, 
-            IWebRequestor requestor, 
-            IFormatter formatter)
+        public LongPollReciever(Address address, IWebRequestor requestor, IFormatter formatter)
         {
             Contract.Requires(address != Address.Empty);
             Contract.Requires(requestor != null);
