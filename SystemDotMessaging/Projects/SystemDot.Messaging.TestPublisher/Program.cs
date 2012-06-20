@@ -22,7 +22,8 @@ namespace SystemDot.Messaging.TestPublisher
             MessagingEnvironment.SetComponent<IWebRequestor>(new WebRequestor());
             MessagingEnvironment.SetComponent<IFormatter>(new BinaryFormatter());
             MessagingEnvironment.SetComponent<ISerialiser>(new BinarySerialiser(MessagingEnvironment.GetComponent<IFormatter>()));
-            MessagingEnvironment.SetComponent<MessagePayloadCopier>(new MessagePayloadCopier());
+            MessagingEnvironment.SetComponent(new MessagePayloadCopier());
+            MessagingEnvironment.SetComponent(new PublisherRegistry());
             
             ChannelBuilder
                .StartsWith(new MessageBus())

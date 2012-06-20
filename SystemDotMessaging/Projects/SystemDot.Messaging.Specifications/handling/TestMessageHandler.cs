@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Channels.Remote;
 
-namespace SystemDot.Messaging.Specifications.message_handling
+namespace SystemDot.Messaging.Specifications.handling
 {
     public class TestMessageHandler<T> : IMessageHandler<T>
     {

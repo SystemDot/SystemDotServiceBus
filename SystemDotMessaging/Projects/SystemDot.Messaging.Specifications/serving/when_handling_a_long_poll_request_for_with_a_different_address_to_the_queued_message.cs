@@ -1,24 +1,22 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using SystemDot.Messaging.MessageTransportation;
 using SystemDot.Messaging.MessageTransportation.Headers;
 using SystemDot.Messaging.Servers;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.message_serving
+namespace SystemDot.Messaging.Specifications.serving
 {
     [Subject("Message serving")]
-    public class when_handling_a_long_poll_request_for_messages_with_two_messages_in_the_queue
+    public class when_handling_a_long_poll_request_with_a_different_address_to_the_queued_message
     {
         static HttpMessagingServer server;
         static BinaryFormatter formatter; 
         static MemoryStream inputStream;
         static MemoryStream outputStream;
-        static MessagePayload sentMessageInQueue1;
-        static MessagePayload sentMessageInQueue2;
+        static MessagePayload sentMessageInQueue;
         static MessagePayload longPollRequest;
         static MessagePayloadQueue outgoingQueue;
 
@@ -34,13 +32,10 @@ namespace SystemDot.Messaging.Specifications.message_serving
                 new SentMessageHandler(outgoingQueue),
                 new LongPollHandler(outgoingQueue));
 
-            sentMessageInQueue1 = new MessagePayload(new Address("Address1"));
-            outgoingQueue.Enqueue(sentMessageInQueue1);
+            sentMessageInQueue = new MessagePayload(new Address("Address1"));
+            outgoingQueue.Enqueue(sentMessageInQueue);
 
-            sentMessageInQueue2 = new MessagePayload(new Address("Address1"));
-            outgoingQueue.Enqueue(sentMessageInQueue2);
-
-            longPollRequest = new MessagePayload(new Address("Address1"));
+            longPollRequest = new MessagePayload(new Address("Address2"));
             longPollRequest.SetLongPollRequest();
 
             inputStream.Serialise(longPollRequest, formatter);
@@ -48,12 +43,8 @@ namespace SystemDot.Messaging.Specifications.message_serving
 
         Because of = () => server.HandleRequest(inputStream, outputStream);
 
-        It should_put_the_first_message_in_the_response_stream = () =>
-            outputStream.Deserialise<IEnumerable<MessagePayload>>(formatter)
-                .First().Address.ShouldEqual(sentMessageInQueue1.Address);
+        It should_not_output_the_message_in_the_response_stream = () =>
+            outputStream.Deserialise<IEnumerable<MessagePayload>>(formatter).ShouldBeEmpty();        
         
-        It should_put_the_second_message_in_the_response_stream = () => 
-            outputStream.Deserialise<IEnumerable<MessagePayload>>(formatter)
-                .Last().Address.ShouldEqual(sentMessageInQueue2.Address);
     }
 }

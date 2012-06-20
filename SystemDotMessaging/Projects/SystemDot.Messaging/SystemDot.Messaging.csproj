@@ -40,6 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Channels\Distribution\IDistributionSubscriber.cs" />
+    <Compile Include="Channels\Distribution\IDistributor.cs" />
+    <Compile Include="Channels\Local\PublisherRegistry.cs" />
+    <Compile Include="Channels\Local\SubsriptionRequestHandler.cs" />
     <Compile Include="Configuration\Channels\ChannelBuilder.cs" />
     <Compile Include="Configuration\Channels\StartPointBuilder.cs" />
     <Compile Include="Configuration\Configure.cs" />
@@ -60,7 +64,6 @@
     <Compile Include="Channels\Distribution\Pump.cs" />
     <Compile Include="MessageTransportation\MessagePayloadCopier.cs" />
     <Compile Include="Channels\Distribution\Distributor.cs" />
-    <Compile Include="Channels\Distribution\DistributionSubscriber.cs" />
     <Compile Include="Servers\IMessagingServerHandler.cs" />
     <Compile Include="MessageBus.cs" />
     <Compile Include="MessageTransportation\Headers\BodyHeader.cs" />

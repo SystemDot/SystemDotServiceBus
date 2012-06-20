@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -8,7 +7,7 @@ using SystemDot.Messaging.MessageTransportation.Headers;
 using SystemDot.Messaging.Servers;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.message_serving
+namespace SystemDot.Messaging.Specifications.serving
 {
     [Subject("Message serving")]
     public class when_handling_a_sent_message_from_a_request
