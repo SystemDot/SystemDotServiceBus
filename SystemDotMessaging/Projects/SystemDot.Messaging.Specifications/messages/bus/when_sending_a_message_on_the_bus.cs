@@ -1,6 +1,6 @@
 ﻿using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.bus
+namespace SystemDot.Messaging.Specifications.messages.bus
 {
     [Subject("Message bus")]
     public class when_sending_a_message_on_the_bus

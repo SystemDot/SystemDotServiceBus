@@ -3,6 +3,7 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using SystemDot.Messaging.Channels.Messages.Recieving;
 using SystemDot.Messaging.MessageTransportation;
+using SystemDot.Messaging.MessageTransportation.Headers;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.long_polling
@@ -20,8 +21,10 @@ namespace SystemDot.Messaging.Specifications.long_polling
         Establish context = () =>
         {
             messagePayloads = new List<MessagePayload>();
-            messagePayload1 = new MessagePayload(new Address("Address1"));
-            messagePayload2 = new MessagePayload(new Address("Address2"));
+            messagePayload1 = new MessagePayload();
+            messagePayload1.SetToAddress(new Address("Address1"));
+            messagePayload2 = new MessagePayload();
+            messagePayload2.SetToAddress(new Address("Address2"));
             
             formatter = new BinaryFormatter();
             requestor = new TestWebRequestor();
@@ -34,9 +37,9 @@ namespace SystemDot.Messaging.Specifications.long_polling
         Because of = () => reciever.PerformWork();
 
         It should_output_the_first_recieved_message = () =>
-            messagePayloads.First().Address.ShouldEqual(messagePayload1.Address);
+            messagePayloads.First().GetToAddress().ShouldEqual(messagePayload1.GetToAddress());
 
         It should_output_the_second_recieved_message = () =>
-             messagePayloads.Last().Address.ShouldEqual(messagePayload2.Address);
+             messagePayloads.Last().GetToAddress().ShouldEqual(messagePayload2.GetToAddress());
     }
 }

@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Specifications.long_polling
                 .IsLongPollRequest().ShouldBeTrue();
 
         It should_send_the_long_poll_request_with_the_correct_address = () =>
-            requestor.RequestStream.Deserialise<MessagePayload>(formatter).Address.ShouldEqual(address);
+            requestor.RequestStream.Deserialise<MessagePayload>(formatter).GetToAddress().ShouldEqual(address);
 
         It should_send_the_long_poll_request_to_the_correct_address = () =>
             requestor.AddressUsed.ShouldEqual(address.Url);

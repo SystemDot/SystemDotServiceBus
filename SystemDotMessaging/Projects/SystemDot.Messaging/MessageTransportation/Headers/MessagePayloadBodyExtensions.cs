@@ -17,10 +17,11 @@ namespace SystemDot.Messaging.MessageTransportation.Headers
             Contract.Requires(body != null);
             payload.AddHeader(new BodyHeader(body));
         }
-        
+
         public static bool HasBody(this MessagePayload payload)
         {
             return payload.Headers.OfType<BodyHeader>().Any();
         }
+
     }
 }

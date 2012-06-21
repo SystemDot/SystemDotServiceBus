@@ -2,6 +2,7 @@ using System.Diagnostics.Contracts;
 using System.Runtime.Serialization;
 using SystemDot.Http;
 using SystemDot.Messaging.MessageTransportation;
+using SystemDot.Messaging.MessageTransportation.Headers;
 
 namespace SystemDot.Messaging.Channels.Messages.Sending
 {
@@ -21,7 +22,7 @@ namespace SystemDot.Messaging.Channels.Messages.Sending
 
         public void InputMessage(MessagePayload toInput)
         {
-            this.requestor.SendPut(toInput.Address.Url, s => this.formatter.Serialize(s, toInput));
+            this.requestor.SendPut(toInput.GetToAddress().Url, s => this.formatter.Serialize(s, toInput));
         }
     }
 }

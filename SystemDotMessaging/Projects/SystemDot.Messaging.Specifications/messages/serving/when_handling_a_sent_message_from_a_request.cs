@@ -7,7 +7,7 @@ using SystemDot.Messaging.MessageTransportation.Headers;
 using SystemDot.Messaging.Servers;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.serving
+namespace SystemDot.Messaging.Specifications.messages.serving
 {
     [Subject("Message serving")]
     public class when_handling_a_sent_message_from_a_request
@@ -29,7 +29,8 @@ namespace SystemDot.Messaging.Specifications.serving
                 new SentMessageHandler(outgoingQueue),
                 new LongPollHandler(outgoingQueue));
             
-            sentMessage = new MessagePayload(new Address("Message"));
+            sentMessage = new MessagePayload();
+            sentMessage.SetToAddress(new Address("Message"));
             sentMessage.SetBody(new byte[0]);
 
             stream.Serialise(sentMessage, formatter);           
@@ -37,8 +38,8 @@ namespace SystemDot.Messaging.Specifications.serving
 
         Because of = () => server.HandleRequest(stream, new MemoryStream());
 
-        It should_pass_the_message_to_the_outgoing_queue_ = () => 
-            outgoingQueue.DequeueAll(sentMessage.Address).First().Address.ShouldEqual(sentMessage.Address);
+        It should_pass_the_message_to_the_outgoing_queue_ = () =>
+            outgoingQueue.DequeueAll(sentMessage.GetToAddress()).First().GetToAddress().ShouldEqual(sentMessage.GetToAddress());
     }
 
 }

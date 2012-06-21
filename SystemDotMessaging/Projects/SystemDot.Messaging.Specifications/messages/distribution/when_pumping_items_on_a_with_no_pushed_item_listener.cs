@@ -2,7 +2,7 @@
 using SystemDot.Messaging.Channels.Messages.Distribution;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.distribution
+namespace SystemDot.Messaging.Specifications.messages.distribution
 {
     [Subject("Message distribution")]
     public class when_pumping_items_on_a_with_no_pushed_item_listener

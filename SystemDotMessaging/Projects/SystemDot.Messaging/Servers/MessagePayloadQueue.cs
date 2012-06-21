@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using SystemDot.Messaging.MessageTransportation;
+using SystemDot.Messaging.MessageTransportation.Headers;
 using SystemDot.Threading;
 
 namespace SystemDot.Messaging.Servers
@@ -22,9 +23,9 @@ namespace SystemDot.Messaging.Servers
         {
             Contract.Requires(toEnqueue != null);
 
-            CreateQueueIfNonExistant(toEnqueue.Address);
+            CreateQueueIfNonExistant(toEnqueue.GetToAddress());
 
-            this.queues[toEnqueue.Address].Enqueue(toEnqueue);
+            this.queues[toEnqueue.GetToAddress()].Enqueue(toEnqueue);
         }
 
         public IEnumerable<MessagePayload> DequeueAll(Address address)

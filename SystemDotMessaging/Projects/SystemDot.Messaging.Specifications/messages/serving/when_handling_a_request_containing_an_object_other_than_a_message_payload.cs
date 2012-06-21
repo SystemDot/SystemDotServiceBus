@@ -4,7 +4,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using SystemDot.Messaging.Servers;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.serving
+namespace SystemDot.Messaging.Specifications.messages.serving
 {
     [Subject("Message serving")]
     public class when_handling_a_request_containing_an_object_other_than_a_message_payload

@@ -1,7 +1,7 @@
 ﻿using SystemDot.Messaging.Channels.Messages.Distribution;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.distribution
+namespace SystemDot.Messaging.Specifications.messages.distribution
 {
     [Subject("Message distribution")]
     public class when_pumping_an_item

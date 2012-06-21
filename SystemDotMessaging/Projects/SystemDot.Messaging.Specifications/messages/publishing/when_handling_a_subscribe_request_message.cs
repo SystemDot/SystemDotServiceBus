@@ -4,8 +4,9 @@ using SystemDot.Messaging.MessageTransportation;
 using SystemDot.Messaging.MessageTransportation.Headers;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.publishing
+namespace SystemDot.Messaging.Specifications.messages.publishing
 {
+    [Subject("Message publishing")]
     public class when_handling_a_subscribe_request_message 
         : WithDistributionSubscriberSubject<SubsriptionRequestHandler>
     {
@@ -27,7 +28,8 @@ namespace SystemDot.Messaging.Specifications.publishing
             Configure<ISubscriptionChannelBuilder>(
                 new TestSubscriptionChannelBuilder(subscriptionSchema, subscriptionChannel));
             
-            request = new MessagePayload(address);
+            request = new MessagePayload();
+            request.SetToAddress(address);
             request.SetSubscriptionRequest(subscriptionSchema);
         };
 

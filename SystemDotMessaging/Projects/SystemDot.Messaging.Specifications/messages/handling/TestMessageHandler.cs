@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Channels.Messages.Consuming;
 
-namespace SystemDot.Messaging.Specifications.handling
+namespace SystemDot.Messaging.Specifications.messages.handling
 {
     public class TestMessageHandler<T> : IMessageHandler<T>
     {

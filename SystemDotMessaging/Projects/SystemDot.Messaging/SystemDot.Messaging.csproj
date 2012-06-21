@@ -68,7 +68,9 @@
     <Compile Include="MessageTransportation\Headers\LongPollRequestHeader.cs" />
     <Compile Include="MessageTransportation\Headers\MessagePayloadLongPollRequestExtensions.cs" />
     <Compile Include="Channels\Messages\Distribution\Pump.cs" />
+    <Compile Include="MessageTransportation\Headers\MessagePayloadToAddressExtensions.cs" />
     <Compile Include="MessageTransportation\Headers\SubscriptionRequestHeader.cs" />
+    <Compile Include="MessageTransportation\Headers\ToAddressHeader.cs" />
     <Compile Include="MessageTransportation\MessagePayloadCopier.cs" />
     <Compile Include="Channels\Messages\Distribution\Distributor.cs" />
     <Compile Include="Servers\IMessagingServerHandler.cs" />

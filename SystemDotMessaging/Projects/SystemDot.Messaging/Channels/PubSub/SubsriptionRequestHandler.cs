@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Channels.PubSub
         {
             if (!message.IsSubscriptionRequest()) return;
 
-            IDistributor publisher = this.publisherRegistry.GetPublisher(message.Address);
+            IDistributor publisher = this.publisherRegistry.GetPublisher(message.GetToAddress());
             publisher.Subscribe(this.channelBuilder.Build(message.GetSubscriptionRequestSchema()));
         }
     }

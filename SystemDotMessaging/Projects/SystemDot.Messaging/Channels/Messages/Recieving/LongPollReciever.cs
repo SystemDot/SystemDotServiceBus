@@ -45,7 +45,8 @@ namespace SystemDot.Messaging.Channels.Messages.Recieving
 
         MessagePayload CreateLongPollPayload()
         {
-            var payload = new MessagePayload(this.address);
+            var payload = new MessagePayload();
+            payload.SetToAddress(this.address);
             payload.SetLongPollRequest();
 
             return payload;

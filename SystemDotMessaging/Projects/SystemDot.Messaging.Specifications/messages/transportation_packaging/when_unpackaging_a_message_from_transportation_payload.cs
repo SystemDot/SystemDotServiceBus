@@ -5,7 +5,7 @@ using SystemDot.Messaging.MessageTransportation.Headers;
 using SystemDot.Serialisation;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.transportation_packaging
+namespace SystemDot.Messaging.Specifications.messages.transportation_packaging
 {
     [Subject("Message transportation packaging")]
     public class when_unpackaging_a_message_from_transportation_payload
@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.transportation_packaging
             packager.MessageProcessed += i => processedMessage = (string)i;
             
             message = "Test";
-            messagePayload = new MessagePayload(new Address("TestAddress"));
+            messagePayload = new MessagePayload();
             messagePayload.SetBody(serialiser.Serialise(message)); 
         };
 

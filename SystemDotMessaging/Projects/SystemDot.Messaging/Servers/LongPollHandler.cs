@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Servers
             if (!toHandle.IsLongPollRequest())
                 return;
 
-            outgoingMessages.AddRange(this.outgoingQueue.DequeueAll(toHandle.Address));
+            outgoingMessages.AddRange(this.outgoingQueue.DequeueAll(toHandle.GetToAddress()));
         }
     }
 }

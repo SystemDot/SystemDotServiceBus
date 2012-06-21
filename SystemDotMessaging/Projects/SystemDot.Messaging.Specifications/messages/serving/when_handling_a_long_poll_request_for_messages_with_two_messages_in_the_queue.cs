@@ -8,7 +8,7 @@ using SystemDot.Messaging.MessageTransportation.Headers;
 using SystemDot.Messaging.Servers;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.serving
+namespace SystemDot.Messaging.Specifications.messages.serving
 {
     [Subject("Message serving")]
     public class when_handling_a_long_poll_request_for_messages_with_two_messages_in_the_queue
@@ -34,13 +34,16 @@ namespace SystemDot.Messaging.Specifications.serving
                 new SentMessageHandler(outgoingQueue),
                 new LongPollHandler(outgoingQueue));
 
-            sentMessageInQueue1 = new MessagePayload(new Address("Address1"));
+            sentMessageInQueue1 = new MessagePayload();
+            sentMessageInQueue1.SetToAddress(new Address("Address2"));
             outgoingQueue.Enqueue(sentMessageInQueue1);
 
-            sentMessageInQueue2 = new MessagePayload(new Address("Address1"));
+            sentMessageInQueue2 = new MessagePayload();
+            sentMessageInQueue2.SetToAddress(new Address("Address2"));
             outgoingQueue.Enqueue(sentMessageInQueue2);
 
-            longPollRequest = new MessagePayload(new Address("Address1"));
+            longPollRequest = new MessagePayload();
+            longPollRequest.SetToAddress(new Address("Address2"));
             longPollRequest.SetLongPollRequest();
 
             inputStream.Serialise(longPollRequest, formatter);
@@ -50,10 +53,10 @@ namespace SystemDot.Messaging.Specifications.serving
 
         It should_put_the_first_message_in_the_response_stream = () =>
             outputStream.Deserialise<IEnumerable<MessagePayload>>(formatter)
-                .First().Address.ShouldEqual(sentMessageInQueue1.Address);
+                .First().GetToAddress().ShouldEqual(sentMessageInQueue1.GetToAddress());
         
         It should_put_the_second_message_in_the_response_stream = () => 
             outputStream.Deserialise<IEnumerable<MessagePayload>>(formatter)
-                .Last().Address.ShouldEqual(sentMessageInQueue2.Address);
+                .Last().GetToAddress().ShouldEqual(sentMessageInQueue2.GetToAddress());
     }
 }

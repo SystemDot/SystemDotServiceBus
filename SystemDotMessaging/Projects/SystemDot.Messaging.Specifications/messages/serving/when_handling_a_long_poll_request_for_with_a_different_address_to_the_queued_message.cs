@@ -7,7 +7,7 @@ using SystemDot.Messaging.MessageTransportation.Headers;
 using SystemDot.Messaging.Servers;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.serving
+namespace SystemDot.Messaging.Specifications.messages.serving
 {
     [Subject("Message serving")]
     public class when_handling_a_long_poll_request_with_a_different_address_to_the_queued_message
@@ -32,10 +32,12 @@ namespace SystemDot.Messaging.Specifications.serving
                 new SentMessageHandler(outgoingQueue),
                 new LongPollHandler(outgoingQueue));
 
-            sentMessageInQueue = new MessagePayload(new Address("Address1"));
+            sentMessageInQueue = new MessagePayload();
+            sentMessageInQueue.SetToAddress(new Address("Address1"));
             outgoingQueue.Enqueue(sentMessageInQueue);
 
-            longPollRequest = new MessagePayload(new Address("Address2"));
+            longPollRequest = new MessagePayload();
+            longPollRequest.SetToAddress(new Address("Address2")); 
             longPollRequest.SetLongPollRequest();
 
             inputStream.Serialise(longPollRequest, formatter);

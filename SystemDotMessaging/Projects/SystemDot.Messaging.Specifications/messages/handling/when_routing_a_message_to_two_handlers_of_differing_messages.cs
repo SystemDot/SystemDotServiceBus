@@ -1,7 +1,7 @@
 using SystemDot.Messaging.Channels.Messages.Consuming;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.handling
+namespace SystemDot.Messaging.Specifications.messages.handling
 {
     [Subject("Message handling")]
     public class when_routing_a_message_to_two_handlers_of_differing_messages

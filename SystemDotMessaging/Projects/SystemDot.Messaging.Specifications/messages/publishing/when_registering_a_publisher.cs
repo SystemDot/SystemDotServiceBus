@@ -4,8 +4,9 @@ using SystemDot.Messaging.MessageTransportation;
 using Machine.Fakes;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.publishing
+namespace SystemDot.Messaging.Specifications.messages.publishing
 {
+    [Subject("Message publishing")]
     public class when_retreving_a_registered_publisher : WithSubject<PublisherRegistry>
     {
         static IDistributor distributor;
@@ -21,6 +22,7 @@ namespace SystemDot.Messaging.Specifications.publishing
 
         Because of = () => retreived = Subject.GetPublisher(address);
 
-        It should_retreive_the_publisher_with_the_correct_address = () => retreived.ShouldBeTheSameAs(distributor);
+        It should_retreive_the_publisher_with_the_correct_address = () => 
+            retreived.ShouldBeTheSameAs(distributor);
     }
 }
