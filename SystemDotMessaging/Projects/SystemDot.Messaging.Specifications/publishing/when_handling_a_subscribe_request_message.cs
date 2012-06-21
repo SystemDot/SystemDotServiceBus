@@ -1,8 +1,7 @@
-using SystemDot.Messaging.Channels;
-using SystemDot.Messaging.Channels.Distribution;
-using SystemDot.Messaging.Channels.Local;
+using SystemDot.Messaging.Channels.Messages.Distribution;
+using SystemDot.Messaging.Channels.PubSub;
 using SystemDot.Messaging.MessageTransportation;
-using SystemDot.Messaging.Specifications.distribution;
+using SystemDot.Messaging.MessageTransportation.Headers;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.publishing
@@ -14,19 +13,22 @@ namespace SystemDot.Messaging.Specifications.publishing
         static TestDistributor publisher;
         static IDistributionSubscriber subscriptionChannel;
         static MessagePayload request;
- 
+        static SubscriptionSchema subscriptionSchema;
+
         Establish context = () =>
         {
             address = new Address("TestAddress");
             publisher = new TestDistributor();
             subscriptionChannel = new TestDistributionSubscriber();
+            subscriptionSchema = new SubscriptionSchema();
+            Configure<IPublisherRegistry>(new PublisherRegistry());
+            The<IPublisherRegistry>().RegisterPublisher(address, publisher);
 
-            Configure<PublisherRegistry>(new PublisherRegistry());
-            The<PublisherRegistry>().RegisterPublisher(address, publisher);
-
-            Configure<IDistributionSubscriber>(subscriptionChannel);
+            Configure<ISubscriptionChannelBuilder>(
+                new TestSubscriptionChannelBuilder(subscriptionSchema, subscriptionChannel));
             
             request = new MessagePayload(address);
+            request.SetSubscriptionRequest(subscriptionSchema);
         };
 
         Because of = () => Subject.Recieve(request);

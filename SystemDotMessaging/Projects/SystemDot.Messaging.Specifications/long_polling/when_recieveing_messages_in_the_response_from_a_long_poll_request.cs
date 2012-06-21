@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using SystemDot.Messaging.Channels.Remote;
+using SystemDot.Messaging.Channels.Messages.Recieving;
 using SystemDot.Messaging.MessageTransportation;
 using Machine.Specifications;
 

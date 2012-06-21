@@ -4,7 +4,7 @@ using SystemDot.Messaging.MessageTransportation;
 using SystemDot.Messaging.MessageTransportation.Headers;
 using SystemDot.Serialisation;
 
-namespace SystemDot.Messaging.Channels.Remote
+namespace SystemDot.Messaging.Channels.Messages.Processing
 {
     public class MessagePayloadUnpackager : IMessageProcessor<MessagePayload, object>
     {

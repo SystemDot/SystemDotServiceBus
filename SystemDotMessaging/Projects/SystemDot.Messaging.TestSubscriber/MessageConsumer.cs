@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-using SystemDot.Messaging.Channels.Remote;
+using SystemDot.Messaging.Channels.Messages.Consuming;
 
 namespace SystemDot.Messaging.TestSubscriber
 {

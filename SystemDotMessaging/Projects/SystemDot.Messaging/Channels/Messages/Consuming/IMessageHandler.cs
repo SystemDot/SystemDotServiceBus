@@ -1,4 +1,4 @@
-namespace SystemDot.Messaging.Channels.Remote
+namespace SystemDot.Messaging.Channels.Messages.Consuming
 {
     public interface IMessageHandler
     { 

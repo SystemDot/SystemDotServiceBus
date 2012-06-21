@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Reflection;
 
-namespace SystemDot.Messaging.Channels.Remote
+namespace SystemDot.Messaging.Channels.Messages.Consuming
 {
     public class MessageHandlerRouter : IChannelEndPoint<object>
     {

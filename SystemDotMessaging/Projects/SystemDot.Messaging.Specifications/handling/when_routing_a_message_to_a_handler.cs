@@ -1,4 +1,4 @@
-﻿using SystemDot.Messaging.Channels.Remote;
+﻿using SystemDot.Messaging.Channels.Messages.Consuming;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.handling

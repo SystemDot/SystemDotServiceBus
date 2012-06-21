@@ -1,6 +1,6 @@
-using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Messages.Processing;
 
-namespace SystemDot.Messaging.Configuration.Channels
+namespace SystemDot.Messaging.Channels.Building
 {
     public class ProcessorBuilder<TIn, TOut>
     {

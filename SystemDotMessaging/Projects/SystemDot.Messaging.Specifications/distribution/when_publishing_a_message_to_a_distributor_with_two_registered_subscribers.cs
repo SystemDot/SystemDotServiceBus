@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using SystemDot.Messaging.Channels.Distribution;
+using SystemDot.Messaging.Channels.Messages.Distribution;
 using SystemDot.Messaging.MessageTransportation;
 using Machine.Fakes;
 using Machine.Specifications;

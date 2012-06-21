@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 using SystemDot.Http;
 using SystemDot.Messaging.MessageTransportation;
 
-namespace SystemDot.Messaging.Channels.Local
+namespace SystemDot.Messaging.Channels.Messages.Sending
 {
     public class MessageSender : IChannelEndPoint<MessagePayload>
     {

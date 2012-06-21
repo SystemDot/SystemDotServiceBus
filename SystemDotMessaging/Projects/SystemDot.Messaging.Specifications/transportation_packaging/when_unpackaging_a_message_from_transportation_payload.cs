@@ -1,5 +1,5 @@
 ﻿using System.Runtime.Serialization.Formatters.Binary;
-using SystemDot.Messaging.Channels.Remote;
+using SystemDot.Messaging.Channels.Messages.Processing;
 using SystemDot.Messaging.MessageTransportation;
 using SystemDot.Messaging.MessageTransportation.Headers;
 using SystemDot.Serialisation;

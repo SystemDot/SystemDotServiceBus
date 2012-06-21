@@ -1,5 +1,5 @@
 ﻿using System;
-using SystemDot.Messaging.Channels.Distribution;
+using SystemDot.Messaging.Channels.Messages.Distribution;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.distribution

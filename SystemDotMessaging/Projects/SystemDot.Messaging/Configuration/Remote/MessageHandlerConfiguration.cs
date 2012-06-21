@@ -1,8 +1,10 @@
 using System.Diagnostics.Contracts;
 using System.Runtime.Serialization;
 using SystemDot.Http;
-using SystemDot.Messaging.Channels.Remote;
-using SystemDot.Messaging.Configuration.Channels;
+using SystemDot.Messaging.Channels.Building;
+using SystemDot.Messaging.Channels.Messages.Consuming;
+using SystemDot.Messaging.Channels.Messages.Processing;
+using SystemDot.Messaging.Channels.Messages.Recieving;
 using SystemDot.Messaging.MessageTransportation;
 using SystemDot.Serialisation;
 using SystemDot.Threading;

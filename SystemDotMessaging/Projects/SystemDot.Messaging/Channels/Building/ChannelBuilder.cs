@@ -1,6 +1,4 @@
-using SystemDot.Messaging.Channels;
-
-namespace SystemDot.Messaging.Configuration.Channels
+namespace SystemDot.Messaging.Channels.Building
 {
     public class ChannelBuilder
     {

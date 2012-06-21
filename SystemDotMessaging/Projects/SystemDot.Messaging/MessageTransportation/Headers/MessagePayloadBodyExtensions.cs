@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace SystemDot.Messaging.MessageTransportation.Headers
 {
@@ -6,11 +7,14 @@ namespace SystemDot.Messaging.MessageTransportation.Headers
     {
         public static byte[] GetBody(this MessagePayload payload)
         {
-            return payload.Headers.OfType<BodyHeader>().First().Body;
+            Contract.Requires(payload.HasBody());
+
+            return payload.Headers.OfType<BodyHeader>().Single().Body;
         }
 
         public static void SetBody(this MessagePayload payload, byte[] body)
         {
+            Contract.Requires(body != null);
             payload.AddHeader(new BodyHeader(body));
         }
         

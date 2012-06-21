@@ -1,5 +1,5 @@
-﻿using SystemDot.Messaging.Channels.Distribution;
-using SystemDot.Messaging.Channels.Local;
+﻿using SystemDot.Messaging.Channels.Messages.Distribution;
+using SystemDot.Messaging.Channels.PubSub;
 using SystemDot.Messaging.MessageTransportation;
 using Machine.Fakes;
 using Machine.Specifications;

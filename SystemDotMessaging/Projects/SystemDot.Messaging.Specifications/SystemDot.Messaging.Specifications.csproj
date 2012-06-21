@@ -53,6 +53,8 @@
     <Compile Include="configuration\ITestComponent.cs" />
     <Compile Include="configuration\TestComponent.cs" />
     <Compile Include="configuration\when_setting_a_component_in_the_environment.cs" />
+    <Compile Include="publishing\when_handling_a_non_subscription_request_message_with_the_subscription_request_handler.cs" />
+    <Compile Include="publishing\TestSubscriptionChannelBuilder.cs" />
     <Compile Include="TestDistributionSubscriber.cs" />
     <Compile Include="distribution\TestThreadPool.cs" />
     <Compile Include="distribution\when_pumping_an_item.cs" />

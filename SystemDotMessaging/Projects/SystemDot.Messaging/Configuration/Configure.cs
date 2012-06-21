@@ -1,7 +1,6 @@
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using SystemDot.Http;
-using SystemDot.Messaging.Configuration.Channels;
 using SystemDot.Messaging.Configuration.Local;
 using SystemDot.Messaging.Configuration.Remote;
 using SystemDot.Serialisation;
