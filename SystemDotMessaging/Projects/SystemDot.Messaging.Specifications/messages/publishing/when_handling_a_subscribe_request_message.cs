@@ -1,3 +1,4 @@
+using SystemDot.Messaging.Channels.Messages;
 using SystemDot.Messaging.Channels.Messages.Distribution;
 using SystemDot.Messaging.Channels.PubSub;
 using SystemDot.Messaging.MessageTransportation;
@@ -8,11 +9,11 @@ namespace SystemDot.Messaging.Specifications.messages.publishing
 {
     [Subject("Message publishing")]
     public class when_handling_a_subscribe_request_message 
-        : WithDistributionSubscriberSubject<SubsriptionRequestHandler>
+        : WithMessageInputterSubject<SubsriptionRequestHandler>
     {
         static Address address;
         static TestDistributor publisher;
-        static IDistributionSubscriber subscriptionChannel;
+        static IMessageInputter<MessagePayload> subscriptionChannel;
         static MessagePayload request;
         static SubscriptionSchema subscriptionSchema;
 
@@ -20,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.messages.publishing
         {
             address = new Address("TestAddress");
             publisher = new TestDistributor();
-            subscriptionChannel = new TestDistributionSubscriber();
+            subscriptionChannel = new Pipe<MessagePayload>();
             subscriptionSchema = new SubscriptionSchema();
             Configure<IPublisherRegistry>(new PublisherRegistry());
             The<IPublisherRegistry>().RegisterPublisher(address, publisher);
@@ -33,7 +34,7 @@ namespace SystemDot.Messaging.Specifications.messages.publishing
             request.SetSubscriptionRequest(subscriptionSchema);
         };
 
-        Because of = () => Subject.Recieve(request);
+        Because of = () => Subject.InputMessage(request);
 
         It should_setup_a_subscription_channel_and_subscribe_it_to_the_publisher = () =>
             publisher.Subscribers.ShouldContainOnly(subscriptionChannel);

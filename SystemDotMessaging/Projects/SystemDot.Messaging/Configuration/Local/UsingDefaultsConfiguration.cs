@@ -11,11 +11,12 @@ namespace SystemDot.Messaging.Configuration.Local
     {
         public void Initialise()
         {
-            ChannelBuilder
-               .StartsWith(BuildMessageBus())
+            ChannelBuilder.Build()
+               .With(BuildMessageBus())
                .Pump()
                .ToProcessor(BuildPayloadPackager())
-               .ThenToEndPoint(BuildMessageSender());
+               .ToProcessor(new MessageAddresser())
+               .ToEndPoint(BuildMessageSender());
         }
 
         private static MessageBus BuildMessageBus()

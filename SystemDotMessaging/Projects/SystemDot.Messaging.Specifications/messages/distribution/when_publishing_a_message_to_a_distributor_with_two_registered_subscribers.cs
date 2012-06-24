@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using SystemDot.Messaging.Channels.Messages.Distribution;
 using SystemDot.Messaging.MessageTransportation;
 using SystemDot.Messaging.MessageTransportation.Headers;
@@ -12,30 +13,33 @@ namespace SystemDot.Messaging.Specifications.messages.distribution
         : WithSubject<Distributor>
     {
         static MessagePayload inputMessage;
-        static TestDistributionSubscriber subscriber1;
-        static TestDistributionSubscriber subscriber2;
-        static MessagePayload message;
+        static Pipe<MessagePayload> subscriber1;
+        static Pipe<MessagePayload> subscriber2;
+        static MessagePayload processedMessage1;
+        static MessagePayload processedMessage2;
 
         Establish context = () =>
         {
-            subscriber1 = new TestDistributionSubscriber();
+            subscriber1 = new Pipe<MessagePayload>();
+            subscriber1.MessageProcessed += m => processedMessage1 = m;
             Subject.Subscribe(subscriber1);
 
-            subscriber2 = new TestDistributionSubscriber();
+            subscriber2 = new Pipe<MessagePayload>();
+            subscriber2.MessageProcessed += m => processedMessage2 = m;
             Subject.Subscribe(subscriber2);
-            
-            message = new MessagePayload();
-            message.SetToAddress(new Address("TestAddress"));
-            inputMessage = message;
+
+            inputMessage = new MessagePayload();
+            inputMessage.SetToAddress(new Address("TestAddress"));
         };
 
         Because of = () => Subject.InputMessage(inputMessage);
 
         It should_pass_a_copy_of_the_message_to_the_first_subscriber = () =>
-            subscriber1.ProcessedMessages.First().GetToAddress().ShouldEqual(message.GetToAddress());
+            processedMessage1.GetToAddress().ShouldEqual(inputMessage.GetToAddress());
 
         It should_pass_a_copy_of_the_message_to_the_second_subscriber = () =>
-            subscriber2.ProcessedMessages.First().GetToAddress().ShouldEqual(message.GetToAddress());
+            processedMessage2.GetToAddress().ShouldEqual(inputMessage.GetToAddress());
 
+        
     }
 }

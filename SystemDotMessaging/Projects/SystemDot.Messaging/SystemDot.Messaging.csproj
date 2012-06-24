@@ -40,29 +40,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Channels\Messages\Distribution\IDistributionSubscriber.cs" />
+    <Compile Include="Channels\Building\ChannelBuilder.cs" />
     <Compile Include="Channels\Messages\Distribution\IDistributor.cs" />
+    <Compile Include="Channels\Messages\Processing\MessageAddresser.cs" />
     <Compile Include="Channels\PubSub\IPublisherRegistry.cs" />
     <Compile Include="Channels\PubSub\ISubscriptionChannelBuilder.cs" />
     <Compile Include="Channels\PubSub\PublisherRegistry.cs" />
-    <Compile Include="Channels\PubSub\SubscriberStartPoint.cs" />
+    <Compile Include="Channels\Messages\Distribution\Pipe.cs" />
     <Compile Include="Channels\PubSub\SubscriptionChannelBuilder.cs" />
     <Compile Include="Channels\PubSub\SubscriptionSchema.cs" />
     <Compile Include="Channels\PubSub\SubsriptionRequestHandler.cs" />
-    <Compile Include="Channels\Building\ChannelBuilder.cs" />
-    <Compile Include="Channels\Building\StartPointBuilder.cs" />
     <Compile Include="Configuration\Configure.cs" />
     <Compile Include="Configuration\Local\LocalConfiguration.cs" />
     <Compile Include="Configuration\Local\UsingDefaultsConfiguration.cs" />
     <Compile Include="Configuration\MessagingEnvironment.cs" />
     <Compile Include="Channels\Building\ProcessorBuilder.cs" />
-    <Compile Include="Channels\Building\PumpBuilder.cs" />
     <Compile Include="Configuration\Remote\MessageHandlerConfiguration.cs" />
     <Compile Include="Configuration\Remote\RemoteConfiguration.cs" />
     <Compile Include="Configuration\Remote\UsingDefaultsConfiguration.cs" />
-    <Compile Include="Channels\IChannelEndPoint.cs" />
-    <Compile Include="Channels\IChannelStartPoint.cs" />
-    <Compile Include="Channels\Messages\Processing\IMessageProcessor.cs" />
+    <Compile Include="Channels\Messages\IMessageProcessor.cs" />
+    <Compile Include="Channels\Messages\IMessageInputter.cs" />
     <Compile Include="MessageTransportation\Address.cs" />
     <Compile Include="MessageTransportation\Headers\MessagePayloadSubscriptionRequestExtensions.cs" />
     <Compile Include="MessageTransportation\Headers\LongPollRequestHeader.cs" />

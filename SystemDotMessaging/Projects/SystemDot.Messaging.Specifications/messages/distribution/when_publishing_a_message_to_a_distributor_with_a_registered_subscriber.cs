@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using SystemDot.Messaging.Channels.Messages.Distribution;
 using SystemDot.Messaging.MessageTransportation;
 using SystemDot.Messaging.MessageTransportation.Headers;
@@ -12,13 +13,16 @@ namespace SystemDot.Messaging.Specifications.messages.distribution
         : WithSubject<Distributor>
     {
         static MessagePayload inputMessage;
-        static TestDistributionSubscriber distributionSubscriber;
+        static Pipe<MessagePayload> distributionSubscriber;
         static MessagePayload message;
+        static List<MessagePayload> processedMessages;
 
         Establish context = () =>
         {
+            processedMessages = new List<MessagePayload>();
             Configure<MessagePayloadCopier>(new MessagePayloadCopier());
-            distributionSubscriber = new TestDistributionSubscriber();
+            distributionSubscriber = new Pipe<MessagePayload>();
+            distributionSubscriber.MessageProcessed += m => processedMessages.Add(m);
             Subject.Subscribe(distributionSubscriber);
 
             message = new MessagePayload();
@@ -29,10 +33,11 @@ namespace SystemDot.Messaging.Specifications.messages.distribution
         Because of = () => Subject.InputMessage(inputMessage);
 
         It should_pass_an_equivelent_message_to_the_subscriber = () =>
-            distributionSubscriber.ProcessedMessages.First().GetToAddress().ShouldEqual(message.GetToAddress());
+            processedMessages.First().GetToAddress().ShouldEqual(message.GetToAddress());
 
         It should_copy_the_message_to_the_subscriber = () =>
-            distributionSubscriber.ProcessedMessages.First().ShouldNotBeTheSameAs(message);
+            processedMessages.First().ShouldNotBeTheSameAs(message);
 
+        
     }
 }

@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace SystemDot.Messaging.Channels.Messages.Consuming
 {
-    public class MessageHandlerRouter : IChannelEndPoint<object>
+    public class MessageHandlerRouter : IMessageInputter<object>
     {
         readonly List<IMessageHandler> handlers;
 

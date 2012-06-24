@@ -10,7 +10,7 @@ using SystemDot.Messaging.MessageTransportation.Headers;
 
 namespace SystemDot.Messaging.Channels.Messages.Recieving
 {
-    public class LongPollReciever : IWorker, IChannelStartPoint<MessagePayload>
+    public class LongPollReciever : IWorker, IMessageProcessor<MessagePayload>
     {
         readonly Address address;
         readonly IWebRequestor requestor;

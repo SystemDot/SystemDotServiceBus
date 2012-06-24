@@ -4,9 +4,9 @@ using SystemDot.Messaging.MessageTransportation;
 namespace SystemDot.Messaging.Channels.Messages.Distribution
 {
     [ContractClass(typeof(IDistributorContract))]
-    public interface IDistributor : IChannelEndPoint<MessagePayload>
+    public interface IDistributor : IMessageInputter<MessagePayload>
     {
-        void Subscribe(IDistributionSubscriber toSubscribe);
+        void Subscribe(IMessageInputter<MessagePayload> toSubscribe);
     }
 
     [ContractClassFor(typeof(IDistributor))]
@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Channels.Messages.Distribution
             Contract.Requires(toInput != null);
         }
 
-        public void Subscribe(IDistributionSubscriber toSubscribe)
+        public void Subscribe(IMessageInputter<MessagePayload> toSubscribe)
         {
             Contract.Requires(toSubscribe != null);
         }

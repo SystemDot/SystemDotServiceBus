@@ -55,7 +55,7 @@
     <Compile Include="configuration\when_setting_a_component_in_the_environment.cs" />
     <Compile Include="messages\publishing\when_handling_a_non_subscription_request_message_with_the_subscription_request_handler.cs" />
     <Compile Include="messages\publishing\TestSubscriptionChannelBuilder.cs" />
-    <Compile Include="TestDistributionSubscriber.cs" />
+    <Compile Include="messages\processing\when_addressing_a_message.cs" />
     <Compile Include="messages\distribution\TestThreadPool.cs" />
     <Compile Include="messages\distribution\when_pumping_an_item.cs" />
     <Compile Include="messages\distribution\when_pumping_items_on_a_with_no_pushed_item_listener.cs" />
@@ -72,14 +72,14 @@
     <Compile Include="TestDistributor.cs" />
     <Compile Include="messages\publishing\when_handling_a_subscribe_request_message.cs" />
     <Compile Include="messages\publishing\when_registering_a_publisher.cs" />
-    <Compile Include="WithDistributionSubscriberSubject.cs" />
+    <Compile Include="WithMessageInputterSubject.cs" />
     <Compile Include="messages\serving\when_handling_a_request_containing_an_object_other_than_a_message_payload.cs" />
     <Compile Include="messages\serving\when_handling_a_long_poll_request_for_with_a_different_address_to_the_queued_message.cs" />
     <Compile Include="StreamExtensions.cs" />
     <Compile Include="messages\serving\when_handling_a_long_poll_request_for_messages_with_two_messages_in_the_queue.cs" />
     <Compile Include="messages\serving\when_handling_a_sent_message_from_a_request.cs" />
-    <Compile Include="messages\transportation_packaging\when_unpackaging_a_message_from_transportation_payload.cs" />
-    <Compile Include="messages\transportation_packaging\when_packaging_a_message_into_transportation_payload.cs" />
+    <Compile Include="messages\processing\when_unpackaging_a_message_from_transportation_payload.cs" />
+    <Compile Include="messages\processing\when_packaging_a_message_into_transportation_payload.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

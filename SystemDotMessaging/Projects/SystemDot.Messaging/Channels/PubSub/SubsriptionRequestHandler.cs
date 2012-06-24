@@ -1,11 +1,12 @@
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Channels.Messages;
 using SystemDot.Messaging.Channels.Messages.Distribution;
 using SystemDot.Messaging.MessageTransportation;
 using SystemDot.Messaging.MessageTransportation.Headers;
 
 namespace SystemDot.Messaging.Channels.PubSub
 {
-    public class SubsriptionRequestHandler : IDistributionSubscriber
+    public class SubsriptionRequestHandler : IMessageInputter<MessagePayload>
     {
         readonly IPublisherRegistry publisherRegistry;
         readonly ISubscriptionChannelBuilder channelBuilder;
@@ -21,7 +22,7 @@ namespace SystemDot.Messaging.Channels.PubSub
             this.channelBuilder = channelBuilder;
         }
 
-        public void Recieve(MessagePayload message)
+        public void InputMessage(MessagePayload message)
         {
             if (!message.IsSubscriptionRequest()) return;
 

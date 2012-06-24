@@ -1,9 +1,10 @@
-using SystemDot.Messaging.Channels.Messages.Distribution;
+using SystemDot.Messaging.Channels.Messages;
+using SystemDot.Messaging.MessageTransportation;
 
 namespace SystemDot.Messaging.Channels.PubSub
 {
     public interface ISubscriptionChannelBuilder 
     {
-        IDistributionSubscriber Build(SubscriptionSchema toSchema);
+        IMessageInputter<MessagePayload> Build(SubscriptionSchema toSchema);
     }
 }

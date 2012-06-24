@@ -6,7 +6,7 @@ using SystemDot.Messaging.MessageTransportation.Headers;
 
 namespace SystemDot.Messaging.Channels.Messages.Sending
 {
-    public class MessageSender : IChannelEndPoint<MessagePayload>
+    public class MessageSender : IMessageInputter<MessagePayload>
     {
         readonly IFormatter formatter;
         readonly IWebRequestor requestor;

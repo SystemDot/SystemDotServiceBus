@@ -23,11 +23,11 @@ namespace SystemDot.Messaging.Configuration.Remote
 
         public void Initialise()
         {
-            ChannelBuilder
-                .StartsWith(BuildLongPollReciever(Address.Default))
+            ChannelBuilder.Build()
+                .With(BuildLongPollReciever(Address.Default))
                 .Pump()
                 .ToProcessor(BuildPayloadPackager())
-                .ThenToEndPoint(BuildHandlerRouter(this.toRegister));
+                .ToEndPoint(BuildHandlerRouter(this.toRegister));
 
             MessagingEnvironment.GetComponent<ThreadedWorkCoordinator>().Start();
         }

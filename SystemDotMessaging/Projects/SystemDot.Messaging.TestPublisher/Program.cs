@@ -27,10 +27,10 @@ namespace SystemDot.Messaging.TestPublisher
             MessagingEnvironment.SetComponent(new PublisherRegistry());
             
             ChannelBuilder
-               .StartsWith(new MessageBus())
+               .Build().With(new MessageBus())
                .Pump()
                .ToProcessor(new MessagePayloadPackager(MessagingEnvironment.GetComponent<ISerialiser>()))
-               .ThenToEndPoint(new Distributor(MessagingEnvironment.GetComponent<MessagePayloadCopier>()));
+               .ToEndPoint(new Distributor(MessagingEnvironment.GetComponent<MessagePayloadCopier>()));
 
             do
             {

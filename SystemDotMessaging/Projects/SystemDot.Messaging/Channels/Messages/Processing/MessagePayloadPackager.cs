@@ -21,10 +21,10 @@ namespace SystemDot.Messaging.Channels.Messages.Processing
         public void InputMessage(object toInput)
         {
             var messagePayload = new MessagePayload();
-            messagePayload.SetToAddress(Address.Default);
             messagePayload.SetBody(this.serialiser.Serialise(toInput));
 
             MessageProcessed(messagePayload);
         }
     }
+    
 }

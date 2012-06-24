@@ -1,10 +1,17 @@
+using SystemDot.Messaging.Channels.Messages;
+
 namespace SystemDot.Messaging.Channels.Building
 {
     public class ChannelBuilder
     {
-        public static StartPointBuilder<T> StartsWith<T>(IChannelStartPoint<T> startPoint)
+        public static ChannelBuilder Build()
         {
-            return new StartPointBuilder<T>(startPoint);
+            return new ChannelBuilder();
+        }
+
+        public ProcessorBuilder<T, T> With<T>(IMessageProcessor<T> startPoint)
+        {
+            return new ProcessorBuilder<T, T>(startPoint);
         }
     }
 }

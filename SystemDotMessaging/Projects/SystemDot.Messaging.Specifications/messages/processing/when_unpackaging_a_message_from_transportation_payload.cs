@@ -5,9 +5,9 @@ using SystemDot.Messaging.MessageTransportation.Headers;
 using SystemDot.Serialisation;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.messages.transportation_packaging
+namespace SystemDot.Messaging.Specifications.messages.processing
 {
-    [Subject("Message transportation packaging")]
+    [Subject("Message processing")]
     public class when_unpackaging_a_message_from_transportation_payload
     {
         static MessagePayloadUnpackager packager;
