@@ -1,6 +1,6 @@
-using SystemDot.Messaging.Channels.Messages;
-using SystemDot.Messaging.Channels.PubSub;
-using SystemDot.Messaging.MessageTransportation;
+using SystemDot.Messaging.Channels.Publishing;
+using SystemDot.Messaging.Messages;
+using SystemDot.Messaging.Messages.Packaging;
 
 namespace SystemDot.Messaging.Specifications.messages.publishing
 {

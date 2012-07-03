@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using SystemDot.Messaging.Channels.Messages.Distribution;
-using SystemDot.Messaging.MessageTransportation;
-using SystemDot.Messaging.MessageTransportation.Headers;
+using SystemDot.Messaging.Messages;
+using SystemDot.Messaging.Messages.Distribution;
+using SystemDot.Messaging.Messages.Packaging;
+using SystemDot.Messaging.Messages.Packaging.Headers;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -26,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.messages.distribution
             Subject.Subscribe(distributionSubscriber);
 
             message = new MessagePayload();
-            message.SetToAddress(new Address("TestAddress"));
+            message.SetToAddress(new EndpointAddress("TestAddress"));
             inputMessage = message;
         };
 

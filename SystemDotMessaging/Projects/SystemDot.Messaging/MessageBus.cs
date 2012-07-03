@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels;
-using SystemDot.Messaging.Channels.Messages;
+using SystemDot.Messaging.Messages;
 
 namespace SystemDot.Messaging
 {

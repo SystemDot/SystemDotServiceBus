@@ -40,53 +40,65 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Channels\Building\ChannelBuilder.cs" />
-    <Compile Include="Channels\Messages\Distribution\IDistributor.cs" />
-    <Compile Include="Channels\Messages\Processing\MessageAddresser.cs" />
-    <Compile Include="Channels\PubSub\IPublisherRegistry.cs" />
-    <Compile Include="Channels\PubSub\ISubscriptionChannelBuilder.cs" />
-    <Compile Include="Channels\PubSub\PublisherRegistry.cs" />
-    <Compile Include="Channels\Messages\Distribution\Pipe.cs" />
-    <Compile Include="Channels\PubSub\SubscriptionChannelBuilder.cs" />
-    <Compile Include="Channels\PubSub\SubscriptionSchema.cs" />
-    <Compile Include="Channels\PubSub\SubsriptionRequestHandler.cs" />
+    <Compile Include="Configuration\ComponentRegistration\ChannelComponents.cs" />
+    <Compile Include="Configuration\ComponentRegistration\Components.cs" />
+    <Compile Include="Configuration\ComponentRegistration\PublishingComponents.cs" />
+    <Compile Include="Configuration\ComponentRegistration\CoreComponents.cs" />
+    <Compile Include="Configuration\ComponentRegistration\HttpComponents.cs" />
+    <Compile Include="Configuration\ComponentRegistration\ThreadingComponents.cs" />
+    <Compile Include="Channels\Publishing\SubscriptionRequestor.cs" />
+    <Compile Include="Configuration\InitialisingConfiguration.cs" />
+    <Compile Include="Messages\Distribution\IDistributor.cs" />
+    <Compile Include="Messages\EndpointAddress.cs" />
+    <Compile Include="Messages\Processing\MessageRepeater.cs" />
+    <Compile Include="Messages\Pipelines\MessagePipelineBuilder.cs" />
+    <Compile Include="Messages\Pipelines\ProcessorBuilder.cs" />
+    <Compile Include="Messages\Processing\MessageAddresser.cs" />
+    <Compile Include="Channels\Publishing\IPublisherRegistry.cs" />
+    <Compile Include="Channels\Publishing\ISubscriptionChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\PublisherRegistry.cs" />
+    <Compile Include="Messages\Distribution\Pipe.cs" />
+    <Compile Include="Channels\Publishing\SubscriptionChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\SubscriptionSchema.cs" />
+    <Compile Include="Channels\Publishing\SubscriptionRequestHandler.cs" />
     <Compile Include="Configuration\Configure.cs" />
-    <Compile Include="Configuration\Local\LocalConfiguration.cs" />
-    <Compile Include="Configuration\Local\UsingDefaultsConfiguration.cs" />
-    <Compile Include="Configuration\MessagingEnvironment.cs" />
-    <Compile Include="Channels\Building\ProcessorBuilder.cs" />
-    <Compile Include="Configuration\Remote\MessageHandlerConfiguration.cs" />
-    <Compile Include="Configuration\Remote\RemoteConfiguration.cs" />
-    <Compile Include="Configuration\Remote\UsingDefaultsConfiguration.cs" />
-    <Compile Include="Channels\Messages\IMessageProcessor.cs" />
-    <Compile Include="Channels\Messages\IMessageInputter.cs" />
-    <Compile Include="MessageTransportation\Address.cs" />
-    <Compile Include="MessageTransportation\Headers\MessagePayloadSubscriptionRequestExtensions.cs" />
-    <Compile Include="MessageTransportation\Headers\LongPollRequestHeader.cs" />
-    <Compile Include="MessageTransportation\Headers\MessagePayloadLongPollRequestExtensions.cs" />
-    <Compile Include="Channels\Messages\Distribution\Pump.cs" />
-    <Compile Include="MessageTransportation\Headers\MessagePayloadToAddressExtensions.cs" />
-    <Compile Include="MessageTransportation\Headers\SubscriptionRequestHeader.cs" />
-    <Compile Include="MessageTransportation\Headers\ToAddressHeader.cs" />
-    <Compile Include="MessageTransportation\MessagePayloadCopier.cs" />
-    <Compile Include="Channels\Messages\Distribution\Distributor.cs" />
-    <Compile Include="Servers\IMessagingServerHandler.cs" />
+    <Compile Include="Configuration\EndpointConfiguration.cs" />
+    <Compile Include="Configuration\Publishers\PublisherConfiguration.cs" />
+    <Compile Include="Configuration\ComponentRegistration\MessagingEnvironment.cs" />
+    <Compile Include="Configuration\Subscribers\MessageHandlerConfiguration.cs" />
+    <Compile Include="Configuration\Subscribers\SubscriberConfiguration.cs" />
+    <Compile Include="Configuration\Subscribers\SubscribeToConfiguration.cs" />
+    <Compile Include="Messages\IMessageProcessor.cs" />
+    <Compile Include="Messages\IMessageInputter.cs" />
+    <Compile Include="Messages\Packaging\Headers\MessagePayloadSubscriptionRequestExtensions.cs" />
+    <Compile Include="Transport\Http\HttpAddressExtensions.cs" />
+    <Compile Include="Transport\IMessageSender.cs" />
+    <Compile Include="Transport\IMessageReciever.cs" />
+    <Compile Include="Transport\Http\LongPolling\LongPollRequestHeader.cs" />
+    <Compile Include="Transport\Http\LongPolling\MessagePayloadLongPollRequestExtensions.cs" />
+    <Compile Include="Messages\Distribution\Pump.cs" />
+    <Compile Include="Messages\Packaging\Headers\MessagePayloadToAddressExtensions.cs" />
+    <Compile Include="Messages\Packaging\Headers\SubscriptionRequestHeader.cs" />
+    <Compile Include="Messages\Packaging\Headers\ToAddressHeader.cs" />
+    <Compile Include="Messages\Packaging\MessagePayloadCopier.cs" />
+    <Compile Include="Messages\Distribution\Distributor.cs" />
+    <Compile Include="Transport\Http\LongPolling\Servers\IMessagingServerHandler.cs" />
     <Compile Include="MessageBus.cs" />
-    <Compile Include="MessageTransportation\Headers\BodyHeader.cs" />
-    <Compile Include="MessageTransportation\Headers\MessagePayloadBodyExtensions.cs" />
-    <Compile Include="MessageTransportation\IMessageHeader.cs" />
-    <Compile Include="Servers\HttpMessagingServer.cs" />
-    <Compile Include="Channels\Messages\Consuming\IMessageHandler.cs" />
-    <Compile Include="Channels\Messages\Processing\MessagePayloadUnpackager.cs" />
-    <Compile Include="Channels\Messages\Recieving\LongPollReciever.cs" />
-    <Compile Include="MessageTransportation\MessagePayload.cs" />
-    <Compile Include="Channels\Messages\Processing\MessagePayloadPackager.cs" />
-    <Compile Include="Channels\Messages\Sending\MessageSender.cs" />
-    <Compile Include="Channels\Messages\Consuming\MessageHandlerRouter.cs" />
+    <Compile Include="Messages\Packaging\Headers\BodyHeader.cs" />
+    <Compile Include="Messages\Packaging\Headers\MessagePayloadBodyExtensions.cs" />
+    <Compile Include="Messages\Packaging\IMessageHeader.cs" />
+    <Compile Include="Transport\Http\LongPolling\Servers\HttpMessagingServer.cs" />
+    <Compile Include="Messages\Consuming\IMessageHandler.cs" />
+    <Compile Include="Messages\Processing\MessagePayloadUnpackager.cs" />
+    <Compile Include="Transport\Http\LongPolling\LongPollReciever.cs" />
+    <Compile Include="Messages\Packaging\MessagePayload.cs" />
+    <Compile Include="Messages\Processing\MessagePayloadPackager.cs" />
+    <Compile Include="Transport\Http\LongPolling\MessageSender.cs" />
+    <Compile Include="Messages\Consuming\MessageHandlerRouter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Servers\LongPollHandler.cs" />
-    <Compile Include="Servers\MessagePayloadQueue.cs" />
-    <Compile Include="Servers\SentMessageHandler.cs" />
+    <Compile Include="Transport\Http\LongPolling\Servers\LongPollHandler.cs" />
+    <Compile Include="Transport\Http\LongPolling\Servers\MessagePayloadQueue.cs" />
+    <Compile Include="Transport\Http\LongPolling\Servers\SentMessageHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">
@@ -94,6 +106,7 @@
       <Name>SystemDot</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

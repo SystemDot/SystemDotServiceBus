@@ -1,4 +1,4 @@
-using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Configuration.ComponentRegistration;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration
@@ -13,7 +13,7 @@ namespace SystemDot.Messaging.Specifications.configuration
             component = new TestComponent();
         };
 
-        Because of = () => MessagingEnvironment.SetComponent<ITestComponent>(component);
+        Because of = () => MessagingEnvironment.RegisterComponent<ITestComponent>(component);
 
         It should_be_able_to_retrieved = () => 
             MessagingEnvironment.GetComponent<ITestComponent>().ShouldBeTheSameAs(component);

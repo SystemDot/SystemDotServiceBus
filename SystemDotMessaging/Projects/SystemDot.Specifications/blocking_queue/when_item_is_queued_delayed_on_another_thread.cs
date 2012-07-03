@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using SystemDot.Threading;
+using SystemDot.Parallelism;
 using Machine.Specifications;
 using ThreadPool = System.Threading.ThreadPool;
 

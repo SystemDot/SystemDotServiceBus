@@ -1,5 +1,5 @@
 using System;
-using SystemDot.Threading;
+using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Specifications.messages.distribution
 {

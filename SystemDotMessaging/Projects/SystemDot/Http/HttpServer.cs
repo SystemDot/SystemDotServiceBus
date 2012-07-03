@@ -2,21 +2,20 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Net;
 using SystemDot.Logging;
-using SystemDot.Threading;
+using SystemDot.Parallelism;
 
 namespace SystemDot.Http
 {
     public class HttpServer : IWorker
     {
-        readonly string address;
+        readonly FixedPortAddress address;
         readonly IHttpHandler handler;
         readonly HttpListener listener;
         
         bool isStopped;
         
-        public HttpServer(string address, IHttpHandler handler)
+        public HttpServer(FixedPortAddress address, IHttpHandler handler)
         {
-            Contract.Requires(!string.IsNullOrEmpty(address));
             Contract.Requires(handler != null);
 
             this.address = address;
@@ -27,7 +26,7 @@ namespace SystemDot.Http
         public void StartWork()
         {
             this.listener.Prefixes.Clear();
-            this.listener.Prefixes.Add(this.address);
+            this.listener.Prefixes.Add(this.address.Url);
             this.listener.Start();
         }
 

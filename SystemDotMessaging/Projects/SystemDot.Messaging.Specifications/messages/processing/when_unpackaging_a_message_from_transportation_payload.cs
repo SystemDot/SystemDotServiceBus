@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization.Formatters.Binary;
-using SystemDot.Messaging.Channels.Messages.Processing;
-using SystemDot.Messaging.MessageTransportation;
-using SystemDot.Messaging.MessageTransportation.Headers;
+using SystemDot.Messaging.Messages.Packaging;
+using SystemDot.Messaging.Messages.Packaging.Headers;
+using SystemDot.Messaging.Messages.Processing;
 using SystemDot.Serialisation;
 using Machine.Specifications;
 

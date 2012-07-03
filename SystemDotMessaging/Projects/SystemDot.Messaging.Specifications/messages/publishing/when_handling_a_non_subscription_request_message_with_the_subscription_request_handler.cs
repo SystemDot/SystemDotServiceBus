@@ -1,14 +1,15 @@
 using System;
-using SystemDot.Messaging.Channels.Messages.Distribution;
-using SystemDot.Messaging.Channels.PubSub;
-using SystemDot.Messaging.MessageTransportation;
+using SystemDot.Messaging.Channels.Publishing;
+using SystemDot.Messaging.Messages;
+using SystemDot.Messaging.Messages.Distribution;
+using SystemDot.Messaging.Messages.Packaging;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.messages.publishing
 {
     [Subject("Message publishing")]
     public class when_handling_a_non_subscription_request_message_with_the_subscription_request_handler
-        : WithMessageInputterSubject<SubsriptionRequestHandler>
+        : WithMessageInputterSubject<SubscriptionRequestHandler>
     {
         static Exception exception;
         static MessagePayload messagePayload;
@@ -19,7 +20,7 @@ namespace SystemDot.Messaging.Specifications.messages.publishing
             
             Configure<ISubscriptionChannelBuilder>(
                 new TestSubscriptionChannelBuilder(
-                    new SubscriptionSchema(), 
+                    new SubscriptionSchema(new EndpointAddress("TestAddress")), 
                     new Pipe<MessagePayload>()));
 
             messagePayload = new MessagePayload();

@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using SystemDot.Http;
-using SystemDot.Messaging.MessageTransportation;
-using SystemDot.Messaging.Servers;
-using SystemDot.Threading;
+using SystemDot.Messaging.Messages.Packaging;
+using SystemDot.Messaging.Transport.Http.LongPolling.Servers;
+using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.MessagingServer
 {
     class Program
     {
-        const string DefaultChannelName = "Default";
-
         static void Main(string[] args)
         {
-            var coordinator = new ThreadedWorkCoordinator(new Threader());
+            var coordinator = new AsynchronousWorkCoordinator(new Threader());
             coordinator.RegisterWorker(BuildMessagingServer());
             coordinator.Start();
 
@@ -23,7 +21,7 @@ namespace SystemDot.Messaging.MessagingServer
 
         private static HttpServer BuildMessagingServer()
         {
-            return new HttpServer(Address.Default.Url, BuildMessagingServerHandler());
+            return new HttpServer(new FixedPortAddress(), BuildMessagingServerHandler());
         }
 
         static HttpMessagingServer BuildMessagingServerHandler()

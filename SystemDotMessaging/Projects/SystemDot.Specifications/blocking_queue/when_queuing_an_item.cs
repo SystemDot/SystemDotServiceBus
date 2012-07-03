@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using SystemDot.Threading;
+using SystemDot.Parallelism;
 using Machine.Specifications;
 
 namespace SystemDot.Specifications.blocking_queue

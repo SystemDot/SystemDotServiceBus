@@ -1,17 +1,17 @@
-using SystemDot.Messaging.Channels.Messages;
-using SystemDot.Messaging.Channels.Messages.Distribution;
-using SystemDot.Messaging.Channels.PubSub;
-using SystemDot.Messaging.MessageTransportation;
-using SystemDot.Messaging.MessageTransportation.Headers;
+using SystemDot.Messaging.Channels.Publishing;
+using SystemDot.Messaging.Messages;
+using SystemDot.Messaging.Messages.Distribution;
+using SystemDot.Messaging.Messages.Packaging;
+using SystemDot.Messaging.Messages.Packaging.Headers;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.messages.publishing
 {
     [Subject("Message publishing")]
     public class when_handling_a_subscribe_request_message 
-        : WithMessageInputterSubject<SubsriptionRequestHandler>
+        : WithMessageInputterSubject<SubscriptionRequestHandler>
     {
-        static Address address;
+        static EndpointAddress address;
         static TestDistributor publisher;
         static IMessageInputter<MessagePayload> subscriptionChannel;
         static MessagePayload request;
@@ -19,10 +19,10 @@ namespace SystemDot.Messaging.Specifications.messages.publishing
 
         Establish context = () =>
         {
-            address = new Address("TestAddress");
+            address = new EndpointAddress("TestAddress");
             publisher = new TestDistributor();
             subscriptionChannel = new Pipe<MessagePayload>();
-            subscriptionSchema = new SubscriptionSchema();
+            subscriptionSchema = new SubscriptionSchema(new EndpointAddress("TestSubscriberAddress"));
             Configure<IPublisherRegistry>(new PublisherRegistry());
             The<IPublisherRegistry>().RegisterPublisher(address, publisher);
 

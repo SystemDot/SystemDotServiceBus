@@ -1,5 +1,5 @@
-using SystemDot.Messaging.Channels.Messages;
-using SystemDot.Messaging.MessageTransportation;
+using SystemDot.Messaging.Messages;
+using SystemDot.Messaging.Messages.Packaging;
 using Machine.Fakes;
 
 namespace SystemDot.Messaging.Specifications

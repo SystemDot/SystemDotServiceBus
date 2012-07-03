@@ -10,7 +10,7 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
         {
             Configure
                 .Local()
-                .UsingDefaults()
+                .ToPublishToChannel()
                 .Initialise();
 
             do

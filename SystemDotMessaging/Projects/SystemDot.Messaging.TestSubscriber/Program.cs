@@ -1,4 +1,5 @@
 ﻿using System;
+using SystemDot.Messaging.Configuration;
 
 namespace SystemDot.Messaging.TestSubscriber
 {
@@ -6,7 +7,14 @@ namespace SystemDot.Messaging.TestSubscriber
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Started listening..");
+            Configure
+                .Endpoint("TestSubscriber")
+                .AsSubscriber()
+                .To("TestPublisher")
+                .HandlingMessagesWith(new MessageConsumer())
+                .Initialise();
+
+            Console.WriteLine("I am a subscriber, listening for messages..");
 
             Console.ReadLine();
         }

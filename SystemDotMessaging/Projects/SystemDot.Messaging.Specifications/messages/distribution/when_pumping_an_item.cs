@@ -1,4 +1,4 @@
-﻿using SystemDot.Messaging.Channels.Messages.Distribution;
+﻿using SystemDot.Messaging.Messages.Distribution;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.messages.distribution

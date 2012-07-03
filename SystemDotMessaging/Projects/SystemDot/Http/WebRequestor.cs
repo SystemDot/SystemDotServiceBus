@@ -7,17 +7,17 @@ namespace SystemDot.Http
 {
     public class WebRequestor : IWebRequestor
     {
-        public void SendPut(string address, Action<Stream> performOnRequestStream)
+        public void SendPut(FixedPortAddress address, Action<Stream> performOnRequestStream)
         {
             SendPut(address, performOnRequestStream, s => { });
         }
 
         public void SendPut(
-            string address, 
+            FixedPortAddress address, 
             Action<Stream> performOnRequestStream, 
             Action<Stream> performOnResponseStream)
         {
-            var request = (HttpWebRequest)WebRequest.Create(address);
+            var request = (HttpWebRequest)WebRequest.Create(address.Url);
             request.Method = "PUT";
             request.ConnectionGroupName = Guid.NewGuid().ToString();
 

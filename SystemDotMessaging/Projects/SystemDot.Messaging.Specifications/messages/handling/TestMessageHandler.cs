@@ -1,4 +1,4 @@
-using SystemDot.Messaging.Channels.Messages.Consuming;
+using SystemDot.Messaging.Messages.Consuming;
 
 namespace SystemDot.Messaging.Specifications.messages.handling
 {

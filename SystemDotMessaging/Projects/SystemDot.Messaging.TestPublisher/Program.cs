@@ -1,15 +1,5 @@
 ﻿using System;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using SystemDot.Http;
-using SystemDot.Messaging.Channels.Building;
-using SystemDot.Messaging.Channels.Messages.Distribution;
-using SystemDot.Messaging.Channels.Messages.Processing;
-using SystemDot.Messaging.Channels.PubSub;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.MessageTransportation;
-using SystemDot.Serialisation;
-using SystemDot.Threading;
 
 namespace SystemDot.Messaging.TestPublisher
 {
@@ -17,21 +7,11 @@ namespace SystemDot.Messaging.TestPublisher
     {
         static void Main(string[] args)
         {
-            MessagingEnvironment.SetComponent<IThreadPool>(new ThreadPool(4));
-            MessagingEnvironment.SetComponent<IThreader>(new Threader());
-            MessagingEnvironment.SetComponent(new ThreadedWorkCoordinator(MessagingEnvironment.GetComponent<IThreader>()));
-            MessagingEnvironment.SetComponent<IWebRequestor>(new WebRequestor());
-            MessagingEnvironment.SetComponent<IFormatter>(new BinaryFormatter());
-            MessagingEnvironment.SetComponent<ISerialiser>(new BinarySerialiser(MessagingEnvironment.GetComponent<IFormatter>()));
-            MessagingEnvironment.SetComponent(new MessagePayloadCopier());
-            MessagingEnvironment.SetComponent(new PublisherRegistry());
+            Configure
+                .Endpoint("TestPublisher")
+                .AsPublisher()
+                .Initialise();
             
-            ChannelBuilder
-               .Build().With(new MessageBus())
-               .Pump()
-               .ToProcessor(new MessagePayloadPackager(MessagingEnvironment.GetComponent<ISerialiser>()))
-               .ToEndPoint(new Distributor(MessagingEnvironment.GetComponent<MessagePayloadCopier>()));
-
             do
             {
                 Console.WriteLine("Press a key to send message..");
