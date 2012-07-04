@@ -8,7 +8,7 @@ namespace SystemDot.Messaging.TestPublisher
         static void Main(string[] args)
         {
             Configure
-                .Endpoint("TestPublisher")
+                .Local("TestPublisher")
                 .AsPublisher()
                 .Initialise();
             

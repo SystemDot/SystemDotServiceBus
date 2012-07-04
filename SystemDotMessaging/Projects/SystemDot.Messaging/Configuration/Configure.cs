@@ -5,7 +5,7 @@ namespace SystemDot.Messaging.Configuration
 {
     public class Configure
     {
-        public static EndpointConfiguration Endpoint(EndpointAddress address)
+        public static EndpointConfiguration Local(EndpointAddress address)
         {
             return new EndpointConfiguration(address);
         }        

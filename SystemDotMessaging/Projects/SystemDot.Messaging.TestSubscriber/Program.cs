@@ -8,8 +8,8 @@ namespace SystemDot.Messaging.TestSubscriber
         static void Main(string[] args)
         {
             Configure
-                .Endpoint("TestSubscriber")
-                .AsSubscriber()
+                .Local("TestSubscriber")
+                .Subscribes()
                 .To("TestPublisher")
                 .HandlingMessagesWith(new MessageConsumer())
                 .Initialise();

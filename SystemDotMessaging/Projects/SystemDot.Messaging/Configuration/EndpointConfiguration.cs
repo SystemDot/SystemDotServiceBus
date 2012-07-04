@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Configuration
             return new PublisherConfiguration(this.address);
         }
 
-        public SubscriberConfiguration AsSubscriber()
+        public SubscriberConfiguration Subscribes()
         {
             return new SubscriberConfiguration(this.address);
         }

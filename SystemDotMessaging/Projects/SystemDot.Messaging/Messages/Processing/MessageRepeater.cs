@@ -16,6 +16,7 @@ namespace SystemDot.Messaging.Messages.Processing
             Contract.Requires(delay != TimeSpan.MinValue);
             Contract.Requires(taskScheduler != null);
 
+
             this.delay = delay;
             this.taskScheduler = taskScheduler;
         }
