@@ -23,11 +23,11 @@ namespace SystemDot.Messaging.Specifications.messages.distribution
         {
             subscriber1 = new Pipe<MessagePayload>();
             subscriber1.MessageProcessed += m => processedMessage1 = m;
-            Subject.Subscribe(subscriber1);
+            Subject.Subscribe(new object(), subscriber1);
 
             subscriber2 = new Pipe<MessagePayload>();
             subscriber2.MessageProcessed += m => processedMessage2 = m;
-            Subject.Subscribe(subscriber2);
+            Subject.Subscribe(new object(), subscriber2);
 
             inputMessage = new MessagePayload();
             inputMessage.SetToAddress(new EndpointAddress("TestAddress"));

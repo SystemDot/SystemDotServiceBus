@@ -6,7 +6,7 @@ namespace SystemDot.Messaging.Messages.Distribution
     [ContractClass(typeof(IDistributorContract))]
     public interface IDistributor : IMessageInputter<MessagePayload>
     {
-        void Subscribe(IMessageInputter<MessagePayload> toSubscribe);
+        void Subscribe(object key, IMessageInputter<MessagePayload> toSubscribe);
     }
 
     [ContractClassFor(typeof(IDistributor))]
@@ -17,8 +17,9 @@ namespace SystemDot.Messaging.Messages.Distribution
             Contract.Requires(toInput != null);
         }
 
-        public void Subscribe(IMessageInputter<MessagePayload> toSubscribe)
+        public void Subscribe(object key, IMessageInputter<MessagePayload> toSubscribe)
         {
+            Contract.Requires(key != null);
             Contract.Requires(toSubscribe != null);
         }
     }

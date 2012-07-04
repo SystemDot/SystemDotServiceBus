@@ -44,6 +44,7 @@
     <Compile Include="Http\FixedPortAddress.cs" />
     <Compile Include="Http\IWebRequestor.cs" />
     <Compile Include="Http\WebRequestor.cs" />
+    <Compile Include="IEnumerableExtensions.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="ObjectExtensions.cs" />
     <Compile Include="Parallelism\TimerTaskScheduler.cs" />

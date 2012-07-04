@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Messages.Packaging;
 
@@ -7,26 +7,24 @@ namespace SystemDot.Messaging.Messages.Distribution
     public class Distributor : IDistributor
     {
         readonly MessagePayloadCopier messagePayloadCopier;
-        readonly List<IMessageInputter<MessagePayload>> subscribers;
+        readonly ConcurrentDictionary<object, IMessageInputter<MessagePayload>> subscribers;
         
         public Distributor(MessagePayloadCopier messagePayloadCopier)
         {
             Contract.Requires(messagePayloadCopier != null);
 
             this.messagePayloadCopier = messagePayloadCopier;
-            this.subscribers = new List<IMessageInputter<MessagePayload>>();
+            this.subscribers = new ConcurrentDictionary<object, IMessageInputter<MessagePayload>>();
         }
 
         public void InputMessage(MessagePayload toInput)
         {
-            Contract.Requires(toInput != null);
-            this.subscribers.ForEach(s => s.InputMessage(this.messagePayloadCopier.Copy(toInput)));        
+            this.subscribers.Values.ForEach(s => s.InputMessage(this.messagePayloadCopier.Copy(toInput)));        
         }
 
-        public void Subscribe(IMessageInputter<MessagePayload> toSubscribe)
+        public void Subscribe(object key, IMessageInputter<MessagePayload> toSubscribe)
         {
-            Contract.Requires(toSubscribe != null);
-            this.subscribers.Add(toSubscribe);
+            this.subscribers.TryAdd(key, toSubscribe);
         }
     }
 }

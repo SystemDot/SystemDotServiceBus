@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Specifications.messages.distribution
             Configure<MessagePayloadCopier>(new MessagePayloadCopier());
             distributionSubscriber = new Pipe<MessagePayload>();
             distributionSubscriber.MessageProcessed += m => processedMessages.Add(m);
-            Subject.Subscribe(distributionSubscriber);
+            Subject.Subscribe(new object(), distributionSubscriber);
 
             message = new MessagePayload();
             message.SetToAddress(new EndpointAddress("TestAddress"));

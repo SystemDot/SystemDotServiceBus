@@ -56,6 +56,7 @@
     <Compile Include="configuration\ITestComponent.cs" />
     <Compile Include="configuration\TestComponent.cs" />
     <Compile Include="configuration\when_setting_a_component_in_the_environment.cs" />
+    <Compile Include="messages\distribution\when_subscribing_with_the_same_subscriber_key_twice.cs" />
     <Compile Include="messages\publishing\when_handling_a_subscribe_request_message.cs" />
     <Compile Include="transport\long_polling\when_long_polling_for_messages_on_two_addresses_and_a_message_is_returned_from_each.cs" />
     <Compile Include="messages\when_initialising_a_new_endpoint_address_with_only_a_node_name.cs" />
@@ -81,7 +82,6 @@
     <Compile Include="messages\repeating\when_recieving_a_message.cs" />
     <Compile Include="messages\when_initialising_a_new_endpoint_address_with_a_node_and_a_server_name.cs" />
     <Compile Include="TestDistributor.cs" />
-    <Compile Include="messages\publishing\when_handling_a_subscribe_request_message_for_an_existing_subscription.cs" />
     <Compile Include="messages\publishing\when_registering_a_publisher.cs" />
     <Compile Include="WithMessageInputterSubject.cs" />
     <Compile Include="transport\long_polling\serving\when_handling_a_request_containing_an_object_other_than_a_message_payload.cs" />

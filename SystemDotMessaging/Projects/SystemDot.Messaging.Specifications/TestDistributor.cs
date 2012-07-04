@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Specifications
             Subscribers = new List<IMessageInputter<MessagePayload>>();
         }
 
-        public void Subscribe(IMessageInputter<MessagePayload> toSubscribe)
+        public void Subscribe(object key, IMessageInputter<MessagePayload> toSubscribe)
         {
             this.Subscribers.Add(toSubscribe);
         }
@@ -23,5 +23,7 @@ namespace SystemDot.Messaging.Specifications
         {
             throw new System.NotImplementedException();
         }
+
+        
     }
 }
