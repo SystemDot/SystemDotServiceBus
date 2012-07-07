@@ -6,7 +6,6 @@ using SystemDot.Http;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Packaging.Headers;
-using SystemDot.Messaging.Transport.Http;
 using SystemDot.Messaging.Transport.Http.LongPolling;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -14,8 +13,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.transport.long_polling
 {
     [Subject("Long polling")]
-    public class when_long_polling_for_messages_and_two_messages_are_returned_in_the_stream :
-        WithSubject<LongPollReciever>
+    public class when_long_polling_for_messages_with_two_messages_are_returned_in_the_stream : WithSubject<LongPollReciever>
     {
         static List<MessagePayload> messagePayloads;
         static MessagePayload messagePayload1;
@@ -28,17 +26,16 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
             messagePayload1.SetToAddress(new EndpointAddress("Address1"));
             messagePayload2 = new MessagePayload();
             messagePayload2.SetToAddress(new EndpointAddress("Address2"));
-
-            var address = new EndpointAddress("EndpointAddress");
+            
             Configure<IFormatter>(new BinaryFormatter());
             
-            var requestor = new TestWebRequestor(The<IFormatter>());
-            requestor.AddMessages(address.GetUrl(), messagePayload1, messagePayload2);
-            Configure<IWebRequestor>(requestor);
-
-            Subject = new LongPollReciever(The<IWebRequestor>(), The<IFormatter>());
+            var requestor = new TestWebRequestor(The<IFormatter>(), new FixedPortAddress());
+            Configure<IWebRequestor>(requestor); 
+            requestor.AddMessages(messagePayload1, messagePayload2);
+            
             Subject.MessageProcessed += payload => messagePayloads.Add(payload);
-            Subject.RegisterListeningAddress(address);
+            Subject.RegisterListeningAddress(messagePayload1.GetToAddress());
+            Subject.RegisterListeningAddress(messagePayload2.GetToAddress());
         };
 
         Because of = () => Subject.Poll();

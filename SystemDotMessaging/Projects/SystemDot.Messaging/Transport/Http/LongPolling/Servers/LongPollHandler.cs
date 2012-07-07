@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using SystemDot.Logging;
+using System.Linq;
 using SystemDot.Messaging.Messages.Packaging;
-using SystemDot.Messaging.Messages.Packaging.Headers;
 
 namespace SystemDot.Messaging.Transport.Http.LongPolling.Servers
 {
@@ -21,7 +20,9 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling.Servers
             if (!toHandle.IsLongPollRequest())
                 return;
 
-            outgoingMessages.AddRange(this.outgoingQueue.DequeueAll(toHandle.GetToAddress()));
+            toHandle.GetLongPollRequestAddresses()
+                .ForEach(a => 
+                    outgoingMessages.AddRange(this.outgoingQueue.DequeueAll(a)));
         }
     }
 }

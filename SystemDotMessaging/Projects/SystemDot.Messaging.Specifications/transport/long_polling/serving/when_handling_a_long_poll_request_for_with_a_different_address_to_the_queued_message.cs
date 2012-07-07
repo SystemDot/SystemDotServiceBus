@@ -39,8 +39,7 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling.serving
             outgoingQueue.Enqueue(sentMessageInQueue);
 
             longPollRequest = new MessagePayload();
-            longPollRequest.SetToAddress(new EndpointAddress("Address2")); 
-            longPollRequest.SetLongPollRequest();
+            longPollRequest.SetLongPollRequest(new List<EndpointAddress> { new EndpointAddress("Address2") });
 
             inputStream.Serialise(longPollRequest, formatter);
         };

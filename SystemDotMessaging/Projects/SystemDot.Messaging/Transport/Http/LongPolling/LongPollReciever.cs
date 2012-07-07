@@ -5,11 +5,8 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using SystemDot.Http;
-using SystemDot.Logging;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
-using SystemDot.Messaging.Messages.Packaging.Headers;
-using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Transport.Http.LongPolling
 {
@@ -40,23 +37,24 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
         public Task Poll()
         {
             return this.requestor.SendPut(
-                this.addresses[0].GetUrl(),
-                s => this.formatter.Serialize(s, CreateLongPollPayload(this.addresses[0])), 
+                new FixedPortAddress(), 
+                s => this.formatter.Serialize(s, CreateLongPollPayload(this.addresses)), 
                 RecieveResponse);
         }
 
-        MessagePayload CreateLongPollPayload(EndpointAddress address)
+        MessagePayload CreateLongPollPayload(List<EndpointAddress> toAdd)
         {
             var payload = new MessagePayload();
-            payload.SetToAddress(address);
-            payload.SetLongPollRequest();
+            payload.SetLongPollRequest(toAdd);
 
             return payload;
         }
 
         void RecieveResponse(Stream responseStream)
         {
-            var messages = this.formatter.Deserialize(responseStream).As<IEnumerable<MessagePayload>>();
+            var messages = this.formatter.Deserialize(responseStream)
+                .As<IEnumerable<MessagePayload>>();
+
             foreach (var message in messages)
             {
                 this.MessageProcessed(message);

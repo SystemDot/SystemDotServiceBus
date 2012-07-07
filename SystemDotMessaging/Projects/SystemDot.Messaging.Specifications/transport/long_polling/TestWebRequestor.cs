@@ -1,23 +1,27 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using SystemDot.Http;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Transport.Http.LongPolling;
+using SystemDot.Messaging.Messages.Packaging.Headers;
 
 namespace SystemDot.Messaging.Specifications.transport.long_polling
 {
     public class TestWebRequestor : IWebRequestor
     {
-        readonly Dictionary<FixedPortAddress, MessagePayload[]> messages;
+        readonly List<MessagePayload> messages;
         readonly IFormatter formatter;
+        readonly FixedPortAddress toCheck;
 
-        public TestWebRequestor(IFormatter formatter)
+        public TestWebRequestor(IFormatter formatter, FixedPortAddress toCheck)
         {
             this.formatter = formatter;
-            messages = new Dictionary<FixedPortAddress, MessagePayload[]>();
+            this.toCheck = toCheck;
+            messages = new List<MessagePayload>();
         }
 
         public Task SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest)
@@ -27,23 +31,35 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
 
         public Task SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest, Action<Stream> toPerformOnResponse)
         {
+            if (toCheck.Url != address.Url)
+                return new Task(() => { });
+
             var request = new MemoryStream();
             toPerformOnRequest(request);
 
             var requestMessagePayload = request.Deserialise<MessagePayload>(formatter);
-            if(!requestMessagePayload.IsLongPollRequest()) return new Task(() => { });
+            
+            if(!requestMessagePayload.IsLongPollRequest()) 
+                return new Task(() => { });
 
             var response = new MemoryStream();
 
-            response.Serialise(messages[address], formatter);
+            response.Serialise(
+                messages.Join(
+                    requestMessagePayload.GetLongPollRequestAddresses(), 
+                    m => m.GetToAddress(), 
+                    a => a, 
+                    (m , a) => m).ToList(), 
+                formatter);
+
             toPerformOnResponse(response);
 
             return new Task(() => { });
         }
 
-        public void AddMessages(FixedPortAddress address, params MessagePayload[] messagePayloads)
+        public void AddMessages(params MessagePayload[] messagePayloads)
         {
-            messages[address] = messagePayloads;
+            this.messages.AddRange(messagePayloads);
         }
     }
 }

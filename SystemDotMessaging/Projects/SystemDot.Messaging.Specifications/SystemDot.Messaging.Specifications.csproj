@@ -58,7 +58,6 @@
     <Compile Include="configuration\when_setting_a_component_in_the_environment.cs" />
     <Compile Include="messages\distribution\when_subscribing_with_the_same_subscriber_key_twice.cs" />
     <Compile Include="messages\publishing\when_handling_a_subscribe_request_message.cs" />
-    <Compile Include="transport\long_polling\when_long_polling_for_messages_on_two_addresses_and_a_message_is_returned_from_each.cs" />
     <Compile Include="messages\when_initialising_a_new_endpoint_address_with_only_a_node_name.cs" />
     <Compile Include="messages\publishing\when_handling_a_non_subscription_request_message_with_the_subscription_request_handler.cs" />
     <Compile Include="messages\publishing\TestSubscriptionChannelBuilder.cs" />
@@ -66,6 +65,8 @@
     <Compile Include="messages\distribution\TestTaskStarter.cs" />
     <Compile Include="messages\distribution\when_pumping_an_item.cs" />
     <Compile Include="messages\distribution\when_pumping_items_on_a_with_no_pushed_item_listener.cs" />
+    <Compile Include="transport\long_polling\when_long_polling_for_messages_with_addresses_that_are_not_in_the_queue_.cs" />
+    <Compile Include="transport\long_polling\serving\when_handling_a_long_poll_request_for_two_addresses_with_two_messages_with_those_addresses_in_the_queue.cs" />
     <Compile Include="transport\long_polling\when_long_polling_for_messages_and_two_messages_are_returned_in_the_stream.cs" />
     <Compile Include="transport\long_polling\TestWebRequestor.cs" />
     <Compile Include="messages\bus\when_sending_a_message_on_the_bus.cs" />
