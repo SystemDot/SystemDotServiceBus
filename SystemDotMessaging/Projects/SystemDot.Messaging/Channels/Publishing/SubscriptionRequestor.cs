@@ -1,4 +1,5 @@
 using System;
+using SystemDot.Logging;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Packaging.Headers;
@@ -18,6 +19,8 @@ namespace SystemDot.Messaging.Channels.Publishing
 
         public void Start()
         {
+            Logger.Info("Sending subscription request");
+
             var request = new MessagePayload();
             request.SetSubscriptionRequest(new SubscriptionSchema(subscriberAddress));
             MessageProcessed(request);

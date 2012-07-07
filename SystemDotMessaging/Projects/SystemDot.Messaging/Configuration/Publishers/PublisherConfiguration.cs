@@ -6,6 +6,7 @@ using SystemDot.Messaging.Messages.Distribution;
 using SystemDot.Messaging.Messages.Pipelines;
 using SystemDot.Messaging.Messages.Processing;
 using SystemDot.Messaging.Transport;
+using SystemDot.Messaging.Transport.Http.LongPolling;
 using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Configuration.Publishers
@@ -26,14 +27,14 @@ namespace SystemDot.Messaging.Configuration.Publishers
             BuildSubscriptionRequestHandler(address);
             BuildPublisher(address);
 
-            GetComponent<AsynchronousWorkCoordinator>().Start();
+            MessagingEnvironment.GetComponent<TaskLooper>().Start();
         }
 
         static void BuildSubscriptionRequestHandler(EndpointAddress address)
         {
             MessagePipelineBuilder.Build()
                 .With(GetComponent<IMessageReciever>())
-                .Pump()
+                .Pipe()
                 .ToEndPoint(GetComponent<SubscriptionRequestHandler>());
 
             GetComponent<IMessageReciever>().RegisterListeningAddress(address);
@@ -51,7 +52,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
 
             MessagePipelineBuilder.Build()
                 .With(GetComponent<MessageBus>())
-                .Pump()
+                .Pipe()
                 .ToProcessor(GetComponent<MessagePayloadPackager>())
                 .ToEndPoint(publisher);
         }

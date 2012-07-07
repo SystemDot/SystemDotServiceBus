@@ -81,5 +81,10 @@ namespace SystemDot.Messaging.Messages
         {
             return !left.Equals(right);
         }
+
+        public override string ToString()
+        {
+            return String.Concat(NodeName, "@", ServerName);
+        }
     }
 }

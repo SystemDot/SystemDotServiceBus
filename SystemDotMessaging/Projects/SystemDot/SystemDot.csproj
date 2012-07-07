@@ -47,7 +47,8 @@
     <Compile Include="IEnumerableExtensions.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="ObjectExtensions.cs" />
-    <Compile Include="Parallelism\TimerTaskScheduler.cs" />
+    <Compile Include="Parallelism\TaskLooper.cs" />
+    <Compile Include="Parallelism\TaskScheduler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Http\HttpServer.cs" />
     <Compile Include="Http\IHttpHandler.cs" />
@@ -55,12 +56,8 @@
     <Compile Include="Serialisation\BinarySerialiser.cs" />
     <Compile Include="Parallelism\BlockingQueue.cs" />
     <Compile Include="Parallelism\ITaskScheduler.cs" />
-    <Compile Include="Parallelism\IThreader.cs" />
-    <Compile Include="Parallelism\IThreadPool.cs" />
-    <Compile Include="Parallelism\IWorker.cs" />
-    <Compile Include="Parallelism\AsynchronousWorkCoordinator.cs" />
-    <Compile Include="Parallelism\Threader.cs" />
-    <Compile Include="Parallelism\ThreadPool.cs" />
+    <Compile Include="Parallelism\ITaskStarter.cs" />
+    <Compile Include="Parallelism\TaskStarter.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

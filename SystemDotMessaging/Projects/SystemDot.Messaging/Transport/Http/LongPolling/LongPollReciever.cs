@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 using SystemDot.Http;
+using SystemDot.Logging;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Packaging.Headers;
@@ -11,19 +13,19 @@ using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Transport.Http.LongPolling
 {
-    public class LongPollReciever : IWorker, IMessageReciever
+    public class LongPollReciever : IMessageReciever
     {
         readonly List<EndpointAddress> addresses;
         readonly IWebRequestor requestor;
         readonly IFormatter formatter;
-
+        
         public event Action<MessagePayload> MessageProcessed;
 
         public LongPollReciever(IWebRequestor requestor, IFormatter formatter)
         {
             Contract.Requires(requestor != null);
             Contract.Requires(formatter != null);
-
+            
             this.requestor = requestor;
             this.formatter = formatter;
             this.addresses = new List<EndpointAddress>();
@@ -35,20 +37,11 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
             this.addresses.Add(toRegister);
         }
 
-        public void StartWork()
+        public Task Poll()
         {
-        }
-
-        public void PerformWork()
-        {
-            this.addresses.ForEach(SendPut);
-        }
-
-        void SendPut(EndpointAddress address)
-        {
-            this.requestor.SendPut(
-                address.GetUrl(), 
-                s => this.formatter.Serialize(s, CreateLongPollPayload(address)), 
+            return this.requestor.SendPut(
+                this.addresses[0].GetUrl(),
+                s => this.formatter.Serialize(s, CreateLongPollPayload(this.addresses[0])), 
                 RecieveResponse);
         }
 
@@ -68,10 +61,6 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
             {
                 this.MessageProcessed(message);
             }
-        }
-
-        public void StopWork()
-        {
         }
     }
 }

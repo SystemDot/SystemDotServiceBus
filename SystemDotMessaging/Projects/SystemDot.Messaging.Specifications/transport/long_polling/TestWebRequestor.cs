@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 using SystemDot.Http;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Transport.Http.LongPolling;
@@ -19,29 +20,30 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
             messages = new Dictionary<FixedPortAddress, MessagePayload[]>();
         }
 
-        public void SendPut(FixedPortAddress address, Action<Stream> performOnRequestStream)
+        public Task SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest)
         {
+            return new Task(() => { });
         }
 
-        public void SendPut(FixedPortAddress address, Action<Stream> performOnRequestStream, Action<Stream> performOnResponseStream)
+        public Task SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest, Action<Stream> toPerformOnResponse)
         {
             var request = new MemoryStream();
-            performOnRequestStream(request);
+            toPerformOnRequest(request);
 
             var requestMessagePayload = request.Deserialise<MessagePayload>(formatter);
-            if(!requestMessagePayload.IsLongPollRequest()) return;
+            if(!requestMessagePayload.IsLongPollRequest()) return new Task(() => { });
 
             var response = new MemoryStream();
 
             response.Serialise(messages[address], formatter);
-            performOnResponseStream(response);
+            toPerformOnResponse(response);
+
+            return new Task(() => { });
         }
 
         public void AddMessages(FixedPortAddress address, params MessagePayload[] messagePayloads)
         {
             messages[address] = messagePayloads;
         }
-
-        
     }
 }

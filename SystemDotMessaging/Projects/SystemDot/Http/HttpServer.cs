@@ -1,12 +1,11 @@
-using System;
 using System.Diagnostics.Contracts;
 using System.Net;
+using System.Threading.Tasks;
 using SystemDot.Logging;
-using SystemDot.Parallelism;
 
 namespace SystemDot.Http
 {
-    public class HttpServer : IWorker
+    public class HttpServer
     {
         readonly FixedPortAddress address;
         readonly IHttpHandler handler;
@@ -23,28 +22,30 @@ namespace SystemDot.Http
             this.listener = new HttpListener();
         }
 
-        public void StartWork()
+        public void Start()
         {
             this.listener.Prefixes.Clear();
             this.listener.Prefixes.Add(this.address.Url);
             this.listener.Start();
+
+            Task.Factory.StartNew(PerformWork);
         }
 
         public void PerformWork()
-        {
-            if (this.isStopped || !this.listener.IsListening)
-                return;
+        {    
+            Task<HttpListenerContext> context = Task.Factory.FromAsync<HttpListenerContext>(
+                listener.BeginGetContext, 
+                listener.EndGetContext, 
+                listener);
 
-            var result = listener.BeginGetContext(BeginGetContextCallback, listener);
-            result.AsyncWaitHandle.WaitOne();
+            context.ContinueWith(_ => PerformWork());
+            context.ContinueWith(task => HandleRequest(task.Result));            
         }
 
-        private void BeginGetContextCallback(IAsyncResult ar)
+        private void HandleRequest(HttpListenerContext context)
         {
             try
             {
-                HttpListenerContext context = this.listener.EndGetContext(ar);
-
                 this.handler.HandleRequest(context.Request.InputStream, context.Response.OutputStream);
 
                 context.Response.StatusCode = (int)HttpStatusCode.OK;
@@ -52,7 +53,7 @@ namespace SystemDot.Http
             }
             catch (HttpListenerException e)
             {
-                Logger.Log(e.Message);
+                Logger.Info(e.Message);
             }
         }
 

@@ -63,7 +63,7 @@
     <Compile Include="messages\publishing\when_handling_a_non_subscription_request_message_with_the_subscription_request_handler.cs" />
     <Compile Include="messages\publishing\TestSubscriptionChannelBuilder.cs" />
     <Compile Include="messages\processing\when_addressing_a_message.cs" />
-    <Compile Include="messages\distribution\TestThreadPool.cs" />
+    <Compile Include="messages\distribution\TestTaskStarter.cs" />
     <Compile Include="messages\distribution\when_pumping_an_item.cs" />
     <Compile Include="messages\distribution\when_pumping_items_on_a_with_no_pushed_item_listener.cs" />
     <Compile Include="transport\long_polling\when_long_polling_for_messages_and_two_messages_are_returned_in_the_stream.cs" />

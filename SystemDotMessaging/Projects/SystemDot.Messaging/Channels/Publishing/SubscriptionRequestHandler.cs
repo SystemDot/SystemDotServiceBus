@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using SystemDot.Logging;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Distribution;
 using SystemDot.Messaging.Messages.Packaging;
@@ -27,6 +28,9 @@ namespace SystemDot.Messaging.Channels.Publishing
         public void InputMessage(MessagePayload message)
         {
             if (!message.IsSubscriptionRequest()) return;
+
+            Logger.Info("Handling subscription request for {0}", 
+                message.GetSubscriptionRequestSchema().SubscriberAddress);
 
             GetPublisher(message).Subscribe(
                 message.GetSubscriptionRequestSchema().SubscriberAddress, 

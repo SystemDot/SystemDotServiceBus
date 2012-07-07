@@ -5,18 +5,18 @@ namespace SystemDot.Messaging.Messages.Distribution
 {
     public class Pump<T> : IMessageProcessor<T, T>
     {
-        readonly IThreadPool threadPool;
+        readonly ITaskStarter taskStarter;
 
         public event Action<T> MessageProcessed;
 
-        public Pump(IThreadPool threadPool)
+        public Pump(ITaskStarter taskStarter)
         {
-            this.threadPool = threadPool;
+            this.taskStarter = taskStarter;
         }
 
         public void InputMessage(T toInput)
         {
-            this.threadPool.QueueTask(() => OnItemPushed(toInput));
+            this.taskStarter.StartTask(() => OnItemPushed(toInput));
         }
 
         void OnItemPushed(T message)

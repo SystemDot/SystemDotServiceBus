@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using SystemDot.Logging;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Packaging.Headers;
 
@@ -19,7 +20,7 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling.Servers
         {
             if (toHandle.IsLongPollRequest()) 
                 return;
-
+            
             this.outgoingQueue.Enqueue(toHandle);
         }
     }

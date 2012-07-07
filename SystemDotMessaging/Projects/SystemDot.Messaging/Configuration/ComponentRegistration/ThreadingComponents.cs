@@ -8,13 +8,9 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
 
         public static void Register()
         {
-            MessagingEnvironment.RegisterComponent<IThreadPool>(new ThreadPool(DefaultWorkerThreads));
-            MessagingEnvironment.RegisterComponent<IThreader>(new Threader());
-
-            MessagingEnvironment.RegisterComponent(
-                new AsynchronousWorkCoordinator(MessagingEnvironment.GetComponent<IThreader>()));
-
-            MessagingEnvironment.RegisterComponent<ITaskScheduler>(new TimerTaskScheduler());
+            MessagingEnvironment.RegisterComponent<ITaskStarter>(new TaskStarter());
+            MessagingEnvironment.RegisterComponent(new TaskLooper(MessagingEnvironment.GetComponent<ITaskStarter>()));
+            MessagingEnvironment.RegisterComponent<ITaskScheduler>(new TaskScheduler());
 
         }
     }

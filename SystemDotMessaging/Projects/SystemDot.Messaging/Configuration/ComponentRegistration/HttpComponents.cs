@@ -1,7 +1,5 @@
 using System.Runtime.Serialization;
 using SystemDot.Http;
-using SystemDot.Messaging.Messages;
-using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Transport;
 using SystemDot.Messaging.Transport.Http.LongPolling;
 using SystemDot.Parallelism;
@@ -16,7 +14,8 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
                 MessagingEnvironment.GetComponent<IWebRequestor>(), 
                 MessagingEnvironment.GetComponent<IFormatter>());
 
-            MessagingEnvironment.GetComponent<AsynchronousWorkCoordinator>().RegisterWorker(longPollReciever);
+            MessagingEnvironment.GetComponent<TaskLooper>().RegisterToLoop(longPollReciever.Poll);
+
             MessagingEnvironment.RegisterComponent<IMessageReciever>(longPollReciever);
 
             MessagingEnvironment.RegisterComponent<IMessageSender>(() => new MessageSender(

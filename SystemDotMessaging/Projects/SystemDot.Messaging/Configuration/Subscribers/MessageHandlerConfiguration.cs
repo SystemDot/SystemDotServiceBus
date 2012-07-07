@@ -7,6 +7,7 @@ using SystemDot.Messaging.Messages.Consuming;
 using SystemDot.Messaging.Messages.Pipelines;
 using SystemDot.Messaging.Messages.Processing;
 using SystemDot.Messaging.Transport;
+using SystemDot.Messaging.Transport.Http.LongPolling;
 using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Configuration.Subscribers
@@ -41,8 +42,8 @@ namespace SystemDot.Messaging.Configuration.Subscribers
         {
             SubscriptionRequestor subscriptionRequestor = BuildSubscriptionRequestChannel();
             BuildSubscriberChannel();
-            
-            GetComponent<AsynchronousWorkCoordinator>().Start();
+
+            MessagingEnvironment.GetComponent<TaskLooper>().Start();
             subscriptionRequestor.Start();
         }
 
@@ -65,7 +66,7 @@ namespace SystemDot.Messaging.Configuration.Subscribers
             
             MessagePipelineBuilder.Build()
                 .With(GetComponent<IMessageReciever>())
-                .Pump()
+                .Pipe()
                 .ToProcessor(GetComponent<MessagePayloadUnpackager>())
                 .ToEndPoint(messageHandlerRouter);
 

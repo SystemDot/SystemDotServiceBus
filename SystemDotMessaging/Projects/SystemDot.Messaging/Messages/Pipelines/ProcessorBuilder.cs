@@ -15,10 +15,18 @@ namespace SystemDot.Messaging.Messages.Pipelines
 
         public ProcessorBuilder<TOut> Pump()
         {
-            var pump = new Pump<TOut>(MessagingEnvironment.GetComponent<IThreadPool>());
+            var pump = new Pump<TOut>(MessagingEnvironment.GetComponent<ITaskStarter>());
             this.processor.MessageProcessed += pump.InputMessage;
 
             return new ProcessorBuilder<TOut>(pump);
+        }
+
+        public ProcessorBuilder<TOut> Pipe()
+        {
+            var pipe = new Pipe<TOut>();
+            this.processor.MessageProcessed += pipe.InputMessage;
+
+            return new ProcessorBuilder<TOut>(pipe);
         }
 
         public ProcessorBuilder<TNextOut> ToProcessor<TNextOut>(IMessageProcessor<TOut, TNextOut> messageProcessor)

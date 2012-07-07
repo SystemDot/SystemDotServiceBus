@@ -1,6 +1,7 @@
 using System.Diagnostics.Contracts;
 using System.Runtime.Serialization;
 using SystemDot.Http;
+using SystemDot.Logging;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Packaging.Headers;
 

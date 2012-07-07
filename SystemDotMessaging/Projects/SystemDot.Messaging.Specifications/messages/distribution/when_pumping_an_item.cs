@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Specifications.messages.distribution
         {
             item = new object();
             
-            pump = new Pump<object>(new TestThreadPool());
+            pump = new Pump<object>(new TestTaskStarter());
             pump.MessageProcessed += m => pushedItem = m;
         };
 

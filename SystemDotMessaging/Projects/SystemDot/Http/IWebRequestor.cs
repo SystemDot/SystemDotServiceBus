@@ -1,12 +1,13 @@
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace SystemDot.Http
 {
     public interface IWebRequestor
     {
-        void SendPut(FixedPortAddress address, Action<Stream> performOnRequestStream);
-        void SendPut(FixedPortAddress address, Action<Stream> performOnRequestStream, Action<Stream> performOnResponseStream);
+        Task SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest);
+        Task SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest, Action<Stream> toPerformOnResponse);
         
     }
 }

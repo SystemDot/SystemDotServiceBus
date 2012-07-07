@@ -39,7 +39,7 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
             reciever.MessageProcessed += payload => messagePayloads.Add(payload);
         };
 
-        Because of = () => reciever.PerformWork();
+        Because of = () => reciever.Poll();
 
         It should_output_the_first_recieved_message = () =>
             messagePayloads.First().GetToAddress().ShouldEqual(messagePayload1.GetToAddress());

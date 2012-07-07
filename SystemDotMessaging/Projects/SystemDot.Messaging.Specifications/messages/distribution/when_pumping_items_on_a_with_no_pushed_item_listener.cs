@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.Specifications.messages.distribution
         {
             message = new object();
             
-            pump = new Pump<object>(new TestThreadPool());
+            pump = new Pump<object>(new TestTaskStarter());
         };
 
         Because of = () => exception = Catch.Exception(() => pump.InputMessage(message));

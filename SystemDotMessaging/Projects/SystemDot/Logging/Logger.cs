@@ -4,9 +4,14 @@ namespace SystemDot.Logging
 {
     public class Logger
     {
-        public static void Log(string message)
+        public static void Info(string message)
         {
             Console.WriteLine(message);
+        }
+
+        public static void Info(string message, params object[] args)
+        {
+            Console.WriteLine(message, args);
         }
     }
 }

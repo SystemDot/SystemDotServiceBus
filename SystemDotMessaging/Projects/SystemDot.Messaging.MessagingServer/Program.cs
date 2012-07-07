@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using SystemDot.Http;
-using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Transport.Http.LongPolling.Servers;
-using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.MessagingServer
 {
@@ -11,9 +9,7 @@ namespace SystemDot.Messaging.MessagingServer
     {
         static void Main(string[] args)
         {
-            var coordinator = new AsynchronousWorkCoordinator(new Threader());
-            coordinator.RegisterWorker(BuildMessagingServer());
-            coordinator.Start();
+            BuildMessagingServer().Start();
 
             Console.Write("I am the message server. Press enter to exit.");
             Console.ReadLine();
