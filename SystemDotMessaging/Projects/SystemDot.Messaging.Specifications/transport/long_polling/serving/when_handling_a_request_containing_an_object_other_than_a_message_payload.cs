@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using SystemDot.Messaging.Transport.Http.LongPolling.Servers;
+using SystemDot.Serialisation;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.transport.long_polling.serving
@@ -10,7 +11,7 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling.serving
     public class when_handling_a_request_containing_an_object_other_than_a_message_payload
     {
         static HttpMessagingServer server;
-        static BinaryFormatter formatter; 
+        static ISerialiser formatter; 
         static MemoryStream inputStream;
         static MemoryStream outputStream;
         static MessagePayloadQueue outgoingQueue;
@@ -18,7 +19,7 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling.serving
 
         Establish context = () =>
         {
-            formatter = new BinaryFormatter();
+            formatter = new PlatformAgnosticSerialiser();
             outgoingQueue = new MessagePayloadQueue(new TimeSpan(0, 0, 0));
             inputStream = new MemoryStream();
             outputStream = new MemoryStream();

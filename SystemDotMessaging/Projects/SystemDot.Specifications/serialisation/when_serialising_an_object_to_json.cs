@@ -7,14 +7,14 @@ namespace SystemDot.Specifications.serialisation
     [Subject("Serialisation")]
     public class when_serialising_an_object_to_json
     {
-        static BinarySerialiser serialiser;
+        static PlatformAgnosticSerialiser serialiser;
         static string item;
         static byte[] serialisedItem;
         
         Establish context = () =>
         {
             item = "Test";
-            serialiser = new BinarySerialiser(new BinaryFormatter());
+            serialiser = new PlatformAgnosticSerialiser();
         };
 
         Because of = () => serialisedItem = serialiser.Serialise(item);

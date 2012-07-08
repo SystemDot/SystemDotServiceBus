@@ -10,10 +10,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
         public static void Register()
         {
             MessagingEnvironment.RegisterComponent<IWebRequestor>(new WebRequestor());
-            MessagingEnvironment.RegisterComponent<IFormatter>(new BinaryFormatter());
-
-            MessagingEnvironment.RegisterComponent<ISerialiser>(
-                new BinarySerialiser(MessagingEnvironment.GetComponent<IFormatter>()));
+            MessagingEnvironment.RegisterComponent<ISerialiser>(new PlatformAgnosticSerialiser());
         }
     }
 }

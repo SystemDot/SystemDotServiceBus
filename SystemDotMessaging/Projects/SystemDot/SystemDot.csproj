@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Serialization">
+      <HintPath>..\..\Dependencies\Serialization.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -53,11 +56,11 @@
     <Compile Include="Http\HttpServer.cs" />
     <Compile Include="Http\IHttpHandler.cs" />
     <Compile Include="Serialisation\ISerialiser.cs" />
-    <Compile Include="Serialisation\BinarySerialiser.cs" />
     <Compile Include="Parallelism\BlockingQueue.cs" />
     <Compile Include="Parallelism\ITaskScheduler.cs" />
     <Compile Include="Parallelism\ITaskStarter.cs" />
     <Compile Include="Parallelism\TaskStarter.cs" />
+    <Compile Include="Serialisation\PlatformAgnosticSerialiser.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

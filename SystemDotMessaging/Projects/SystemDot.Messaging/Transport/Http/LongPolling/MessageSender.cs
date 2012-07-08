@@ -1,18 +1,18 @@
 using System.Diagnostics.Contracts;
 using System.Runtime.Serialization;
 using SystemDot.Http;
-using SystemDot.Logging;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Packaging.Headers;
+using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Transport.Http.LongPolling
 {
     public class MessageSender : IMessageSender
     {
-        readonly IFormatter formatter;
+        readonly ISerialiser formatter;
         readonly IWebRequestor requestor;
 
-        public MessageSender(IFormatter formatter, IWebRequestor requestor)
+        public MessageSender(ISerialiser formatter, IWebRequestor requestor)
         {
             Contract.Requires(formatter != null);
             Contract.Requires(requestor != null);

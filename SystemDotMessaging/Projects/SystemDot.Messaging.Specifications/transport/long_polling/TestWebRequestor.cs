@@ -8,16 +8,17 @@ using SystemDot.Http;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Transport.Http.LongPolling;
 using SystemDot.Messaging.Messages.Packaging.Headers;
+using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Specifications.transport.long_polling
 {
     public class TestWebRequestor : IWebRequestor
     {
         readonly List<MessagePayload> messages;
-        readonly IFormatter formatter;
+        readonly ISerialiser formatter;
         readonly FixedPortAddress toCheck;
 
-        public TestWebRequestor(IFormatter formatter, FixedPortAddress toCheck)
+        public TestWebRequestor(ISerialiser formatter, FixedPortAddress toCheck)
         {
             this.formatter = formatter;
             this.toCheck = toCheck;

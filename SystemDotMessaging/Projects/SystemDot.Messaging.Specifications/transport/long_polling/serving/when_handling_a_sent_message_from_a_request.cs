@@ -6,6 +6,7 @@ using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Packaging.Headers;
 using SystemDot.Messaging.Transport.Http.LongPolling.Servers;
+using SystemDot.Serialisation;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.transport.long_polling.serving
@@ -14,14 +15,14 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling.serving
     public class when_handling_a_sent_message_from_a_request
     {
         static HttpMessagingServer server;
-        static BinaryFormatter formatter; 
+        static ISerialiser formatter; 
         static MemoryStream stream;
         static MessagePayload sentMessage;
         static MessagePayloadQueue outgoingQueue;
 
         Establish context = () =>
         {
-            formatter = new BinaryFormatter();
+            formatter = new PlatformAgnosticSerialiser();
             outgoingQueue = new MessagePayloadQueue(new TimeSpan(0, 0, 0));
             stream = new MemoryStream();
             

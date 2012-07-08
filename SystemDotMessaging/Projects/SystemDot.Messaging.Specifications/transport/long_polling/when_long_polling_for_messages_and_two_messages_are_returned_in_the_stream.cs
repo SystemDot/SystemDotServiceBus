@@ -7,6 +7,7 @@ using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Packaging.Headers;
 using SystemDot.Messaging.Transport.Http.LongPolling;
+using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -26,10 +27,10 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
             messagePayload1.SetToAddress(new EndpointAddress("Address1"));
             messagePayload2 = new MessagePayload();
             messagePayload2.SetToAddress(new EndpointAddress("Address2"));
-            
-            Configure<IFormatter>(new BinaryFormatter());
-            
-            var requestor = new TestWebRequestor(The<IFormatter>(), new FixedPortAddress());
+
+            Configure<ISerialiser>(new PlatformAgnosticSerialiser());
+
+            var requestor = new TestWebRequestor(The<ISerialiser>(), new FixedPortAddress());
             Configure<IWebRequestor>(requestor); 
             requestor.AddMessages(messagePayload1, messagePayload2);
             

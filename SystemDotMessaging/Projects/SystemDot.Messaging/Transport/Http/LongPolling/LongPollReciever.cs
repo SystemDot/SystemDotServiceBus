@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using SystemDot.Http;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
+using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Transport.Http.LongPolling
 {
@@ -14,11 +15,11 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
     {
         readonly List<EndpointAddress> addresses;
         readonly IWebRequestor requestor;
-        readonly IFormatter formatter;
+        readonly ISerialiser formatter;
         
         public event Action<MessagePayload> MessageProcessed;
 
-        public LongPollReciever(IWebRequestor requestor, IFormatter formatter)
+        public LongPollReciever(IWebRequestor requestor, ISerialiser formatter)
         {
             Contract.Requires(requestor != null);
             Contract.Requires(formatter != null);

@@ -2,6 +2,7 @@
 using System.Runtime.Serialization.Formatters.Binary;
 using SystemDot.Http;
 using SystemDot.Messaging.Transport.Http.LongPolling.Servers;
+using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.MessagingServer
 {
@@ -25,7 +26,7 @@ namespace SystemDot.Messaging.MessagingServer
             var messagePayloadQueue = new MessagePayloadQueue(new TimeSpan(0, 0, 4));
 
             return new HttpMessagingServer(
-                new BinaryFormatter(),
+                new PlatformAgnosticSerialiser(),
                 new SentMessageHandler(messagePayloadQueue),
                 new LongPollHandler(messagePayloadQueue));
         }

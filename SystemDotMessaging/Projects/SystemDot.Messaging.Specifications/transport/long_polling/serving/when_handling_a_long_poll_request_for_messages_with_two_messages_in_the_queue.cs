@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Packaging.Headers;
 using SystemDot.Messaging.Transport.Http.LongPolling;
 using SystemDot.Messaging.Transport.Http.LongPolling.Servers;
+using SystemDot.Serialisation;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.transport.long_polling.serving
@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling.serving
     public class when_handling_a_long_poll_request_for_messages_with_two_messages_in_the_queue
     {
         static HttpMessagingServer server;
-        static BinaryFormatter formatter; 
+        static ISerialiser formatter; 
         static MemoryStream inputStream;
         static MemoryStream outputStream;
         static MessagePayload sentMessageInQueue1;
@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling.serving
 
         Establish context = () =>
         {
-            formatter = new BinaryFormatter();
+            formatter = new PlatformAgnosticSerialiser();
             outgoingQueue = new MessagePayloadQueue(new TimeSpan(0, 0, 0));
             inputStream = new MemoryStream();
             outputStream = new MemoryStream();

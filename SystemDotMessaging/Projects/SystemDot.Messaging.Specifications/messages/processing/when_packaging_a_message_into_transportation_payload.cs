@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Packaging.Headers;
 using SystemDot.Messaging.Messages.Processing;
@@ -18,7 +17,7 @@ namespace SystemDot.Messaging.Specifications.messages.processing
         
         Establish context = () =>
         {
-            serialiser = new BinarySerialiser(new BinaryFormatter());
+            serialiser = new PlatformAgnosticSerialiser();
 
             packager = new MessagePayloadPackager(serialiser);
             packager.MessageProcessed += i => processedPayload = i;

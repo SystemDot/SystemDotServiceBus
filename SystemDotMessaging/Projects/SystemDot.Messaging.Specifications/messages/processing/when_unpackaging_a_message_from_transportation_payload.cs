@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.messages.processing
         
         Establish context = () =>
         {
-            serialiser = new BinarySerialiser(new BinaryFormatter());
+            serialiser = new PlatformAgnosticSerialiser();
             packager = new MessagePayloadUnpackager(serialiser);
             packager.MessageProcessed += i => processedMessage = (string)i;
             

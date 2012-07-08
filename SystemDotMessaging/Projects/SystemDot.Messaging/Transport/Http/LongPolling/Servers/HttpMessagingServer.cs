@@ -4,15 +4,16 @@ using System.IO;
 using System.Runtime.Serialization;
 using SystemDot.Http;
 using SystemDot.Messaging.Messages.Packaging;
+using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Transport.Http.LongPolling.Servers
 {
     public class HttpMessagingServer : IHttpHandler 
     {
-        private readonly IFormatter formatter;
+        private readonly ISerialiser formatter;
         private readonly IMessagingServerHandler[] handlers;
 
-        public HttpMessagingServer(IFormatter formatter, params IMessagingServerHandler[] handlers)
+        public HttpMessagingServer(ISerialiser formatter, params IMessagingServerHandler[] handlers)
         {
             Contract.Requires(formatter != null);
             

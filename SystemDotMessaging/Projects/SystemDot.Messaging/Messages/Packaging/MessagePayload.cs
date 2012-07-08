@@ -7,26 +7,18 @@ namespace SystemDot.Messaging.Messages.Packaging
     [Serializable]
     public class MessagePayload
     {
-        readonly List<IMessageHeader> headers;
-
-        public IEnumerable<IMessageHeader> Headers 
-        { 
-            get
-            {
-                return this.headers;
-            }
-        }
+        public List<IMessageHeader> Headers { get; private set; }
 
         public MessagePayload()
         {
-            this.headers = new List<IMessageHeader>();
+            this.Headers = new List<IMessageHeader>();
         }
 
         public void AddHeader(IMessageHeader toAdd)
         {
             Contract.Requires(toAdd != null);
 
-            this.headers.Add(toAdd);
+            this.Headers.Add(toAdd);
         }
     }
 }
