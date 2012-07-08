@@ -19,8 +19,7 @@ namespace SystemDot.Http
         {
             var request = (HttpWebRequest) WebRequest.Create(address.Url);
             request.Method = "PUT";
-            request.ConnectionGroupName = Guid.NewGuid().ToString();
-
+            
             SendRequest(toPerformOnRequest, request);
             return RecieveResponse(toPerformOnResponse, request);   
         }
