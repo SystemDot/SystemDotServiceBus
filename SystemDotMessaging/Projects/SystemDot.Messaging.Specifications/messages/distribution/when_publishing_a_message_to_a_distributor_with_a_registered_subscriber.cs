@@ -4,6 +4,7 @@ using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Distribution;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Packaging.Headers;
+using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -21,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.messages.distribution
         Establish context = () =>
         {
             processedMessages = new List<MessagePayload>();
-            Configure<MessagePayloadCopier>(new MessagePayloadCopier());
+            Configure<ISerialiser>(new PlatformAgnosticSerialiser());
             distributionSubscriber = new Pipe<MessagePayload>();
             distributionSubscriber.MessageProcessed += m => processedMessages.Add(m);
             Subject.Subscribe(new object(), distributionSubscriber);

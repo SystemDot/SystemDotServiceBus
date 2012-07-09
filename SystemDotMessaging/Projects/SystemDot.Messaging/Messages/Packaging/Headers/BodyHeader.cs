@@ -3,10 +3,11 @@ using System.Diagnostics.Contracts;
 
 namespace SystemDot.Messaging.Messages.Packaging.Headers
 {
-    [Serializable]
     public class BodyHeader : IMessageHeader
     {
-        public byte[] Body { get; private set; }
+        public byte[] Body { get; set; }
+
+        public BodyHeader() {}
 
         public BodyHeader(byte[] body)
         {

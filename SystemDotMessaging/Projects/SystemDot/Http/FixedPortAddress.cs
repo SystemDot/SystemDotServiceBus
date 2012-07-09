@@ -2,7 +2,7 @@ using System;
 
 namespace SystemDot.Http
 {
-    public struct FixedPortAddress
+    public class FixedPortAddress
     {
         readonly string server;
 
@@ -15,6 +15,8 @@ namespace SystemDot.Http
         {
             return (!string.IsNullOrEmpty(this.server)) ? this.server : Environment.MachineName;
         }
+
+        public FixedPortAddress() {}
 
         public FixedPortAddress(string server)
         {

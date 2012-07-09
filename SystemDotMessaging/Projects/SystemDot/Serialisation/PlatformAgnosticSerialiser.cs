@@ -10,9 +10,10 @@ namespace SystemDot.Serialisation
             return SilverlightSerializer.Serialize(toSerialise);
         }
 
-        public void Serialize(Stream toSerialise, object graph)
+        public void Serialise(Stream toSerialise, object graph)
         {
-            using (var ms = new MemoryStream(Serialise(graph))) ms.CopyTo(toSerialise);
+            byte[] serialised = Serialise(graph);
+            toSerialise.Write(serialised, 0, serialised.Length);
         }
 
         public object Deserialise(byte[] toDeserialise)
@@ -20,7 +21,7 @@ namespace SystemDot.Serialisation
             return SilverlightSerializer.Deserialize(toDeserialise);
         }
 
-        public object Deserialize(Stream toDeserialise)
+        public object Deserialise(Stream toDeserialise)
         {
             using (var ms = new MemoryStream())
             {

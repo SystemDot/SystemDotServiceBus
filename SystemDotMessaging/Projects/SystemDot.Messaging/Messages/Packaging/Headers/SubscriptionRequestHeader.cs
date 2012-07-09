@@ -4,10 +4,11 @@ using SystemDot.Messaging.Channels.Publishing;
 
 namespace SystemDot.Messaging.Messages.Packaging.Headers
 {
-    [Serializable]
     public class SubscriptionRequestHeader : IMessageHeader 
     {
-        public SubscriptionSchema Schema { get; private set; }
+        public SubscriptionSchema Schema { get; set; }
+        
+        public SubscriptionRequestHeader() {}
 
         public SubscriptionRequestHeader(SubscriptionSchema schema) 
         {

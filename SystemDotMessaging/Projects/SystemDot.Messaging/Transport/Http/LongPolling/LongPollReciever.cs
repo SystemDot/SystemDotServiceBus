@@ -39,7 +39,7 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
         {
             return this.requestor.SendPut(
                 new FixedPortAddress(), 
-                s => this.formatter.Serialize(s, CreateLongPollPayload(this.addresses)), 
+                s => this.formatter.Serialise(s, CreateLongPollPayload(this.addresses)), 
                 RecieveResponse);
         }
 
@@ -53,7 +53,7 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
 
         void RecieveResponse(Stream responseStream)
         {
-            var messages = this.formatter.Deserialize(responseStream)
+            var messages = this.formatter.Deserialise(responseStream)
                 .As<IEnumerable<MessagePayload>>();
 
             foreach (var message in messages)

@@ -3,10 +3,13 @@ using System.Diagnostics.Contracts;
 
 namespace SystemDot.Messaging.Messages.Packaging.Headers
 {
-    [Serializable]
     public class ToAddressHeader : IMessageHeader 
     {
-        public EndpointAddress Address { get; private set; }
+        public EndpointAddress Address { get; set; }
+
+        public ToAddressHeader()
+        {
+        }
 
         public ToAddressHeader(EndpointAddress address)
         {

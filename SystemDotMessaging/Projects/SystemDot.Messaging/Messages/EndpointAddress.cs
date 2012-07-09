@@ -5,8 +5,7 @@ using System.Linq;
 
 namespace SystemDot.Messaging.Messages
 {
-    [Serializable]
-    public struct EndpointAddress
+    public class EndpointAddress
     {
         public static implicit operator EndpointAddress(string address)
         {
@@ -21,10 +20,12 @@ namespace SystemDot.Messaging.Messages
             }
         }
 
-        public string ServerName { get; private set; }
+        public string ServerName { get; set; }
 
-        public string NodeName { get; private set; }
-        
+        public string NodeName { get; set; }
+
+        public EndpointAddress() {}
+
         public EndpointAddress(string address) : this()
         {
             Contract.Requires(!string.IsNullOrEmpty(address));

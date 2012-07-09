@@ -8,12 +8,12 @@ namespace SystemDot.Messaging.Specifications
         public static T Deserialise<T>(this Stream stream, ISerialiser formatter)
         {
             stream.Seek(0, 0);
-            return formatter.Deserialize(stream).As<T>();
+            return formatter.Deserialise(stream).As<T>();
         }
 
         public static void Serialise(this Stream stream, object toSerialise, ISerialiser formatter)
         {
-            formatter.Serialize(stream, toSerialise);
+            formatter.Serialise(stream, toSerialise);
             stream.Seek(0, 0);
         }
     }

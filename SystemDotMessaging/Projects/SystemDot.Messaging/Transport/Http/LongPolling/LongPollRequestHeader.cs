@@ -8,7 +8,9 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
     [Serializable]
     public class LongPollRequestHeader : IMessageHeader 
     {
-        public List<EndpointAddress> Addresses { get; private set; }
+        public List<EndpointAddress> Addresses { get; set; }
+
+        public LongPollRequestHeader() {}
 
         public LongPollRequestHeader(List<EndpointAddress> addresses)
         {

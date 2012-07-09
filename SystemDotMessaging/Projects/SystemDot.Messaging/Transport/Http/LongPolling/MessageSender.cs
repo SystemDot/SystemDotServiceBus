@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
         {
             this.requestor.SendPut(
                 toInput.GetToAddress().GetUrl(), 
-                s => this.formatter.Serialize(s, toInput));
+                s => this.formatter.Serialise(s, toInput));
         }
     }
 }

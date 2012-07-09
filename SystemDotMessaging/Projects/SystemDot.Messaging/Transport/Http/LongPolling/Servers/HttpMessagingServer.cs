@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling.Servers
 
         public void HandleRequest(Stream inputStream, Stream outputStream)
         {
-            object deserialised = this.formatter.Deserialize(inputStream);
+            object deserialised = this.formatter.Deserialise(inputStream);
 
             if (!(deserialised is MessagePayload)) return;
 
@@ -33,7 +33,7 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling.Servers
             foreach (IMessagingServerHandler handler in this.handlers)
                 handler.HandleMessage(message, outgoingMessages);
 
-            this.formatter.Serialize(outputStream, outgoingMessages);
+            this.formatter.Serialise(outputStream, outgoingMessages);
         }
     }
 }

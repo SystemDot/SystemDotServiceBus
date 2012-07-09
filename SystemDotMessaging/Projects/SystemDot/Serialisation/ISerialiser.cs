@@ -5,8 +5,8 @@ namespace SystemDot.Serialisation
     public interface ISerialiser 
     {
         byte[] Serialise(object toSerialise);
-        void Serialize(Stream toSerialise, object graph);
+        void Serialise(Stream toSerialise, object graph);
         object Deserialise(byte[] toDeserialise);
-        object Deserialize(Stream toDeserialise);
+        object Deserialise(Stream toDeserialise);
     }
 }

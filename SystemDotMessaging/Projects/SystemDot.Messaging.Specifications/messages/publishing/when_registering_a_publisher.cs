@@ -2,6 +2,7 @@
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Distribution;
 using SystemDot.Messaging.Messages.Packaging;
+using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -16,7 +17,7 @@ namespace SystemDot.Messaging.Specifications.messages.publishing
         
         Establish context = () =>
         {
-            distributor = new Distributor(new MessagePayloadCopier());
+            distributor = new Distributor(new MessagePayloadCopier(new PlatformAgnosticSerialiser()));
             address = new EndpointAddress("TestAddress");
             Subject.RegisterPublisher(address, distributor);
         };

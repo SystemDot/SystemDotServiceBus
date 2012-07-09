@@ -7,7 +7,7 @@ namespace SystemDot.Messaging.Messages.Packaging
     [Serializable]
     public class MessagePayload
     {
-        public List<IMessageHeader> Headers { get; private set; }
+        public List<IMessageHeader> Headers { get; set; }
 
         public MessagePayload()
         {

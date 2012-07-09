@@ -1,6 +1,7 @@
 ﻿using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Distribution;
 using SystemDot.Messaging.Messages.Packaging;
+using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -18,7 +19,7 @@ namespace SystemDot.Messaging.Specifications.messages.distribution
         
         Establish context = () =>
         {
-            Configure<MessagePayloadCopier>(new MessagePayloadCopier());
+            Configure<MessagePayloadCopier>(new MessagePayloadCopier(new PlatformAgnosticSerialiser()));
             message = new MessagePayload();
             
             subscriber1 = new Pipe<MessagePayload>();

@@ -14,7 +14,8 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
     {
         public static void Register()
         {
-            MessagingEnvironment.RegisterComponent(new MessagePayloadCopier());
+            MessagingEnvironment.RegisterComponent(new MessagePayloadCopier(
+                MessagingEnvironment.GetComponent<ISerialiser>()));
 
             MessagingEnvironment.RegisterComponent<IDistributor>(
                 () => new Distributor(MessagingEnvironment.GetComponent<MessagePayloadCopier>()));
