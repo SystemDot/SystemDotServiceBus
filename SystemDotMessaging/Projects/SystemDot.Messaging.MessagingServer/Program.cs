@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.Serialization.Formatters.Binary;
 using SystemDot.Http;
 using SystemDot.Messaging.Transport.Http.LongPolling.Servers;
 using SystemDot.Serialisation;

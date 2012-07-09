@@ -1,7 +1,5 @@
-using System.Security.Policy;
 using SystemDot.Http;
 using SystemDot.Messaging.Messages;
-using SystemDot.Messaging.Messages.Packaging;
 
 namespace SystemDot.Messaging.Transport.Http
 {

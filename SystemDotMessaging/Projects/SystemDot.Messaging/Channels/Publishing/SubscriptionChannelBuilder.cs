@@ -11,12 +11,12 @@ namespace SystemDot.Messaging.Channels.Publishing
     {
         public IMessageInputter<MessagePayload> Build(SubscriptionSchema toSchema) 
         {
-            MessageAddresser addresser = MessagingEnvironment
-                .GetComponent<MessageAddresser, EndpointAddress>(toSchema.SubscriberAddress);
+            MessageAddresser addresser = IocContainer
+                .Resolve<MessageAddresser, EndpointAddress>(toSchema.SubscriberAddress);
 
             MessagePipelineBuilder.Build()
                 .With(addresser)
-                .ToEndPoint(MessagingEnvironment.GetComponent<IMessageSender>());
+                .ToEndPoint(IocContainer.Resolve<IMessageSender>());
 
             return addresser;
         }

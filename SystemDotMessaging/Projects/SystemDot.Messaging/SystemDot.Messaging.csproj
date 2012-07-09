@@ -64,13 +64,13 @@
     <Compile Include="Configuration\Configure.cs" />
     <Compile Include="Configuration\EndpointConfiguration.cs" />
     <Compile Include="Configuration\Publishers\PublisherConfiguration.cs" />
-    <Compile Include="Configuration\ComponentRegistration\MessagingEnvironment.cs" />
+    <Compile Include="Configuration\ComponentRegistration\IocContainer.cs" />
     <Compile Include="Configuration\Subscribers\MessageHandlerConfiguration.cs" />
     <Compile Include="Configuration\Subscribers\SubscriberConfiguration.cs" />
     <Compile Include="Configuration\Subscribers\SubscribeToConfiguration.cs" />
     <Compile Include="Messages\IMessageProcessor.cs" />
     <Compile Include="Messages\IMessageInputter.cs" />
-    <Compile Include="Messages\Packaging\Headers\MessagePayloadSubscriptionRequestExtensions.cs" />
+    <Compile Include="Channels\Publishing\MessagePayloadSubscriptionRequestExtensions.cs" />
     <Compile Include="Transport\Http\HttpAddressExtensions.cs" />
     <Compile Include="Transport\IMessageSender.cs" />
     <Compile Include="Transport\IMessageReciever.cs" />
@@ -78,7 +78,7 @@
     <Compile Include="Transport\Http\LongPolling\MessagePayloadLongPollRequestExtensions.cs" />
     <Compile Include="Messages\Distribution\Pump.cs" />
     <Compile Include="Messages\Packaging\Headers\MessagePayloadToAddressExtensions.cs" />
-    <Compile Include="Messages\Packaging\Headers\SubscriptionRequestHeader.cs" />
+    <Compile Include="Channels\Publishing\SubscriptionRequestHeader.cs" />
     <Compile Include="Messages\Packaging\Headers\ToAddressHeader.cs" />
     <Compile Include="Messages\Packaging\MessagePayloadCopier.cs" />
     <Compile Include="Messages\Distribution\Distributor.cs" />
@@ -101,6 +101,10 @@
     <Compile Include="Transport\Http\LongPolling\Servers\SentMessageHandler.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SystemDot.NonMetro\SystemDot.NonMetro.csproj">
+      <Project>{fd8bb339-a3f0-4643-b09c-6fd9d6bd1e1a}</Project>
+      <Name>SystemDot.NonMetro</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">
       <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>
       <Name>SystemDot</Name>

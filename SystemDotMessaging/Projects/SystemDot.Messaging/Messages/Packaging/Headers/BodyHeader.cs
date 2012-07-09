@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics.Contracts;
 
 namespace SystemDot.Messaging.Messages.Packaging.Headers

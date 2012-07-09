@@ -1,4 +1,3 @@
-using System.Runtime.Serialization;
 using SystemDot.Http;
 using SystemDot.Messaging.Transport;
 using SystemDot.Messaging.Transport.Http.LongPolling;
@@ -12,16 +11,16 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
         public static void Register()
         {
             var longPollReciever = new LongPollReciever(
-                MessagingEnvironment.GetComponent<IWebRequestor>(),
-                MessagingEnvironment.GetComponent<ISerialiser>());
+                IocContainer.Resolve<IWebRequestor>(),
+                IocContainer.Resolve<ISerialiser>());
 
-            MessagingEnvironment.GetComponent<TaskLooper>().RegisterToLoop(longPollReciever.Poll);
+            IocContainer.Resolve<TaskLooper>().RegisterToLoop(longPollReciever.Poll);
 
-            MessagingEnvironment.RegisterComponent<IMessageReciever>(longPollReciever);
+            IocContainer.Register<IMessageReciever>(longPollReciever);
 
-            MessagingEnvironment.RegisterComponent<IMessageSender>(() => new MessageSender(
-                MessagingEnvironment.GetComponent<ISerialiser>(),
-                MessagingEnvironment.GetComponent<IWebRequestor>()));
+            IocContainer.Register<IMessageSender>(() => new MessageSender(
+                IocContainer.Resolve<ISerialiser>(),
+                IocContainer.Resolve<IWebRequestor>()));
 
         }
     }

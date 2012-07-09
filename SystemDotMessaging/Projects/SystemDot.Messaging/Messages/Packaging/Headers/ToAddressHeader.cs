@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics.Contracts;
 
 namespace SystemDot.Messaging.Messages.Packaging.Headers
@@ -7,9 +6,7 @@ namespace SystemDot.Messaging.Messages.Packaging.Headers
     {
         public EndpointAddress Address { get; set; }
 
-        public ToAddressHeader()
-        {
-        }
+        public ToAddressHeader() {}
 
         public ToAddressHeader(EndpointAddress address)
         {

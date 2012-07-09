@@ -10,6 +10,6 @@ namespace SystemDot.Specifications.http
 
         Because of = () => address = new FixedPortAddress();
 
-        It should_provide_a_url_with_the_correct_address = () => address.Url.ShouldEqual("http://" + Environment.MachineName + ":8090/");
+        It should_provide_a_url_with_the_correct_address = () => address.Url.ShouldEqual("http://localhost:8090/");
     }
 }

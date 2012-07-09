@@ -5,7 +5,6 @@ using SystemDot.Messaging.Messages.Packaging;
 
 namespace SystemDot.Messaging.Transport.Http.LongPolling
 {
-    [Serializable]
     public class LongPollRequestHeader : IMessageHeader 
     {
         public List<EndpointAddress> Addresses { get; set; }

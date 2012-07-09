@@ -6,14 +6,12 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
     {
         public static void Register()
         {
-            MessagingEnvironment.RegisterComponent<IPublisherRegistry>(new PublisherRegistry());
+            IocContainer.Register<IPublisherRegistry>(new PublisherRegistry());
+            IocContainer.Register<ISubscriptionChannelBuilder>(new SubscriptionChannelBuilder());
 
-            MessagingEnvironment.RegisterComponent<ISubscriptionChannelBuilder>(
-                new SubscriptionChannelBuilder());
-
-            MessagingEnvironment.RegisterComponent(new SubscriptionRequestHandler(
-                MessagingEnvironment.GetComponent<IPublisherRegistry>(),
-                MessagingEnvironment.GetComponent<ISubscriptionChannelBuilder>()));
+            IocContainer.Register(new SubscriptionRequestHandler(
+                IocContainer.Resolve<IPublisherRegistry>(),
+                IocContainer.Resolve<ISubscriptionChannelBuilder>()));
         }
     }
 }

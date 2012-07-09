@@ -13,10 +13,10 @@ namespace SystemDot.Messaging.Specifications.configuration
             component = new TestComponent();
         };
 
-        Because of = () => MessagingEnvironment.RegisterComponent<ITestComponent>(component);
+        Because of = () => IocContainer.Register<ITestComponent>(component);
 
         It should_be_able_to_retrieved = () => 
-            MessagingEnvironment.GetComponent<ITestComponent>().ShouldBeTheSameAs(component);
+            IocContainer.Resolve<ITestComponent>().ShouldBeTheSameAs(component);
 
     }
 }

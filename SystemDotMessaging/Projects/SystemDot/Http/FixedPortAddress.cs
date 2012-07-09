@@ -13,7 +13,7 @@ namespace SystemDot.Http
 
         string GetServer()
         {
-            return (!string.IsNullOrEmpty(this.server)) ? this.server : Environment.MachineName;
+            return (!string.IsNullOrEmpty(this.server)) ? this.server : "localhost";
         }
 
         public FixedPortAddress() {}

@@ -43,7 +43,7 @@ namespace SystemDot.Messaging.Configuration.Subscribers
             SubscriptionRequestor subscriptionRequestor = BuildSubscriptionRequestChannel();
             BuildSubscriberChannel();
 
-            MessagingEnvironment.GetComponent<TaskLooper>().Start();
+            IocContainer.Resolve<TaskLooper>().Start();
             subscriptionRequestor.Start();
         }
 
@@ -66,7 +66,7 @@ namespace SystemDot.Messaging.Configuration.Subscribers
             
             MessagePipelineBuilder.Build()
                 .With(GetComponent<IMessageReciever>())
-                .Pipe()
+                .Pump()
                 .ToProcessor(GetComponent<MessagePayloadUnpackager>())
                 .ToEndPoint(messageHandlerRouter);
 

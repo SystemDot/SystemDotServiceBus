@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
 namespace SystemDot.Messaging.Messages.Packaging
 {
-    [Serializable]
     public class MessagePayload
     {
         public List<IMessageHeader> Headers { get; set; }

@@ -27,14 +27,14 @@ namespace SystemDot.Messaging.Configuration.Publishers
             BuildSubscriptionRequestHandler(address);
             BuildPublisher(address);
 
-            MessagingEnvironment.GetComponent<TaskLooper>().Start();
+            IocContainer.Resolve<TaskLooper>().Start();
         }
 
         static void BuildSubscriptionRequestHandler(EndpointAddress address)
         {
             MessagePipelineBuilder.Build()
                 .With(GetComponent<IMessageReciever>())
-                .Pipe()
+                .Pump()
                 .ToEndPoint(GetComponent<SubscriptionRequestHandler>());
 
             GetComponent<IMessageReciever>().RegisterListeningAddress(address);
@@ -52,7 +52,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
 
             MessagePipelineBuilder.Build()
                 .With(GetComponent<MessageBus>())
-                .Pipe()
+                .Pump()
                 .ToProcessor(GetComponent<MessagePayloadPackager>())
                 .ToEndPoint(publisher);
         }

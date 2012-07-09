@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Distribution;
 using SystemDot.Messaging.Messages.Packaging;
@@ -7,12 +8,12 @@ using SystemDot.Messaging.Messages.Packaging.Headers;
 using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;
+using SystemDot.Messaging.Transport.Http.LongPolling;
 
 namespace SystemDot.Messaging.Specifications.messages.distribution
 {
     [Subject("Message distribution")]
-    public class when_publishing_a_message_to_a_distributor_with_two_registered_subscribers 
-        : WithSubject<Distributor>
+    public class when_publishing_a_message_to_a_distributor_with_two_registered_subscribers : WithSubject<Distributor>
     {
         static MessagePayload inputMessage;
         static Pipe<MessagePayload> subscriber1;
@@ -23,6 +24,7 @@ namespace SystemDot.Messaging.Specifications.messages.distribution
         Establish context = () =>
         {
             Configure<ISerialiser>(new PlatformAgnosticSerialiser());
+            
             subscriber1 = new Pipe<MessagePayload>();
             subscriber1.MessageProcessed += m => processedMessage1 = m;
             Subject.Subscribe(new object(), subscriber1);
@@ -42,7 +44,5 @@ namespace SystemDot.Messaging.Specifications.messages.distribution
 
         It should_pass_a_copy_of_the_message_to_the_second_subscriber = () =>
             processedMessage2.GetToAddress().ShouldEqual(inputMessage.GetToAddress());
-
-        
     }
 }

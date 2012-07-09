@@ -12,8 +12,8 @@ namespace SystemDot.Serialisation
 
         public void Serialise(Stream toSerialise, object graph)
         {
-            byte[] serialised = Serialise(graph);
-            toSerialise.Write(serialised, 0, serialised.Length);
+            byte[] bytes = Serialise(graph);
+            toSerialise.Write(bytes, 0, bytes.Length);
         }
 
         public object Deserialise(byte[] toDeserialise)

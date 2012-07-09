@@ -14,31 +14,20 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
     {
         public static void Register()
         {
-            MessagingEnvironment.RegisterComponent(new MessagePayloadCopier(
-                MessagingEnvironment.GetComponent<ISerialiser>()));
-
-            MessagingEnvironment.RegisterComponent<IDistributor>(
-                () => new Distributor(MessagingEnvironment.GetComponent<MessagePayloadCopier>()));
+            IocContainer.Register(new MessagePayloadCopier(IocContainer.Resolve<ISerialiser>()));
+            IocContainer.Register<IDistributor>(() => new Distributor(IocContainer.Resolve<MessagePayloadCopier>()));
+            IocContainer.Register(() => new MessageBus());
+            IocContainer.Register(() => new MessagePayloadPackager(IocContainer.Resolve<ISerialiser>()));
+            IocContainer.Register<MessageAddresser, EndpointAddress>(a => new MessageAddresser(a));
+            IocContainer.Register(() => new MessagePayloadUnpackager(IocContainer.Resolve<ISerialiser>()));
+            IocContainer.Register(() => new MessageHandlerRouter());
             
-            MessagingEnvironment.RegisterComponent(() => new MessageBus());
-            
-            MessagingEnvironment.RegisterComponent(() => new MessagePayloadPackager(
-                MessagingEnvironment.GetComponent<ISerialiser>()));
+            IocContainer.Register<MessageRepeater, TimeSpan>(
+                (t) => new MessageRepeater(
+                    t, 
+                    IocContainer.Resolve<ITaskScheduler>()));
 
-            MessagingEnvironment.RegisterComponent<MessageAddresser, EndpointAddress>(
-                a => new MessageAddresser(a));
-            
-            MessagingEnvironment.RegisterComponent(
-                () => new MessagePayloadUnpackager(
-                    MessagingEnvironment.GetComponent<ISerialiser>()));
-
-            MessagingEnvironment.RegisterComponent(() => new MessageHandlerRouter());
-
-            MessagingEnvironment.RegisterComponent<MessageRepeater, TimeSpan>(
-                (t) => new MessageRepeater(t, MessagingEnvironment.GetComponent<ITaskScheduler>()));
-
-            MessagingEnvironment.RegisterComponent<SubscriptionRequestor, EndpointAddress>(
-                a => new SubscriptionRequestor(a));
+            IocContainer.Register<SubscriptionRequestor, EndpointAddress>(a => new SubscriptionRequestor(a));
 
         }
     }

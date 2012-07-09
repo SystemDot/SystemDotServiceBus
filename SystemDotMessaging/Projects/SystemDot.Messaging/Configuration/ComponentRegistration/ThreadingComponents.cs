@@ -8,9 +8,9 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
 
         public static void Register()
         {
-            MessagingEnvironment.RegisterComponent<ITaskStarter>(new TaskStarter());
-            MessagingEnvironment.RegisterComponent(new TaskLooper(MessagingEnvironment.GetComponent<ITaskStarter>()));
-            MessagingEnvironment.RegisterComponent<ITaskScheduler>(new TaskScheduler());
+            IocContainer.Register<ITaskStarter>(new TaskStarter());
+            IocContainer.Register(new TaskLooper(IocContainer.Resolve<ITaskStarter>()));
+            IocContainer.Register<ITaskScheduler>(new TaskScheduler());
 
         }
     }

@@ -21,8 +21,9 @@ namespace SystemDot.Messaging.Specifications.messages.distribution
 
         Establish context = () =>
         {
-            processedMessages = new List<MessagePayload>();
             Configure<ISerialiser>(new PlatformAgnosticSerialiser());
+            
+            processedMessages = new List<MessagePayload>();
             distributionSubscriber = new Pipe<MessagePayload>();
             distributionSubscriber.MessageProcessed += m => processedMessages.Add(m);
             Subject.Subscribe(new object(), distributionSubscriber);

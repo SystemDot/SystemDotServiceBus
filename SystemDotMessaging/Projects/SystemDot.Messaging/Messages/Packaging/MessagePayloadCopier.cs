@@ -9,12 +9,14 @@ namespace SystemDot.Messaging.Messages.Packaging
 
         public MessagePayloadCopier(ISerialiser serialiser)
         {
+            Contract.Requires(serialiser != null);
             this.serialiser = serialiser;
         }
 
         public MessagePayload Copy(MessagePayload toCopy)
         {
             Contract.Requires(toCopy != null);
+
             return serialiser.Deserialise(serialiser.Serialise(toCopy)).As<MessagePayload>();
         }
     }

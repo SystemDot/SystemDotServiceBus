@@ -8,12 +8,12 @@ namespace SystemDot.Messaging.Configuration
 
         public static TType GetComponent<TType, TConstructorArg>(TConstructorArg arg)
         {
-            return MessagingEnvironment.GetComponent<TType, TConstructorArg>(arg);
+            return IocContainer.Resolve<TType, TConstructorArg>(arg);
         }
 
         public static TType GetComponent<TType>()
         {
-            return MessagingEnvironment.GetComponent<TType>();
+            return IocContainer.Resolve<TType>();
         }
     }
 }
