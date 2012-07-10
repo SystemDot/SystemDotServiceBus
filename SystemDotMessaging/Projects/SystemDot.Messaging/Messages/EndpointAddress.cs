@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Linq;
 
 namespace SystemDot.Messaging.Messages
 {
@@ -21,8 +19,8 @@ namespace SystemDot.Messaging.Messages
         }
 
         public string ServerName { get; set; }
-
-        public string NodeName { get; set; }
+        
+        public string Address { get; set; }
 
         public EndpointAddress() {}
 
@@ -30,31 +28,24 @@ namespace SystemDot.Messaging.Messages
         {
             Contract.Requires(!string.IsNullOrEmpty(address));
 
-            ServerName = SplitAddress(address).Count() == 2 
-                ? GetServer(address) 
-                : string.Empty;
+            Address = address;
+            ServerName = string.Empty;
 
-            NodeName = GetNode(address);
-        }
+            var parts = address.Split('.');
+            if (parts.Length == 2)
+            {
+                ServerName = parts[1];
+                return;
+            }
 
-        string GetServer(string address)
-        {
-            return SplitAddress(address).Last();
-        }
-
-        string GetNode(string address)
-        {
-            return SplitAddress(address).First();
-        }
-
-        static IEnumerable<string> SplitAddress(string address)
-        {
-            return address.Split('@');
+            parts = address.Split('@');
+            if (parts.Length == 2) 
+                ServerName = parts[1];
         }
 
         public bool Equals(EndpointAddress other)
         {
-            return other.ServerName == this.ServerName && other.NodeName == this.NodeName;
+            return other.Address == Address;
         }
 
         public override bool Equals(object obj)
@@ -70,7 +61,7 @@ namespace SystemDot.Messaging.Messages
 
         public override int GetHashCode()
         {
-            return ServerName.GetHashCode() ^ NodeName.GetHashCode();
+            return Address.GetHashCode();
         }
 
         public static bool operator ==(EndpointAddress left, EndpointAddress right)
@@ -85,7 +76,7 @@ namespace SystemDot.Messaging.Messages
 
         public override string ToString()
         {
-            return String.Concat(NodeName, "@", ServerName);
+            return String.Concat(Address, ".", ServerName);
         }
     }
 }

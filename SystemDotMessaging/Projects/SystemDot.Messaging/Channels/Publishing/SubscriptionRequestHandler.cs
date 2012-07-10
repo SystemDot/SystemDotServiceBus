@@ -14,9 +14,7 @@ namespace SystemDot.Messaging.Channels.Publishing
         readonly IPublisherRegistry publisherRegistry;
         readonly ISubscriptionChannelBuilder channelBuilder;
         
-        public SubscriptionRequestHandler(
-            IPublisherRegistry publisherRegistry, 
-            ISubscriptionChannelBuilder channelBuilder)
+        public SubscriptionRequestHandler(IPublisherRegistry publisherRegistry, ISubscriptionChannelBuilder channelBuilder)
         {
             Contract.Requires(publisherRegistry != null);
             Contract.Requires(channelBuilder != null);
@@ -29,8 +27,7 @@ namespace SystemDot.Messaging.Channels.Publishing
         {
             if (!message.IsSubscriptionRequest()) return;
 
-            Logger.Info("Handling subscription request for {0}", 
-                message.GetSubscriptionRequestSchema().SubscriberAddress);
+            Logger.Info("Handling subscription request for {0}", message.GetSubscriptionRequestSchema().SubscriberAddress);
 
             GetPublisher(message).Subscribe(
                 message.GetSubscriptionRequestSchema().SubscriberAddress, 

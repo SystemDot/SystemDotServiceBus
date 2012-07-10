@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
-using System.Runtime.Serialization;
+using System.Linq;
 using System.Threading.Tasks;
 using SystemDot.Http;
 using SystemDot.Messaging.Messages;
@@ -38,7 +38,7 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
         public Task Poll()
         {
             return this.requestor.SendPut(
-                new FixedPortAddress(), 
+                this.addresses.First().GetUrl(), 
                 s => this.formatter.Serialise(s, CreateLongPollPayload(this.addresses)), 
                 RecieveResponse);
         }
@@ -53,8 +53,7 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
 
         void RecieveResponse(Stream responseStream)
         {
-            var messages = this.formatter.Deserialise(responseStream)
-                .As<IEnumerable<MessagePayload>>();
+            var messages = this.formatter.Deserialise(responseStream).As<IEnumerable<MessagePayload>>();
 
             foreach (var message in messages)
             {

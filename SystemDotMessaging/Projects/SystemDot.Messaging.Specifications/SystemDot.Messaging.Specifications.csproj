@@ -56,9 +56,10 @@
     <Compile Include="configuration\ITestComponent.cs" />
     <Compile Include="configuration\TestComponent.cs" />
     <Compile Include="configuration\when_setting_a_component_in_the_environment.cs" />
+    <Compile Include="messages\when_initialising_a_new_endpoint_address_with_an_address_and_a_proxy.cs" />
     <Compile Include="messages\distribution\when_subscribing_with_the_same_subscriber_key_twice.cs" />
     <Compile Include="messages\publishing\when_handling_a_subscribe_request_message.cs" />
-    <Compile Include="messages\when_initialising_a_new_endpoint_address_with_only_a_node_name.cs" />
+    <Compile Include="messages\when_initialising_a_new_endpoint_address_with_only_a_local_address.cs" />
     <Compile Include="messages\publishing\when_handling_a_non_subscription_request_message_with_the_subscription_request_handler.cs" />
     <Compile Include="messages\publishing\TestSubscriptionChannelBuilder.cs" />
     <Compile Include="messages\processing\when_addressing_a_message.cs" />
@@ -81,7 +82,7 @@
     <Compile Include="messages\repeating\TestTaskScheduler.cs" />
     <Compile Include="messages\repeating\when_a_recieved_message_is_sent_and_the_specified_time_period_has_passed.cs" />
     <Compile Include="messages\repeating\when_recieving_a_message.cs" />
-    <Compile Include="messages\when_initialising_a_new_endpoint_address_with_a_node_and_a_server_name.cs" />
+    <Compile Include="messages\when_initialising_a_new_endpoint_address_with_a_full_address.cs" />
     <Compile Include="TestDistributor.cs" />
     <Compile Include="messages\publishing\when_registering_a_publisher.cs" />
     <Compile Include="WithMessageInputterSubject.cs" />
