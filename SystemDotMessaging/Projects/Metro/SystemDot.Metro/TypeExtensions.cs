@@ -7,12 +7,12 @@ namespace SystemDot
     {
         public static bool IsInstanceOfType(this Type type, object o)
         {
-            return false;
+            return type.GetTypeInfo().IsAssignableFrom(o.GetType().GetTypeInfo());
         }
 
         public static MethodInfo GetMethod(this Type type, string name, Type[] types)
         {
-            return null;
+            return type.GetRuntimeMethod(name, types);
         }
     }
 }

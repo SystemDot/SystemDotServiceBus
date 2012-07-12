@@ -40,7 +40,14 @@ namespace SystemDot.Http
 
         private static void PerformActionOnStream(Action<Stream> toPerform, Stream stream)
         {
-            using (stream) toPerform(stream);
+            try
+            {
+                using (stream) toPerform(stream);
+            }
+            catch (Exception)
+            {
+            }
+            
         }
     }
 }
