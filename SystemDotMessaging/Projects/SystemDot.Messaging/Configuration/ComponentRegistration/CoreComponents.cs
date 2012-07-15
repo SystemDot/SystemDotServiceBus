@@ -9,6 +9,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
         {
             IocContainer.Register<IWebRequestor>(new WebRequestor());
             IocContainer.Register<ISerialiser>(new PlatformAgnosticSerialiser());
+            IocContainer.Register<IMachineIdentifier>(new MachineIdentifier());
         }
     }
 }

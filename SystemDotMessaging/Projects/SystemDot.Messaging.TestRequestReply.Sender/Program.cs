@@ -8,11 +8,6 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
     {
         static void Main(string[] args)
         {
-            Configure
-                .Local()
-                .ToPublishToChannel()
-                .Initialise();
-
             do
             {
                 Console.WriteLine("I am the sender. Press enter to send messages..");
@@ -20,14 +15,14 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
                 
                 Console.WriteLine("Sending message");
 
-                MessageBus.Send(new TestMessage("Hello"));
-                MessageBus.Send(new TestMessage("Hello1"));
-                MessageBus.Send(new TestMessage("Hello2"));
-                MessageBus.Send(new TestMessage("Hello3"));
-                MessageBus.Send(new TestMessage("Hello4"));
-                MessageBus.Send(new TestMessage("Hello5"));
-                MessageBus.Send(new TestMessage("Hello6"));
-                MessageBus.Send(new TestMessage("Hello7"));
+                MessageBus.SendMessage(new TestMessage("Hello"));
+                MessageBus.SendMessage(new TestMessage("Hello1"));
+                MessageBus.SendMessage(new TestMessage("Hello2"));
+                MessageBus.SendMessage(new TestMessage("Hello3"));
+                MessageBus.SendMessage(new TestMessage("Hello4"));
+                MessageBus.SendMessage(new TestMessage("Hello5"));
+                MessageBus.SendMessage(new TestMessage("Hello6"));
+                MessageBus.SendMessage(new TestMessage("Hello7"));
             }
             while (true);
         }

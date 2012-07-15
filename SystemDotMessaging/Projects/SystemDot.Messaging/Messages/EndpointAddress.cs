@@ -18,6 +18,8 @@ namespace SystemDot.Messaging.Messages
             }
         }
 
+        public string Channel { get; set; }
+        
         public string ServerName { get; set; }
         
         public string Address { get; set; }
@@ -31,16 +33,22 @@ namespace SystemDot.Messaging.Messages
             Address = address;
             ServerName = string.Empty;
 
-            var parts = address.Split('.');
+            var parts = address.Split('@', '.');
+            Channel = parts[0];
+            
+            if (parts.Length == 3)
+                ServerName = parts[2];
+            
             if (parts.Length == 2)
-            {
                 ServerName = parts[1];
-                return;
-            }
+            
+        }
 
-            parts = address.Split('@');
-            if (parts.Length == 2) 
-                ServerName = parts[1];
+        public EndpointAddress(string channel, string machineName)
+            : this(String.Concat(channel, "@", machineName))
+        {
+            Contract.Requires(!string.IsNullOrEmpty(channel));
+            Contract.Requires(!string.IsNullOrEmpty(machineName));
         }
 
         public bool Equals(EndpointAddress other)

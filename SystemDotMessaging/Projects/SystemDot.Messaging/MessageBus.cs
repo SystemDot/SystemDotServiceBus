@@ -1,30 +1,15 @@
 using System;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Channels;
-using SystemDot.Messaging.Messages;
 
 namespace SystemDot.Messaging
 {
-    public class MessageBus : IMessageProcessor<object>
+    public class MessageBus : IBus
     {
-        static MessageBus instance;
-
-        public static void Send(object message)
-        {
-            Contract.Requires(message != null);
-
-            instance.SendMessage(message);
-        }
-
         public event Action<object> MessageProcessed;
 
-        public MessageBus()
+        public void Send(object message)
         {
-            instance = this;
-        }
-
-        void SendMessage(object message)
-        {
+            Contract.Requires(message != null);
             MessageProcessed(message);
         }        
     }

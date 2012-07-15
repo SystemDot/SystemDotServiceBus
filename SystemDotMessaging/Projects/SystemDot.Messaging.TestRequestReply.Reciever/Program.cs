@@ -7,10 +7,8 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
     {
         static void Main(string[] args)
         {
-            Configure
-                .Remote()
-                .UsingDefaults()
-                .HandlingMessagesWith(new MessageConsumer())
+            Configure.WithLocalMessageServer()
+                .RequestReplyServer("Test")
                 .Initialise();
 
             Console.WriteLine("I am the reciever. Press enter to exit");

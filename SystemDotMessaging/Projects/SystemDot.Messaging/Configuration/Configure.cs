@@ -1,13 +1,12 @@
-using System.Net;
 using SystemDot.Messaging.Messages;
 
 namespace SystemDot.Messaging.Configuration
 {
     public class Configure
     {
-        public static EndpointConfiguration Local(EndpointAddress address)
+        public static LocalMessageServerConfiguration WithLocalMessageServer()
         {
-            return new EndpointConfiguration(address);
-        }        
+            return new LocalMessageServerConfiguration();
+        }
     }
 }

@@ -4,23 +4,18 @@ namespace SystemDot.Http
 {
     public class FixedPortAddress
     {
-        readonly string server;
+        readonly string machineName;
 
         public string Url
         {
-            get { return String.Concat("http://", GetServer(), ":8090/"); }
-        }
-
-        string GetServer()
-        {
-            return (!string.IsNullOrEmpty(this.server)) ? this.server : "localhost";
+            get { return String.Concat("http://", this.machineName, ":8090/"); }
         }
 
         public FixedPortAddress() {}
 
-        public FixedPortAddress(string server)
+        public FixedPortAddress(string machineName)
         {
-            this.server = server;
+            this.machineName = machineName;
         }
     }
 }

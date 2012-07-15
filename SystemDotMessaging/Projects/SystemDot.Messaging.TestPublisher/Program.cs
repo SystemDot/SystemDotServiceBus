@@ -7,9 +7,9 @@ namespace SystemDot.Messaging.TestPublisher
     {
         static void Main(string[] args)
         {
-            Configure
-                .Local("TestPublisher")
-                .AsPublisher()
+            IBus bus = Configure
+                .WithLocalMessageServer()
+                .AsPublisher("TestPublisher")
                 .Initialise();
             
             do
@@ -17,14 +17,14 @@ namespace SystemDot.Messaging.TestPublisher
                 Console.WriteLine("Press a key to send message..");
                 Console.ReadLine();
                 Console.WriteLine("Sending message");
-                MessageBus.Send("Hello");
-                MessageBus.Send("Hello1");
-                MessageBus.Send("Hello2");
-                MessageBus.Send("Hello3");
-                MessageBus.Send("Hello4");
-                MessageBus.Send("Hello5");
-                MessageBus.Send("Hello6");
-                MessageBus.Send("Hello7");
+                bus.Send("Hello");
+                bus.Send("Hello1");
+                bus.Send("Hello2");
+                bus.Send("Hello3");
+                bus.Send("Hello4");
+                bus.Send("Hello5");
+                bus.Send("Hello6");
+                bus.Send("Hello7");
             }
             while (true);
         }

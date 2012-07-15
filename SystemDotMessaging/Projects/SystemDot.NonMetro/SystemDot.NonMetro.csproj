@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Http\HttpServer.cs" />
     <Compile Include="Logging\Logger.cs" />
+    <Compile Include="MachineIdentifier.cs" />
     <Compile Include="Parallelism\TaskScheduler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -6,38 +6,39 @@ using SystemDot.Messaging.Messages.Distribution;
 using SystemDot.Messaging.Messages.Pipelines;
 using SystemDot.Messaging.Messages.Processing;
 using SystemDot.Messaging.Transport;
-using SystemDot.Messaging.Transport.Http.LongPolling;
 using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Configuration.Publishers
 {
     public class PublisherConfiguration : InitialisingConfiguration
     {
-        readonly EndpointAddress address;
+        readonly string channel;
 
-        public PublisherConfiguration(EndpointAddress address)
+        public PublisherConfiguration(string channel)
         {
-            Contract.Requires(address != EndpointAddress.Empty);
-            this.address = address;
+            Contract.Requires(!string.IsNullOrEmpty(channel));
+            this.channel = channel;
         }
 
-        public override void Initialise()
+        public override IBus Initialise()
         {
             Components.Register();
+            var address = new EndpointAddress(this.channel, Resolve<IMachineIdentifier>().GetMachineName());
             BuildSubscriptionRequestHandler(address);
             BuildPublisher(address);
 
             IocContainer.Resolve<TaskLooper>().Start();
+            return IocContainer.Resolve<IBus>();
         }
 
         static void BuildSubscriptionRequestHandler(EndpointAddress address)
         {
             MessagePipelineBuilder.Build()
-                .With(GetComponent<IMessageReciever>())
+                .With(Resolve<IMessageReciever>())
                 .Pump()
-                .ToEndPoint(GetComponent<SubscriptionRequestHandler>());
+                .ToEndPoint(Resolve<SubscriptionRequestHandler>());
 
-            GetComponent<IMessageReciever>().RegisterListeningAddress(address);
+            Resolve<IMessageReciever>().RegisterListeningAddress(address);
         }
 
         static void BuildPublisher(EndpointAddress address)
@@ -47,13 +48,13 @@ namespace SystemDot.Messaging.Configuration.Publishers
 
         static void BuildPublisherChannel(EndpointAddress address)
         {
-            var publisher = GetComponent<IDistributor>();
-            GetComponent<IPublisherRegistry>().RegisterPublisher(address, publisher);
+            var publisher = Resolve<IDistributor>();
+            Resolve<IPublisherRegistry>().RegisterPublisher(address, publisher);
 
             MessagePipelineBuilder.Build()
-                .With(GetComponent<MessageBus>())
+                .With(Resolve<IBus>())
                 .Pump()
-                .ToProcessor(GetComponent<MessagePayloadPackager>())
+                .ToProcessor(Resolve<MessagePayloadPackager>())
                 .ToEndPoint(publisher);
         }
     }

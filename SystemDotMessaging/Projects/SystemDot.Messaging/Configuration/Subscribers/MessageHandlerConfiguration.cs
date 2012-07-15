@@ -7,7 +7,6 @@ using SystemDot.Messaging.Messages.Consuming;
 using SystemDot.Messaging.Messages.Pipelines;
 using SystemDot.Messaging.Messages.Processing;
 using SystemDot.Messaging.Transport;
-using SystemDot.Messaging.Transport.Http.LongPolling;
 using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Configuration.Subscribers
@@ -15,62 +14,59 @@ namespace SystemDot.Messaging.Configuration.Subscribers
     public class MessageHandlerConfiguration : InitialisingConfiguration
     {
         readonly IMessageHandler toRegister;
-        readonly EndpointAddress subscriberAddress;
         readonly EndpointAddress publisherAddress;
 
-        public MessageHandlerConfiguration(
-            IMessageHandler toRegister, 
-            EndpointAddress subscriberAddress,
-            EndpointAddress publisherAddress)
+        public MessageHandlerConfiguration(IMessageHandler toRegister, EndpointAddress publisherAddress)
         {
             Contract.Requires(toRegister != null);
-            Contract.Requires(subscriberAddress != EndpointAddress.Empty);
             Contract.Requires(publisherAddress != EndpointAddress.Empty);
             
             this.toRegister = toRegister;
-            this.subscriberAddress = subscriberAddress;
             this.publisherAddress = publisherAddress;
         }
 
-        public override void Initialise()
+        public override IBus Initialise()
         {
             Components.Register();
             BuildSubscriber();
+            return IocContainer.Resolve<IBus>();
         }
 
         void BuildSubscriber()
         {
-            SubscriptionRequestor subscriptionRequestor = BuildSubscriptionRequestChannel();
-            BuildSubscriberChannel();
+            var subscriberAddress = new EndpointAddress(
+                this.publisherAddress.Channel, 
+                Resolve<IMachineIdentifier>().GetMachineName());
 
+            BuildSubscriberChannel(subscriberAddress);
+            BuildSubscriptionRequestChannel(subscriberAddress).Start();
             IocContainer.Resolve<TaskLooper>().Start();
-            subscriptionRequestor.Start();
         }
 
-        SubscriptionRequestor BuildSubscriptionRequestChannel()
+        SubscriptionRequestor BuildSubscriptionRequestChannel(EndpointAddress subscriberAddress)
         {
-            SubscriptionRequestor requestor = GetComponent<SubscriptionRequestor, EndpointAddress>(this.subscriberAddress);
+            SubscriptionRequestor requestor = Resolve<SubscriptionRequestor, EndpointAddress>(subscriberAddress);
             
             MessagePipelineBuilder.Build()
                 .With(requestor)
-                .ToProcessor(GetComponent<MessageAddresser, EndpointAddress>(this.publisherAddress))
-                .ToProcessor(GetComponent<MessageRepeater, TimeSpan>(new TimeSpan(0, 0, 1)))
-                .ToEndPoint(GetComponent<IMessageSender>());
+                .ToProcessor(Resolve<MessageAddresser, EndpointAddress>(this.publisherAddress))
+                .ToProcessor(Resolve<MessageRepeater, TimeSpan>(new TimeSpan(0, 0, 1)))
+                .ToEndPoint(Resolve<IMessageSender>());
 
             return requestor;
         }
 
-        void BuildSubscriberChannel()
+        void BuildSubscriberChannel(EndpointAddress subscriberAddress)
         {
-            var messageHandlerRouter = GetComponent<MessageHandlerRouter>();
+            var messageHandlerRouter = Resolve<MessageHandlerRouter>();
             
             MessagePipelineBuilder.Build()
-                .With(GetComponent<IMessageReciever>())
+                .With(Resolve<IMessageReciever>())
                 .Pump()
-                .ToProcessor(GetComponent<MessagePayloadUnpackager>())
+                .ToProcessor(Resolve<MessagePayloadUnpackager>())
                 .ToEndPoint(messageHandlerRouter);
 
-            GetComponent<IMessageReciever>().RegisterListeningAddress(this.subscriberAddress);
+            Resolve<IMessageReciever>().RegisterListeningAddress(subscriberAddress);
             messageHandlerRouter.RegisterHandler(this.toRegister);
         }
     }

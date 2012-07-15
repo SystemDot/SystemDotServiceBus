@@ -8,9 +8,8 @@ namespace SystemDot.Messaging.TestSubscriber
         static void Main(string[] args)
         {
             Configure
-                .Local("TestSubscriber")
-                .Subscribes()
-                .To("TestPublisher")
+                .WithLocalMessageServer()
+                .SubscribesTo("TestPublisher@CHRIS_WIN8")
                 .HandlingMessagesWith(new MessageConsumer())
                 .Initialise();
 

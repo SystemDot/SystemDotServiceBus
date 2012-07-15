@@ -4,14 +4,14 @@ namespace SystemDot.Messaging.Configuration
 {
     public abstract class InitialisingConfiguration 
     {
-        public abstract void Initialise();
+        public abstract IBus Initialise();
 
-        public static TType GetComponent<TType, TConstructorArg>(TConstructorArg arg)
+        public static TType Resolve<TType, TConstructorArg>(TConstructorArg arg)
         {
             return IocContainer.Resolve<TType, TConstructorArg>(arg);
         }
 
-        public static TType GetComponent<TType>()
+        public static TType Resolve<TType>()
         {
             return IocContainer.Resolve<TType>();
         }

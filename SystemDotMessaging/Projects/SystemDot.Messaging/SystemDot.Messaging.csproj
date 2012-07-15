@@ -40,14 +40,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Channels\ChannelBuilder.cs" />
+    <Compile Include="Channels\ChannelBuildSchema.cs" />
+    <Compile Include="Channels\IChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\RequestReplySubscriptionHandler.cs" />
     <Compile Include="Configuration\ComponentRegistration\ChannelComponents.cs" />
     <Compile Include="Configuration\ComponentRegistration\Components.cs" />
     <Compile Include="Configuration\ComponentRegistration\PublishingComponents.cs" />
     <Compile Include="Configuration\ComponentRegistration\CoreComponents.cs" />
     <Compile Include="Configuration\ComponentRegistration\HttpComponents.cs" />
+    <Compile Include="Configuration\ComponentRegistration\RequestReplyComponents.cs" />
     <Compile Include="Configuration\ComponentRegistration\ThreadingComponents.cs" />
     <Compile Include="Channels\Publishing\SubscriptionRequestor.cs" />
     <Compile Include="Configuration\InitialisingConfiguration.cs" />
+    <Compile Include="Configuration\LocalMessageServerConfiguration.cs" />
+    <Compile Include="Configuration\RequestReply\RequestReplyServerConfiguration.cs" />
+    <Compile Include="IBus.cs" />
     <Compile Include="Messages\Distribution\IDistributor.cs" />
     <Compile Include="Messages\EndpointAddress.cs" />
     <Compile Include="Messages\Processing\MessageRepeater.cs" />
@@ -62,11 +70,9 @@
     <Compile Include="Channels\Publishing\SubscriptionSchema.cs" />
     <Compile Include="Channels\Publishing\SubscriptionRequestHandler.cs" />
     <Compile Include="Configuration\Configure.cs" />
-    <Compile Include="Configuration\EndpointConfiguration.cs" />
     <Compile Include="Configuration\Publishers\PublisherConfiguration.cs" />
     <Compile Include="Configuration\ComponentRegistration\IocContainer.cs" />
     <Compile Include="Configuration\Subscribers\MessageHandlerConfiguration.cs" />
-    <Compile Include="Configuration\Subscribers\SubscriberConfiguration.cs" />
     <Compile Include="Configuration\Subscribers\SubscribeToConfiguration.cs" />
     <Compile Include="Messages\IMessageProcessor.cs" />
     <Compile Include="Messages\IMessageInputter.cs" />

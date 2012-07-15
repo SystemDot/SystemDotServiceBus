@@ -48,6 +48,7 @@
     <Compile Include="Http\IWebRequestor.cs" />
     <Compile Include="Http\WebRequestor.cs" />
     <Compile Include="IEnumerableExtensions.cs" />
+    <Compile Include="IMachineIdentifier.cs" />
     <Compile Include="ObjectExtensions.cs" />
     <Compile Include="Parallelism\TaskLooper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

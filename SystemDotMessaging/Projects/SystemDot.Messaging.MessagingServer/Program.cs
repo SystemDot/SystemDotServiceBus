@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.MessagingServer
 
         private static HttpServer BuildMessagingServer()
         {
-            return new HttpServer(new FixedPortAddress(), BuildMessagingServerHandler());
+            return new HttpServer(new FixedPortAddress(new MachineIdentifier().GetMachineName()), BuildMessagingServerHandler());
         }
 
         static HttpMessagingServer BuildMessagingServerHandler()
