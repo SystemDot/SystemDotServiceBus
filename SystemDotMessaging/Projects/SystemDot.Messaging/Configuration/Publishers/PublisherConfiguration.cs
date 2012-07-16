@@ -10,28 +10,25 @@ using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Configuration.Publishers
 {
-    public class PublisherConfiguration : InitialisingConfiguration
+    public class PublisherConfiguration : Configurer
     {
-        readonly string channel;
+        readonly EndpointAddress address;
 
-        public PublisherConfiguration(string channel)
+        public PublisherConfiguration(EndpointAddress address)
         {
-            Contract.Requires(!string.IsNullOrEmpty(channel));
-            this.channel = channel;
+            this.address = address;
         }
 
-        public override IBus Initialise()
+        public IBus Initialise()
         {
-            Components.Register();
-            var address = new EndpointAddress(this.channel, Resolve<IMachineIdentifier>().GetMachineName());
-            BuildSubscriptionRequestHandler(address);
-            BuildPublisher(address);
+            BuildSubscriptionRequestHandler();
+            BuildPublisher();
 
             IocContainer.Resolve<TaskLooper>().Start();
             return IocContainer.Resolve<IBus>();
         }
 
-        static void BuildSubscriptionRequestHandler(EndpointAddress address)
+        void BuildSubscriptionRequestHandler()
         {
             MessagePipelineBuilder.Build()
                 .With(Resolve<IMessageReciever>())
@@ -41,12 +38,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
             Resolve<IMessageReciever>().RegisterListeningAddress(address);
         }
 
-        static void BuildPublisher(EndpointAddress address)
-        {
-            BuildPublisherChannel(address);
-        }
-
-        static void BuildPublisherChannel(EndpointAddress address)
+        void BuildPublisher()
         {
             var publisher = Resolve<IDistributor>();
             Resolve<IPublisherRegistry>().RegisterPublisher(address, publisher);

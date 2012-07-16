@@ -7,24 +7,22 @@ using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Configuration.RequestReply
 {
-    public class RequestReplyServerConfiguration : InitialisingConfiguration
+    public class RequestReplyServerConfiguration : Configurer
     {
-        readonly string channel;
+        readonly EndpointAddress address;
 
-        public RequestReplyServerConfiguration(string channel)
+        public RequestReplyServerConfiguration(EndpointAddress address)
         {
-            Contract.Requires(!string.IsNullOrEmpty(channel));
-            this.channel = channel;
+            this.address = address;
         }
 
-        public override IBus Initialise()
+        public IBus Initialise()
         {
-            Components.Register();
-
             var reciever = Resolve<IMessageReciever>();
 
             Resolve<IChannelBuilder>().Build(reciever, Resolve<RequestReplySubscriptionHandler>());
-            reciever.RegisterListeningAddress(new EndpointAddress(this.channel, Resolve<IMachineIdentifier>().GetMachineName()));
+            
+            reciever.RegisterListeningAddress(this.address);
 
             return Resolve<IBus>();
         }

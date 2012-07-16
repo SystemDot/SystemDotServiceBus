@@ -1,7 +1,7 @@
 ﻿using System;
 using SystemDot.Messaging.Configuration;
 
-namespace SystemDot.Messaging.TestSubscriber
+namespace SystemDot.Messaging.OtherTestSubscriber
 {
     class Program
     {
@@ -9,11 +9,12 @@ namespace SystemDot.Messaging.TestSubscriber
         {
             Configure
                 .WithLocalMessageServer()
-                .SubscribesTo("TestPublisher@CHRIS_WIN8")
+                .OpenChannel("TestOtherSubscriber")
+                .SubscribesTo("TestPublisher")
                 .HandlingMessagesWith(new MessageConsumer())
                 .Initialise();
 
-            Console.WriteLine("I am a subscriber, listening for messages..");
+            Console.WriteLine("I am the other subscriber, listening for messages..");
 
             Console.ReadLine();
         }

@@ -44,6 +44,7 @@
     <Compile Include="Channels\ChannelBuildSchema.cs" />
     <Compile Include="Channels\IChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\RequestReplySubscriptionHandler.cs" />
+    <Compile Include="Configuration\ChannelConfiguration.cs" />
     <Compile Include="Configuration\ComponentRegistration\ChannelComponents.cs" />
     <Compile Include="Configuration\ComponentRegistration\Components.cs" />
     <Compile Include="Configuration\ComponentRegistration\PublishingComponents.cs" />
@@ -52,8 +53,8 @@
     <Compile Include="Configuration\ComponentRegistration\RequestReplyComponents.cs" />
     <Compile Include="Configuration\ComponentRegistration\ThreadingComponents.cs" />
     <Compile Include="Channels\Publishing\SubscriptionRequestor.cs" />
-    <Compile Include="Configuration\InitialisingConfiguration.cs" />
-    <Compile Include="Configuration\LocalMessageServerConfiguration.cs" />
+    <Compile Include="Configuration\Configurer.cs" />
+    <Compile Include="Configuration\MessageServerConfiguration.cs" />
     <Compile Include="Configuration\RequestReply\RequestReplyServerConfiguration.cs" />
     <Compile Include="IBus.cs" />
     <Compile Include="Messages\Distribution\IDistributor.cs" />

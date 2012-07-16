@@ -35,7 +35,8 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply
         Because of = () => initialisedBus = 
             Configuration.Configure
                 .WithLocalMessageServer()
-                .RequestReplyServer(ChannelName)
+                .OpenChannel(ChannelName)
+                .AsRequestReplyServer()
                 .Initialise();
 
         It should_create_a_bus = () => initialisedBus.ShouldBeTheSameAs(IocContainer.Resolve<IBus>());

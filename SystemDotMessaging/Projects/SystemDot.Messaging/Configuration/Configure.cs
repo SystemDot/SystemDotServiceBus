@@ -4,9 +4,9 @@ namespace SystemDot.Messaging.Configuration
 {
     public class Configure
     {
-        public static LocalMessageServerConfiguration WithLocalMessageServer()
+        public static MessageServerConfiguration WithLocalMessageServer()
         {
-            return new LocalMessageServerConfiguration();
+            return new MessageServerConfiguration();
         }
     }
 }

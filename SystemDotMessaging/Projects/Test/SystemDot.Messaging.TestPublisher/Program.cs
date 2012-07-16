@@ -9,7 +9,8 @@ namespace SystemDot.Messaging.TestPublisher
         {
             IBus bus = Configure
                 .WithLocalMessageServer()
-                .AsPublisher("TestPublisher")
+                .OpenChannel("TestPublisher")
+                .AsPublisher()
                 .Initialise();
             
             do

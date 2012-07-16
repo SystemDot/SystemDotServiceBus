@@ -11,41 +11,43 @@ using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Configuration.Subscribers
 {
-    public class MessageHandlerConfiguration : InitialisingConfiguration
+    public class MessageHandlerConfiguration : Configurer
     {
         readonly IMessageHandler toRegister;
+        readonly EndpointAddress subscriberAddress;
         readonly EndpointAddress publisherAddress;
 
-        public MessageHandlerConfiguration(IMessageHandler toRegister, EndpointAddress publisherAddress)
+        public MessageHandlerConfiguration(
+            IMessageHandler toRegister, 
+            EndpointAddress subscriberAddress, 
+            EndpointAddress publisherAddress)
         {
             Contract.Requires(toRegister != null);
+            Contract.Requires(subscriberAddress != EndpointAddress.Empty);
             Contract.Requires(publisherAddress != EndpointAddress.Empty);
             
             this.toRegister = toRegister;
+            this.subscriberAddress = subscriberAddress;
             this.publisherAddress = publisherAddress;
         }
 
-        public override IBus Initialise()
+        public IBus Initialise()
         {
-            Components.Register();
             BuildSubscriber();
             return IocContainer.Resolve<IBus>();
         }
 
         void BuildSubscriber()
         {
-            var subscriberAddress = new EndpointAddress(
-                this.publisherAddress.Channel, 
-                Resolve<IMachineIdentifier>().GetMachineName());
-
-            BuildSubscriberChannel(subscriberAddress);
-            BuildSubscriptionRequestChannel(subscriberAddress).Start();
+            BuildSubscriberChannel();
+            BuildSubscriptionRequestChannel().Start();
             IocContainer.Resolve<TaskLooper>().Start();
         }
 
-        SubscriptionRequestor BuildSubscriptionRequestChannel(EndpointAddress subscriberAddress)
+        SubscriptionRequestor BuildSubscriptionRequestChannel()
         {
-            SubscriptionRequestor requestor = Resolve<SubscriptionRequestor, EndpointAddress>(subscriberAddress);
+            SubscriptionRequestor requestor = Resolve<SubscriptionRequestor, EndpointAddress>(
+                this.subscriberAddress);
             
             MessagePipelineBuilder.Build()
                 .With(requestor)
@@ -56,7 +58,7 @@ namespace SystemDot.Messaging.Configuration.Subscribers
             return requestor;
         }
 
-        void BuildSubscriberChannel(EndpointAddress subscriberAddress)
+        void BuildSubscriberChannel()
         {
             var messageHandlerRouter = Resolve<MessageHandlerRouter>();
             
@@ -66,7 +68,7 @@ namespace SystemDot.Messaging.Configuration.Subscribers
                 .ToProcessor(Resolve<MessagePayloadUnpackager>())
                 .ToEndPoint(messageHandlerRouter);
 
-            Resolve<IMessageReciever>().RegisterListeningAddress(subscriberAddress);
+            Resolve<IMessageReciever>().RegisterListeningAddress(this.subscriberAddress);
             messageHandlerRouter.RegisterHandler(this.toRegister);
         }
     }
