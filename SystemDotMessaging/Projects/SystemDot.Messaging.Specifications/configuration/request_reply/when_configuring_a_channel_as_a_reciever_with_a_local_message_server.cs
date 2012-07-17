@@ -9,9 +9,9 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.configuration.request_reply
 {
     [Subject("Request reply configuration")]
-    public class when_configuring_a_channel_with_a_local_message_server : WithSubject<object>
+    public class when_configuring_a_channel_as_a_reciever_with_a_local_message_server : WithSubject<object>
     {
-        const string MachineName = "TestServer";
+        const string MachineName = "TestMachine";
         const string ChannelName = "TestChannel";
         static IBus initialisedBus;
         static TestChannelBuilder channelBuilder;
@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply
             Configuration.Configure
                 .WithLocalMessageServer()
                 .OpenChannel(ChannelName)
-                .AsRequestReplyServer()
+                .AsRequestReplyReciever()
                 .Initialise();
 
         It should_create_a_bus = () => initialisedBus.ShouldBeTheSameAs(IocContainer.Resolve<IBus>());
@@ -45,7 +45,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply
             channelBuilder.StartPoint.ShouldBeTheSameAs(reciever);
 
         It should_register_to_listen_for_the_address_on_the_reciever = () =>
-            reciever.ListeningAddresses.First().Address.ShouldEqual(string.Concat(ChannelName, "@", MachineName, ".",  MachineName));
+            reciever.ListeningAddresses.First().Address.ShouldEqual(string.Concat(ChannelName, "@", MachineName));
 
         It should_build_a_request_reply_subscription_handler_channel_with_the_subscription_handler_as_its_end_point = () =>
             channelBuilder.EndPoint.ShouldBeTheSameAs(IocContainer.Resolve<RequestReplySubscriptionHandler>());

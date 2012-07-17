@@ -50,10 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="configuration\request_reply\when_configuring_a_channel_as_a_sender_with_a_local_message_server.cs" />
     <Compile Include="configuration\request_reply\TestChannelBuilder.cs" />
     <Compile Include="configuration\request_reply\TestMachineIdentifier.cs" />
     <Compile Include="configuration\request_reply\TestMessageReciever.cs" />
-    <Compile Include="configuration\request_reply\when_configuring_a_channel_with_a_local_message_server.cs" />
+    <Compile Include="configuration\request_reply\when_configuring_a_channel_as_a_reciever_with_a_local_message_server.cs" />
     <Compile Include="configuration\when_setting_a_transient_component_creator_with_two_constructors_argument_in_the_environment.cs" />
     <Compile Include="configuration\when_setting_a_transient_component_creator_with_one_constructor_argument_in_the_environment.cs" />
     <Compile Include="configuration\when_setting_a_transient_component_creator_in_the_environment.cs" />

@@ -55,7 +55,8 @@
     <Compile Include="Channels\Publishing\SubscriptionRequestor.cs" />
     <Compile Include="Configuration\Configurer.cs" />
     <Compile Include="Configuration\MessageServerConfiguration.cs" />
-    <Compile Include="Configuration\RequestReply\RequestReplyServerConfiguration.cs" />
+    <Compile Include="Configuration\RequestReply\RequestReplySenderConfiguration.cs" />
+    <Compile Include="Configuration\RequestReply\RequestReplyRecieverConfiguration.cs" />
     <Compile Include="IBus.cs" />
     <Compile Include="Messages\Distribution\IDistributor.cs" />
     <Compile Include="Messages\EndpointAddress.cs" />
@@ -73,7 +74,6 @@
     <Compile Include="Configuration\Configure.cs" />
     <Compile Include="Configuration\Publishers\PublisherConfiguration.cs" />
     <Compile Include="Configuration\ComponentRegistration\IocContainer.cs" />
-    <Compile Include="Configuration\Subscribers\MessageHandlerConfiguration.cs" />
     <Compile Include="Configuration\Subscribers\SubscribeToConfiguration.cs" />
     <Compile Include="Messages\IMessageProcessor.cs" />
     <Compile Include="Messages\IMessageInputter.cs" />

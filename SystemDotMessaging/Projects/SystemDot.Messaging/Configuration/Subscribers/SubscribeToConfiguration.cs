@@ -1,26 +1,67 @@
+using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Channels.Publishing;
+using SystemDot.Messaging.Configuration.ComponentRegistration;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Consuming;
+using SystemDot.Messaging.Messages.Pipelines;
+using SystemDot.Messaging.Messages.Processing;
+using SystemDot.Messaging.Transport;
+using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Configuration.Subscribers
 {
-    public class SubscribeToConfiguration
+    public class SubscribeToConfiguration : Configurer
     {
-        readonly EndpointAddress address;
+        readonly EndpointAddress subscriberAddress;
         readonly EndpointAddress publisherAddress;
 
-        public SubscribeToConfiguration(EndpointAddress address, EndpointAddress publisherAddress)
+        public SubscribeToConfiguration(EndpointAddress subscriberAddress, EndpointAddress publisherAddress)
         {
-            Contract.Requires(address != EndpointAddress.Empty);
+            Contract.Requires(subscriberAddress != EndpointAddress.Empty);
             Contract.Requires(publisherAddress != EndpointAddress.Empty);
-            this.address = address;
+            this.subscriberAddress = subscriberAddress;
             this.publisherAddress = publisherAddress;
         }
 
-        public MessageHandlerConfiguration HandlingMessagesWith<T>(IMessageHandler<T> toRegister)
+        public IBus Initialise()
         {
-            Contract.Requires(toRegister != null);
-            return new MessageHandlerConfiguration(toRegister, this.address, this.publisherAddress);
+            BuildSubscriber();
+            return IocContainer.Resolve<IBus>();
+        }
+
+        void BuildSubscriber()
+        {
+            BuildSubscriberChannel();
+            BuildSubscriptionRequestChannel().Start();
+            IocContainer.Resolve<TaskLooper>().Start();
+        }
+
+        SubscriptionRequestor BuildSubscriptionRequestChannel()
+        {
+            SubscriptionRequestor requestor = Resolve<SubscriptionRequestor, EndpointAddress>(
+                this.subscriberAddress);
+
+            MessagePipelineBuilder.Build()
+                .With(requestor)
+                .ToProcessor(Resolve<MessageAddresser, EndpointAddress>(this.publisherAddress))
+                .ToProcessor(Resolve<MessageRepeater, TimeSpan>(new TimeSpan(0, 0, 1)))
+                .ToEndPoint(Resolve<IMessageSender>());
+
+            return requestor;
+        }
+
+        void BuildSubscriberChannel()
+        {
+            var messageHandlerRouter = Resolve<MessageHandlerRouter>();
+
+            MessagePipelineBuilder.Build()
+                .With(Resolve<IMessageReciever>())
+                .Pump()
+                .ToProcessor(Resolve<MessagePayloadUnpackager>())
+                .ToEndPoint(messageHandlerRouter);
+
+            Resolve<IMessageReciever>().RegisterListeningAddress(this.subscriberAddress);
         }
     }
 }

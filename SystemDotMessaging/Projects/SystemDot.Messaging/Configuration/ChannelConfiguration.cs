@@ -16,9 +16,9 @@ namespace SystemDot.Messaging.Configuration
             this.address = address;
         }
 
-        public RequestReplyServerConfiguration AsRequestReplyServer()
+        public RequestReplyRecieverConfiguration AsRequestReplyReciever()
         {
-            return new RequestReplyServerConfiguration(address);
+            return new RequestReplyRecieverConfiguration(address);
         }
 
         public PublisherConfiguration AsPublisher()
@@ -29,6 +29,11 @@ namespace SystemDot.Messaging.Configuration
         public SubscribeToConfiguration SubscribesTo(string publisherAddress)
         {
             return new SubscribeToConfiguration(this.address, BuildEndpointAddress(publisherAddress));
+        }
+
+        public RequestReplySenderConfiguration AsRequestReplySenderTo(string recieverName)
+        {
+            return new RequestReplySenderConfiguration();
         }
     }
 }

@@ -1,4 +1,4 @@
-using SystemDot.Messaging.Messages;
+using SystemDot.Messaging.Configuration.ComponentRegistration;
 
 namespace SystemDot.Messaging.Configuration
 {
@@ -6,6 +6,7 @@ namespace SystemDot.Messaging.Configuration
     {
         public static MessageServerConfiguration WithLocalMessageServer()
         {
+            Components.Register();            
             return new MessageServerConfiguration();
         }
     }

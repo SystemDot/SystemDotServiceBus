@@ -8,7 +8,8 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
         static void Main(string[] args)
         {
             Configure.WithLocalMessageServer()
-                .RequestReplyServer("Test")
+                .OpenChannel("TestReciever")
+                .AsRequestReplyReciever()
                 .Initialise();
 
             Console.WriteLine("I am the reciever. Press enter to exit");

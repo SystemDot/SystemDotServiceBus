@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.Contracts;
 using System.Net;
 using System.Threading.Tasks;
@@ -51,7 +52,7 @@ namespace SystemDot.Http
                 context.Response.StatusCode = (int)HttpStatusCode.OK;
                 context.Response.Close();
             }
-            catch (HttpListenerException e)
+            catch (Exception e)
             {
                 Logger.Info(e.Message);
             }

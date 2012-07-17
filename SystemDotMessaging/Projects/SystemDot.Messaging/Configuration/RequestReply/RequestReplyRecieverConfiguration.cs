@@ -7,11 +7,11 @@ using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Configuration.RequestReply
 {
-    public class RequestReplyServerConfiguration : Configurer
+    public class RequestReplyRecieverConfiguration : Configurer
     {
         readonly EndpointAddress address;
 
-        public RequestReplyServerConfiguration(EndpointAddress address)
+        public RequestReplyRecieverConfiguration(EndpointAddress address)
         {
             this.address = address;
         }

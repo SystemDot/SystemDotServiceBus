@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             IocContainer.Register(() => new MessagePayloadPackager(IocContainer.Resolve<ISerialiser>()));
             IocContainer.Register<MessageAddresser, EndpointAddress>(a => new MessageAddresser(a));
             IocContainer.Register(() => new MessagePayloadUnpackager(IocContainer.Resolve<ISerialiser>()));
-            IocContainer.Register(() => new MessageHandlerRouter());
+            IocContainer.Register(new MessageHandlerRouter());
             
             IocContainer.Register<MessageRepeater, TimeSpan>((t) => new MessageRepeater(t, IocContainer.Resolve<ITaskScheduler>()));
             IocContainer.Register<SubscriptionRequestor, EndpointAddress>(a => new SubscriptionRequestor(a));

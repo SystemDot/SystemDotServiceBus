@@ -17,12 +17,7 @@ namespace SystemDot.Messaging.Configuration
 
         protected EndpointAddress BuildEndpointAddress(string channel)
         {
-            var address = new EndpointAddress(channel);
-
-            if (address.ServerName == string.Empty) 
-                address.ServerName = Resolve<IMachineIdentifier>().GetMachineName();
-
-            return address;
+            return new EndpointAddress(channel, Resolve<IMachineIdentifier>().GetMachineName());
         }
     }
 }

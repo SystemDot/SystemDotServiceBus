@@ -1,5 +1,7 @@
 ﻿using System;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Configuration.ComponentRegistration;
+using SystemDot.Messaging.Messages.Consuming;
 
 namespace SystemDot.Messaging.OtherTestSubscriber
 {
@@ -11,9 +13,10 @@ namespace SystemDot.Messaging.OtherTestSubscriber
                 .WithLocalMessageServer()
                 .OpenChannel("TestOtherSubscriber")
                 .SubscribesTo("TestPublisher")
-                .HandlingMessagesWith(new MessageConsumer())
                 .Initialise();
 
+            IocContainer.Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());
+            
             Console.WriteLine("I am the other subscriber, listening for messages..");
 
             Console.ReadLine();
