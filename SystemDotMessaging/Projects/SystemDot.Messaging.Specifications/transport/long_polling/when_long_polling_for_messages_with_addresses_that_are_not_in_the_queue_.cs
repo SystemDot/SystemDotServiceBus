@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
         {
             messagePayloads = new List<MessagePayload>();
             messagePayload = new MessagePayload();
-            messagePayload.SetToAddress(new EndpointAddress("Address1"));
+            messagePayload.SetToAddress(new EndpointAddress("Address1", "TestServer"));
 
             Configure<ISerialiser>(new PlatformAgnosticSerialiser());
 
@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
             requestor.AddMessages(messagePayload);
             
             Subject.MessageProcessed += payload => messagePayloads.Add(payload);
-            Subject.RegisterListeningAddress(new EndpointAddress("Address2"));
+            Subject.RegisterListeningAddress(new EndpointAddress("Address2", "TestServer"));
         };
 
         Because of = () => Subject.Poll();

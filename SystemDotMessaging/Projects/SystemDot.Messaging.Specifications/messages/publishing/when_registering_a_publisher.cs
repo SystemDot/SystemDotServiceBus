@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.messages.publishing
         Establish context = () =>
         {
             distributor = new Distributor(new MessagePayloadCopier(new PlatformAgnosticSerialiser()));
-            address = new EndpointAddress("TestAddress");
+            address = new EndpointAddress("TestAddress", "TestServer");
             Subject.RegisterPublisher(address, distributor);
         };
 

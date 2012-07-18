@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Specifications.messages.processing
 
         Establish context = () =>
         {
-            address = new EndpointAddress("Test");
+            address = new EndpointAddress("TestAddress", "TestServer");
             Configure<EndpointAddress>(address);
             Subject.MessageProcessed += i => processedPayload = i;
             message = new MessagePayload();

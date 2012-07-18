@@ -61,11 +61,11 @@
     <Compile Include="configuration\ITestComponent.cs" />
     <Compile Include="configuration\TestComponent.cs" />
     <Compile Include="configuration\when_setting_a_component_in_the_environment.cs" />
-    <Compile Include="messages\endpoints\when_creating_a_new_endpoint_address_with_a_channel_and_a_machine_name.cs" />
-    <Compile Include="messages\endpoints\when_initialising_a_new_endpoint_address_with_an_address_and_a_proxy.cs" />
     <Compile Include="messages\distribution\when_subscribing_with_the_same_subscriber_key_twice.cs" />
+    <Compile Include="messages\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel.cs" />
+    <Compile Include="messages\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel_and_machine_name.cs" />
+    <Compile Include="messages\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel_machine_and_server.cs" />
     <Compile Include="messages\publishing\when_handling_a_subscribe_request_message.cs" />
-    <Compile Include="messages\endpoints\when_initialising_a_new_endpoint_address_with_only_a_local_address.cs" />
     <Compile Include="messages\publishing\when_handling_a_non_subscription_request_message_with_the_subscription_request_handler.cs" />
     <Compile Include="messages\publishing\TestSubscriptionChannelBuilder.cs" />
     <Compile Include="messages\processing\when_addressing_a_message.cs" />
@@ -88,7 +88,6 @@
     <Compile Include="messages\repeating\TestTaskScheduler.cs" />
     <Compile Include="messages\repeating\when_a_recieved_message_is_sent_and_the_specified_time_period_has_passed.cs" />
     <Compile Include="messages\repeating\when_recieving_a_message.cs" />
-    <Compile Include="messages\endpoints\when_initialising_a_new_endpoint_address_with_a_full_address.cs" />
     <Compile Include="TestDistributor.cs" />
     <Compile Include="messages\publishing\when_registering_a_publisher.cs" />
     <Compile Include="WithMessageInputterSubject.cs" />
@@ -105,6 +104,10 @@
     <ProjectReference Include="..\SystemDot.Messaging\SystemDot.Messaging.csproj">
       <Project>{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}</Project>
       <Name>SystemDot.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemDot.NonMetro\SystemDot.NonMetro.csproj">
+      <Project>{FD8BB339-A3F0-4643-B09C-6FD9D6BD1E1A}</Project>
+      <Name>SystemDot.NonMetro</Name>
     </ProjectReference>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">
       <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>

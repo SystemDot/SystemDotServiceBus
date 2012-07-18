@@ -15,9 +15,9 @@ namespace SystemDot.Messaging.Configuration
             return IocContainer.Resolve<TType>();
         }
 
-        protected EndpointAddress BuildEndpointAddress(string channel)
+        protected EndpointAddress BuildEndpointAddress(string address, string defaultServerName)
         {
-            return new EndpointAddress(channel, Resolve<IMachineIdentifier>().GetMachineName());
+            return Resolve<EndpointAddressBuilder>().Build(address, defaultServerName);
         }
     }
 }

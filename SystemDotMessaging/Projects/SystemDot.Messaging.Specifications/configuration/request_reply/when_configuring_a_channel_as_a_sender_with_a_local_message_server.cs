@@ -1,4 +1,5 @@
 using SystemDot.Messaging.Configuration.ComponentRegistration;
+using SystemDot.Messaging.Messages;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -18,6 +19,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply
             Components.Registration = () =>
             {
                 IocContainer.Register<IMachineIdentifier>(new TestMachineIdentifier(MachineName));
+                IocContainer.Register(new EndpointAddressBuilder(IocContainer.Resolve<IMachineIdentifier>()));
                 IocContainer.Register<IBus>(An<IBus>());
             };
         };

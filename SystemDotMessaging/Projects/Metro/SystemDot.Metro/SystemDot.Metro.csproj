@@ -107,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logging\Logger.cs" />
+    <Compile Include="MachineIdentifier.cs" />
     <Compile Include="Parallelism\TaskScheduler.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -44,9 +44,9 @@ namespace SystemDot.Messaging.TestSubscriber
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             Configure
-                .Local("TestSubscriber@Chris_Win8.CHRIS-LAPTOP")
-                .Subscribes().To("TestPublisher@CHRIS-LAPTOP")
-                .HandlingMessagesWith(new TestHandler())
+                .WithLocalMessageServer()
+                .OpenChannel("TestSubscriber")
+                .SubscribesTo("TestPublisher")
                 .Initialise();
 
             // Do not repeat app initialization when already running, just ensure that

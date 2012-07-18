@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.Specifications.messages.publishing
 
         Establish context = () =>
         {
-            address = new EndpointAddress("PublisherAddress");
+            address = new EndpointAddress("PublisherAddress", "TestServer");
             Configure<EndpointAddress>(address);
             Subject.MessageProcessed += m => request = m;
         };

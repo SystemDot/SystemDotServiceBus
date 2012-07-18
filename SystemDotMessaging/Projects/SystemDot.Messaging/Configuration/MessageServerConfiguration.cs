@@ -1,15 +1,23 @@
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Configuration.ComponentRegistration;
 
 namespace SystemDot.Messaging.Configuration
 {
     public class MessageServerConfiguration : Configurer
     {
+        readonly string messageServerName;
+
+        public MessageServerConfiguration(string messageServerName)
+        {
+            Contract.Requires(!string.IsNullOrEmpty(messageServerName));
+            
+            this.messageServerName = messageServerName;
+        }
+
         public ChannelConfiguration OpenChannel(string name)
         {
             Contract.Requires(!string.IsNullOrEmpty(name));
-            
-            return new ChannelConfiguration(BuildEndpointAddress(name));
+
+            return new ChannelConfiguration(BuildEndpointAddress(name, this.messageServerName), this.messageServerName);
         }
     }
 }

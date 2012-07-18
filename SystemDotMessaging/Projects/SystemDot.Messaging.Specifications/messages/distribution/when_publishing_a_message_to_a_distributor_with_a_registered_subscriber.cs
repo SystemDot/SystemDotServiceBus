@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Specifications.messages.distribution
             Subject.Subscribe(new object(), distributionSubscriber);
 
             message = new MessagePayload();
-            message.SetToAddress(new EndpointAddress("TestAddress"));
+            message.SetToAddress(new EndpointAddress("TestAddress", "TestServer"));
             inputMessage = message;
         };
 

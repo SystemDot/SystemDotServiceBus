@@ -16,6 +16,7 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
     [Subject("Long polling")]
     public class when_long_polling_for_messages_with_two_messages_are_returned_in_the_stream : WithSubject<LongPollReciever>
     {
+        const string ServerName = "ServerName";
         static List<MessagePayload> messagePayloads;
         static MessagePayload messagePayload1;
         static MessagePayload messagePayload2;
@@ -24,13 +25,13 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
         {
             messagePayloads = new List<MessagePayload>();
             messagePayload1 = new MessagePayload();
-            messagePayload1.SetToAddress(new EndpointAddress("Address1"));
+            messagePayload1.SetToAddress(new EndpointAddress("Address1", ServerName));
             messagePayload2 = new MessagePayload();
-            messagePayload2.SetToAddress(new EndpointAddress("Address2"));
+            messagePayload2.SetToAddress(new EndpointAddress("Address2", ServerName));
 
             Configure<ISerialiser>(new PlatformAgnosticSerialiser());
 
-            var requestor = new TestWebRequestor(The<ISerialiser>(), new FixedPortAddress());
+            var requestor = new TestWebRequestor(The<ISerialiser>(), new FixedPortAddress(ServerName));
             Configure<IWebRequestor>(requestor); 
             requestor.AddMessages(messagePayload1, messagePayload2);
             

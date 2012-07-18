@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.messages.distribution
             subscriber2 = new Pipe<MessagePayload>();
             subscriber2.MessageProcessed += payload => secondMessageDistributed = payload;
 
-            address = new EndpointAddress("test@test");
+            address = new EndpointAddress("TestAddress", "TestServer");
             Subject.Subscribe(address, subscriber1);
             Subject.Subscribe(address, subscriber2);
         };

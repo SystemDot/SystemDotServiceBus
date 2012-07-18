@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Specifications.messages.publishing
             
             Configure<ISubscriptionChannelBuilder>(
                 new TestSubscriptionChannelBuilder(
-                    new SubscriptionSchema(new EndpointAddress("TestAddress")), 
+                    new SubscriptionSchema(new EndpointAddress("TestAddress", "TestServer")), 
                     new Pipe<MessagePayload>()));
 
             messagePayload = new MessagePayload();

@@ -9,11 +9,13 @@ namespace SystemDot.Messaging.Configuration
     public class ChannelConfiguration : Configurer
     {
         readonly EndpointAddress address;
+        readonly string messageServerName;
 
-        public ChannelConfiguration(EndpointAddress address)
+        public ChannelConfiguration(EndpointAddress address, string messageServerName)
         {
             Contract.Requires(address != EndpointAddress.Empty);
             this.address = address;
+            this.messageServerName = messageServerName;
         }
 
         public RequestReplyRecieverConfiguration AsRequestReplyReciever()
@@ -28,7 +30,7 @@ namespace SystemDot.Messaging.Configuration
 
         public SubscribeToConfiguration SubscribesTo(string publisherAddress)
         {
-            return new SubscribeToConfiguration(this.address, BuildEndpointAddress(publisherAddress));
+            return new SubscribeToConfiguration(this.address, BuildEndpointAddress(publisherAddress, this.messageServerName));
         }
 
         public RequestReplySenderConfiguration AsRequestReplySenderTo(string recieverName)

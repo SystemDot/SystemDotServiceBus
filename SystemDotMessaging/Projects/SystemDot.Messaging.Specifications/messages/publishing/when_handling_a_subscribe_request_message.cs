@@ -19,10 +19,10 @@ namespace SystemDot.Messaging.Specifications.messages.publishing
 
         Establish context = () =>
         {
-            address = new EndpointAddress("TestAddress");
+            address = new EndpointAddress("TestAddress", "TestServer");
             publisher = new TestDistributor();
             subscriptionChannel = new Pipe<MessagePayload>();
-            subscriptionSchema = new SubscriptionSchema(new EndpointAddress("TestSubscriberAddress"));
+            subscriptionSchema = new SubscriptionSchema(new EndpointAddress("TestSubscriberAddress", "TestServer"));
             Configure<IPublisherRegistry>(new PublisherRegistry());
             The<IPublisherRegistry>().RegisterPublisher(address, publisher);
 
