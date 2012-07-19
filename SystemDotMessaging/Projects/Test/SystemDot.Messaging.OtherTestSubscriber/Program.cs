@@ -1,4 +1,5 @@
 ﻿using System;
+using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Messages.Consuming;
 
@@ -8,6 +9,9 @@ namespace SystemDot.Messaging.OtherTestSubscriber
     {
         static void Main(string[] args)
         {
+            Logger.LoggingMechanism = new ConsoleLoggingMechanism();
+            Logger.ShowInfo = false;
+
             Configure
                 .WithLocalMessageServer()
                 .OpenChannel("TestOtherSubscriber")

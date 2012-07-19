@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using SystemDot.Http;
+using SystemDot.Logging;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Serialisation;
@@ -37,9 +38,11 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
 
         public Task Poll()
         {
+            Logger.Info("Long polling for messages");
+
             return this.requestor.SendPut(
-                this.addresses.First().GetUrl(), 
-                s => this.formatter.Serialise(s, CreateLongPollPayload(this.addresses)), 
+                this.addresses.First().GetUrl(),
+                s => this.formatter.Serialise(s, CreateLongPollPayload(this.addresses)),
                 RecieveResponse);
         }
 
@@ -57,6 +60,7 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
 
             foreach (var message in messages)
             {
+                Logger.Info("Recieved message");
                 this.MessageProcessed(message);
             }
         }

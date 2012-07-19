@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using SystemDot.Logging;
 
 namespace SystemDot.Http
 {
@@ -27,27 +28,41 @@ namespace SystemDot.Http
         private static void SendRequest(Action<Stream> toPerformOnRequest, HttpWebRequest request)
         {
             Task.Factory.FromAsync<Stream>(request.BeginGetRequestStream, request.EndGetRequestStream, request)
-                .ContinueWith(task => PerformActionOnStream(toPerformOnRequest, task.Result))
+                .ContinueWith(task => PerformActionOnRequest(toPerformOnRequest, task))
                 .Wait();
+        }
+
+        static void PerformActionOnRequest(Action<Stream> toPerformOnRequest, Task<Stream> task)
+        {
+            try
+            {
+                using (task.Result) 
+                    toPerformOnRequest(task.Result);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message);
+            }
         }
 
         private static Task RecieveResponse(Action<Stream> toPerformOnResponse, HttpWebRequest request)
         {
             return Task.Factory
                 .FromAsync<WebResponse>(request.BeginGetResponse, request.EndGetResponse, request)
-                .ContinueWith(task => PerformActionOnStream(toPerformOnResponse, task.Result.GetResponseStream()));
+                .ContinueWith(task => PerformActionOnResponse(toPerformOnResponse, task));
         }
 
-        private static void PerformActionOnStream(Action<Stream> toPerform, Stream stream)
+        static void PerformActionOnResponse(Action<Stream> toPerformOnResponse, Task<WebResponse> task)
         {
             try
             {
-                using (stream) toPerform(stream);
+                using (task.Result.GetResponseStream()) 
+                    toPerformOnResponse(task.Result.GetResponseStream());
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Logger.Error(e.Message);
             }
-            
         }
     }
 }

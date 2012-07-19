@@ -1,6 +1,6 @@
 ﻿using System;
+using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Configuration.ComponentRegistration;
 using SystemDot.Messaging.Messages.Consuming;
 
 namespace SystemDot.Messaging.TestSubscriber
@@ -9,6 +9,9 @@ namespace SystemDot.Messaging.TestSubscriber
     {
         static void Main(string[] args)
         {
+            Logger.LoggingMechanism = new ConsoleLoggingMechanism();
+            Logger.ShowInfo = false;
+
             Configure
                 .WithLocalMessageServer()
                 .OpenChannel("TestSubscriber")

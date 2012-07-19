@@ -1,4 +1,5 @@
 ﻿using System;
+using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Test.Messages;
 
@@ -8,6 +9,9 @@ namespace SystemDot.Messaging.TestPublisher
     {
         static void Main(string[] args)
         {
+            Logger.LoggingMechanism = new ConsoleLoggingMechanism();
+            Logger.ShowInfo = false;
+
             IBus bus = Configure
                 .WithLocalMessageServer()
                 .OpenChannel("TestPublisher")
