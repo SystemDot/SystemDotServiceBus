@@ -1,3 +1,4 @@
+using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Distribution;
@@ -26,8 +27,8 @@ namespace SystemDot.Messaging.Specifications.messages.publishing
             Configure<IPublisherRegistry>(new PublisherRegistry());
             The<IPublisherRegistry>().RegisterPublisher(address, publisher);
 
-            Configure<ISubscriptionChannelBuilder>(
-                new TestSubscriptionChannelBuilder(subscriptionSchema, subscriptionChannel));
+            Configure<IChannelBuilder>(
+                new TestChannelBuilder(subscriptionSchema, subscriptionChannel));
             
             request = new MessagePayload();
             request.SetToAddress(address);

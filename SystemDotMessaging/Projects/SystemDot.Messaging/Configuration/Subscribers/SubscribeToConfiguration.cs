@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Configuration.Subscribers
         {
             BuildSubscriberChannel();
             BuildSubscriptionRequestChannel().Start();
-            IocContainer.Resolve<TaskLooper>().Start();
+            IocContainer.Resolve<ITaskLooper>().Start();
         }
 
         SubscriptionRequestor BuildSubscriptionRequestChannel()

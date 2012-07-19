@@ -1,4 +1,5 @@
 using SystemDot.Messaging.Channels.RequestReply;
+using SystemDot.Messaging.Messages;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {
@@ -6,7 +7,8 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
     {
         public static void Register()
         {
-            IocContainer.Register(new RequestReplySubscriptionHandler());
+            IocContainer.Register(new SubscriptionRequestHandler(new ChannelBuilder()));
+            IocContainer.Register<SubscriptionRequestor, EndpointAddress>(a => new SubscriptionRequestor(a));
         }
     }
 }

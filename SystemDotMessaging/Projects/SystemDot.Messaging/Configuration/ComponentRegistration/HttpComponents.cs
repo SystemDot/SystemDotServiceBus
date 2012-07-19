@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
                 IocContainer.Resolve<IWebRequestor>(),
                 IocContainer.Resolve<ISerialiser>());
 
-            IocContainer.Resolve<TaskLooper>().RegisterToLoop(longPollReciever.Poll);
+            IocContainer.Resolve<ITaskLooper>().RegisterToLoop(longPollReciever.Poll);
 
             IocContainer.Register<IMessageReciever>(longPollReciever);
 

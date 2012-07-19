@@ -1,9 +1,8 @@
-using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.RequestReply;
-using SystemDot.Messaging.Configuration.ComponentRegistration;
 using SystemDot.Messaging.Messages;
+using SystemDot.Messaging.Messages.Pipelines;
 using SystemDot.Messaging.Transport;
+using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Configuration.RequestReply
 {
@@ -20,9 +19,14 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             var reciever = Resolve<IMessageReciever>();
 
-            Resolve<IChannelBuilder>().Build(reciever, Resolve<RequestReplySubscriptionHandler>());
-            
+            MessagePipelineBuilder.Build()
+                .With(reciever)
+                .Pump()
+                .ToEndPoint(Resolve<SubscriptionRequestHandler>());
+
             reciever.RegisterListeningAddress(this.address);
+
+            Resolve<ITaskLooper>().Start();
 
             return Resolve<IBus>();
         }

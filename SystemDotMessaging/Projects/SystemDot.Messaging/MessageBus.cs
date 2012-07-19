@@ -11,6 +11,12 @@ namespace SystemDot.Messaging
         {
             Contract.Requires(message != null);
             MessageProcessed(message);
-        }        
+        }
+
+        public void Reply(object message)
+        {
+            Contract.Requires(message != null);
+            MessageProcessed(message);
+        }
     }
 }

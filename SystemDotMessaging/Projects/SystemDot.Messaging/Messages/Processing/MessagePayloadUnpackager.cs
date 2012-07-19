@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Logging;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Packaging.Headers;
 using SystemDot.Serialisation;
@@ -20,6 +21,10 @@ namespace SystemDot.Messaging.Messages.Processing
 
         public void InputMessage(MessagePayload toInput)
         {
+            if (!toInput.HasBody()) return;
+
+            Logger.Info("Unpackaging message payload");
+
             MessageProcessed(this.serialiser.Deserialise(toInput.GetBody()));
         }
 

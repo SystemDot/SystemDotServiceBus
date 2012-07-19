@@ -2,7 +2,6 @@ using System;
 using SystemDot.Logging;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
-using SystemDot.Messaging.Messages.Packaging.Headers;
 
 namespace SystemDot.Messaging.Channels.Publishing
 {

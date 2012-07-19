@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
             BuildSubscriptionRequestHandler();
             BuildPublisher();
 
-            IocContainer.Resolve<TaskLooper>().Start();
+            IocContainer.Resolve<ITaskLooper>().Start();
             return IocContainer.Resolve<IBus>();
         }
 

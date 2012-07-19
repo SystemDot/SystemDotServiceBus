@@ -50,8 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="configuration\request_reply\when_configuring_a_channel_as_a_sender_with_a_local_message_server.cs" />
-    <Compile Include="configuration\request_reply\TestChannelBuilder.cs" />
     <Compile Include="configuration\request_reply\TestMachineIdentifier.cs" />
     <Compile Include="configuration\request_reply\TestMessageReciever.cs" />
     <Compile Include="configuration\request_reply\when_configuring_a_channel_as_a_reciever_with_a_local_message_server.cs" />
@@ -61,17 +59,23 @@
     <Compile Include="configuration\ITestComponent.cs" />
     <Compile Include="configuration\TestComponent.cs" />
     <Compile Include="configuration\when_setting_a_component_in_the_environment.cs" />
+    <Compile Include="messages\bus\when_replying_with_a_message_on_the_bus.cs" />
     <Compile Include="messages\distribution\when_subscribing_with_the_same_subscriber_key_twice.cs" />
     <Compile Include="messages\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel.cs" />
     <Compile Include="messages\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel_and_machine_name.cs" />
     <Compile Include="messages\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel_machine_and_server.cs" />
+    <Compile Include="messages\processing\when_unpackaging_a_message_from_transportation_payload_that_does_not_have_a_body.cs" />
     <Compile Include="messages\publishing\when_handling_a_subscribe_request_message.cs" />
     <Compile Include="messages\publishing\when_handling_a_non_subscription_request_message_with_the_subscription_request_handler.cs" />
-    <Compile Include="messages\publishing\TestSubscriptionChannelBuilder.cs" />
+    <Compile Include="messages\publishing\TestChannelBuilder.cs" />
     <Compile Include="messages\processing\when_addressing_a_message.cs" />
-    <Compile Include="messages\distribution\TestTaskStarter.cs" />
     <Compile Include="messages\distribution\when_pumping_an_item.cs" />
     <Compile Include="messages\distribution\when_pumping_items_on_a_with_no_pushed_item_listener.cs" />
+    <Compile Include="messages\request_reply\when_handling_a_subscribe_request_message_for_the_same_subscriber_twice.cs" />
+    <Compile Include="messages\request_reply\when_handling_a_non_subscription_request_message_with_the_subscription_request_handler.cs" />
+    <Compile Include="messages\request_reply\when_handling_a_subscribe_request_message.cs" />
+    <Compile Include="messages\request_reply\when_starting_a_subscription_requestor.cs" />
+    <Compile Include="TestTaskStarter.cs" />
     <Compile Include="transport\long_polling\when_long_polling_for_messages_with_addresses_that_are_not_in_the_queue_.cs" />
     <Compile Include="transport\long_polling\serving\when_handling_a_long_poll_request_for_two_addresses_with_two_messages_with_those_addresses_in_the_queue.cs" />
     <Compile Include="transport\long_polling\when_long_polling_for_messages_and_two_messages_are_returned_in_the_stream.cs" />

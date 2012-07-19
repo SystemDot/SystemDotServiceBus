@@ -17,5 +17,10 @@ namespace SystemDot.Http
         {
             this.machineName = machineName;
         }
+
+        public override string ToString()
+        {
+            return Url;
+        }
     }
 }

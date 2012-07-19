@@ -5,5 +5,6 @@ namespace SystemDot.Messaging
     public interface IBus : IMessageProcessor<object>
     {
         void Send(object message);
+        void Reply(object message);
     }
 }

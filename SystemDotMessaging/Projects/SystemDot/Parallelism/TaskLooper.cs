@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SystemDot.Parallelism
 {
-    public class TaskLooper
+    public class TaskLooper : ITaskLooper
     {
         readonly ITaskStarter starter;
         readonly List<Func<Task>> looping;

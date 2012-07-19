@@ -1,5 +1,4 @@
 using System;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Consuming;
@@ -25,8 +24,6 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             
             IocContainer.Register<MessageRepeater, TimeSpan>((t) => new MessageRepeater(t, IocContainer.Resolve<ITaskScheduler>()));
             IocContainer.Register<SubscriptionRequestor, EndpointAddress>(a => new SubscriptionRequestor(a));
-            IocContainer.Register<IChannelBuilder>(new ChannelBuilder());
-
         }
     }
 }

@@ -1,0 +1,16 @@
+using SystemDot.Messaging.Messages;
+
+namespace SystemDot.Messaging.Channels
+{
+    public class SubscriptionSchema
+    {
+        public EndpointAddress SubscriberAddress { get; set; }
+
+        public SubscriptionSchema() {}
+
+        public SubscriptionSchema(EndpointAddress subscriberAddress)
+        {
+            SubscriberAddress = subscriberAddress;
+        }
+    }
+}

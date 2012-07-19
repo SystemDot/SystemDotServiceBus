@@ -1,5 +1,6 @@
 ﻿using System;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Messages.Consuming;
 using SystemDot.Messaging.Test.Messages;
 
 namespace SystemDot.Messaging.TestRequestReply.Sender
@@ -10,15 +11,17 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
         {
             IBus bus = Configure.WithLocalMessageServer()
                 .OpenChannel("TestSender")
-                .AsRequestReplyReciever()
+                .AsRequestReplySenderTo("TestReciever")
                 .Initialise();
+
+            IocContainer.Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());
 
             do
             {
                 Console.WriteLine("I am the sender. Press enter to send messages..");
                 Console.ReadLine();
                 
-                Console.WriteLine("Sending message");
+                Console.WriteLine("Sending messages");
 
                 bus.Send(new TestMessage("Hello"));
                 bus.Send(new TestMessage("Hello1"));

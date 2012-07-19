@@ -1,4 +1,5 @@
 using System;
+using SystemDot.Logging;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Packaging.Headers;
 
@@ -16,6 +17,8 @@ namespace SystemDot.Messaging.Messages.Processing
         
         public void InputMessage(MessagePayload toInput)
         {
+            Logger.Info("Addressing message to {0}", address);
+
             toInput.SetToAddress(address);
             MessageProcessed(toInput);
         }

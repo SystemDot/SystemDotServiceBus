@@ -1,6 +1,5 @@
 ﻿using System;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Configuration.ComponentRegistration;
 using SystemDot.Messaging.Messages.Consuming;
 
 namespace SystemDot.Messaging.OtherTestSubscriber

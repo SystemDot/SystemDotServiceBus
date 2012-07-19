@@ -55,6 +55,10 @@
       <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>
       <Name>SystemDot</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SystemDot.Messaging.Test.Messages\SystemDot.Messaging.Test.Messages.csproj">
+      <Project>{EAABD53D-7507-4F76-A538-0264D7294422}</Project>
+      <Name>SystemDot.Messaging.Test.Messages</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
