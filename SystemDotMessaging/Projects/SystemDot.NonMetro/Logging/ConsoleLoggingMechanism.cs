@@ -9,11 +9,6 @@ namespace SystemDot.Logging
             Console.WriteLine(message);
         }
 
-        public void Info(string message, params object[] args)
-        {
-            Console.WriteLine(message, args);
-        }
-
         public void Error(string message)
         {
             Console.WriteLine(message);

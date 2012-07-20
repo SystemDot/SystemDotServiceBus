@@ -1,10 +1,13 @@
+using System.Linq;
+using Windows.Networking.Connectivity;
+
 namespace SystemDot
 {
     public class MachineIdentifier : IMachineIdentifier
     {
         public string GetMachineName()
         {
-            throw new System.NotImplementedException();
+            return NetworkInformation.GetHostNames().First().DisplayName;
         }
     }
 }

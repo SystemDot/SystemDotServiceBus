@@ -102,52 +102,7 @@
     <Compile Include="..\..\SystemDot\*.cs">
       <Link>%(RecursiveDir)%(FileName)</Link>
     </Compile>
-    <Compile Include="..\..\SystemDot\Http\FixedPortAddress.cs">
-      <Link>Http\FixedPortAddress</Link>
-    </Compile>
-    <Compile Include="..\..\SystemDot\Http\IHttpHandler.cs">
-      <Link>Http\IHttpHandler</Link>
-    </Compile>
-    <Compile Include="..\..\SystemDot\Http\IWebRequestor.cs">
-      <Link>Http\IWebRequestor</Link>
-    </Compile>
-    <Compile Include="..\..\SystemDot\Http\WebRequestor.cs">
-      <Link>Http\WebRequestor</Link>
-    </Compile>
-    <Compile Include="..\..\SystemDot\Logging\ILoggingMechanism.cs">
-      <Link>Logging\ILoggingMechanism</Link>
-    </Compile>
-    <Compile Include="..\..\SystemDot\Logging\Logger.cs">
-      <Link>Logging\Logger</Link>
-    </Compile>
-    <Compile Include="..\..\SystemDot\Parallelism\BlockingQueue.cs">
-      <Link>Parallelism\BlockingQueue</Link>
-    </Compile>
-    <Compile Include="..\..\SystemDot\Parallelism\ITaskLooper.cs">
-      <Link>Parallelism\ITaskLooper</Link>
-    </Compile>
-    <Compile Include="..\..\SystemDot\Parallelism\ITaskScheduler.cs">
-      <Link>Parallelism\ITaskScheduler</Link>
-    </Compile>
-    <Compile Include="..\..\SystemDot\Parallelism\ITaskStarter.cs">
-      <Link>Parallelism\ITaskStarter</Link>
-    </Compile>
-    <Compile Include="..\..\SystemDot\Parallelism\TaskLooper.cs">
-      <Link>Parallelism\TaskLooper</Link>
-    </Compile>
-    <Compile Include="..\..\SystemDot\Parallelism\TaskStarter.cs">
-      <Link>Parallelism\TaskStarter</Link>
-    </Compile>
-    <Compile Include="..\..\SystemDot\Properties\AssemblyInfo.cs">
-      <Link>Properties\AssemblyInfo</Link>
-    </Compile>
-    <Compile Include="..\..\SystemDot\Serialisation\ISerialiser.cs">
-      <Link>Serialisation\ISerialiser</Link>
-    </Compile>
-    <Compile Include="..\..\SystemDot\Serialisation\PlatformAgnosticSerialiser.cs">
-      <Link>Serialisation\PlatformAgnosticSerialiser</Link>
-    </Compile>
-    <Compile Include="..\..\SystemDot\*\*\*.cs">
+    <Compile Include="..\..\SystemDot\*\*.cs">
       <Link>%(RecursiveDir)%(FileName)</Link>
     </Compile>
     <Compile Include="..\..\SystemDot\*\*\*.cs">

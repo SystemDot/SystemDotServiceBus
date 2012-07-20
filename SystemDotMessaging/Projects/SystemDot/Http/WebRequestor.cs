@@ -27,9 +27,13 @@ namespace SystemDot.Http
 
         private static void SendRequest(Action<Stream> toPerformOnRequest, HttpWebRequest request)
         {
-            Task.Factory.FromAsync<Stream>(request.BeginGetRequestStream, request.EndGetRequestStream, request)
-                .ContinueWith(task => PerformActionOnRequest(toPerformOnRequest, task))
-                .Wait();
+            var requestTask = Task.Factory.FromAsync<Stream>(
+                request.BeginGetRequestStream, 
+                request.EndGetRequestStream,
+                request)
+                .ContinueWith(task => PerformActionOnRequest(toPerformOnRequest, task));
+
+            requestTask.Wait();
         }
 
         static void PerformActionOnRequest(Action<Stream> toPerformOnRequest, Task<Stream> task)
@@ -39,9 +43,9 @@ namespace SystemDot.Http
                 using (task.Result) 
                     toPerformOnRequest(task.Result);
             }
-            catch (Exception e)
+            catch (AggregateException e)
             {
-                Logger.Error(e.Message);
+                LogAggregateException(e);
             }
         }
 
@@ -59,10 +63,19 @@ namespace SystemDot.Http
                 using (task.Result.GetResponseStream()) 
                     toPerformOnResponse(task.Result.GetResponseStream());
             }
-            catch (Exception e)
+            catch (AggregateException e)
             {
-                Logger.Error(e.Message);
+                LogAggregateException(e);
             }
+        }
+
+        private static void LogAggregateException(AggregateException toLog)
+        {
+            toLog.Handle(e =>
+                {
+                    Logger.Error(e.Message);
+                    return true;
+                });
         }
     }
 }

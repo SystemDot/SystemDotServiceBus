@@ -102,11 +102,12 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">
       <Project>{E9433834-D592-4A4A-8219-3EA48B5A2BCC}</Project>
-      <Name>SystemDot</Name>
+      <Name>SystemDot %28Metro\SystemDot%29</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MachineIdentifier.cs" />
+    <Compile Include="ObservableLoggingMechanism.cs" />
     <Compile Include="Parallelism\TaskScheduler.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

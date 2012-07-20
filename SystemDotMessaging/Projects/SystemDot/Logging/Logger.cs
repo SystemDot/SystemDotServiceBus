@@ -19,7 +19,7 @@ namespace SystemDot.Logging
         {
             if (!ShowInfo) return;
             if (LoggingMechanism != null)
-                LoggingMechanism.Info(message, args);
+                LoggingMechanism.Info(String.Format(message, args));
         }
 
         public static void Error(string message)

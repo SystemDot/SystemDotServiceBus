@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
         static void Main(string[] args)
         {
             Logger.LoggingMechanism = new ConsoleLoggingMechanism();
-            Logger.ShowInfo = false;
+            Logger.ShowInfo = true;
 
             IBus bus = Configure.WithLocalMessageServer()
                 .OpenChannel("TestSender")

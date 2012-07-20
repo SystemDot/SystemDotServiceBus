@@ -10,7 +10,7 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
         static void Main(string[] args)
         {
             Logger.LoggingMechanism = new ConsoleLoggingMechanism();
-            Logger.ShowInfo = false;
+            Logger.ShowInfo = true;
 
             IBus bus = Configure.WithLocalMessageServer()
                 .OpenChannel("TestReciever")

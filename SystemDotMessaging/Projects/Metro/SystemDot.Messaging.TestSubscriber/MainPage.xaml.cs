@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
+﻿using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Test.Messages;
+using SystemDot.Messaging.TestSubscriber.ViewModels;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -24,6 +16,7 @@ namespace SystemDot.Messaging.TestSubscriber
         public MainPage()
         {
             this.InitializeComponent();
+            this.DataContext = new MainPageViewModel();
         }
 
         /// <summary>
@@ -33,6 +26,11 @@ namespace SystemDot.Messaging.TestSubscriber
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+        }
+
+        private void Button_Click_1(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            this.DataContext.As<MainPageViewModel>().SendMessage();
         }
     }
 }

@@ -49,9 +49,9 @@
     <Compile Include="Http\IWebRequestor.cs" />
     <Compile Include="Http\WebRequestor.cs" />
     <Compile Include="IEnumerableExtensions.cs" />
+    <Compile Include="IMachineIdentifier.cs" />
     <Compile Include="Logging\ILoggingMechanism.cs" />
     <Compile Include="Logging\Logger.cs" />
-    <Compile Include="Parallelism\IMachineIdentifier.cs" />
     <Compile Include="IocContainer.cs" />
     <Compile Include="ObjectExtensions.cs" />
     <Compile Include="Parallelism\ITaskLooper.cs" />

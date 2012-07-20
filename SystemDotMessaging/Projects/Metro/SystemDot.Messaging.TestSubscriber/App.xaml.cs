@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Messages.Consuming;
+using SystemDot.Messaging.Test.Messages;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -43,12 +44,6 @@ namespace SystemDot.Messaging.TestSubscriber
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            Configure
-                .WithLocalMessageServer()
-                .OpenChannel("TestSubscriber")
-                .SubscribesTo("TestPublisher")
-                .Initialise();
-
             // Do not repeat app initialization when already running, just ensure that
             // the window is active
             if (args.PreviousExecutionState == ApplicationExecutionState.Running)
@@ -86,14 +81,6 @@ namespace SystemDot.Messaging.TestSubscriber
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
-        }
-    }
-
-    public class TestHandler : IMessageHandler<string>
-    {
-        public void Handle(string message)
-        {
-            throw new NotImplementedException();
         }
     }
 }
