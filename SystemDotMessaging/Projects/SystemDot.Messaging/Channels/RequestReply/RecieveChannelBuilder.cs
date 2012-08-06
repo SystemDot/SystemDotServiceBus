@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Messages;
-using SystemDot.Messaging.Messages.Consuming;
+using SystemDot.Messaging.Messages.Handling;
 using SystemDot.Messaging.Messages.Pipelines;
 using SystemDot.Messaging.Messages.Processing;
 using SystemDot.Messaging.Transport;

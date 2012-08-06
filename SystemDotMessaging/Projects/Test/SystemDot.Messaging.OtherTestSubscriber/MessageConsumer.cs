@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Threading;
-using SystemDot.Messaging.Messages.Consuming;
 using SystemDot.Messaging.Test.Messages;
 
 namespace SystemDot.Messaging.OtherTestSubscriber
 {
-    public class MessageConsumer : IMessageHandler<TestMessage>
+    public class MessageConsumer
     {
         public void Handle(TestMessage message)
         {

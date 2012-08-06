@@ -1,8 +1,6 @@
-using SystemDot.Messaging.Messages.Consuming;
-
 namespace SystemDot.Messaging.Specifications.messages.handling
 {
-    public class TestMessageHandler<T> : IMessageHandler<T>
+    public class TestMessageHandler<T>
     {
         public T HandledMessage { get; private set; }
 

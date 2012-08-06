@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Messages.Consuming;
+using SystemDot.Messaging.Messages.Handling;
 using SystemDot.Messaging.Test.Messages;
 using SystemDot.Messaging.TestSubscriber.Handlers;
 using Windows.UI.Core;

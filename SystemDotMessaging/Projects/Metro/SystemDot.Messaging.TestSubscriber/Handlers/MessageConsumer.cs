@@ -1,10 +1,9 @@
-﻿using SystemDot.Messaging.Messages.Consuming;
-using SystemDot.Messaging.Test.Messages;
+﻿using SystemDot.Messaging.Test.Messages;
 using SystemDot.Messaging.TestSubscriber.ViewModels;
 
 namespace SystemDot.Messaging.TestSubscriber.Handlers
 {
-    public class MessageConsumer : IMessageHandler<TestMessage>
+    public class MessageConsumer
     {
         readonly IBus bus;
         readonly MainPageViewModel viewModel;

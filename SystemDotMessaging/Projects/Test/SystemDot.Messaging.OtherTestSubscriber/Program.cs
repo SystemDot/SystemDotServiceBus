@@ -1,7 +1,7 @@
 ﻿using System;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Messages.Consuming;
+using SystemDot.Messaging.Messages.Handling;
 
 namespace SystemDot.Messaging.OtherTestSubscriber
 {

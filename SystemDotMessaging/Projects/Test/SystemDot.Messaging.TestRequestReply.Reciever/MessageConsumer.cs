@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Threading;
-using SystemDot.Messaging.Messages.Consuming;
 using SystemDot.Messaging.Test.Messages;
 
 namespace SystemDot.Messaging.TestRequestReply.Reciever
 {
-    public class MessageConsumer : IMessageHandler<TestMessage>
+    public class MessageConsumer
     {
         readonly IBus bus;
 
