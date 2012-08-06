@@ -106,7 +106,7 @@
     </ProjectReference>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">
       <Project>{e9433834-d592-4a4a-8219-3ea48b5a2bcc}</Project>
-      <Name>SystemDot %28Metro\SystemDot%29</Name>
+      <Name>SystemDot</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

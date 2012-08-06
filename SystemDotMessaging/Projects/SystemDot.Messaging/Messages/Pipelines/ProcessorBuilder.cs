@@ -1,4 +1,3 @@
-using SystemDot.Messaging.Configuration.ComponentRegistration;
 using SystemDot.Messaging.Messages.Distribution;
 using SystemDot.Parallelism;
 
@@ -29,15 +28,30 @@ namespace SystemDot.Messaging.Messages.Pipelines
             return new ProcessorBuilder<TOut>(pipe);
         }
 
-        public ProcessorBuilder<TNextOut> ToProcessor<TNextOut>(IMessageProcessor<TOut, TNextOut> messageProcessor)
+        public ProcessorBuilder<TNextOut> ToConverter<TNextOut>(IMessageProcessor<TOut, TNextOut> messageProcessor)
         {
             this.processor.MessageProcessed += messageProcessor.InputMessage;
             return new ProcessorBuilder<TNextOut>(messageProcessor);
         }
 
+        public ProcessorBuilder<TOut> ToProcessor(IMessageProcessor<TOut, TOut> messageProcessor)
+        {
+            this.processor.MessageProcessed += messageProcessor.InputMessage;
+            return new ProcessorBuilder<TOut>(messageProcessor);
+        }
+
+        public ProcessorBuilder<TOut> ToProcessors(params IMessageProcessor<TOut, TOut>[] processors)
+        {
+            var builder = this;
+
+            processors.ForEach(p => builder = builder.ToProcessor(p));
+
+            return builder;
+        }
+
         public void ToEndPoint(IMessageInputter<TOut> endPoint)
         {
-            processor.MessageProcessed += endPoint.InputMessage;
+            this.processor.MessageProcessed += endPoint.InputMessage;
         }
     }
 }

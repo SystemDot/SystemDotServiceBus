@@ -1,18 +1,22 @@
 using System.Collections.Generic;
 using SystemDot.Logging;
+using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
+using SystemDot.Messaging.Messages.Packaging.Headers;
 
 namespace SystemDot.Messaging.Channels.RequestReply
 {
     public class SubscriptionRequestHandler : IMessageInputter<MessagePayload>
     {
-        readonly IChannelBuilder builder;
-        List<EndpointAddress> registry;
+        readonly ISendChannelBuilder sendChannelBuilder;
+        readonly IRecieveChannelBuilder recieveChannelBuilder;
+        readonly List<EndpointAddress> registry;
 
-        public SubscriptionRequestHandler(IChannelBuilder builder)
+        public SubscriptionRequestHandler(IRecieveChannelBuilder recieveChannelBuilder, ISendChannelBuilder sendChannelBuilder)
         {
-            this.builder = builder;
+            this.recieveChannelBuilder = recieveChannelBuilder;
+            this.sendChannelBuilder = sendChannelBuilder;
             this.registry = new List<EndpointAddress>();
         }
 
@@ -30,7 +34,8 @@ namespace SystemDot.Messaging.Channels.RequestReply
             
             registry.Add(subscriberAddress);
 
-            this.builder.Build(toInput.GetSubscriptionRequestSchema());
+            this.sendChannelBuilder.Build(toInput.GetSubscriptionRequestSchema().SubscriberAddress);
+            this.recieveChannelBuilder.Build();
         }
     }
 }

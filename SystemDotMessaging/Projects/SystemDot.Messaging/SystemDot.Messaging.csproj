@@ -40,12 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Channels\RequestReply\ChannelBuilder.cs" />
-    <Compile Include="Channels\RequestReply\IChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\Builders\IRecieveChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\Builders\ISendChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\Builders\ISubscriptionHandlerChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\Builders\ISubscriptionRequestorChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\MessagePayloadSubscriptionRequestExtensions.cs" />
+    <Compile Include="Channels\RequestReply\RecieveChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\SendChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\Builders\SubscriptionHandlerChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\SubscriptionRequestHandler.cs" />
     <Compile Include="Channels\RequestReply\SubscriptionRequestHeader.cs" />
     <Compile Include="Channels\RequestReply\SubscriptionRequestor.cs" />
+    <Compile Include="Channels\RequestReply\Builders\SubscriptionRequestorChannelBuilder.cs" />
     <Compile Include="Configuration\ChannelConfiguration.cs" />
     <Compile Include="Configuration\ComponentRegistration\ChannelComponents.cs" />
     <Compile Include="Configuration\ComponentRegistration\Components.cs" />

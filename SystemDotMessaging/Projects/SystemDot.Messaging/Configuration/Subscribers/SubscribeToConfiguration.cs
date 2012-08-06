@@ -1,7 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Publishing;
-using SystemDot.Messaging.Configuration.ComponentRegistration;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Consuming;
 using SystemDot.Messaging.Messages.Pipelines;
@@ -20,6 +19,7 @@ namespace SystemDot.Messaging.Configuration.Subscribers
         {
             Contract.Requires(subscriberAddress != EndpointAddress.Empty);
             Contract.Requires(publisherAddress != EndpointAddress.Empty);
+
             this.subscriberAddress = subscriberAddress;
             this.publisherAddress = publisherAddress;
         }
@@ -58,7 +58,7 @@ namespace SystemDot.Messaging.Configuration.Subscribers
             MessagePipelineBuilder.Build()
                 .With(Resolve<IMessageReciever>())
                 .Pump()
-                .ToProcessor(Resolve<MessagePayloadUnpackager>())
+                .ToConverter(Resolve<MessagePayloadUnpackager>())
                 .ToEndPoint(messageHandlerRouter);
 
             Resolve<IMessageReciever>().RegisterListeningAddress(this.subscriberAddress);

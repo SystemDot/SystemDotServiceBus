@@ -102,7 +102,7 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">
       <Project>{E9433834-D592-4A4A-8219-3EA48B5A2BCC}</Project>
-      <Name>SystemDot %28Metro\SystemDot%29</Name>
+      <Name>SystemDot</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

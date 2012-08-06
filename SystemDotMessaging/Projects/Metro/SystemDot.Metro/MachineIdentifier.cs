@@ -7,7 +7,7 @@ namespace SystemDot
     {
         public string GetMachineName()
         {
-            return NetworkInformation.GetHostNames().First().DisplayName;
+            return NetworkInformation.GetHostNames().First().DisplayName.Split('@')[0];
         }
     }
 }

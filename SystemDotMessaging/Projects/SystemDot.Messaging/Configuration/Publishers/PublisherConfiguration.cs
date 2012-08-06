@@ -44,7 +44,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
             MessagePipelineBuilder.Build()
                 .With(Resolve<IBus>())
                 .Pump()
-                .ToProcessor(Resolve<MessagePayloadPackager>())
+                .ToConverter(Resolve<MessagePayloadPackager>())
                 .ToEndPoint(publisher);
         }
     }

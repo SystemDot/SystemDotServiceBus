@@ -1,5 +1,6 @@
 using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.RequestReply;
+using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Distribution;
 using SystemDot.Messaging.Messages.Packaging;
@@ -22,10 +23,10 @@ namespace SystemDot.Messaging.Specifications.messages.request_reply
         {
             address = new EndpointAddress("TestAddress", "TestServer");
             subscriptionChannel = new Pipe<MessagePayload>();
-            subscriptionSchema = new SubscriptionSchema(
-                new EndpointAddress("TestSubscriberAddress", "TestServer"));
- 
-            Configure<IChannelBuilder>(An<IChannelBuilder>());
+            subscriptionSchema = new SubscriptionSchema(new EndpointAddress("TestSubscriberAddress", "TestServer"));
+
+            Configure<ISendChannelBuilder>(An<ISendChannelBuilder>());
+            Configure<IRecieveChannelBuilder>(An<IRecieveChannelBuilder>());
             
             request = new MessagePayload();
             request.SetToAddress(address);
@@ -34,7 +35,10 @@ namespace SystemDot.Messaging.Specifications.messages.request_reply
 
         Because of = () => Subject.InputMessage(request);
 
-        It should_setup_the_request_and_reply_channels = () =>
-            The<IChannelBuilder>().WasToldTo(b => b.Build(subscriptionSchema));
+        It should_setup_the_reply_channel = () =>
+            The<ISendChannelBuilder>().WasToldTo(b => b.Build(subscriptionSchema.SubscriberAddress));
+
+        It should_setup_the_request_channel = () =>
+            The<IRecieveChannelBuilder>().WasToldTo(b => b.Build());
     }
 }

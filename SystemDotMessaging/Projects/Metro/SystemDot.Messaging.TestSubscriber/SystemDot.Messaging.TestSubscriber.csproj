@@ -107,7 +107,7 @@
     </ProjectReference>
     <ProjectReference Include="..\SystemDot.Messaging\SystemDot.Messaging.csproj">
       <Project>{6a4f976c-fb85-4d3d-a145-d43626605212}</Project>
-      <Name>SystemDot.Messaging %28Metro\SystemDot.Messaging%29</Name>
+      <Name>SystemDot.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\SystemDot.Metro\SystemDot.Metro.csproj">
       <Project>{09a377ee-27bb-468d-9b4e-e870424aeba4}</Project>
@@ -115,7 +115,7 @@
     </ProjectReference>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">
       <Project>{e9433834-d592-4a4a-8219-3ea48b5a2bcc}</Project>
-      <Name>SystemDot %28Metro\SystemDot%29</Name>
+      <Name>SystemDot</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +128,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="MessageMarshallingHook.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

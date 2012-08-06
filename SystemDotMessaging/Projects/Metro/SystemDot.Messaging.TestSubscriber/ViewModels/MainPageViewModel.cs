@@ -29,9 +29,10 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
                .WithLocalMessageServer()
                .OpenChannel("TestSender")
                .AsRequestReplySenderTo("TestReciever")
+               .WithHook(new MessageMarshallingHook())
                .Initialise();
 
-            IocContainer.Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer(this.bus, CoreWindow.GetForCurrentThread().Dispatcher, this));
+            IocContainer.Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer(this.bus, this));
         }
 
         public void SendMessage()
