@@ -14,9 +14,12 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
     {
         public static void Register()
         {
+            IocContainer.Register<IBus>(new MessageBus());
+            
             IocContainer.Register(new MessagePayloadCopier(IocContainer.Resolve<ISerialiser>()));
             IocContainer.Register<IDistributor>(() => new Distributor(IocContainer.Resolve<MessagePayloadCopier>()));
-            IocContainer.Register<IBus>(new MessageBus());
+            
+            IocContainer.Register(new MessageFilter());
             IocContainer.Register(() => new MessagePayloadPackager(IocContainer.Resolve<ISerialiser>()));
             IocContainer.Register<MessageAddresser, EndpointAddress>(a => new MessageAddresser(a));
             IocContainer.Register(() => new MessagePayloadUnpackager(IocContainer.Resolve<ISerialiser>()));

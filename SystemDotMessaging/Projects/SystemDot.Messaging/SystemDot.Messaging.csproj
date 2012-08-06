@@ -41,11 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Channels\RequestReply\Builders\IRecieveChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\Builders\IReplyChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\ISendChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\ISubscriptionHandlerChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\ISubscriptionRequestorChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\MessagePayloadSubscriptionRequestExtensions.cs" />
     <Compile Include="Channels\RequestReply\RecieveChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\ReplyChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\SendChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\SubscriptionHandlerChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\SubscriptionRequestHandler.cs" />
@@ -69,6 +71,7 @@
     <Compile Include="Messages\Distribution\IDistributor.cs" />
     <Compile Include="Messages\EndpointAddress.cs" />
     <Compile Include="Messages\EndpointAddressBuilder.cs" />
+    <Compile Include="Messages\Processing\MessageFilter.cs" />
     <Compile Include="Messages\Processing\MessageRepeater.cs" />
     <Compile Include="Messages\Pipelines\MessagePipelineBuilder.cs" />
     <Compile Include="Messages\Pipelines\ProcessorBuilder.cs" />

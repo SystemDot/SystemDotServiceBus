@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Specifications.messages.request_reply
             subscriptionChannel = new Pipe<MessagePayload>();
             subscriptionSchema = new SubscriptionSchema(new EndpointAddress("TestSubscriberAddress", "TestServer"));
 
-            Configure<ISendChannelBuilder>(An<ISendChannelBuilder>());
+            Configure<IReplyChannelBuilder>(An<IReplyChannelBuilder>());
             Configure<IRecieveChannelBuilder>(An<IRecieveChannelBuilder>());
             
             request = new MessagePayload();
@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Specifications.messages.request_reply
         Because of = () => Subject.InputMessage(request);
 
         It should_setup_the_reply_channel = () =>
-            The<ISendChannelBuilder>().WasToldTo(b => b.Build(subscriptionSchema.SubscriberAddress));
+            The<IReplyChannelBuilder>().WasToldTo(b => b.Build(subscriptionSchema.SubscriberAddress));
 
         It should_setup_the_request_channel = () =>
             The<IRecieveChannelBuilder>().WasToldTo(b => b.Build());

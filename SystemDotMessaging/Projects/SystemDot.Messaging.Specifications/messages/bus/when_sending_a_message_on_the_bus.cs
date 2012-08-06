@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.Specifications.messages.bus
 
         Establish context = () =>
         {
-            Subject.MessageProcessed += m => processedMessage = m; 
+            Subject.MessageSent += m => processedMessage = m; 
             message = new object();
         };
 

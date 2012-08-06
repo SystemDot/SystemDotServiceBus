@@ -6,12 +6,12 @@ using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Channels.RequestReply
 {
-    public class SendChannelBuilder : ISendChannelBuilder
+    public class ReplyChannelBuilder : IReplyChannelBuilder
     {
         public void Build(EndpointAddress recieverAddress)
         {
             MessagePipelineBuilder.Build()
-                .WithBusSendTo(IocContainer.Resolve<MessageFilter>())
+                .WithBusReplyTo(IocContainer.Resolve<MessageFilter>())
                 .Pump()
                 .ToConverter(IocContainer.Resolve<MessagePayloadPackager>())
                 .ToProcessor(IocContainer.Resolve<MessageAddresser, EndpointAddress>(recieverAddress))

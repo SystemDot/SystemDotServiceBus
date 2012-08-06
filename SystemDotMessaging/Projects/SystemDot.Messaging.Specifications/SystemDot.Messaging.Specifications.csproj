@@ -56,6 +56,7 @@
     <Compile Include="configuration\ITestComponent.cs" />
     <Compile Include="configuration\TestComponent.cs" />
     <Compile Include="configuration\when_setting_a_component_in_the_environment.cs" />
+    <Compile Include="messages\bus\when_publishing_a_message_on_the_bus.cs" />
     <Compile Include="messages\bus\when_replying_with_a_message_on_the_bus.cs" />
     <Compile Include="messages\distribution\when_subscribing_with_the_same_subscriber_key_twice.cs" />
     <Compile Include="messages\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel.cs" />

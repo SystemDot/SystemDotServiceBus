@@ -5,18 +5,26 @@ namespace SystemDot.Messaging
 {
     public class MessageBus : IBus
     {
-        public event Action<object> MessageProcessed;
+        public event Action<object> MessageSent;
+        public event Action<object> MessageReplied;
+        public event Action<object> MessagePublished;
 
         public void Send(object message)
         {
             Contract.Requires(message != null);
-            MessageProcessed(message);
+            MessageSent(message);
         }
 
         public void Reply(object message)
         {
             Contract.Requires(message != null);
-            MessageProcessed(message);
+            MessageReplied(message);
+        }
+
+        public void Publish(object message)
+        {
+            Contract.Requires(message != null);
+            MessagePublished(message);
         }
     }
 }

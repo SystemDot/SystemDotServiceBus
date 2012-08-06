@@ -23,14 +23,14 @@ namespace SystemDot.Messaging.TestPublisher
                 Console.WriteLine("Press a key to send message..");
                 Console.ReadLine();
                 Console.WriteLine("Sending message");
-                bus.Send(new TestMessage("Hello"));
-                bus.Send(new TestMessage("Hello1"));
-                bus.Send(new TestMessage("Hello2"));
-                bus.Send(new TestMessage("Hello3"));
-                bus.Send(new TestMessage("Hello4"));
-                bus.Send(new TestMessage("Hello5"));
-                bus.Send(new TestMessage("Hello6"));
-                bus.Send(new TestMessage("Hello7"));
+                bus.Publish(new TestMessage("Hello"));
+                bus.Publish(new TestMessage("Hello1"));
+                bus.Publish(new TestMessage("Hello2"));
+                bus.Publish(new TestMessage("Hello3"));
+                bus.Publish(new TestMessage("Hello4"));
+                bus.Publish(new TestMessage("Hello5"));
+                bus.Publish(new TestMessage("Hello6"));
+                bus.Publish(new TestMessage("Hello7"));
             }
             while (true);
         }

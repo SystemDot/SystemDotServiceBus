@@ -10,12 +10,13 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
         {
             IocContainer.Register<IRecieveChannelBuilder>(new RecieveChannelBuilder());
             IocContainer.Register<ISendChannelBuilder>(new SendChannelBuilder());
+            IocContainer.Register<IReplyChannelBuilder>(new ReplyChannelBuilder());
             IocContainer.Register<ISubscriptionHandlerChannelBuilder>(new SubscriptionHandlerChannelBuilder());
             IocContainer.Register<ISubscriptionRequestorChannelBuilder>(new SubscriptionRequestorChannelBuilder());
 
             IocContainer.Register(new SubscriptionRequestHandler(
                 IocContainer.Resolve<IRecieveChannelBuilder>(), 
-                IocContainer.Resolve<ISendChannelBuilder>()));
+                IocContainer.Resolve<IReplyChannelBuilder>()));
 
             IocContainer.Register<SubscriptionRequestor, EndpointAddress>(a => new SubscriptionRequestor(a));
         }

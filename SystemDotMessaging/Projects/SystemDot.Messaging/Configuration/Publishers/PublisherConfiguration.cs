@@ -42,7 +42,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
             Resolve<IPublisherRegistry>().RegisterPublisher(address, publisher);
 
             MessagePipelineBuilder.Build()
-                .With(Resolve<IBus>())
+                .WithBusPublishTo(Resolve<MessageFilter>())
                 .Pump()
                 .ToConverter(Resolve<MessagePayloadPackager>())
                 .ToEndPoint(publisher);
