@@ -9,5 +9,11 @@ namespace SystemDot.Messaging.Configuration
             Components.Register();            
             return new MessageServerConfiguration(Resolve<IMachineIdentifier>().GetMachineName());
         }
+
+        public static MessageServerConfiguration WithRemoteMessageServer(string serverName)
+        {
+            Components.Register();
+            return new MessageServerConfiguration(serverName);
+        }
     }
 }
