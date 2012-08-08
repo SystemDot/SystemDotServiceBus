@@ -8,9 +8,9 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
 {
     public class SubscriptionHandlerChannelBuilder : ISubscriptionHandlerChannelBuilder
     {
-        public SubscriptionRequestor Build(EndpointAddress address, EndpointAddress recieverAddress)
+        public ISubscriptionRequestor Build(EndpointAddress address, EndpointAddress recieverAddress)
         {
-            var requestor = IocContainer.Resolve<SubscriptionRequestor, EndpointAddress>(address);
+            var requestor = IocContainer.Resolve<ISubscriptionRequestor, EndpointAddress>(address);
 
             MessagePipelineBuilder.Build()
                 .With(requestor)

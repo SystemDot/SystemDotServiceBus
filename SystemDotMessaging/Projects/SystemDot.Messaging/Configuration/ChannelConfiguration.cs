@@ -1,7 +1,8 @@
+using System;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Configuration.Publishers;
 using SystemDot.Messaging.Configuration.RequestReply;
-using SystemDot.Messaging.Configuration.Subscribers;
 using SystemDot.Messaging.Messages;
 
 namespace SystemDot.Messaging.Configuration
@@ -10,36 +11,43 @@ namespace SystemDot.Messaging.Configuration
     {
         readonly EndpointAddress address;
         readonly string messageServerName;
+        readonly List<Action> buildActions;
 
-        public ChannelConfiguration(EndpointAddress address, string messageServerName)
+        public ChannelConfiguration(EndpointAddress address, string messageServerName, List<Action> buildActions)
         {
             Contract.Requires(address != EndpointAddress.Empty);
+            Contract.Requires(!String.IsNullOrEmpty(messageServerName));
+            Contract.Requires(buildActions != null);
+
             this.address = address;
             this.messageServerName = messageServerName;
+            this.buildActions = buildActions;
         }
 
         public RequestReplyRecieverConfiguration AsRequestReplyReciever()
         {
-            return new RequestReplyRecieverConfiguration(address);
+            return new RequestReplyRecieverConfiguration(address, this.buildActions);
         }
 
         public RequestReplySenderConfiguration AsRequestReplySenderTo(string recieverAddress)
         {
             return new RequestReplySenderConfiguration(
                 this.address,
-                BuildEndpointAddress(recieverAddress, this.messageServerName));
+                BuildEndpointAddress(recieverAddress, this.messageServerName),
+                this.buildActions);
         }
 
         public PublisherConfiguration AsPublisher()
         {
-            return new PublisherConfiguration(address);
+            return new PublisherConfiguration(address, this.buildActions);
         }
 
-        public SubscribeToConfiguration SubscribesTo(string publisherAddress)
+        public SubscribeToConfiguration AsSubscriberTo(string publisherAddress)
         {
             return new SubscribeToConfiguration(
                 this.address, 
-                BuildEndpointAddress(publisherAddress, this.messageServerName));
+                BuildEndpointAddress(publisherAddress, this.messageServerName),
+                this.buildActions);
         }
     }
 }

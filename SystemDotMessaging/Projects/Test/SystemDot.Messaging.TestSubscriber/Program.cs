@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.TestSubscriber
             Configure
                 .WithLocalMessageServer()
                 .OpenChannel("TestSubscriber")
-                .SubscribesTo("TestPublisher")
+                .AsSubscriberTo("TestPublisher")
                 .Initialise();
 
             IocContainer.Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());

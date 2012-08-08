@@ -5,7 +5,7 @@ using SystemDot.Messaging.Messages.Packaging;
 
 namespace SystemDot.Messaging.Channels.RequestReply
 {
-    public class SubscriptionRequestor : IMessageProcessor<MessagePayload>
+    public class SubscriptionRequestor : ISubscriptionRequestor
     {
         readonly EndpointAddress subscriberAddress;
 

@@ -4,7 +4,7 @@ using SystemDot.Messaging.Messages.Pipelines;
 using SystemDot.Messaging.Messages.Processing;
 using SystemDot.Messaging.Transport;
 
-namespace SystemDot.Messaging.Channels.Publishing
+namespace SystemDot.Messaging.Channels.Publishing.Builders
 {
     public class ChannelBuilder : IChannelBuilder 
     {

@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
                 IocContainer.Resolve<IRecieveChannelBuilder>(), 
                 IocContainer.Resolve<IReplyChannelBuilder>()));
 
-            IocContainer.Register<SubscriptionRequestor, EndpointAddress>(a => new SubscriptionRequestor(a));
+            IocContainer.Register<ISubscriptionRequestor, EndpointAddress>(a => new SubscriptionRequestor(a));
         }
     }
 }

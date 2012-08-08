@@ -7,7 +7,7 @@ namespace SystemDot.Messaging.Configuration
         public static MessageServerConfiguration WithLocalMessageServer()
         {
             Components.Register();            
-            return new MessageServerConfiguration(Resolve<IMachineIdentifier>().GetMachineName());
+            return new MessageServerConfiguration(IocContainer.Resolve<IMachineIdentifier>().GetMachineName());
         }
 
         public static MessageServerConfiguration WithRemoteMessageServer(string serverName)

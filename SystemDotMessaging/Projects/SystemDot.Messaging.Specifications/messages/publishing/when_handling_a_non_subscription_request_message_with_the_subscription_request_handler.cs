@@ -1,6 +1,7 @@
 using System;
 using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Publishing;
+using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Distribution;
 using SystemDot.Messaging.Messages.Packaging;

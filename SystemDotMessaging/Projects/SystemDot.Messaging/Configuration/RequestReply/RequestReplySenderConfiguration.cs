@@ -1,18 +1,19 @@
+using System;
 using System.Collections.Generic;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Transport;
-using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Configuration.RequestReply
 {
-    public class RequestReplySenderConfiguration : Configurer
+    public class RequestReplySenderConfiguration : Initialiser
     {
         readonly EndpointAddress address;
         readonly EndpointAddress recieverAddress;
         readonly List<IMessageProcessor<object, object>> hooks;
 
-        public RequestReplySenderConfiguration(EndpointAddress address, EndpointAddress recieverAddress)
+        public RequestReplySenderConfiguration(EndpointAddress address, EndpointAddress recieverAddress, List<Action> buildActions)
+            : base(buildActions)
         {
             this.address = address;
             this.recieverAddress = recieverAddress;
@@ -25,16 +26,17 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             return this;
         }
 
-        public IBus Initialise()
+        protected override void Build()
         {
             Resolve<ISendChannelBuilder>().Build(this.recieverAddress);
             Resolve<IRecieveChannelBuilder>().Build(this.hooks.ToArray());
             Resolve<ISubscriptionHandlerChannelBuilder>().Build(this.address, this.recieverAddress).Start();
-
             Resolve<IMessageReciever>().RegisterListeningAddress(this.address);
-            Resolve<ITaskLooper>().Start();
-            
-            return Resolve<IBus>();
+        }
+
+        protected override EndpointAddress GetAddress()
+        {
+            return this.address;
         }
     }
 }

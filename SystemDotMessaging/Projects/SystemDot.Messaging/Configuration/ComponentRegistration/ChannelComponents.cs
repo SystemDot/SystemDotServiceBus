@@ -18,8 +18,8 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             
             IocContainer.Register(new MessagePayloadCopier(IocContainer.Resolve<ISerialiser>()));
             IocContainer.Register<IDistributor>(() => new Distributor(IocContainer.Resolve<MessagePayloadCopier>()));
-            
-            IocContainer.Register(new MessageFilter());
+
+            IocContainer.Register(() => new MessageFilter());
             IocContainer.Register(() => new MessagePayloadPackager(IocContainer.Resolve<ISerialiser>()));
             IocContainer.Register<MessageAddresser, EndpointAddress>(a => new MessageAddresser(a));
             IocContainer.Register(() => new MessagePayloadUnpackager(IocContainer.Resolve<ISerialiser>()));

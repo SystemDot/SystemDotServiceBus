@@ -50,12 +50,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="configuration\when_setting_a_transient_component_creator_with_two_constructors_argument_in_the_environment.cs" />
-    <Compile Include="configuration\when_setting_a_transient_component_creator_with_one_constructor_argument_in_the_environment.cs" />
-    <Compile Include="configuration\when_setting_a_transient_component_creator_in_the_environment.cs" />
-    <Compile Include="configuration\ITestComponent.cs" />
-    <Compile Include="configuration\TestComponent.cs" />
-    <Compile Include="configuration\when_setting_a_component_in_the_environment.cs" />
+    <Compile Include="configuration\publishing\when_configuring_a_publisher_channel_followed_by_another.cs" />
+    <Compile Include="configuration\publishing\when_configuring_a_subscriber_channel_followed_by_another.cs" />
+    <Compile Include="configuration\publishing\when_configuring_a_subscriber_channel.cs" />
+    <Compile Include="configuration\request_reply\when_configuring_a_request_reply_sender_channel_followed_by_another.cs" />
+    <Compile Include="configuration\request_reply\when_configuring_a_request_reply_receiver_channel_followed_by_another.cs" />
+    <Compile Include="configuration\request_reply\when_configuring_a_request_reply_sender_channel_with_a_hook.cs" />
+    <Compile Include="configuration\request_reply\when_configuring_a_request_reply_sender_channel.cs" />
+    <Compile Include="configuration\when_configuring_a_channel_on_a_remote_message_server.cs" />
+    <Compile Include="configuration\publishing\when_configuring_a_publisher_channel.cs" />
+    <Compile Include="configuration\WithConfiguationSubject.cs" />
+    <Compile Include="configuration\request_reply\when_configuring_a_request_reply_receiver_channel.cs" />
     <Compile Include="messages\bus\when_publishing_a_message_on_the_bus.cs" />
     <Compile Include="messages\bus\when_replying_with_a_message_on_the_bus.cs" />
     <Compile Include="messages\distribution\when_subscribing_with_the_same_subscriber_key_twice.cs" />

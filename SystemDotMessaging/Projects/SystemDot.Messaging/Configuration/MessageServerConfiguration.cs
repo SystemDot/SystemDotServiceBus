@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
 namespace SystemDot.Messaging.Configuration
@@ -17,7 +19,10 @@ namespace SystemDot.Messaging.Configuration
         {
             Contract.Requires(!string.IsNullOrEmpty(name));
 
-            return new ChannelConfiguration(BuildEndpointAddress(name, this.messageServerName), this.messageServerName);
+            return new ChannelConfiguration(
+                BuildEndpointAddress(name, this.messageServerName), 
+                this.messageServerName, 
+                new List<Action>());
         }
     }
 }

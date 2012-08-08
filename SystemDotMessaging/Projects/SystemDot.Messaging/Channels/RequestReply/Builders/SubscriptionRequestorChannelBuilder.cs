@@ -1,4 +1,3 @@
-using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Messages.Pipelines;
 using SystemDot.Messaging.Transport;
 
@@ -9,9 +8,9 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
         public void Build()
         {
             MessagePipelineBuilder.Build()
-                .With(Configurer.Resolve<IMessageReciever>())
+                .With(IocContainer.Resolve<IMessageReciever>())
                 .Pump()
-                .ToEndPoint(Configurer.Resolve<SubscriptionRequestHandler>());
+                .ToEndPoint(IocContainer.Resolve<SubscriptionRequestHandler>());
         }
     }
 }

@@ -40,15 +40,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Channels\Publishing\Builders\IPublisherChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\Builders\ISubscriberChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\Builders\ISubscriptionHandlerChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\Builders\ISubscriptionRequestChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\Builders\PublisherChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\Builders\SubscriberChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\Builders\SubscriptionHandlerChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\Builders\SubscriptionRequestChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\ISubscriptionRequestor.cs" />
     <Compile Include="Channels\RequestReply\Builders\IRecieveChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\IReplyChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\ISendChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\ISubscriptionHandlerChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\ISubscriptionRequestorChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\ISubscriptionRequestor.cs" />
     <Compile Include="Channels\RequestReply\MessagePayloadSubscriptionRequestExtensions.cs" />
-    <Compile Include="Channels\RequestReply\RecieveChannelBuilder.cs" />
-    <Compile Include="Channels\RequestReply\ReplyChannelBuilder.cs" />
-    <Compile Include="Channels\RequestReply\SendChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\Builders\RecieveChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\Builders\ReplyChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\Builders\SendChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\SubscriptionHandlerChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\SubscriptionRequestHandler.cs" />
     <Compile Include="Channels\RequestReply\SubscriptionRequestHeader.cs" />
@@ -64,6 +74,7 @@
     <Compile Include="Configuration\ComponentRegistration\ThreadingComponents.cs" />
     <Compile Include="Channels\Publishing\SubscriptionRequestor.cs" />
     <Compile Include="Configuration\Configurer.cs" />
+    <Compile Include="Configuration\Initialiser.cs" />
     <Compile Include="Configuration\MessageServerConfiguration.cs" />
     <Compile Include="Configuration\RequestReply\RequestReplySenderConfiguration.cs" />
     <Compile Include="Configuration\RequestReply\RequestReplyRecieverConfiguration.cs" />
@@ -77,15 +88,15 @@
     <Compile Include="Messages\Pipelines\ProcessorBuilder.cs" />
     <Compile Include="Messages\Processing\MessageAddresser.cs" />
     <Compile Include="Channels\Publishing\IPublisherRegistry.cs" />
-    <Compile Include="Channels\Publishing\IChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\Builders\IChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\PublisherRegistry.cs" />
     <Compile Include="Messages\Distribution\Pipe.cs" />
-    <Compile Include="Channels\Publishing\ChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\Builders\ChannelBuilder.cs" />
     <Compile Include="Channels\SubscriptionSchema.cs" />
     <Compile Include="Channels\Publishing\SubscriptionRequestHandler.cs" />
     <Compile Include="Configuration\Configure.cs" />
     <Compile Include="Configuration\Publishers\PublisherConfiguration.cs" />
-    <Compile Include="Configuration\Subscribers\SubscribeToConfiguration.cs" />
+    <Compile Include="Configuration\Publishers\SubscribeToConfiguration.cs" />
     <Compile Include="Messages\IMessageProcessor.cs" />
     <Compile Include="Messages\IMessageInputter.cs" />
     <Compile Include="Channels\Publishing\MessagePayloadSubscriptionRequestExtensions.cs" />
@@ -124,7 +135,7 @@
     </ProjectReference>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">
       <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>
-      <Name>SystemDot %28NonMetro\SystemDot%29</Name>
+      <Name>SystemDot</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

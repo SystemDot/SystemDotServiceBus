@@ -7,11 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.Messaging", "..\P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.Metro", "..\Projects\Metro\SystemDot.Metro\SystemDot.Metro.csproj", "{09A377EE-27BB-468D-9B4E-E870424AEBA4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{608035C0-6BAE-45ED-91DB-798ABE27A69E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messaging", "Messaging", "{608035C0-6BAE-45ED-91DB-798ABE27A69E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.Messaging.TestSubscriber", "..\Projects\Metro\SystemDot.Messaging.TestSubscriber\SystemDot.Messaging.TestSubscriber.csproj", "{E6C4ACD0-A177-45C9-9743-664B27109936}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.Messaging.TestSubscriber", "..\Projects\Metro\Test\SystemDot.Messaging.TestSubscriber\SystemDot.Messaging.TestSubscriber.csproj", "{E6C4ACD0-A177-45C9-9743-664B27109936}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.Messaging.Test.Messages", "..\Projects\Metro\SystemDot.Messaging.Test.Messages\SystemDot.Messaging.Test.Messages.csproj", "{0D0FA9C5-9BDD-4192-978D-BE82EE49AA81}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.Messaging.Test.Messages", "..\Projects\Metro\Test\SystemDot.Messaging.Test.Messages\SystemDot.Messaging.Test.Messages.csproj", "{0D0FA9C5-9BDD-4192-978D-BE82EE49AA81}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -142,7 +142,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{0D0FA9C5-9BDD-4192-978D-BE82EE49AA81} = {608035C0-6BAE-45ED-91DB-798ABE27A69E}
-		{E6C4ACD0-A177-45C9-9743-664B27109936} = {608035C0-6BAE-45ED-91DB-798ABE27A69E}
+		{09A377EE-27BB-468D-9B4E-E870424AEBA4} = {608035C0-6BAE-45ED-91DB-798ABE27A69E}
+		{6A4F976C-FB85-4D3D-A145-D43626605212} = {608035C0-6BAE-45ED-91DB-798ABE27A69E}
+		{E9433834-D592-4A4A-8219-3EA48B5A2BCC} = {608035C0-6BAE-45ED-91DB-798ABE27A69E}
 	EndGlobalSection
 EndGlobal

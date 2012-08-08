@@ -4,6 +4,6 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
 {
     public interface ISubscriptionHandlerChannelBuilder
     {
-        SubscriptionRequestor Build(EndpointAddress address, EndpointAddress recieverAddress);
+        ISubscriptionRequestor Build(EndpointAddress address, EndpointAddress recieverAddress);
     }
 }

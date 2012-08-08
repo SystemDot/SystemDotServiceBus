@@ -21,6 +21,7 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling.Servers
             if (toHandle.IsLongPollRequest()) 
                 return;
             
+            Logger.Info("Handling sent message for {0}", toHandle.GetToAddress());
             this.outgoingQueue.Enqueue(toHandle);
         }
     }

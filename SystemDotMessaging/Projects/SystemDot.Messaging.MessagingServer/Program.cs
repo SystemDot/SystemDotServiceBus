@@ -1,5 +1,6 @@
 ﻿using System;
 using SystemDot.Http;
+using SystemDot.Logging;
 using SystemDot.Messaging.Transport.Http.LongPolling.Servers;
 using SystemDot.Serialisation;
 
@@ -9,6 +10,9 @@ namespace SystemDot.Messaging.MessagingServer
     {
         static void Main(string[] args)
         {
+            Logger.LoggingMechanism = new ConsoleLoggingMechanism();
+            Logger.ShowInfo = true;
+
             BuildMessagingServer().Start();
 
             Console.Write("I am the message server. Press enter to exit.");
