@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using SystemDot.Http;
 using SystemDot.Logging;
@@ -40,16 +39,21 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
         {
             Logger.Info("Long polling for messages");
 
-            return this.requestor.SendPut(
-                this.addresses.First().GetUrl(),
-                s => this.formatter.Serialise(s, CreateLongPollPayload(this.addresses)),
-                RecieveResponse);
+            Task task = null;
+
+            this.addresses.ForEach(a =>
+                task = this.requestor.SendPut(
+                    a.GetUrl(), 
+                    s => this.formatter.Serialise(s, CreateLongPollPayload(a)), 
+                    RecieveResponse));
+
+            return task;
         }
 
-        MessagePayload CreateLongPollPayload(List<EndpointAddress> toAdd)
+        MessagePayload CreateLongPollPayload(EndpointAddress address)
         {
             var payload = new MessagePayload();
-            payload.SetLongPollRequest(toAdd);
+            payload.SetLongPollRequest(address);
 
             return payload;
         }

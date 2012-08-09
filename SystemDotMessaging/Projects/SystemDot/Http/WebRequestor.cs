@@ -72,10 +72,10 @@ namespace SystemDot.Http
         private static void LogAggregateException(AggregateException toLog)
         {
             toLog.Handle(e =>
-                {
-                    Logger.Error(e.Message);
-                    return true;
-                });
+            {
+                Logger.Error(e.Message);
+                return true;
+            });
         }
     }
 }
