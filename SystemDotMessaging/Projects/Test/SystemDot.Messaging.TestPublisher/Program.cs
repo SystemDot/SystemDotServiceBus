@@ -13,9 +13,10 @@ namespace SystemDot.Messaging.TestPublisher
             Logger.ShowInfo = false;
 
             IBus bus = Configure
+                .UsingHttpMessaging()
                 .WithLocalMessageServer()
                 .OpenChannel("TestPublisher")
-                .AsPublisher()
+                .ForPublishing()
                 .Initialise();
             
             do

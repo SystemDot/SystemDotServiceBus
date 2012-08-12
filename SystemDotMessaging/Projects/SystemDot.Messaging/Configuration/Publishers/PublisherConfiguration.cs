@@ -4,6 +4,7 @@ using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Transport;
+using SystemDot.Messaging.Transport.Http.LongPolling;
 
 namespace SystemDot.Messaging.Configuration.Publishers
 {

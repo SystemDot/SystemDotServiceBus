@@ -14,9 +14,10 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
             Logger.ShowInfo = false;
 
             IBus bus = Configure
+                .UsingHttpMessaging()
                 .WithLocalMessageServer()
                 .OpenChannel("TestSender")
-                .AsRequestReplySenderTo("TestReciever")
+                .ForRequestReplySending("TestReciever")
                 .Initialise();
 
             IocContainer.Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());

@@ -3,6 +3,7 @@ using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Configuration.ComponentRegistration;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Transport;
+using SystemDot.Messaging.Transport.Http.LongPolling;
 using SystemDot.Parallelism;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -45,12 +46,13 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply
         };
 
         Because of = () => Configuration.Configure
-            .WithLocalMessageServer()
-                .OpenChannel(Channel2Name)
-                    .AsRequestReplySenderTo(Reciever2Address)
-                .OpenChannel(Channel2Name)
-                    .AsRequestReplySenderTo(Reciever2Address)
-            .Initialise();
+            .UsingHttpMessaging()
+                .WithLocalMessageServer()
+                    .OpenChannel(Channel2Name)
+                        .ForRequestReplySending(Reciever2Address)
+                    .OpenChannel(Channel2Name)
+                        .ForRequestReplySending(Reciever2Address)
+                .Initialise();
 
         It should_build_the_second_send_channel = () =>
             The<ISendChannelBuilder>().WasToldTo(b =>

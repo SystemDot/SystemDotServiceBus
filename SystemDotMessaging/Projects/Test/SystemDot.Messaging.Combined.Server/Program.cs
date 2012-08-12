@@ -10,14 +10,13 @@ namespace SystemDot.Messaging.Combined.Server
         static void Main(string[] args)
         {
             Logger.LoggingMechanism = new ConsoleLoggingMechanism();
-            Logger.ShowInfo = true;
+            Logger.ShowInfo = false;
 
             IBus bus = Configure
-                .WithLocalMessageServer()
-                    .OpenChannel("TestReciever")
-                        .AsRequestReplyReciever()
-                    .OpenChannel("TestPublisher")
-                        .AsPublisher()
+                .UsingHttpMessaging()
+                    .WithLocalMessageServer()                
+                        .OpenChannel("TestReciever").ForRequestReplyRecieving()
+                        .OpenChannel("TestPublisher").ForPublishing()
                 .Initialise();
 
             IocContainer.Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer(bus));

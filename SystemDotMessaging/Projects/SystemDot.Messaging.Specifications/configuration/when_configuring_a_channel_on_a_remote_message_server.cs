@@ -2,6 +2,7 @@ using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Configuration.ComponentRegistration;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Transport;
+using SystemDot.Messaging.Transport.Http.LongPolling;
 using SystemDot.Parallelism;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -30,9 +31,10 @@ namespace SystemDot.Messaging.Specifications.configuration
         };
 
         Because of = () => bus = Configuration.Configure
+            .UsingHttpMessaging()
             .WithRemoteMessageServer(ServerName)
             .OpenChannel(ChannelName)
-            .AsRequestReplyReciever()
+            .ForRequestReplyRecieving()
             .Initialise();
 
         It should_register_the_listening_address_with_the_message_reciever = () =>

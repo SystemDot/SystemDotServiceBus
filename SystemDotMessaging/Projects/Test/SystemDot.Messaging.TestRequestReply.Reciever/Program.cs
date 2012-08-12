@@ -12,9 +12,11 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
             Logger.LoggingMechanism = new ConsoleLoggingMechanism();
             Logger.ShowInfo = false;
 
-            IBus bus = Configure.WithLocalMessageServer()
+            IBus bus = Configure
+                .UsingHttpMessaging()
+                .WithLocalMessageServer()
                 .OpenChannel("TestReciever")
-                .AsRequestReplyReciever()
+                .ForRequestReplyRecieving()
                 .Initialise();
 
             IocContainer.Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer(bus));

@@ -4,6 +4,7 @@ using SystemDot.Messaging.Configuration.ComponentRegistration;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Distribution;
 using SystemDot.Messaging.Transport;
+using SystemDot.Messaging.Transport.Http.LongPolling;
 using SystemDot.Parallelism;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -34,9 +35,9 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
         };
 
         Because of = () => bus = Configuration.Configure
-            .WithLocalMessageServer()
-            .OpenChannel(ChannelName)
-            .AsPublisher()
+            .UsingHttpMessaging()
+                .WithLocalMessageServer()
+                    .OpenChannel(ChannelName).ForPublishing()
             .Initialise();
 
         It should_build_the_subscription_handler_channel = () => The<ISubscriptionHandlerChannelBuilder>().WasToldTo(l => l.Build());

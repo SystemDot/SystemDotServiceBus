@@ -7,47 +7,45 @@ using SystemDot.Http;
 using SystemDot.Logging;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
+using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Transport.Http.LongPolling
 {
     public class LongPollReciever : IMessageReciever
     {
-        readonly List<EndpointAddress> addresses;
         readonly IWebRequestor requestor;
         readonly ISerialiser formatter;
-        
+        readonly ITaskLooper looper;
+
         public event Action<MessagePayload> MessageProcessed;
 
-        public LongPollReciever(IWebRequestor requestor, ISerialiser formatter)
+        public LongPollReciever(IWebRequestor requestor, ISerialiser formatter, ITaskLooper looper)
         {
             Contract.Requires(requestor != null);
             Contract.Requires(formatter != null);
+            Contract.Requires(looper != null);
             
             this.requestor = requestor;
             this.formatter = formatter;
-            this.addresses = new List<EndpointAddress>();
+            this.looper = looper;
         }
 
         public void RegisterListeningAddress(EndpointAddress toRegister)
         {
             Contract.Requires(toRegister != EndpointAddress.Empty);
-            this.addresses.Add(toRegister);
+            
+            this.looper.RegisterToLoop(() => Poll(toRegister));
         }
 
-        public Task Poll()
+        Task Poll(EndpointAddress address)
         {
-            Logger.Info("Long polling for messages");
+            Logger.Info("Long polling for messages for {0}", address);
 
-            Task task = null;
-
-            this.addresses.ForEach(a =>
-                task = this.requestor.SendPut(
-                    a.GetUrl(), 
-                    s => this.formatter.Serialise(s, CreateLongPollPayload(a)), 
-                    RecieveResponse));
-
-            return task;
+            return this.requestor.SendPut(
+                address.GetUrl(), 
+                s => this.formatter.Serialise(s, CreateLongPollPayload(address)), 
+                RecieveResponse);
         }
 
         MessagePayload CreateLongPollPayload(EndpointAddress address)

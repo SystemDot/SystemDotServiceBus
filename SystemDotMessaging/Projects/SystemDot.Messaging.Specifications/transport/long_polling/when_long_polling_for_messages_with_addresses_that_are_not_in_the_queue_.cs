@@ -7,6 +7,7 @@ using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Packaging.Headers;
 using SystemDot.Messaging.Transport.Http.LongPolling;
+using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -25,6 +26,7 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
             messagePayload = new MessagePayload();
             messagePayload.SetToAddress(new EndpointAddress("Address1", "TestServer"));
 
+            Configure<ITaskLooper>(new TestTaskLooper());
             Configure<ISerialiser>(new PlatformAgnosticSerialiser());
 
             var requestor = new TestWebRequestor(The<ISerialiser>(), new FixedPortAddress());
@@ -35,7 +37,7 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
             Subject.RegisterListeningAddress(new EndpointAddress("Address2", "TestServer"));
         };
 
-        Because of = () => Subject.Poll();
+        Because of = () => The<ITaskLooper>().Start();
 
         It should_output_any_messages_from_the_queue = () => messagePayloads.ShouldBeEmpty();
     }

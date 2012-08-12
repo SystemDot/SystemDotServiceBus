@@ -26,9 +26,9 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
             Replies = new ObservableCollection<string>();
 
             this.bus = Configure
+               .UsingHttpMessaging()
                .WithLocalMessageServer()
-               .OpenChannel("TestSender")
-               .AsRequestReplySenderTo("TestReciever")
+               .OpenChannel("TestSender").ForRequestReplySending("TestReciever")
                .WithHook(new MessageMarshallingHook())
                .Initialise();
 

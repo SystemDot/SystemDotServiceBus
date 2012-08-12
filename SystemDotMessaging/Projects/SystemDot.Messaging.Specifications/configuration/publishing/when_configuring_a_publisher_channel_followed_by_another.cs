@@ -33,11 +33,10 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
         };
 
         Because of = () => Configuration.Configure
-            .WithLocalMessageServer()
-                .OpenChannel("Test1")
-                    .AsPublisher()
-                .OpenChannel(Channel2Name)
-                    .AsPublisher()
+            .UsingHttpMessaging()
+                .WithLocalMessageServer()
+                    .OpenChannel("Test1").ForPublishing()
+                .OpenChannel(Channel2Name).ForPublishing()
             .Initialise();
 
         It should_build_and_register_the_second_publisher_channel = () => 

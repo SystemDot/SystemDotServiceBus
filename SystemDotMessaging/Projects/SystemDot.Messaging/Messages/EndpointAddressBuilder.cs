@@ -13,12 +13,12 @@ namespace SystemDot.Messaging.Messages
             this.machineIdentifier = machineIdentifier;
         }
 
-        public EndpointAddress Build(string address, string defaultServerName)
+        public EndpointAddress Build(string address, string messageServerName)
         {
             Contract.Requires(!string.IsNullOrEmpty(address));
-            Contract.Requires(!string.IsNullOrEmpty(defaultServerName));
+            Contract.Requires(!string.IsNullOrEmpty(messageServerName));
 
-            string serverName = defaultServerName;
+            string serverName = messageServerName;
             
             string[] addressParts = address.Split('.');
             if (addressParts.Length == 2)

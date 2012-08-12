@@ -79,8 +79,9 @@
     <Compile Include="messages\request_reply\when_handling_a_subscribe_request_message.cs" />
     <Compile Include="messages\request_reply\when_starting_a_subscription_requestor.cs" />
     <Compile Include="TestTaskStarter.cs" />
-    <Compile Include="transport\long_polling\when_long_polling_for_messages_with_addresses_that_are_not_in_the_queue_.cs" />
+    <Compile Include="transport\long_polling\TestTaskLooper.cs" />
     <Compile Include="transport\long_polling\when_long_polling_for_messages_and_two_messages_are_returned_in_the_stream.cs" />
+    <Compile Include="transport\long_polling\when_long_polling_for_messages_with_addresses_that_are_not_in_the_queue_.cs" />
     <Compile Include="transport\long_polling\TestWebRequestor.cs" />
     <Compile Include="messages\bus\when_sending_a_message_on_the_bus.cs" />
     <Compile Include="messages\handling\when_routing_a_message_to_two_handlers_of_differing_messages.cs" />

@@ -1,19 +1,12 @@
-using SystemDot.Messaging.Configuration.ComponentRegistration;
+using SystemDot.Messaging.Configuration.HttpMessaging;
 
 namespace SystemDot.Messaging.Configuration
 {
     public class Configure : Configurer
     {
-        public static MessageServerConfiguration WithLocalMessageServer()
+        public static HttpMessagingConfiguration UsingHttpMessaging()
         {
-            Components.Register();            
-            return new MessageServerConfiguration(IocContainer.Resolve<IMachineIdentifier>().GetMachineName());
-        }
-
-        public static MessageServerConfiguration WithRemoteMessageServer(string serverName)
-        {
-            Components.Register();
-            return new MessageServerConfiguration(serverName);
+            return new HttpMessagingConfiguration();
         }
     }
 }

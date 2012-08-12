@@ -24,12 +24,12 @@ namespace SystemDot.Messaging.Configuration
             this.buildActions = buildActions;
         }
 
-        public RequestReplyRecieverConfiguration AsRequestReplyReciever()
+        public RequestReplyRecieverConfiguration ForRequestReplyRecieving()
         {
             return new RequestReplyRecieverConfiguration(address, this.buildActions);
         }
 
-        public RequestReplySenderConfiguration AsRequestReplySenderTo(string recieverAddress)
+        public RequestReplySenderConfiguration ForRequestReplySending(string recieverAddress)
         {
             return new RequestReplySenderConfiguration(
                 this.address,
@@ -37,12 +37,12 @@ namespace SystemDot.Messaging.Configuration
                 this.buildActions);
         }
 
-        public PublisherConfiguration AsPublisher()
+        public PublisherConfiguration ForPublishing()
         {
             return new PublisherConfiguration(address, this.buildActions);
         }
 
-        public SubscribeToConfiguration AsSubscriberTo(string publisherAddress)
+        public SubscribeToConfiguration ForSubscribingTo(string publisherAddress)
         {
             return new SubscribeToConfiguration(
                 this.address, 

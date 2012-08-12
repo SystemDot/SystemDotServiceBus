@@ -13,9 +13,9 @@ namespace SystemDot.Messaging.Combined.Subscriber
             Logger.ShowInfo = false;
 
             Configure
+                .UsingHttpMessaging()
                 .WithLocalMessageServer()
-                .OpenChannel("TestSubscriber")
-                .AsSubscriberTo("TestPublisher")
+                .OpenChannel("TestSubscriber").ForSubscribingTo("TestPublisher")
                 .Initialise();
 
             IocContainer.Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());

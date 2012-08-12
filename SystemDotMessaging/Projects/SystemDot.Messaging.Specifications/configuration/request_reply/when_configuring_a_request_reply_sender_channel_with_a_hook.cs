@@ -38,10 +38,9 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply
         };
 
         Because of = () => bus = Configuration.Configure
-            .WithLocalMessageServer()
-            .OpenChannel(ChannelName)
-            .AsRequestReplySenderTo(RecieverAddress)
-            .WithHook(The<IMessageProcessor<object, object>>())
+            .UsingHttpMessaging().WithLocalMessageServer()
+                .OpenChannel(ChannelName).ForRequestReplySending(RecieverAddress)
+                    .WithHook(The<IMessageProcessor<object, object>>())
             .Initialise();
 
         It should_build_the_recieve_channel_with_the_specified_hook = () =>

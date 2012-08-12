@@ -44,11 +44,12 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
         };
 
         Because of = () => Configuration.Configure
-            .WithLocalMessageServer()
-                .OpenChannel(Channel1Name)
-                    .AsSubscriberTo(Publisher1Name)
-                .OpenChannel(Channel2Name)
-                    .AsSubscriberTo(Publisher2Name) 
+            .UsingHttpMessaging()
+                .WithLocalMessageServer()
+                    .OpenChannel(Channel1Name)
+                        .ForSubscribingTo(Publisher1Name)
+                    .OpenChannel(Channel2Name)
+                        .ForSubscribingTo(Publisher2Name) 
                 .Initialise();
 
         It should_build_the_subscriber_channel_for_both_channels = () => 

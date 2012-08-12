@@ -2,6 +2,7 @@ using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Configuration.ComponentRegistration;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Transport;
+using SystemDot.Messaging.Transport.Http.LongPolling;
 using SystemDot.Parallelism;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -27,11 +28,10 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply
         };
 
         Because of = () => Configuration.Configure
-            .WithLocalMessageServer()
-                .OpenChannel("TestChannel1")
-                    .AsRequestReplyReciever()
-                .OpenChannel(Channel2Name)
-                    .AsRequestReplyReciever()
+            .UsingHttpMessaging()
+                .WithLocalMessageServer()
+                    .OpenChannel("TestChannel1").ForRequestReplyRecieving()
+                    .OpenChannel(Channel2Name).ForRequestReplyRecieving()
             .Initialise();
 
         It should_register_the_listening_address_of_the_second_channel_with_the_message_reciever = () =>
