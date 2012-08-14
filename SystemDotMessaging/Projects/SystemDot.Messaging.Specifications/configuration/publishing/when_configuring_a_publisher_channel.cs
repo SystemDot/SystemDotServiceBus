@@ -1,6 +1,7 @@
 using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Configuration.ComponentRegistration;
+using SystemDot.Messaging.Configuration.HttpMessaging;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Distribution;
 using SystemDot.Messaging.Transport;
@@ -34,10 +35,9 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
             };
         };
 
-        Because of = () => bus = Configuration.Configure
-            .UsingHttpMessaging()
-                .WithLocalMessageServer()
-                    .OpenChannel(ChannelName).ForPublishing()
+        Because of = () => bus = Configuration.Configure.Messaging()
+            .UsingHttpTransport(MessageServer.Local())
+                .OpenChannel(ChannelName).ForPublishing()
             .Initialise();
 
         It should_build_the_subscription_handler_channel = () => The<ISubscriptionHandlerChannelBuilder>().WasToldTo(l => l.Build());

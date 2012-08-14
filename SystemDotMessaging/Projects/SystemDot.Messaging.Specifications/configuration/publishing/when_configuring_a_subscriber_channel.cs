@@ -1,6 +1,7 @@
 using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Configuration.ComponentRegistration;
+using SystemDot.Messaging.Configuration.HttpMessaging;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Transport;
 using SystemDot.Messaging.Transport.Http.LongPolling;
@@ -37,11 +38,9 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
             };
         };
 
-        Because of = () => bus = Configuration.Configure
-            .UsingHttpMessaging()
-            .WithLocalMessageServer()
-            .OpenChannel(ChannelName)
-            .ForSubscribingTo(PublisherName)
+        Because of = () => bus = Configuration.Configure.Messaging()
+            .UsingHttpTransport(MessageServer.Local())
+                .OpenChannel(ChannelName).ForSubscribingTo(PublisherName)
             .Initialise();
 
         It should_build_the_subscriber_channel = () => The<ISubscriberChannelBuilder>().WasToldTo(b => b.Build());

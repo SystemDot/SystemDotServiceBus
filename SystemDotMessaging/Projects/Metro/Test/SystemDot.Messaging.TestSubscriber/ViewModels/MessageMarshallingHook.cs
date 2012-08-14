@@ -2,7 +2,7 @@ using System;
 using SystemDot.Messaging.Messages;
 using Windows.UI.Core;
 
-namespace SystemDot.Messaging.TestSubscriber
+namespace SystemDot.Messaging.TestSubscriber.ViewModels
 {
     public class MessageMarshallingHook : IMessageProcessor<object, object>
     {

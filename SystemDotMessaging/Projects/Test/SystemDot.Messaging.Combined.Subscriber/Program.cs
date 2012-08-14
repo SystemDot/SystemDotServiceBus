@@ -1,6 +1,7 @@
 ﻿using System;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Configuration.HttpMessaging;
 using SystemDot.Messaging.Messages.Handling;
 
 namespace SystemDot.Messaging.Combined.Subscriber
@@ -9,12 +10,9 @@ namespace SystemDot.Messaging.Combined.Subscriber
     {
         static void Main(string[] args)
         {
-            Logger.LoggingMechanism = new ConsoleLoggingMechanism();
-            Logger.ShowInfo = false;
-
-            Configure
-                .UsingHttpMessaging()
-                .WithLocalMessageServer()
+            IBus bus = Configure.Messaging()
+                .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
+                .UsingHttpTransport(MessageServer.Local())
                 .OpenChannel("TestSubscriber").ForSubscribingTo("TestPublisher")
                 .Initialise();
 

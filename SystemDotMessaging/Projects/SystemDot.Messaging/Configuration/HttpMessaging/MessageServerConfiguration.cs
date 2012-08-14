@@ -6,13 +6,13 @@ namespace SystemDot.Messaging.Configuration.HttpMessaging
 {
     public class MessageServerConfiguration : Configurer
     {
-        readonly string messageServerName;
+        readonly MessageServer messageServer;
 
-        public MessageServerConfiguration(string messageServerName)
+        public MessageServerConfiguration(MessageServer messageServer)
         {
-            Contract.Requires(!string.IsNullOrEmpty(messageServerName));
-            
-            this.messageServerName = messageServerName;
+            Contract.Requires(messageServer != null);
+
+            this.messageServer = messageServer;
         }
 
         public ChannelConfiguration OpenChannel(string name)
@@ -20,8 +20,8 @@ namespace SystemDot.Messaging.Configuration.HttpMessaging
             Contract.Requires(!string.IsNullOrEmpty(name));
 
             return new ChannelConfiguration(
-                BuildEndpointAddress(name, this.messageServerName), 
-                this.messageServerName, 
+                BuildEndpointAddress(name, this.messageServer.Name),
+                this.messageServer.Name,
                 new List<Action>());
         }
     }

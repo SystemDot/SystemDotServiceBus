@@ -1,6 +1,7 @@
 ﻿using System;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Configuration.HttpMessaging;
 using SystemDot.Messaging.Test.Messages;
 
 namespace SystemDot.Messaging.TestPublisher
@@ -9,14 +10,10 @@ namespace SystemDot.Messaging.TestPublisher
     {
         static void Main(string[] args)
         {
-            Logger.LoggingMechanism = new ConsoleLoggingMechanism();
-            Logger.ShowInfo = false;
-
-            IBus bus = Configure
-                .UsingHttpMessaging()
-                .WithLocalMessageServer()
-                .OpenChannel("TestPublisher")
-                .ForPublishing()
+            IBus bus = Configure.Messaging()
+                .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
+                .UsingHttpTransport(MessageServer.Local())
+                .OpenChannel("TestPublisher").ForPublishing()
                 .Initialise();
             
             do

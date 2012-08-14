@@ -1,6 +1,7 @@
 ﻿using System;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Configuration.HttpMessaging;
 using SystemDot.Messaging.Messages.Handling;
 
 namespace SystemDot.Messaging.OtherTestSubscriber
@@ -9,14 +10,11 @@ namespace SystemDot.Messaging.OtherTestSubscriber
     {
         static void Main(string[] args)
         {
-            Logger.LoggingMechanism = new ConsoleLoggingMechanism();
-            Logger.ShowInfo = false;
+            Logger.LoggingMechanism = new ConsoleLoggingMechanism { ShowInfo = false };
 
-            Configure
-                .UsingHttpMessaging()
-                .WithLocalMessageServer()
-                .OpenChannel("TestOtherSubscriber")
-                .ForSubscribingTo("TestPublisher")
+            Configure.Messaging()
+                .UsingHttpTransport(MessageServer.Local())
+                .OpenChannel("TestOtherSubscriber").ForSubscribingTo("TestPublisher")
                 .Initialise();
 
             IocContainer.Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());

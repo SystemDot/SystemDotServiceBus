@@ -74,9 +74,10 @@
     <Compile Include="Configuration\ComponentRegistration\ThreadingComponents.cs" />
     <Compile Include="Channels\Publishing\SubscriptionRequestor.cs" />
     <Compile Include="Configuration\Configurer.cs" />
-    <Compile Include="Configuration\HttpMessaging\HttpMessagingConfiguration.cs" />
-    <Compile Include="Configuration\Initialiser.cs" />
+    <Compile Include="Configuration\HttpMessaging\MessageServer.cs" />
     <Compile Include="Configuration\HttpMessaging\MessageServerConfiguration.cs" />
+    <Compile Include="Configuration\Initialiser.cs" />
+    <Compile Include="Configuration\MessagingConfiguration.cs" />
     <Compile Include="Configuration\RequestReply\RequestReplySenderConfiguration.cs" />
     <Compile Include="Configuration\RequestReply\RequestReplyRecieverConfiguration.cs" />
     <Compile Include="IBus.cs" />

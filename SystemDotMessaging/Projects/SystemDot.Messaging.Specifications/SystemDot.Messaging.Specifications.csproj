@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="configuration\when_logging_a_message_with_a_logging_mechanism_configured.cs" />
     <Compile Include="configuration\publishing\when_configuring_a_publisher_channel_followed_by_another.cs" />
     <Compile Include="configuration\publishing\when_configuring_a_subscriber_channel_followed_by_another.cs" />
     <Compile Include="configuration\publishing\when_configuring_a_subscriber_channel.cs" />

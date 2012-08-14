@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Configuration.HttpMessaging;
 using SystemDot.Messaging.Messages.Handling;
 using SystemDot.Messaging.Test.Messages;
 using SystemDot.Messaging.TestSubscriber.Handlers;
@@ -18,16 +19,14 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
 
         public MainPageViewModel()
         {
-            var loggingMechanism = new ObservableLoggingMechanism(CoreWindow.GetForCurrentThread().Dispatcher);
-            Logger.LoggingMechanism = loggingMechanism;
-            Logger.ShowInfo = true;
-
+            var loggingMechanism = new ObservableLoggingMechanism(CoreWindow.GetForCurrentThread().Dispatcher) { ShowInfo = true };
+ 
             Messages = loggingMechanism.Messages;
             Replies = new ObservableCollection<string>();
 
-            this.bus = Configure
-               .UsingHttpMessaging()
-               .WithLocalMessageServer()
+            this.bus = Configure.Messaging()
+               .LoggingWith(loggingMechanism)
+               .UsingHttpTransport(MessageServer.Local())
                .OpenChannel("TestSender").ForRequestReplySending("TestReciever")
                .WithHook(new MessageMarshallingHook())
                .Initialise();

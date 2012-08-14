@@ -1,6 +1,7 @@
 using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Configuration.ComponentRegistration;
+using SystemDot.Messaging.Configuration.HttpMessaging;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Distribution;
 using SystemDot.Messaging.Transport;
@@ -32,10 +33,9 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
             };
         };
 
-        Because of = () => Configuration.Configure
-            .UsingHttpMessaging()
-                .WithLocalMessageServer()
-                    .OpenChannel("Test1").ForPublishing()
+        Because of = () => Configuration.Configure.Messaging()
+            .UsingHttpTransport(MessageServer.Local())
+                .OpenChannel("Test1").ForPublishing()
                 .OpenChannel(Channel2Name).ForPublishing()
             .Initialise();
 

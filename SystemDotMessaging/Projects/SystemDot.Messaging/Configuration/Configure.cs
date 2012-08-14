@@ -1,12 +1,13 @@
-using SystemDot.Messaging.Configuration.HttpMessaging;
+using SystemDot.Messaging.Configuration.ComponentRegistration;
 
 namespace SystemDot.Messaging.Configuration
 {
     public class Configure : Configurer
     {
-        public static HttpMessagingConfiguration UsingHttpMessaging()
+        public static MessagingConfiguration Messaging()
         {
-            return new HttpMessagingConfiguration();
+            Components.Register();
+            return new MessagingConfiguration();
         }
     }
 }

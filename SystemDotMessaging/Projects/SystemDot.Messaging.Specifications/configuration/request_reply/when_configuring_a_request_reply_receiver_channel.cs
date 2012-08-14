@@ -1,5 +1,6 @@
 using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Configuration.ComponentRegistration;
+using SystemDot.Messaging.Configuration.HttpMessaging;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Transport;
 using SystemDot.Messaging.Transport.Http.LongPolling;
@@ -28,8 +29,8 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply
             };
         };
 
-        Because of = () => bus = Configuration.Configure
-            .UsingHttpMessaging().WithLocalMessageServer()
+        Because of = () => bus = Configuration.Configure.Messaging()
+            .UsingHttpTransport(MessageServer.Local())
             .OpenChannel(ChannelName)
             .ForRequestReplyRecieving()
             .Initialise();

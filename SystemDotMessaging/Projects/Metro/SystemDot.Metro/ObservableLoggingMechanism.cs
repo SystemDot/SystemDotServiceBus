@@ -8,6 +8,8 @@ namespace SystemDot
     {
         private readonly CoreDispatcher dispatcher;
 
+        public bool ShowInfo { get; set; }
+        
         public ObservableCollection<string> Messages { get; private set; }
 
         public ObservableLoggingMechanism(CoreDispatcher dispatcher)
