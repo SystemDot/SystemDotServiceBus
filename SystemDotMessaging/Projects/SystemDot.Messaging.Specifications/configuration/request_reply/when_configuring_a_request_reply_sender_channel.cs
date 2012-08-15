@@ -25,13 +25,13 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply
                 ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
                 ConfigureAndRegister(new EndpointAddressBuilder(IocContainer.Resolve<IMachineIdentifier>()));
                 ConfigureAndRegister<ISendChannelBuilder>();
-                ConfigureAndRegister<IRecieveChannelBuilder>();
-                ConfigureAndRegister<ISubscriptionHandlerChannelBuilder>();
+                ConfigureAndRegister<IReplyRecieveChannelBuilder>();
+                ConfigureAndRegister<ISubscriptionRequestorChannelBuilder>();
                 ConfigureAndRegister<IMessageReciever>();
                 ConfigureAndRegister<ITaskLooper>();
                 ConfigureAndRegister<IBus>();
 
-                The<ISubscriptionHandlerChannelBuilder>()
+                The<ISubscriptionRequestorChannelBuilder>()
                     .WhenToldTo(b => b.Build(
                         GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName()),
                         GetEndpointAddress(RecieverAddress, The<IMachineIdentifier>().GetMachineName())))
@@ -49,7 +49,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply
                 b.Build(GetEndpointAddress(RecieverAddress, The<IMachineIdentifier>().GetMachineName())));
 
         It should_build_the_recieve_channel = () =>
-            The<IRecieveChannelBuilder>().WasToldTo(b => b.Build(new IMessageProcessor<object, object>[0]));
+            The<IReplyRecieveChannelBuilder>().WasToldTo(b => b.Build(new IMessageProcessor<object, object>[0]));
 
         It should_build_the_subscription_handler_channel = () =>
             The<ISubscriptionRequestor>().WasToldTo(b => b.Start());

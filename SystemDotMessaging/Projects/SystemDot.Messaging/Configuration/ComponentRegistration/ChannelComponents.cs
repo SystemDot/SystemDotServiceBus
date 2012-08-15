@@ -20,6 +20,11 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             IocContainer.Register<IDistributor>(() => new Distributor(IocContainer.Resolve<MessagePayloadCopier>()));
 
             IocContainer.Register(() => new MessageFilter());
+
+            IocContainer.Register(new ThreadLocalChannelReserve());
+            IocContainer.Register<MessageReplyFilter, Guid>(id => new MessageReplyFilter(id, IocContainer.Resolve<ThreadLocalChannelReserve>()));
+            IocContainer.Register<ReplyChannelReserver, Guid>(id => new ReplyChannelReserver(id, IocContainer.Resolve<ThreadLocalChannelReserve>()));     
+       
             IocContainer.Register(() => new MessagePayloadPackager(IocContainer.Resolve<ISerialiser>()));
             IocContainer.Register<MessageAddresser, EndpointAddress>(a => new MessageAddresser(a));
             IocContainer.Register(() => new MessagePayloadUnpackager(IocContainer.Resolve<ISerialiser>()));

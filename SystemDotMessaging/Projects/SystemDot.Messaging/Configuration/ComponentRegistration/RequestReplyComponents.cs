@@ -8,14 +8,15 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
     {
         public static void Register()
         {
-            IocContainer.Register<IRecieveChannelBuilder>(new RecieveChannelBuilder());
+            IocContainer.Register<IReplyRecieveChannelBuilder>(new ReplyRecieveChannelBuilder());
+            IocContainer.Register<IRequestRecieveChannelBuilder>(new RequestRecieveChannelBuilder());
             IocContainer.Register<ISendChannelBuilder>(new SendChannelBuilder());
             IocContainer.Register<IReplyChannelBuilder>(new ReplyChannelBuilder());
             IocContainer.Register<ISubscriptionHandlerChannelBuilder>(new SubscriptionHandlerChannelBuilder());
             IocContainer.Register<ISubscriptionRequestorChannelBuilder>(new SubscriptionRequestorChannelBuilder());
 
             IocContainer.Register(new SubscriptionRequestHandler(
-                IocContainer.Resolve<IRecieveChannelBuilder>(), 
+                IocContainer.Resolve<IRequestRecieveChannelBuilder>(), 
                 IocContainer.Resolve<IReplyChannelBuilder>()));
 
             IocContainer.Register<ISubscriptionRequestor, EndpointAddress>(a => new SubscriptionRequestor(a));

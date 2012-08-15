@@ -30,8 +30,8 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         protected override void Build()
         {
             Resolve<ISendChannelBuilder>().Build(this.recieverAddress);
-            Resolve<IRecieveChannelBuilder>().Build(this.hooks.ToArray());
-            Resolve<ISubscriptionHandlerChannelBuilder>().Build(this.address, this.recieverAddress).Start();
+            Resolve<IReplyRecieveChannelBuilder>().Build(this.hooks.ToArray());
+            Resolve<ISubscriptionRequestorChannelBuilder>().Build(this.address, this.recieverAddress).Start();
             Resolve<IMessageReciever>().RegisterListeningAddress(this.address);
         }
 

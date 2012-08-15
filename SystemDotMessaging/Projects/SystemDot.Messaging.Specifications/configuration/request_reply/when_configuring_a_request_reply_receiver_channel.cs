@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply
             {
                 ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
                 ConfigureAndRegister(new EndpointAddressBuilder(IocContainer.Resolve<IMachineIdentifier>()));
-                ConfigureAndRegister<ISubscriptionRequestorChannelBuilder>();
+                ConfigureAndRegister<ISubscriptionHandlerChannelBuilder>();
                 ConfigureAndRegister<IMessageReciever>();
                 ConfigureAndRegister<ITaskLooper>();
                 ConfigureAndRegister<IBus>();
@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply
             .Initialise();
 
         It should_build_the_subscription_request_channel_against_ = () => 
-            The<ISubscriptionRequestorChannelBuilder>().WasToldTo(b => b.Build());
+            The<ISubscriptionHandlerChannelBuilder>().WasToldTo(b => b.Build());
 
         It should_register_the_listening_address_with_the_message_reciever = () =>
             The<IMessageReciever>().WasToldTo(r => 

@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.RequestReply;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
@@ -14,6 +15,7 @@ namespace SystemDot.Messaging.Specifications.messages.request_reply
     public class when_handling_a_subscribe_request_message_for_the_same_subscriber_twice
         : WithMessageInputterSubject<SubscriptionRequestHandler>
     {
+        static Guid channelIdentifier;
         static EndpointAddress address;
         static IMessageInputter<MessagePayload> subscriptionChannel;
         static MessagePayload request;
@@ -25,8 +27,13 @@ namespace SystemDot.Messaging.Specifications.messages.request_reply
             subscriptionChannel = new Pipe<MessagePayload>();
             subscriptionSchema = new SubscriptionSchema(new EndpointAddress("TestSubscriberAddress", "TestServer"));
 
+            
             Configure<IReplyChannelBuilder>(An<IReplyChannelBuilder>());
-            Configure<IRecieveChannelBuilder>(An<IRecieveChannelBuilder>());
+
+            channelIdentifier = Guid.NewGuid();
+            var recieveChannelBuilder = An<IRequestRecieveChannelBuilder>();
+            recieveChannelBuilder.WhenToldTo(b => b.Build()).Return(channelIdentifier);
+            Configure<IRequestRecieveChannelBuilder>(recieveChannelBuilder);
             
             request = new MessagePayload();
             request.SetToAddress(address);
@@ -37,9 +44,9 @@ namespace SystemDot.Messaging.Specifications.messages.request_reply
         Because of = () => Subject.InputMessage(request);
 
         It should_setup_the_reply_channels_only_once = () =>
-            The<IReplyChannelBuilder>().WasToldTo(b => b.Build(subscriptionSchema.SubscriberAddress)).OnlyOnce();
+            The<IReplyChannelBuilder>().WasToldTo(b => b.Build(channelIdentifier, subscriptionSchema.SubscriberAddress)).OnlyOnce();
 
         It should_setup_the_request_channels_only_once = () =>
-            The<IRecieveChannelBuilder>().WasToldTo(b => b.Build()).OnlyOnce();
+            The<IRequestRecieveChannelBuilder>().WasToldTo(b => b.Build()).OnlyOnce();
     }
 }

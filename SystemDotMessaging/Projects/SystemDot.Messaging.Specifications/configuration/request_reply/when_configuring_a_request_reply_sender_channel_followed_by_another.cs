@@ -26,19 +26,19 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply
                 ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
                 ConfigureAndRegister(new EndpointAddressBuilder(IocContainer.Resolve<IMachineIdentifier>()));
                 ConfigureAndRegister<ISendChannelBuilder>();
-                ConfigureAndRegister<IRecieveChannelBuilder>();
-                ConfigureAndRegister<ISubscriptionHandlerChannelBuilder>();
+                ConfigureAndRegister<IRequestRecieveChannelBuilder>();
+                ConfigureAndRegister<ISubscriptionRequestorChannelBuilder>();
                 ConfigureAndRegister<IMessageReciever>();
                 ConfigureAndRegister<ITaskLooper>();
                 ConfigureAndRegister<IBus>();
 
-                The<ISubscriptionHandlerChannelBuilder>()
+                The<ISubscriptionRequestorChannelBuilder>()
                     .WhenToldTo(b => b.Build(
                         GetEndpointAddress(Channel1Name, The<IMachineIdentifier>().GetMachineName()),
                         GetEndpointAddress(Reciever1Address, The<IMachineIdentifier>().GetMachineName())))
                     .Return(The<ISubscriptionRequestor>());
-            
-                The<ISubscriptionHandlerChannelBuilder>()
+
+                The<ISubscriptionRequestorChannelBuilder>()
                     .WhenToldTo(b => b.Build(
                         GetEndpointAddress(Channel2Name, The<IMachineIdentifier>().GetMachineName()),
                         GetEndpointAddress(Reciever2Address, The<IMachineIdentifier>().GetMachineName())))

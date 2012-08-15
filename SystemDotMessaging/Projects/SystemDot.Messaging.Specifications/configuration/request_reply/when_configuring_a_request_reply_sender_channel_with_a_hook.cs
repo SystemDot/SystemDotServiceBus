@@ -24,13 +24,13 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply
                 ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
                 ConfigureAndRegister(new EndpointAddressBuilder(IocContainer.Resolve<IMachineIdentifier>()));
                 ConfigureAndRegister<ISendChannelBuilder>();
-                ConfigureAndRegister<IRecieveChannelBuilder>();
-                ConfigureAndRegister<ISubscriptionHandlerChannelBuilder>();
+                ConfigureAndRegister<IReplyRecieveChannelBuilder>();
+                ConfigureAndRegister<ISubscriptionRequestorChannelBuilder>();
                 ConfigureAndRegister<IMessageReciever>();
                 ConfigureAndRegister<ITaskLooper>();
                 ConfigureAndRegister<IBus>();
 
-                The<ISubscriptionHandlerChannelBuilder>()
+                The<ISubscriptionRequestorChannelBuilder>()
                     .WhenToldTo(b => b.Build(
                         GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName()),
                         GetEndpointAddress(RecieverAddress, The<IMachineIdentifier>().GetMachineName())))
@@ -45,6 +45,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply
             .Initialise();
 
         It should_build_the_recieve_channel_with_the_specified_hook = () =>
-            The<IRecieveChannelBuilder>().WasToldTo(b => b.Build(The<IMessageProcessor<object, object>>()));        
+            The<IReplyRecieveChannelBuilder>().WasToldTo(b => b.Build(The<IMessageProcessor<object, object>>()));        
     }
 }
