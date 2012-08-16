@@ -10,7 +10,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
         public void Build(EndpointAddress recieverAddress)
         {
             MessagePipelineBuilder.Build()
-                .WithBusSendTo(IocContainer.Resolve<MessageFilter>())
+                .WithBusSendTo(IocContainer.Resolve<ChannelStartPoint>())
                 .Pump()
                 .ToConverter(IocContainer.Resolve<MessagePayloadPackager>())
                 .ToProcessor(IocContainer.Resolve<MessageAddresser, EndpointAddress>(recieverAddress))

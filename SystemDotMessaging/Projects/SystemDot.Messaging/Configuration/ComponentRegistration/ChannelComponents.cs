@@ -14,16 +14,15 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
     {
         public static void Register()
         {
-            IocContainer.Register<IBus>(new MessageBus());
+            IocContainer.Register(new ReplyChannelLookup());
+            IocContainer.Register<IBus>(new MessageBus(IocContainer.Resolve<ReplyChannelLookup>()));
             
             IocContainer.Register(new MessagePayloadCopier(IocContainer.Resolve<ISerialiser>()));
             IocContainer.Register<IDistributor>(() => new Distributor(IocContainer.Resolve<MessagePayloadCopier>()));
 
-            IocContainer.Register(() => new MessageFilter());
+            IocContainer.Register(() => new ChannelStartPoint());
 
-            IocContainer.Register(new ThreadLocalChannelReserve());
-            IocContainer.Register<MessageReplyFilter, Guid>(id => new MessageReplyFilter(id, IocContainer.Resolve<ThreadLocalChannelReserve>()));
-            IocContainer.Register<ReplyChannelReserver, Guid>(id => new ReplyChannelReserver(id, IocContainer.Resolve<ThreadLocalChannelReserve>()));     
+            IocContainer.Register<ReplyChannelSelector, EndpointAddress>(a => new ReplyChannelSelector(a, IocContainer.Resolve<ReplyChannelLookup>()));     
        
             IocContainer.Register(() => new MessagePayloadPackager(IocContainer.Resolve<ISerialiser>()));
             IocContainer.Register<MessageAddresser, EndpointAddress>(a => new MessageAddresser(a));

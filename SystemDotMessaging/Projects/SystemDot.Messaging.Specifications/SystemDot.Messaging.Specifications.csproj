@@ -68,9 +68,7 @@
     <Compile Include="messages\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel.cs" />
     <Compile Include="messages\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel_and_machine_name.cs" />
     <Compile Include="messages\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel_machine_and_server.cs" />
-    <Compile Include="messages\processing\request_reply\when_passing_messages_through_a_reply_channel_reserver.cs" />
-    <Compile Include="messages\processing\request_reply\when_filtering_messages_for_reply_on_an_incorrect_channel.cs" />
-    <Compile Include="messages\processing\request_reply\when_filtering_messages_for_reply_on_the_correct_channel.cs" />
+    <Compile Include="messages\processing\request_reply\when_passing_messages_through_a_reply_channel_selector.cs" />
     <Compile Include="messages\processing\when_unpackaging_a_message_from_transportation_payload_that_does_not_have_a_body.cs" />
     <Compile Include="messages\publishing\when_handling_a_subscribe_request_message.cs" />
     <Compile Include="messages\publishing\when_handling_a_non_subscription_request_message_with_the_subscription_request_handler.cs" />

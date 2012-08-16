@@ -1,4 +1,5 @@
 using SystemDot.Messaging.Channels.RequestReply;
+using SystemDot.Messaging.Messages.Processing;
 
 namespace SystemDot.Messaging.Messages.Pipelines
 {
@@ -17,12 +18,6 @@ namespace SystemDot.Messaging.Messages.Pipelines
         public ProcessorBuilder<T> WithBusSendTo<T>(IMessageProcessor<T, T> processor)
         {
             IocContainer.Resolve<IBus>().MessageSent += o => processor.InputMessage(o.As<T>());
-            return new ProcessorBuilder<T>(processor);
-        }
-
-        public ProcessorBuilder<T> WithBusReplyTo<T>(IMessageProcessor<T, T> processor)
-        {
-            IocContainer.Resolve<IBus>().MessageReplied += o => processor.InputMessage(o.As<T>());
             return new ProcessorBuilder<T>(processor);
         }
 

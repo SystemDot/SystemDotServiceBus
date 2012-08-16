@@ -5,7 +5,6 @@ namespace SystemDot.Messaging
     public interface IBus
     {
         event Action<object> MessageSent;
-        event Action<object> MessageReplied;
         event Action<object> MessagePublished;
         
         void Send(object message);

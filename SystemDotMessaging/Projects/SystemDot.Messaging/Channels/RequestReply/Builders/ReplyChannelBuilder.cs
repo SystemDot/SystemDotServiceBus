@@ -1,4 +1,3 @@
-using System;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Pipelines;
 using SystemDot.Messaging.Messages.Processing;
@@ -8,14 +7,26 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
 {
     public class ReplyChannelBuilder : IReplyChannelBuilder
     {
-        public void Build(Guid channelIdentifier, EndpointAddress recieverAddress)
+        readonly ReplyChannelLookup channelLookup;
+
+        public ReplyChannelBuilder(ReplyChannelLookup channelLookup)
         {
+            this.channelLookup = channelLookup;
+        }
+
+        public void Build(EndpointAddress replyAddress)
+        {
+            var channelStartPoint = IocContainer.Resolve<ChannelStartPoint>();
+
             MessagePipelineBuilder.Build()
-                .WithBusReplyTo(IocContainer.Resolve<MessageReplyFilter, Guid>(channelIdentifier))
-                .Pipe()
+                .With(channelStartPoint)
+                .Pump()
                 .ToConverter(IocContainer.Resolve<MessagePayloadPackager>())
-                .ToProcessor(IocContainer.Resolve<MessageAddresser, EndpointAddress>(recieverAddress))
+                .ToProcessor(IocContainer.Resolve<MessageAddresser, EndpointAddress>(replyAddress))
                 .ToEndPoint(IocContainer.Resolve<IMessageSender>());
+
+            this.channelLookup.RegisterChannel(replyAddress, channelStartPoint);
+            
         }
     }
 }

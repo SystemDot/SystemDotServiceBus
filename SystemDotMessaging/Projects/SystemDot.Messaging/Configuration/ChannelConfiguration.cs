@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Configuration
             return new RequestReplyRecieverConfiguration(address, this.buildActions);
         }
 
-        public RequestReplySenderConfiguration ForRequestReplySending(string recieverAddress)
+        public RequestReplySenderConfiguration ForRequestReplySendingTo(string recieverAddress)
         {
             return new RequestReplySenderConfiguration(
                 this.address,

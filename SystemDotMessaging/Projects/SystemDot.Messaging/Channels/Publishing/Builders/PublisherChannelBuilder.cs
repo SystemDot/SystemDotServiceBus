@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             var publisherEndpoint = IocContainer.Resolve<IDistributor>();
 
             MessagePipelineBuilder.Build()
-                .WithBusPublishTo(IocContainer.Resolve<MessageFilter>())
+                .WithBusPublishTo(IocContainer.Resolve<ChannelStartPoint>())
                 .Pump()
                 .ToConverter(IocContainer.Resolve<MessagePayloadPackager>())
                 .ToEndPoint(publisherEndpoint);

@@ -15,7 +15,6 @@ namespace SystemDot.Messaging.Specifications.messages.request_reply
     public class when_handling_a_subscribe_request_message 
         : WithMessageInputterSubject<SubscriptionRequestHandler>
     {
-        static Guid channelIdentifier;
         static EndpointAddress address;
         static IMessageInputter<MessagePayload> subscriptionChannel;
         static MessagePayload request;
@@ -28,11 +27,7 @@ namespace SystemDot.Messaging.Specifications.messages.request_reply
             subscriptionSchema = new SubscriptionSchema(new EndpointAddress("TestSubscriberAddress", "TestServer"));
 
             Configure<IReplyChannelBuilder>(An<IReplyChannelBuilder>());
-            
-            channelIdentifier = Guid.NewGuid();
-            var recieveChannelBuilder = An<IRequestRecieveChannelBuilder>();
-            recieveChannelBuilder.WhenToldTo(b => b.Build()).Return(channelIdentifier);
-            Configure<IRequestRecieveChannelBuilder>(recieveChannelBuilder);
+            Configure<IRequestRecieveChannelBuilder>(An<IRequestRecieveChannelBuilder>());
             
             request = new MessagePayload();
             request.SetToAddress(address);
@@ -42,9 +37,9 @@ namespace SystemDot.Messaging.Specifications.messages.request_reply
         Because of = () => Subject.InputMessage(request);
 
         It should_setup_the_request_channel = () =>
-            The<IRequestRecieveChannelBuilder>().WasToldTo(b => b.Build());
+            The<IRequestRecieveChannelBuilder>().WasToldTo(b => b.Build(subscriptionSchema.SubscriberAddress));
 
         It should_setup_the_reply_channel = () =>
-            The<IReplyChannelBuilder>().WasToldTo(b => b.Build(channelIdentifier, subscriptionSchema.SubscriberAddress));
+            The<IReplyChannelBuilder>().WasToldTo(b => b.Build(subscriptionSchema.SubscriberAddress));
     }
 }

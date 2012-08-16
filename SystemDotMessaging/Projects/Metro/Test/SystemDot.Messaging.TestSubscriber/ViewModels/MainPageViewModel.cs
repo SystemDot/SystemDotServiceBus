@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
             this.bus = Configure.Messaging()
                .LoggingWith(loggingMechanism)
                .UsingHttpTransport(MessageServer.Local())
-               .OpenChannel("TestSender").ForRequestReplySending("TestReciever")
+               .OpenChannel("TestSender").ForRequestReplySendingTo("TestReciever")
                .WithHook(new MessageMarshallingHook())
                .Initialise();
 

@@ -33,8 +33,8 @@ namespace SystemDot.Messaging.Channels.RequestReply
             
             registry.Add(subscriberAddress);
 
-            Guid channelIdentifier = this.requestRecieveChannelBuilder.Build();
-            this.replyChannelBuilder.Build(channelIdentifier, toInput.GetSubscriptionRequestSchema().SubscriberAddress);
+            this.requestRecieveChannelBuilder.Build(subscriberAddress);
+            this.replyChannelBuilder.Build(subscriberAddress);
         }
     }
 }

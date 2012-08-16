@@ -20,14 +20,6 @@ namespace SystemDot.Messaging.Messages.Pipelines
             return new ProcessorBuilder<TOut>(pump);
         }
 
-        public ProcessorBuilder<TOut> Pipe()
-        {
-            var pipe = new Pipe<TOut>();
-            this.processor.MessageProcessed += pipe.InputMessage;
-
-            return new ProcessorBuilder<TOut>(pipe);
-        }
-
         public ProcessorBuilder<TNextOut> ToConverter<TNextOut>(IMessageProcessor<TOut, TNextOut> messageProcessor)
         {
             this.processor.MessageProcessed += messageProcessor.InputMessage;
@@ -53,5 +45,7 @@ namespace SystemDot.Messaging.Messages.Pipelines
         {
             this.processor.MessageProcessed += endPoint.InputMessage;
         }
+
+        
     }
 }

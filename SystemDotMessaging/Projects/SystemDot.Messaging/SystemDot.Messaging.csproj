@@ -86,7 +86,7 @@
     <Compile Include="Messages\Distribution\IDistributor.cs" />
     <Compile Include="Messages\EndpointAddress.cs" />
     <Compile Include="Messages\EndpointAddressBuilder.cs" />
-    <Compile Include="Messages\Processing\MessageFilter.cs" />
+    <Compile Include="Messages\Processing\ChannelStartPoint.cs" />
     <Compile Include="Messages\Processing\MessageRepeater.cs" />
     <Compile Include="Messages\Pipelines\MessagePipelineBuilder.cs" />
     <Compile Include="Messages\Pipelines\ProcessorBuilder.cs" />
@@ -104,9 +104,8 @@
     <Compile Include="Messages\IMessageProcessor.cs" />
     <Compile Include="Messages\IMessageInputter.cs" />
     <Compile Include="Channels\Publishing\MessagePayloadSubscriptionRequestExtensions.cs" />
-    <Compile Include="Messages\Processing\MessageReplyFilter.cs" />
-    <Compile Include="Messages\Processing\ReplyChannelReserver.cs" />
-    <Compile Include="Messages\Processing\ThreadLocalChannelReserve.cs" />
+    <Compile Include="Messages\Processing\ReplyChannelSelector.cs" />
+    <Compile Include="Messages\Processing\ReplyChannelLookup.cs" />
     <Compile Include="Transport\Http\HttpAddressExtensions.cs" />
     <Compile Include="Transport\IMessageSender.cs" />
     <Compile Include="Transport\IMessageReciever.cs" />

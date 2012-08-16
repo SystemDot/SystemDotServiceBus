@@ -1,10 +1,9 @@
-using System;
-using System.Collections.Generic;
+using SystemDot.Messaging.Messages;
 
 namespace SystemDot.Messaging.Channels.RequestReply.Builders
 {
     public interface IRequestRecieveChannelBuilder
     {
-        Guid Build();
+        void Build(EndpointAddress replyAddress);
     }
 }

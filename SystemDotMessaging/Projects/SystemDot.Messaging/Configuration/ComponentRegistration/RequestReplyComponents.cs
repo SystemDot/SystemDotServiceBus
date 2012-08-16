@@ -1,6 +1,7 @@
 using SystemDot.Messaging.Channels.RequestReply;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Messages;
+using SystemDot.Messaging.Messages.Processing;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {
@@ -11,7 +12,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             IocContainer.Register<IReplyRecieveChannelBuilder>(new ReplyRecieveChannelBuilder());
             IocContainer.Register<IRequestRecieveChannelBuilder>(new RequestRecieveChannelBuilder());
             IocContainer.Register<ISendChannelBuilder>(new SendChannelBuilder());
-            IocContainer.Register<IReplyChannelBuilder>(new ReplyChannelBuilder());
+            IocContainer.Register<IReplyChannelBuilder>(new ReplyChannelBuilder(IocContainer.Resolve<ReplyChannelLookup>()));
             IocContainer.Register<ISubscriptionHandlerChannelBuilder>(new SubscriptionHandlerChannelBuilder());
             IocContainer.Register<ISubscriptionRequestorChannelBuilder>(new SubscriptionRequestorChannelBuilder());
 

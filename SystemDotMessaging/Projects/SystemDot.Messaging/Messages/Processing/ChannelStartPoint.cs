@@ -2,7 +2,7 @@ using System;
 
 namespace SystemDot.Messaging.Messages.Processing
 {
-    public class MessageFilter : IMessageProcessor<object, object>
+    public class ChannelStartPoint : IMessageProcessor<object, object>
     {
         public void InputMessage(object toInput)
         {
