@@ -8,9 +8,9 @@ namespace SystemDot.Parallelism
         
         public void ScheduleTask(TimeSpan delay, Action task)
         {
-            Task.Run(() =>
+            Task.Run(async () =>
             {
-                Task.Delay(delay);
+                await Task.Delay(delay);
                 task();
             });
         }

@@ -1,20 +1,19 @@
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Linq;
 using SystemDot.Logging;
+using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Distribution;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Packaging.Headers;
-using System.Collections.Concurrent;
+
 namespace SystemDot.Messaging.Channels.Publishing
 {
     public class SubscriptionRequestHandler : IMessageInputter<MessagePayload>
     {
         readonly IPublisherRegistry publisherRegistry;
-        readonly ISubscriptionChannelBuilder channelBuilder;
+        readonly IChannelBuilder channelBuilder;
         
-        public SubscriptionRequestHandler(IPublisherRegistry publisherRegistry, ISubscriptionChannelBuilder channelBuilder)
+        public SubscriptionRequestHandler(IPublisherRegistry publisherRegistry, IChannelBuilder channelBuilder)
         {
             Contract.Requires(publisherRegistry != null);
             Contract.Requires(channelBuilder != null);
@@ -27,17 +26,22 @@ namespace SystemDot.Messaging.Channels.Publishing
         {
             if (!message.IsSubscriptionRequest()) return;
 
-            Logger.Info("Handling subscription request for {0}", message.GetSubscriptionRequestSchema().SubscriberAddress);
+            EndpointAddress subscriberAddress = message.GetSubscriptionRequestSchema().SubscriberAddress;
+            EndpointAddress fromAddress = message.GetToAddress();
 
-            GetPublisher(message).Subscribe(
-                message.GetSubscriptionRequestSchema().SubscriberAddress, 
-                this.channelBuilder.Build(message.GetSubscriptionRequestSchema()));
-
+            Logger.Info("Handling request reply subscription request for {0}", subscriberAddress);
+            
+            GetPublisher(fromAddress).Subscribe(subscriberAddress, BuildChannel(fromAddress, subscriberAddress));
         }
 
-        IDistributor GetPublisher(MessagePayload message)
+        IDistributor GetPublisher(EndpointAddress address)
         {
-            return this.publisherRegistry.GetPublisher(message.GetToAddress());
+            return publisherRegistry.GetPublisher(address);
+        }
+
+        private IMessageInputter<MessagePayload> BuildChannel(EndpointAddress toAddress, EndpointAddress subscriberAddress)
+        {
+            return this.channelBuilder.Build(toAddress, subscriberAddress);
         }
     }
 }

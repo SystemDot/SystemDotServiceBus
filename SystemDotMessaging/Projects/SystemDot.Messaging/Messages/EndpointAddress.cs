@@ -5,11 +5,6 @@ namespace SystemDot.Messaging.Messages
 {
     public class EndpointAddress
     {
-        public static implicit operator EndpointAddress(string address)
-        {
-            return new EndpointAddress(address);
-        }
-
         public static EndpointAddress Empty
         {
             get
@@ -18,34 +13,24 @@ namespace SystemDot.Messaging.Messages
             }
         }
 
+        public string Channel { get; set; }
+
         public string ServerName { get; set; }
         
-        public string Address { get; set; }
-
         public EndpointAddress() {}
 
-        public EndpointAddress(string address) : this()
+        public EndpointAddress(string channel, string serverName) 
         {
-            Contract.Requires(!string.IsNullOrEmpty(address));
+            Contract.Requires(!string.IsNullOrEmpty(channel));
+            Contract.Requires(!string.IsNullOrEmpty(serverName));
 
-            Address = address;
-            ServerName = string.Empty;
-
-            var parts = address.Split('.');
-            if (parts.Length == 2)
-            {
-                ServerName = parts[1];
-                return;
-            }
-
-            parts = address.Split('@');
-            if (parts.Length == 2) 
-                ServerName = parts[1];
+            Channel = channel;
+            ServerName = serverName;
         }
 
         public bool Equals(EndpointAddress other)
         {
-            return other.Address == Address;
+            return other.Channel == this.Channel;
         }
 
         public override bool Equals(object obj)
@@ -61,7 +46,7 @@ namespace SystemDot.Messaging.Messages
 
         public override int GetHashCode()
         {
-            return Address.GetHashCode();
+            return this.Channel.GetHashCode();
         }
 
         public static bool operator ==(EndpointAddress left, EndpointAddress right)
@@ -76,7 +61,7 @@ namespace SystemDot.Messaging.Messages
 
         public override string ToString()
         {
-            return String.Concat(Address, ".", ServerName);
+            return String.Concat(Channel, ".", ServerName);
         }
     }
 }

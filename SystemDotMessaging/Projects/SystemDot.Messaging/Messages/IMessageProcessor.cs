@@ -10,4 +10,8 @@ namespace SystemDot.Messaging.Messages
     {
         event Action<T> MessageProcessed;
     }
+
+    public interface IMessageProcessor : IMessageProcessor<object>
+    {
+    }
 }

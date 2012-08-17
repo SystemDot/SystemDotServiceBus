@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Specifications.messages.distribution
             Subject.Subscribe(new object(), subscriber2);
 
             inputMessage = new MessagePayload();
-            inputMessage.SetToAddress(new EndpointAddress("TestAddress"));
+            inputMessage.SetToAddress(new EndpointAddress("TestAddress", "TestServer"));
         };
 
         Because of = () => Subject.InputMessage(inputMessage);

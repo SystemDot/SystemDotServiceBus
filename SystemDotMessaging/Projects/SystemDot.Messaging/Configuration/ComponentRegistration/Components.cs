@@ -1,17 +1,30 @@
-using SystemDot.Messaging.Messages;
-using SystemDot.Messaging.Messages.Packaging;
+using System;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {
-    public static class Components 
+    public class Components 
     {
-        public static void Register()
+        public static Action Registration { get; set; }
+
+        static Components()
+        {
+            Registration = RegisterComponents;    
+        }
+
+        public static void RegisterComponents()
         {
             ThreadingComponents.Register();
             CoreComponents.Register();
             ChannelComponents.Register();
             HttpComponents.Register();
             PublishingComponents.Register();
+            RequestReplyComponents.Register();
         }
+
+        public static void Register()
+        {
+            Registration();
+        }
+
     }
 }

@@ -40,9 +40,7 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling.Servers
         void CreateQueueIfNonExistant(EndpointAddress address)
         {
             if (!this.queues.ContainsKey(address))
-            {
                 this.queues[address] = new BlockingQueue<MessagePayload>(blockingTimeout);
-            }
         }
     }
 }

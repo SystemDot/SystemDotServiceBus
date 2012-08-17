@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\Build\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -40,37 +40,66 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Channels\Publishing\Builders\IPublisherChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\Builders\ISubscriberChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\Builders\ISubscriptionHandlerChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\Builders\ISubscriptionRequestChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\Builders\PublisherChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\Builders\SubscriberChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\Builders\SubscriptionHandlerChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\Builders\SubscriptionRequestChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\ISubscriptionRequestor.cs" />
+    <Compile Include="Channels\RequestReply\Builders\IReplyRecieveChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\Builders\IRequestRecieveChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\Builders\IReplySendChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\Builders\IRequestSendChannelBuilder.cs" />
+    <Compile Include="Messages\Processing\ReplyChannelMessageAddresser.cs" />
+    <Compile Include="Channels\RequestReply\Builders\ReplyRecieveChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\Builders\RequestRecieveChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\Builders\ReplySendChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\Builders\RequestSendChannelBuilder.cs" />
+    <Compile Include="Configuration\ChannelConfiguration.cs" />
     <Compile Include="Configuration\ComponentRegistration\ChannelComponents.cs" />
     <Compile Include="Configuration\ComponentRegistration\Components.cs" />
     <Compile Include="Configuration\ComponentRegistration\PublishingComponents.cs" />
     <Compile Include="Configuration\ComponentRegistration\CoreComponents.cs" />
     <Compile Include="Configuration\ComponentRegistration\HttpComponents.cs" />
+    <Compile Include="Configuration\ComponentRegistration\RequestReplyComponents.cs" />
     <Compile Include="Configuration\ComponentRegistration\ThreadingComponents.cs" />
     <Compile Include="Channels\Publishing\SubscriptionRequestor.cs" />
-    <Compile Include="Configuration\InitialisingConfiguration.cs" />
+    <Compile Include="Configuration\Configurer.cs" />
+    <Compile Include="Configuration\HttpMessaging\MessageServer.cs" />
+    <Compile Include="Configuration\HttpMessaging\MessageServerConfiguration.cs" />
+    <Compile Include="Configuration\Initialiser.cs" />
+    <Compile Include="Configuration\MessagingConfiguration.cs" />
+    <Compile Include="Configuration\RequestReply\RequestReplySenderConfiguration.cs" />
+    <Compile Include="Configuration\RequestReply\RequestReplyRecieverConfiguration.cs" />
+    <Compile Include="IBus.cs" />
     <Compile Include="Messages\Distribution\IDistributor.cs" />
     <Compile Include="Messages\EndpointAddress.cs" />
+    <Compile Include="Messages\EndpointAddressBuilder.cs" />
+    <Compile Include="Messages\Packaging\Headers\AddressHeader.cs" />
+    <Compile Include="Messages\Packaging\Headers\FromAddressHeader.cs" />
+    <Compile Include="Messages\Processing\ChannelStartPoint.cs" />
     <Compile Include="Messages\Processing\MessageRepeater.cs" />
     <Compile Include="Messages\Pipelines\MessagePipelineBuilder.cs" />
     <Compile Include="Messages\Pipelines\ProcessorBuilder.cs" />
     <Compile Include="Messages\Processing\MessageAddresser.cs" />
     <Compile Include="Channels\Publishing\IPublisherRegistry.cs" />
-    <Compile Include="Channels\Publishing\ISubscriptionChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\Builders\IChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\PublisherRegistry.cs" />
     <Compile Include="Messages\Distribution\Pipe.cs" />
-    <Compile Include="Channels\Publishing\SubscriptionChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\Builders\ChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\SubscriptionSchema.cs" />
     <Compile Include="Channels\Publishing\SubscriptionRequestHandler.cs" />
     <Compile Include="Configuration\Configure.cs" />
-    <Compile Include="Configuration\EndpointConfiguration.cs" />
     <Compile Include="Configuration\Publishers\PublisherConfiguration.cs" />
-    <Compile Include="Configuration\ComponentRegistration\IocContainer.cs" />
-    <Compile Include="Configuration\Subscribers\MessageHandlerConfiguration.cs" />
-    <Compile Include="Configuration\Subscribers\SubscriberConfiguration.cs" />
-    <Compile Include="Configuration\Subscribers\SubscribeToConfiguration.cs" />
+    <Compile Include="Configuration\Publishers\SubscribeToConfiguration.cs" />
     <Compile Include="Messages\IMessageProcessor.cs" />
     <Compile Include="Messages\IMessageInputter.cs" />
     <Compile Include="Channels\Publishing\MessagePayloadSubscriptionRequestExtensions.cs" />
+    <Compile Include="Messages\Processing\ReplyChannelSelector.cs" />
+    <Compile Include="Messages\Processing\ReplyChannelLookup.cs" />
     <Compile Include="Transport\Http\HttpAddressExtensions.cs" />
     <Compile Include="Transport\IMessageSender.cs" />
     <Compile Include="Transport\IMessageReciever.cs" />
@@ -88,13 +117,12 @@
     <Compile Include="Messages\Packaging\Headers\MessagePayloadBodyExtensions.cs" />
     <Compile Include="Messages\Packaging\IMessageHeader.cs" />
     <Compile Include="Transport\Http\LongPolling\Servers\HttpMessagingServer.cs" />
-    <Compile Include="Messages\Consuming\IMessageHandler.cs" />
     <Compile Include="Messages\Processing\MessagePayloadUnpackager.cs" />
     <Compile Include="Transport\Http\LongPolling\LongPollReciever.cs" />
     <Compile Include="Messages\Packaging\MessagePayload.cs" />
     <Compile Include="Messages\Processing\MessagePayloadPackager.cs" />
     <Compile Include="Transport\Http\LongPolling\MessageSender.cs" />
-    <Compile Include="Messages\Consuming\MessageHandlerRouter.cs" />
+    <Compile Include="Messages\Handling\MessageHandlerRouter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transport\Http\LongPolling\Servers\LongPollHandler.cs" />
     <Compile Include="Transport\Http\LongPolling\Servers\MessagePayloadQueue.cs" />

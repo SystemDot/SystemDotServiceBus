@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.Contracts;
 using System.Net;
 using System.Threading.Tasks;
@@ -47,13 +48,16 @@ namespace SystemDot.Http
             try
             {
                 this.handler.HandleRequest(context.Request.InputStream, context.Response.OutputStream);
-
                 context.Response.StatusCode = (int)HttpStatusCode.OK;
-                context.Response.Close();
             }
-            catch (HttpListenerException e)
+            catch (Exception e)
             {
-                Logger.Info(e.Message);
+                Logger.Error(e.Message);
+                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            }
+            finally
+            {
+                context.Response.Close();
             }
         }
 

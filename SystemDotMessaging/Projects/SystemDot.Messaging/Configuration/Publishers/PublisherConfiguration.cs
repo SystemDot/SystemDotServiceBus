@@ -1,60 +1,32 @@
-using System.Diagnostics.Contracts;
+using System;
+using System.Collections.Generic;
 using SystemDot.Messaging.Channels.Publishing;
-using SystemDot.Messaging.Configuration.ComponentRegistration;
+using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Messages;
-using SystemDot.Messaging.Messages.Distribution;
-using SystemDot.Messaging.Messages.Pipelines;
-using SystemDot.Messaging.Messages.Processing;
 using SystemDot.Messaging.Transport;
 using SystemDot.Messaging.Transport.Http.LongPolling;
-using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Configuration.Publishers
 {
-    public class PublisherConfiguration : InitialisingConfiguration
+    public class PublisherConfiguration : Initialiser
     {
         readonly EndpointAddress address;
-
-        public PublisherConfiguration(EndpointAddress address)
+        
+        public PublisherConfiguration(EndpointAddress address, List<Action> buildActions) : base(buildActions)
         {
-            Contract.Requires(address != EndpointAddress.Empty);
             this.address = address;
         }
 
-        public override void Initialise()
+        protected override void Build()
         {
-            Components.Register();
-            BuildSubscriptionRequestHandler(address);
-            BuildPublisher(address);
-
-            IocContainer.Resolve<TaskLooper>().Start();
+            Resolve<ISubscriptionHandlerChannelBuilder>().Build();
+            Resolve<IPublisherRegistry>().RegisterPublisher(address, Resolve<IPublisherChannelBuilder>().Build());
+            Resolve<IMessageReciever>().RegisterListeningAddress(address);        
         }
 
-        static void BuildSubscriptionRequestHandler(EndpointAddress address)
+        protected override EndpointAddress GetAddress()
         {
-            MessagePipelineBuilder.Build()
-                .With(GetComponent<IMessageReciever>())
-                .Pump()
-                .ToEndPoint(GetComponent<SubscriptionRequestHandler>());
-
-            GetComponent<IMessageReciever>().RegisterListeningAddress(address);
-        }
-
-        static void BuildPublisher(EndpointAddress address)
-        {
-            BuildPublisherChannel(address);
-        }
-
-        static void BuildPublisherChannel(EndpointAddress address)
-        {
-            var publisher = GetComponent<IDistributor>();
-            GetComponent<IPublisherRegistry>().RegisterPublisher(address, publisher);
-
-            MessagePipelineBuilder.Build()
-                .With(GetComponent<MessageBus>())
-                .Pump()
-                .ToProcessor(GetComponent<MessagePayloadPackager>())
-                .ToEndPoint(publisher);
+            return this.address;
         }
     }
 }

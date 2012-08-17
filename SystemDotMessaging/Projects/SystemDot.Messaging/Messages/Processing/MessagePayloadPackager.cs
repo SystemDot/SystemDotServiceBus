@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Logging;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Packaging.Headers;
 using SystemDot.Serialisation;
@@ -22,6 +23,8 @@ namespace SystemDot.Messaging.Messages.Processing
         {
             var messagePayload = new MessagePayload();
             messagePayload.SetBody(this.serialiser.Serialise(toInput));
+
+            Logger.Info("Packaging message payload");
 
             MessageProcessed(messagePayload);
         }

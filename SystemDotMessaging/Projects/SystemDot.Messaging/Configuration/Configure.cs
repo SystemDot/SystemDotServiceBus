@@ -1,13 +1,13 @@
-using System.Net;
-using SystemDot.Messaging.Messages;
+using SystemDot.Messaging.Configuration.ComponentRegistration;
 
 namespace SystemDot.Messaging.Configuration
 {
-    public class Configure
+    public class Configure : Configurer
     {
-        public static EndpointConfiguration Local(EndpointAddress address)
+        public static MessagingConfiguration Messaging()
         {
-            return new EndpointConfiguration(address);
-        }        
+            Components.Register();
+            return new MessagingConfiguration();
+        }
     }
 }

@@ -1,5 +1,7 @@
 using System;
+using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Publishing;
+using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Distribution;
 using SystemDot.Messaging.Messages.Packaging;
@@ -18,9 +20,10 @@ namespace SystemDot.Messaging.Specifications.messages.publishing
         {
             Configure<PublisherRegistry>(new PublisherRegistry());
             
-            Configure<ISubscriptionChannelBuilder>(
-                new TestSubscriptionChannelBuilder(
-                    new SubscriptionSchema(new EndpointAddress("TestAddress")), 
+            Configure<IChannelBuilder>(
+                new TestChannelBuilder(
+                    new EndpointAddress("TestFromAddress", "TestFromServer"), 
+                    new EndpointAddress("TestToAddress", "TestToServer"), 
                     new Pipe<MessagePayload>()));
 
             messagePayload = new MessagePayload();

@@ -1,4 +1,4 @@
-﻿using SystemDot.Messaging.Messages.Consuming;
+﻿using SystemDot.Messaging.Messages.Handling;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.messages.handling

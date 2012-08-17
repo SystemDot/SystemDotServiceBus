@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using SystemDot.Http;
+using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Transport.Http.LongPolling;
 using SystemDot.Messaging.Messages.Packaging.Headers;
@@ -46,11 +47,9 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
             var response = new MemoryStream();
 
             response.Serialise(
-                messages.Join(
-                    requestMessagePayload.GetLongPollRequestAddresses(), 
-                    m => m.GetToAddress(), 
-                    a => a, 
-                    (m , a) => m).ToList(), 
+                messages
+                    .Where(m => m.GetToAddress() == requestMessagePayload.GetLongPollRequestAddress())
+                    .ToList(), 
                 formatter);
 
             toPerformOnResponse(response);

@@ -1,6 +1,7 @@
 using SystemDot.Http;
 using SystemDot.Messaging.Transport;
 using SystemDot.Messaging.Transport.Http.LongPolling;
+using SystemDot.Messaging.Transport.Http.LongPolling.Servers;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 
@@ -10,18 +11,14 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
     {
         public static void Register()
         {
-            var longPollReciever = new LongPollReciever(
+            IocContainer.Register<IMessageReciever>(new LongPollReciever(
                 IocContainer.Resolve<IWebRequestor>(),
-                IocContainer.Resolve<ISerialiser>());
-
-            IocContainer.Resolve<TaskLooper>().RegisterToLoop(longPollReciever.Poll);
-
-            IocContainer.Register<IMessageReciever>(longPollReciever);
+                IocContainer.Resolve<ISerialiser>(),
+                IocContainer.Resolve<ITaskLooper>()));
 
             IocContainer.Register<IMessageSender>(() => new MessageSender(
                 IocContainer.Resolve<ISerialiser>(),
                 IocContainer.Resolve<IWebRequestor>()));
-
         }
     }
 }

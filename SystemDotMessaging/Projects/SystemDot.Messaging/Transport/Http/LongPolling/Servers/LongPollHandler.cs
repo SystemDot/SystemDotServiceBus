@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Linq;
+using SystemDot.Logging;
+using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
 
 namespace SystemDot.Messaging.Transport.Http.LongPolling.Servers
@@ -20,9 +21,11 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling.Servers
             if (!toHandle.IsLongPollRequest())
                 return;
 
-            toHandle.GetLongPollRequestAddresses()
-                .ForEach(a => 
-                    outgoingMessages.AddRange(this.outgoingQueue.DequeueAll(a)));
+            EndpointAddress address = toHandle.GetLongPollRequestAddress();
+
+            Logger.Info("Handling long pole request for {0}", address);
+            outgoingMessages.AddRange(this.outgoingQueue.DequeueAll(address));
+            Logger.Info("Handled long pole request for {0}", address);
         }
     }
 }

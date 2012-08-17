@@ -50,25 +50,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="configuration\when_setting_a_transient_component_creator_with_two_constructors_argument_in_the_environment.cs" />
-    <Compile Include="configuration\when_setting_a_transient_component_creator_with_one_constructor_argument_in_the_environment.cs" />
-    <Compile Include="configuration\when_setting_a_transient_component_creator_in_the_environment.cs" />
-    <Compile Include="configuration\ITestComponent.cs" />
-    <Compile Include="configuration\TestComponent.cs" />
-    <Compile Include="configuration\when_setting_a_component_in_the_environment.cs" />
-    <Compile Include="messages\when_initialising_a_new_endpoint_address_with_an_address_and_a_proxy.cs" />
+    <Compile Include="configuration\when_logging_a_message_with_a_logging_mechanism_configured.cs" />
+    <Compile Include="configuration\publishing\when_configuring_a_publisher_channel_followed_by_another.cs" />
+    <Compile Include="configuration\publishing\when_configuring_a_subscriber_channel_followed_by_another.cs" />
+    <Compile Include="configuration\publishing\when_configuring_a_subscriber_channel.cs" />
+    <Compile Include="configuration\request_reply\sending\when_configuring_a_request_reply_sender_channel_followed_by_another.cs" />
+    <Compile Include="configuration\request_reply\recieving\when_configuring_a_request_reply_receiver_channel_followed_by_another.cs" />
+    <Compile Include="configuration\request_reply\sending\when_configuring_a_request_reply_sender_channel_with_a_hook.cs" />
+    <Compile Include="configuration\request_reply\sending\when_configuring_a_request_reply_sender_channel.cs" />
+    <Compile Include="configuration\when_configuring_a_channel_on_a_remote_message_server.cs" />
+    <Compile Include="configuration\publishing\when_configuring_a_publisher_channel.cs" />
+    <Compile Include="configuration\WithConfiguationSubject.cs" />
+    <Compile Include="configuration\request_reply\recieving\when_configuring_a_request_reply_receiver_channel.cs" />
+    <Compile Include="messages\bus\when_publishing_a_message_on_the_bus.cs" />
+    <Compile Include="messages\bus\when_replying_with_a_message_on_the_bus.cs" />
     <Compile Include="messages\distribution\when_subscribing_with_the_same_subscriber_key_twice.cs" />
+    <Compile Include="messages\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel.cs" />
+    <Compile Include="messages\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel_and_machine_name.cs" />
+    <Compile Include="messages\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel_machine_and_server.cs" />
+    <Compile Include="messages\processing\request_reply\when_addressing_a_reply_channel_message.cs" />
+    <Compile Include="messages\processing\request_reply\when_passing_messages_through_a_reply_channel_selector.cs" />
+    <Compile Include="messages\processing\when_unpackaging_a_message_from_transportation_payload_that_does_not_have_a_body.cs" />
     <Compile Include="messages\publishing\when_handling_a_subscribe_request_message.cs" />
-    <Compile Include="messages\when_initialising_a_new_endpoint_address_with_only_a_local_address.cs" />
     <Compile Include="messages\publishing\when_handling_a_non_subscription_request_message_with_the_subscription_request_handler.cs" />
-    <Compile Include="messages\publishing\TestSubscriptionChannelBuilder.cs" />
+    <Compile Include="messages\publishing\TestChannelBuilder.cs" />
     <Compile Include="messages\processing\when_addressing_a_message.cs" />
-    <Compile Include="messages\distribution\TestTaskStarter.cs" />
     <Compile Include="messages\distribution\when_pumping_an_item.cs" />
     <Compile Include="messages\distribution\when_pumping_items_on_a_with_no_pushed_item_listener.cs" />
-    <Compile Include="transport\long_polling\when_long_polling_for_messages_with_addresses_that_are_not_in_the_queue_.cs" />
-    <Compile Include="transport\long_polling\serving\when_handling_a_long_poll_request_for_two_addresses_with_two_messages_with_those_addresses_in_the_queue.cs" />
+    <Compile Include="TestTaskStarter.cs" />
+    <Compile Include="transport\long_polling\TestTaskLooper.cs" />
     <Compile Include="transport\long_polling\when_long_polling_for_messages_and_two_messages_are_returned_in_the_stream.cs" />
+    <Compile Include="transport\long_polling\when_long_polling_for_messages_with_addresses_that_are_not_in_the_queue_.cs" />
     <Compile Include="transport\long_polling\TestWebRequestor.cs" />
     <Compile Include="messages\bus\when_sending_a_message_on_the_bus.cs" />
     <Compile Include="messages\handling\when_routing_a_message_to_two_handlers_of_differing_messages.cs" />
@@ -82,7 +94,6 @@
     <Compile Include="messages\repeating\TestTaskScheduler.cs" />
     <Compile Include="messages\repeating\when_a_recieved_message_is_sent_and_the_specified_time_period_has_passed.cs" />
     <Compile Include="messages\repeating\when_recieving_a_message.cs" />
-    <Compile Include="messages\when_initialising_a_new_endpoint_address_with_a_full_address.cs" />
     <Compile Include="TestDistributor.cs" />
     <Compile Include="messages\publishing\when_registering_a_publisher.cs" />
     <Compile Include="WithMessageInputterSubject.cs" />
@@ -99,6 +110,10 @@
     <ProjectReference Include="..\SystemDot.Messaging\SystemDot.Messaging.csproj">
       <Project>{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}</Project>
       <Name>SystemDot.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemDot.NonMetro\SystemDot.NonMetro.csproj">
+      <Project>{FD8BB339-A3F0-4643-B09C-6FD9D6BD1E1A}</Project>
+      <Name>SystemDot.NonMetro</Name>
     </ProjectReference>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">
       <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>

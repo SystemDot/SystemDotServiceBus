@@ -1,17 +1,13 @@
-using System.Diagnostics.Contracts;
-
 namespace SystemDot.Messaging.Messages.Packaging.Headers
 {
-    public class ToAddressHeader : IMessageHeader 
+    public class ToAddressHeader : AddressHeader 
     {
-        public EndpointAddress Address { get; set; }
-
-        public ToAddressHeader() {}
-
-        public ToAddressHeader(EndpointAddress address)
+        public ToAddressHeader()
         {
-            Contract.Requires(address != null);
-            Address = address;
+        }
+
+        public ToAddressHeader(EndpointAddress address) : base(address)
+        {
         }
     }
 }

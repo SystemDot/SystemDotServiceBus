@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling.serving
                 new LongPollHandler(outgoingQueue));
             
             sentMessage = new MessagePayload();
-            sentMessage.SetToAddress(new EndpointAddress("Message"));
+            sentMessage.SetToAddress(new EndpointAddress("Message", "TestServer"));
             sentMessage.SetBody(new byte[0]);
 
             stream.Serialise(sentMessage, formatter);           
