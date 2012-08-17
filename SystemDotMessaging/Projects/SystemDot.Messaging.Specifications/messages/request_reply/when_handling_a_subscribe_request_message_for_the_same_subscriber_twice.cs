@@ -41,6 +41,6 @@ namespace SystemDot.Messaging.Specifications.messages.request_reply
             The<IReplyChannelBuilder>().WasToldTo(b => b.Build(address, subscriptionSchema.SubscriberAddress)).OnlyOnce();
 
         It should_setup_the_request_channels_only_once = () =>
-            The<IRequestRecieveChannelBuilder>().WasToldTo(b => b.Build(subscriptionSchema.SubscriberAddress)).OnlyOnce();
+            The<IRequestRecieveChannelBuilder>().WasToldTo(b => b.Build()).OnlyOnce();
     }
 }

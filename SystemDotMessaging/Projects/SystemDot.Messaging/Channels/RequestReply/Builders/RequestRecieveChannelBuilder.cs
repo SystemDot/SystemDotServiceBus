@@ -9,13 +9,13 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
 {
     public class RequestRecieveChannelBuilder : IRequestRecieveChannelBuilder
     {
-        public void Build(EndpointAddress replyAddress)
+        public void Build()
         {
             MessagePipelineBuilder.Build()
                 .With(IocContainer.Resolve<IMessageReciever>())
                 .Pump()
+                .ToProcessor(IocContainer.Resolve<ReplyChannelSelector>())
                 .ToConverter(IocContainer.Resolve<MessagePayloadUnpackager>())
-                .ToProcessor(IocContainer.Resolve<ReplyChannelSelector, EndpointAddress>(replyAddress))
                 .ToEndPoint(IocContainer.Resolve<MessageHandlerRouter>());
         }
     }

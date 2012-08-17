@@ -1,30 +1,29 @@
 using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Messages.Packaging;
+using SystemDot.Messaging.Messages.Packaging.Headers;
 
 namespace SystemDot.Messaging.Messages.Processing
 {
-    public class ReplyChannelSelector : IMessageProcessor<object, object>
+    public class ReplyChannelSelector : IMessageProcessor<MessagePayload, MessagePayload>
     {
-        readonly EndpointAddress replyAddress;
         readonly ReplyChannelLookup channelLookup;
 
-        public ReplyChannelSelector(EndpointAddress replyAddress, ReplyChannelLookup channelLookup)
+        public ReplyChannelSelector(ReplyChannelLookup channelLookup)
         {
-            Contract.Requires(replyAddress != EndpointAddress.Empty);
             Contract.Requires(channelLookup != null);
 
-            this.replyAddress = replyAddress;
             this.channelLookup = channelLookup;
         }
 
-        public void InputMessage(object toInput)
+        public void InputMessage(MessagePayload toInput)
         {
             Contract.Requires(toInput != null);
 
-            this.channelLookup.SetCurrentChannel(replyAddress);
+            this.channelLookup.SetCurrentChannel(toInput.GetFromAddress());
             MessageProcessed(toInput);
         }
 
-        public event Action<object> MessageProcessed;
+        public event Action<MessagePayload> MessageProcessed;
     }
 }

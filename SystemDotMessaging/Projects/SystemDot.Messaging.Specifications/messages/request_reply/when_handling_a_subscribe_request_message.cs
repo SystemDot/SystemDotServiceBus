@@ -37,7 +37,7 @@ namespace SystemDot.Messaging.Specifications.messages.request_reply
         Because of = () => Subject.InputMessage(request);
 
         It should_setup_the_request_channel = () =>
-            The<IRequestRecieveChannelBuilder>().WasToldTo(b => b.Build(subscriptionSchema.SubscriberAddress));
+            The<IRequestRecieveChannelBuilder>().WasToldTo(b => b.Build());
 
         It should_setup_the_reply_channel = () =>
             The<IReplyChannelBuilder>().WasToldTo(b => b.Build(address, subscriptionSchema.SubscriberAddress));

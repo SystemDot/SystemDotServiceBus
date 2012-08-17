@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
 
             IocContainer.Register(() => new ChannelStartPoint());
 
-            IocContainer.Register<ReplyChannelSelector, EndpointAddress>(a => new ReplyChannelSelector(a, IocContainer.Resolve<ReplyChannelLookup>()));     
+            IocContainer.Register<ReplyChannelSelector>(() => new ReplyChannelSelector(IocContainer.Resolve<ReplyChannelLookup>()));     
        
             IocContainer.Register(() => new MessagePayloadPackager(IocContainer.Resolve<ISerialiser>()));
             IocContainer.Register<MessageAddresser, EndpointAddress, EndpointAddress>((f, t) => new MessageAddresser(f, t));

@@ -11,12 +11,12 @@ namespace SystemDot.Messaging.Channels.RequestReply
     public class SubscriptionRequestHandler : IMessageInputter<MessagePayload>
     {
         readonly IReplyChannelBuilder replyChannelBuilder;
-        readonly IRequestRecieveChannelBuilder requestRecieveChannelBuilder;
+        readonly IRequestRecieveChannelBuilder recieveChannelBuilder;
         readonly List<EndpointAddress> registry;
 
-        public SubscriptionRequestHandler(IRequestRecieveChannelBuilder requestRecieveChannelBuilder, IReplyChannelBuilder replyChannelBuilder)
+        public SubscriptionRequestHandler(IRequestRecieveChannelBuilder recieveChannelBuilder, IReplyChannelBuilder replyChannelBuilder)
         {
-            this.requestRecieveChannelBuilder = requestRecieveChannelBuilder;
+            this.recieveChannelBuilder = recieveChannelBuilder;
             this.replyChannelBuilder = replyChannelBuilder;
             this.registry = new List<EndpointAddress>();
         }
@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Channels.RequestReply
             
             registry.Add(subscriberAddress);
 
-            this.requestRecieveChannelBuilder.Build(subscriberAddress);
+            this.recieveChannelBuilder.Build();
             this.replyChannelBuilder.Build(toInput.GetToAddress(), subscriberAddress);
         }
     }
