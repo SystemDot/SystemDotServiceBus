@@ -7,17 +7,10 @@ namespace SystemDot.Messaging.Messages.Processing
     public class ReplyChannelLookup
     {
         readonly ThreadLocal<EndpointAddress> currentChannel;
-        readonly ConcurrentDictionary<EndpointAddress, IMessageProcessor<object, object>> channels;
-
+        
         public ReplyChannelLookup()
         {
             this.currentChannel = new ThreadLocal<EndpointAddress>();
-            this.channels = new ConcurrentDictionary<EndpointAddress, IMessageProcessor<object, object>>();
-        }
-
-        public void RegisterChannel(EndpointAddress address, IMessageProcessor<object, object> toRegister)
-        {
-            this.channels[address] = toRegister;
         }
 
         public void SetCurrentChannel(EndpointAddress toSet)
@@ -27,9 +20,9 @@ namespace SystemDot.Messaging.Messages.Processing
             this.currentChannel.Value = toSet;
         }
 
-        public IMessageProcessor<object, object> GetCurrentChannel()
+        public EndpointAddress GetCurrentChannel()
         {
-            return this.channels[this.currentChannel.Value];
+            return this.currentChannel.Value;
         }
     }
 }

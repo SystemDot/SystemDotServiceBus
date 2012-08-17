@@ -9,6 +9,9 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
     {
         public static void Register()
         {
+            IocContainer.Register(new ReplyChannelLookup());
+            IocContainer.Register(() => new ReplyChannelSelector(IocContainer.Resolve<ReplyChannelLookup>()));     
+       
             IocContainer.Register<IReplyRecieveChannelBuilder>(new ReplyRecieveChannelBuilder());
             IocContainer.Register<IRequestRecieveChannelBuilder>(new RequestRecieveChannelBuilder());
             IocContainer.Register<ISendChannelBuilder>(new SendChannelBuilder());
