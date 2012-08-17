@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Messages;
 
-namespace SystemDot.Messaging.Channels
+namespace SystemDot.Messaging.Channels.Publishing
 {
     public class SubscriptionSchema
     {

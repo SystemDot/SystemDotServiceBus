@@ -1,11 +1,4 @@
 using SystemDot.Logging;
-using SystemDot.Messaging.Channels.RequestReply.Builders;
-using SystemDot.Messaging.Configuration.ComponentRegistration;
-using SystemDot.Messaging.Configuration.HttpMessaging;
-using SystemDot.Messaging.Messages;
-using SystemDot.Messaging.Transport;
-using SystemDot.Messaging.Transport.Http.LongPolling;
-using SystemDot.Parallelism;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -21,11 +14,7 @@ namespace SystemDot.Messaging.Specifications.configuration
         {
             toLogWith = An<ILoggingMechanism>();
 
-            Configuration.Configure.Messaging()
-                .LoggingWith(toLogWith)
-                .UsingHttpTransport(MessageServer.Named("ServerName"))
-                .OpenChannel("ChannelName").ForRequestReplyRecieving()
-                .Initialise();
+            Configuration.Configure.Messaging().LoggingWith(toLogWith);
         };
 
         Because of = () => Logger.Error(MessageToLog);

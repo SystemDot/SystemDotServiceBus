@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Transport;
-using SystemDot.Messaging.Transport.Http.LongPolling;
 
 namespace SystemDot.Messaging.Configuration.RequestReply
 {
@@ -18,7 +17,8 @@ namespace SystemDot.Messaging.Configuration.RequestReply
 
         protected override void Build()
         {
-            Resolve<ISubscriptionHandlerChannelBuilder>().Build();
+            Resolve<IRequestRecieveChannelBuilder>().Build();
+            Resolve<IReplySendChannelBuilder>().Build(this.address);
             Resolve<IMessageReciever>().RegisterListeningAddress(this.address);
         }
 

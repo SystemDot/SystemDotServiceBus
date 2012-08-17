@@ -1,15 +1,13 @@
-using SystemDot.Messaging.Channels.RequestReply;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Configuration.ComponentRegistration;
 using SystemDot.Messaging.Configuration.HttpMessaging;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Transport;
-using SystemDot.Messaging.Transport.Http.LongPolling;
 using SystemDot.Parallelism;
 using Machine.Fakes;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.configuration.request_reply
+namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 {
     [Subject("Request reply configuration")] 
     public class when_configuring_a_request_reply_sender_channel_followed_by_another : WithConfiguationSubject
@@ -25,26 +23,12 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply
             {
                 ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
                 ConfigureAndRegister(new EndpointAddressBuilder(IocContainer.Resolve<IMachineIdentifier>()));
-                ConfigureAndRegister<ISendChannelBuilder>();
+                ConfigureAndRegister<IRequestSendChannelBuilder>();
                 ConfigureAndRegister<IRequestRecieveChannelBuilder>();
                 ConfigureAndRegister<IReplyRecieveChannelBuilder>();
-                ConfigureAndRegister<ISubscriptionRequestorChannelBuilder>();
-                ConfigureAndRegister<ISubscriptionHandlerChannelBuilder>();
                 ConfigureAndRegister<IMessageReciever>();
                 ConfigureAndRegister<ITaskLooper>();
                 ConfigureAndRegister<IBus>();
-
-                The<ISubscriptionRequestorChannelBuilder>()
-                    .WhenToldTo(b => b.Build(
-                        GetEndpointAddress(Channel1Name, The<IMachineIdentifier>().GetMachineName()),
-                        GetEndpointAddress(Reciever1Address, The<IMachineIdentifier>().GetMachineName())))
-                    .Return(The<ISubscriptionRequestor>());
-
-                The<ISubscriptionRequestorChannelBuilder>()
-                    .WhenToldTo(b => b.Build(
-                        GetEndpointAddress(Channel2Name, The<IMachineIdentifier>().GetMachineName()),
-                        GetEndpointAddress(Reciever2Address, The<IMachineIdentifier>().GetMachineName())))
-                    .Return(The<ISubscriptionRequestor>());
             };
         };
 
@@ -55,7 +39,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply
             .Initialise();
 
         It should_build_the_second_send_channel = () =>
-            The<ISendChannelBuilder>().WasToldTo(b =>
+            The<IRequestSendChannelBuilder>().WasToldTo(b =>
                 b.Build( 
                     GetEndpointAddress(Channel2Name, The<IMachineIdentifier>().GetMachineName()),
                     GetEndpointAddress(Reciever2Address, The<IMachineIdentifier>().GetMachineName())));

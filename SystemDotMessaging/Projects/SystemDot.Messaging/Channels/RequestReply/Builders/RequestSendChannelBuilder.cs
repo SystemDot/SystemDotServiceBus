@@ -5,7 +5,7 @@ using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Channels.RequestReply.Builders
 {
-    public class SendChannelBuilder : ISendChannelBuilder
+    public class RequestSendChannelBuilder : IRequestSendChannelBuilder
     {
         public void Build(EndpointAddress fromAddress, EndpointAddress recieverAddress)
         {

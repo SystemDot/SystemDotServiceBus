@@ -23,7 +23,8 @@ namespace SystemDot.Messaging.Specifications.configuration
             {
                 ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
                 ConfigureAndRegister(new EndpointAddressBuilder(IocContainer.Resolve<IMachineIdentifier>()));
-                ConfigureAndRegister<ISubscriptionRequestorChannelBuilder>();
+                ConfigureAndRegister<IRequestRecieveChannelBuilder>();
+                ConfigureAndRegister<IReplySendChannelBuilder>();  
                 ConfigureAndRegister<IMessageReciever>();
                 ConfigureAndRegister<ITaskLooper>();
                 ConfigureAndRegister<IBus>();

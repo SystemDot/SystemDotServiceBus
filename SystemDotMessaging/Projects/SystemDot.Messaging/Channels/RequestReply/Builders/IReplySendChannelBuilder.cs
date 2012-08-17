@@ -1,9 +1,10 @@
+using System;
 using SystemDot.Messaging.Messages;
 
 namespace SystemDot.Messaging.Channels.RequestReply.Builders
 {
-    public interface ISubscriptionHandlerChannelBuilder
+    public interface IReplySendChannelBuilder
     {
-        void Build();
+        void Build(EndpointAddress fromAddress);
     }
 }

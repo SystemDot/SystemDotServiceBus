@@ -5,22 +5,15 @@ using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Channels.RequestReply.Builders
 {
-    public class ReplyChannelBuilder : IReplyChannelBuilder
+    public class ReplySendChannelBuilder : IReplySendChannelBuilder
     {
-        readonly ReplyChannelLookup channelLookup;
-
-        public ReplyChannelBuilder(ReplyChannelLookup channelLookup)
-        {
-            this.channelLookup = channelLookup;
-        }
-
-        public void Build(EndpointAddress fromAddress, EndpointAddress replyAddress)
+        public void Build(EndpointAddress fromAddress)
         {
             MessagePipelineBuilder.Build()
                 .WithBusReplyTo(IocContainer.Resolve<ChannelStartPoint>())
-                .Pump()
                 .ToConverter(IocContainer.Resolve<MessagePayloadPackager>())
-                .ToProcessor(IocContainer.Resolve<MessageAddresser, EndpointAddress, EndpointAddress>(fromAddress, replyAddress))
+                .ToProcessor(IocContainer.Resolve<ReplyChannelMessageAddresser, EndpointAddress>(fromAddress))
+                .Pump()
                 .ToEndPoint(IocContainer.Resolve<IMessageSender>());            
         }
     }
