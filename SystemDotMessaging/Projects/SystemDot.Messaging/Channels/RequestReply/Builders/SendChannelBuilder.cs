@@ -7,13 +7,13 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
 {
     public class SendChannelBuilder : ISendChannelBuilder
     {
-        public void Build(EndpointAddress recieverAddress)
+        public void Build(EndpointAddress fromAddress, EndpointAddress recieverAddress)
         {
             MessagePipelineBuilder.Build()
                 .WithBusSendTo(IocContainer.Resolve<ChannelStartPoint>())
                 .Pump()
                 .ToConverter(IocContainer.Resolve<MessagePayloadPackager>())
-                .ToProcessor(IocContainer.Resolve<MessageAddresser, EndpointAddress>(recieverAddress))
+                .ToProcessor(IocContainer.Resolve<MessageAddresser, EndpointAddress, EndpointAddress>(fromAddress, recieverAddress))
                 .ToEndPoint(IocContainer.Resolve<IMessageSender>());
         }
     }

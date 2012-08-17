@@ -4,6 +4,7 @@ using SystemDot.Logging;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
+using SystemDot.Messaging.Messages.Packaging.Headers;
 
 namespace SystemDot.Messaging.Channels.RequestReply
 {
@@ -34,7 +35,7 @@ namespace SystemDot.Messaging.Channels.RequestReply
             registry.Add(subscriberAddress);
 
             this.requestRecieveChannelBuilder.Build(subscriberAddress);
-            this.replyChannelBuilder.Build(subscriberAddress);
+            this.replyChannelBuilder.Build(toInput.GetToAddress(), subscriberAddress);
         }
     }
 }

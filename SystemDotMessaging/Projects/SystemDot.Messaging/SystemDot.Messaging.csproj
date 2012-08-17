@@ -86,6 +86,8 @@
     <Compile Include="Messages\Distribution\IDistributor.cs" />
     <Compile Include="Messages\EndpointAddress.cs" />
     <Compile Include="Messages\EndpointAddressBuilder.cs" />
+    <Compile Include="Messages\Packaging\Headers\AddressHeader.cs" />
+    <Compile Include="Messages\Packaging\Headers\FromAddressHeader.cs" />
     <Compile Include="Messages\Processing\ChannelStartPoint.cs" />
     <Compile Include="Messages\Processing\MessageRepeater.cs" />
     <Compile Include="Messages\Pipelines\MessagePipelineBuilder.cs" />

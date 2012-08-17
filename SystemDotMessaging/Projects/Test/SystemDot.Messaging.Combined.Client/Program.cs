@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Combined.Client
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingHttpTransport(MessageServer.Local())
-                .OpenChannel("TestSender").ForRequestReplySending("TestReciever")
+                .OpenChannel("TestSender").ForRequestReplySendingTo("TestReciever")
                 .Initialise();
 
             IocContainer.Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());

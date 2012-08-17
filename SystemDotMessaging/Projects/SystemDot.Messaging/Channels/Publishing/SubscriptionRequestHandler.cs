@@ -26,17 +26,22 @@ namespace SystemDot.Messaging.Channels.Publishing
         {
             if (!message.IsSubscriptionRequest()) return;
 
-            Logger.Info("Handling request reply subscription request for {0}",
-                message.GetSubscriptionRequestSchema().SubscriberAddress);
+            EndpointAddress subscriberAddress = message.GetSubscriptionRequestSchema().SubscriberAddress;
+            EndpointAddress fromAddress = message.GetToAddress();
 
-            GetPublisher(message).Subscribe(
-                message.GetSubscriptionRequestSchema().SubscriberAddress, 
-                this.channelBuilder.Build(message.GetSubscriptionRequestSchema()));
+            Logger.Info("Handling request reply subscription request for {0}", subscriberAddress);
+            
+            GetPublisher(fromAddress).Subscribe(subscriberAddress, BuildChannel(fromAddress, subscriberAddress));
         }
 
-        IDistributor GetPublisher(MessagePayload message)
+        IDistributor GetPublisher(EndpointAddress address)
         {
-            return publisherRegistry.GetPublisher(message.GetToAddress());
+            return publisherRegistry.GetPublisher(address);
+        }
+
+        private IMessageInputter<MessagePayload> BuildChannel(EndpointAddress toAddress, EndpointAddress subscriberAddress)
+        {
+            return this.channelBuilder.Build(toAddress, subscriberAddress);
         }
     }
 }

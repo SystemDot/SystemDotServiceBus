@@ -5,6 +5,6 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
 {
     public interface IChannelBuilder 
     {
-        IMessageInputter<MessagePayload> Build(SubscriptionSchema toSchema);
+        IMessageInputter<MessagePayload> Build(EndpointAddress fromAddress, EndpointAddress subscriberAddress);
     }
 }

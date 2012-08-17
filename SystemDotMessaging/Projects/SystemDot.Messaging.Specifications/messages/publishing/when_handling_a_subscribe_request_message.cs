@@ -22,14 +22,14 @@ namespace SystemDot.Messaging.Specifications.messages.publishing
         Establish context = () =>
         {
             address = new EndpointAddress("TestAddress", "TestServer");
+            
             publisher = new TestDistributor();
-            subscriptionChannel = new Pipe<MessagePayload>();
-            subscriptionSchema = new SubscriptionSchema(new EndpointAddress("TestSubscriberAddress", "TestServer"));
             Configure<IPublisherRegistry>(new PublisherRegistry());
             The<IPublisherRegistry>().RegisterPublisher(address, publisher);
 
-            Configure<IChannelBuilder>(
-                new TestChannelBuilder(subscriptionSchema, subscriptionChannel));
+            subscriptionSchema = new SubscriptionSchema(new EndpointAddress("TestSubscriberAddress", "TestServer"));
+            subscriptionChannel = new Pipe<MessagePayload>();
+            Configure<IChannelBuilder>(new TestChannelBuilder(address, subscriptionSchema.SubscriberAddress, subscriptionChannel));
             
             request = new MessagePayload();
             request.SetToAddress(address);

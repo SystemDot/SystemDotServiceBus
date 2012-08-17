@@ -1,5 +1,3 @@
-using SystemDot.Messaging.Channels;
-using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
@@ -8,20 +6,24 @@ namespace SystemDot.Messaging.Specifications.messages.publishing
 {
     public class TestChannelBuilder : IChannelBuilder
     {
-        readonly SubscriptionSchema subscriptionSchema;
+        readonly EndpointAddress expectedFromAddress;
+        readonly EndpointAddress expectedSubscriberAddress;
         readonly IMessageInputter<MessagePayload> subscriptionChannel;
 
         public TestChannelBuilder(
-            SubscriptionSchema subscriptionSchema,
+            EndpointAddress expectedFromAddress, 
+            EndpointAddress expectedSubscriberAddress,
             IMessageInputter<MessagePayload> subscriptionChannel)
         {
-            this.subscriptionSchema = subscriptionSchema;
+            this.expectedFromAddress = expectedFromAddress;
+            this.expectedSubscriberAddress = expectedSubscriberAddress;
             this.subscriptionChannel = subscriptionChannel;
         }
 
-        public IMessageInputter<MessagePayload> Build(SubscriptionSchema toSchema)
+        public IMessageInputter<MessagePayload> Build(EndpointAddress fromAddress, EndpointAddress subscriberAddress)
         {
-            if (subscriptionSchema != toSchema) return null; 
+            if (fromAddress != this.expectedFromAddress) return null;
+            if (subscriberAddress != this.expectedSubscriberAddress) return null; 
             return this.subscriptionChannel;
         }
     }

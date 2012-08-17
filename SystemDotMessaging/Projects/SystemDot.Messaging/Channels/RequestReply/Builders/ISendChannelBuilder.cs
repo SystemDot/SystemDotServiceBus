@@ -4,6 +4,6 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
 {
     public interface ISendChannelBuilder
     {
-        void Build(EndpointAddress recieverAddress);
+        void Build(EndpointAddress fromAddress, EndpointAddress recieverAddress);
     }
 }

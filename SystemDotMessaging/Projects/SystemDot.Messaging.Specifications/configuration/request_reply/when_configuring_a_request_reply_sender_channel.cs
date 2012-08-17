@@ -41,12 +41,14 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply
 
         Because of = () => bus = Configuration.Configure.Messaging()
             .UsingHttpTransport(MessageServer.Local())
-            .OpenChannel(ChannelName).ForRequestReplySending(RecieverAddress)
+            .OpenChannel(ChannelName).ForRequestReplySendingTo(RecieverAddress)
             .Initialise();
 
         It should_build_the_send_channel = () =>
             The<ISendChannelBuilder>().WasToldTo(b =>
-                b.Build(GetEndpointAddress(RecieverAddress, The<IMachineIdentifier>().GetMachineName())));
+                b.Build(
+                GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName()),
+                GetEndpointAddress(RecieverAddress, The<IMachineIdentifier>().GetMachineName())));
 
         It should_build_the_recieve_channel = () =>
             The<IReplyRecieveChannelBuilder>().WasToldTo(b => b.Build(new IMessageProcessor<object, object>[0]));

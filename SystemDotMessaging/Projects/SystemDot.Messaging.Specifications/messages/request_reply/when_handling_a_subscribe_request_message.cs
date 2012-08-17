@@ -40,6 +40,6 @@ namespace SystemDot.Messaging.Specifications.messages.request_reply
             The<IRequestRecieveChannelBuilder>().WasToldTo(b => b.Build(subscriptionSchema.SubscriberAddress));
 
         It should_setup_the_reply_channel = () =>
-            The<IReplyChannelBuilder>().WasToldTo(b => b.Build(subscriptionSchema.SubscriberAddress));
+            The<IReplyChannelBuilder>().WasToldTo(b => b.Build(address, subscriptionSchema.SubscriberAddress));
     }
 }

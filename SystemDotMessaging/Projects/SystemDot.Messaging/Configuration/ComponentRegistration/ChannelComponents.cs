@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             IocContainer.Register<ReplyChannelSelector, EndpointAddress>(a => new ReplyChannelSelector(a, IocContainer.Resolve<ReplyChannelLookup>()));     
        
             IocContainer.Register(() => new MessagePayloadPackager(IocContainer.Resolve<ISerialiser>()));
-            IocContainer.Register<MessageAddresser, EndpointAddress>(a => new MessageAddresser(a));
+            IocContainer.Register<MessageAddresser, EndpointAddress, EndpointAddress>((f, t) => new MessageAddresser(f, t));
             IocContainer.Register(() => new MessagePayloadUnpackager(IocContainer.Resolve<ISerialiser>()));
             IocContainer.Register(new MessageHandlerRouter());
             

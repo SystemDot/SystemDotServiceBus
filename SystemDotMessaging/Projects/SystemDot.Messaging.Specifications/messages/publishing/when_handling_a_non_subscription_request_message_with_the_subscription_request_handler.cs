@@ -22,7 +22,8 @@ namespace SystemDot.Messaging.Specifications.messages.publishing
             
             Configure<IChannelBuilder>(
                 new TestChannelBuilder(
-                    new SubscriptionSchema(new EndpointAddress("TestAddress", "TestServer")), 
+                    new EndpointAddress("TestFromAddress", "TestFromServer"), 
+                    new EndpointAddress("TestToAddress", "TestToServer"), 
                     new Pipe<MessagePayload>()));
 
             messagePayload = new MessagePayload();

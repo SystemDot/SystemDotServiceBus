@@ -27,7 +27,9 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply
                 ConfigureAndRegister(new EndpointAddressBuilder(IocContainer.Resolve<IMachineIdentifier>()));
                 ConfigureAndRegister<ISendChannelBuilder>();
                 ConfigureAndRegister<IRequestRecieveChannelBuilder>();
+                ConfigureAndRegister<IReplyRecieveChannelBuilder>();
                 ConfigureAndRegister<ISubscriptionRequestorChannelBuilder>();
+                ConfigureAndRegister<ISubscriptionHandlerChannelBuilder>();
                 ConfigureAndRegister<IMessageReciever>();
                 ConfigureAndRegister<ITaskLooper>();
                 ConfigureAndRegister<IBus>();
@@ -48,13 +50,15 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply
 
         Because of = () => Configuration.Configure.Messaging()
             .UsingHttpTransport(MessageServer.Local())
-                .OpenChannel(Channel2Name).ForRequestReplySending(Reciever2Address)
-                .OpenChannel(Channel2Name).ForRequestReplySending(Reciever2Address)
+                .OpenChannel(Channel2Name).ForRequestReplySendingTo(Reciever2Address)
+                .OpenChannel(Channel2Name).ForRequestReplySendingTo(Reciever2Address)
             .Initialise();
 
         It should_build_the_second_send_channel = () =>
             The<ISendChannelBuilder>().WasToldTo(b =>
-                b.Build(GetEndpointAddress(Reciever2Address, The<IMachineIdentifier>().GetMachineName())));
+                b.Build( 
+                    GetEndpointAddress(Channel2Name, The<IMachineIdentifier>().GetMachineName()),
+                    GetEndpointAddress(Reciever2Address, The<IMachineIdentifier>().GetMachineName())));
 
         It should_register_the_listening_address_with_the_message_reciever_for_the_second_channel = () =>
             The<IMessageReciever>().WasToldTo(r =>

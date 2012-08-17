@@ -40,7 +40,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply
 
         Because of = () => bus = Configuration.Configure.Messaging()
             .UsingHttpTransport(MessageServer.Local())
-                .OpenChannel(ChannelName).ForRequestReplySending(RecieverAddress)
+                .OpenChannel(ChannelName).ForRequestReplySendingTo(RecieverAddress)
                     .WithHook(The<IMessageProcessor<object, object>>())
             .Initialise();
 

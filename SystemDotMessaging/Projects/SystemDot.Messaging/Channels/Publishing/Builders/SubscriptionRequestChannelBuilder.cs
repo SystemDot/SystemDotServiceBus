@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
 
             MessagePipelineBuilder.Build()
                 .With(requestor)
-                .ToProcessor(IocContainer.Resolve<MessageAddresser, EndpointAddress>(publisherAddress))
+                .ToProcessor(IocContainer.Resolve<MessageAddresser, EndpointAddress, EndpointAddress>(subscriberAddress, publisherAddress))
                 .ToProcessor(IocContainer.Resolve<MessageRepeater, TimeSpan>(new TimeSpan(0, 0, 1)))
                 .ToEndPoint(IocContainer.Resolve<IMessageSender>());
 

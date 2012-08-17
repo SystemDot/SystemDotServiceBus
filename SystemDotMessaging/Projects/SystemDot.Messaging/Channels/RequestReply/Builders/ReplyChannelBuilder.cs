@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             this.channelLookup = channelLookup;
         }
 
-        public void Build(EndpointAddress replyAddress)
+        public void Build(EndpointAddress fromAddress, EndpointAddress replyAddress)
         {
             var channelStartPoint = IocContainer.Resolve<ChannelStartPoint>();
 
@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
                 .With(channelStartPoint)
                 .Pump()
                 .ToConverter(IocContainer.Resolve<MessagePayloadPackager>())
-                .ToProcessor(IocContainer.Resolve<MessageAddresser, EndpointAddress>(replyAddress))
+                .ToProcessor(IocContainer.Resolve<MessageAddresser, EndpointAddress, EndpointAddress>(fromAddress, replyAddress))
                 .ToEndPoint(IocContainer.Resolve<IMessageSender>());
 
             this.channelLookup.RegisterChannel(replyAddress, channelStartPoint);

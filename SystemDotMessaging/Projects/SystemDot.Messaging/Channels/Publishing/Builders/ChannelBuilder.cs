@@ -8,10 +8,11 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
 {
     public class ChannelBuilder : IChannelBuilder 
     {
-        public IMessageInputter<MessagePayload> Build(SubscriptionSchema toSchema) 
+        public IMessageInputter<MessagePayload> Build(EndpointAddress fromAddress, EndpointAddress subscriberAddress) 
         {
-            MessageAddresser addresser = IocContainer
-                .Resolve<MessageAddresser, EndpointAddress>(toSchema.SubscriberAddress);
+            MessageAddresser addresser = IocContainer.Resolve<MessageAddresser, EndpointAddress, EndpointAddress>(
+                fromAddress,
+                subscriberAddress);
 
             MessagePipelineBuilder.Build()
                 .With(addresser)

@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
 
         protected override void Build()
         {
-            Resolve<ISendChannelBuilder>().Build(this.recieverAddress);
+            Resolve<ISendChannelBuilder>().Build(this.address, this.recieverAddress);
             Resolve<IReplyRecieveChannelBuilder>().Build(this.hooks.ToArray());
             Resolve<ISubscriptionRequestorChannelBuilder>().Build(this.address, this.recieverAddress).Start();
             Resolve<IMessageReciever>().RegisterListeningAddress(this.address);
