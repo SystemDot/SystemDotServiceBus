@@ -2,6 +2,7 @@ using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Configuration.ComponentRegistration;
 using SystemDot.Messaging.Configuration.HttpMessaging;
 using SystemDot.Messaging.Messages;
+using SystemDot.Messaging.Messages.Processing.Filtering;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
 using Machine.Fakes;
@@ -22,12 +23,11 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
             {
                 ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
                 ConfigureAndRegister(new EndpointAddressBuilder(IocContainer.Resolve<IMachineIdentifier>()));
-                ConfigureAndRegister<IRequestSendChannelBuilder>();
+                ConfigureAndRegister<IRequestSendChannelBuilder>(new TestRequestSendChannelBuilder());
                 ConfigureAndRegister<IReplyRecieveChannelBuilder>();
                 ConfigureAndRegister<IMessageReciever>();
                 ConfigureAndRegister<ITaskLooper>();
                 ConfigureAndRegister<IBus>();
-
             };
         };
 
@@ -36,11 +36,17 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
             .OpenChannel(ChannelName).ForRequestReplySendingTo(RecieverAddress)
             .Initialise();
 
-        It should_build_the_send_channel = () =>
-            The<IRequestSendChannelBuilder>().WasToldTo(b =>
-                b.Build(
-                GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName()),
-                GetEndpointAddress(RecieverAddress, The<IMachineIdentifier>().GetMachineName())));
+        It should_build_the_send_channel_with_the_default_pass_through_message_filter = () =>
+            The<IRequestSendChannelBuilder>().As<TestRequestSendChannelBuilder>().MessageFilter
+                .ShouldBeOfType<PassThroughMessageFilterStategy>();
+
+        It should_build_the_send_channel_with_the_correct_from_address = () =>
+            The<IRequestSendChannelBuilder>().As<TestRequestSendChannelBuilder>().From.ShouldEqual(
+                GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName()));
+
+        It should_build_the_send_channel_with_the_correct_reciever_address = () =>
+            The<IRequestSendChannelBuilder>().As<TestRequestSendChannelBuilder>().Reciever.ShouldEqual(
+                GetEndpointAddress(RecieverAddress, The<IMachineIdentifier>().GetMachineName()));
 
         It should_build_the_recieve_channel = () =>
             The<IReplyRecieveChannelBuilder>().WasToldTo(b => b.Build(new IMessageProcessor<object, object>[0]));
@@ -52,6 +58,5 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
         It should_start_the_task_looper = () => The<ITaskLooper>().WasToldTo(l => l.Start());
 
         It should_return_the_bus = () => bus.ShouldBeTheSameAs(The<IBus>());
-        
     }
 }

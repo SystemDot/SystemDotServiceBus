@@ -24,12 +24,10 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
                 ConfigureAndRegister(new EndpointAddressBuilder(IocContainer.Resolve<IMachineIdentifier>()));
                 ConfigureAndRegister<ISubscriptionHandlerChannelBuilder>();
                 ConfigureAndRegister<IPublisherRegistry>();
-                ConfigureAndRegister<IPublisherChannelBuilder>();
+                ConfigureAndRegister<IPublisherChannelBuilder>(new TestPublisherChannelBuilder());
                 ConfigureAndRegister<IMessageReciever>();
                 ConfigureAndRegister<ITaskLooper>();
                 ConfigureAndRegister<IBus>();
-
-                The<IPublisherChannelBuilder>().WhenToldTo(b => b.Build()).Return(The<IDistributor>());
             };
         };
 
@@ -39,12 +37,10 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
                 .OpenChannel(Channel2Name).ForPublishing()
             .Initialise();
 
-        It should_build_and_register_the_second_publisher_channel = () => 
-            The<IPublisherRegistry>().WasToldTo(l => 
-                l.RegisterPublisher(
-                    GetEndpointAddress(Channel2Name, The<IMachineIdentifier>().GetMachineName()),
-                    The<IDistributor>()));
+        It should_build_the_second_publisher_channel = () =>
+            The<IPublisherChannelBuilder>().As<TestPublisherChannelBuilder>().ExpectedAddress.ShouldEqual(
+                GetEndpointAddress(Channel2Name, The<IMachineIdentifier>().GetMachineName()));
 
-        
+
     }
 }

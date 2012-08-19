@@ -1,9 +1,10 @@
-using SystemDot.Messaging.Messages.Distribution;
+using SystemDot.Messaging.Messages;
+using SystemDot.Messaging.Messages.Processing.Filtering;
 
 namespace SystemDot.Messaging.Channels.Publishing.Builders
 {
     public interface IPublisherChannelBuilder
     {
-        IDistributor Build();
+        void Build(EndpointAddress address, IMessageFilterStrategy messageFilterStategy);
     }
 }

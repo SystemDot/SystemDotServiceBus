@@ -53,7 +53,13 @@
     <Compile Include="Channels\RequestReply\Builders\IRequestRecieveChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\IReplySendChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\IRequestSendChannelBuilder.cs" />
-    <Compile Include="Messages\Processing\ReplyChannelMessageAddresser.cs" />
+    <Compile Include="Configuration\FilteredBy.cs" />
+    <Compile Include="Messages\Processing\Filtering\IMessageFilterStrategy.cs" />
+    <Compile Include="Messages\Processing\Filtering\NamePatternMessageFilterStrategy.cs" />
+    <Compile Include="Messages\Processing\Filtering\NamespaceMessageFilterStrategy.cs" />
+    <Compile Include="Messages\Processing\Filtering\PassThroughMessageFilterStategy.cs" />
+    <Compile Include="Messages\Processing\Filtering\ReplyChannelMessageFilterStategy.cs" />
+    <Compile Include="Messages\Processing\RequestReply\ReplyChannelMessageAddresser.cs" />
     <Compile Include="Channels\RequestReply\Builders\ReplyRecieveChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\RequestRecieveChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\ReplySendChannelBuilder.cs" />
@@ -80,7 +86,7 @@
     <Compile Include="Messages\EndpointAddressBuilder.cs" />
     <Compile Include="Messages\Packaging\Headers\AddressHeader.cs" />
     <Compile Include="Messages\Packaging\Headers\FromAddressHeader.cs" />
-    <Compile Include="Messages\Processing\ChannelStartPoint.cs" />
+    <Compile Include="Messages\Processing\Filtering\MessageFilter.cs" />
     <Compile Include="Messages\Processing\MessageRepeater.cs" />
     <Compile Include="Messages\Pipelines\MessagePipelineBuilder.cs" />
     <Compile Include="Messages\Pipelines\ProcessorBuilder.cs" />
@@ -98,8 +104,8 @@
     <Compile Include="Messages\IMessageProcessor.cs" />
     <Compile Include="Messages\IMessageInputter.cs" />
     <Compile Include="Channels\Publishing\MessagePayloadSubscriptionRequestExtensions.cs" />
-    <Compile Include="Messages\Processing\ReplyChannelSelector.cs" />
-    <Compile Include="Messages\Processing\ReplyChannelLookup.cs" />
+    <Compile Include="Messages\Processing\RequestReply\ReplyChannelSelector.cs" />
+    <Compile Include="Messages\Processing\RequestReply\ReplyAddressLookup.cs" />
     <Compile Include="Transport\Http\HttpAddressExtensions.cs" />
     <Compile Include="Transport\IMessageSender.cs" />
     <Compile Include="Transport\IMessageReciever.cs" />
@@ -122,7 +128,7 @@
     <Compile Include="Messages\Packaging\MessagePayload.cs" />
     <Compile Include="Messages\Processing\MessagePayloadPackager.cs" />
     <Compile Include="Transport\Http\LongPolling\MessageSender.cs" />
-    <Compile Include="Messages\Handling\MessageHandlerRouter.cs" />
+    <Compile Include="Messages\Processing\Handling\MessageHandlerRouter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transport\Http\LongPolling\Servers\LongPollHandler.cs" />
     <Compile Include="Transport\Http\LongPolling\Servers\MessagePayloadQueue.cs" />

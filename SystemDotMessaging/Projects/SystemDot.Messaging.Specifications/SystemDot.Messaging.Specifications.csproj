@@ -50,6 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="configuration\publishing\when_configuring_a_publisher_channel_with_a_specific_namespace_filtering_strategy.cs" />
+    <Compile Include="configuration\publishing\TestPublisherChannelBuilder.cs" />
+    <Compile Include="configuration\request_reply\sending\when_configuring_a_request_reply_sender_channel_with_a_name_pattern_filtering_strategy.cs" />
+    <Compile Include="configuration\request_reply\sending\when_configuring_a_request_reply_sender_channel_with_a_specific_namespace_filtering_strategy.cs" />
+    <Compile Include="configuration\request_reply\sending\TestRequestSendChannelBuilder.cs" />
     <Compile Include="configuration\when_logging_a_message_with_a_logging_mechanism_configured.cs" />
     <Compile Include="configuration\publishing\when_configuring_a_publisher_channel_followed_by_another.cs" />
     <Compile Include="configuration\publishing\when_configuring_a_subscriber_channel_followed_by_another.cs" />
@@ -68,6 +73,13 @@
     <Compile Include="messages\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel.cs" />
     <Compile Include="messages\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel_and_machine_name.cs" />
     <Compile Include="messages\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel_machine_and_server.cs" />
+    <Compile Include="messages\processing\filtering\when_filtering_a_message_for_reply_for_the_correct_request.cs" />
+    <Compile Include="messages\processing\filtering\when_filtering_a_message_by_name_pattern_that_does_not_match_the_specified_pattern.cs" />
+    <Compile Include="messages\processing\filtering\when_filtering_a_message_by_name_pattern_that_matches_the_specified_pattern.cs" />
+    <Compile Include="messages\processing\filtering\when_filtering_a_message_with_the_defualt_pass_through_strategy.cs" />
+    <Compile Include="messages\processing\filtering\TestMessage.cs" />
+    <Compile Include="messages\processing\filtering\when_filtering_a_message_by_namespace_that_is_in_the_specified_namespace.cs" />
+    <Compile Include="messages\processing\filtering\when_filtering_a_message_by_namespace_that_is_not_in_the_specified_namespace.cs" />
     <Compile Include="messages\processing\request_reply\when_addressing_a_reply_channel_message.cs" />
     <Compile Include="messages\processing\request_reply\when_passing_messages_through_a_reply_channel_selector.cs" />
     <Compile Include="messages\processing\when_unpackaging_a_message_from_transportation_payload_that_does_not_have_a_body.cs" />

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Reflection;
 
-namespace SystemDot.Messaging.Messages.Handling
+namespace SystemDot.Messaging.Messages.Processing.Handling
 {
     public class MessageHandlerRouter : IMessageInputter<object>
     {

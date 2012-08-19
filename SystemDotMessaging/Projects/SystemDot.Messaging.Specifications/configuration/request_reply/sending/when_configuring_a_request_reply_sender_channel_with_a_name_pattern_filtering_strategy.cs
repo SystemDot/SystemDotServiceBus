@@ -1,23 +1,19 @@
 using SystemDot.Messaging.Channels.RequestReply.Builders;
+using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Configuration.ComponentRegistration;
 using SystemDot.Messaging.Configuration.HttpMessaging;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Processing.Filtering;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
-using Machine.Fakes;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 {
-    [Subject("Request reply configuration")] 
-    public class when_configuring_a_request_reply_sender_channel_followed_by_another : WithConfiguationSubject
+    [Subject("Request reply configuration")]
+    public class when_configuring_a_request_reply_sender_channel_with_a_name_pattern_filtering_strategy :
+        WithConfiguationSubject
     {
-        const string Channel1Name = "Channel1";
-        const string Reciever1Address = "RecieverAddress1";
-        const string Channel2Name = "Channel2";
-        const string Reciever2Address = "RecieverAddress2";
-        
         Establish context = () =>
         {
             Components.Registration = () =>
@@ -25,7 +21,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
                 ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
                 ConfigureAndRegister(new EndpointAddressBuilder(IocContainer.Resolve<IMachineIdentifier>()));
                 ConfigureAndRegister<IRequestSendChannelBuilder>(new TestRequestSendChannelBuilder());
-                ConfigureAndRegister<IRequestRecieveChannelBuilder>();
                 ConfigureAndRegister<IReplyRecieveChannelBuilder>();
                 ConfigureAndRegister<IMessageReciever>();
                 ConfigureAndRegister<ITaskLooper>();
@@ -35,17 +30,11 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 
         Because of = () => Configuration.Configure.Messaging()
             .UsingHttpTransport(MessageServer.Local())
-                .OpenChannel(Channel2Name).ForRequestReplySendingTo(Reciever2Address)
-                .OpenChannel(Channel2Name).ForRequestReplySendingTo(Reciever2Address)
+            .OpenChannel("Test").ForRequestReplySendingTo("TestRecieverAddress").OnlyForMessages(FilteredBy.NamePattern("Name"))
             .Initialise();
 
-        It should_build_the_send_channel_with_the_default_pass_through_message_filter = () =>
+        It should_build_the_send_channel_with_the_correct_namespace_message_filter = () =>
             The<IRequestSendChannelBuilder>().As<TestRequestSendChannelBuilder>().MessageFilter
-                .ShouldBeOfType<PassThroughMessageFilterStategy>();
-
-        It should_register_the_listening_address_with_the_message_reciever_for_the_second_channel = () =>
-            The<IMessageReciever>().WasToldTo(r =>
-                r.RegisterListeningAddress(GetEndpointAddress(Channel2Name, The<IMachineIdentifier>().GetMachineName())));
-        
+                .ShouldBeOfType<NamePatternMessageFilterStrategy>();
     }
 }

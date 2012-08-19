@@ -2,6 +2,7 @@ using System;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Processing;
+using SystemDot.Messaging.Messages.Processing.RequestReply;
 using Machine.Fakes;
 using Machine.Specifications;
 using SystemDot.Messaging.Messages.Packaging.Headers;
@@ -21,8 +22,8 @@ namespace SystemDot.Messaging.Specifications.messages.processing.request_reply
             fromAddress = new EndpointAddress("FromChannel", "FromServer");
             toAddress = new EndpointAddress("ToChannel", "ToServer");
 
-            The<ReplyChannelLookup>().SetCurrentChannel(toAddress);
-            Subject = new ReplyChannelMessageAddresser(The<ReplyChannelLookup>(), fromAddress);
+            The<ReplyAddressLookup>().SetCurrentSenderAddress(toAddress);
+            Subject = new ReplyChannelMessageAddresser(The<ReplyAddressLookup>(), fromAddress);
             Subject.MessageProcessed += i => processedMessage = i;
 
             message = new MessagePayload();

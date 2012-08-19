@@ -3,24 +3,26 @@ using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Packaging.Headers;
 
-namespace SystemDot.Messaging.Messages.Processing
+namespace SystemDot.Messaging.Messages.Processing.RequestReply
 {
     public class ReplyChannelSelector : IMessageProcessor<MessagePayload, MessagePayload>
     {
-        readonly ReplyChannelLookup channelLookup;
+        readonly ReplyAddressLookup addressLookup;
 
-        public ReplyChannelSelector(ReplyChannelLookup channelLookup)
+        public ReplyChannelSelector(ReplyAddressLookup addressLookup)
         {
-            Contract.Requires(channelLookup != null);
+            Contract.Requires(addressLookup != null);
 
-            this.channelLookup = channelLookup;
+            this.addressLookup = addressLookup;
         }
 
         public void InputMessage(MessagePayload toInput)
         {
             Contract.Requires(toInput != null);
 
-            this.channelLookup.SetCurrentChannel(toInput.GetFromAddress());
+            this.addressLookup.SetCurrentSenderAddress(toInput.GetFromAddress());
+            this.addressLookup.SetCurrentRecieverAddress(toInput.GetToAddress());
+
             MessageProcessed(toInput);
         }
 

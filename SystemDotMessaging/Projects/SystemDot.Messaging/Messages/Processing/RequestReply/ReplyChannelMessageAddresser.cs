@@ -2,23 +2,23 @@ using System;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Packaging.Headers;
 
-namespace SystemDot.Messaging.Messages.Processing
+namespace SystemDot.Messaging.Messages.Processing.RequestReply
 {
     public class ReplyChannelMessageAddresser : IMessageProcessor<MessagePayload, MessagePayload>
     {
-        readonly ReplyChannelLookup channelLookup;
+        readonly ReplyAddressLookup addressLookup;
         readonly EndpointAddress address;
 
-        public ReplyChannelMessageAddresser(ReplyChannelLookup channelLookup, EndpointAddress address)
+        public ReplyChannelMessageAddresser(ReplyAddressLookup addressLookup, EndpointAddress address)
         {
-            this.channelLookup = channelLookup;
+            this.addressLookup = addressLookup;
             this.address = address;
         }
 
         public void InputMessage(MessagePayload toInput)
         {
             toInput.SetFromAddress(address);
-            toInput.SetToAddress(this.channelLookup.GetCurrentChannel());
+            toInput.SetToAddress(this.addressLookup.GetCurrentSenderAddress());
             MessageProcessed(toInput);
         }
 
