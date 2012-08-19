@@ -4,27 +4,36 @@ using SystemDot.Messaging.Messages.Processing;
 using SystemDot.Messaging.Messages.Processing.Filtering;
 using SystemDot.Messaging.Messages.Processing.RequestReply;
 using SystemDot.Messaging.Transport;
+using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Channels.RequestReply.Builders
 {
     public class ReplySendChannelBuilder : IReplySendChannelBuilder
     {
         readonly ReplyAddressLookup replyAddressLookup;
+        readonly IMessageSender messageSender;
+        readonly ISerialiser serialiser;
 
-        public ReplySendChannelBuilder(ReplyAddressLookup replyAddressLookup)
+        public ReplySendChannelBuilder(
+            ReplyAddressLookup replyAddressLookup, 
+            IMessageSender messageSender, 
+            ISerialiser serialiser)
         {
             this.replyAddressLookup = replyAddressLookup;
+            this.messageSender = messageSender;
+            this.serialiser = serialiser;
         }
 
         public void Build(EndpointAddress fromAddress)
         {
+            var filterStrategy = new ReplyChannelMessageFilterStategy(this.replyAddressLookup, fromAddress);
+
             MessagePipelineBuilder.Build()
-                .WithBusReplyTo(IocContainer.Resolve<MessageFilter, IMessageFilterStrategy>(
-                    new ReplyChannelMessageFilterStategy(fromAddress, replyAddressLookup)))
-                .ToConverter(IocContainer.Resolve<MessagePayloadPackager>())
-                .ToProcessor(IocContainer.Resolve<ReplyChannelMessageAddresser, EndpointAddress>(fromAddress))
+                .WithBusReplyTo(new MessageFilter(filterStrategy))
+                .ToConverter(new MessagePayloadPackager(this.serialiser))
+                .ToProcessor(new ReplyChannelMessageAddresser(this.replyAddressLookup, fromAddress))
                 .Pump()
-                .ToEndPoint(IocContainer.Resolve<IMessageSender>());            
+                .ToEndPoint(this.messageSender);
         }
     }
 }

@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics.Contracts;
-using SystemDot.Logging;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Parallelism;
 

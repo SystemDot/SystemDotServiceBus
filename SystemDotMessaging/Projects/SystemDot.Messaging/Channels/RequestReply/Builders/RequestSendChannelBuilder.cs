@@ -3,19 +3,32 @@ using SystemDot.Messaging.Messages.Pipelines;
 using SystemDot.Messaging.Messages.Processing;
 using SystemDot.Messaging.Messages.Processing.Filtering;
 using SystemDot.Messaging.Transport;
+using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Channels.RequestReply.Builders
 {
     public class RequestSendChannelBuilder : IRequestSendChannelBuilder
     {
-        public void Build(IMessageFilterStrategy filteringStrategy, EndpointAddress fromAddress, EndpointAddress recieverAddress)
+        readonly IMessageSender messageSender;
+        readonly ISerialiser serialiser;
+
+        public RequestSendChannelBuilder(IMessageSender messageSender, ISerialiser serialiser)
+        {
+            this.messageSender = messageSender;
+            this.serialiser = serialiser;
+        }
+
+        public void Build(
+            IMessageFilterStrategy filteringStrategy, 
+            EndpointAddress fromAddress, 
+            EndpointAddress recieverAddress)
         {
             MessagePipelineBuilder.Build()
-                .WithBusSendTo(IocContainer.Resolve<MessageFilter, IMessageFilterStrategy>(filteringStrategy))
+                .WithBusSendTo(new MessageFilter(filteringStrategy))
                 .Pump()
-                .ToConverter(IocContainer.Resolve<MessagePayloadPackager>())
-                .ToProcessor(IocContainer.Resolve<MessageAddresser, EndpointAddress, EndpointAddress>(fromAddress, recieverAddress))
-                .ToEndPoint(IocContainer.Resolve<IMessageSender>());
+                .ToConverter(new MessagePayloadPackager(this.serialiser))
+                .ToProcessor(new MessageAddresser(fromAddress, recieverAddress))
+                .ToEndPoint(this.messageSender);
         }
     }
 }

@@ -10,10 +10,10 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
 
         public IMessageFilterStrategy ExpectedMessageFilterStrategy { get; private set; }
 
-        public void Build(EndpointAddress address, IMessageFilterStrategy messageFilterStategy)
+        public void Build(EndpointAddress address, IMessageFilterStrategy messageFilterStrategy)
         {
             this.ExpectedAddress = address;
-            this.ExpectedMessageFilterStrategy = messageFilterStategy;
+            this.ExpectedMessageFilterStrategy = messageFilterStrategy;
         }
     }
 }

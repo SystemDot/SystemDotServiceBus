@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.messages.processing.filtering
             recieverAddress = new EndpointAddress("Channel", "Server");
 
             The<ReplyAddressLookup>().SetCurrentRecieverAddress(recieverAddress);
-            Subject = new MessageFilter(new ReplyChannelMessageFilterStategy(recieverAddress, The<ReplyAddressLookup>()));
+            Subject = new MessageFilter(new ReplyChannelMessageFilterStategy(The<ReplyAddressLookup>(), recieverAddress));
 
             Subject.MessageProcessed += i => processed = i;
             message = new object();
@@ -40,9 +40,7 @@ namespace SystemDot.Messaging.Specifications.messages.processing.filtering
         {
             The<ReplyAddressLookup>().SetCurrentRecieverAddress(new EndpointAddress("Channel", "Server"));
             
-            Subject = new MessageFilter(new ReplyChannelMessageFilterStategy(
-                new EndpointAddress("OtherChannel", "OtherServer"), 
-                The<ReplyAddressLookup>()));
+            Subject = new MessageFilter(new ReplyChannelMessageFilterStategy(The<ReplyAddressLookup>(), new EndpointAddress("OtherChannel", "OtherServer")));
 
             Subject.MessageProcessed += i => processed = i;
             message = new object();

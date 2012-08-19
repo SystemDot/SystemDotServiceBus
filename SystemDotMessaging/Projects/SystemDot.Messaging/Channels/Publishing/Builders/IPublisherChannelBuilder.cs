@@ -5,6 +5,6 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
 {
     public interface IPublisherChannelBuilder
     {
-        void Build(EndpointAddress address, IMessageFilterStrategy messageFilterStategy);
+        void Build(EndpointAddress address, IMessageFilterStrategy messageFilterStrategy);
     }
 }

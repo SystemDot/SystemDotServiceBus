@@ -5,12 +5,23 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
 {
     public class SubscriptionHandlerChannelBuilder : ISubscriptionHandlerChannelBuilder
     {
+        readonly SubscriptionRequestHandler subscriptionRequestHandler;
+        readonly IMessageReciever messageReciever;
+
+        public SubscriptionHandlerChannelBuilder(
+            SubscriptionRequestHandler subscriptionRequestHandler, 
+            IMessageReciever messageReciever)
+        {
+            this.subscriptionRequestHandler = subscriptionRequestHandler;
+            this.messageReciever = messageReciever;
+        }
+
         public void Build()
         {
             MessagePipelineBuilder.Build()
-                .With(IocContainer.Resolve<IMessageReciever>())
+                .With(this.messageReciever)
                 .Pump()
-                .ToEndPoint(IocContainer.Resolve<SubscriptionRequestHandler>());
+                .ToEndPoint(this.subscriptionRequestHandler);
         }
     }
 }

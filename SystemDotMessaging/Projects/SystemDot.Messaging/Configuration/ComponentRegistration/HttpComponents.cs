@@ -1,7 +1,6 @@
 using SystemDot.Http;
 using SystemDot.Messaging.Transport;
 using SystemDot.Messaging.Transport.Http.LongPolling;
-using SystemDot.Messaging.Transport.Http.LongPolling.Servers;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 
@@ -16,7 +15,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
                 IocContainer.Resolve<ISerialiser>(),
                 IocContainer.Resolve<ITaskLooper>()));
 
-            IocContainer.Register<IMessageSender>(() => new MessageSender(
+            IocContainer.Register<IMessageSender>(new MessageSender(
                 IocContainer.Resolve<ISerialiser>(),
                 IocContainer.Resolve<IWebRequestor>()));
         }

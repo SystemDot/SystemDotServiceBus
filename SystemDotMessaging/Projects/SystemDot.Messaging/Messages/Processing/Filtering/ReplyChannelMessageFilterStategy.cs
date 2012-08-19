@@ -7,7 +7,7 @@ namespace SystemDot.Messaging.Messages.Processing.Filtering
         readonly EndpointAddress recieverAddress;
         readonly ReplyAddressLookup replyAddressLookup;
 
-        public ReplyChannelMessageFilterStategy(EndpointAddress recieverAddress, ReplyAddressLookup replyAddressLookup)
+        public ReplyChannelMessageFilterStategy(ReplyAddressLookup replyAddressLookup, EndpointAddress recieverAddress)
         {
             this.recieverAddress = recieverAddress;
             this.replyAddressLookup = replyAddressLookup;

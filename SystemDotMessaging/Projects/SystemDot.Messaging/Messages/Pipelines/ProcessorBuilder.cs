@@ -1,4 +1,5 @@
 using SystemDot.Messaging.Messages.Distribution;
+using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Messages.Pipelines
@@ -45,7 +46,5 @@ namespace SystemDot.Messaging.Messages.Pipelines
         {
             this.processor.MessageProcessed += endPoint.InputMessage;
         }
-
-        
     }
 }
