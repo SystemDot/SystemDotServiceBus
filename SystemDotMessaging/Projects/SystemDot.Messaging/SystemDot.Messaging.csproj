@@ -134,6 +134,8 @@
     <Compile Include="Transport\Http\LongPolling\Servers\LongPollHandler.cs" />
     <Compile Include="Transport\Http\LongPolling\Servers\MessagePayloadQueue.cs" />
     <Compile Include="Transport\Http\LongPolling\Servers\SentMessageHandler.cs" />
+    <Compile Include="Transport\InProcess\MessageReciever.cs" />
+    <Compile Include="Transport\InProcess\MessageSender.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SystemDot.NonMetro\SystemDot.NonMetro.csproj">
