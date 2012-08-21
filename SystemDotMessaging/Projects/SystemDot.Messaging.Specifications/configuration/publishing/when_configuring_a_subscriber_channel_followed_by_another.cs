@@ -51,6 +51,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
             .Initialise();
 
         It should_build_the_subscriber_channel_for_both_channels = () => 
-            The<ISubscriberChannelBuilder>().WasToldTo(b => b.Build()).Twice();       
+            The<ISubscriberChannelBuilder>().WasToldTo(b => 
+                b.Build(GetEndpointAddress(Channel2Name, The<IMachineIdentifier>().GetMachineName())));       
     }
 }

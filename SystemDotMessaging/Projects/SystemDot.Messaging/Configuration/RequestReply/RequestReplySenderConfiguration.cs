@@ -33,7 +33,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         protected override void Build()
         {
             Resolve<IRequestSendChannelBuilder>().Build(this.messageFilterStrategy, this.address, this.recieverAddress);
-            Resolve<IReplyRecieveChannelBuilder>().Build(this.hooks.ToArray());
+            Resolve<IReplyRecieveChannelBuilder>().Build(this.address, this.hooks.ToArray());
             
             Resolve<IMessageReciever>().RegisterListeningAddress(this.address);
         }

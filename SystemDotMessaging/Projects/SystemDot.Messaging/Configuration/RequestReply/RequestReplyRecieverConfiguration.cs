@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
 
         protected override void Build()
         {
-            Resolve<IRequestRecieveChannelBuilder>().Build();
+            Resolve<IRequestRecieveChannelBuilder>().Build(this.address);
             Resolve<IReplySendChannelBuilder>().Build(this.address);
             Resolve<IMessageReciever>().RegisterListeningAddress(this.address);
         }

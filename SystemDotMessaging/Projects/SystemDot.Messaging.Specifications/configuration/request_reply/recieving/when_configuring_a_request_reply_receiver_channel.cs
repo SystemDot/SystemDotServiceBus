@@ -35,11 +35,13 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
             .ForRequestReplyRecieving()
             .Initialise();
 
-        It should_build_the_request_recieve_channel = () => The<IRequestRecieveChannelBuilder>().WasToldTo(b => b.Build());
+        It should_build_the_request_recieve_channel = () =>
+            The<IRequestRecieveChannelBuilder>().WasToldTo(
+                b => b.Build(GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName())));
 
         private It should_build_the_reply_send_channel = () => 
-            The<IReplySendChannelBuilder>().WasToldTo(b => b.Build(
-                GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName())));
+            The<IReplySendChannelBuilder>().WasToldTo(
+                b => b.Build(GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName())));
 
         It should_register_the_listening_address_with_the_message_reciever = () =>
             The<IMessageReciever>().WasToldTo(r => 

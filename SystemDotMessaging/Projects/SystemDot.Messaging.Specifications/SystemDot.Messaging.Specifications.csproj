@@ -69,6 +69,7 @@
     <Compile Include="configuration\request_reply\recieving\when_configuring_a_request_reply_receiver_channel.cs" />
     <Compile Include="messages\bus\when_publishing_a_message_on_the_bus.cs" />
     <Compile Include="messages\bus\when_replying_with_a_message_on_the_bus.cs" />
+    <Compile Include="messages\when_handling_a_message_that_does_not_have_with_the_expected_address_with_a_body_message_handler.cs" />
     <Compile Include="messages\distribution\when_subscribing_with_the_same_subscriber_key_twice.cs" />
     <Compile Include="messages\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel.cs" />
     <Compile Include="messages\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel_and_machine_name.cs" />
@@ -89,6 +90,8 @@
     <Compile Include="messages\processing\when_addressing_a_message.cs" />
     <Compile Include="messages\distribution\when_pumping_an_item.cs" />
     <Compile Include="messages\distribution\when_pumping_items_on_a_with_no_pushed_item_listener.cs" />
+    <Compile Include="messages\when_handling_a_message_that_does_not_have_a_body_with_a_body_message_handler.cs" />
+    <Compile Include="messages\when_handling_a_message_with_the_expected_address_with_a_body_message_handler.cs" />
     <Compile Include="TestTaskStarter.cs" />
     <Compile Include="transport\long_polling\TestTaskLooper.cs" />
     <Compile Include="transport\long_polling\when_long_polling_for_messages_and_two_messages_are_returned_in_the_stream.cs" />

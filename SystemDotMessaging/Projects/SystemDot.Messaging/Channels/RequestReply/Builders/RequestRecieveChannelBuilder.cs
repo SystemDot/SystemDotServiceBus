@@ -27,10 +27,11 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             this.messageReciever = messageReciever;
         }
 
-        public void Build()
+        public void Build(EndpointAddress recieverAddress)
         {
             MessagePipelineBuilder.Build()
                 .With(this.messageReciever)
+                .ToProcessor(new BodyMessageHandler(recieverAddress))
                 .Pump()
                 .ToProcessor(new ReplyChannelSelector(this.replyAddressLookup))
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))

@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
 
         protected override void Build()
         {
-            Resolve<ISubscriberChannelBuilder>().Build();
+            Resolve<ISubscriberChannelBuilder>().Build(this.subscriberAddress);
             Resolve<ISubscriptionRequestChannelBuilder>().Build(this.subscriberAddress, this.publisherAddress).Start();
             Resolve<IMessageReciever>().RegisterListeningAddress(this.subscriberAddress);
         }

@@ -49,7 +49,10 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
                 GetEndpointAddress(RecieverAddress, The<IMachineIdentifier>().GetMachineName()));
 
         It should_build_the_recieve_channel = () =>
-            The<IReplyRecieveChannelBuilder>().WasToldTo(b => b.Build(new IMessageProcessor<object, object>[0]));
+            The<IReplyRecieveChannelBuilder>().WasToldTo(b => 
+                b.Build(
+                    GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName()), 
+                    new IMessageProcessor<object, object>[0]));
 
         It should_register_the_listening_address_with_the_message_reciever = () =>
             The<IMessageReciever>().WasToldTo(r =>

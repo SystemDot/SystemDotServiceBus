@@ -54,6 +54,7 @@
     <Compile Include="Channels\RequestReply\Builders\IReplySendChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\IRequestSendChannelBuilder.cs" />
     <Compile Include="Configuration\FilteredBy.cs" />
+    <Compile Include="Messages\Processing\BodyMessageHandler.cs" />
     <Compile Include="Messages\Processing\Filtering\IMessageFilterStrategy.cs" />
     <Compile Include="Messages\Processing\Filtering\NamePatternMessageFilterStrategy.cs" />
     <Compile Include="Messages\Processing\Filtering\NamespaceMessageFilterStrategy.cs" />

@@ -23,10 +23,11 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             this.messageReciever = messageReciever;
         }
 
-        public void Build(params IMessageProcessor<object, object>[] hooks)
+        public void Build(EndpointAddress senderAddress, params IMessageProcessor<object, object>[] hooks)
         {
             MessagePipelineBuilder.Build()
                 .With(this.messageReciever)
+                .ToProcessor(new BodyMessageHandler(senderAddress))
                 .Pump()
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
                 .ToProcessors(hooks)

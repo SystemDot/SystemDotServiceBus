@@ -13,7 +13,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
     public class when_configuring_a_request_reply_sender_channel_with_a_hook : WithConfiguationSubject
     {
         const string ChannelName = "Test";
-        private const string RecieverAddress = "TestRecieverAddress";
+        const string RecieverAddress = "TestRecieverAddress";
         static IBus bus;
         
         Establish context = () =>
@@ -37,6 +37,9 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
             .Initialise();
 
         It should_build_the_recieve_channel_with_the_specified_hook = () =>
-            The<IReplyRecieveChannelBuilder>().WasToldTo(b => b.Build(The<IMessageProcessor<object, object>>()));        
+            The<IReplyRecieveChannelBuilder>().WasToldTo(b => 
+                b.Build( 
+                    GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName()), 
+                    The<IMessageProcessor<object, object>>()));        
     }
 }

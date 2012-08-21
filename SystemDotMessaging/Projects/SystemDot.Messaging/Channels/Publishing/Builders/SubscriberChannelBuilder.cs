@@ -23,10 +23,11 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             this.messageReciever = messageReciever;
         }
 
-        public void Build()
+        public void Build(EndpointAddress subscriberAddress)
         {
             MessagePipelineBuilder.Build()
                 .With(this.messageReciever)
+                .ToProcessor(new BodyMessageHandler(subscriberAddress))
                 .Pump()
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
                 .ToEndPoint(this.messageHandlerRouter);
