@@ -1,7 +1,6 @@
 ﻿using System;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Configuration.HttpMessaging;
 using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Messages.Processing.Handling;
 using SystemDot.Messaging.Test.Messages;
@@ -18,23 +17,29 @@ namespace SystemDot.Messaging.TestRequestReply.OtherSender
                 .OpenChannel("TestOtherSender").ForRequestReplySendingTo("TestReciever")
                 .Initialise();
 
-            IocContainer.Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());
+            IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());
 
             do
             {
                 Console.WriteLine("I am the other sender. Press enter to send messages..");
-                Console.ReadLine();
+                string count = Console.ReadLine();
                 
                 Console.WriteLine("Sending messages");
 
-                bus.Send(new TestMessage("Other Hello"));
-                bus.Send(new TestMessage("Other Hello1"));
-                bus.Send(new TestMessage("Other Hello2"));
-                bus.Send(new TestMessage("Other Hello3"));
-                bus.Send(new TestMessage("Other Hello4"));
-                bus.Send(new TestMessage("Other Hello5"));
-                bus.Send(new TestMessage("Other Hello6"));
-                bus.Send(new TestMessage("Other Hello7"));
+                for (int i = 0; i < int.Parse(count); i++)
+                {
+                    
+                bus.Send(new TestMessage("Other Hello" + i));
+                bus.Send(new TestMessage("Other Hello1" + i));
+                bus.Send(new TestMessage("Other Hello2" + i));
+                bus.Send(new TestMessage("Other Hello3" + i));
+                bus.Send(new TestMessage("Other Hello4" + i));
+                bus.Send(new TestMessage("Other Hello5" + i));
+                bus.Send(new TestMessage("Other Hello6" + i));
+                bus.Send(new TestMessage("Other Hello7" + i));
+
+                }
+                
             }
             while (true);
         }
