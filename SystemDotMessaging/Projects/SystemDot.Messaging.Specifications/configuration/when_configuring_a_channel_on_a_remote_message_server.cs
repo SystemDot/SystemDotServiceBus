@@ -1,6 +1,7 @@
 using SystemDot.Messaging.Channels.RequestReply.Builders;
+using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Configuration.ComponentRegistration;
-using SystemDot.Messaging.Configuration.HttpMessaging;
+using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
@@ -22,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.configuration
             Components.Registration = () =>
             {
                 ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
-                ConfigureAndRegister(new EndpointAddressBuilder(IocContainer.Resolve<IMachineIdentifier>()));
+                ConfigureAndRegister(new EndpointAddressBuilder(new MachineIdentifier()));
                 ConfigureAndRegister<IRequestRecieveChannelBuilder>();
                 ConfigureAndRegister<IReplySendChannelBuilder>();  
                 ConfigureAndRegister<IMessageReciever>();

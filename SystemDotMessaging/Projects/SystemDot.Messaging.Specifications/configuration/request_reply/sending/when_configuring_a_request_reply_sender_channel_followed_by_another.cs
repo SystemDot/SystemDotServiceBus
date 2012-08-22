@@ -1,6 +1,7 @@
 using SystemDot.Messaging.Channels.RequestReply.Builders;
+using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Configuration.ComponentRegistration;
-using SystemDot.Messaging.Configuration.HttpMessaging;
+using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Processing.Filtering;
 using SystemDot.Messaging.Transport;
@@ -13,8 +14,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
     [Subject("Request reply configuration")] 
     public class when_configuring_a_request_reply_sender_channel_followed_by_another : WithConfiguationSubject
     {
-        const string Channel1Name = "Channel1";
-        const string Reciever1Address = "RecieverAddress1";
         const string Channel2Name = "Channel2";
         const string Reciever2Address = "RecieverAddress2";
         
@@ -23,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
             Components.Registration = () =>
             {
                 ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
-                ConfigureAndRegister(new EndpointAddressBuilder(IocContainer.Resolve<IMachineIdentifier>()));
+                ConfigureAndRegister(new EndpointAddressBuilder(new MachineIdentifier()));
                 ConfigureAndRegister<IRequestSendChannelBuilder>(new TestRequestSendChannelBuilder());
                 ConfigureAndRegister<IRequestRecieveChannelBuilder>();
                 ConfigureAndRegister<IReplyRecieveChannelBuilder>();

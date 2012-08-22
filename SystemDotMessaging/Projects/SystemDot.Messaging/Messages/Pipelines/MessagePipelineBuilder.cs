@@ -1,4 +1,5 @@
 using SystemDot.Messaging.Channels.RequestReply;
+using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Messages.Processing;
 
 namespace SystemDot.Messaging.Messages.Pipelines

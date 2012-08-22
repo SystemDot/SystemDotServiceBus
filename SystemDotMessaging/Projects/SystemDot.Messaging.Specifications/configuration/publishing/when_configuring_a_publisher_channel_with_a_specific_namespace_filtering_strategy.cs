@@ -2,7 +2,7 @@ using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Configuration.ComponentRegistration;
-using SystemDot.Messaging.Configuration.HttpMessaging;
+using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Distribution;
 using SystemDot.Messaging.Messages.Processing.Filtering;
@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
             Components.Registration = () =>
             {
                 ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
-                ConfigureAndRegister(new EndpointAddressBuilder(IocContainer.Resolve<IMachineIdentifier>()));
+                ConfigureAndRegister(new EndpointAddressBuilder(new MachineIdentifier()));
                 ConfigureAndRegister<ISubscriptionHandlerChannelBuilder>();
                 ConfigureAndRegister<IPublisherRegistry>();
                 ConfigureAndRegister<IPublisherChannelBuilder>(new TestPublisherChannelBuilder());

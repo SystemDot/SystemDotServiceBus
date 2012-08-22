@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Configuration.ComponentRegistration;
 
-namespace SystemDot.Messaging.Configuration.HttpMessaging
+namespace SystemDot.Messaging.Configuration
 {
     public class MessageServerConfiguration : Configurer
     {
@@ -12,6 +13,7 @@ namespace SystemDot.Messaging.Configuration.HttpMessaging
         {
             Contract.Requires(messageServer != null);
 
+            Components.Register();
             this.messageServer = messageServer;
         }
 

@@ -1,4 +1,6 @@
-namespace SystemDot.Messaging.Configuration.HttpMessaging
+using SystemDot.Messaging.Ioc;
+
+namespace SystemDot.Messaging.Configuration
 {
     public class MessageServer
     {

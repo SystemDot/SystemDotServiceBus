@@ -1,6 +1,5 @@
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration.ComponentRegistration;
-using SystemDot.Messaging.Configuration.HttpMessaging;
 
 namespace SystemDot.Messaging.Configuration
 {
@@ -8,7 +7,14 @@ namespace SystemDot.Messaging.Configuration
     {
         public MessageServerConfiguration UsingHttpTransport(MessageServer server)
         {
+            HttpLongPollingTransportComponents.Register();
             return new MessageServerConfiguration(server);
+        }
+
+        public MessageServerConfiguration UsingInProcessTransport()
+        {
+            InProcessTransportComponents.Register();
+            return new MessageServerConfiguration(MessageServer.Local());
         }
 
         public MessagingConfiguration LoggingWith(ILoggingMechanism toLogWith)

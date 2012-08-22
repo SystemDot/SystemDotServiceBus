@@ -1,4 +1,5 @@
 using SystemDot.Http;
+using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Messages;
 using SystemDot.Serialisation;
 
@@ -8,10 +9,10 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
     {
         public static void Register()
         {
-            IocContainer.Register<IWebRequestor>(new WebRequestor());
-            IocContainer.Register<ISerialiser>(new PlatformAgnosticSerialiser());
-            IocContainer.Register<IMachineIdentifier>(new MachineIdentifier());
-            IocContainer.Register(new EndpointAddressBuilder(IocContainer.Resolve<IMachineIdentifier>()));
+            IocContainer.RegisterInstance<IWebRequestor, WebRequestor>();
+            IocContainer.RegisterInstance<ISerialiser, PlatformAgnosticSerialiser>();
+            IocContainer.RegisterInstance<IMachineIdentifier, MachineIdentifier>();
+            IocContainer.RegisterInstance<EndpointAddressBuilder, EndpointAddressBuilder>();
         }
     }
 }

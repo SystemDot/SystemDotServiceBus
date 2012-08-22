@@ -1,3 +1,5 @@
+using System;
+using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Messages;
 using Machine.Fakes;
 
@@ -13,7 +15,9 @@ namespace SystemDot.Messaging.Specifications.configuration
         protected static void ConfigureAndRegister<T>(T toSet) where T : class
         {
             Configure(toSet);
-            IocContainer.Register(The<T>());
+            var concrete = The<T>();
+
+            IocContainer.RegisterInstance(() => concrete);
         }
 
         protected static EndpointAddress GetEndpointAddress(string channelName, string serverName)

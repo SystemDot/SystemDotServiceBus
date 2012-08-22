@@ -9,10 +9,14 @@ namespace SystemDot.Messaging.Transport.InProcess
     {      
         public event Action<MessagePayload> MessageProcessed;
 
+        public MessageReciever(InProcessMessageServer server)
+        {
+            server.MessageProcessed += payload => MessageProcessed(payload);
+        }
+
         public void RegisterListeningAddress(EndpointAddress toRegister)
         {
             Contract.Requires(toRegister != EndpointAddress.Empty);
-            
         }
     }
 }

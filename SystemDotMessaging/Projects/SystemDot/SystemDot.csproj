@@ -52,7 +52,6 @@
     <Compile Include="IMachineIdentifier.cs" />
     <Compile Include="Logging\ILoggingMechanism.cs" />
     <Compile Include="Logging\Logger.cs" />
-    <Compile Include="IocContainer.cs" />
     <Compile Include="ObjectExtensions.cs" />
     <Compile Include="Parallelism\ITaskLooper.cs" />
     <Compile Include="Parallelism\TaskLooper.cs" />

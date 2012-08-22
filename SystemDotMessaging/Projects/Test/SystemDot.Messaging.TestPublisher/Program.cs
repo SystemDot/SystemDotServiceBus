@@ -1,7 +1,6 @@
 ﻿using System;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Configuration.HttpMessaging;
 using SystemDot.Messaging.Test.Messages;
 
 namespace SystemDot.Messaging.TestPublisher

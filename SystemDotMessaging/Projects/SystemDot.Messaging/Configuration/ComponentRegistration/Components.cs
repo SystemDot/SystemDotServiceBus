@@ -16,7 +16,6 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             ThreadingComponents.Register();
             CoreComponents.Register();
             ChannelComponents.Register();
-            HttpComponents.Register();
             PublishingComponents.Register();
             RequestReplyComponents.Register();
         }

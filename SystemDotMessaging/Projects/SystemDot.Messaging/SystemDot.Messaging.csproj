@@ -53,7 +53,10 @@
     <Compile Include="Channels\RequestReply\Builders\IRequestRecieveChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\IReplySendChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\IRequestSendChannelBuilder.cs" />
+    <Compile Include="Configuration\ComponentRegistration\InProcessTransportComponents.cs" />
     <Compile Include="Configuration\FilteredBy.cs" />
+    <Compile Include="Ioc\ConcreteInstance.cs" />
+    <Compile Include="Ioc\IocContainer.cs" />
     <Compile Include="Messages\Processing\BodyMessageHandler.cs" />
     <Compile Include="Messages\Processing\Filtering\IMessageFilterStrategy.cs" />
     <Compile Include="Messages\Processing\Filtering\NamePatternMessageFilterStrategy.cs" />
@@ -70,13 +73,13 @@
     <Compile Include="Configuration\ComponentRegistration\Components.cs" />
     <Compile Include="Configuration\ComponentRegistration\PublishingComponents.cs" />
     <Compile Include="Configuration\ComponentRegistration\CoreComponents.cs" />
-    <Compile Include="Configuration\ComponentRegistration\HttpComponents.cs" />
+    <Compile Include="Configuration\ComponentRegistration\HttpLongPollingTransportComponents.cs" />
     <Compile Include="Configuration\ComponentRegistration\RequestReplyComponents.cs" />
     <Compile Include="Configuration\ComponentRegistration\ThreadingComponents.cs" />
     <Compile Include="Channels\Publishing\SubscriptionRequestor.cs" />
     <Compile Include="Configuration\Configurer.cs" />
-    <Compile Include="Configuration\HttpMessaging\MessageServer.cs" />
-    <Compile Include="Configuration\HttpMessaging\MessageServerConfiguration.cs" />
+    <Compile Include="Configuration\MessageServer.cs" />
+    <Compile Include="Configuration\MessageServerConfiguration.cs" />
     <Compile Include="Configuration\Initialiser.cs" />
     <Compile Include="Configuration\MessagingConfiguration.cs" />
     <Compile Include="Configuration\RequestReply\RequestReplySenderConfiguration.cs" />
@@ -134,6 +137,7 @@
     <Compile Include="Transport\Http\LongPolling\Servers\LongPollHandler.cs" />
     <Compile Include="Transport\Http\LongPolling\Servers\MessagePayloadQueue.cs" />
     <Compile Include="Transport\Http\LongPolling\Servers\SentMessageHandler.cs" />
+    <Compile Include="Transport\InProcess\InProcessMessageServer.cs" />
     <Compile Include="Transport\InProcess\MessageReciever.cs" />
     <Compile Include="Transport\InProcess\MessageSender.cs" />
   </ItemGroup>

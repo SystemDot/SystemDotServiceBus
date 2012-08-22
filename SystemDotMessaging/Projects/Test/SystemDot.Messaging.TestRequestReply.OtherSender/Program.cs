@@ -2,6 +2,7 @@
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Configuration.HttpMessaging;
+using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Messages.Processing.Handling;
 using SystemDot.Messaging.Test.Messages;
 

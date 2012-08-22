@@ -1,3 +1,4 @@
+using SystemDot.Messaging.Ioc;
 using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration
@@ -8,9 +9,9 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
 
         public static void Register()
         {
-            IocContainer.Register<ITaskStarter>(new TaskStarter());
-            IocContainer.Register<ITaskLooper>(new TaskLooper(IocContainer.Resolve<ITaskStarter>()));
-            IocContainer.Register<ITaskScheduler>(new TaskScheduler());
+            IocContainer.RegisterInstance<ITaskStarter, TaskStarter>();
+            IocContainer.RegisterInstance<ITaskLooper, TaskLooper>();
+            IocContainer.RegisterInstance<ITaskScheduler, TaskScheduler>();
         }
     }
 }
