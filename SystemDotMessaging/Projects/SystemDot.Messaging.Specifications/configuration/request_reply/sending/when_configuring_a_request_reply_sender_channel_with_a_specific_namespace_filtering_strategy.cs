@@ -15,16 +15,14 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
     {
         Establish context = () =>
         {
-            Components.Registration = () =>
-            {
-                ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
-                ConfigureAndRegister(new EndpointAddressBuilder(IocContainer.Resolve<IMachineIdentifier>()));
-                ConfigureAndRegister<IRequestSendChannelBuilder>(new TestRequestSendChannelBuilder());
-                ConfigureAndRegister<IReplyRecieveChannelBuilder>();
-                ConfigureAndRegister<IMessageReciever>();
-                ConfigureAndRegister<ITaskLooper>();
-                ConfigureAndRegister<IBus>();
-            };
+            IocContainerLocator.SetContainer(new IocContainer());
+            ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
+            ConfigureAndRegister(new EndpointAddressBuilder(IocContainerLocator.Locate().Resolve<IMachineIdentifier>()));
+            ConfigureAndRegister<IRequestSendChannelBuilder>(new TestRequestSendChannelBuilder());
+            ConfigureAndRegister<IReplyRecieveChannelBuilder>();
+            ConfigureAndRegister<IMessageReciever>();
+            ConfigureAndRegister<ITaskLooper>();
+            ConfigureAndRegister<IBus>();
         };
 
         Because of = () => Configuration.Configure.Messaging()

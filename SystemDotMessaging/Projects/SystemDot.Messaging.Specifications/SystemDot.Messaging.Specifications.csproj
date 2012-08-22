@@ -69,6 +69,8 @@
     <Compile Include="configuration\request_reply\recieving\when_configuring_a_request_reply_receiver_channel.cs" />
     <Compile Include="ioc\AnotherInheritingComponent.cs" />
     <Compile Include="ioc\AnotherTestComponent.cs" />
+    <Compile Include="ioc\when_manually_registering_an_instance_in_the_container_for_the_second_time.cs" />
+    <Compile Include="ioc\when_registering_an_instance_in_the_container_for_the_second_time.cs" />
     <Compile Include="ioc\IAnotherTestComponent.cs" />
     <Compile Include="ioc\ITestComponent.cs" />
     <Compile Include="ioc\ITestComponentWithParameters.cs" />

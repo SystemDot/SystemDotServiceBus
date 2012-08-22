@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.MultiChannel.Sender
                 .OpenChannel("TestSenderB").ForRequestReplySendingTo("TestRecieverB").OnlyForMessages(FilteredBy.NamePattern("Channel2"))
                 .Initialise();
 
-            IocContainer.Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());
+            IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());
 
             do
             {

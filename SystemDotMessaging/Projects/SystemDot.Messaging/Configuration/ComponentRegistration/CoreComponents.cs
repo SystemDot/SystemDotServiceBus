@@ -7,12 +7,12 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {
     public static class CoreComponents
     {
-        public static void Register()
+        public static void Register(IIocContainer container)
         {
-            IocContainer.RegisterInstance<IWebRequestor, WebRequestor>();
-            IocContainer.RegisterInstance<ISerialiser, PlatformAgnosticSerialiser>();
-            IocContainer.RegisterInstance<IMachineIdentifier, MachineIdentifier>();
-            IocContainer.RegisterInstance<EndpointAddressBuilder, EndpointAddressBuilder>();
+            container.RegisterInstance<IWebRequestor, WebRequestor>();
+            container.RegisterInstance<ISerialiser, PlatformAgnosticSerialiser>();
+            container.RegisterInstance<IMachineIdentifier, MachineIdentifier>();
+            container.RegisterInstance<EndpointAddressBuilder, EndpointAddressBuilder>();
         }
     }
 }

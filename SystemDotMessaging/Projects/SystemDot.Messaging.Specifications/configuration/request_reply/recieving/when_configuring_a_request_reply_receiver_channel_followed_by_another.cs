@@ -14,19 +14,17 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
     public class when_configuring_a_request_reply_receiver_channel_followed_by_another : WithConfiguationSubject
     {
         const string Channel2Name = "TestChannel2";
-        
+
         Establish context = () =>
         {
-            Components.Registration = () =>
-            {
-                ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
-                ConfigureAndRegister(new EndpointAddressBuilder(IocContainer.Resolve<IMachineIdentifier>()));
-                ConfigureAndRegister<IRequestRecieveChannelBuilder>();
-                ConfigureAndRegister<IReplySendChannelBuilder>();
-                ConfigureAndRegister<IMessageReciever>();
-                ConfigureAndRegister<ITaskLooper>();
-                ConfigureAndRegister<IBus>();
-            };
+            IocContainerLocator.SetContainer(new IocContainer());
+            ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
+            ConfigureAndRegister(new EndpointAddressBuilder(IocContainerLocator.Locate().Resolve<IMachineIdentifier>()));
+            ConfigureAndRegister<IRequestRecieveChannelBuilder>();
+            ConfigureAndRegister<IReplySendChannelBuilder>();
+            ConfigureAndRegister<IMessageReciever>();
+            ConfigureAndRegister<ITaskLooper>();
+            ConfigureAndRegister<IBus>();
         };
 
         Because of = () => Configuration.Configure.Messaging()

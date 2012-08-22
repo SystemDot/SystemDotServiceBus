@@ -15,19 +15,17 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
     {
         const string ChannelName = "Test";
         static IBus bus;
-        
+
         Establish context = () =>
         {
-            Components.Registration = () =>
-            {
-                ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
-                ConfigureAndRegister(new EndpointAddressBuilder(IocContainer.Resolve<IMachineIdentifier>()));
-                ConfigureAndRegister<IRequestRecieveChannelBuilder>();
-                ConfigureAndRegister<IReplySendChannelBuilder>();                
-                ConfigureAndRegister<IMessageReciever>();
-                ConfigureAndRegister<ITaskLooper>();
-                ConfigureAndRegister<IBus>();
-            };
+            IocContainerLocator.SetContainer(new IocContainer());
+            ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
+            ConfigureAndRegister(new EndpointAddressBuilder(IocContainerLocator.Locate().Resolve<IMachineIdentifier>()));
+            ConfigureAndRegister<IRequestRecieveChannelBuilder>();
+            ConfigureAndRegister<IReplySendChannelBuilder>();
+            ConfigureAndRegister<IMessageReciever>();
+            ConfigureAndRegister<ITaskLooper>();
+            ConfigureAndRegister<IBus>();
         };
 
         Because of = () => bus = Configuration.Configure.Messaging()

@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Messages.Pipelines
 
         public ProcessorBuilder<TOut> Pump()
         {
-            var pump = new Pump<TOut>(IocContainer.Resolve<ITaskStarter>());
+            var pump = new Pump<TOut>(IocContainerLocator.Locate().Resolve<ITaskStarter>());
             this.processor.MessageProcessed += pump.InputMessage;
 
             return new ProcessorBuilder<TOut>(pump);

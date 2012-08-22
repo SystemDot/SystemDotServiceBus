@@ -1,29 +1,19 @@
 using System;
+using SystemDot.Messaging.Ioc;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {
     public class Components 
     {
-        public static Action Registration { get; set; }
-
-        static Components()
-        {
-            Registration = RegisterComponents;    
-        }
-
-        public static void RegisterComponents()
-        {
-            ThreadingComponents.Register();
-            CoreComponents.Register();
-            ChannelComponents.Register();
-            PublishingComponents.Register();
-            RequestReplyComponents.Register();
-        }
-
         public static void Register()
         {
-            Registration();
-        }
+            IIocContainer container = IocContainerLocator.Locate();
 
+            ThreadingComponents.Register(container);
+            CoreComponents.Register(container);
+            ChannelComponents.Register(container);
+            PublishingComponents.Register(container);
+            RequestReplyComponents.Register(container);
+        }
     }
 }

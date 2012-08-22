@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.OtherTestSubscriber
                 .OpenChannel("TestOtherSubscriber").ForSubscribingTo("TestPublisher")
                 .Initialise();
 
-            IocContainer.Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());
+            IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());
             
             Console.WriteLine("I am the other subscriber, listening for messages..");
 

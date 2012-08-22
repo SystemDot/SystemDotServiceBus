@@ -1,7 +1,6 @@
 using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Configuration.ComponentRegistration;
 using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Transport;
@@ -18,31 +17,29 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
         const string Publisher1Name = "TestPublisher1";
         const string Channel2Name = "TestChannel2";
         const string Publisher2Name = "TestPublisher2";
-        
+
         Establish context = () =>
         {
-            Components.Registration = () =>
-            {
-                ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
-                ConfigureAndRegister(new EndpointAddressBuilder(new MachineIdentifier()));
-                ConfigureAndRegister<ISubscriberChannelBuilder>();
-                ConfigureAndRegister<ISubscriptionRequestChannelBuilder>();
-                ConfigureAndRegister<IMessageReciever>();
-                ConfigureAndRegister<ITaskLooper>();
-                ConfigureAndRegister<IBus>();
+            IocContainerLocator.SetContainer(new IocContainer());
+            ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
+            ConfigureAndRegister(new EndpointAddressBuilder(new MachineIdentifier()));
+            ConfigureAndRegister<ISubscriberChannelBuilder>();
+            ConfigureAndRegister<ISubscriptionRequestChannelBuilder>();
+            ConfigureAndRegister<IMessageReciever>();
+            ConfigureAndRegister<ITaskLooper>();
+            ConfigureAndRegister<IBus>();
 
-                The<ISubscriptionRequestChannelBuilder>()
-                    .WhenToldTo(b => b.Build(
-                        GetEndpointAddress(Channel1Name, The<IMachineIdentifier>().GetMachineName()),
-                        GetEndpointAddress(Publisher1Name, The<IMachineIdentifier>().GetMachineName())))
-                    .Return(The<ISubscriptionRequestor>());
+            The<ISubscriptionRequestChannelBuilder>()
+                .WhenToldTo(b => b.Build(
+                    GetEndpointAddress(Channel1Name, The<IMachineIdentifier>().GetMachineName()),
+                    GetEndpointAddress(Publisher1Name, The<IMachineIdentifier>().GetMachineName())))
+                .Return(The<ISubscriptionRequestor>());
 
-                The<ISubscriptionRequestChannelBuilder>()
-                    .WhenToldTo(b => b.Build(
-                        GetEndpointAddress(Channel2Name, The<IMachineIdentifier>().GetMachineName()),
-                        GetEndpointAddress(Publisher2Name, The<IMachineIdentifier>().GetMachineName())))
-                    .Return(The<ISubscriptionRequestor>());
-            };
+            The<ISubscriptionRequestChannelBuilder>()
+                .WhenToldTo(b => b.Build(
+                    GetEndpointAddress(Channel2Name, The<IMachineIdentifier>().GetMachineName()),
+                    GetEndpointAddress(Publisher2Name, The<IMachineIdentifier>().GetMachineName())))
+                .Return(The<ISubscriptionRequestor>());
         };
 
         Because of = () => Configuration.Configure.Messaging()

@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
                 .ForRequestReplyRecieving()
                 .Initialise();
 
-            IocContainer.Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer(bus));
+            IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer(bus));
 
             Console.WriteLine("I am the reciever. Press enter to exit");
 

@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Combined.Server
                 .OpenChannel("TestPublisher").ForPublishing()
                 .Initialise();
 
-            IocContainer.Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer(bus));
+            IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer(bus));
 
             Console.WriteLine("I am the server. Press enter to exit");
 

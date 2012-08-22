@@ -1,5 +1,6 @@
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration.ComponentRegistration;
+using SystemDot.Messaging.Ioc;
 
 namespace SystemDot.Messaging.Configuration
 {
@@ -7,13 +8,13 @@ namespace SystemDot.Messaging.Configuration
     {
         public MessageServerConfiguration UsingHttpTransport(MessageServer server)
         {
-            HttpLongPollingTransportComponents.Register();
+            HttpLongPollingTransportComponents.Register(IocContainerLocator.Locate());
             return new MessageServerConfiguration(server);
         }
 
         public MessageServerConfiguration UsingInProcessTransport()
         {
-            InProcessTransportComponents.Register();
+            InProcessTransportComponents.Register(IocContainerLocator.Locate());
             return new MessageServerConfiguration(MessageServer.Local());
         }
 

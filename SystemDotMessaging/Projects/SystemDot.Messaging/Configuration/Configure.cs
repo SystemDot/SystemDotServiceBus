@@ -6,6 +6,7 @@ namespace SystemDot.Messaging.Configuration
     {
         public static MessagingConfiguration Messaging()
         {
+            Components.Register();
             return new MessagingConfiguration();
         }
     }

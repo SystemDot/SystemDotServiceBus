@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.MultiChannel.RecieverA
                 .OpenChannel("TestRecieverA").ForRequestReplyRecieving()
                 .Initialise();
 
-            IocContainer.Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer(bus));
+            IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer(bus));
 
             Console.WriteLine("I am reciever A");
             Console.ReadLine();                

@@ -7,11 +7,11 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
     {
         const int DefaultWorkerThreads = 4;
 
-        public static void Register()
+        public static void Register(IIocContainer iocContainer)
         {
-            IocContainer.RegisterInstance<ITaskStarter, TaskStarter>();
-            IocContainer.RegisterInstance<ITaskLooper, TaskLooper>();
-            IocContainer.RegisterInstance<ITaskScheduler, TaskScheduler>();
+            iocContainer.RegisterInstance<ITaskStarter, TaskStarter>();
+            iocContainer.RegisterInstance<ITaskLooper, TaskLooper>();
+            iocContainer.RegisterInstance<ITaskScheduler, TaskScheduler>();
         }
     }
 }

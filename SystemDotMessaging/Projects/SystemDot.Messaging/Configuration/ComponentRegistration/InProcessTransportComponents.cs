@@ -6,10 +6,11 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {
     public static class InProcessTransportComponents
     {
-        public static void Register()
+        public static void Register(IIocContainer iocContainer)
         {
-            IocContainer.RegisterInstance<IMessageReciever, MessageReciever>();
-            IocContainer.RegisterInstance<IMessageSender, MessageSender>();
+            iocContainer.RegisterInstance<InProcessMessageServer, InProcessMessageServer>();
+            iocContainer.RegisterInstance<IMessageReciever, MessageReciever>();
+            iocContainer.RegisterInstance<IMessageSender, MessageSender>();
         }
     }
 }

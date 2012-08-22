@@ -7,12 +7,12 @@ namespace SystemDot.Messaging.Configuration
     {
         protected static T Resolve<T>()  where T : class
         {
-            return IocContainer.Resolve<T>();
+            return IocContainerLocator.Locate().Resolve<T>();
         }
 
         protected EndpointAddress BuildEndpointAddress(string address, string defaultServerName)
         {
-            return IocContainer.Resolve<EndpointAddressBuilder>().Build(address, defaultServerName);
+            return IocContainerLocator.Locate().Resolve<EndpointAddressBuilder>().Build(address, defaultServerName);
         }
     }
 }

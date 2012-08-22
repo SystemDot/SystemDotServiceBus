@@ -6,15 +6,15 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {
     public static class PublishingComponents
     {
-        public static void Register()
+        public static void Register(IIocContainer iocContainer)
         {
-            IocContainer.RegisterInstance<IPublisherRegistry, PublisherRegistry>();
-            IocContainer.RegisterInstance<IChannelBuilder, ChannelBuilder>();
-            IocContainer.RegisterInstance<SubscriptionRequestHandler, SubscriptionRequestHandler>();
-            IocContainer.RegisterInstance<ISubscriptionHandlerChannelBuilder, SubscriptionHandlerChannelBuilder>();
-            IocContainer.RegisterInstance<IPublisherChannelBuilder, PublisherChannelBuilder>();
-            IocContainer.RegisterInstance<ISubscriberChannelBuilder, SubscriberChannelBuilder>();
-            IocContainer.RegisterInstance<ISubscriptionRequestChannelBuilder, SubscriptionRequestChannelBuilder>();                
+            iocContainer.RegisterInstance<IPublisherRegistry, PublisherRegistry>();
+            iocContainer.RegisterInstance<IChannelBuilder, ChannelBuilder>();
+            iocContainer.RegisterInstance<SubscriptionRequestHandler, SubscriptionRequestHandler>();
+            iocContainer.RegisterInstance<ISubscriptionHandlerChannelBuilder, SubscriptionHandlerChannelBuilder>();
+            iocContainer.RegisterInstance<IPublisherChannelBuilder, PublisherChannelBuilder>();
+            iocContainer.RegisterInstance<ISubscriberChannelBuilder, SubscriberChannelBuilder>();
+            iocContainer.RegisterInstance<ISubscriptionRequestChannelBuilder, SubscriptionRequestChannelBuilder>();                
         }
     }
 }

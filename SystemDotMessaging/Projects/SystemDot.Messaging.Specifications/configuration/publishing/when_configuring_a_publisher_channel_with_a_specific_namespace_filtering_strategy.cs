@@ -17,20 +17,18 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
     public class when_configuring_a_publisher_channel_with_a_specific_namespace_filtering_strategy : WithConfiguationSubject
     {
         const string Channel2Name = "Test2";
-        
+
         Establish context = () =>
         {
-            Components.Registration = () =>
-            {
-                ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
-                ConfigureAndRegister(new EndpointAddressBuilder(new MachineIdentifier()));
-                ConfigureAndRegister<ISubscriptionHandlerChannelBuilder>();
-                ConfigureAndRegister<IPublisherRegistry>();
-                ConfigureAndRegister<IPublisherChannelBuilder>(new TestPublisherChannelBuilder());
-                ConfigureAndRegister<IMessageReciever>();
-                ConfigureAndRegister<ITaskLooper>();
-                ConfigureAndRegister<IBus>();
-            };
+            IocContainerLocator.SetContainer(new IocContainer());
+            ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
+            ConfigureAndRegister(new EndpointAddressBuilder(new MachineIdentifier()));
+            ConfigureAndRegister<ISubscriptionHandlerChannelBuilder>();
+            ConfigureAndRegister<IPublisherRegistry>();
+            ConfigureAndRegister<IPublisherChannelBuilder>(new TestPublisherChannelBuilder());
+            ConfigureAndRegister<IMessageReciever>();
+            ConfigureAndRegister<ITaskLooper>();
+            ConfigureAndRegister<IBus>();
         };
 
         Because of = () => Configuration.Configure.Messaging()

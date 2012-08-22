@@ -18,25 +18,23 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
         const string ChannelName = "TestChannel";
         const string PublisherName = "TestPublisher";
         static IBus bus;
-        
+
         Establish context = () =>
         {
-            Components.Registration = () =>
-            {
-                ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
-                ConfigureAndRegister(new EndpointAddressBuilder(new MachineIdentifier()));
-                ConfigureAndRegister<ISubscriberChannelBuilder>();
-                ConfigureAndRegister<ISubscriptionRequestChannelBuilder>();
-                ConfigureAndRegister<IMessageReciever>();
-                ConfigureAndRegister<ITaskLooper>();
-                ConfigureAndRegister<IBus>();
+            IocContainerLocator.SetContainer(new IocContainer());
+            ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
+            ConfigureAndRegister(new EndpointAddressBuilder(new MachineIdentifier()));
+            ConfigureAndRegister<ISubscriberChannelBuilder>();
+            ConfigureAndRegister<ISubscriptionRequestChannelBuilder>();
+            ConfigureAndRegister<IMessageReciever>();
+            ConfigureAndRegister<ITaskLooper>();
+            ConfigureAndRegister<IBus>();
 
-                The<ISubscriptionRequestChannelBuilder>()
-                    .WhenToldTo(b => b.Build(
-                        GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName()),
-                        GetEndpointAddress(PublisherName, The<IMachineIdentifier>().GetMachineName())))
-                    .Return(The<ISubscriptionRequestor>());
-            };
+            The<ISubscriptionRequestChannelBuilder>()
+                .WhenToldTo(b => b.Build(
+                    GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName()),
+                    GetEndpointAddress(PublisherName, The<IMachineIdentifier>().GetMachineName())))
+                .Return(The<ISubscriptionRequestor>());
         };
 
         Because of = () => bus = Configuration.Configure.Messaging()

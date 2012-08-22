@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
                 .OpenChannel("TestSender").ForRequestReplySendingTo("TestReciever")
                 .Initialise();
 
-            IocContainer.Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());
+            IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());
 
             do
             {

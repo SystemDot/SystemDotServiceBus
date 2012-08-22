@@ -6,10 +6,10 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {
     public static class HttpLongPollingTransportComponents
     {
-        public static void Register()
+        public static void Register(IIocContainer container)
         {
-            IocContainer.RegisterInstance<IMessageReciever, LongPollReciever>();
-            IocContainer.RegisterInstance<IMessageSender, MessageSender>();
+            container.RegisterInstance<IMessageReciever, LongPollReciever>();
+            container.RegisterInstance<IMessageSender, MessageSender>();
         }
     }
 }

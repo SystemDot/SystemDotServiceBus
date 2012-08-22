@@ -2,14 +2,15 @@ using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Pipelines;
 using SystemDot.Messaging.Messages.Processing;
+using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Channels.Publishing.Builders
 {
     public class ChannelBuilder : IChannelBuilder 
     {
-        readonly IMessageInputter<MessagePayload> messageSender;
+        readonly IMessageSender messageSender;
 
-        public ChannelBuilder(IMessageInputter<MessagePayload> messageSender)
+        public ChannelBuilder(IMessageSender messageSender)
         {
             this.messageSender = messageSender;
         }

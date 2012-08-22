@@ -2,6 +2,7 @@ using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Configuration.ComponentRegistration;
+using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Processing.Filtering;
 using SystemDot.Messaging.Transport;
@@ -16,20 +17,18 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
     {
         const string ChannelName = "Test";
         static IBus bus;
-        
+
         Establish context = () =>
         {
-            Components.Registration = () =>
-            {
-                ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
-                ConfigureAndRegister<EndpointAddressBuilder>(new EndpointAddressBuilder(new MachineIdentifier()));
-                ConfigureAndRegister<ISubscriptionHandlerChannelBuilder>();
-                ConfigureAndRegister<IPublisherRegistry>();
-                ConfigureAndRegister<IPublisherChannelBuilder>(new TestPublisherChannelBuilder());
-                ConfigureAndRegister<IMessageReciever>();
-                ConfigureAndRegister<ITaskLooper>();
-                ConfigureAndRegister<IBus>();
-            };
+            IocContainerLocator.SetContainer(new IocContainer());
+            ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
+            ConfigureAndRegister<EndpointAddressBuilder>(new EndpointAddressBuilder(new MachineIdentifier()));
+            ConfigureAndRegister<ISubscriptionHandlerChannelBuilder>();
+            ConfigureAndRegister<IPublisherRegistry>();
+            ConfigureAndRegister<IPublisherChannelBuilder>(new TestPublisherChannelBuilder());
+            ConfigureAndRegister<IMessageReciever>();
+            ConfigureAndRegister<ITaskLooper>();
+            ConfigureAndRegister<IBus>();
         };
 
         Because of = () => bus = Configuration.Configure.Messaging()

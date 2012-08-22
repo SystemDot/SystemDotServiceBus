@@ -1,11 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Configuration.HttpMessaging;
 using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Messages.Processing.Handling;
 using SystemDot.Messaging.Test.Messages;
-using SystemDot.Messaging.TestSubscriber.Handlers;
+using SystemDot.Messaging.TestReciever;
 using Windows.UI.Core;
+using SystemDot.Messaging.TestSubscriber.Handlers;
 
 namespace SystemDot.Messaging.TestSubscriber.ViewModels
 {
@@ -15,28 +15,35 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
 
         public ObservableCollection<string> Messages { get; private set; }
 
-        public ObservableCollection<string> Replies { get; set; }
+        public ObservableCollection<string> Replies { get; private set; }
 
         public MainPageViewModel()
         {
-            var loggingMechanism = new ObservableLoggingMechanism(CoreWindow.GetForCurrentThread().Dispatcher) { ShowInfo = true };
+            var loggingMechanism = new ObservableLoggingMechanism(CoreWindow.GetForCurrentThread().Dispatcher)
+            {
+                ShowInfo = true
+            };
  
             Messages = loggingMechanism.Messages;
             Replies = new ObservableCollection<string>();
 
             this.bus = Configure.Messaging()
                .LoggingWith(loggingMechanism)
-               .UsingHttpTransport(MessageServer.Local())
+               .UsingInProcessTransport()
                .OpenChannel("TestSender").ForRequestReplySendingTo("TestReciever")
-               .WithHook(new MessageMarshallingHook())
+               .WithHook(new MessageMarshallingHook(CoreWindow.GetForCurrentThread().Dispatcher))
                .Initialise();
 
-            IocContainer.Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer(this.bus, this));
+            IocContainerLocator.Locate()
+                .Resolve<MessageHandlerRouter>()
+                .RegisterHandler(new ResponseHandler(this.bus, this));
+
+            RecieverConfiguration.ConfigureMessaging();
         }
 
         public void SendMessage()
         {
-            bus.Send(new TestMessage("Hello"));
+            bus.Send(new TestQuery { Text = "Hello" });
         }
     }
 }

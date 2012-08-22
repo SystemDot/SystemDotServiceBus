@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Configuration.ComponentRegistration;
 
 namespace SystemDot.Messaging.Configuration
 {
@@ -13,7 +12,6 @@ namespace SystemDot.Messaging.Configuration
         {
             Contract.Requires(messageServer != null);
 
-            Components.Register();
             this.messageServer = messageServer;
         }
 

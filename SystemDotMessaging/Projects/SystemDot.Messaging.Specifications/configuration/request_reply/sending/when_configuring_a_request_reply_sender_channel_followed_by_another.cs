@@ -16,20 +16,18 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
     {
         const string Channel2Name = "Channel2";
         const string Reciever2Address = "RecieverAddress2";
-        
+
         Establish context = () =>
         {
-            Components.Registration = () =>
-            {
-                ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
-                ConfigureAndRegister(new EndpointAddressBuilder(new MachineIdentifier()));
-                ConfigureAndRegister<IRequestSendChannelBuilder>(new TestRequestSendChannelBuilder());
-                ConfigureAndRegister<IRequestRecieveChannelBuilder>();
-                ConfigureAndRegister<IReplyRecieveChannelBuilder>();
-                ConfigureAndRegister<IMessageReciever>();
-                ConfigureAndRegister<ITaskLooper>();
-                ConfigureAndRegister<IBus>();
-            };
+            IocContainerLocator.SetContainer(new IocContainer());
+            ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
+            ConfigureAndRegister(new EndpointAddressBuilder(new MachineIdentifier()));
+            ConfigureAndRegister<IRequestSendChannelBuilder>(new TestRequestSendChannelBuilder());
+            ConfigureAndRegister<IRequestRecieveChannelBuilder>();
+            ConfigureAndRegister<IReplyRecieveChannelBuilder>();
+            ConfigureAndRegister<IMessageReciever>();
+            ConfigureAndRegister<ITaskLooper>();
+            ConfigureAndRegister<IBus>();
         };
 
         Because of = () => Configuration.Configure.Messaging()

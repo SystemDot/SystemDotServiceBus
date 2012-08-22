@@ -6,13 +6,13 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {
     public static class RequestReplyComponents
     {
-        public static void Register()
+        public static void Register(IIocContainer iocContainer)
         {
-            IocContainer.RegisterInstance<ReplyAddressLookup, ReplyAddressLookup>();
-            IocContainer.RegisterInstance<IReplyRecieveChannelBuilder, ReplyRecieveChannelBuilder>();
-            IocContainer.RegisterInstance<IRequestRecieveChannelBuilder, RequestRecieveChannelBuilder>();
-            IocContainer.RegisterInstance<IRequestSendChannelBuilder, RequestSendChannelBuilder>();
-            IocContainer.RegisterInstance<IReplySendChannelBuilder, ReplySendChannelBuilder>();
+            iocContainer.RegisterInstance<ReplyAddressLookup, ReplyAddressLookup>();
+            iocContainer.RegisterInstance<IReplyRecieveChannelBuilder, ReplyRecieveChannelBuilder>();
+            iocContainer.RegisterInstance<IRequestRecieveChannelBuilder, RequestRecieveChannelBuilder>();
+            iocContainer.RegisterInstance<IRequestSendChannelBuilder, RequestSendChannelBuilder>();
+            iocContainer.RegisterInstance<IReplySendChannelBuilder, ReplySendChannelBuilder>();
         }
     }
 }

@@ -1,4 +1,5 @@
 using SystemDot.Logging;
+using SystemDot.Messaging.Ioc;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -12,8 +13,8 @@ namespace SystemDot.Messaging.Specifications.configuration
 
         Establish context = () =>
         {
+            IocContainerLocator.SetContainer(new IocContainer());
             toLogWith = An<ILoggingMechanism>();
-
             Configuration.Configure.Messaging().LoggingWith(toLogWith);
         };
 

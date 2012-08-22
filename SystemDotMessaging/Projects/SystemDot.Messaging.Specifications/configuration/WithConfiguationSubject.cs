@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Specifications.configuration
             Configure(toSet);
             var concrete = The<T>();
 
-            IocContainer.RegisterInstance(() => concrete);
+            IocContainerLocator.Locate().RegisterInstance(() => concrete);
         }
 
         protected static EndpointAddress GetEndpointAddress(string channelName, string serverName)

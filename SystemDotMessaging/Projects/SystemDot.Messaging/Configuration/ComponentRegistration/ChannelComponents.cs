@@ -6,11 +6,11 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {
     public static class ChannelComponents
     {
-        public static void Register()
+        public static void Register(IIocContainer container)
         {
-            IocContainer.RegisterInstance<IBus, MessageBus>();
-            IocContainer.RegisterInstance<MessagePayloadCopier, MessagePayloadCopier>();
-            IocContainer.RegisterInstance<MessageHandlerRouter, MessageHandlerRouter>();            
+            container.RegisterInstance<IBus, MessageBus>();
+            container.RegisterInstance<MessagePayloadCopier, MessagePayloadCopier>();
+            container.RegisterInstance<MessageHandlerRouter, MessageHandlerRouter>();            
         }
     }
 }

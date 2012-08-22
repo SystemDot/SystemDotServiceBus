@@ -4,28 +4,37 @@ using System.Linq;
 
 namespace SystemDot.Messaging.Ioc
 {
-    public static class IocContainer
+    public class IocContainer : IIocContainer
     {
-        static readonly Dictionary<Type, ConcreteInstance> components = new Dictionary<Type, ConcreteInstance>();
+        readonly Dictionary<Type, ConcreteInstance> components = new Dictionary<Type, ConcreteInstance>();
         
-        public static void RegisterInstance<TPlugin>(Func<TPlugin> instanceFactory) where TPlugin : class
+        public void RegisterInstance<TPlugin>(Func<TPlugin> instanceFactory) where TPlugin : class
         {
+            if (ComponentExists<TPlugin>()) return;
+            
             components[typeof(TPlugin)] = new ConcreteInstance(instanceFactory);
         }
 
-        public static void RegisterInstance<TPlugin, TConcrete>()
+        public void RegisterInstance<TPlugin, TConcrete>()
             where TPlugin : class
             where TConcrete : class
         {
+            if(ComponentExists<TPlugin>()) return;        
+
             components[typeof(TPlugin)] = new ConcreteInstance(typeof(TConcrete));
         }
 
-        public static T Resolve<T>() where T : class
+        bool ComponentExists<TPlugin>() 
+        {
+            return components.ContainsKey(typeof(TPlugin));
+        }
+
+        public T Resolve<T>() where T : class
         {
             return (T)Resolve(typeof(T));
         }
 
-        static object Resolve(Type type)
+        object Resolve(Type type)
         {
             var concreteType = components[type];
 
@@ -38,7 +47,7 @@ namespace SystemDot.Messaging.Ioc
             return CreateObjectInstance(concreteType);
         }
 
-        static object CreateObjectInstance(ConcreteInstance concreteType)
+        object CreateObjectInstance(ConcreteInstance concreteType)
         {
             var constructorInfo = concreteType.ObjectType.GetConstructors().First();
             var parameters = constructorInfo.GetParameters();
