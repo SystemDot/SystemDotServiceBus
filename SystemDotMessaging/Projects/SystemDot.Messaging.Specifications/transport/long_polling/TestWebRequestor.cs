@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using SystemDot.Http;
-using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Transport.Http.LongPolling;
 using SystemDot.Messaging.Messages.Packaging.Headers;
@@ -26,15 +24,14 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
             messages = new List<MessagePayload>();
         }
 
-        public Task SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest)
+        public void SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest)
         {
-            return new Task(() => { });
         }
 
-        public Task SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest, Action<Stream> toPerformOnResponse)
+        public void SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest, Action<Stream> toPerformOnResponse)
         {
             if (toCheck.Url != address.Url)
-                return new Task(() => { });
+                return;
 
             var request = new MemoryStream();
             toPerformOnRequest(request);
@@ -42,7 +39,7 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
             var requestMessagePayload = request.Deserialise<MessagePayload>(formatter);
             
             if(!requestMessagePayload.IsLongPollRequest()) 
-                return new Task(() => { });
+                return;
 
             var response = new MemoryStream();
 
@@ -53,8 +50,6 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
                 formatter);
 
             toPerformOnResponse(response);
-
-            return new Task(() => { });
         }
 
         public void AddMessages(params MessagePayload[] messagePayloads)

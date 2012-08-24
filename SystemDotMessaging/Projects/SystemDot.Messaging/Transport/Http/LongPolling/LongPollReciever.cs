@@ -34,15 +34,15 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
         public void RegisterListeningAddress(EndpointAddress toRegister)
         {
             Contract.Requires(toRegister != EndpointAddress.Empty);
-            
-            this.looper.RegisterToLoop(() => Poll(toRegister));
+
+            this.looper.RegisterToLoop(() => Task.Factory.StartNew(() => Poll(toRegister)));
         }
 
-        Task Poll(EndpointAddress address)
+        void Poll(EndpointAddress address)
         {
             Logger.Info("Long polling for messages for {0}", address);
 
-            return this.requestor.SendPut(
+            this.requestor.SendPut(
                 address.GetUrl(), 
                 s => this.formatter.Serialise(s, CreateLongPollPayload(address)), 
                 RecieveResponse);

@@ -1,81 +1,44 @@
 using System;
 using System.IO;
 using System.Net;
-using System.Threading.Tasks;
 using SystemDot.Logging;
 
 namespace SystemDot.Http
 {
     public class WebRequestor : IWebRequestor
     {
-        public Task SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest)
+        public void SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest)
         {
-            return SendPut(address, toPerformOnRequest, s => { });
+            SendPut(address, toPerformOnRequest, s => { });
         }
 
-        public Task SendPut(
-            FixedPortAddress address,
-            Action<Stream> toPerformOnRequest,
-            Action<Stream> toPerformOnResponse)
+        public void SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest, Action<Stream> toPerformOnResponse)
         {
             var request = (HttpWebRequest) WebRequest.Create(address.Url);
             request.Method = "PUT";
-            
-            SendRequest(toPerformOnRequest, request);
-            return RecieveResponse(toPerformOnResponse, request);   
-        }
 
-        private static void SendRequest(Action<Stream> toPerformOnRequest, HttpWebRequest request)
-        {
-            var requestTask = Task.Factory.FromAsync<Stream>(
-                request.BeginGetRequestStream, 
-                request.EndGetRequestStream,
-                request)
-                .ContinueWith(task => PerformActionOnRequest(toPerformOnRequest, task));
-
-            requestTask.Wait();
-        }
-
-        static void PerformActionOnRequest(Action<Stream> toPerformOnRequest, Task<Stream> task)
-        {
             try
             {
-                using (task.Result) 
-                    toPerformOnRequest(task.Result);
+                SendRequest(toPerformOnRequest, request);
+                RecieveResponse(toPerformOnResponse, request);
             }
-            catch (AggregateException e)
-            {
-                LogAggregateException(e);
-            }
-        }
-
-        private static Task RecieveResponse(Action<Stream> toPerformOnResponse, HttpWebRequest request)
-        {
-            return Task.Factory
-                .FromAsync<WebResponse>(request.BeginGetResponse, request.EndGetResponse, request)
-                .ContinueWith(task => PerformActionOnResponse(toPerformOnResponse, task));
-        }
-
-        static void PerformActionOnResponse(Action<Stream> toPerformOnResponse, Task<WebResponse> task)
-        {
-            try
-            {
-                using (task.Result.GetResponseStream()) 
-                    toPerformOnResponse(task.Result.GetResponseStream());
-            }
-            catch (AggregateException e)
-            {
-                LogAggregateException(e);
-            }
-        }
-
-        private static void LogAggregateException(AggregateException toLog)
-        {
-            toLog.Handle(e =>
+            catch (WebException e)
             {
                 Logger.Error(e.Message);
-                return true;
-            });
+            }
+        }
+
+        static void SendRequest(Action<Stream> toPerformOnRequest, HttpWebRequest request)
+        {
+            using(var stream = request.GetRequestStream())
+                toPerformOnRequest(stream);
+        }
+
+        static void RecieveResponse(Action<Stream> toPerformOnResponse, HttpWebRequest request)
+        {
+            using (var response = request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+                toPerformOnResponse(stream);
         }
     }
 }
