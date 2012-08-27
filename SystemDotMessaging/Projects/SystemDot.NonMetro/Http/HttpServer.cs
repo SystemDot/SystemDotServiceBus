@@ -12,8 +12,6 @@ namespace SystemDot.Http
         readonly IHttpHandler handler;
         readonly HttpListener listener;
         
-        bool isStopped;
-        
         public HttpServer(FixedPortAddress address, IHttpHandler handler)
         {
             Contract.Requires(handler != null);
@@ -63,7 +61,6 @@ namespace SystemDot.Http
 
         public void StopWork()
         {
-            this.isStopped = true;
             this.listener.Stop();
             this.listener.Prefixes.Clear();
             this.listener.Close();

@@ -1,8 +1,8 @@
+using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Configuration.ComponentRegistration;
-using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Distribution;
 using SystemDot.Messaging.Messages.Processing.Filtering;
@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
 
         Establish context = () =>
         {
-            IocContainerLocator.SetContainer(new IocContainer());
+            IocContainerLocator.SetContainer(new IocContainer(new TypeExtender()));
             ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
             ConfigureAndRegister(new EndpointAddressBuilder(new MachineIdentifier()));
             ConfigureAndRegister<ISubscriptionHandlerChannelBuilder>();
@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
             ConfigureAndRegister<IBus>();
         };
 
-        Because of = () => Configuration.Configure.Messaging()
+        Because of = () => Configuration.Configure.Messaging(IocContainerLocator.Locate())
             .UsingHttpTransport(MessageServer.Local())
                 .OpenChannel("Test1").ForPublishing().OnlyForMessages(FilteredBy.Namespace("Namespace"))
             .Initialise();

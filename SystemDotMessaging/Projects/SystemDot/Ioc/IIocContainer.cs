@@ -1,6 +1,6 @@
 using System;
 
-namespace SystemDot.Messaging.Ioc
+namespace SystemDot.Ioc
 {
     public interface IIocContainer
     {

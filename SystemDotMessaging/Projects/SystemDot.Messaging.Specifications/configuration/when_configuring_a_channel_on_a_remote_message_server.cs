@@ -1,7 +1,7 @@
+using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Configuration.ComponentRegistration;
-using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
@@ -20,7 +20,8 @@ namespace SystemDot.Messaging.Specifications.configuration
 
         Establish context = () =>
         {
-            IocContainerLocator.SetContainer(new IocContainer());
+            IocContainerLocator.SetContainer(new IocContainer(new TypeExtender()));
+
             ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
             ConfigureAndRegister(new EndpointAddressBuilder(new MachineIdentifier()));
             ConfigureAndRegister<IRequestRecieveChannelBuilder>();
@@ -29,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.configuration
             ConfigureAndRegister<IBus>();
         };
 
-        Because of = () => bus = Configuration.Configure.Messaging()
+        Because of = () => bus = Configuration.Configure.Messaging(IocContainerLocator.Locate())
             .UsingHttpTransport(MessageServer.Named(ServerName))
             .OpenChannel(ChannelName).ForRequestReplyRecieving()
             .Initialise();

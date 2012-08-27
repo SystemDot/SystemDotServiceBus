@@ -1,14 +1,15 @@
-﻿using SystemDot.Messaging.Ioc;
+﻿using SystemDot.Ioc;
 using Machine.Fakes;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.ioc
+namespace SystemDot.Specifications.ioc
 {
     [Subject("Ioc")]
     public class when_registering_an_instance_with_parameters_in_the_container : WithSubject<IocContainer>
     {
         Establish context = () =>
         {
+            Configure<ITypeExtender>(new TypeExtender());
             Subject.RegisterInstance<ITestComponent, TestComponent>();
             Subject.RegisterInstance<IAnotherTestComponent>(() => new AnotherTestComponent(Subject.Resolve<IThirdTestComponent>(), new AnotherInheritingComponent()));
             Subject.RegisterInstance<IThirdTestComponent, ThirdTestComponent>();

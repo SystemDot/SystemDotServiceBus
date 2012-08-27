@@ -1,6 +1,6 @@
+using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
-using SystemDot.Messaging.Ioc;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {

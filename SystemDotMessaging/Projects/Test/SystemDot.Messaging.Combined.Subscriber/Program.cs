@@ -1,7 +1,7 @@
 ﻿using System;
+using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Messages.Processing.Handling;
 
 namespace SystemDot.Messaging.Combined.Subscriber

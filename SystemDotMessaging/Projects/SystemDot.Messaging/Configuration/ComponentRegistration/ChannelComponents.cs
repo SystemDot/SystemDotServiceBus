@@ -1,4 +1,4 @@
-using SystemDot.Messaging.Ioc;
+using SystemDot.Ioc;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Processing.Handling;
 

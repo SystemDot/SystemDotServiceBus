@@ -16,15 +16,8 @@ namespace SystemDot.Http
         {
             var request = CreateRequest(address);
 
-            try
-            {
-                SendRequest(toPerformOnRequest, request);
-                RecieveResponse(toPerformOnResponse, request);
-            }
-            catch (WebException e)
-            {
-                Logger.Error(e.Message);
-            }
+            SendRequest(toPerformOnRequest, request);
+            RecieveResponse(toPerformOnResponse, request);
         }
 
         static HttpWebRequest CreateRequest(FixedPortAddress address)

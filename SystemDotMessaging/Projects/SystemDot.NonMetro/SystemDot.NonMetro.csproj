@@ -45,6 +45,7 @@
     <Compile Include="MachineIdentifier.cs" />
     <Compile Include="Parallelism\TaskScheduler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypeExtender.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">

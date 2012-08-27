@@ -1,8 +1,8 @@
+using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Configuration.ComponentRegistration;
-using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Transport;
 using SystemDot.Messaging.Transport.Http.LongPolling;
@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
 
         Establish context = () =>
         {
-            IocContainerLocator.SetContainer(new IocContainer());
+            IocContainerLocator.SetContainer(new IocContainer(new TypeExtender()));
             ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
             ConfigureAndRegister(new EndpointAddressBuilder(new MachineIdentifier()));
             ConfigureAndRegister<ISubscriberChannelBuilder>();
@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
                 .Return(The<ISubscriptionRequestor>());
         };
 
-        Because of = () => bus = Configuration.Configure.Messaging()
+        Because of = () => bus = Configuration.Configure.Messaging(IocContainerLocator.Locate())
             .UsingHttpTransport(MessageServer.Local())
                 .OpenChannel(ChannelName).ForSubscribingTo(PublisherName)
             .Initialise();

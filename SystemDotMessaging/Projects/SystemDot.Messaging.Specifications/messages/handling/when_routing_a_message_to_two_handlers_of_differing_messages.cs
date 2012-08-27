@@ -12,7 +12,7 @@ namespace SystemDot.Messaging.Specifications.messages.handling
 
         Establish context = () =>
         {
-            router = new MessageHandlerRouter();
+            router = new MessageHandlerRouter(new TypeExtender());
             
             handler1 = new TestMessageHandler<string>();
             handler2 = new TestMessageHandler<int>();

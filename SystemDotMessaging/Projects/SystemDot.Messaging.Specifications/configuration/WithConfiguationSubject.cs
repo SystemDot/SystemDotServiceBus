@@ -1,5 +1,5 @@
 using System;
-using SystemDot.Messaging.Ioc;
+using SystemDot.Ioc;
 using SystemDot.Messaging.Messages;
 using Machine.Fakes;
 

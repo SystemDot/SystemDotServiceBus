@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Http;
 using SystemDot.Logging;
@@ -25,9 +26,14 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
         {
             Logger.Info("Sending message to {0}", toInput.GetToAddress().GetUrl());
 
-            this.requestor.SendPut(
-                toInput.GetToAddress().GetUrl(), 
-                s => this.formatter.Serialise(s, toInput));
+            try
+            {
+                this.requestor.SendPut(toInput.GetToAddress().GetUrl(), s => this.formatter.Serialise(s, toInput));
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message);
+            }
         }
     }
 }

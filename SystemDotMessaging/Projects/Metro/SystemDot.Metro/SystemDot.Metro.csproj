@@ -110,7 +110,7 @@
     <Compile Include="MachineIdentifier.cs" />
     <Compile Include="ObservableLoggingMechanism.cs" />
     <Compile Include="Parallelism\TaskScheduler.cs" />
-    <Compile Include="TypeExtensions.cs" />
+    <Compile Include="TypeExtender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">

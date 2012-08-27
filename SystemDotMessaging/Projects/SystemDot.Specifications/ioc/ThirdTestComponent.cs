@@ -1,4 +1,4 @@
-namespace SystemDot.Messaging.Specifications.ioc
+namespace SystemDot.Specifications.ioc
 {
     public class ThirdTestComponent : IThirdTestComponent
     {

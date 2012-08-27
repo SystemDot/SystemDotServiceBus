@@ -5,8 +5,9 @@ namespace SystemDot.Messaging.Specifications
 {
     public class TestTaskStarter : ITaskStarter 
     {
-        int invocationCount;
         readonly int allowedInvocationCount;
+        
+        public int InvocationCount { get; private set; }
 
         public TestTaskStarter() : this(1)
         {
@@ -19,9 +20,9 @@ namespace SystemDot.Messaging.Specifications
 
         public void StartTask(Action action)
         {
-            if (invocationCount == allowedInvocationCount) return;
+            if (InvocationCount == allowedInvocationCount) return;
             
-            invocationCount++;
+            InvocationCount++;
             action.Invoke();
         }
     }

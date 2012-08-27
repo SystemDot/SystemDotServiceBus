@@ -1,8 +1,8 @@
-namespace SystemDot.Messaging.Ioc
+namespace SystemDot.Ioc
 {
     public class IocContainerLocator
     {
-        static IIocContainer iocContainer = new IocContainer();
+        static IIocContainer iocContainer;
 
         public static void SetContainer(IIocContainer toSet)
         {

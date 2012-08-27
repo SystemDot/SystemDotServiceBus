@@ -1,5 +1,5 @@
 ﻿
-namespace SystemDot.Messaging.Specifications.ioc
+namespace SystemDot.Specifications.ioc
 {
     class AnotherInheritingComponent : IAnotherTestComponent
     {

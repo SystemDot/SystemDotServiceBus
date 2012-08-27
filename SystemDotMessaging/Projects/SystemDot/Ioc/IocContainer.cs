@@ -2,12 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SystemDot.Messaging.Ioc
+namespace SystemDot.Ioc
 {
     public class IocContainer : IIocContainer
     {
         readonly Dictionary<Type, ConcreteInstance> components = new Dictionary<Type, ConcreteInstance>();
-        
+        readonly ITypeExtender typeExtender;
+
+        public IocContainer(ITypeExtender typeExtender)
+        {
+            this.typeExtender = typeExtender;
+        }
+
         public void RegisterInstance<TPlugin>(Func<TPlugin> instanceFactory) where TPlugin : class
         {
             if (ComponentExists<TPlugin>()) return;
@@ -49,7 +55,7 @@ namespace SystemDot.Messaging.Ioc
 
         object CreateObjectInstance(ConcreteInstance concreteType)
         {
-            var constructorInfo = concreteType.ObjectType.GetConstructors().First();
+            var constructorInfo = this.typeExtender.GetConstructors(concreteType.ObjectType).First();
             var parameters = constructorInfo.GetParameters();
 
             var parameterInstances = new object[parameters.Count()];

@@ -55,10 +55,6 @@
     <Compile Include="Channels\RequestReply\Builders\IRequestSendChannelBuilder.cs" />
     <Compile Include="Configuration\ComponentRegistration\InProcessTransportComponents.cs" />
     <Compile Include="Configuration\FilteredBy.cs" />
-    <Compile Include="Ioc\ConcreteInstance.cs" />
-    <Compile Include="Ioc\IIocContainer.cs" />
-    <Compile Include="Ioc\IocContainer.cs" />
-    <Compile Include="Ioc\IocContainerLocator.cs" />
     <Compile Include="Messages\Processing\BodyMessageHandler.cs" />
     <Compile Include="Messages\Processing\Filtering\IMessageFilterStrategy.cs" />
     <Compile Include="Messages\Processing\Filtering\NamePatternMessageFilterStrategy.cs" />

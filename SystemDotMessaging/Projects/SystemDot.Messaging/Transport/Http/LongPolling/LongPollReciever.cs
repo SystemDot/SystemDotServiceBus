@@ -41,14 +41,22 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
         {
             Logger.Info("Long polling for messages for {0}", address);
 
-            this.requestor.SendPut(
-                address.GetUrl(),
-                requestStream => this.formatter.Serialise(requestStream, CreateLongPollPayload(address)),
-                response =>
-                {
-                    RecieveResponse(response);
-                    StartNextPoll(address);
-                });
+            try
+            {
+                this.requestor.SendPut(
+                    address.GetUrl(),
+                    requestStream => this.formatter.Serialise(requestStream, CreateLongPollPayload(address)),
+                    response =>
+                    {
+                        RecieveResponse(response);
+                        StartNextPoll(address);
+                    });
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message);
+                StartNextPoll(address);
+            }
         }
 
         void StartNextPoll(EndpointAddress address)
@@ -74,5 +82,9 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
                 this.MessageProcessed(message);
             }
         }
+    }
+
+    class HttpRequestException : Exception
+    {
     }
 }

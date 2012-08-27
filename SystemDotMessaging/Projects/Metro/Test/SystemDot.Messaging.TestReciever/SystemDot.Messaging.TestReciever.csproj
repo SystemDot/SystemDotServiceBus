@@ -104,6 +104,10 @@
       <Project>{6A4F976C-FB85-4D3D-A145-D43626605212}</Project>
       <Name>SystemDot.Messaging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SystemDot\SystemDot.csproj">
+      <Project>{E9433834-D592-4A4A-8219-3EA48B5A2BCC}</Project>
+      <Name>SystemDot</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SystemDot.Messaging.Test.Messages\SystemDot.Messaging.Test.Messages.csproj">
       <Project>{0D0FA9C5-9BDD-4192-978D-BE82EE49AA81}</Project>
       <Name>SystemDot.Messaging.Test.Messages</Name>

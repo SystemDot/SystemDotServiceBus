@@ -26,6 +26,11 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
 
         public void SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest)
         {
+            if (toCheck.Url != address.Url)
+                return;
+
+            var request = new MemoryStream();
+            toPerformOnRequest(request);
         }
 
         public void SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest, Action<Stream> toPerformOnResponse)

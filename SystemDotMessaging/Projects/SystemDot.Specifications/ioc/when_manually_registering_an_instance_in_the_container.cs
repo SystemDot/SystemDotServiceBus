@@ -1,8 +1,8 @@
-﻿using SystemDot.Messaging.Ioc;
+﻿using SystemDot.Ioc;
 using Machine.Fakes;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.ioc
+namespace SystemDot.Specifications.ioc
 {
     [Subject("Ioc")]
     public class when_manually_registering_an_instance_in_the_container : WithSubject<IocContainer>
