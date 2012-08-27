@@ -22,28 +22,31 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
         static List<MessagePayload> messagePayloads;
         static MessagePayload messagePayload1;
         static MessagePayload messagePayload2;
-            
+        static EndpointAddress endpointAddress;
+
         Establish context = () =>
         {
             messagePayloads = new List<MessagePayload>();
             messagePayload1 = new MessagePayload();
-            messagePayload1.SetToAddress(new EndpointAddress("Address1", ServerName));
             messagePayload2 = new MessagePayload();
-            messagePayload2.SetToAddress(new EndpointAddress("Address2", ServerName));
+            endpointAddress = new EndpointAddress("Address", ServerName);
+            
+            messagePayload1.SetToAddress(endpointAddress);
+            messagePayload2.SetToAddress(endpointAddress);
 
-            Configure<ITaskLooper>(new TestTaskLooper());
             Configure<ISerialiser>(new PlatformAgnosticSerialiser());
             
             var requestor = new TestWebRequestor(The<ISerialiser>(), new FixedPortAddress(ServerName));
             Configure<IWebRequestor>(requestor);
             requestor.AddMessages(messagePayload1, messagePayload2);
 
-            Subject.MessageProcessed += payload => messagePayloads.Add(payload);
-            Subject.RegisterListeningAddress(messagePayload1.GetToAddress());
-            Subject.RegisterListeningAddress(messagePayload2.GetToAddress());
+            var starter = new TestTaskStarter(1);
+            Configure<ITaskStarter>(starter);
+
+            Subject.MessageProcessed += payload => messagePayloads.Add(payload);            
         };
 
-        Because of = () => The<ITaskLooper>().Start();
+        Because of = () => Subject.StartPolling(endpointAddress);
 
         It should_output_the_first_recieved_message = () =>
             messagePayloads.First().GetToAddress().ShouldEqual(messagePayload1.GetToAddress());

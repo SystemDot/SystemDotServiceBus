@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
         {
             Resolve<ISubscriptionHandlerChannelBuilder>().Build();
             Resolve<IPublisherChannelBuilder>().Build(address, this.messageFilterStategy);
-            Resolve<IMessageReciever>().RegisterListeningAddress(address);        
+            Resolve<IMessageReciever>().StartPolling(address);        
         }
 
         protected override EndpointAddress GetAddress()

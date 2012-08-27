@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             Resolve<IRequestRecieveChannelBuilder>().Build(this.address);
             Resolve<IReplySendChannelBuilder>().Build(this.address);
-            Resolve<IMessageReciever>().RegisterListeningAddress(this.address);
+            Resolve<IMessageReciever>().StartPolling(this.address);
         }
 
         protected override EndpointAddress GetAddress()

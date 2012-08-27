@@ -22,7 +22,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
             ConfigureAndRegister<IRequestSendChannelBuilder>(new TestRequestSendChannelBuilder());
             ConfigureAndRegister<IReplyRecieveChannelBuilder>();
             ConfigureAndRegister<IMessageReciever>();
-            ConfigureAndRegister<ITaskLooper>();
             ConfigureAndRegister<IBus>();
         };
 

@@ -35,7 +35,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             Resolve<IRequestSendChannelBuilder>().Build(this.messageFilterStrategy, this.address, this.recieverAddress);
             Resolve<IReplyRecieveChannelBuilder>().Build(this.address, this.hooks.ToArray());
             
-            Resolve<IMessageReciever>().RegisterListeningAddress(this.address);
+            Resolve<IMessageReciever>().StartPolling(this.address);
         }
 
         protected override EndpointAddress GetAddress()

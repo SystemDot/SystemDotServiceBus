@@ -24,7 +24,6 @@ namespace SystemDot.Messaging.Configuration
         {
             this.buildActions.ForEach(a => a());
 
-            Resolve<ITaskLooper>().Start();
             return Resolve<IBus>();
         }
 

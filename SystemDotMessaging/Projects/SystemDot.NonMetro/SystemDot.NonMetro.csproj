@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Http\WebRequestor.cs" />
     <Compile Include="Http\HttpServer.cs" />
     <Compile Include="Logging\ConsoleLoggingMechanism.cs" />
     <Compile Include="MachineIdentifier.cs" />

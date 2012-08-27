@@ -22,24 +22,18 @@ namespace SystemDot.Messaging.TestRequestReply.OtherSender
             do
             {
                 Console.WriteLine("I am the other sender. Press enter to send messages..");
-                string count = Console.ReadLine();
+                Console.ReadLine();
                 
                 Console.WriteLine("Sending messages");
-
-                for (int i = 0; i < int.Parse(count); i++)
-                {
-                    
-                bus.Send(new TestMessage("Other Hello" + i));
-                bus.Send(new TestMessage("Other Hello1" + i));
-                bus.Send(new TestMessage("Other Hello2" + i));
-                bus.Send(new TestMessage("Other Hello3" + i));
-                bus.Send(new TestMessage("Other Hello4" + i));
-                bus.Send(new TestMessage("Other Hello5" + i));
-                bus.Send(new TestMessage("Other Hello6" + i));
-                bus.Send(new TestMessage("Other Hello7" + i));
-
-                }
-                
+    
+                bus.Send(new TestMessage("Other Hello"));
+                bus.Send(new TestMessage("Other Hello1"));
+                bus.Send(new TestMessage("Other Hello2"));
+                bus.Send(new TestMessage("Other Hello3"));
+                bus.Send(new TestMessage("Other Hello4"));
+                bus.Send(new TestMessage("Other Hello5"));
+                bus.Send(new TestMessage("Other Hello6"));
+                bus.Send(new TestMessage("Other Hello7"));
             }
             while (true);
         }

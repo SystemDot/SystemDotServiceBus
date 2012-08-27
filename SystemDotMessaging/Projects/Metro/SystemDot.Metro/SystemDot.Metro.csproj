@@ -106,6 +106,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Http\WebRequestor.cs" />
     <Compile Include="MachineIdentifier.cs" />
     <Compile Include="ObservableLoggingMechanism.cs" />
     <Compile Include="Parallelism\TaskScheduler.cs" />

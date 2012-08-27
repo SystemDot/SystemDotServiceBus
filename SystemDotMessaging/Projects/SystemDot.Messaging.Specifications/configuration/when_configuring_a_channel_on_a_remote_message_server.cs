@@ -26,7 +26,6 @@ namespace SystemDot.Messaging.Specifications.configuration
             ConfigureAndRegister<IRequestRecieveChannelBuilder>();
             ConfigureAndRegister<IReplySendChannelBuilder>();
             ConfigureAndRegister<IMessageReciever>();
-            ConfigureAndRegister<ITaskLooper>();
             ConfigureAndRegister<IBus>();
         };
 
@@ -36,7 +35,7 @@ namespace SystemDot.Messaging.Specifications.configuration
             .Initialise();
 
         It should_register_the_listening_address_with_the_message_reciever = () =>
-            The<IMessageReciever>().WasToldTo(r => r.RegisterListeningAddress(GetEndpointAddress(ChannelName, ServerName)));
+            The<IMessageReciever>().WasToldTo(r => r.StartPolling(GetEndpointAddress(ChannelName, ServerName)));
 
     }
 }

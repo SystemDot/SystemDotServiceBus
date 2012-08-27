@@ -26,7 +26,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
             ConfigureAndRegister<IRequestRecieveChannelBuilder>();
             ConfigureAndRegister<IReplyRecieveChannelBuilder>();
             ConfigureAndRegister<IMessageReciever>();
-            ConfigureAndRegister<ITaskLooper>();
             ConfigureAndRegister<IBus>();
         };
 
@@ -42,7 +41,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 
         It should_register_the_listening_address_with_the_message_reciever_for_the_second_channel = () =>
             The<IMessageReciever>().WasToldTo(r =>
-                r.RegisterListeningAddress(GetEndpointAddress(Channel2Name, The<IMachineIdentifier>().GetMachineName())));
+                r.StartPolling(GetEndpointAddress(Channel2Name, The<IMachineIdentifier>().GetMachineName())));
         
     }
 }

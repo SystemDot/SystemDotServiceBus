@@ -27,7 +27,6 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
             ConfigureAndRegister<IPublisherRegistry>();
             ConfigureAndRegister<IPublisherChannelBuilder>(new TestPublisherChannelBuilder());
             ConfigureAndRegister<IMessageReciever>();
-            ConfigureAndRegister<ITaskLooper>();
             ConfigureAndRegister<IBus>();
         };
 
@@ -48,9 +47,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
 
         It should_register_the_listening_address_of_the_message_server_with_the_message_reciever = () =>
             The<IMessageReciever>().WasToldTo(r => 
-                r.RegisterListeningAddress(GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName())));
-
-        It should_start_the_task_looper = () => The<ITaskLooper>().WasToldTo(l => l.Start());
+                r.StartPolling(GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName())));
 
         It should_return_the_bus = () => bus.ShouldBeTheSameAs(The<IBus>());
     }

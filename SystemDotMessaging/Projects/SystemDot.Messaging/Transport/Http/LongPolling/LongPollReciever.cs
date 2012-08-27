@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
-using System.Threading.Tasks;
 using SystemDot.Http;
 using SystemDot.Logging;
 using SystemDot.Messaging.Messages;
@@ -16,26 +15,26 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
     {
         readonly IWebRequestor requestor;
         readonly ISerialiser formatter;
-        readonly ITaskLooper looper;
+        readonly ITaskStarter starter;
 
         public event Action<MessagePayload> MessageProcessed;
 
-        public LongPollReciever(IWebRequestor requestor, ISerialiser formatter, ITaskLooper looper)
+        public LongPollReciever(IWebRequestor requestor, ISerialiser formatter, ITaskStarter starter)
         {
             Contract.Requires(requestor != null);
             Contract.Requires(formatter != null);
-            Contract.Requires(looper != null);
-            
+            Contract.Requires(starter != null);
+
             this.requestor = requestor;
             this.formatter = formatter;
-            this.looper = looper;
+            this.starter = starter;
         }
 
-        public void RegisterListeningAddress(EndpointAddress toRegister)
+        public void StartPolling(EndpointAddress address)
         {
-            Contract.Requires(toRegister != EndpointAddress.Empty);
+            Contract.Requires(address != EndpointAddress.Empty);
 
-            this.looper.RegisterToLoop(() => Task.Factory.StartNew(() => Poll(toRegister)));
+            StartNextPoll(address);
         }
 
         void Poll(EndpointAddress address)
@@ -43,9 +42,18 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
             Logger.Info("Long polling for messages for {0}", address);
 
             this.requestor.SendPut(
-                address.GetUrl(), 
-                s => this.formatter.Serialise(s, CreateLongPollPayload(address)), 
-                RecieveResponse);
+                address.GetUrl(),
+                requestStream => this.formatter.Serialise(requestStream, CreateLongPollPayload(address)),
+                response =>
+                {
+                    RecieveResponse(response);
+                    StartNextPoll(address);
+                });
+        }
+
+        void StartNextPoll(EndpointAddress address)
+        {
+            this.starter.StartTask(() => Poll(address));
         }
 
         MessagePayload CreateLongPollPayload(EndpointAddress address)

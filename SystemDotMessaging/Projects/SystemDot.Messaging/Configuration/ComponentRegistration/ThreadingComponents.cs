@@ -10,7 +10,6 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
         public static void Register(IIocContainer iocContainer)
         {
             iocContainer.RegisterInstance<ITaskStarter, TaskStarter>();
-            iocContainer.RegisterInstance<ITaskLooper, TaskLooper>();
             iocContainer.RegisterInstance<ITaskScheduler, TaskScheduler>();
         }
     }

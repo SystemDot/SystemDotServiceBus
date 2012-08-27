@@ -26,7 +26,6 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
             ConfigureAndRegister<ISubscriberChannelBuilder>();
             ConfigureAndRegister<ISubscriptionRequestChannelBuilder>();
             ConfigureAndRegister<IMessageReciever>();
-            ConfigureAndRegister<ITaskLooper>();
             ConfigureAndRegister<IBus>();
 
             The<ISubscriptionRequestChannelBuilder>()

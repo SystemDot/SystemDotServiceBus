@@ -110,7 +110,7 @@
     <Compile Include="TestTaskStarter.cs" />
     <Compile Include="transport\in_process\when_listening_for_messages.cs" />
     <Compile Include="transport\in_process\when_sending_a_message.cs" />
-    <Compile Include="transport\long_polling\TestTaskLooper.cs" />
+    <Compile Include="transport\long_polling\when_a_response_to_a_long_poll_request_has_been_processed.cs" />
     <Compile Include="transport\long_polling\when_long_polling_for_messages_and_two_messages_are_returned_in_the_stream.cs" />
     <Compile Include="transport\long_polling\when_long_polling_for_messages_with_addresses_that_are_not_in_the_queue_.cs" />
     <Compile Include="transport\long_polling\TestWebRequestor.cs" />
