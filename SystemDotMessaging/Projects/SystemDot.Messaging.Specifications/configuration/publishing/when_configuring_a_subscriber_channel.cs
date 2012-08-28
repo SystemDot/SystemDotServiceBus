@@ -2,41 +2,27 @@ using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Configuration.ComponentRegistration;
-using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Transport;
-using SystemDot.Messaging.Transport.Http.LongPolling;
-using SystemDot.Parallelism;
 using Machine.Fakes;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing
 {
-    [Subject("Publishing configuration")] 
-    public class when_configuring_a_subscriber_channel : WithConfiguationSubject
+    [Subject("Publishing configuration")]
+    public class when_configuring_a_subscriber_channel : WithSubscriberSubject
     {
         const string ChannelName = "TestChannel";
         const string PublisherName = "TestPublisher";
         static IBus bus;
 
         Establish context = () =>
-        {
-            IocContainerLocator.SetContainer(new IocContainer(new TypeExtender()));
-            ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
-            ConfigureAndRegister(new EndpointAddressBuilder(new MachineIdentifier()));
-            ConfigureAndRegister<ISubscriberChannelBuilder>();
-            ConfigureAndRegister<ISubscriptionRequestChannelBuilder>();
-            ConfigureAndRegister<IMessageReciever>();
-            ConfigureAndRegister<IBus>();
-
             The<ISubscriptionRequestChannelBuilder>()
                 .WhenToldTo(b => b.Build(
                     GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName()),
                     GetEndpointAddress(PublisherName, The<IMachineIdentifier>().GetMachineName())))
                 .Return(The<ISubscriptionRequestor>());
-        };
-
-        Because of = () => bus = Configuration.Configure.Messaging(IocContainerLocator.Locate())
+        
+        Because of = () => bus = Configuration.Configure.Messaging()
             .UsingHttpTransport(MessageServer.Local())
                 .OpenChannel(ChannelName).ForSubscribingTo(PublisherName)
             .Initialise();

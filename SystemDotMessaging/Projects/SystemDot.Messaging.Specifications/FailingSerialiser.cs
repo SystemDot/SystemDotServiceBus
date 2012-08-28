@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using SystemDot.Serialisation;
 
-namespace SystemDot.Messaging.Specifications.transport.long_polling
+namespace SystemDot.Messaging.Specifications
 {
     public class FailingSerialiser : ISerialiser
     {
@@ -18,12 +18,12 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
 
         public object Deserialise(byte[] toDeserialise)
         {
-            throw new Exception();
+            throw new CannotDeserialiseException(new Exception());
         }
 
         public object Deserialise(Stream toDeserialise)
         {
-            throw new Exception();
+            return Deserialise(new byte[0]);
         }
     }
 }

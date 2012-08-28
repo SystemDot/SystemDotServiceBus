@@ -16,6 +16,7 @@ namespace SystemDot.Messaging.Messages.Processing
         public MessagePayloadUnpackager(ISerialiser serialiser)
         {
             Contract.Requires(serialiser != null);
+
             this.serialiser = serialiser;
         }
 
@@ -25,8 +26,24 @@ namespace SystemDot.Messaging.Messages.Processing
 
             Logger.Info("Unpackaging message payload");
 
-            MessageProcessed(this.serialiser.Deserialise(toInput.GetBody()));
+            object message = Deserialise(toInput.GetBody());
+            
+            if (message == null) return;
+
+            MessageProcessed(message);
         }
 
+        object Deserialise(byte[] toDeserialise)
+        {
+            try
+            {
+                return this.serialiser.Deserialise(toDeserialise);
+            }
+            catch (CannotDeserialiseException e)
+            {
+                Logger.Error(e.Message);
+                return null;
+            }
+        }
     }
 }

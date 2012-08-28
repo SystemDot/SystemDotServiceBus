@@ -5,14 +5,13 @@ namespace SystemDot.Messaging.Configuration
 {
     public class Configure : Configurer
     {
-        public static MessagingConfiguration Messaging()
+        static Configure()
         {
-            return Messaging(new IocContainer(new TypeExtender()));
+            IocContainerLocator.SetContainer(new IocContainer(new TypeExtender()));
         }
 
-        public static MessagingConfiguration Messaging(IIocContainer container)
+        public static MessagingConfiguration Messaging()
         {
-            IocContainerLocator.SetContainer(container);
             Components.Register();
             return new MessagingConfiguration();
         }

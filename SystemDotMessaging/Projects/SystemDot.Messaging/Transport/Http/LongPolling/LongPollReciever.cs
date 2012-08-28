@@ -83,8 +83,4 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
             }
         }
     }
-
-    class HttpRequestException : Exception
-    {
-    }
 }

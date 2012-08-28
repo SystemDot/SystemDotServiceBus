@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
-using System.Runtime.Serialization;
 using SystemDot.Http;
+using SystemDot.Logging;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Serialisation;
 
@@ -23,8 +24,9 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling.Servers
 
         public void HandleRequest(Stream inputStream, Stream outputStream)
         {
-            object deserialised = this.formatter.Deserialise(inputStream);
+            object deserialised = DeserialiseMessage(inputStream);
 
+            if (deserialised == null) return;
             if (!(deserialised is MessagePayload)) return;
 
             var message = deserialised.As<MessagePayload>();
@@ -34,6 +36,19 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling.Servers
                 handler.HandleMessage(message, outgoingMessages);
 
             this.formatter.Serialise(outputStream, outgoingMessages);
+        }
+
+        object DeserialiseMessage(Stream inputStream)
+        {
+            try
+            {
+                return this.formatter.Deserialise(inputStream);
+            }
+            catch (CannotDeserialiseException e)
+            {
+                Logger.Error(e.Message);
+                return null;
+            }
         }
     }
 }

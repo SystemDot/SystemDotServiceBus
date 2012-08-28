@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Serialization;
 
@@ -18,7 +19,14 @@ namespace SystemDot.Serialisation
 
         public object Deserialise(byte[] toDeserialise)
         {
-            return SilverlightSerializer.Deserialize(toDeserialise);
+            try
+            {
+                return SilverlightSerializer.Deserialize(toDeserialise);
+            }
+            catch (NullReferenceException e)
+            {
+                throw new CannotDeserialiseException(e);
+            }
         }
 
         public object Deserialise(Stream toDeserialise)

@@ -1,10 +1,8 @@
 using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Configuration.ComponentRegistration;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Transport;
-using SystemDot.Parallelism;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -30,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.configuration
             ConfigureAndRegister<IBus>();
         };
 
-        Because of = () => bus = Configuration.Configure.Messaging(IocContainerLocator.Locate())
+        Because of = () => bus = Configuration.Configure.Messaging()
             .UsingHttpTransport(MessageServer.Named(ServerName))
             .OpenChannel(ChannelName).ForRequestReplyRecieving()
             .Initialise();

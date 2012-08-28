@@ -52,9 +52,13 @@
   <ItemGroup>
     <Compile Include="configuration\publishing\when_configuring_a_publisher_channel_with_a_specific_namespace_filtering_strategy.cs" />
     <Compile Include="configuration\publishing\TestPublisherChannelBuilder.cs" />
+    <Compile Include="configuration\publishing\WithPublisherSubject.cs" />
+    <Compile Include="configuration\publishing\WithSubscriberSubject.cs" />
+    <Compile Include="configuration\request_reply\recieving\WithRecieverSubject.cs" />
     <Compile Include="configuration\request_reply\sending\when_configuring_a_request_reply_sender_channel_with_a_name_pattern_filtering_strategy.cs" />
     <Compile Include="configuration\request_reply\sending\when_configuring_a_request_reply_sender_channel_with_a_specific_namespace_filtering_strategy.cs" />
     <Compile Include="configuration\request_reply\sending\TestRequestSendChannelBuilder.cs" />
+    <Compile Include="configuration\request_reply\sending\WithSenderSubject.cs" />
     <Compile Include="configuration\when_logging_a_message_with_a_logging_mechanism_configured.cs" />
     <Compile Include="configuration\publishing\when_configuring_a_publisher_channel_followed_by_another.cs" />
     <Compile Include="configuration\publishing\when_configuring_a_subscriber_channel_followed_by_another.cs" />
@@ -69,8 +73,10 @@
     <Compile Include="configuration\request_reply\recieving\when_configuring_a_request_reply_receiver_channel.cs" />
     <Compile Include="messages\bus\when_publishing_a_message_on_the_bus.cs" />
     <Compile Include="messages\bus\when_replying_with_a_message_on_the_bus.cs" />
+    <Compile Include="messages\processing\when_unpackaging_a_message_from_transportation_payload_and_serialisation_fails.cs" />
+    <Compile Include="transport\long_polling\serving\when_handling_request_that_fails_deserialisation.cs" />
     <Compile Include="transport\long_polling\when_long_polling_for_messages_and_the_web_requestor_fails.cs" />
-    <Compile Include="transport\long_polling\FailingSerialiser.cs" />
+    <Compile Include="FailingSerialiser.cs" />
     <Compile Include="transport\long_polling\when_sending_a_message_and_the_web_requestor_throws_an_exception.cs" />
     <Compile Include="transport\long_polling\FailingWebRequestor.cs" />
     <Compile Include="transport\long_polling\TestSerialiser.cs" />
