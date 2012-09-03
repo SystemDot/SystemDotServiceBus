@@ -1,18 +1,10 @@
+using System;
 using System.Diagnostics.Contracts;
 
 namespace SystemDot.Messaging.Messages
 {
     public class EndpointAddressBuilder
     {
-        readonly IMachineIdentifier machineIdentifier;
-
-        public EndpointAddressBuilder(IMachineIdentifier machineIdentifier)
-        {
-            Contract.Requires(machineIdentifier != null);
-
-            this.machineIdentifier = machineIdentifier;
-        }
-
         public EndpointAddress Build(string address, string messageServerName)
         {
             Contract.Requires(!string.IsNullOrEmpty(address));
@@ -28,7 +20,7 @@ namespace SystemDot.Messaging.Messages
             
             if(channelParts.Length == 1)
                 return new EndpointAddress(
-                    string.Concat(channelParts[0], "@", this.machineIdentifier.GetMachineName()),
+                    string.Concat(channelParts[0], "@", Environment.MachineName),
                     serverName);
 
             return new EndpointAddress(addressParts[0], serverName);

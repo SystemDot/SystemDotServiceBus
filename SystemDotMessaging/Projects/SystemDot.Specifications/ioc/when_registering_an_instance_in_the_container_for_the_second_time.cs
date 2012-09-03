@@ -9,8 +9,6 @@ namespace SystemDot.Specifications.ioc
     {
         static ITestComponent instance;
         
-        Establish context = () => Configure<ITypeExtender>(new TypeExtender());
-        
         Because of = () =>
         {
             Subject.RegisterInstance<ITestComponent, TestComponent>();

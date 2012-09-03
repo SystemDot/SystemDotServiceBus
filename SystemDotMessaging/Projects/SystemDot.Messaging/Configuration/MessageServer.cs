@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Ioc;
 
 namespace SystemDot.Messaging.Configuration
@@ -6,7 +7,7 @@ namespace SystemDot.Messaging.Configuration
     {
         public static MessageServer Local()
         {
-            return new MessageServer(IocContainerLocator.Locate().Resolve<IMachineIdentifier>().GetMachineName()); 
+            return new MessageServer(Environment.MachineName); 
         }
 
         public static MessageServer Named(string name)

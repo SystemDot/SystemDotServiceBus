@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Configuration;
@@ -23,7 +24,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
 
         It should_build_the_publisher_channel_with_the_expected_address = () =>
             The<IPublisherChannelBuilder>().As<TestPublisherChannelBuilder>().ExpectedAddress.ShouldEqual(
-                GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName()));
+                GetEndpointAddress(ChannelName, Environment.MachineName));
 
         It should_build_the_publisher_channel_with_the_default_pass_through_message_filterer = () =>
             The<IPublisherChannelBuilder>().As<TestPublisherChannelBuilder>().ExpectedMessageFilterStrategy
@@ -31,7 +32,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
 
         It should_register_the_listening_address_of_the_message_server_with_the_message_reciever = () =>
             The<IMessageReciever>().WasToldTo(r => 
-                r.StartPolling(GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName())));
+                r.StartPolling(GetEndpointAddress(ChannelName, Environment.MachineName)));
 
         It should_return_the_bus = () => bus.ShouldBeTheSameAs(The<IBus>());
     }

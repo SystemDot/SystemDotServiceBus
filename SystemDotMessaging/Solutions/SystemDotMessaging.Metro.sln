@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.Messaging.TestSub
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.Messaging.TestReciever", "..\Projects\Metro\Test\SystemDot.Messaging.TestReciever\SystemDot.Messaging.TestReciever.csproj", "{51299507-FCAC-4D87-AFF7-ABC3F9C4C654}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.Extensions.Metro", "..\Projects\Metro\SystemDot.Extensions.Metro\SystemDot.Extensions.Metro.csproj", "{4A01B283-9022-4549-B9EA-34782B3E25A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -59,6 +61,22 @@ Global
 		{0D0FA9C5-9BDD-4192-978D-BE82EE49AA81}.Release|x64.Build.0 = Release|x64
 		{0D0FA9C5-9BDD-4192-978D-BE82EE49AA81}.Release|x86.ActiveCfg = Release|x86
 		{0D0FA9C5-9BDD-4192-978D-BE82EE49AA81}.Release|x86.Build.0 = Release|x86
+		{4A01B283-9022-4549-B9EA-34782B3E25A3}.Debug|ARM.ActiveCfg = Debug|ARM
+		{4A01B283-9022-4549-B9EA-34782B3E25A3}.Debug|ARM.Build.0 = Debug|ARM
+		{4A01B283-9022-4549-B9EA-34782B3E25A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A01B283-9022-4549-B9EA-34782B3E25A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A01B283-9022-4549-B9EA-34782B3E25A3}.Debug|x64.ActiveCfg = Debug|x64
+		{4A01B283-9022-4549-B9EA-34782B3E25A3}.Debug|x64.Build.0 = Debug|x64
+		{4A01B283-9022-4549-B9EA-34782B3E25A3}.Debug|x86.ActiveCfg = Debug|x86
+		{4A01B283-9022-4549-B9EA-34782B3E25A3}.Debug|x86.Build.0 = Debug|x86
+		{4A01B283-9022-4549-B9EA-34782B3E25A3}.Release|ARM.ActiveCfg = Release|ARM
+		{4A01B283-9022-4549-B9EA-34782B3E25A3}.Release|ARM.Build.0 = Release|ARM
+		{4A01B283-9022-4549-B9EA-34782B3E25A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A01B283-9022-4549-B9EA-34782B3E25A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A01B283-9022-4549-B9EA-34782B3E25A3}.Release|x64.ActiveCfg = Release|x64
+		{4A01B283-9022-4549-B9EA-34782B3E25A3}.Release|x64.Build.0 = Release|x64
+		{4A01B283-9022-4549-B9EA-34782B3E25A3}.Release|x86.ActiveCfg = Release|x86
+		{4A01B283-9022-4549-B9EA-34782B3E25A3}.Release|x86.Build.0 = Release|x86
 		{51299507-FCAC-4D87-AFF7-ABC3F9C4C654}.Debug|ARM.ActiveCfg = Debug|ARM
 		{51299507-FCAC-4D87-AFF7-ABC3F9C4C654}.Debug|ARM.Build.0 = Debug|ARM
 		{51299507-FCAC-4D87-AFF7-ABC3F9C4C654}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

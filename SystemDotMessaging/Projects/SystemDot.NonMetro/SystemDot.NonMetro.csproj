@@ -42,10 +42,8 @@
     <Compile Include="Http\WebRequestor.cs" />
     <Compile Include="Http\HttpServer.cs" />
     <Compile Include="Logging\ConsoleLoggingMechanism.cs" />
-    <Compile Include="MachineIdentifier.cs" />
     <Compile Include="Parallelism\TaskScheduler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TypeExtender.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">

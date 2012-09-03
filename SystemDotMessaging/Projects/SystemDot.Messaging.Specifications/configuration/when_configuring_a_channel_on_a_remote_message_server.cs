@@ -18,10 +18,8 @@ namespace SystemDot.Messaging.Specifications.configuration
 
         Establish context = () =>
         {
-            IocContainerLocator.SetContainer(new IocContainer(new TypeExtender()));
+            IocContainerLocator.SetContainer(new IocContainer());
 
-            ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
-            ConfigureAndRegister(new EndpointAddressBuilder(new MachineIdentifier()));
             ConfigureAndRegister<IRequestRecieveChannelBuilder>();
             ConfigureAndRegister<IReplySendChannelBuilder>();
             ConfigureAndRegister<IMessageReciever>();

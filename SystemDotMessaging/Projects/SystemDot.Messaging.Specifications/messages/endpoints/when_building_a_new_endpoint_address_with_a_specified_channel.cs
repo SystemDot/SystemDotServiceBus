@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Messaging.Messages;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -10,13 +11,10 @@ namespace SystemDot.Messaging.Specifications.messages.endpoints
         const string TestChannelName = "TestChannel";
         const string TestServer = "TestServer";
         static EndpointAddress address;
-
-        Establish context = () => Configure<IMachineIdentifier>(new MachineIdentifier());
-
         Because of = () => address = Subject.Build(TestChannelName, TestServer); 
 
         It should_set_the_specified_address = () => 
-            address.Channel.ShouldEqual(TestChannelName + "@" + The<IMachineIdentifier>().GetMachineName());
+            address.Channel.ShouldEqual(TestChannelName + "@" + Environment.MachineName);
 
         It should_set_the_specified_server_name = () => address.ServerName.ShouldEqual(TestServer);
     }

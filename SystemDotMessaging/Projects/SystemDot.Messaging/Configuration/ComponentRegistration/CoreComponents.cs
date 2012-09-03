@@ -11,8 +11,6 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
         {
             container.RegisterInstance<IWebRequestor, WebRequestor>();
             container.RegisterInstance<ISerialiser, PlatformAgnosticSerialiser>();
-            container.RegisterInstance<IMachineIdentifier, MachineIdentifier>();
-            container.RegisterInstance<ITypeExtender, TypeExtender>();
             container.RegisterInstance<EndpointAddressBuilder, EndpointAddressBuilder>();
         }
     }

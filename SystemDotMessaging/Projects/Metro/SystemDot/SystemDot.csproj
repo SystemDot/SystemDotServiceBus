@@ -117,6 +117,12 @@
       <HintPath>..\..\..\Dependencies\Serialization.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SystemDot.Extensions.Metro\SystemDot.Extensions.Metro.csproj">
+      <Project>{4a01b283-9022-4549-b9ea-34782b3e25a3}</Project>
+      <Name>SystemDot.Extensions.Metro</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>

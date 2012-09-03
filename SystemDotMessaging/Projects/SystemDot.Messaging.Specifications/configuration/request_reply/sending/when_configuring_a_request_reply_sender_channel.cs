@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Configuration;
@@ -27,21 +28,21 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 
         It should_build_the_send_channel_with_the_correct_from_address = () =>
             The<IRequestSendChannelBuilder>().As<TestRequestSendChannelBuilder>().From.ShouldEqual(
-                GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName()));
+                GetEndpointAddress(ChannelName, Environment.MachineName));
 
         It should_build_the_send_channel_with_the_correct_reciever_address = () =>
             The<IRequestSendChannelBuilder>().As<TestRequestSendChannelBuilder>().Reciever.ShouldEqual(
-                GetEndpointAddress(RecieverAddress, The<IMachineIdentifier>().GetMachineName()));
+                GetEndpointAddress(RecieverAddress, Environment.MachineName));
 
         It should_build_the_recieve_channel = () =>
             The<IReplyRecieveChannelBuilder>().WasToldTo(b => 
                 b.Build(
-                    GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName()), 
+                    GetEndpointAddress(ChannelName, Environment.MachineName), 
                     new IMessageProcessor<object, object>[0]));
 
         It should_register_the_listening_address_with_the_message_reciever = () =>
             The<IMessageReciever>().WasToldTo(r =>
-                r.StartPolling(GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName())));
+                r.StartPolling(GetEndpointAddress(ChannelName, Environment.MachineName)));
 
         It should_return_the_bus = () => bus.ShouldBeTheSameAs(The<IBus>());
     }

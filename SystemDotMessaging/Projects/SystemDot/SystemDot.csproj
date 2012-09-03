@@ -48,12 +48,10 @@
     <Compile Include="Http\FixedPortAddress.cs" />
     <Compile Include="Http\IWebRequestor.cs" />
     <Compile Include="IEnumerableExtensions.cs" />
-    <Compile Include="IMachineIdentifier.cs" />
     <Compile Include="Ioc\ConcreteInstance.cs" />
     <Compile Include="Ioc\IIocContainer.cs" />
     <Compile Include="Ioc\IocContainer.cs" />
     <Compile Include="Ioc\IocContainerLocator.cs" />
-    <Compile Include="ITypeExtender.cs" />
     <Compile Include="Logging\ILoggingMechanism.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="ObjectExtensions.cs" />

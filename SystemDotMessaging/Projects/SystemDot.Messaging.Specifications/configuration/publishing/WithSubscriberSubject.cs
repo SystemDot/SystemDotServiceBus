@@ -10,8 +10,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
     {
         Establish context = () =>
         {
-            ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
-            ConfigureAndRegister(new EndpointAddressBuilder(new MachineIdentifier()));
+            ConfigureAndRegister(new EndpointAddressBuilder());
             ConfigureAndRegister<ISubscriberChannelBuilder>();
             ConfigureAndRegister<ISubscriptionRequestChannelBuilder>();
             ConfigureAndRegister<IMessageReciever>();

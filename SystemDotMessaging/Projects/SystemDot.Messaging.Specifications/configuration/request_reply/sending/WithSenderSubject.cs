@@ -9,8 +9,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
     {
         Establish context = () =>
         {
-            ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
-            ConfigureAndRegister(new EndpointAddressBuilder(new MachineIdentifier()));
+            ConfigureAndRegister(new EndpointAddressBuilder());
             ConfigureAndRegister<IRequestSendChannelBuilder>(new TestRequestSendChannelBuilder());
             ConfigureAndRegister<IReplyRecieveChannelBuilder>();
             ConfigureAndRegister<IMessageReciever>();

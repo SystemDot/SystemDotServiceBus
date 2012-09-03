@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
@@ -19,14 +20,14 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
         {
             The<ISubscriptionRequestChannelBuilder>()
                 .WhenToldTo(b => b.Build(
-                    GetEndpointAddress(Channel1Name, The<IMachineIdentifier>().GetMachineName()),
-                    GetEndpointAddress(Publisher1Name, The<IMachineIdentifier>().GetMachineName())))
+                    GetEndpointAddress(Channel1Name, Environment.MachineName),
+                    GetEndpointAddress(Publisher1Name, Environment.MachineName)))
                 .Return(The<ISubscriptionRequestor>());
 
             The<ISubscriptionRequestChannelBuilder>()
                 .WhenToldTo(b => b.Build(
-                    GetEndpointAddress(Channel2Name, The<IMachineIdentifier>().GetMachineName()),
-                    GetEndpointAddress(Publisher2Name, The<IMachineIdentifier>().GetMachineName())))
+                    GetEndpointAddress(Channel2Name, Environment.MachineName),
+                    GetEndpointAddress(Publisher2Name, Environment.MachineName)))
                 .Return(The<ISubscriptionRequestor>());
         };
 
@@ -38,6 +39,6 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
 
         It should_build_the_subscriber_channel_for_both_channels = () => 
             The<ISubscriberChannelBuilder>().WasToldTo(b => 
-                b.Build(GetEndpointAddress(Channel2Name, The<IMachineIdentifier>().GetMachineName())));       
+                b.Build(GetEndpointAddress(Channel2Name, Environment.MachineName)));       
     }
 }

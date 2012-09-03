@@ -7,7 +7,6 @@ namespace SystemDot.Specifications.ioc
     [Subject("Ioc")]
     public class when_registering_an_instance_in_the_container : WithSubject<IocContainer>
     {
-        Establish context = () => Configure<ITypeExtender>(new TypeExtender());
             
         Because of = () => Subject.RegisterInstance<ITestComponent, TestComponent>();
 

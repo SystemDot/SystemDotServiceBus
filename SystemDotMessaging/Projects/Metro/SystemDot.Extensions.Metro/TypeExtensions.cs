@@ -4,14 +4,14 @@ using System.Reflection;
 
 namespace SystemDot
 {
-    public class TypeExtender : ITypeExtender
+    public static class TypeExtensions
     {
-        public MethodInfo GetMethod(Type type, string name, Type[] types)
+        public static MethodInfo GetMethod(this Type type, string name, Type[] types)
         {
             return type.GetRuntimeMethod(name, types);
         }
 
-        public IEnumerable<ConstructorInfo> GetConstructors(Type type)
+        public static IEnumerable<ConstructorInfo> GetConstructors(this Type type)
         {
             return type.GetTypeInfo().DeclaredConstructors;
         }

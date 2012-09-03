@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Configuration;
@@ -26,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 
         It should_register_the_listening_address_with_the_message_reciever_for_the_second_channel = () =>
             The<IMessageReciever>().WasToldTo(r =>
-                r.StartPolling(GetEndpointAddress(Channel2Name, The<IMachineIdentifier>().GetMachineName())));
+                r.StartPolling(GetEndpointAddress(Channel2Name, Environment.MachineName)));
         
     }
 }

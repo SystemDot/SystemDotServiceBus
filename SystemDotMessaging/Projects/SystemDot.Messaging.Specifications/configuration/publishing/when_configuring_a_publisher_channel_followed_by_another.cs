@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Configuration;
@@ -18,7 +19,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
 
         It should_build_the_second_publisher_channel = () =>
             The<IPublisherChannelBuilder>().As<TestPublisherChannelBuilder>().ExpectedAddress.ShouldEqual(
-                GetEndpointAddress(Channel2Name, The<IMachineIdentifier>().GetMachineName()));
+                GetEndpointAddress(Channel2Name, Environment.MachineName));
 
 
     }

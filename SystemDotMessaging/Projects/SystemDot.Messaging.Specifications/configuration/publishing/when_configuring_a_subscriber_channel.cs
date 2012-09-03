@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
@@ -18,8 +19,8 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
         Establish context = () =>
             The<ISubscriptionRequestChannelBuilder>()
                 .WhenToldTo(b => b.Build(
-                    GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName()),
-                    GetEndpointAddress(PublisherName, The<IMachineIdentifier>().GetMachineName())))
+                    GetEndpointAddress(ChannelName, Environment.MachineName),
+                    GetEndpointAddress(PublisherName, Environment.MachineName)))
                 .Return(The<ISubscriptionRequestor>());
         
         Because of = () => bus = Configuration.Configure.Messaging()
@@ -29,14 +30,14 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
 
         It should_build_the_subscriber_channel = () =>
             The<ISubscriberChannelBuilder>().WasToldTo(
-                b => b.Build(GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName())));
+                b => b.Build(GetEndpointAddress(ChannelName, Environment.MachineName)));
 
         It should_build_and_start_the_subscription_request_channel = () => 
             The<ISubscriptionRequestor>().WasToldTo(b => b.Start());
 
         It should_register_the_listening_address_of_the_message_server_with_the_message_reciever = () =>
             The<IMessageReciever>().WasToldTo(r => 
-                r.StartPolling(GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName())));
+                r.StartPolling(GetEndpointAddress(ChannelName, Environment.MachineName)));
 
         It should_return_the_bus = () => bus.ShouldBeTheSameAs(The<IBus>());
         

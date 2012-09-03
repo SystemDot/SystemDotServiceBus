@@ -13,7 +13,7 @@ namespace SystemDot.Messaging.Specifications.configuration
 
         Establish context = () =>
         {
-            IocContainerLocator.SetContainer(new IocContainer(new TypeExtender()));
+            IocContainerLocator.SetContainer(new IocContainer());
             toLogWith = An<ILoggingMechanism>();
             Configuration.Configure.Messaging().LoggingWith(toLogWith);
         };

@@ -9,7 +9,6 @@ namespace SystemDot.Specifications.ioc
     {
         Establish context = () =>
         {
-            Configure<ITypeExtender>(new TypeExtender());
             Subject.RegisterInstance<ITestComponent, TestComponent>();
             Subject.RegisterInstance<IAnotherTestComponent>(() => new AnotherTestComponent(Subject.Resolve<IThirdTestComponent>(), new AnotherInheritingComponent()));
             Subject.RegisterInstance<IThirdTestComponent, ThirdTestComponent>();

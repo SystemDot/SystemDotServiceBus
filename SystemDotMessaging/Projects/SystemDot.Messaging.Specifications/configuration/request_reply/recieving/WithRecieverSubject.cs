@@ -10,8 +10,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
     {
         Establish context = () =>
         {
-            ConfigureAndRegister<IMachineIdentifier>(new MachineIdentifier());
-            ConfigureAndRegister(new EndpointAddressBuilder(IocContainerLocator.Locate().Resolve<IMachineIdentifier>()));
+            ConfigureAndRegister(new EndpointAddressBuilder());
             ConfigureAndRegister<IRequestRecieveChannelBuilder>();
             ConfigureAndRegister<IReplySendChannelBuilder>();
             ConfigureAndRegister<IMessageReciever>();

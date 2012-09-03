@@ -7,11 +7,8 @@ namespace SystemDot.Messaging.Messages.Processing.Handling
     public class MessageHandlerRouter : IMessageInputter<object>
     {
         readonly List<object> handlers;
-        readonly ITypeExtender typeExtender;
-
-        public MessageHandlerRouter(ITypeExtender typeExtender)
+        public MessageHandlerRouter()
         {
-            this.typeExtender = typeExtender;
             this.handlers = new List<object>();
         }
 
@@ -35,7 +32,7 @@ namespace SystemDot.Messaging.Messages.Processing.Handling
 
         MethodInfo GetHandlerMethodInfo(object consumer, object message)
         {
-            return this.typeExtender.GetMethod(consumer.GetType(), "Handle", new [] { message.GetType() });
+            return consumer.GetType().GetMethod("Handle", new[] { message.GetType() });
         }
 
         public void RegisterHandler(object toRegister)

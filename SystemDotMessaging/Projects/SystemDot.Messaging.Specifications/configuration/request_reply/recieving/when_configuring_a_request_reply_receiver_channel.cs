@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Configuration;
@@ -21,15 +22,15 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
 
         It should_build_the_request_recieve_channel = () =>
             The<IRequestRecieveChannelBuilder>().WasToldTo(
-                b => b.Build(GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName())));
+                b => b.Build(GetEndpointAddress(ChannelName, Environment.MachineName)));
 
         private It should_build_the_reply_send_channel = () => 
             The<IReplySendChannelBuilder>().WasToldTo(
-                b => b.Build(GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName())));
+                b => b.Build(GetEndpointAddress(ChannelName, Environment.MachineName)));
 
         It should_register_the_listening_address_with_the_message_reciever = () =>
             The<IMessageReciever>().WasToldTo(r => 
-                r.StartPolling(GetEndpointAddress(ChannelName, The<IMachineIdentifier>().GetMachineName())));
+                r.StartPolling(GetEndpointAddress(ChannelName, Environment.MachineName)));
 
         It should_return_the_bus = () => bus.ShouldBeTheSameAs(The<IBus>());
         

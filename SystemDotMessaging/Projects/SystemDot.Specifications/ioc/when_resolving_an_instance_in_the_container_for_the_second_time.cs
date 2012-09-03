@@ -12,7 +12,6 @@ namespace SystemDot.Specifications.ioc
 
         Establish context = () =>
         {
-            Configure<ITypeExtender>(new TypeExtender());
             Subject.RegisterInstance<ITestComponent, TestComponent>();
             component1 = Subject.Resolve<ITestComponent>();
         };

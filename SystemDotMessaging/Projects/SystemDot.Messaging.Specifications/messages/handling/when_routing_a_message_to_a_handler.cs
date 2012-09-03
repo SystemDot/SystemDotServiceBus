@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.Specifications.messages.handling
 
         Establish context = () =>
         {
-            router = new MessageHandlerRouter(new TypeExtender());
+            router = new MessageHandlerRouter();
  
             messageHandler = new TestMessageHandler<string>();
             router.RegisterHandler(messageHandler);

@@ -2,7 +2,7 @@ namespace SystemDot.Ioc
 {
     public class IocContainerLocator
     {
-        static IIocContainer iocContainer;
+        static IIocContainer iocContainer = new IocContainer();
 
         public static void SetContainer(IIocContainer toSet)
         {
