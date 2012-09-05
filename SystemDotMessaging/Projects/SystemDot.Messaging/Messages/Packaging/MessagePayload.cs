@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
@@ -7,9 +8,12 @@ namespace SystemDot.Messaging.Messages.Packaging
     {
         public List<IMessageHeader> Headers { get; set; }
 
+        public Guid Id { get; private set; }
+
         public MessagePayload()
         {
-            this.Headers = new List<IMessageHeader>();
+            Headers = new List<IMessageHeader>();
+            Id = Guid.NewGuid();
         }
 
         public void AddHeader(IMessageHeader toAdd)

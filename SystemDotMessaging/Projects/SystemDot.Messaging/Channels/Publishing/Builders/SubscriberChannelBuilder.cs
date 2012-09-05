@@ -1,6 +1,8 @@
+using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Pipelines;
 using SystemDot.Messaging.Messages.Processing;
+using SystemDot.Messaging.Messages.Processing.Acknowledgement;
 using SystemDot.Messaging.Messages.Processing.Handling;
 using SystemDot.Messaging.Transport;
 using SystemDot.Serialisation;
@@ -12,15 +14,23 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
         readonly ISerialiser serialiser;
         readonly MessageHandlerRouter messageHandlerRouter;
         readonly IMessageReciever messageReciever;
+        readonly IMessageSender messageSender;
 
         public SubscriberChannelBuilder(
             ISerialiser serialiser, 
             MessageHandlerRouter messageHandlerRouter, 
-            IMessageReciever messageReciever)
+            IMessageReciever messageReciever, 
+            IMessageSender messageSender)
         {
+            Contract.Requires(serialiser != null);
+            Contract.Requires(messageHandlerRouter != null);
+            Contract.Requires(messageReciever != null);
+            Contract.Requires(messageSender != null);
+            
             this.serialiser = serialiser;
             this.messageHandlerRouter = messageHandlerRouter;
             this.messageReciever = messageReciever;
+            this.messageSender = messageSender;
         }
 
         public void Build(EndpointAddress subscriberAddress)
@@ -29,6 +39,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .With(this.messageReciever)
                 .ToProcessor(new BodyMessageHandler(subscriberAddress))
                 .Pump()
+                .ToProcessor(new MessageAcknowledger(this.messageSender))
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
                 .ToEndPoint(this.messageHandlerRouter);
         }

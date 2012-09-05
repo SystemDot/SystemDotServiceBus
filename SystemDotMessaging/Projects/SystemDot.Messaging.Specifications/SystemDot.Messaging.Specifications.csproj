@@ -71,9 +71,11 @@
     <Compile Include="configuration\publishing\when_configuring_a_publisher_channel.cs" />
     <Compile Include="configuration\WithConfiguationSubject.cs" />
     <Compile Include="configuration\request_reply\recieving\when_configuring_a_request_reply_receiver_channel.cs" />
+    <Compile Include="messages\acknowledgement\when_a_recieved_message_is_sent_and_the_specified_time_period_has_passed.cs" />
     <Compile Include="messages\bus\when_publishing_a_message_on_the_bus.cs" />
     <Compile Include="messages\bus\when_replying_with_a_message_on_the_bus.cs" />
     <Compile Include="messages\processing\when_unpackaging_a_message_from_transportation_payload_and_serialisation_fails.cs" />
+    <Compile Include="TestMessageSender.cs" />
     <Compile Include="transport\long_polling\serving\when_handling_request_that_fails_deserialisation.cs" />
     <Compile Include="transport\long_polling\when_long_polling_for_messages_and_the_web_requestor_fails.cs" />
     <Compile Include="FailingSerialiser.cs" />

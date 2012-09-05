@@ -55,6 +55,9 @@
     <Compile Include="Channels\RequestReply\Builders\IRequestSendChannelBuilder.cs" />
     <Compile Include="Configuration\ComponentRegistration\InProcessTransportComponents.cs" />
     <Compile Include="Configuration\FilteredBy.cs" />
+    <Compile Include="Messages\Processing\Acknowledgement\AcknowledgementHeader.cs" />
+    <Compile Include="Messages\Processing\Acknowledgement\MessageAcknowledgementExtensions.cs" />
+    <Compile Include="Messages\Processing\Acknowledgement\MessageAcknowledger.cs" />
     <Compile Include="Messages\Processing\BodyMessageHandler.cs" />
     <Compile Include="Messages\Processing\Filtering\IMessageFilterStrategy.cs" />
     <Compile Include="Messages\Processing\Filtering\NamePatternMessageFilterStrategy.cs" />
