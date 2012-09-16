@@ -1,6 +1,7 @@
 using SystemDot.Http;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Messages;
+using SystemDot.Messaging.Messages.Storage;
 using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration
@@ -12,6 +13,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<IWebRequestor, WebRequestor>();
             container.RegisterInstance<ISerialiser, PlatformAgnosticSerialiser>();
             container.RegisterInstance<EndpointAddressBuilder, EndpointAddressBuilder>();
+            container.RegisterInstance<IMessageStore, InMemoryMessageStore>();
         }
     }
 }

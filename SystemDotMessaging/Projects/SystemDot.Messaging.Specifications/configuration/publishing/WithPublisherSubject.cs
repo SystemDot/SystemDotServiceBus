@@ -1,3 +1,4 @@
+using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Transport;
@@ -10,6 +11,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
         Establish context = () =>
         {
             ConfigureAndRegister<ISubscriptionHandlerChannelBuilder>();
+            ConfigureAndRegister<IAcknowledgementChannelBuilder>();
             ConfigureAndRegister<IPublisherRegistry>();
             ConfigureAndRegister<IPublisherChannelBuilder>(new TestPublisherChannelBuilder());
             ConfigureAndRegister<IMessageReciever>();

@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Machine.Specifications">
+      <HintPath>..\SystemDot.Messaging.Specifications\bin\Debug\Machine.Specifications.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Channels\AcknowledgementChannelBuilder.cs" />
+    <Compile Include="Channels\IAcknowledgementChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\IPublisherChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\ISubscriberChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\ISubscriptionHandlerChannelBuilder.cs" />
@@ -111,6 +116,9 @@
     <Compile Include="Channels\Publishing\MessagePayloadSubscriptionRequestExtensions.cs" />
     <Compile Include="Messages\Processing\RequestReply\ReplyChannelSelector.cs" />
     <Compile Include="Messages\Processing\RequestReply\ReplyAddressLookup.cs" />
+    <Compile Include="Messages\Storage\IMessageStore.cs" />
+    <Compile Include="Messages\Storage\InMemoryMessageStore.cs" />
+    <Compile Include="Messages\Storage\MessageAcknowledgementHandler.cs" />
     <Compile Include="Transport\Http\HttpAddressExtensions.cs" />
     <Compile Include="Transport\IMessageSender.cs" />
     <Compile Include="Transport\IMessageReciever.cs" />

@@ -1,5 +1,6 @@
 using System;
 using SystemDot.Ioc;
+using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Configuration;
@@ -38,6 +39,8 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
         It should_register_the_listening_address_of_the_message_server_with_the_message_reciever = () =>
             The<IMessageReciever>().WasToldTo(r => 
                 r.StartPolling(GetEndpointAddress(ChannelName, Environment.MachineName)));
+
+        It should_build_the_acknowledgement_channel = () => The<IAcknowledgementChannelBuilder>().WasToldTo(b => b.Build());
 
         It should_return_the_bus = () => bus.ShouldBeTheSameAs(The<IBus>());
         

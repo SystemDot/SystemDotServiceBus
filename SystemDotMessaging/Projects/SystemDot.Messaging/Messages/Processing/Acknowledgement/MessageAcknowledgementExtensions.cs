@@ -17,5 +17,10 @@ namespace SystemDot.Messaging.Messages.Processing.Acknowledgement
         {
             return payload.Headers.OfType<AcknowledgementHeader>().Single().MessageId;
         }
+
+        public static bool IsAcknowledgement(this MessagePayload payload)
+        {
+            return payload.Headers.OfType<AcknowledgementHeader>().Any();
+        }
     }
 }

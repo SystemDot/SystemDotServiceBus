@@ -1,4 +1,4 @@
-using SystemDot.Ioc;
+using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Transport;
@@ -11,6 +11,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
         Establish context = () =>
         {
             ConfigureAndRegister(new EndpointAddressBuilder());
+            ConfigureAndRegister<IAcknowledgementChannelBuilder>();
             ConfigureAndRegister<IRequestRecieveChannelBuilder>();
             ConfigureAndRegister<IReplySendChannelBuilder>();
             ConfigureAndRegister<IMessageReciever>();

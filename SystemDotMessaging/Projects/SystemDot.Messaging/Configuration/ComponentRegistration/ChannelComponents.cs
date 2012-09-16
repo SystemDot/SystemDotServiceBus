@@ -1,4 +1,5 @@
 using SystemDot.Ioc;
+using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Processing.Handling;
 
@@ -10,7 +11,8 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
         {
             container.RegisterInstance<IBus, MessageBus>();
             container.RegisterInstance<MessagePayloadCopier, MessagePayloadCopier>();
-            container.RegisterInstance<MessageHandlerRouter, MessageHandlerRouter>();            
+            container.RegisterInstance<MessageHandlerRouter, MessageHandlerRouter>();
+            container.RegisterInstance<IAcknowledgementChannelBuilder, AcknowledgementChannelBuilder>();            
         }
     }
 }

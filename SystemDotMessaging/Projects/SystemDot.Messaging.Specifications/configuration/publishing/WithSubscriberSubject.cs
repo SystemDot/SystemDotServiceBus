@@ -1,4 +1,5 @@
 using SystemDot.Ioc;
+using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Transport;
@@ -11,6 +12,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
         Establish context = () =>
         {
             ConfigureAndRegister(new EndpointAddressBuilder());
+            ConfigureAndRegister<IAcknowledgementChannelBuilder>();
             ConfigureAndRegister<ISubscriberChannelBuilder>();
             ConfigureAndRegister<ISubscriptionRequestChannelBuilder>();
             ConfigureAndRegister<IMessageReciever>();

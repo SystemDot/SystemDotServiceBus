@@ -20,8 +20,8 @@ namespace SystemDot.Messaging.Messages.Processing.Acknowledgement
 
         public void InputMessage(MessagePayload toInput)
         {
-            SendAcknowledgement(toInput);
             MessageProcessed(toInput);
+            SendAcknowledgement(toInput);
         }
 
         void SendAcknowledgement(MessagePayload toInput)
