@@ -9,7 +9,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.messages.storage.in_memory
 {
     [Subject("Message handling")]
-    public class when_getting_messages_for_a_channel : WithSubject<InMemoryMessageStore>
+    public class when_getting_messages_for_a_channel : WithSubject<InMemoryPersistence>
     {
         static IEnumerable<MessagePayload> messages;
         static EndpointAddress address;
@@ -22,18 +22,18 @@ namespace SystemDot.Messaging.Specifications.messages.storage.in_memory
 
             message1 = new MessagePayload();
             message1.SetFromAddress(address);
-            Subject.Store(message1);
+            Subject.StoreMessage(message1);
 
             message2 = new MessagePayload();
             message2.SetFromAddress(address);
-            Subject.Store(message2);
+            Subject.StoreMessage(message2);
 
             var message3 = new MessagePayload();
             message3.SetFromAddress(new EndpointAddress("Channel1", "Server1"));
-            Subject.Store(message3);
+            Subject.StoreMessage(message3);
         };
 
-        Because of = () => messages = Subject.GetForChannel(address);
+        Because of = () => messages = Subject.GetMessages(address);
 
         It should_not_let_the_message_pass_through = () => messages.ShouldContainOnly(message1, message2);
     }

@@ -8,26 +8,30 @@ using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.messages.acknowledgement
 {
-    public class when_handling_a_recieved_an_acknowledgement : WithSubject<MessageAcknowledgementHandler>
+    public class when_handling_a_recieved_acknowledgement_that_is_not_for_the_current_channel 
+        : WithSubject<MessageAcknowledgementHandler>
     {
         static MessagePayload acknowledgement;
         static MessagePayload message;
         
         Establish context = () =>
         {
+            Configure<EndpointAddress>(new EndpointAddress("Channel", "Server"));
+
             message = new MessagePayload();
-            message.SetToAddress(new EndpointAddress("Channel", "Server"));
-            
-            Configure<IMessageStore>(new InMemoryMessageStore());
-            The<IMessageStore>().Store(message);
+            message.SetFromAddress(The<EndpointAddress>());
+
+            Configure<IMessageCache>(new MessageCache(new InMemoryPersistence(), The<EndpointAddress>()));
+            The<IMessageCache>().Cache(message);
 
             acknowledgement = new MessagePayload();
             acknowledgement.SetAcknowledgementId(message.Id);
+            acknowledgement.SetToAddress(new EndpointAddress("Channel1", "Server2"));
         };
 
         Because of = () => Subject.InputMessage(acknowledgement);
 
-        It should_remove_the_corresponding_message_from_the_message_store = () => 
-            The<IMessageStore>().GetForChannel(message.GetToAddress()).ShouldNotContain(message);
+        It should_not_remove_the_corresponding_message_from_the_message_store = () => 
+            The<IMessageCache>().GetAll().ShouldContain(message);
     }
 }

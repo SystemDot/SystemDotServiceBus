@@ -2,6 +2,7 @@ using System;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Pipelines;
 using SystemDot.Messaging.Messages.Processing;
+using SystemDot.Messaging.Messages.Processing.Repeating;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
 

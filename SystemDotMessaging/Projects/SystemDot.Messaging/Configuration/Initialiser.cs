@@ -23,9 +23,6 @@ namespace SystemDot.Messaging.Configuration
         public IBus Initialise()
         {
             this.buildActions.ForEach(a => a());
-
-            Resolve<IAcknowledgementChannelBuilder>().Build();
-            
             return Resolve<IBus>();
         }
 

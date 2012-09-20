@@ -13,7 +13,8 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<IWebRequestor, WebRequestor>();
             container.RegisterInstance<ISerialiser, PlatformAgnosticSerialiser>();
             container.RegisterInstance<EndpointAddressBuilder, EndpointAddressBuilder>();
-            container.RegisterInstance<IMessageStore, InMemoryMessageStore>();
+            container.RegisterInstance<IPersistence, InMemoryPersistence>();
+            container.RegisterInstance<ICurrentDateProvider, CurrentDateProvider>();
         }
     }
 }

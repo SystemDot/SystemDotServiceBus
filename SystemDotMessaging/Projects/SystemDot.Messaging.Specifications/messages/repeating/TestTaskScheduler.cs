@@ -1,17 +1,19 @@
 using System;
-using System.Threading;
 using SystemDot.Parallelism;
+using SystemDot.Specifications;
 
 namespace SystemDot.Messaging.Specifications.messages.repeating
 {
     public class TestTaskScheduler : ITaskScheduler
     {
         readonly int schedulesPermitted;
+        readonly TestCurrentDateProvider currentDateProvider;
         int schedulesExecuted;
 
-        public TestTaskScheduler(int schedulesPermitted)
+        public TestTaskScheduler(int schedulesPermitted, TestCurrentDateProvider currentDateProvider)
         {
             this.schedulesPermitted = schedulesPermitted;
+            this.currentDateProvider = currentDateProvider;
         }
 
         public TimeSpan LastDelay { get; private set;  }
@@ -22,7 +24,9 @@ namespace SystemDot.Messaging.Specifications.messages.repeating
                 return;
 
             this.LastDelay = delay;
+            this.currentDateProvider.AddToCurrentDate(delay);
             task.Invoke();
+
         }
     }
 }

@@ -8,7 +8,7 @@ namespace SystemDot.Messaging.Messages.Packaging
     {
         public List<IMessageHeader> Headers { get; set; }
 
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
         public MessagePayload()
         {

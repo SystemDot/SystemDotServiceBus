@@ -39,7 +39,6 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .With(this.messageReciever)
                 .ToProcessor(new BodyMessageHandler(subscriberAddress))
                 .Pump()
-                .ToProcessor(new MessageAcknowledger(this.messageSender))
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
                 .ToEndPoint(this.messageHandlerRouter);
         }

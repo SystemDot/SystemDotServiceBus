@@ -44,9 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CurrentDateProvider.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="Http\FixedPortAddress.cs" />
     <Compile Include="Http\IWebRequestor.cs" />
+    <Compile Include="ICurrentDateProvider.cs" />
     <Compile Include="IEnumerableExtensions.cs" />
     <Compile Include="Ioc\ConcreteInstance.cs" />
     <Compile Include="Ioc\IIocContainer.cs" />

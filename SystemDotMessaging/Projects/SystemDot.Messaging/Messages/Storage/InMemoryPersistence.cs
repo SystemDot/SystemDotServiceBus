@@ -7,31 +7,35 @@ using SystemDot.Messaging.Messages.Packaging.Headers;
 
 namespace SystemDot.Messaging.Messages.Storage
 {
-    public class InMemoryMessageStore : IMessageStore
+    public class InMemoryPersistence : IPersistence
     {
         readonly ConcurrentDictionary<Guid, MessagePayload> messages;
 
-        public InMemoryMessageStore()
+        public InMemoryPersistence()
         {
             messages = new ConcurrentDictionary<Guid, MessagePayload>();
         }
 
-        public IEnumerable<MessagePayload> GetForChannel(EndpointAddress address)
+        public IEnumerable<MessagePayload> GetMessages(EndpointAddress address)
         {
             return messages.Values.Where(m => m.GetFromAddress() == address);
         }
 
-        public void Store(MessagePayload message)
+        public void StoreMessage(MessagePayload message)
         {
             messages.TryAdd(message.Id, message);
         }
 
-        public void Remove(Guid id)
+        public void RemoveMessage(Guid id)
         {
             if (!messages.ContainsKey(id)) return;
 
             MessagePayload temp;
             messages.TryRemove(id, out temp);
+        }
+
+        public void Initialise()
+        {
         }
     }
 }

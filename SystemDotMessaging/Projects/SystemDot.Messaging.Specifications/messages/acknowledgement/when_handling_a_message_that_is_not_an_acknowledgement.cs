@@ -1,6 +1,7 @@
 using System;
+using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
-using SystemDot.Messaging.Messages.Storage;
+using SystemDot.Messaging.Messages.Processing.Acknowledgement;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -13,7 +14,8 @@ namespace SystemDot.Messaging.Specifications.messages.acknowledgement
 
         Establish context = () =>
         {
-            Configure<IMessageStore>(new InMemoryMessageStore());
+            Configure<EndpointAddress>(new EndpointAddress("Channel", "Server"));
+
             message = new MessagePayload();
         };
 

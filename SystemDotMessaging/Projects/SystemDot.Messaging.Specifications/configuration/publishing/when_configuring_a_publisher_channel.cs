@@ -35,8 +35,6 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
             The<IMessageReciever>().WasToldTo(r => 
                 r.StartPolling(GetEndpointAddress(ChannelName, Environment.MachineName)));
 
-        It should_build_the_acknowledgement_channel = () => The<IAcknowledgementChannelBuilder>().WasToldTo(b => b.Build());
-
         It should_return_the_bus = () => bus.ShouldBeTheSameAs(The<IBus>());
     }
 }
