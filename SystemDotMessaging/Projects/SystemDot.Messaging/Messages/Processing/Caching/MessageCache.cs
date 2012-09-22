@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Messages.Packaging;
+using SystemDot.Messaging.Storage;
 
-namespace SystemDot.Messaging.Messages.Storage
+namespace SystemDot.Messaging.Messages.Processing.Caching
 {
     public class MessageCache : IMessageCache
     {

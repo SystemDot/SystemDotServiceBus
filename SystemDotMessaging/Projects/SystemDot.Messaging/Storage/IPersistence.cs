@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
 
-namespace SystemDot.Messaging.Messages.Storage
+namespace SystemDot.Messaging.Storage
 {
     [ContractClass(typeof(IPersistenceContract))]
     public interface IPersistence

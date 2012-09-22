@@ -11,6 +11,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
         {
             iocContainer.RegisterInstance<ITaskStarter, TaskStarter>();
             iocContainer.RegisterInstance<ITaskScheduler, TaskScheduler>();
+            iocContainer.RegisterInstance<ITaskRepeater, TaskRepeater>();
         }
     }
 }

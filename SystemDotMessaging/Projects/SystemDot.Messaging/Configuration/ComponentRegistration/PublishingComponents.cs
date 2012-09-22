@@ -9,8 +9,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
         public static void Register(IIocContainer iocContainer)
         {
             iocContainer.RegisterInstance<IPublisherRegistry, PublisherRegistry>();
-            iocContainer.RegisterInstance<IChannelBuilder, ChannelBuilder>();
-            iocContainer.RegisterInstance<SubscriptionRequestHandler, SubscriptionRequestHandler>();
+            iocContainer.RegisterInstance<SubscriptionChannelBuilder, SubscriptionChannelBuilder>();
             iocContainer.RegisterInstance<ISubscriptionHandlerChannelBuilder, SubscriptionHandlerChannelBuilder>();
             iocContainer.RegisterInstance<IPublisherChannelBuilder, PublisherChannelBuilder>();
             iocContainer.RegisterInstance<ISubscriberChannelBuilder, SubscriberChannelBuilder>();

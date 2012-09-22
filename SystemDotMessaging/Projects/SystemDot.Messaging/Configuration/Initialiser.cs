@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Messages;
+using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Configuration
 {
@@ -23,6 +23,8 @@ namespace SystemDot.Messaging.Configuration
         public IBus Initialise()
         {
             this.buildActions.ForEach(a => a());
+            Resolve<ITaskRepeater>().Start();
+            
             return Resolve<IBus>();
         }
 

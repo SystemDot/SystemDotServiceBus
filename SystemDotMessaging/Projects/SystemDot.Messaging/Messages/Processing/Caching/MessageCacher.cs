@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Messages.Packaging;
 
-namespace SystemDot.Messaging.Messages.Storage
+namespace SystemDot.Messaging.Messages.Processing.Caching
 {
     public class MessageCacher : IMessageProcessor<MessagePayload, MessagePayload>
     {

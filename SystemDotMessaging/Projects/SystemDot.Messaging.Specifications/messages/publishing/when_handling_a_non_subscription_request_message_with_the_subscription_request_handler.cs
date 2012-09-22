@@ -1,9 +1,5 @@
 using System;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Publishing;
-using SystemDot.Messaging.Channels.Publishing.Builders;
-using SystemDot.Messaging.Messages;
-using SystemDot.Messaging.Messages.Distribution;
 using SystemDot.Messaging.Messages.Packaging;
 using Machine.Specifications;
 
@@ -14,22 +10,16 @@ namespace SystemDot.Messaging.Specifications.messages.publishing
         : WithMessageInputterSubject<SubscriptionRequestHandler>
     {
         static Exception exception;
-        static MessagePayload messagePayload;
+        static MessagePayload nonRequest;
 
         Establish context = () =>
         {
             Configure<PublisherRegistry>(new PublisherRegistry());
             
-            Configure<IChannelBuilder>(
-                new TestChannelBuilder(
-                    new EndpointAddress("TestFromAddress", "TestFromServer"), 
-                    new EndpointAddress("TestToAddress", "TestToServer"), 
-                    new Pipe<MessagePayload>()));
-
-            messagePayload = new MessagePayload();
+            nonRequest = new MessagePayload();
         };
 
-        Because of = () => exception = Catch.Exception(() => Subject.InputMessage(messagePayload));
+        Because of = () => exception = Catch.Exception(() => Subject.InputMessage(nonRequest));
 
         It should_not_fail = () => exception.ShouldBeNull();
     }

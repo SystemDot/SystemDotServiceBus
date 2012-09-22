@@ -1,42 +1,47 @@
 using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Messages.Packaging;
-using SystemDot.Parallelism;
+using SystemDot.Messaging.Messages.Processing.Caching;
 
 namespace SystemDot.Messaging.Messages.Processing.Repeating
 {
     public class MessageRepeater : IMessageProcessor<MessagePayload, MessagePayload>
     {
-        readonly TimeSpan delay;
-        readonly ITaskScheduler taskScheduler;
+        readonly IMessageCache cache;
+        readonly ICurrentDateProvider currentDateProvider;
 
-        public MessageRepeater(TimeSpan delay, ITaskScheduler taskScheduler)
+        public MessageRepeater(
+            IMessageCache cache, 
+            ICurrentDateProvider currentDateProvider)
         {
-            Contract.Requires(delay != TimeSpan.MinValue);
-            Contract.Requires(taskScheduler != null);
-
-
-            this.delay = delay;
-            this.taskScheduler = taskScheduler;
+            Contract.Requires(cache != null);
+            Contract.Requires(currentDateProvider != null);
+            
+            this.cache = cache;
+            this.currentDateProvider = currentDateProvider;
         }
 
         public void InputMessage(MessagePayload toInput)
         {
+            toInput.SetLastTimeSent(this.currentDateProvider.Get());
+            toInput.IncreaseAmountSent();
             MessageProcessed(toInput);
-            ScheduleNextSend(toInput, this.delay);
-        }
-
-        void ScheduleNextSend(MessagePayload toInput, TimeSpan nextDelay)
-        {
-            taskScheduler.ScheduleTask(
-                nextDelay, 
-                () =>
-                {
-                    MessageProcessed(toInput);
-                    ScheduleNextSend(toInput, new TimeSpan(nextDelay.Ticks * 2));
-                });
         }
 
         public event Action<MessagePayload> MessageProcessed;
+
+        public void Start()
+        {
+            this.cache.GetAll().ForEach(m =>
+            {
+                if (m.GetLastTimeSent() <= this.currentDateProvider.Get().AddSeconds(-GetDelay(m))) 
+                    InputMessage(m);
+            });
+        }
+
+        static int GetDelay(MessagePayload toGetDelayFor)
+        {
+            return toGetDelayFor.GetAmountSent() < 3 ? toGetDelayFor.GetAmountSent() : 4;
+        }
     }
 }

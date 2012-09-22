@@ -1,10 +1,9 @@
 using System;
-using SystemDot.Ioc;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Messages.Processing.Filtering;
 using SystemDot.Messaging.Transport;
+using SystemDot.Parallelism;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -34,6 +33,8 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
         It should_register_the_listening_address_of_the_message_server_with_the_message_reciever = () =>
             The<IMessageReciever>().WasToldTo(r => 
                 r.StartPolling(GetEndpointAddress(ChannelName, Environment.MachineName)));
+
+        It should_start_the_task_repeater = () => The<ITaskRepeater>().WasToldTo(r => r.Start());
 
         It should_return_the_bus = () => bus.ShouldBeTheSameAs(The<IBus>());
     }

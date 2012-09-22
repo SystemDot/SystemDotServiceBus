@@ -2,6 +2,7 @@ using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Transport;
+using SystemDot.Parallelism;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing
@@ -15,6 +16,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
             ConfigureAndRegister<IPublisherRegistry>();
             ConfigureAndRegister<IPublisherChannelBuilder>(new TestPublisherChannelBuilder());
             ConfigureAndRegister<IMessageReciever>();
+            ConfigureAndRegister<ITaskRepeater>();
             ConfigureAndRegister<IBus>();
         };
     }

@@ -1,5 +1,5 @@
 ﻿using SystemDot.Messaging.Messages;
-using SystemDot.Messaging.Messages.Storage;
+using SystemDot.Messaging.Messages.Processing.Caching;
 
 namespace SystemDot.Messaging.Channels
 {

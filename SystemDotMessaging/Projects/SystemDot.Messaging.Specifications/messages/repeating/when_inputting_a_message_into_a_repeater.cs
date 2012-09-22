@@ -7,7 +7,7 @@ using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.messages.repeating.durable
 {
-    public class when_inputting_a_message_into_a_repeater : WithSubject<DurableMessageRepeater>
+    public class when_inputting_a_message_into_a_repeater : WithSubject<MessageRepeater>
     {
         static MessagePayload message;
         static MessagePayload processedMessage;

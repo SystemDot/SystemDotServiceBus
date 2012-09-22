@@ -70,10 +70,14 @@
     <Compile Include="ioc\when_registering_an_instance_in_the_container_for_the_second_time.cs" />
     <Compile Include="ioc\when_registering_an_instance_with_parameters_in_the_container.cs" />
     <Compile Include="ioc\when_resolving_an_instance_in_the_container_for_the_second_time.cs" />
+    <Compile Include="parallelism\when_starting_task_repeating_with_a_task_registered.cs" />
+    <Compile Include="parallelism\when_starting_task_repeating_with_two_tasks_registered.cs" />
+    <Compile Include="parallelism\ZeroTimespanPassThroughTaskScheduler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="serialisation\when_serialising_an_object_to_json.cs" />
     <Compile Include="StreamExtensions.cs" />
     <Compile Include="TestCurrentDateProvider.cs" />
+    <Compile Include="TestTaskScheduler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SystemDot.NonMetro\SystemDot.NonMetro.csproj">

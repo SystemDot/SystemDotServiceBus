@@ -1,7 +1,7 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Messages.Packaging;
-using SystemDot.Messaging.Messages.Storage;
 using SystemDot.Messaging.Messages.Packaging.Headers;
+using SystemDot.Messaging.Messages.Processing.Caching;
 
 namespace SystemDot.Messaging.Messages.Processing.Acknowledgement
 {

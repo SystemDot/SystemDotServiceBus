@@ -1,35 +1,38 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Messages.Pipelines;
+using SystemDot.Messaging.Messages.Processing.Acknowledgement;
 using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Channels.Publishing.Builders
 {
     public class SubscriptionHandlerChannelBuilder : ISubscriptionHandlerChannelBuilder
     {
-        readonly SubscriptionRequestHandler subscriptionRequestHandler;
         readonly IMessageReciever messageReciever;
         readonly IMessageSender messageSender;
+        readonly IPublisherRegistry publisherRegistry;
 
         public SubscriptionHandlerChannelBuilder(
-            SubscriptionRequestHandler subscriptionRequestHandler, 
             IMessageReciever messageReciever, 
-            IMessageSender messageSender)
+            IMessageSender messageSender, 
+            IPublisherRegistry publisherRegistry)
         {
-            Contract.Requires(subscriptionRequestHandler != null);
             Contract.Requires(messageReciever != null);
             Contract.Requires(messageSender != null);
+            Contract.Requires(publisherRegistry != null);
             
-            this.subscriptionRequestHandler = subscriptionRequestHandler;
             this.messageReciever = messageReciever;
             this.messageSender = messageSender;
+            this.publisherRegistry = publisherRegistry;
         }
 
         public void Build()
         {
             MessagePipelineBuilder.Build()
                 .With(this.messageReciever)
+                .ToProcessor(new SubscriptionRequestHandler())
                 .Pump()
-                .ToEndPoint(this.subscriptionRequestHandler);
+                .ToProcessor(new MessageAcknowledger(this.messageSender))
+                .ToEndPoint(new SubscriptionChannelBuilder(this.publisherRegistry, this.messageSender));
         }
     }
 }

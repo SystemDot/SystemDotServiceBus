@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Packaging.Headers;
+using SystemDot.Messaging.Messages.Processing.Caching;
 using SystemDot.Messaging.Messages.Processing.Repeating;
-using SystemDot.Messaging.Messages.Storage;
+using SystemDot.Messaging.Storage;
 using SystemDot.Specifications;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -12,7 +13,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.messages.repeating.durable
 {
     public class when_two_stored_messages_can_be_repeated_as_one_second_has_passed_after_their_first_attempts 
-        : WithSubject<DurableMessageRepeater>
+        : WithSubject<MessageRepeater>
     {
         static List<MessagePayload> processedMessages;
         static MessagePayload message1;

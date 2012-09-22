@@ -2,10 +2,11 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Packaging;
 using SystemDot.Messaging.Messages.Packaging.Headers;
 
-namespace SystemDot.Messaging.Messages.Storage
+namespace SystemDot.Messaging.Storage
 {
     public class InMemoryPersistence : IPersistence
     {

@@ -2,7 +2,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Messages.Pipelines;
 using SystemDot.Messaging.Messages.Processing.Acknowledgement;
-using SystemDot.Messaging.Messages.Storage;
+using SystemDot.Messaging.Messages.Processing.Caching;
 using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Channels

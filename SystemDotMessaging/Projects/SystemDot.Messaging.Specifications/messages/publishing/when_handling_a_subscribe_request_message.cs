@@ -10,12 +10,10 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.messages.publishing
 {
     [Subject("Message publishing")]
-    public class when_handling_a_subscribe_request_message 
-        : WithMessageInputterSubject<SubscriptionRequestHandler>
+    public class when_building_a_subscription_channel : WithMessageInputterSubject<SubscriptionChannelBuilder>
     {
         static EndpointAddress address;
         static TestDistributor publisher;
-        static IMessageInputter<MessagePayload> subscriptionChannel;
         static MessagePayload request;
         static SubscriptionSchema subscriptionSchema;
 
@@ -28,8 +26,6 @@ namespace SystemDot.Messaging.Specifications.messages.publishing
             The<IPublisherRegistry>().RegisterPublisher(address, publisher);
 
             subscriptionSchema = new SubscriptionSchema(new EndpointAddress("TestSubscriberAddress", "TestServer"));
-            subscriptionChannel = new Pipe<MessagePayload>();
-            Configure<IChannelBuilder>(new TestChannelBuilder(address, subscriptionSchema.SubscriberAddress, subscriptionChannel));
             
             request = new MessagePayload();
             request.SetToAddress(address);
@@ -38,7 +34,6 @@ namespace SystemDot.Messaging.Specifications.messages.publishing
 
         Because of = () => Subject.InputMessage(request);
 
-        It should_setup_a_subscription_channel_and_subscribe_it_to_the_publisher = () =>
-            publisher.Subscribers.ShouldContainOnly(subscriptionChannel);
+        It should_setup_a_subscription_channel_and_subscribe_it_to_the_publisher = () => publisher.Subscribers.ShouldNotBeEmpty();
     }
 }
