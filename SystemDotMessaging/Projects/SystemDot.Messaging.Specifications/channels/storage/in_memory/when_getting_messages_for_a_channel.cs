@@ -22,15 +22,15 @@ namespace SystemDot.Messaging.Specifications.channels.storage.in_memory
 
             message1 = new MessagePayload();
             message1.SetFromAddress(address);
-            Subject.StoreMessage(message1);
+            Subject.StoreMessage(message1, address);
 
             message2 = new MessagePayload();
             message2.SetFromAddress(address);
-            Subject.StoreMessage(message2);
+            Subject.StoreMessage(message2, address);
 
             var message3 = new MessagePayload();
             message3.SetFromAddress(new EndpointAddress("Channel1", "Server1"));
-            Subject.StoreMessage(message3);
+            Subject.StoreMessage(message3, new EndpointAddress("Channel1", "Server1"));
         };
 
         Because of = () => messages = Subject.GetMessages(address);

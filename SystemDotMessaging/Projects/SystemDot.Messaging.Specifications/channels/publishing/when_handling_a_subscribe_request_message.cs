@@ -2,16 +2,15 @@ using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Messaging.Channels.Publishing;
-using SystemDot.Messaging.Channels.Publishing.Builders;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.channels.publishing
 {
     [Subject("Message publishing")]
-    public class when_building_a_subscription_channel : WithMessageInputterSubject<SubscriberSendChannelBuilder>
+    public class when_building_a_subscription_channel : WithMessageInputterSubject<SubscriptionRequestHandler>
     {
         static EndpointAddress address;
-        static TestDistributor publisher;
+        static TestPublisher publisher;
         static MessagePayload request;
         static SubscriptionSchema subscriptionSchema;
 
@@ -19,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
         {
             address = new EndpointAddress("TestAddress", "TestServer");
             
-            publisher = new TestDistributor();
+            publisher = new TestPublisher();
             Configure<IPublisherRegistry>(new PublisherRegistry());
             The<IPublisherRegistry>().RegisterPublisher(address, publisher);
 

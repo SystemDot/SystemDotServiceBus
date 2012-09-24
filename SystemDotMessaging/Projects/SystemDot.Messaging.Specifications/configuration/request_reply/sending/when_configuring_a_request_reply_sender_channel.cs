@@ -49,8 +49,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 
         It should_start_the_task_repeater = () => The<ITaskRepeater>().WasToldTo(r => r.Start());
 
-        It should_intitialise_the_persistence_layer = () => The<IPersistence>().WasToldTo(p => p.Initialise());
-
         It should_return_the_bus = () => bus.ShouldBeTheSameAs(The<IBus>());
     }
 }

@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="channels\storage\when_decaching_a_message.cs" />
     <Compile Include="configuration\publishing\when_configuring_a_publisher_channel_with_a_specific_namespace_filtering_strategy.cs" />
     <Compile Include="configuration\publishing\TestPublisherChannelBuilder.cs" />
     <Compile Include="configuration\publishing\WithPublisherSubject.cs" />
@@ -77,7 +78,7 @@
     <Compile Include="channels\acknowledgement\when_handling_a_recieved_acknowledgement.cs" />
     <Compile Include="channels\bus\when_publishing_a_message_on_the_bus.cs" />
     <Compile Include="channels\bus\when_replying_with_a_message_on_the_bus.cs" />
-    <Compile Include="channels\when_unpackaging_a_message_from_transportation_payload_and_serialisation_fails.cs" />
+    <Compile Include="channels\packaging\when_unpackaging_a_message_from_transportation_payload_and_serialisation_fails.cs" />
     <Compile Include="channels\publishing\when_handling_a_subscription_request_message_with_the_subscription_request_handler.cs" />
     <Compile Include="channels\repeating\when_a_stored_message_can_be_repeated_as_four_seconds_have_passed_after_the_fourth_attempt.cs" />
     <Compile Include="channels\repeating\when_a_stored_message_cannot_be_repeated_as_four_seconds_have_not_passed_after_the_third_attempt.cs" />
@@ -90,7 +91,7 @@
     <Compile Include="channels\repeating\when_two_stored_messages_can_be_repeated_as_one_second_has_passed_after_their_first_attempts.cs" />
     <Compile Include="channels\storage\in_memory\when_getting_messages_for_a_channel.cs" />
     <Compile Include="channels\storage\in_memory\when_removing_a_message_that_does_not_exist.cs" />
-    <Compile Include="channels\storage\when_getting_messages_for_a_channel.cs" />
+    <Compile Include="channels\storage\when_caching_a_message.cs" />
     <Compile Include="TestMessageSender.cs" />
     <Compile Include="transport\long_polling\serving\when_handling_request_that_fails_deserialisation.cs" />
     <Compile Include="transport\long_polling\when_long_polling_for_messages_and_the_web_requestor_fails.cs" />
@@ -100,7 +101,7 @@
     <Compile Include="transport\long_polling\TestSerialiser.cs" />
     <Compile Include="transport\long_polling\when_sending_a_message.cs" />
     <Compile Include="channels\when_handling_a_message_that_does_not_have_with_the_expected_address_with_a_body_message_handler.cs" />
-    <Compile Include="channels\distribution\when_subscribing_with_the_same_subscriber_key_twice.cs" />
+    <Compile Include="channels\publishing\when_subscribing_with_the_same_subscriber_key_twice.cs" />
     <Compile Include="channels\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel.cs" />
     <Compile Include="channels\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel_and_machine_name.cs" />
     <Compile Include="channels\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel_machine_and_server.cs" />
@@ -113,7 +114,7 @@
     <Compile Include="channels\filtering\when_filtering_a_message_by_namespace_that_is_not_in_the_specified_namespace.cs" />
     <Compile Include="channels\request_reply\when_addressing_a_reply_channel_message.cs" />
     <Compile Include="channels\request_reply\when_passing_messages_through_a_reply_channel_selector.cs" />
-    <Compile Include="channels\when_unpackaging_a_message_from_transportation_payload_that_does_not_have_a_body.cs" />
+    <Compile Include="channels\packaging\when_unpackaging_a_message_from_transportation_payload_that_does_not_have_a_body.cs" />
     <Compile Include="channels\publishing\when_handling_a_subscribe_request_message.cs" />
     <Compile Include="channels\publishing\when_handling_a_non_subscription_request_message_with_the_subscription_request_handler.cs" />
     <Compile Include="channels\when_addressing_a_message.cs" />
@@ -133,10 +134,10 @@
     <Compile Include="channels\handling\TestMessageHandler.cs" />
     <Compile Include="channels\handling\when_routing_a_message_to_two_handlers.cs" />
     <Compile Include="channels\handling\when_routing_a_message_to_a_handler.cs" />
-    <Compile Include="channels\distribution\when_publishing_a_message_to_a_distributor_with_a_registered_subscriber.cs" />
-    <Compile Include="channels\distribution\when_publishing_a_message_to_a_distributor_with_two_registered_subscribers.cs" />
+    <Compile Include="channels\publishing\when_publishing_a_message_with_a_registered_subscriber.cs" />
+    <Compile Include="channels\publishing\when_publishing_a_message_with_two_registered_subscribers.cs" />
     <Compile Include="channels\publishing\when_starting_a_subscription_requestor.cs" />
-    <Compile Include="TestDistributor.cs" />
+    <Compile Include="TestPublisher.cs" />
     <Compile Include="channels\publishing\when_registering_a_publisher.cs" />
     <Compile Include="WithMessageInputterSubject.cs" />
     <Compile Include="transport\long_polling\serving\when_handling_a_request_containing_an_object_other_than_a_message_payload.cs" />
@@ -144,8 +145,8 @@
     <Compile Include="StreamExtensions.cs" />
     <Compile Include="transport\long_polling\serving\when_handling_a_long_poll_request_for_messages_with_two_messages_in_the_queue.cs" />
     <Compile Include="transport\long_polling\serving\when_handling_a_sent_message_from_a_request.cs" />
-    <Compile Include="channels\when_unpackaging_a_message_from_transportation_payload.cs" />
-    <Compile Include="channels\when_packaging_a_message_into_transportation_payload.cs" />
+    <Compile Include="channels\packaging\when_unpackaging_a_message_from_transportation_payload.cs" />
+    <Compile Include="channels\packaging\when_packaging_a_message_into_transportation_payload.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

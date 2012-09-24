@@ -1,15 +1,18 @@
+using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Packaging;
 
-namespace SystemDot.Messaging.Channels.Distribution
+namespace SystemDot.Messaging.Channels.Publishing
 {
-    public class Distributor : IDistributor
+    public class Publisher : IPublisher
     {
         readonly MessagePayloadCopier messagePayloadCopier;
         readonly ConcurrentDictionary<object, IMessageInputter<MessagePayload>> subscribers;
-        
-        public Distributor(MessagePayloadCopier messagePayloadCopier)
+
+        public event Action<MessagePayload> MessageProcessed;
+
+        public Publisher(MessagePayloadCopier messagePayloadCopier)
         {
             Contract.Requires(messagePayloadCopier != null);
 
@@ -19,7 +22,8 @@ namespace SystemDot.Messaging.Channels.Distribution
 
         public void InputMessage(MessagePayload toInput)
         {
-            this.subscribers.Values.ForEach(s => s.InputMessage(this.messagePayloadCopier.Copy(toInput)));        
+            this.subscribers.Values.ForEach(s => s.InputMessage(this.messagePayloadCopier.Copy(toInput)));
+            MessageProcessed(toInput);
         }
 
         public void Subscribe(object key, IMessageInputter<MessagePayload> toSubscribe)

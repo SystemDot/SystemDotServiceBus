@@ -2,14 +2,15 @@
 using SystemDot.Messaging.Channels.Distribution;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Packaging.Headers;
+using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.channels.distribution
+namespace SystemDot.Messaging.Specifications.channels.publishing
 {
-    [Subject("Message distribution")]
-    public class when_publishing_a_message_to_a_distributor_with_two_registered_subscribers : WithSubject<Distributor>
+    [Subject("Message publishing")]
+    public class when_publishing_a_message_with_two_registered_subscribers : WithSubject<Publisher>
     {
         static MessagePayload inputMessage;
         static Pipe<MessagePayload> subscriber1;
@@ -31,6 +32,8 @@ namespace SystemDot.Messaging.Specifications.channels.distribution
 
             inputMessage = new MessagePayload();
             inputMessage.SetToAddress(new EndpointAddress("TestAddress", "TestServer"));
+
+            Subject.MessageProcessed += _ => { };
         };
 
         Because of = () => Subject.InputMessage(inputMessage);

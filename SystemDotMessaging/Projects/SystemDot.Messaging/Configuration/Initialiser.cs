@@ -25,7 +25,6 @@ namespace SystemDot.Messaging.Configuration
         {
             this.buildActions.ForEach(a => a());
             
-            Resolve<IPersistence>().Initialise();
             Resolve<ITaskRepeater>().Start();
             
             return Resolve<IBus>();

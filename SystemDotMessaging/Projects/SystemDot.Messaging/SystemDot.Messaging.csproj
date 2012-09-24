@@ -45,16 +45,19 @@
   <ItemGroup>
     <Compile Include="Channels\Acknowledgement\Builders\AcknowledgementChannelBuilder.cs" />
     <Compile Include="Channels\Acknowledgement\Builders\IAcknowledgementChannelBuilder.cs" />
+    <Compile Include="Channels\Caching\MessageDecacher.cs" />
     <Compile Include="Channels\Publishing\Builders\IPublisherChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\ISubscriberChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\Builders\ISubscriberSendChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\ISubscriptionHandlerChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\ISubscriptionRequestChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\PublisherChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\SubscriberRecieveChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\SubscriptionRequestHandler.cs" />
     <Compile Include="Channels\Publishing\Builders\SubscriptionHandlerChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\SubscriptionRequestChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\ISubscriptionRequestor.cs" />
-    <Compile Include="Channels\Publishing\SubscriptionRequestHandler.cs" />
+    <Compile Include="Channels\Publishing\SubscriptionRequestChecker.cs" />
     <Compile Include="Channels\RequestReply\Builders\IReplyRecieveChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\IRequestRecieveChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\IReplySendChannelBuilder.cs" />
@@ -96,7 +99,7 @@
     <Compile Include="Configuration\RequestReply\RequestReplySenderConfiguration.cs" />
     <Compile Include="Configuration\RequestReply\RequestReplyRecieverConfiguration.cs" />
     <Compile Include="IBus.cs" />
-    <Compile Include="Channels\Distribution\IDistributor.cs" />
+    <Compile Include="Channels\Publishing\IPublisher.cs" />
     <Compile Include="Channels\EndpointAddress.cs" />
     <Compile Include="Channels\EndpointAddressBuilder.cs" />
     <Compile Include="Channels\Packaging\Headers\AddressHeader.cs" />
@@ -134,7 +137,7 @@
     <Compile Include="Channels\Publishing\SubscriptionRequestHeader.cs" />
     <Compile Include="Channels\Packaging\Headers\ToAddressHeader.cs" />
     <Compile Include="Channels\Packaging\MessagePayloadCopier.cs" />
-    <Compile Include="Channels\Distribution\Distributor.cs" />
+    <Compile Include="Channels\Publishing\Publisher.cs" />
     <Compile Include="Transport\Http\LongPolling\Servers\IMessagingServerHandler.cs" />
     <Compile Include="MessageBus.cs" />
     <Compile Include="Channels\Packaging\Headers\BodyHeader.cs" />

@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Channels.Caching
 
         public void Cache(MessagePayload toCache)
         {
-            this.persistence.StoreMessage(toCache);
+            this.persistence.StoreMessage(toCache, this.address);
         }
 
         public void Remove(Guid id)

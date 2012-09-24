@@ -11,19 +11,19 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
     [Subject("Message publishing")]
     public class when_retreving_a_registered_publisher : WithSubject<PublisherRegistry>
     {
-        static IDistributor distributor;
+        static IPublisher publisher;
         static EndpointAddress address;
-        static IDistributor retreived;
+        static IPublisher retreived;
         
         Establish context = () =>
         {
-            distributor = new Distributor(new MessagePayloadCopier(new PlatformAgnosticSerialiser()));
+            publisher = new Publisher(new MessagePayloadCopier(new PlatformAgnosticSerialiser()));
             address = new EndpointAddress("TestAddress", "TestServer");
-            Subject.RegisterPublisher(address, distributor);
+            Subject.RegisterPublisher(address, publisher);
         };
 
         Because of = () => retreived = Subject.GetPublisher(address);
 
-        It should_retreive_the_publisher_with_the_correct_address = () => retreived.ShouldBeTheSameAs(distributor);
+        It should_retreive_the_publisher_with_the_correct_address = () => retreived.ShouldBeTheSameAs(publisher);
     }
 }

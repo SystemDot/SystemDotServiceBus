@@ -45,9 +45,9 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
 
         public void Build(EndpointAddress address, IMessageFilterStrategy messageFilterStrategy)
         {
-            var publisherEndpoint = new Distributor(this.messagePayloadCopier);
-
             IMessageCache cache = new MessageCache(this.persistence, address);
+            
+            var publisherEndpoint = new Publisher(this.messagePayloadCopier);
 
             MessagePipelineBuilder.Build()
                 .WithBusPublishTo(new MessageFilter(messageFilterStrategy))
@@ -55,7 +55,8 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .ToMessageRepeater(cache, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new MessageCacher(cache))
                 .Pump()
-                .ToEndPoint(publisherEndpoint);
+                .ToProcessor(publisherEndpoint)
+                .ToEndPoint(new MessageDecacher(cache));
 
             this.publisherRegistry.RegisterPublisher(address, publisherEndpoint);
         }

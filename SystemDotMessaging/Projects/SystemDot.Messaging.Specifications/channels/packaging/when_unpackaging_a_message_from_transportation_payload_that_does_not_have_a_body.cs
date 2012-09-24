@@ -3,7 +3,7 @@ using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Serialisation;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.channels
+namespace SystemDot.Messaging.Specifications.channels.packaging
 {
     [Subject("Message processing")]
     public class when_unpackaging_a_message_from_transportation_payload_that_does_not_have_a_body

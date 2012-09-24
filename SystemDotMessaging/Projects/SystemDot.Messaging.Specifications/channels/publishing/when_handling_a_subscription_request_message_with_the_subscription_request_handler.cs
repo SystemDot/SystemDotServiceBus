@@ -6,7 +6,7 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
 {
     [Subject("Message publishing")]
     public class when_handling_a_subscription_request_message_with_the_subscription_request_handler
-        : WithMessageInputterSubject<SubscriptionRequestHandler>
+        : WithMessageInputterSubject<SubscriptionRequestChecker>
     {
         static MessagePayload processedMessage;
         static MessagePayload request;

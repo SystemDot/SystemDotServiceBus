@@ -5,7 +5,7 @@ using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Serialisation;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.channels
+namespace SystemDot.Messaging.Specifications.channels.packaging
 {
     [Subject("Message processing")]
     public class when_packaging_a_message_into_transportation_payload

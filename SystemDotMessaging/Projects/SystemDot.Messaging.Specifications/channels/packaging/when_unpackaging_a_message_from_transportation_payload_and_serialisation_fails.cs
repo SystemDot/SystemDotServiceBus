@@ -4,7 +4,7 @@ using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Packaging.Headers;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.channels
+namespace SystemDot.Messaging.Specifications.channels.packaging
 {
     [Subject("Message processing")]
     public class when_unpackaging_a_message_from_transportation_payload_and_serialisation_fails 

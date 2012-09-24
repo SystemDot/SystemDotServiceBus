@@ -1,16 +1,17 @@
+using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Packaging;
 
-namespace SystemDot.Messaging.Channels.Distribution
+namespace SystemDot.Messaging.Channels.Publishing
 {
-    [ContractClass(typeof(IDistributorContract))]
-    public interface IDistributor : IMessageInputter<MessagePayload>
+    [ContractClass(typeof(PublisherContract))]
+    public interface IPublisher : IMessageProcessor<MessagePayload, MessagePayload>
     {
         void Subscribe(object key, IMessageInputter<MessagePayload> toSubscribe);
     }
 
-    [ContractClassFor(typeof(IDistributor))]
-    public class IDistributorContract : IDistributor 
+    [ContractClassFor(typeof(IPublisher))]
+    public class PublisherContract : IPublisher 
     {
         public void InputMessage(MessagePayload toInput)
         {
@@ -22,5 +23,8 @@ namespace SystemDot.Messaging.Channels.Distribution
             Contract.Requires(key != null);
             Contract.Requires(toSubscribe != null);
         }
+
+        public event Action<MessagePayload> MessageProcessed;
+
     }
 }
