@@ -1,5 +1,5 @@
 using System;
-using SystemDot.Messaging.Messages;
+using SystemDot.Messaging.Channels;
 using Windows.UI.Core;
 
 namespace SystemDot.Messaging.TestSubscriber.ViewModels

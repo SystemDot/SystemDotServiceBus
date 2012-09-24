@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Publishing.Builders;
-using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Transport;
 using SystemDot.Messaging.Transport.Http.LongPolling;
 

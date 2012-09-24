@@ -1,6 +1,6 @@
 using System.Diagnostics.Contracts;
 using System.Linq;
-using SystemDot.Messaging.Messages.Packaging;
+using SystemDot.Messaging.Channels.Packaging;
 
 namespace SystemDot.Messaging.Channels.Publishing
 {

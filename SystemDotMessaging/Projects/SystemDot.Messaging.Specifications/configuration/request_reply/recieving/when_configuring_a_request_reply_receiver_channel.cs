@@ -1,8 +1,8 @@
 using System;
-using SystemDot.Ioc;
-using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.RequestReply;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
 using Machine.Fakes;
@@ -35,6 +35,8 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
                 r.StartPolling(GetEndpointAddress(ChannelName, Environment.MachineName)));
 
         It should_start_the_task_repeater = () => The<ITaskRepeater>().WasToldTo(r => r.Start());
+
+        It should_intitialise_the_persistence_layer = () => The<IPersistence>().WasToldTo(p => p.Initialise());
 
         It should_return_the_bus = () => bus.ShouldBeTheSameAs(The<IBus>());
         

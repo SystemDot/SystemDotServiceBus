@@ -1,10 +1,9 @@
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Messages;
-using SystemDot.Messaging.Messages.Pipelines;
-using SystemDot.Messaging.Messages.Processing;
-using SystemDot.Messaging.Messages.Processing.Caching;
-using SystemDot.Messaging.Messages.Processing.Filtering;
-using SystemDot.Messaging.Messages.Processing.Repeating;
+using SystemDot.Messaging.Channels.Acknowledgement.Builders;
+using SystemDot.Messaging.Channels.Caching;
+using SystemDot.Messaging.Channels.Filtering;
+using SystemDot.Messaging.Channels.Pipelines;
+using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;

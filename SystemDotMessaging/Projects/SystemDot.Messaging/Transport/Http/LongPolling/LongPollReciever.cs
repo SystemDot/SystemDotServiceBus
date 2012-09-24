@@ -4,8 +4,8 @@ using System.Diagnostics.Contracts;
 using System.IO;
 using SystemDot.Http;
 using SystemDot.Logging;
-using SystemDot.Messaging.Messages;
-using SystemDot.Messaging.Messages.Packaging;
+using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 

@@ -1,7 +1,7 @@
 using SystemDot.Ioc;
+using SystemDot.Messaging.Channels.RequestReply;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Transport;
 using Machine.Fakes;
 using Machine.Specifications;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using SystemDot.Ioc;
+using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Messages.Processing.Handling;
 using SystemDot.Messaging.Test.Messages;
 using SystemDot.Messaging.TestReciever;
 using Windows.UI.Core;

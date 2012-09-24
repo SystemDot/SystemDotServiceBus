@@ -1,7 +1,7 @@
 using SystemDot.Ioc;
+using SystemDot.Messaging.Channels.Filtering;
 using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Messages.Processing.Filtering;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing

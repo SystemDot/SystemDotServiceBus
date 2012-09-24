@@ -1,6 +1,6 @@
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Messages.Pipelines;
-using SystemDot.Messaging.Messages.Processing.Acknowledgement;
+using SystemDot.Messaging.Channels.Acknowledgement;
+using SystemDot.Messaging.Channels.Pipelines;
 using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Channels.Publishing.Builders
@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .ToProcessor(new SubscriptionRequestHandler())
                 .Pump()
                 .ToProcessor(new MessageAcknowledger(this.messageSender))
-                .ToEndPoint(new SubscriptionChannelBuilder(this.publisherRegistry, this.messageSender));
+                .ToEndPoint(new SubscriberSendChannelBuilder(this.publisherRegistry, this.messageSender));
         }
     }
 }

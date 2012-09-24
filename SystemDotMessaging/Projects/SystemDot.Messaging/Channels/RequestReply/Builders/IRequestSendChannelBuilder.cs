@@ -1,5 +1,4 @@
-using SystemDot.Messaging.Messages;
-using SystemDot.Messaging.Messages.Processing.Filtering;
+using SystemDot.Messaging.Channels.Filtering;
 
 namespace SystemDot.Messaging.Channels.RequestReply.Builders
 {

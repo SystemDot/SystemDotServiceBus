@@ -1,10 +1,7 @@
-using System;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Messages;
-using SystemDot.Messaging.Messages.Pipelines;
-using SystemDot.Messaging.Messages.Processing;
-using SystemDot.Messaging.Messages.Processing.Acknowledgement;
-using SystemDot.Messaging.Messages.Processing.Handling;
+using SystemDot.Messaging.Channels.Acknowledgement;
+using SystemDot.Messaging.Channels.Handling;
+using SystemDot.Messaging.Channels.Pipelines;
 using SystemDot.Messaging.Transport;
 using SystemDot.Serialisation;
 

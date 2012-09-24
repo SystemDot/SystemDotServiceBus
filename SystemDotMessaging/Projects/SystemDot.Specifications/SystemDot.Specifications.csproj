@@ -33,7 +33,7 @@
   <ItemGroup>
     <Reference Include="Machine.Fakes, Version=0.2.6.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SystemDot.Messaging.Specifications\bin\Debug\Machine.Fakes.dll</HintPath>
+      <HintPath>..\..\Dependencies\Mspec\Machine.Fakes.dll</HintPath>
     </Reference>
     <Reference Include="Machine.Fakes.Adapters.RhinoMocks">
       <HintPath>..\..\Dependencies\Mspec\Machine.Fakes.Adapters.RhinoMocks.dll</HintPath>

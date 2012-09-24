@@ -2,9 +2,9 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using SystemDot.Messaging.Messages;
-using SystemDot.Messaging.Messages.Packaging;
-using SystemDot.Messaging.Messages.Packaging.Headers;
+using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Channels.Packaging.Headers;
 
 namespace SystemDot.Messaging.Storage
 {

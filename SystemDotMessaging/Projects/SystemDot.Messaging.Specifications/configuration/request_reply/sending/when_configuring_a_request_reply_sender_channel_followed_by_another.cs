@@ -1,8 +1,9 @@
 using System;
 using SystemDot.Ioc;
+using SystemDot.Messaging.Channels.Filtering;
+using SystemDot.Messaging.Channels.RequestReply;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Messages.Processing.Filtering;
 using SystemDot.Messaging.Transport;
 using Machine.Fakes;
 using Machine.Specifications;

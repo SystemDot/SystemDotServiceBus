@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using SystemDot.Http;
-using SystemDot.Messaging.Messages.Packaging;
+using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Messaging.Transport.Http.LongPolling;
-using SystemDot.Messaging.Messages.Packaging.Headers;
 using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Specifications.transport.long_polling

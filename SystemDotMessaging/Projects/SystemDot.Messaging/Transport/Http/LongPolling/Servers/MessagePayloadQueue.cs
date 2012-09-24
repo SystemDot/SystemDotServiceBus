@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Messages;
-using SystemDot.Messaging.Messages.Packaging;
-using SystemDot.Messaging.Messages.Packaging.Headers;
+using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Transport.Http.LongPolling.Servers

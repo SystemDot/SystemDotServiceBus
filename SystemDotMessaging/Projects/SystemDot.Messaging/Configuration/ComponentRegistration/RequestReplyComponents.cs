@@ -1,6 +1,6 @@
 using SystemDot.Ioc;
+using SystemDot.Messaging.Channels.RequestReply;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
-using SystemDot.Messaging.Messages.Processing.RequestReply;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {

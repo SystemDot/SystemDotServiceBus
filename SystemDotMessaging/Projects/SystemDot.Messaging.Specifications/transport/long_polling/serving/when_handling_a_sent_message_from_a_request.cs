@@ -2,9 +2,9 @@
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using SystemDot.Messaging.Messages;
-using SystemDot.Messaging.Messages.Packaging;
-using SystemDot.Messaging.Messages.Packaging.Headers;
+using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Messaging.Transport.Http.LongPolling.Servers;
 using SystemDot.Serialisation;
 using Machine.Specifications;

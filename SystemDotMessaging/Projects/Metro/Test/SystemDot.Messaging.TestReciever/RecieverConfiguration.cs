@@ -1,6 +1,6 @@
 ﻿using SystemDot.Ioc;
+using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Messages.Processing.Handling;
 
 namespace SystemDot.Messaging.TestReciever
 {

@@ -1,12 +1,12 @@
 ﻿using SystemDot.Http;
-using SystemDot.Messaging.Messages;
-using SystemDot.Messaging.Messages.Packaging;
+using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Messaging.Transport.Http;
 using SystemDot.Messaging.Transport.Http.LongPolling;
 using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;
-using SystemDot.Messaging.Messages.Packaging.Headers;
 
 namespace SystemDot.Messaging.Specifications.transport.long_polling
 {

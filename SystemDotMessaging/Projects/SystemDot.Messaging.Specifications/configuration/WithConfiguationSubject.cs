@@ -1,5 +1,5 @@
 using SystemDot.Ioc;
-using SystemDot.Messaging.Messages;
+using SystemDot.Messaging.Channels;
 using Machine.Fakes;
 using Machine.Specifications;
 

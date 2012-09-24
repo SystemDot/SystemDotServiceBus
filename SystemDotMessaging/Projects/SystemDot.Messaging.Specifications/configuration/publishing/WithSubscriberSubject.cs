@@ -1,7 +1,7 @@
 using SystemDot.Ioc;
 using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Acknowledgement.Builders;
 using SystemDot.Messaging.Channels.Publishing.Builders;
-using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Transport;
 using Machine.Specifications;
 

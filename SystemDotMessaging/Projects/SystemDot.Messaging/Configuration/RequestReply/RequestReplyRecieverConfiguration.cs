@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.RequestReply;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
-using SystemDot.Messaging.Messages;
 using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Configuration.RequestReply

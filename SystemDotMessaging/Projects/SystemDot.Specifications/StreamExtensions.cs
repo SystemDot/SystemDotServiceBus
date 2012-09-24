@@ -1,7 +1,7 @@
 using System.IO;
 using System.Runtime.Serialization;
 
-namespace SystemDot.Messaging.Specifications
+namespace SystemDot.Specifications
 {
     public static class StreamExtensions
     {

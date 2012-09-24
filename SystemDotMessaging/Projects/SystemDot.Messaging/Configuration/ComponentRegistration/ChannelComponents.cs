@@ -1,7 +1,8 @@
 using SystemDot.Ioc;
 using SystemDot.Messaging.Channels;
-using SystemDot.Messaging.Messages.Packaging;
-using SystemDot.Messaging.Messages.Processing.Handling;
+using SystemDot.Messaging.Channels.Acknowledgement.Builders;
+using SystemDot.Messaging.Channels.Handling;
+using SystemDot.Messaging.Channels.Packaging;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {

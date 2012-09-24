@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using SystemDot.Messaging.Messages;
-using SystemDot.Messaging.Messages.Distribution;
-using SystemDot.Messaging.Messages.Packaging;
+using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Distribution;
+using SystemDot.Messaging.Channels.Packaging;
 
 namespace SystemDot.Messaging.Specifications
 {

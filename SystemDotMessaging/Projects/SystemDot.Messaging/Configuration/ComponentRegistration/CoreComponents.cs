@@ -1,6 +1,6 @@
 using SystemDot.Http;
 using SystemDot.Ioc;
-using SystemDot.Messaging.Messages;
+using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Storage;
 using SystemDot.Serialisation;
 

@@ -1,6 +1,6 @@
+using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Filtering;
 using SystemDot.Messaging.Channels.Publishing.Builders;
-using SystemDot.Messaging.Messages;
-using SystemDot.Messaging.Messages.Processing.Filtering;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing
 {

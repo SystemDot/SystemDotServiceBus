@@ -1,6 +1,4 @@
-using SystemDot.Messaging.Messages;
-using SystemDot.Messaging.Messages.Distribution;
-using SystemDot.Messaging.Messages.Packaging;
+using SystemDot.Messaging.Channels.Distribution;
 
 namespace SystemDot.Messaging.Channels.Publishing
 {

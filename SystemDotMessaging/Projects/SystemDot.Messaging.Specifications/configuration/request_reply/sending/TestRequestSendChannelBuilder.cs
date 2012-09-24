@@ -1,6 +1,7 @@
+using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Filtering;
+using SystemDot.Messaging.Channels.RequestReply;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
-using SystemDot.Messaging.Messages;
-using SystemDot.Messaging.Messages.Processing.Filtering;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 {

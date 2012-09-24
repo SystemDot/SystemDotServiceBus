@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Configuration.Publishers;
 using SystemDot.Messaging.Configuration.RequestReply;
-using SystemDot.Messaging.Messages;
 
 namespace SystemDot.Messaging.Configuration
 {

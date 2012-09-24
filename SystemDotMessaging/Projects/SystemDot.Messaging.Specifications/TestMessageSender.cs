@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using SystemDot.Messaging.Messages.Packaging;
+using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Specifications
