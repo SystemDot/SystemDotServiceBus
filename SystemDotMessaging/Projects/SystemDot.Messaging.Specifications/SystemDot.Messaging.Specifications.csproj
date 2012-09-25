@@ -79,7 +79,7 @@
     <Compile Include="channels\bus\when_publishing_a_message_on_the_bus.cs" />
     <Compile Include="channels\bus\when_replying_with_a_message_on_the_bus.cs" />
     <Compile Include="channels\packaging\when_unpackaging_a_message_from_transportation_payload_and_serialisation_fails.cs" />
-    <Compile Include="channels\publishing\when_handling_a_subscription_request_message_with_the_subscription_request_handler.cs" />
+    <Compile Include="channels\publishing\when_filtering_for_a_subscription_request_message_and_recieving_one.cs" />
     <Compile Include="channels\repeating\when_a_stored_message_can_be_repeated_as_four_seconds_have_passed_after_the_fourth_attempt.cs" />
     <Compile Include="channels\repeating\when_a_stored_message_cannot_be_repeated_as_four_seconds_have_not_passed_after_the_third_attempt.cs" />
     <Compile Include="channels\repeating\when_a_stored_message_cannot_be_repeated_as_two_seconds_have_not_passed_after_the_second_attempt.cs" />
@@ -116,7 +116,7 @@
     <Compile Include="channels\request_reply\when_passing_messages_through_a_reply_channel_selector.cs" />
     <Compile Include="channels\packaging\when_unpackaging_a_message_from_transportation_payload_that_does_not_have_a_body.cs" />
     <Compile Include="channels\publishing\when_handling_a_subscribe_request_message.cs" />
-    <Compile Include="channels\publishing\when_handling_a_non_subscription_request_message_with_the_subscription_request_handler.cs" />
+    <Compile Include="channels\publishing\when_filtering_for_a_subscription_request_message_and_recieving_something_else.cs" />
     <Compile Include="channels\when_addressing_a_message.cs" />
     <Compile Include="channels\distribution\when_pumping_an_item.cs" />
     <Compile Include="channels\distribution\when_pumping_items_on_a_with_no_pushed_item_listener.cs" />

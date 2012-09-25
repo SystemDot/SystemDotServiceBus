@@ -57,7 +57,7 @@
     <Compile Include="Channels\Publishing\Builders\SubscriptionHandlerChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\SubscriptionRequestChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\ISubscriptionRequestor.cs" />
-    <Compile Include="Channels\Publishing\SubscriptionRequestChecker.cs" />
+    <Compile Include="Channels\Publishing\SubscriptionRequestFilter.cs" />
     <Compile Include="Channels\RequestReply\Builders\IReplyRecieveChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\IRequestRecieveChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\IReplySendChannelBuilder.cs" />

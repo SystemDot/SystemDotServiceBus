@@ -33,7 +33,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
         {
             MessagePipelineBuilder.Build()
                 .With(this.messageReciever)
-                .ToProcessor(new SubscriptionRequestChecker())
+                .ToProcessor(new SubscriptionRequestFilter())
                 .Pump()
                 .ToProcessor(new MessageAcknowledger(this.messageSender))
                 .ToEndPoint(new SubscriptionRequestHandler(this.publisherRegistry, this.subscriberSendChannelBuilder));

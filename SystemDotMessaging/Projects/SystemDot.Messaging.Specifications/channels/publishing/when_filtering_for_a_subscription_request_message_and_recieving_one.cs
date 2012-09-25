@@ -5,8 +5,8 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.channels.publishing
 {
     [Subject("Message publishing")]
-    public class when_handling_a_subscription_request_message_with_the_subscription_request_handler
-        : WithMessageInputterSubject<SubscriptionRequestChecker>
+    public class when_filtering_for_a_subscription_request_message_and_recieving_one
+        : WithMessageInputterSubject<SubscriptionRequestFilter>
     {
         static MessagePayload processedMessage;
         static MessagePayload request;

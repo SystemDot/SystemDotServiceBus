@@ -7,7 +7,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.channels.publishing
 {
     [Subject("Message publishing")]
-    public class when_building_a_subscription_channel : WithMessageInputterSubject<SubscriptionRequestHandler>
+    public class when_handling_a_subscription_channel : WithMessageInputterSubject<SubscriptionRequestHandler>
     {
         static EndpointAddress address;
         static TestPublisher publisher;
