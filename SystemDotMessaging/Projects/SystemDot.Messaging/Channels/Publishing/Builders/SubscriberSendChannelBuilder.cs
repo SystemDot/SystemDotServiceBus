@@ -38,11 +38,11 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             this.acknowledgementChannelBuilder = acknowledgementChannelBuilder;
         }
 
-        public IMessageInputter<MessagePayload> BuildChannel(EndpointAddress fromAddress, EndpointAddress subscriberAddress)
+        public IMessageInputter<MessagePayload> BuildChannel(SubscriberSendChannelSchema subscriberSendChannelSchema)
         {
-            IMessageCache cache = new MessageCache(this.persistence, subscriberAddress);
+            IMessageCache cache = new MessageCache(this.persistence, subscriberSendChannelSchema.SubscriberAddress);
             
-            var addresser = new MessageAddresser(fromAddress, subscriberAddress);
+            var addresser = new MessageAddresser(subscriberSendChannelSchema.FromAddress, subscriberSendChannelSchema.SubscriberAddress);
 
             MessagePipelineBuilder.Build()
                 .With(addresser)
@@ -50,7 +50,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .ToProcessor(new MessageCacher(cache))
                 .ToEndPoint(this.messageSender);
 
-            this.acknowledgementChannelBuilder.Build(cache, fromAddress);
+            this.acknowledgementChannelBuilder.Build(cache, subscriberSendChannelSchema.FromAddress);
 
             return addresser;
         }

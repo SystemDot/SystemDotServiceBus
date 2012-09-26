@@ -43,14 +43,14 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             this.taskRepeater = taskRepeater;
         }
 
-        public void Build(EndpointAddress address, IMessageFilterStrategy messageFilterStrategy)
+        public void Build(PublisherChannelSchema schema)
         {
-            IMessageCache cache = new MessageCache(this.persistence, address);
+            IMessageCache cache = new MessageCache(this.persistence, schema.Address);
             
             var publisherEndpoint = new Publisher(this.messagePayloadCopier);
 
             MessagePipelineBuilder.Build()
-                .WithBusPublishTo(new MessageFilter(messageFilterStrategy))
+                .WithBusPublishTo(new MessageFilter(schema.MessageFilterStrategy))
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
                 .ToMessageRepeater(cache, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new MessageCacher(cache))
@@ -58,7 +58,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .ToProcessor(publisherEndpoint)
                 .ToEndPoint(new MessageDecacher(cache));
 
-            this.publisherRegistry.RegisterPublisher(address, publisherEndpoint);
+            this.publisherRegistry.RegisterPublisher(schema.Address, publisherEndpoint);
         }
     }
 }

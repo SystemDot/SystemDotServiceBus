@@ -31,15 +31,15 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             this.messageSender = messageSender;
         }
 
-        public void Build(EndpointAddress senderAddress, params IMessageProcessor<object, object>[] hooks)
+        public void Build(ReplyRecieveChannelSchema schema)
         {
             MessagePipelineBuilder.Build()
                 .With(this.messageReciever)
-                .ToProcessor(new BodyMessageHandler(senderAddress))
+                .ToProcessor(new BodyMessageFilter(schema.SenderAddress))
                 .Pump()
                 .ToProcessor(new MessageAcknowledger(this.messageSender))
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
-                .ToProcessors(hooks)
+                .ToProcessors(schema.Hooks)
                 .ToEndPoint(this.messageHandlerRouter);
         }
     }

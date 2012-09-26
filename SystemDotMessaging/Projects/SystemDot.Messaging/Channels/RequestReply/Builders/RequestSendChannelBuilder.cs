@@ -43,20 +43,20 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             this.taskRepeater = taskRepeater;
         }
 
-        public void Build(IMessageFilterStrategy filteringStrategy, EndpointAddress fromAddress, EndpointAddress recieverAddress)
+        public void Build(RequestSendChannelSchema schema)
         {
-            IMessageCache cache = new MessageCache(this.persistence, fromAddress); 
+            IMessageCache cache = new MessageCache(this.persistence, schema.FromAddress); 
 
             MessagePipelineBuilder.Build()
-                .WithBusSendTo(new MessageFilter(filteringStrategy))
+                .WithBusSendTo(new MessageFilter(schema.FilteringStrategy))
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
-                .ToProcessor(new MessageAddresser(fromAddress, recieverAddress))
+                .ToProcessor(new MessageAddresser(schema.FromAddress, schema.RecieverAddress))
                 .ToMessageRepeater(cache, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new MessageCacher(cache))
                 .Pump()
                 .ToEndPoint(this.messageSender);
 
-            this.acknowledgementChannelBuilder.Build(cache, fromAddress);
+            this.acknowledgementChannelBuilder.Build(cache, schema.FromAddress);
         }
     }
 }

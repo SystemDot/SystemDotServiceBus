@@ -40,7 +40,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
         {
             MessagePipelineBuilder.Build()
                 .With(this.messageReciever)
-                .ToProcessor(new BodyMessageHandler(recieverAddress))
+                .ToProcessor(new BodyMessageFilter(recieverAddress))
                 .Pump()
                 .ToProcessor(new MessageAcknowledger(this.messageSender))
                 .ToProcessor(new ReplyChannelSelector(this.replyAddressLookup))

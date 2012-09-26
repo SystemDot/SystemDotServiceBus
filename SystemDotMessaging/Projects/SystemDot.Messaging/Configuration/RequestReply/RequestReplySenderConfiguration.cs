@@ -16,7 +16,10 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         readonly List<IMessageProcessor<object, object>> hooks;
         IMessageFilterStrategy messageFilterStrategy;
 
-        public RequestReplySenderConfiguration(EndpointAddress address, EndpointAddress recieverAddress, List<Action> buildActions)
+        public RequestReplySenderConfiguration(
+            EndpointAddress address, 
+            EndpointAddress recieverAddress, 
+            List<Action> buildActions)
             : base(buildActions)
         {
             this.messageFilterStrategy = new PassThroughMessageFilterStategy();
@@ -33,8 +36,11 @@ namespace SystemDot.Messaging.Configuration.RequestReply
 
         protected override void Build()
         {
-            Resolve<IRequestSendChannelBuilder>().Build(this.messageFilterStrategy, this.address, this.recieverAddress);
-            Resolve<IReplyRecieveChannelBuilder>().Build(this.address, this.hooks.ToArray());
+            Resolve<IRequestSendChannelBuilder>().Build(
+                new RequestSendChannelSchema(this.messageFilterStrategy, this.address, this.recieverAddress));
+
+            Resolve<IReplyRecieveChannelBuilder>().Build(
+                new ReplyRecieveChannelSchema(this.address, this.hooks.ToArray()));
             
             Resolve<IMessageReciever>().StartPolling(this.address);
         }

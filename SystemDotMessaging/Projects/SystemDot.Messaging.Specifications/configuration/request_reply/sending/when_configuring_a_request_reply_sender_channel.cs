@@ -39,9 +39,9 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 
         It should_build_the_recieve_channel = () =>
             The<IReplyRecieveChannelBuilder>().WasToldTo(b => 
-                b.Build(
+                b.Build(new ReplyRecieveChannelSchema(
                     GetEndpointAddress(ChannelName, Environment.MachineName), 
-                    new IMessageProcessor<object, object>[0]));
+                    new IMessageProcessor<object, object>[0])));
 
         It should_register_the_listening_address_with_the_message_reciever = () =>
             The<IMessageReciever>().WasToldTo(r =>

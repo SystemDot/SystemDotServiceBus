@@ -22,9 +22,8 @@ namespace SystemDot.Messaging.Specifications
 
         public void InputMessage(MessagePayload toInput)
         {
-            throw new System.NotImplementedException();
+            MessageProcessed(toInput);
         }
-
 
         public event Action<MessagePayload> MessageProcessed;
     }

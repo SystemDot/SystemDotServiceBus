@@ -27,7 +27,9 @@ namespace SystemDot.Messaging.Channels.Publishing
 
             Logger.Info("Handling request reply subscription request for {0}", subscriberAddress);
 
-            GetPublisher(fromAddress).Subscribe(subscriberAddress, this.builder.BuildChannel(fromAddress, subscriberAddress));
+            GetPublisher(fromAddress).Subscribe(
+                subscriberAddress, 
+                this.builder.BuildChannel(new SubscriberSendChannelSchema(fromAddress, subscriberAddress)));
         }
 
         IPublisher GetPublisher(EndpointAddress address)

@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
         {
             MessagePipelineBuilder.Build()
                 .With(this.messageReciever)
-                .ToProcessor(new BodyMessageHandler(subscriberAddress))
+                .ToProcessor(new BodyMessageFilter(subscriberAddress))
                 .Pump()
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
                 .ToEndPoint(this.messageHandlerRouter);

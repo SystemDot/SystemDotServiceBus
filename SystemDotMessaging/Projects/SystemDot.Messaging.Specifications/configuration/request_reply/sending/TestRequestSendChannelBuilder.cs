@@ -13,11 +13,11 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 
         public IMessageFilterStrategy MessageFilter{ get; private set; }
 
-        public void Build(IMessageFilterStrategy filteringStrategy, EndpointAddress fromAddress, EndpointAddress recieverAddress)
+        public void Build(RequestSendChannelSchema schema)
         {
-            MessageFilter = filteringStrategy;
-            From = fromAddress;
-            Reciever = recieverAddress;
+            MessageFilter = schema.FilteringStrategy;
+            From = schema.FromAddress;
+            Reciever = schema.RecieverAddress;
         }
     }
 }

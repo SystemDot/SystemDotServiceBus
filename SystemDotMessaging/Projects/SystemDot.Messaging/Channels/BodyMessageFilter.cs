@@ -4,11 +4,11 @@ using SystemDot.Messaging.Channels.Packaging.Headers;
 
 namespace SystemDot.Messaging.Channels
 {
-    public class BodyMessageHandler : IMessageProcessor<MessagePayload, MessagePayload>
+    public class BodyMessageFilter : IMessageProcessor<MessagePayload, MessagePayload>
     {
         readonly EndpointAddress address;
 
-        public BodyMessageHandler(EndpointAddress address)
+        public BodyMessageFilter(EndpointAddress address)
         {
             this.address = address;
         }

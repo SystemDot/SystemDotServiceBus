@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
         protected override void Build()
         {
             Resolve<ISubscriptionHandlerChannelBuilder>().Build();
-            Resolve<IPublisherChannelBuilder>().Build(address, this.messageFilterStategy);
+            Resolve<IPublisherChannelBuilder>().Build(new PublisherChannelSchema(address, this.messageFilterStategy));
             Resolve<IMessageReciever>().StartPolling(address);        
         }
 

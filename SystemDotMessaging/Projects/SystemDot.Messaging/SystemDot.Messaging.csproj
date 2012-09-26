@@ -52,7 +52,9 @@
     <Compile Include="Channels\Publishing\Builders\ISubscriptionHandlerChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\ISubscriptionRequestChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\PublisherChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\Builders\PublisherChannelSchema.cs" />
     <Compile Include="Channels\Publishing\Builders\SubscriberRecieveChannelBuilder.cs" />
+    <Compile Include="Channels\Publishing\Builders\SubscriberSendChannelSchema.cs" />
     <Compile Include="Channels\Publishing\SubscriptionRequestHandler.cs" />
     <Compile Include="Channels\Publishing\Builders\SubscriptionHandlerChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\SubscriptionRequestChannelBuilder.cs" />
@@ -62,12 +64,14 @@
     <Compile Include="Channels\RequestReply\Builders\IRequestRecieveChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\IReplySendChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\IRequestSendChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\Builders\ReplyRecieveChannelSchema.cs" />
+    <Compile Include="Channels\RequestReply\Builders\RequestSendChannelSchema.cs" />
     <Compile Include="Configuration\ComponentRegistration\InProcessTransportComponents.cs" />
     <Compile Include="Configuration\FilteredBy.cs" />
     <Compile Include="Channels\Acknowledgement\AcknowledgementHeader.cs" />
     <Compile Include="Channels\Acknowledgement\MessageAcknowledgementExtensions.cs" />
     <Compile Include="Channels\Acknowledgement\MessageAcknowledger.cs" />
-    <Compile Include="Channels\BodyMessageHandler.cs" />
+    <Compile Include="Channels\BodyMessageFilter.cs" />
     <Compile Include="Channels\Filtering\IMessageFilterStrategy.cs" />
     <Compile Include="Channels\Filtering\NamePatternMessageFilterStrategy.cs" />
     <Compile Include="Channels\Filtering\NamespaceMessageFilterStrategy.cs" />

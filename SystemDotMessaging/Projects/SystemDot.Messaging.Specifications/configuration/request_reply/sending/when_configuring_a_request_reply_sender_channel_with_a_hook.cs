@@ -23,9 +23,9 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
             .Initialise();
 
         It should_build_the_recieve_channel_with_the_specified_hook = () =>
-            The<IReplyRecieveChannelBuilder>().WasToldTo(b => 
-                b.Build( 
-                    GetEndpointAddress(ChannelName, Environment.MachineName), 
-                    The<IMessageProcessor<object, object>>()));        
+            The<IReplyRecieveChannelBuilder>().WasToldTo(b =>
+                b.Build(new ReplyRecieveChannelSchema(
+                    GetEndpointAddress(ChannelName, Environment.MachineName),
+                    The<IMessageProcessor<object, object>>())));
     }
 }

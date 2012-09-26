@@ -7,14 +7,14 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.channels
 {
     [Subject("Message handling")]
-    public class when_handling_a_message_that_does_not_have_with_the_expected_address_with_a_body_message_handler : WithSubject<BodyMessageHandler>
+    public class when_handling_a_message_that_does_not_have_with_the_expected_address_with_a_body_message_handler : WithSubject<BodyMessageFilter>
     {
         static MessagePayload message;
         static MessagePayload processedMessage;
 
         Establish context = () =>
         {
-            Subject = new BodyMessageHandler(new EndpointAddress("Channel", "Server"));
+            Subject = new BodyMessageFilter(new EndpointAddress("Channel", "Server"));
             Subject.MessageProcessed += m => processedMessage = m;
             
             message = new MessagePayload();
