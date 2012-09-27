@@ -3,13 +3,19 @@ using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Specifications
 {
-    public class TestTaskStarter : ITaskStarter 
+    public class TestTaskStarter : ITaskStarter
     {
+        public static ITaskStarter Umlimited()
+        {
+            return new TestTaskStarter(0);
+        }
+
         readonly int allowedInvocationCount;
-        
+
         public int InvocationCount { get; private set; }
 
-        public TestTaskStarter() : this(1)
+        public TestTaskStarter()
+            : this(1)
         {
         }
 
@@ -20,8 +26,8 @@ namespace SystemDot.Messaging.Specifications
 
         public void StartTask(Action action)
         {
-            if (InvocationCount == allowedInvocationCount) return;
-            
+            if (allowedInvocationCount > 0 && InvocationCount == allowedInvocationCount) return;
+
             InvocationCount++;
             action.Invoke();
         }

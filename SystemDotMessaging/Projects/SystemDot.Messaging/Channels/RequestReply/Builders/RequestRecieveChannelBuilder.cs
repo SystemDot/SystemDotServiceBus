@@ -2,13 +2,12 @@ using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Acknowledgement;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Channels.Pipelines;
-using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Transport;
 using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Channels.RequestReply.Builders
 {
-    public class RequestRecieveChannelBuilder : IRequestRecieveChannelBuilder
+    public class RequestRecieveChannelBuilder
     {
         readonly ReplyAddressLookup replyAddressLookup;
         readonly ISerialiser serialiser;

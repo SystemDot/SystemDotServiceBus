@@ -36,10 +36,10 @@ namespace SystemDot.Messaging.Configuration.RequestReply
 
         protected override void Build()
         {
-            Resolve<IRequestSendChannelBuilder>().Build(
+            Resolve<RequestSendChannelBuilder>().Build(
                 new RequestSendChannelSchema(this.messageFilterStrategy, this.address, this.recieverAddress));
 
-            Resolve<IReplyRecieveChannelBuilder>().Build(
+            Resolve<ReplyRecieveChannelBuilder>().Build(
                 new ReplyRecieveChannelSchema(this.address, this.hooks.ToArray()));
             
             Resolve<IMessageReciever>().StartPolling(this.address);

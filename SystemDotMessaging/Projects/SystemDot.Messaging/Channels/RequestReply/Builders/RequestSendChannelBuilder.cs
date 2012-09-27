@@ -11,7 +11,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Channels.RequestReply.Builders
 {
-    public class RequestSendChannelBuilder : IRequestSendChannelBuilder
+    public class RequestSendChannelBuilder
     {
         readonly IMessageSender messageSender;
         readonly ISerialiser serialiser;

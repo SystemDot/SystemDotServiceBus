@@ -4,7 +4,6 @@ using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Filtering;
 using SystemDot.Messaging.Channels.Pipelines;
 using SystemDot.Messaging.Channels.Repeating;
-using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
@@ -12,7 +11,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Channels.RequestReply.Builders
 {
-    public class ReplySendChannelBuilder : IReplySendChannelBuilder
+    public class ReplySendChannelBuilder
     {
         readonly ReplyAddressLookup replyAddressLookup;
         readonly IMessageSender messageSender;

@@ -7,7 +7,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Channels.RequestReply.Builders
 {
-    public class ReplyRecieveChannelBuilder : IReplyRecieveChannelBuilder
+    public class ReplyRecieveChannelBuilder
     {
         readonly ISerialiser serialiser;
         readonly MessageHandlerRouter messageHandlerRouter;

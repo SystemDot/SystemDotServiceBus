@@ -1,4 +1,4 @@
-namespace SystemDot.Messaging.Specifications.channels.handling
+namespace SystemDot.Messaging.Specifications
 {
     public class TestMessageHandler<T>
     {

@@ -9,10 +9,10 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
         public static void Register(IIocContainer iocContainer)
         {
             iocContainer.RegisterInstance<ReplyAddressLookup, ReplyAddressLookup>();
-            iocContainer.RegisterInstance<IReplyRecieveChannelBuilder, ReplyRecieveChannelBuilder>();
-            iocContainer.RegisterInstance<IRequestRecieveChannelBuilder, RequestRecieveChannelBuilder>();
-            iocContainer.RegisterInstance<IRequestSendChannelBuilder, RequestSendChannelBuilder>();
-            iocContainer.RegisterInstance<IReplySendChannelBuilder, ReplySendChannelBuilder>();
+            iocContainer.RegisterInstance<ReplyRecieveChannelBuilder, ReplyRecieveChannelBuilder>();
+            iocContainer.RegisterInstance<RequestRecieveChannelBuilder, RequestRecieveChannelBuilder>();
+            iocContainer.RegisterInstance<RequestSendChannelBuilder, RequestSendChannelBuilder>();
+            iocContainer.RegisterInstance<ReplySendChannelBuilder, ReplySendChannelBuilder>();
         }
     }
 }

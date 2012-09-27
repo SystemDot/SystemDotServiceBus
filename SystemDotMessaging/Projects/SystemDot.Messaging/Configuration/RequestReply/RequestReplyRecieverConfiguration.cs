@@ -18,8 +18,8 @@ namespace SystemDot.Messaging.Configuration.RequestReply
 
         protected override void Build()
         {
-            Resolve<IRequestRecieveChannelBuilder>().Build(this.address);
-            Resolve<IReplySendChannelBuilder>().Build(this.address);
+            Resolve<RequestRecieveChannelBuilder>().Build(this.address);
+            Resolve<ReplySendChannelBuilder>().Build(this.address);
             Resolve<IMessageReciever>().StartPolling(this.address);
         }
 
