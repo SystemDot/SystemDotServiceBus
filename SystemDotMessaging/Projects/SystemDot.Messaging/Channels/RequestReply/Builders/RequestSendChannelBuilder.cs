@@ -1,3 +1,4 @@
+
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Acknowledgement.Builders;
 using SystemDot.Messaging.Channels.Caching;
@@ -19,6 +20,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
         readonly ICurrentDateProvider currentDateProvider;
         readonly IAcknowledgementChannelBuilder acknowledgementChannelBuilder;
         readonly ITaskRepeater taskRepeater;
+        readonly MessageCacheBuilder cacheBuilder;
 
         public RequestSendChannelBuilder(
             IMessageSender messageSender, 
@@ -26,7 +28,8 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             IPersistence persistence, 
             ICurrentDateProvider currentDateProvider, 
             IAcknowledgementChannelBuilder acknowledgementChannelBuilder, 
-            ITaskRepeater taskRepeater)
+            ITaskRepeater taskRepeater, 
+            MessageCacheBuilder cacheBuilder)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(serialiser != null);
@@ -34,6 +37,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             Contract.Requires(currentDateProvider != null);
             Contract.Requires(acknowledgementChannelBuilder != null);
             Contract.Requires(taskRepeater != null);
+            Contract.Requires(cacheBuilder != null);
 
             this.messageSender = messageSender;
             this.serialiser = serialiser;
@@ -41,11 +45,12 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             this.currentDateProvider = currentDateProvider;
             this.acknowledgementChannelBuilder = acknowledgementChannelBuilder;
             this.taskRepeater = taskRepeater;
+            this.cacheBuilder = cacheBuilder;
         }
 
         public void Build(RequestSendChannelSchema schema)
         {
-            IMessageCache cache = new MessageCache(this.persistence, schema.FromAddress); 
+            IMessageCache cache = this.cacheBuilder.Create(schema); 
 
             MessagePipelineBuilder.Build()
                 .WithBusSendTo(new MessageFilter(schema.FilteringStrategy))

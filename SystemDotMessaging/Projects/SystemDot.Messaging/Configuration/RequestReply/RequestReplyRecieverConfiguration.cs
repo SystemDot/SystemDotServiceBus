@@ -9,23 +9,32 @@ namespace SystemDot.Messaging.Configuration.RequestReply
 {
     public class RequestReplyRecieverConfiguration : Initialiser
     {
-        private readonly EndpointAddress address;
+        readonly ReplySendChannelSchema sendChannelSchema;
 
         public RequestReplyRecieverConfiguration(EndpointAddress address, List<Action> buildActions) : base(buildActions)
         {
-            this.address = address;
+            this.sendChannelSchema = new ReplySendChannelSchema
+            {
+                FromAddress = address
+            };
         }
 
         protected override void Build()
         {
-            Resolve<RequestRecieveChannelBuilder>().Build(this.address);
-            Resolve<ReplySendChannelBuilder>().Build(this.address);
-            Resolve<IMessageReciever>().StartPolling(this.address);
+            Resolve<RequestRecieveChannelBuilder>().Build(GetAddress());
+            Resolve<ReplySendChannelBuilder>().Build(this.sendChannelSchema);
+            Resolve<IMessageReciever>().StartPolling(GetAddress());
         }
 
         protected override EndpointAddress GetAddress()
         {
-            return this.address;
+            return this.sendChannelSchema.FromAddress;
+        }
+
+        public RequestReplyRecieverConfiguration WithPersistence()
+        {
+            this.sendChannelSchema.IsPersistent = true;
+            return this;
         }
     }
 }

@@ -20,6 +20,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
         readonly ICurrentDateProvider currentDateProvider;
         readonly ITaskRepeater taskRepeater;
         readonly IAcknowledgementChannelBuilder acknowledgementChannelBuilder;
+        readonly MessageCacheBuilder cacheBuilder;
 
         public ReplySendChannelBuilder(
             ReplyAddressLookup replyAddressLookup, 
@@ -28,7 +29,8 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             IPersistence persistence, 
             ICurrentDateProvider currentDateProvider, 
             ITaskRepeater taskRepeater, 
-            IAcknowledgementChannelBuilder acknowledgementChannelBuilder)
+            IAcknowledgementChannelBuilder acknowledgementChannelBuilder, 
+            MessageCacheBuilder cacheBuilder)
         {
             Contract.Requires(replyAddressLookup != null);
             Contract.Requires(messageSender != null);
@@ -37,6 +39,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             Contract.Requires(currentDateProvider != null);
             Contract.Requires(taskRepeater != null);
             Contract.Requires(acknowledgementChannelBuilder != null);
+            Contract.Requires(cacheBuilder != null);
             
             this.replyAddressLookup = replyAddressLookup;
             this.messageSender = messageSender;
@@ -45,22 +48,28 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             this.currentDateProvider = currentDateProvider;
             this.taskRepeater = taskRepeater;
             this.acknowledgementChannelBuilder = acknowledgementChannelBuilder;
+            this.cacheBuilder = cacheBuilder;
         }
 
-        public void Build(EndpointAddress fromAddress)
+        public void Build(ReplySendChannelSchema schema)
         {
-            IMessageCache cache = new MessageCache(this.persistence, fromAddress);
+            IMessageCache cache = this.cacheBuilder.Create(schema);
 
             MessagePipelineBuilder.Build()
-                .WithBusReplyTo(new MessageFilter(new ReplyChannelMessageFilterStategy(this.replyAddressLookup, fromAddress)))
+                .WithBusReplyTo(new MessageFilter(GetFilterStrategy(schema)))
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
-                .ToProcessor(new ReplyChannelMessageAddresser(this.replyAddressLookup, fromAddress))
+                .ToProcessor(new ReplyChannelMessageAddresser(this.replyAddressLookup, schema.FromAddress))
                 .ToMessageRepeater(cache, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new MessageCacher(cache))
                 .Pump()
                 .ToEndPoint(this.messageSender);
 
-            this.acknowledgementChannelBuilder.Build(cache, fromAddress);
+            this.acknowledgementChannelBuilder.Build(cache, schema.FromAddress);
+        }
+
+        ReplyChannelMessageFilterStategy GetFilterStrategy(ReplySendChannelSchema schema)
+        {
+            return new ReplyChannelMessageFilterStategy(this.replyAddressLookup, schema.FromAddress);
         }
     }
 }

@@ -45,7 +45,9 @@
   <ItemGroup>
     <Compile Include="Channels\Acknowledgement\Builders\AcknowledgementChannelBuilder.cs" />
     <Compile Include="Channels\Acknowledgement\Builders\IAcknowledgementChannelBuilder.cs" />
+    <Compile Include="Channels\MessageCacheBuilder.cs" />
     <Compile Include="Channels\Caching\MessageDecacher.cs" />
+    <Compile Include="Channels\SendChannelSchema.cs" />
     <Compile Include="Channels\Publishing\Builders\IPublisherChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\ISubscriberChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\ISubscriberSendChannelBuilder.cs" />
@@ -61,6 +63,7 @@
     <Compile Include="Channels\Publishing\ISubscriptionRequestor.cs" />
     <Compile Include="Channels\Publishing\SubscriptionRequestFilter.cs" />
     <Compile Include="Channels\RequestReply\Builders\ReplyRecieveChannelSchema.cs" />
+    <Compile Include="Channels\RequestReply\Builders\ReplySendChannelSchema.cs" />
     <Compile Include="Channels\RequestReply\Builders\RequestSendChannelSchema.cs" />
     <Compile Include="Configuration\ComponentRegistration\InProcessTransportComponents.cs" />
     <Compile Include="Configuration\FilteredBy.cs" />

@@ -44,8 +44,8 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
         It should_mark_the_amount_of_times_the_message_has_been_sent = () =>
             MessageSender.SentMessages.First().GetAmountSent().ShouldEqual(1);
 
-        It should_cache_the_message = () =>
-            Resolve<IPersistence>().GetMessages(BuildAddress(ChannelName)).ShouldNotBeEmpty();
+        It should_not_persist_the_message = () =>
+            Resolve<IPersistence>().GetMessages(BuildAddress(ChannelName)).ShouldBeEmpty();
 
         It should_start_the_task_repeater = () => The<ITaskRepeater>().WasToldTo(r => r.Start());
     }

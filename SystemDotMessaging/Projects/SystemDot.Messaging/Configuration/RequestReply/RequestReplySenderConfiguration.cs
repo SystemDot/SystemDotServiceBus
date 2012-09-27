@@ -2,19 +2,15 @@ using System;
 using System.Collections.Generic;
 using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Filtering;
-using SystemDot.Messaging.Channels.RequestReply;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Transport;
-using SystemDot.Messaging.Transport.Http.LongPolling;
 
 namespace SystemDot.Messaging.Configuration.RequestReply
 {
     public class RequestReplySenderConfiguration : Initialiser
     {
-        readonly EndpointAddress address;
-        readonly EndpointAddress recieverAddress;
-        readonly List<IMessageProcessor<object, object>> hooks;
-        IMessageFilterStrategy messageFilterStrategy;
+        readonly RequestSendChannelSchema sendChannelSchema;
+        readonly ReplyRecieveChannelSchema recieveChannelSchema;
 
         public RequestReplySenderConfiguration(
             EndpointAddress address, 
@@ -22,37 +18,46 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             List<Action> buildActions)
             : base(buildActions)
         {
-            this.messageFilterStrategy = new PassThroughMessageFilterStategy();
-            this.address = address;
-            this.recieverAddress = recieverAddress;
-            this.hooks = new List<IMessageProcessor<object, object>>();
+            this.sendChannelSchema = new RequestSendChannelSchema
+            {
+                FilteringStrategy = new PassThroughMessageFilterStategy(),
+                FromAddress = address,
+                RecieverAddress = recieverAddress
+            };
+
+            this.recieveChannelSchema = new ReplyRecieveChannelSchema
+            {
+                SenderAddress = address
+            };   
         }
 
         public RequestReplySenderConfiguration WithHook(IMessageProcessor<object, object> hook)
         {
-            this.hooks.Add(hook);
+            this.recieveChannelSchema.Hooks.Add(hook);
             return this;
         }
 
         protected override void Build()
         {
-            Resolve<RequestSendChannelBuilder>().Build(
-                new RequestSendChannelSchema(this.messageFilterStrategy, this.address, this.recieverAddress));
-
-            Resolve<ReplyRecieveChannelBuilder>().Build(
-                new ReplyRecieveChannelSchema(this.address, this.hooks.ToArray()));
-            
-            Resolve<IMessageReciever>().StartPolling(this.address);
+            Resolve<RequestSendChannelBuilder>().Build(this.sendChannelSchema);
+            Resolve<ReplyRecieveChannelBuilder>().Build(this.recieveChannelSchema);
+            Resolve<IMessageReciever>().StartPolling(GetAddress());
         }
 
         protected override EndpointAddress GetAddress()
         {
-            return this.address;
+            return this.sendChannelSchema.FromAddress;
         }
 
         public RequestReplySenderConfiguration OnlyForMessages(IMessageFilterStrategy toFilterMessagesWith)
         {
-            this.messageFilterStrategy = toFilterMessagesWith;
+            this.sendChannelSchema.FilteringStrategy = toFilterMessagesWith;
+            return this;
+        }
+
+        public RequestReplySenderConfiguration WithPersistence()
+        {
+            this.sendChannelSchema.IsPersistent = true;
             return this;
         }
     }

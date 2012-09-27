@@ -39,7 +39,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
                 .Pump()
                 .ToProcessor(new MessageAcknowledger(this.messageSender))
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
-                .ToProcessors(schema.Hooks)
+                .ToProcessors(schema.Hooks.ToArray())
                 .ToEndPoint(this.messageHandlerRouter);
         }
     }

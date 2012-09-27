@@ -3,7 +3,6 @@ using System.Linq;
 using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Channels.RequestReply;
-using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Storage;
 using SystemDot.Parallelism;
 using Machine.Fakes;
@@ -51,8 +50,8 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
         It should_mark_the_amount_of_times_the_message_has_been_sent = () =>
             MessageSender.SentMessages.First().GetAmountSent().ShouldEqual(1);
 
-        It should_cache_the_message = () =>
-            Resolve<IPersistence>().GetMessages(BuildAddress(ChannelName)).ShouldNotBeEmpty();
+        It should_not_persist_the_message = () =>
+            Resolve<IPersistence>().GetMessages(BuildAddress(ChannelName)).ShouldBeEmpty();
 
         It should_start_the_task_repeater = () => The<ITaskRepeater>().WasToldTo(r => r.Start());
     }

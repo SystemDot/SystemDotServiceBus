@@ -13,7 +13,8 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<IBus, MessageBus>();
             container.RegisterInstance<MessagePayloadCopier, MessagePayloadCopier>();
             container.RegisterInstance<MessageHandlerRouter, MessageHandlerRouter>();
-            container.RegisterInstance<IAcknowledgementChannelBuilder, AcknowledgementChannelBuilder>();            
+            container.RegisterInstance<IAcknowledgementChannelBuilder, AcknowledgementChannelBuilder>();
+            container.RegisterInstance<MessageCacheBuilder, MessageCacheBuilder>();            
         }
     }
 }
