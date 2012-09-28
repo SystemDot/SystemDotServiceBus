@@ -10,7 +10,7 @@ using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Channels.Publishing.Builders
 {
-    public class SubscriptionRequestChannelBuilder : ISubscriptionRequestChannelBuilder
+    public class SubscriptionRequestChannelBuilder
     {
         readonly IMessageSender messageSender;
         readonly ICurrentDateProvider currentDateProvider;
@@ -34,20 +34,20 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             this.acknowledgementChannelBuilder = acknowledgementChannelBuilder;
         }
 
-        public ISubscriptionRequestor Build(EndpointAddress subscriberAddress, EndpointAddress publisherAddress)
+        public ISubscriptionRequestor Build(SubscriptionRequestChannelSchema schema)
         {
-            var requestor = new SubscriptionRequestor(subscriberAddress);
+            var requestor = new SubscriptionRequestor(schema.SubscriberAddress, schema.IsPersistent);
 
-            IMessageCache cache = new MessageCache(new InMemoryPersistence(), subscriberAddress);
+            IMessageCache cache = new MessageCache(new InMemoryPersistence(), schema.SubscriberAddress);
 
             MessagePipelineBuilder.Build()
                 .With(requestor)
-                .ToProcessor(new MessageAddresser(subscriberAddress, publisherAddress))
+                .ToProcessor(new MessageAddresser(schema.SubscriberAddress, schema.PublisherAddress))
                 .ToMessageRepeater(cache, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new MessageCacher(cache))
                 .ToEndPoint(this.messageSender);
 
-            this.acknowledgementChannelBuilder.Build(cache, subscriberAddress);
+            this.acknowledgementChannelBuilder.Build(cache, schema.SubscriberAddress);
 
             return requestor;
         }

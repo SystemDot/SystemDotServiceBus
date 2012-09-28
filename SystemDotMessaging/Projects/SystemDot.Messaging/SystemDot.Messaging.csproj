@@ -47,12 +47,8 @@
     <Compile Include="Channels\Acknowledgement\Builders\IAcknowledgementChannelBuilder.cs" />
     <Compile Include="Channels\MessageCacheBuilder.cs" />
     <Compile Include="Channels\Caching\MessageDecacher.cs" />
+    <Compile Include="Channels\Publishing\Builders\SubscriptionRequestChannelSchema.cs" />
     <Compile Include="Channels\SendChannelSchema.cs" />
-    <Compile Include="Channels\Publishing\Builders\IPublisherChannelBuilder.cs" />
-    <Compile Include="Channels\Publishing\Builders\ISubscriberChannelBuilder.cs" />
-    <Compile Include="Channels\Publishing\Builders\ISubscriberSendChannelBuilder.cs" />
-    <Compile Include="Channels\Publishing\Builders\ISubscriptionHandlerChannelBuilder.cs" />
-    <Compile Include="Channels\Publishing\Builders\ISubscriptionRequestChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\PublisherChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\PublisherChannelSchema.cs" />
     <Compile Include="Channels\Publishing\Builders\SubscriberRecieveChannelBuilder.cs" />

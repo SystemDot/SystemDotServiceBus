@@ -18,6 +18,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
         {
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
+                
                 .OpenChannel(ChannelName).ForRequestReplySendingTo(RecieverAddress)
                 .Initialise();
 

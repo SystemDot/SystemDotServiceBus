@@ -9,29 +9,38 @@ namespace SystemDot.Messaging.Configuration.Publishers
 {
     public class PublisherConfiguration : Initialiser
     {
-        readonly EndpointAddress address;
-        IMessageFilterStrategy messageFilterStategy = new PassThroughMessageFilterStategy();
-            
+        readonly PublisherChannelSchema schema;
+
         public PublisherConfiguration(EndpointAddress address, List<Action> buildActions) : base(buildActions)
         {
-            this.address = address;
+            this.schema = new PublisherChannelSchema
+            {
+                FromAddress = address,  
+                MessageFilterStrategy = new PassThroughMessageFilterStategy()
+            };
         }
 
         protected override void Build()
         {
-            Resolve<ISubscriptionHandlerChannelBuilder>().Build();
-            Resolve<IPublisherChannelBuilder>().Build(new PublisherChannelSchema(address, this.messageFilterStategy));
-            Resolve<IMessageReciever>().StartPolling(address);        
+            Resolve<SubscriptionHandlerChannelBuilder>().Build();
+            Resolve<PublisherChannelBuilder>().Build(this.schema);
+            Resolve<IMessageReciever>().StartPolling(GetAddress());        
         }
 
         protected override EndpointAddress GetAddress()
         {
-            return this.address;
+            return this.schema.FromAddress;
         }
 
         public PublisherConfiguration OnlyForMessages(IMessageFilterStrategy toFilterWith)
         {
-            this.messageFilterStategy = toFilterWith;
+            this.schema.MessageFilterStrategy = toFilterWith;
+            return this;
+        }
+
+        public PublisherConfiguration WithPersistence()
+        {
+            this.schema.IsPersistent = true;
             return this;
         }
     }

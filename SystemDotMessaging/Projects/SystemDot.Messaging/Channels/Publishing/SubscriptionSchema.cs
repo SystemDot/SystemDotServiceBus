@@ -4,11 +4,6 @@ namespace SystemDot.Messaging.Channels.Publishing
     {
         public EndpointAddress SubscriberAddress { get; set; }
 
-        public SubscriptionSchema() {}
-
-        public SubscriptionSchema(EndpointAddress subscriberAddress)
-        {
-            SubscriberAddress = subscriberAddress;
-        }
+        public bool IsPersistent { get; set; }
     }
 }

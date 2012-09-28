@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Storage
                 .Select(m => m.Payload);
         }
 
-        public void StoreMessage(MessagePayload message, EndpointAddress address)
+        public virtual void StoreMessage(MessagePayload message, EndpointAddress address)
         {
             messages.TryAdd(message.Id, new Container(message, address));
         }

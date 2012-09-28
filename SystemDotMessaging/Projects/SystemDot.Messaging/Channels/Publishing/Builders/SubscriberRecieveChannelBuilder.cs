@@ -1,4 +1,5 @@
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Channels.Acknowledgement;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Channels.Pipelines;
 using SystemDot.Messaging.Transport;
@@ -6,7 +7,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Channels.Publishing.Builders
 {
-    public class SubscriberRecieveChannelBuilder : ISubscriberChannelBuilder
+    public class SubscriberRecieveChannelBuilder
     {
         readonly ISerialiser serialiser;
         readonly MessageHandlerRouter messageHandlerRouter;
@@ -36,6 +37,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .With(this.messageReciever)
                 .ToProcessor(new BodyMessageFilter(subscriberAddress))
                 .Pump()
+                .ToProcessor(new MessageAcknowledger(this.messageSender))
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
                 .ToEndPoint(this.messageHandlerRouter);
         }

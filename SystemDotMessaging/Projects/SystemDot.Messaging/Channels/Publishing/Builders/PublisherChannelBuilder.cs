@@ -11,7 +11,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Channels.Publishing.Builders
 {
-    public class PublisherChannelBuilder : IPublisherChannelBuilder
+    public class PublisherChannelBuilder
     {
         readonly IPublisherRegistry publisherRegistry;
         readonly MessagePayloadCopier messagePayloadCopier;
@@ -19,6 +19,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
         readonly IPersistence persistence;
         readonly ICurrentDateProvider currentDateProvider;
         readonly ITaskRepeater taskRepeater;
+        readonly MessageCacheBuilder messageCacheBuilder;
 
         public PublisherChannelBuilder(
             IPublisherRegistry publisherRegistry, 
@@ -26,7 +27,8 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             ISerialiser serialiser, 
             IPersistence persistence, 
             ICurrentDateProvider currentDateProvider, 
-            ITaskRepeater taskRepeater)
+            ITaskRepeater taskRepeater, 
+            MessageCacheBuilder messageCacheBuilder)
         {
             Contract.Requires(publisherRegistry != null);
             Contract.Requires(messagePayloadCopier != null);
@@ -34,6 +36,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             Contract.Requires(persistence != null);
             Contract.Requires(currentDateProvider != null);
             Contract.Requires(taskRepeater != null);
+            Contract.Requires(messageCacheBuilder != null);
 
             this.publisherRegistry = publisherRegistry;
             this.messagePayloadCopier = messagePayloadCopier;
@@ -41,11 +44,12 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             this.persistence = persistence;
             this.currentDateProvider = currentDateProvider;
             this.taskRepeater = taskRepeater;
+            this.messageCacheBuilder = messageCacheBuilder;
         }
 
         public void Build(PublisherChannelSchema schema)
         {
-            IMessageCache cache = new MessageCache(this.persistence, schema.Address);
+            IMessageCache cache = this.messageCacheBuilder.Create(schema);
             
             var publisherEndpoint = new Publisher(this.messagePayloadCopier);
 
@@ -58,7 +62,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .ToProcessor(publisherEndpoint)
                 .ToEndPoint(new MessageDecacher(cache));
 
-            this.publisherRegistry.RegisterPublisher(schema.Address, publisherEndpoint);
+            this.publisherRegistry.RegisterPublisher(schema.FromAddress, publisherEndpoint);
         }
     }
 }

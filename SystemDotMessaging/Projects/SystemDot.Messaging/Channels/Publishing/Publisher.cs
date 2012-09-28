@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Channels.Repeating;
 
 namespace SystemDot.Messaging.Channels.Publishing
 {
@@ -22,8 +23,15 @@ namespace SystemDot.Messaging.Channels.Publishing
 
         public void InputMessage(MessagePayload toInput)
         {
-            this.subscribers.Values.ForEach(s => s.InputMessage(this.messagePayloadCopier.Copy(toInput)));
+            this.subscribers.Values.ForEach(s => s.InputMessage(CopyMessage(toInput)));
             MessageProcessed(toInput);
+        }
+
+        MessagePayload CopyMessage(MessagePayload toInput)
+        {
+            MessagePayload copy = this.messagePayloadCopier.Copy(toInput);
+            copy.Headers.RemoveAll(h => h is LastSentHeader);
+            return copy;
         }
 
         public void Subscribe(object key, IMessageInputter<MessagePayload> toSubscribe)

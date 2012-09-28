@@ -50,11 +50,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="channels\publishing\when_starting_a_subscription_requestor_with_persistence_indicated_on_the_schema.cs" />
     <Compile Include="channels\storage\when_decaching_a_message.cs" />
-    <Compile Include="configuration\publishing\when_configuring_a_publisher_channel_with_a_specific_namespace_filtering_strategy.cs" />
-    <Compile Include="configuration\publishing\TestPublisherChannelBuilder.cs" />
+    <Compile Include="configuration\publishing\ExclusionMessagePayloadListExtensions.cs" />
+    <Compile Include="configuration\publishing\TestPersistence.cs" />
+    <Compile Include="configuration\publishing\when_initialising_a_durable_subscriber_channel.cs" />
+    <Compile Include="configuration\publishing\when_initialising_a_subscriber_channel.cs" />
+    <Compile Include="configuration\publishing\when_publishing_a_request_message_on_a_durable_publish_subscribe_channel.cs" />
+    <Compile Include="configuration\publishing\when_publishing_a_request_message_on_a_publish_subscribe_channel_with_a_durable_subscriber.cs" />
+    <Compile Include="configuration\publishing\when_publishing_a_request_message_on_two_publish_subscribe_channels.cs" />
+    <Compile Include="configuration\publishing\when_publishing_a_request_message_with_the_correct_name_on_a_publish_subscribe_channel_with_a_name_filter.cs" />
+    <Compile Include="configuration\publishing\when_publishing_a_request_message_with_the_wrong_name_on_a_publish_subscribe_channel_with_a_name_filter.cs" />
+    <Compile Include="configuration\publishing\when_recieveing_a_non_subscription_request_message_on_a_subscription_channel.cs" />
+    <Compile Include="configuration\publishing\when_recieveing_a_subscription_request_message_on_a_subscription_channel.cs" />
+    <Compile Include="configuration\publishing\when_recieving_a_published_message_on_a_subscriber_channel_with_no_body.cs" />
     <Compile Include="configuration\publishing\WithPublisherSubject.cs" />
-    <Compile Include="configuration\publishing\WithSubscriberSubject.cs" />
     <Compile Include="configuration\request_reply\recieving\when_recieving_a_request_message_on_a_request_reply_channel_with_no_body.cs" />
     <Compile Include="configuration\request_reply\recieving\when_recieving_a_request_message_on_a_request_reply_channel.cs" />
     <Compile Include="configuration\request_reply\recieving\when_replying_with_a_message_on_a_durable_request_reply_channel.cs" />
@@ -70,10 +80,8 @@
     <Compile Include="configuration\request_reply\sending\when_sending_a_request_message_down_a_request_reply_channel.cs" />
     <Compile Include="configuration\request_reply\sending\when_sending_a_request_message_with_the_wrong_name_down_a_request_reply_channel_with_a_name_pattern_filter.cs" />
     <Compile Include="configuration\when_logging_a_message_with_a_logging_mechanism_configured.cs" />
-    <Compile Include="configuration\publishing\when_configuring_a_publisher_channel_followed_by_another.cs" />
-    <Compile Include="configuration\publishing\when_configuring_a_subscriber_channel_followed_by_another.cs" />
-    <Compile Include="configuration\publishing\when_configuring_a_subscriber_channel.cs" />
-    <Compile Include="configuration\publishing\when_configuring_a_publisher_channel.cs" />
+    <Compile Include="configuration\publishing\when_recieving_a_published_message_on_a_subscriber_channel.cs" />
+    <Compile Include="configuration\publishing\when_publishing_a_request_message_on_a_publish_subscribe_channel.cs" />
     <Compile Include="configuration\WithConfiguationSubject.cs" />
     <Compile Include="configuration\request_reply\recieving\when_replying_with_a_message_on_a_request_reply_channel.cs" />
     <Compile Include="channels\acknowledgement\when_handling_a_recieved_acknowledgement_that_is_not_for_the_current_channel.cs" />

@@ -20,6 +20,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
         {
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
+                
                 .OpenChannel(ChannelName).ForRequestReplyRecieving()
                 .Initialise();
 

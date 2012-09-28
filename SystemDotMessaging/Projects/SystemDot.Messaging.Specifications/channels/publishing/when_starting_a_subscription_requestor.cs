@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
         Establish context = () =>
         {
             address = new EndpointAddress("PublisherAddress", "TestServer");
-            Configure<EndpointAddress>(address);
+            Subject = new SubscriptionRequestor(address, false);
             Subject.MessageProcessed += m => request = m;
         };
 
@@ -25,5 +25,8 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
 
         It should_put_the_subscriber_address_on_request_schema = () =>
             request.GetSubscriptionRequestSchema().SubscriberAddress.ShouldEqual(address);
+
+        It should_set_the_request_schema_to_indicate_no_persistence = () =>
+           request.GetSubscriptionRequestSchema().IsPersistent.ShouldBeFalse();
     }
 }

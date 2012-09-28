@@ -5,18 +5,18 @@ using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Channels.Publishing.Builders
 {
-    public class SubscriptionHandlerChannelBuilder : ISubscriptionHandlerChannelBuilder
+    public class SubscriptionHandlerChannelBuilder
     {
         readonly IMessageReciever messageReciever;
         readonly IMessageSender messageSender;
         readonly IPublisherRegistry publisherRegistry;
-        readonly ISubscriberSendChannelBuilder subscriberSendChannelBuilder;
+        readonly SubscriberSendChannelBuilder subscriberSendChannelBuilder;
 
         public SubscriptionHandlerChannelBuilder(
             IMessageReciever messageReciever, 
             IMessageSender messageSender, 
-            IPublisherRegistry publisherRegistry, 
-            ISubscriberSendChannelBuilder subscriberSendChannelBuilder)
+            IPublisherRegistry publisherRegistry,
+            SubscriberSendChannelBuilder subscriberSendChannelBuilder)
         {
             Contract.Requires(messageReciever != null);
             Contract.Requires(messageSender != null);

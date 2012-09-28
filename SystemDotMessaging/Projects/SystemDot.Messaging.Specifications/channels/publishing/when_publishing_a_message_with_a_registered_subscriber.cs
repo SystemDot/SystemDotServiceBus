@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Caching;
@@ -10,6 +11,7 @@ using SystemDot.Messaging.Storage;
 using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;
+using SystemDot.Messaging.Channels.Repeating;
 
 namespace SystemDot.Messaging.Specifications.channels.publishing
 {
@@ -35,6 +37,8 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
             Subject.MessageProcessed += m => processedMessage = m;
 
             message = new MessagePayload();
+            message.SetLastTimeSent(DateTime.Now);
+            message.IncreaseAmountSent();
             message.SetToAddress(address);
             inputMessage = message;
         };
@@ -45,7 +49,10 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
             processedSubscriberMessage.GetToAddress().ShouldEqual(message.GetToAddress());
 
         It should_copy_the_message_to_the_subscriber = () => processedSubscriberMessage.ShouldNotBeTheSameAs(message);
-        
+
+        It should_remove_the_last_time_sent_and_amount_sent_from_the_copied_message = () => 
+            processedSubscriberMessage.Headers.OfType<LastSentHeader>().ShouldBeEmpty();
+
         It should_process_the_message = () => processedMessage.ShouldBeTheSameAs(message);
 
     }

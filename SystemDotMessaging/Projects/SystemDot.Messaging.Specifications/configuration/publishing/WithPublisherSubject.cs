@@ -1,26 +1,34 @@
 using SystemDot.Messaging.Channels;
-using SystemDot.Messaging.Channels.Acknowledgement.Builders;
+using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Messaging.Channels.Publishing;
-using SystemDot.Messaging.Channels.Publishing.Builders;
-using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Transport;
-using SystemDot.Parallelism;
-using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing
 {
-    public class WithPublisherSubject : WithConfiguationSubject
+    public class WithPublisherSubject : WithMessageConfigurationSubject
     {
-        Establish context = () =>
+        protected static void Subscribe(EndpointAddress subscriberAddress, EndpointAddress publisherAddress)
         {
-            ConfigureAndRegister<ISubscriptionHandlerChannelBuilder>();
-            ConfigureAndRegister<IAcknowledgementChannelBuilder>();
-            ConfigureAndRegister<IPublisherRegistry>();
-            ConfigureAndRegister<IPublisherChannelBuilder>(new TestPublisherChannelBuilder());
-            ConfigureAndRegister<IMessageReciever>();
-            ConfigureAndRegister<ITaskRepeater>();
-            ConfigureAndRegister<IPersistence>();
-            ConfigureAndRegister<IBus>();
-        };
+            MessageReciever.RecieveMessage(BuildSubscriptionRequest(subscriberAddress, publisherAddress));
+        }
+        
+        protected static void SubscribeDurable(EndpointAddress subscriberAddress, EndpointAddress publisherAddress)
+        {
+            MessagePayload request = BuildSubscriptionRequest(subscriberAddress, publisherAddress);
+            request.GetSubscriptionRequestSchema().IsPersistent = true;
+            MessageReciever.RecieveMessage(request);
+        }
+
+        protected static MessagePayload BuildSubscriptionRequest(
+            EndpointAddress subscriberAddress, 
+            EndpointAddress publisherAddress)
+        {
+            var request = new MessagePayload();
+            request.SetFromAddress(subscriberAddress);
+            request.SetToAddress(publisherAddress);
+            request.SetSubscriptionRequest(new SubscriptionSchema { SubscriberAddress = subscriberAddress });
+
+            return request;
+        }
     }
 }

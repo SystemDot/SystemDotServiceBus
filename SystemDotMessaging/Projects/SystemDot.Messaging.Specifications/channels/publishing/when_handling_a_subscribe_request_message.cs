@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
             Configure<IPublisherRegistry>(new PublisherRegistry());
             The<IPublisherRegistry>().RegisterPublisher(address, publisher);
 
-            subscriptionSchema = new SubscriptionSchema(new EndpointAddress("TestSubscriberAddress", "TestServer"));
+            subscriptionSchema = new SubscriptionSchema { SubscriberAddress = new EndpointAddress("TestSubscriberAddress", "TestServer") };
             
             request = new MessagePayload();
             request.SetToAddress(address);

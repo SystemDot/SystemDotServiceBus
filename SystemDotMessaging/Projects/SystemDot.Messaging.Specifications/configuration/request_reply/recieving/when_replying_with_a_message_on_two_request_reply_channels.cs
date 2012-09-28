@@ -16,6 +16,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
         {
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
+                
                 .OpenChannel(ChannelName).ForRequestReplyRecieving()
                 .OpenChannel(ChannelName).ForRequestReplyRecieving()
                 .Initialise();

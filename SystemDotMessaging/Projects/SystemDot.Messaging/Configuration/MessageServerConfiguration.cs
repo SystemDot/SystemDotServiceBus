@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using SystemDot.Ioc;
+using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Configuration
 {
@@ -18,6 +20,8 @@ namespace SystemDot.Messaging.Configuration
         public ChannelConfiguration OpenChannel(string name)
         {
             Contract.Requires(!string.IsNullOrEmpty(name));
+
+            IocContainerLocator.Locate().RegisterInstance<IPersistence, InMemoryPersistence>();
 
             return new ChannelConfiguration(
                 BuildEndpointAddress(name, this.messageServer.Name),

@@ -10,14 +10,14 @@ using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Channels.Publishing.Builders
 {
-    public class SubscriberSendChannelBuilder : ISubscriberSendChannelBuilder
+    public class SubscriberSendChannelBuilder
     {
         readonly IMessageSender messageSender;
         readonly IPersistence persistence;
         readonly ICurrentDateProvider currentDateProvider;
         readonly ITaskRepeater taskRepeater;
         readonly IAcknowledgementChannelBuilder acknowledgementChannelBuilder;
-
+        
         public SubscriberSendChannelBuilder(
             IMessageSender messageSender, 
             IPersistence persistence, 
@@ -38,11 +38,11 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             this.acknowledgementChannelBuilder = acknowledgementChannelBuilder;
         }
 
-        public IMessageInputter<MessagePayload> BuildChannel(SubscriberSendChannelSchema subscriberSendChannelSchema)
+        public IMessageInputter<MessagePayload> BuildChannel(SubscriberSendChannelSchema schema)
         {
-            IMessageCache cache = new MessageCache(this.persistence, subscriberSendChannelSchema.SubscriberAddress);
-            
-            var addresser = new MessageAddresser(subscriberSendChannelSchema.FromAddress, subscriberSendChannelSchema.SubscriberAddress);
+            IMessageCache cache = new MessageCache(GetPersistence(schema), schema.SubscriberAddress);
+        
+            var addresser = new MessageAddresser(schema.FromAddress, schema.SubscriberAddress);
 
             MessagePipelineBuilder.Build()
                 .With(addresser)
@@ -50,9 +50,15 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .ToProcessor(new MessageCacher(cache))
                 .ToEndPoint(this.messageSender);
 
-            this.acknowledgementChannelBuilder.Build(cache, subscriberSendChannelSchema.FromAddress);
+            this.acknowledgementChannelBuilder.Build(cache, schema.FromAddress);
 
             return addresser;
         }
+
+        IPersistence GetPersistence(SendChannelSchema schema)
+        {
+            return schema.IsPersistent ? this.persistence : new InMemoryPersistence();
+        }
+        
     }
 }

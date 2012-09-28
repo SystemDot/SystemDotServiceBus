@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels;
-using SystemDot.Messaging.Storage;
 using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Configuration
