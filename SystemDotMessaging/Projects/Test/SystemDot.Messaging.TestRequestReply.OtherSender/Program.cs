@@ -1,8 +1,9 @@
 ﻿using System;
 using SystemDot.Ioc;
 using SystemDot.Logging;
+using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Messages.Processing.Handling;
+using SystemDot.Messaging.Storage.Sql;
 using SystemDot.Messaging.Test.Messages;
 
 namespace SystemDot.Messaging.TestRequestReply.OtherSender
@@ -14,7 +15,8 @@ namespace SystemDot.Messaging.TestRequestReply.OtherSender
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingHttpTransport(MessageServer.Local())
-                .OpenChannel("TestOtherSender").ForRequestReplySendingTo("TestReciever")
+                .UsingSqlPersistence()
+                .OpenChannel("TestOtherSender").ForRequestReplySendingTo("TestReciever").WithPersistence()
                 .Initialise();
 
             IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());

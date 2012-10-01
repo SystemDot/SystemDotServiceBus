@@ -100,6 +100,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <ProjectReference Include="..\..\SystemDot.Messaging.Storage.Sqlite.Metro\SystemDot.Messaging.Storage.Sqlite.Metro.csproj">
+      <Project>{11BDF3DC-3E5F-41B2-9EBF-4BBF655CD245}</Project>
+      <Name>SystemDot.Messaging.Storage.Sqlite.Metro</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SystemDot.Messaging\SystemDot.Messaging.csproj">
       <Project>{6A4F976C-FB85-4D3D-A145-D43626605212}</Project>
       <Name>SystemDot.Messaging</Name>

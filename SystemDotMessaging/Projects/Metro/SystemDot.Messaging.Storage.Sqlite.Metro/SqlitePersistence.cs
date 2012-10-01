@@ -44,42 +44,20 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
         {
             Logger.Info("Storing message in sqlite storage");
 
-            SQLiteAsyncConnection connection = GetConnection();
+            const string statement = "insert or replace into MessagePayloadStorageItem" 
+                + "(id, headers, address)" 
+                + "values(?, ?, ?)";
 
-            string id = message.Id.ToString();
-
-            var item = await GetItemAsync(id);
-
-            if (item == null)
-            {
-                await connection.InsertAsync(new MessagePayloadStorageItem
-                {
-                    Id = id,
-                    Address = message.GetFromAddress().ToString(),
-                    Headers = this.serialiser.Serialise(message.Headers)
-                });
-            }
-            else
-            {
-                item.Headers = this.serialiser.Serialise(message.Headers);
-                await connection.UpdateAsync(item);
-            }
+            await GetConnection().ExecuteAsync(
+                statement,
+                message.Id.ToString(), 
+                message.GetFromAddress().ToString(), 
+                this.serialiser.Serialise(message.Headers));
         }
 
         public async void RemoveMessage(Guid id)
         {
-            MessagePayloadStorageItem item = await GetItemAsync(id.ToString());
-            if(item == null) return;
-
-            await GetConnection().DeleteAsync(item);
-        }
-
-        private static async Task<MessagePayloadStorageItem> GetItemAsync(string id)
-        {
-            return await GetConnection()
-                .Table<MessagePayloadStorageItem>()
-                .Where(m => m.Id == id)
-                .FirstOrDefaultAsync();
+            await GetConnection().ExecuteAsync("delete from MessagePayloadStorageItem where id = ?", id.ToString());
         }
 
         private static SQLiteAsyncConnection GetConnection()
@@ -89,7 +67,11 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
 
         public async void Initialise()
         {
-            await GetConnection().CreateTableAsync<MessagePayloadStorageItem>();
+            await GetConnection().ExecuteAsync(
+                "create table if not exists MessagePayloadStorageItem(\n"
+                + "Id varchar(140) primary key not null ,\n"
+                + "Headers blob ,\n"
+                + "Address varchar(1000))");
         }
     }
 }

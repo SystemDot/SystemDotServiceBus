@@ -6,6 +6,7 @@ using SystemDot.Messaging.Test.Messages;
 using SystemDot.Messaging.TestReciever;
 using Windows.UI.Core;
 using SystemDot.Messaging.TestSubscriber.Handlers;
+using SystemDot.Messaging.Storage.Sqlite.Metro;
 
 namespace SystemDot.Messaging.TestSubscriber.ViewModels
 {
@@ -30,7 +31,8 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
             this.bus = Configure.Messaging()
                .LoggingWith(loggingMechanism)
                .UsingInProcessTransport()
-               .OpenChannel("TestSender").ForRequestReplySendingTo("TestReciever")
+               .UsingSqlitePersistence()
+               .OpenChannel("TestSender").ForRequestReplySendingTo("TestReciever").WithPersistence()
                .WithHook(new MessageMarshallingHook(CoreWindow.GetForCurrentThread().Dispatcher))
                .Initialise();
 

@@ -1,6 +1,7 @@
 ﻿using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Storage.Sqlite.Metro;
 
 namespace SystemDot.Messaging.TestReciever
 {
@@ -10,7 +11,8 @@ namespace SystemDot.Messaging.TestReciever
         {
             var bus = Configure.Messaging()
               .UsingInProcessTransport()
-              .OpenChannel("TestReciever").ForRequestReplyRecieving()
+              .UsingSqlitePersistence()
+              .OpenChannel("TestReciever").ForRequestReplyRecieving().WithPersistence()
               .Initialise();
 
             IocContainerLocator.Locate()

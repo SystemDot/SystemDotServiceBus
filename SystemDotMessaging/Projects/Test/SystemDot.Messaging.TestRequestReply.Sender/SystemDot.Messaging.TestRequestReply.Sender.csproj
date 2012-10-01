@@ -48,6 +48,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\SystemDot.Messaging.Storage.Sql\SystemDot.Messaging.Storage.Sql.csproj">
+      <Project>{80ffa53e-9c4d-45ce-a7d2-8fe0b6a9fbfb}</Project>
+      <Name>SystemDot.Messaging.Storage.Sql</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SystemDot.NonMetro\SystemDot.NonMetro.csproj">
       <Project>{FD8BB339-A3F0-4643-B09C-6FD9D6BD1E1A}</Project>
       <Name>SystemDot.NonMetro</Name>
@@ -64,6 +68,9 @@
       <Project>{EAABD53D-7507-4F76-A538-0264D7294422}</Project>
       <Name>SystemDot.Messaging.Test.Messages</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

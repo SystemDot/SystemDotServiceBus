@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.Messaging.MultiCh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.Messaging.MultiChannel.Sender", "..\Projects\Test\SystemDot.Messaging.MultiChannel.Sender\SystemDot.Messaging.MultiChannel.Sender.csproj", "{41F49920-AAF5-4168-96C1-053BF5301A05}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemDot.Messaging.Storage.Sql", "..\Projects\SystemDot.Messaging.Storage.Sql\SystemDot.Messaging.Storage.Sql.csproj", "{80FFA53E-9C4D-45CE-A7D2-8FE0B6A9FBFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -127,6 +129,16 @@ Global
 		{70598EB3-7AA8-429B-8E9D-3ADCAD2D377B}.Release|Mixed Platforms.Build.0 = Release|x86
 		{70598EB3-7AA8-429B-8E9D-3ADCAD2D377B}.Release|x86.ActiveCfg = Release|x86
 		{70598EB3-7AA8-429B-8E9D-3ADCAD2D377B}.Release|x86.Build.0 = Release|x86
+		{80FFA53E-9C4D-45CE-A7D2-8FE0B6A9FBFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80FFA53E-9C4D-45CE-A7D2-8FE0B6A9FBFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80FFA53E-9C4D-45CE-A7D2-8FE0B6A9FBFB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{80FFA53E-9C4D-45CE-A7D2-8FE0B6A9FBFB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{80FFA53E-9C4D-45CE-A7D2-8FE0B6A9FBFB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{80FFA53E-9C4D-45CE-A7D2-8FE0B6A9FBFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80FFA53E-9C4D-45CE-A7D2-8FE0B6A9FBFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80FFA53E-9C4D-45CE-A7D2-8FE0B6A9FBFB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{80FFA53E-9C4D-45CE-A7D2-8FE0B6A9FBFB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{80FFA53E-9C4D-45CE-A7D2-8FE0B6A9FBFB}.Release|x86.ActiveCfg = Release|Any CPU
 		{8F04CA98-5CFA-40A9-8902-AF8CA122B2B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8F04CA98-5CFA-40A9-8902-AF8CA122B2B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F04CA98-5CFA-40A9-8902-AF8CA122B2B8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
