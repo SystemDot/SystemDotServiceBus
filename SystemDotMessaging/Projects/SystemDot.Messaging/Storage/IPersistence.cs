@@ -12,6 +12,7 @@ namespace SystemDot.Messaging.Storage
         IEnumerable<MessagePayload> GetMessages(EndpointAddress address);
         void StoreMessage(MessagePayload message, EndpointAddress address);
         void RemoveMessage(Guid id);
+        int GetNextSequence(EndpointAddress address);
     }
 
     [ContractClassFor(typeof(IPersistence))]
@@ -29,6 +30,7 @@ namespace SystemDot.Messaging.Storage
         public void StoreMessage(MessagePayload message, EndpointAddress address)
         {
             Contract.Requires(message != null);
+            Contract.Requires(address != null);
             Contract.Requires(address != EndpointAddress.Empty);
             Contract.Ensures(Contract.Result<IEnumerable<MessagePayload>>() != null);
         }
@@ -37,5 +39,13 @@ namespace SystemDot.Messaging.Storage
         {
             Contract.Requires(id != Guid.Empty);
         }
+
+        public int GetNextSequence(EndpointAddress address)
+        {
+            Contract.Requires(address != null);
+            Contract.Requires(address != EndpointAddress.Empty);
+            return default(int);
+        }
+
     }
 }

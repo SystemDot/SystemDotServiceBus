@@ -66,6 +66,9 @@
     <Compile Include="Channels\RequestReply\Builders\ReplyRecieveChannelSchema.cs" />
     <Compile Include="Channels\RequestReply\Builders\ReplySendChannelSchema.cs" />
     <Compile Include="Channels\RequestReply\Builders\RequestSendChannelSchema.cs" />
+    <Compile Include="Channels\Sequencing\MessageSequenceExtensions.cs" />
+    <Compile Include="Channels\Sequencing\OutboundSequencer.cs" />
+    <Compile Include="Channels\Sequencing\SequenceHeader.cs" />
     <Compile Include="Configuration\ComponentRegistration\InProcessTransportComponents.cs" />
     <Compile Include="Configuration\FilteredBy.cs" />
     <Compile Include="Channels\Acknowledgement\AcknowledgementHeader.cs" />

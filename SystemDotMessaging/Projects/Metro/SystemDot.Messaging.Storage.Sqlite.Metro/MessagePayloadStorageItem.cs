@@ -1,3 +1,4 @@
+using System;
 using SQLite;
 
 namespace SystemDot.Messaging.Storage.Sqlite.Metro
@@ -6,6 +7,9 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
     {
         [PrimaryKey]
         public string Id { get; set; }
+
+        [MaxLength(1000)]
+        public DateTime CreatedOn { get; set; }
 
         [MaxLength(1000)]
         public byte[] Headers { get; set; }

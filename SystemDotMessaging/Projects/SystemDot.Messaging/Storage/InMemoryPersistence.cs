@@ -36,6 +36,11 @@ namespace SystemDot.Messaging.Storage
             messages.TryRemove(id, out temp);
         }
 
+        public int GetNextSequence(EndpointAddress address)
+        {
+            return 1;
+        }
+
         class Container
         {
             public EndpointAddress Address { get; private set; }

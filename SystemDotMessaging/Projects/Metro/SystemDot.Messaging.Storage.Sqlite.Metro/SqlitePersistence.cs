@@ -45,12 +45,13 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
             Logger.Info("Storing message in sqlite storage");
 
             const string statement = "insert or replace into MessagePayloadStorageItem" 
-                + "(id, headers, address)" 
-                + "values(?, ?, ?)";
+                + "(id, createdon, headers, address)" 
+                + "values(?, ?, ?, ?)";
 
             await GetConnection().ExecuteAsync(
                 statement,
                 message.Id.ToString(), 
+                message.CreatedOn, 
                 message.GetFromAddress().ToString(), 
                 this.serialiser.Serialise(message.Headers));
         }
@@ -58,6 +59,18 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
         public async void RemoveMessage(Guid id)
         {
             await GetConnection().ExecuteAsync("delete from MessagePayloadStorageItem where id = ?", id.ToString());
+        }
+
+        public int GetNextSequence(EndpointAddress address)
+        {
+            return GetNextSequenceAsync(address).Result;
+        }
+
+        static async Task<int> GetNextSequenceAsync(EndpointAddress address)
+        {
+            return await GetConnection().ExecuteScalarAsync<int>(
+                "select sequencenumber from MessageSequence where address = ?", 
+                address.ToString());
         }
 
         private static SQLiteAsyncConnection GetConnection()
@@ -70,8 +83,12 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
             await GetConnection().ExecuteAsync(
                 "create table if not exists MessagePayloadStorageItem(\n"
                 + "Id varchar(140) primary key not null ,\n"
+                + "CreatedOn bigint not null ,\n"
                 + "Headers blob ,\n"
                 + "Address varchar(1000))");
+
+            await GetConnection().ExecuteAsync(
+                "create table if not exists MessageSequence(Address varchar(1000), SequenceNumber int)");
         }
     }
 }
