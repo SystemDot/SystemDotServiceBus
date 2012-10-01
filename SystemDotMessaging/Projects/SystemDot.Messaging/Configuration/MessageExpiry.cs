@@ -13,5 +13,10 @@ namespace SystemDot.Messaging.Configuration
 
             return new TimeMessageExpiryStrategy(time, IocContainerLocator.Locate().Resolve<ICurrentDateProvider>());
         }
+
+        public static IMessageExpiryStrategy ByRepeatAttempt(int attempts)
+        {
+            return new RepeatAttemptMessageExpiryStrategy(attempts);
+        }
     }
 }

@@ -48,6 +48,7 @@
     <Compile Include="Channels\Expiry\IMessageExpiryStrategy.cs" />
     <Compile Include="Channels\Expiry\MessageExpirer.cs" />
     <Compile Include="Channels\Expiry\PassthroughMessageExpiryStrategy.cs" />
+    <Compile Include="Channels\Expiry\RepeatAttemptMessageExpiryStrategy.cs" />
     <Compile Include="Channels\Expiry\TimeMessageExpiryStrategy.cs" />
     <Compile Include="Channels\MessageCacheBuilder.cs" />
     <Compile Include="Channels\Caching\MessageDecacher.cs" />
