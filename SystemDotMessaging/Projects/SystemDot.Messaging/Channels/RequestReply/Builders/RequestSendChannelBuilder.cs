@@ -2,6 +2,7 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Acknowledgement.Builders;
 using SystemDot.Messaging.Channels.Caching;
+using SystemDot.Messaging.Channels.Expiry;
 using SystemDot.Messaging.Channels.Filtering;
 using SystemDot.Messaging.Channels.Pipelines;
 using SystemDot.Messaging.Channels.Repeating;
@@ -58,6 +59,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.RecieverAddress))
                 .ToMessageRepeater(cache, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new MessageCacher(cache))
+                .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, cache))
                 .Pump()
                 .ToEndPoint(this.messageSender);
 

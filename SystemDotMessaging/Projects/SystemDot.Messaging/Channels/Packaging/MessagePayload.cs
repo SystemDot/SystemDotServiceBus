@@ -10,10 +10,13 @@ namespace SystemDot.Messaging.Channels.Packaging
 
         public Guid Id { get; set; }
 
+        public DateTime CreatedOn { get; set; }
+
         public MessagePayload()
         {
             Headers = new List<IMessageHeader>();
             Id = Guid.NewGuid();
+            CreatedOn = DateTime.Now;
         }
 
         public void AddHeader(IMessageHeader toAdd)

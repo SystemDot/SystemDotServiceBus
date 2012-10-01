@@ -45,6 +45,10 @@
   <ItemGroup>
     <Compile Include="Channels\Acknowledgement\Builders\AcknowledgementChannelBuilder.cs" />
     <Compile Include="Channels\Acknowledgement\Builders\IAcknowledgementChannelBuilder.cs" />
+    <Compile Include="Channels\Expiry\IMessageExpiryStrategy.cs" />
+    <Compile Include="Channels\Expiry\MessageExpirer.cs" />
+    <Compile Include="Channels\Expiry\PassthroughMessageExpiryStrategy.cs" />
+    <Compile Include="Channels\Expiry\TimeMessageExpiryStrategy.cs" />
     <Compile Include="Channels\MessageCacheBuilder.cs" />
     <Compile Include="Channels\Caching\MessageDecacher.cs" />
     <Compile Include="Channels\Publishing\Builders\SubscriptionRequestChannelSchema.cs" />
@@ -91,6 +95,7 @@
     <Compile Include="Configuration\ComponentRegistration\ThreadingComponents.cs" />
     <Compile Include="Channels\Publishing\SubscriptionRequestor.cs" />
     <Compile Include="Configuration\Configurer.cs" />
+    <Compile Include="Configuration\MessageExpiry.cs" />
     <Compile Include="Configuration\MessageServer.cs" />
     <Compile Include="Configuration\MessageServerConfiguration.cs" />
     <Compile Include="Configuration\Initialiser.cs" />

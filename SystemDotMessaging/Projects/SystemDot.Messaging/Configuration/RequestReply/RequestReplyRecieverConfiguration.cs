@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels;
-using SystemDot.Messaging.Channels.RequestReply;
+using SystemDot.Messaging.Channels.Expiry;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Transport;
 
@@ -15,7 +16,8 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             this.sendChannelSchema = new ReplySendChannelSchema
             {
-                FromAddress = address
+                FromAddress = address,
+                ExpiryStrategy = new PassthroughMessageExpiryStrategy()
             };
         }
 
@@ -34,6 +36,14 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         public RequestReplyRecieverConfiguration WithPersistence()
         {
             this.sendChannelSchema.IsPersistent = true;
+            return this;
+        }
+
+        public RequestReplyRecieverConfiguration WithMessageExpiry(IMessageExpiryStrategy strategy)
+        {
+            Contract.Requires(strategy != null);
+
+            this.sendChannelSchema.ExpiryStrategy = strategy;
             return this;
         }
     }

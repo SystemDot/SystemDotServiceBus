@@ -1,6 +1,7 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Acknowledgement.Builders;
 using SystemDot.Messaging.Channels.Caching;
+using SystemDot.Messaging.Channels.Expiry;
 using SystemDot.Messaging.Channels.Filtering;
 using SystemDot.Messaging.Channels.Pipelines;
 using SystemDot.Messaging.Channels.Repeating;
@@ -16,7 +17,6 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
         readonly ReplyAddressLookup replyAddressLookup;
         readonly IMessageSender messageSender;
         readonly ISerialiser serialiser;
-        readonly IPersistence persistence;
         readonly ICurrentDateProvider currentDateProvider;
         readonly ITaskRepeater taskRepeater;
         readonly IAcknowledgementChannelBuilder acknowledgementChannelBuilder;
@@ -26,7 +26,6 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             ReplyAddressLookup replyAddressLookup, 
             IMessageSender messageSender, 
             ISerialiser serialiser, 
-            IPersistence persistence, 
             ICurrentDateProvider currentDateProvider, 
             ITaskRepeater taskRepeater, 
             IAcknowledgementChannelBuilder acknowledgementChannelBuilder, 
@@ -35,7 +34,6 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             Contract.Requires(replyAddressLookup != null);
             Contract.Requires(messageSender != null);
             Contract.Requires(serialiser != null);
-            Contract.Requires(persistence != null);
             Contract.Requires(currentDateProvider != null);
             Contract.Requires(taskRepeater != null);
             Contract.Requires(acknowledgementChannelBuilder != null);
@@ -44,7 +42,6 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             this.replyAddressLookup = replyAddressLookup;
             this.messageSender = messageSender;
             this.serialiser = serialiser;
-            this.persistence = persistence;
             this.currentDateProvider = currentDateProvider;
             this.taskRepeater = taskRepeater;
             this.acknowledgementChannelBuilder = acknowledgementChannelBuilder;
@@ -61,6 +58,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
                 .ToProcessor(new ReplyChannelMessageAddresser(this.replyAddressLookup, schema.FromAddress))
                 .ToMessageRepeater(cache, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new MessageCacher(cache))
+                .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, cache))
                 .Pump()
                 .ToEndPoint(this.messageSender);
 
