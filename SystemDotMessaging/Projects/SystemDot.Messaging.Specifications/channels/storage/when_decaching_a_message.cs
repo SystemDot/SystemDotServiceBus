@@ -5,6 +5,7 @@ using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Messaging.Storage;
 using Machine.Fakes;
 using Machine.Specifications;
+using SystemDot.Messaging.Channels.Repeating;
 
 namespace SystemDot.Messaging.Specifications.channels.storage
 {
@@ -18,8 +19,9 @@ namespace SystemDot.Messaging.Specifications.channels.storage
             Configure<EndpointAddress>(new EndpointAddress("Channel", "Server"));
             message = new MessagePayload();
             message.SetFromAddress(The<EndpointAddress>());
+            message.IncreaseAmountSent();
 
-            Configure<IMessageCache>(new MessageCache(new InMemoryPersistence(), The<EndpointAddress>()));
+            Configure<IMessageCache>(new MessageCache(new TestPersistence(), The<EndpointAddress>()));
             The<IMessageCache>().Cache(message);
         };
 

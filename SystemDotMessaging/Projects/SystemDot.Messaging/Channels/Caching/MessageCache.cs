@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Channels.Repeating;
 
 namespace SystemDot.Messaging.Channels.Caching
 {
@@ -19,6 +20,7 @@ namespace SystemDot.Messaging.Channels.Caching
 
             this.persistence = persistence;
             this.address = address;
+            this.persistence.InitialiseChannel(this.address);            
         }
 
         public IEnumerable<MessagePayload> GetAll()
@@ -28,7 +30,10 @@ namespace SystemDot.Messaging.Channels.Caching
 
         public void Cache(MessagePayload toCache)
         {
-            this.persistence.StoreMessage(toCache, this.address);
+            if(toCache.GetAmountSent() > 1)
+                this.persistence.UpdateMessage(toCache);
+            else
+                this.persistence.AddMessage(toCache, this.address);
         }
 
         public void Remove(Guid id)

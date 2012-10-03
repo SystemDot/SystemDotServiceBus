@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Storage.Sql
             using (SqlCeConnection connection = GetConnection())
             {
                 connection.ExecuteReader(
-                    "select id, createdon, headers from MessagePayloadStorageItem where old = 0 and address = '" + address + "'", 
+                    "select id, createdon, headers from MessagePayloadStorageItem where and address = '" + address + "'",
                     reader => messages.Add(new MessagePayload
                     {
                         Id = reader.GetGuid(0),
@@ -43,22 +43,41 @@ namespace SystemDot.Messaging.Storage.Sql
             return connection;
         }
 
-        public void StoreMessage(MessagePayload message, EndpointAddress address)
+        public void AddMessage(MessagePayload message, EndpointAddress address)
+        {
+            using (SqlCeConnection connection = GetConnection())
+            {
+                using (SqlCeTransaction transaction = connection.BeginTransaction())
+                {
+                    connection.Execute(
+                        "update MessageSequence set sequencenumber = sequencenumber + 1 where address = @address",
+                        command => command.Parameters.AddWithValue("@address", address.ToString()));
+
+                    connection.Execute(
+                        "insert into MessagePayloadStorageItem(id, createdon, headers, address) values(@id, @createdon, @headers, @address)",
+                        command =>
+                        {
+                            command.Parameters.AddWithValue("@id", message.Id);
+                            command.Parameters.AddWithValue("@createdon", message.CreatedOn);
+                            command.Parameters.AddWithValue("@headers", this.serialiser.Serialise(message.Headers));
+                            command.Parameters.AddWithValue("@address", message.GetFromAddress().ToString());
+                        });
+
+                    transaction.Commit();
+                }
+            }
+        }
+
+        public void UpdateMessage(MessagePayload message)
         {
             using (SqlCeConnection connection = GetConnection())
             {
                 connection.Execute(
-                    "update MessagePayloadStorageItem set old = 1 where id = @id", 
-                    command => command.Parameters.AddWithValue("@id", message.Id));
-
-                connection.Execute(
-                    "insert into MessagePayloadStorageItem(id, createdon, headers, address, old) values(@id, @createdon, @headers, @address, 0)",  
+                    "update MessagePayloadStorageItem set @headers = headers where id = @id",
                     command =>
                     {
                         command.Parameters.AddWithValue("@id", message.Id);
-                        command.Parameters.AddWithValue("@createdon", message.CreatedOn);
                         command.Parameters.AddWithValue("@headers", this.serialiser.Serialise(message.Headers));
-                        command.Parameters.AddWithValue("@address", message.GetFromAddress().ToString());
                     });
             }
         }
@@ -79,6 +98,20 @@ namespace SystemDot.Messaging.Storage.Sql
             {
                 return connection.ExecuteScalar<int>(
                     "select sequencenumber from MessageSequence where address = @address",
+                    command => command.Parameters.AddWithValue("@address", address.ToString()));
+            }
+        }
+
+        public void InitialiseChannel(EndpointAddress address)
+        {
+            using (SqlCeConnection connection = GetConnection())
+            {
+                if (connection.ExecuteScalar<int>(
+                    "select count(*) from MessageSequence where address = @address",
+                    command => command.Parameters.AddWithValue("@address", address.ToString())) > 0) return;
+
+                connection.Execute(
+                    "insert into MessageSequence(address, sequencenumber) values(@address, 1)",
                     command => command.Parameters.AddWithValue("@address", address.ToString()));
             }
         }

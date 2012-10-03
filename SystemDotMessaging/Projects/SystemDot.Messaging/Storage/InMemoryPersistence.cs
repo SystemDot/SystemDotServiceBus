@@ -23,9 +23,14 @@ namespace SystemDot.Messaging.Storage
                 .Select(m => m.Payload);
         }
 
-        public virtual void StoreMessage(MessagePayload message, EndpointAddress address)
+        public void AddMessage(MessagePayload message, EndpointAddress address)
         {
             messages.TryAdd(message.Id, new Container(message, address));
+        }
+
+        public void UpdateMessage(MessagePayload message)
+        {
+            messages[message.Id].Payload = message;
         }
 
         public void RemoveMessage(Guid id)
@@ -41,10 +46,14 @@ namespace SystemDot.Messaging.Storage
             return 1;
         }
 
+        public void InitialiseChannel(EndpointAddress address)
+        {
+        }
+
         class Container
         {
             public EndpointAddress Address { get; private set; }
-            public MessagePayload Payload { get; private set; }
+            public MessagePayload Payload { get; set; }
 
             public Container(MessagePayload payload, EndpointAddress address)
             {

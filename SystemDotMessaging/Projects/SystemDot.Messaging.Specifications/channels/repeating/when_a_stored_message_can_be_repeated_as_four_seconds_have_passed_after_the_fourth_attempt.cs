@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Specifications.channels.repeating
         Establish context = () =>
         {
             var endpointAddress = new EndpointAddress("Channel", "Server");
-            Configure<IMessageCache>(new MessageCache(new InMemoryPersistence(), endpointAddress));
+            Configure<IMessageCache>(new MessageCache(new TestPersistence(), endpointAddress));
             
             DateTime currentDate = DateTime.Now;
             Configure<ICurrentDateProvider>(new TestCurrentDateProvider(currentDate));
@@ -31,10 +31,10 @@ namespace SystemDot.Messaging.Specifications.channels.repeating
             message.SetFromAddress(endpointAddress);
             message.SetLastTimeSent(currentDate.Subtract(new TimeSpan(0, 0, 0, 4)));
             message.IncreaseAmountSent();
-            message.IncreaseAmountSent();
-            message.IncreaseAmountSent();
-            message.IncreaseAmountSent();
             The<IMessageCache>().Cache(message);
+            message.IncreaseAmountSent();
+            message.IncreaseAmountSent();
+            message.IncreaseAmountSent();
         };
 
         Because of = () => Subject.Start();

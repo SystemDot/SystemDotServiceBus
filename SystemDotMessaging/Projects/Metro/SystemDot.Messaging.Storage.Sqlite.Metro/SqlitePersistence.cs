@@ -40,11 +40,15 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
                 .ToListAsync();
         }
 
-        public async void StoreMessage(MessagePayload message, EndpointAddress address)
+        public async void AddMessage(MessagePayload message, EndpointAddress address)
         {
             Logger.Info("Storing message in sqlite storage");
 
-            const string statement = "insert or replace into MessagePayloadStorageItem" 
+            await GetConnection().ExecuteAsync(
+                "update MessageSequence set sequencenumber = sequencenumber + 1 where address = ?",
+                message.Id.ToString());
+
+            const string statement = "insert into MessagePayloadStorageItem" 
                 + "(id, createdon, headers, address)" 
                 + "values(?, ?, ?, ?)";
 
@@ -56,6 +60,18 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
                 this.serialiser.Serialise(message.Headers));
         }
 
+        public async void UpdateMessage(MessagePayload message)
+        {
+            Logger.Info("Storing message in sqlite storage");
+
+            const string statement = "update MessagePayloadStorageItem set headers = ? where id = ?";
+
+            await GetConnection().ExecuteAsync(
+                statement,
+                this.serialiser.Serialise(message.Headers),
+                message.Id.ToString());
+        }
+
         public async void RemoveMessage(Guid id)
         {
             await GetConnection().ExecuteAsync("delete from MessagePayloadStorageItem where id = ?", id.ToString());
@@ -64,6 +80,13 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
         public int GetNextSequence(EndpointAddress address)
         {
             return GetNextSequenceAsync(address).Result;
+        }
+
+        public async void InitialiseChannel(EndpointAddress address)
+        {
+            await GetConnection().ExecuteAsync(
+                "insert into MessageSequence(address, sequencenumber) values(?, 1)",
+                address.ToString());
         }
 
         static async Task<int> GetNextSequenceAsync(EndpointAddress address)

@@ -3,6 +3,7 @@ using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Expiry;
 using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Storage;
 using SystemDot.Specifications;
 using Machine.Fakes;
@@ -19,8 +20,9 @@ namespace SystemDot.Messaging.Specifications.channels.expiry
         Establish context = () =>
         {
             message = new MessagePayload();
-
-            Configure<IMessageCache>(new MessageCache(new InMemoryPersistence(), new EndpointAddress()));
+            message.IncreaseAmountSent();
+            
+            Configure<IMessageCache>(new MessageCache(new TestPersistence(), new EndpointAddress()));
             The<IMessageCache>().Cache(message);
 
             var expiryTime = new TimeSpan(0, 1, 0);
