@@ -59,8 +59,8 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.RecieverAddress))
                 .ToMessageRepeater(cache, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new MessageCacher(cache))
-                .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, cache))
                 .Pump()
+                .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, cache))
                 .ToEndPoint(this.messageSender);
 
             this.acknowledgementChannelBuilder.Build(cache, schema.FromAddress);

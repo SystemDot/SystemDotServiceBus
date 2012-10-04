@@ -30,7 +30,15 @@ namespace SystemDot.Messaging.TestSubscriber
 
         private void Button_Click_1(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            this.DataContext.As<MainPageViewModel>().SendMessage();
+            for (int i = 0; i < 10; i++)
+            {
+                this.DataContext.As<MainPageViewModel>().SendMessage(i);                
+            }
+        }
+
+        private void Button_Click_2(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            this.DataContext.As<MainPageViewModel>().Clear();
         }
     }
 }

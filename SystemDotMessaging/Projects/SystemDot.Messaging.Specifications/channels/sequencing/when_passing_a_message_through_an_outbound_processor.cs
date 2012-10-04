@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Sequencing;
@@ -8,7 +9,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.channels.sequencing
 {
     [Subject("Message processing")]
-    public class when_passing_a_message_through_an_outbound_processor : WithMessageProcessorSubject<OutboundSequencer>
+    public class when_passing_a_message_through_an_sequencer : WithMessageProcessorSubject<Sequencer>
     {
         const int Sequence = 1;
         static MessagePayload message;

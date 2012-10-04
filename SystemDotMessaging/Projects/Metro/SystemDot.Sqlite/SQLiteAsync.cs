@@ -198,6 +198,15 @@ namespace SQLite
 			});
 		}
 
+        public int Execute(string sql, params object[] args)
+        {
+            var conn = GetConnection();
+            using (conn.Lock())
+            {
+                return conn.Execute(sql, args);
+            }
+        }
+
 		public Task<int> InsertAllAsync (IEnumerable items)
 		{
 			return Task.Factory.StartNew (() => {
@@ -249,7 +258,26 @@ namespace SQLite
             });
         }
 
-		public AsyncTableQuery<T> Table<T> ()
+        public void RunInTransaction(Action<SQLiteConnection> action)
+        {
+            var conn = this.GetConnection();
+            using (conn.Lock())
+            {
+                conn.BeginTransaction();
+                try
+                {
+                    action(conn);
+                    conn.Commit();
+                }
+                catch (Exception)
+                {
+                    conn.Rollback();
+                    throw;
+                }
+            }
+        }
+
+	    public AsyncTableQuery<T> Table<T> ()
 			where T : new ()
 		{
 			//
@@ -281,6 +309,16 @@ namespace SQLite
 				}
 			});
 		}
+
+        public T ExecuteScalar<T>(string sql, params object[] args)
+        {
+            var conn = GetConnection();
+            using (conn.Lock())
+            {
+                var command = conn.CreateCommand(sql, args);
+                return command.ExecuteScalar<T>();
+            }
+        }
 	}
 
 	//
@@ -324,8 +362,9 @@ namespace SQLite
 
 		public Task<List<T>> ToListAsync ()
 		{
-			return Task.Factory.StartNew (() => {
-				using (((SQLiteConnectionWithLock)_innerQuery.Connection).Lock ()) {
+			return Task.Factory.StartNew (() =>
+			{
+			    using (((SQLiteConnectionWithLock)_innerQuery.Connection).Lock ()) {
 					return _innerQuery.ToList ();
 				}
 			});

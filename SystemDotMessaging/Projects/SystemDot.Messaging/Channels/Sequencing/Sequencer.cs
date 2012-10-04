@@ -5,12 +5,12 @@ using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Channels.Sequencing
 {
-    public class OutboundSequencer : IMessageProcessor<MessagePayload, MessagePayload>
+    public class Sequencer : IMessageProcessor<MessagePayload, MessagePayload>
     {
         readonly IPersistence persistence;
         readonly EndpointAddress address;
 
-        public OutboundSequencer(IPersistence persistence, EndpointAddress address)
+        public Sequencer(IPersistence persistence, EndpointAddress address)
         {
             Contract.Requires(persistence != null);
             Contract.Requires(address != null);

@@ -17,6 +17,8 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
         public ObservableCollection<string> Messages { get; private set; }
 
         public ObservableCollection<string> Replies { get; private set; }
+        
+        public ObservableCollection<string> Logging { get; private set; }
 
         public MainPageViewModel()
         {
@@ -25,7 +27,8 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
                 ShowInfo = true
             };
  
-            Messages = loggingMechanism.Messages;
+            Logging = loggingMechanism.Messages;
+            Messages = new ObservableCollection<string>();
             Replies = new ObservableCollection<string>();
 
             this.bus = Configure.Messaging()
@@ -43,9 +46,18 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
             RecieverConfiguration.ConfigureMessaging();
         }
 
-        public void SendMessage()
+        public void SendMessage(int i)
         {
-            bus.Send(new TestQuery { Text = "Hello" });
+            var query = new TestQuery {Text = "Hello" + i};
+            Messages.Add(query.Text);
+            bus.Send(query);
+        }
+
+        public void Clear()
+        {
+            Messages.Clear();
+            Replies.Clear();
+            Logging.Clear();
         }
     }
 }
