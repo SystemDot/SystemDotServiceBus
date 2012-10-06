@@ -10,6 +10,11 @@ namespace SystemDot.Messaging.Channels.Sequencing
             return payload.Headers.OfType<SequenceHeader>().Single().Sequence;
         }
 
+        public static bool HasSequence(this MessagePayload payload)
+        {
+            return payload.Headers.OfType<SequenceHeader>().Any();
+        }
+
         public static void SetSequence(this MessagePayload payload, int sequence)
         {
             payload.Headers.Add(new SequenceHeader { Sequence = sequence });

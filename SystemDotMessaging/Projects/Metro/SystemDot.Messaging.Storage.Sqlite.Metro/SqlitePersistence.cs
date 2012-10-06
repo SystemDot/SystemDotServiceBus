@@ -94,6 +94,14 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
                 address.ToString());
         }
 
+        public void SetNextSequence(EndpointAddress address, int toSet)
+        {
+            GetAsyncConnection().Execute(
+               "update MessageSequence set sequencenumber = ? where address = ?",
+               toSet,
+               address.ToString());
+        }
+
         private static SQLiteAsyncConnection GetAsyncConnection()
         {
             return new SQLiteAsyncConnection("Messaging");

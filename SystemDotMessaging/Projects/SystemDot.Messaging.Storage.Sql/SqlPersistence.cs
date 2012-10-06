@@ -115,5 +115,19 @@ namespace SystemDot.Messaging.Storage.Sql
                     command => command.Parameters.AddWithValue("@address", address.ToString()));
             }
         }
+
+        public void SetNextSequence(EndpointAddress address, int toSet)
+        {
+            using (SqlCeConnection connection = GetConnection())
+            {
+                connection.Execute(
+                    "update MessageSequence set sequencenumber = @sequence where address = @address",
+                    command =>
+                    {
+                        command.Parameters.AddWithValue("@sequence", toSet);
+                        command.Parameters.AddWithValue("@address", address.ToString());
+                    });
+            }
+        }
     }
 }

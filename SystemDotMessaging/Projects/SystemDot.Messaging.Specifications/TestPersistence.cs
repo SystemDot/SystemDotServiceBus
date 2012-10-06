@@ -9,6 +9,14 @@ namespace SystemDot.Messaging.Specifications
 {
     public class TestPersistence : IPersistence
     {
+        public static IPersistence WithSequenceOf(EndpointAddress address, int sequence)
+        {
+            IPersistence persistence = new TestPersistence();
+            persistence.InitialiseChannel(address);
+            persistence.SetNextSequence(address, sequence);
+            return persistence;
+        }
+
         readonly InMemoryPersistence inner;
         readonly List<EndpointAddress> initialisedChannels;
 
@@ -54,6 +62,11 @@ namespace SystemDot.Messaging.Specifications
         {
             this.initialisedChannels.Add(address);
             this.inner.InitialiseChannel(address);
+        }
+
+        public void SetNextSequence(EndpointAddress address, int toSet)
+        {
+            this.inner.SetNextSequence(address, toSet);
         }
     }
 }

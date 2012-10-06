@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.channels.expiry
             message = new MessagePayload();
             message.IncreaseAmountSent();
             
-            Configure<IMessageCache>(new MessageCache(new TestPersistence(), new EndpointAddress()));
+            Configure<IMessageCache>(new MessageCache(new TestPersistence(), new EndpointAddress("Channel", "Server")));
             The<IMessageCache>().Cache(message);
 
             var expiryTime = new TimeSpan(0, 1, 0);

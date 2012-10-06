@@ -15,6 +15,7 @@ namespace SystemDot.Messaging.Storage
         void RemoveMessage(Guid id);
         int GetNextSequence(EndpointAddress address);
         void InitialiseChannel(EndpointAddress address);
+        void SetNextSequence(EndpointAddress address, int toSet);
     }
 
     [ContractClassFor(typeof(IPersistence))]
@@ -58,6 +59,13 @@ namespace SystemDot.Messaging.Storage
         {
             Contract.Requires(address != null);
             Contract.Requires(address != EndpointAddress.Empty);
+        }
+
+        public void SetNextSequence(EndpointAddress address, int toSet)
+        {
+            Contract.Requires(address != null);
+            Contract.Requires(address != EndpointAddress.Empty);
+            Contract.Requires(toSet > 0);
         }
     }
 }

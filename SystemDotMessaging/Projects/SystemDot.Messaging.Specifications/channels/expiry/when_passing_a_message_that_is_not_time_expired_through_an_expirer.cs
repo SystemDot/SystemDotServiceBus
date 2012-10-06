@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.channels.expiry
         {
             message = new MessagePayload();
             message.IncreaseAmountSent();
-            Configure<IMessageCache>(new MessageCache(new TestPersistence(), new EndpointAddress()));
+            Configure<IMessageCache>(new MessageCache(new TestPersistence(), new EndpointAddress("Channel", "Server")));
 
             The<IMessageCache>().Cache(message);
 

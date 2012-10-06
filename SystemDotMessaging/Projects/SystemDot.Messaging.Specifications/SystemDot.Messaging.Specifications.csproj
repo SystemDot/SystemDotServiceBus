@@ -56,8 +56,10 @@
     <Compile Include="channels\expiry\when_passing_a_message_that_is_time_expired_through_an_expirer.cs" />
     <Compile Include="channels\expiry\when_passing_a_message_that_is_not_time_expired_through_an_expirer.cs" />
     <Compile Include="channels\publishing\when_starting_a_subscription_requestor_with_persistence_indicated_on_the_schema.cs" />
-    <Compile Include="channels\sequencing\when_passing_a_message_through_an_outbound_processor.cs" />
-    <Compile Include="channels\sequencing\when_running_a_resequncer_with_messages_in_the_correct_order_previously_passed_to_it.cs" />
+    <Compile Include="channels\sequencing\when_passing_a_message_without_a_sequence_number_header_through_a_resequncer.cs" />
+    <Compile Include="channels\sequencing\when_passing_a_message_through_an_sequencer.cs" />
+    <Compile Include="channels\sequencing\when_passing_messages_in_the_correct_order_through_a_resequncer.cs" />
+    <Compile Include="channels\sequencing\when_passing_messages_in_the_incorrect_order_through_a_resequncer.cs" />
     <Compile Include="channels\storage\when_decaching_a_message.cs" />
     <Compile Include="configuration\publishing\ExclusionMessagePayloadListExtensions.cs" />
     <Compile Include="TestPersistence.cs" />

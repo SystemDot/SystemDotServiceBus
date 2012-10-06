@@ -10,10 +10,12 @@ namespace SystemDot.Messaging.Storage
     public class InMemoryPersistence : IPersistence
     {
         readonly ConcurrentDictionary<Guid, Container> messages;
+        readonly ConcurrentDictionary<EndpointAddress, int> sequences;
 
         public InMemoryPersistence()
         {
-            messages = new ConcurrentDictionary<Guid, Container>();
+            this.messages = new ConcurrentDictionary<Guid, Container>();
+            this.sequences = new ConcurrentDictionary<EndpointAddress, int>();
         }
 
         public IEnumerable<MessagePayload> GetMessages(EndpointAddress address)
@@ -43,11 +45,17 @@ namespace SystemDot.Messaging.Storage
 
         public int GetNextSequence(EndpointAddress address)
         {
-            return 1;
+            return this.sequences[address];
         }
 
         public void InitialiseChannel(EndpointAddress address)
         {
+            this.sequences.TryAdd(address, 1);
+        }
+
+        public void SetNextSequence(EndpointAddress address, int toSet)
+        {
+            this.sequences[address] = toSet;
         }
 
         class Container
