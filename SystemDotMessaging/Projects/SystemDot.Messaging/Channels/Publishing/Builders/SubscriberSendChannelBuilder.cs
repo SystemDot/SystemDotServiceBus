@@ -57,7 +57,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
 
         IPersistence GetPersistence(SendChannelSchema schema)
         {
-            return schema.IsPersistent ? this.persistence : new InMemoryPersistence();
+            return schema.IsDurable ? this.persistence : new InMemoryPersistence();
         }
         
     }

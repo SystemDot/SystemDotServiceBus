@@ -30,7 +30,8 @@ namespace SystemDot.Messaging.Configuration.RequestReply
 
             this.recieveChannelSchema = new ReplyRecieveChannelSchema
             {
-                SenderAddress = address
+                Address = address,
+                IsSequenced = false
             };   
         }
 
@@ -62,9 +63,10 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             return this;
         }
 
-        public RequestReplySenderConfiguration WithPersistence()
+        public RequestReplySenderConfiguration WithDurability()
         {
-            this.sendChannelSchema.IsPersistent = true;
+            this.sendChannelSchema.IsDurable = true;
+            this.recieveChannelSchema.IsSequenced = true;
             return this;
         }
 

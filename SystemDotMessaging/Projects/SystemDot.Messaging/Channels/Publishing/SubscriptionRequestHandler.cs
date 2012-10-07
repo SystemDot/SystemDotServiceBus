@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Channels.Publishing
                     {
                         FromAddress = fromAddress,
                         SubscriberAddress = schema.SubscriberAddress,
-                        IsPersistent = schema.IsPersistent
+                        IsDurable = schema.IsPersistent
                     }));
         }
 

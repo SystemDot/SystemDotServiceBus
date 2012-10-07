@@ -38,9 +38,9 @@ namespace SystemDot.Messaging.Configuration.Publishers
             return this;
         }
 
-        public PublisherConfiguration WithPersistence()
+        public PublisherConfiguration WithDurability()
         {
-            this.schema.IsPersistent = true;
+            this.schema.IsDurable = true;
             return this;
         }
     }

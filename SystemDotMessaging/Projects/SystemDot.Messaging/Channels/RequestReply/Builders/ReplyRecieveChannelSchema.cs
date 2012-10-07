@@ -2,11 +2,9 @@ using System.Collections.Generic;
 
 namespace SystemDot.Messaging.Channels.RequestReply.Builders
 {
-    public class ReplyRecieveChannelSchema
+    public class ReplyRecieveChannelSchema : RecieveChannelSchema
     {
-        public EndpointAddress SenderAddress { get; set; }
-
-        public List<IMessageProcessor<object, object>> Hooks { get; private set; }
+        public List<IMessageProcessor<object, object>> Hooks { get; set; }
 
         public ReplyRecieveChannelSchema()
         {

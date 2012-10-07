@@ -12,7 +12,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
 
         Because of = () => Configuration.Configure.Messaging()
             .UsingInProcessTransport()
-            .OpenChannel(ChannelName).ForSubscribingTo(PublisherName).WithPersistence()
+            .OpenChannel(ChannelName).ForSubscribingTo(PublisherName).WithDurability()
             .Initialise();
 
         It should_send_a_request_for_non_persistent_subscriber_channel = () =>

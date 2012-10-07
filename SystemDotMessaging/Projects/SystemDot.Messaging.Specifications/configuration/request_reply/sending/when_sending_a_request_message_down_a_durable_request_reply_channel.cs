@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
         {
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel(ChannelName).ForRequestReplySendingTo(RecieverAddress).WithPersistence()
+                .OpenChannel(ChannelName).ForRequestReplySendingTo(RecieverAddress).WithDurability()
                 .Initialise();
 
             message = 1;

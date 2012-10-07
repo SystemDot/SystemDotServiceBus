@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Channels\Acknowledgement\Builders\AcknowledgementChannelBuilder.cs" />
     <Compile Include="Channels\Acknowledgement\Builders\IAcknowledgementChannelBuilder.cs" />
+    <Compile Include="Channels\Distribution\Queue.cs" />
     <Compile Include="Channels\Expiry\IMessageExpiryStrategy.cs" />
     <Compile Include="Channels\Expiry\MessageExpirer.cs" />
     <Compile Include="Channels\Expiry\PassthroughMessageExpiryStrategy.cs" />
@@ -52,7 +53,10 @@
     <Compile Include="Channels\Expiry\TimeMessageExpiryStrategy.cs" />
     <Compile Include="Channels\MessageCacheBuilder.cs" />
     <Compile Include="Channels\Caching\MessageDecacher.cs" />
+    <Compile Include="Channels\Publishing\Builders\SubscriberRecieveChannelSchema.cs" />
     <Compile Include="Channels\Publishing\Builders\SubscriptionRequestChannelSchema.cs" />
+    <Compile Include="Channels\RecieveChannelSchema.cs" />
+    <Compile Include="Channels\RequestReply\Builders\RequestRecieveChannelSchema.cs" />
     <Compile Include="Channels\SendChannelSchema.cs" />
     <Compile Include="Channels\Publishing\Builders\PublisherChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\PublisherChannelSchema.cs" />
@@ -68,6 +72,7 @@
     <Compile Include="Channels\RequestReply\Builders\RequestSendChannelSchema.cs" />
     <Compile Include="Channels\Sequencing\MessageSequenceExtensions.cs" />
     <Compile Include="Channels\Sequencing\Resequencer.cs" />
+    <Compile Include="Channels\Sequencing\ResequencerMessagePipelineBuilderExtensions.cs" />
     <Compile Include="Channels\Sequencing\Sequencer.cs" />
     <Compile Include="Channels\Sequencing\SequenceHeader.cs" />
     <Compile Include="Configuration\ComponentRegistration\InProcessTransportComponents.cs" />

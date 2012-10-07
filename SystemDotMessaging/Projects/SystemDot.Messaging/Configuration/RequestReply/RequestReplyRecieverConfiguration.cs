@@ -11,6 +11,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
     public class RequestReplyRecieverConfiguration : Initialiser
     {
         readonly ReplySendChannelSchema sendChannelSchema;
+        readonly RequestRecieveChannelSchema requestChannelSchema;
 
         public RequestReplyRecieverConfiguration(EndpointAddress address, List<Action> buildActions) : base(buildActions)
         {
@@ -19,11 +20,17 @@ namespace SystemDot.Messaging.Configuration.RequestReply
                 FromAddress = address,
                 ExpiryStrategy = new PassthroughMessageExpiryStrategy()
             };
+
+            this.requestChannelSchema = new RequestRecieveChannelSchema
+            {
+                Address = address,
+                IsSequenced = false
+            };
         }
 
         protected override void Build()
         {
-            Resolve<RequestRecieveChannelBuilder>().Build(GetAddress());
+            Resolve<RequestRecieveChannelBuilder>().Build(this.requestChannelSchema);
             Resolve<ReplySendChannelBuilder>().Build(this.sendChannelSchema);
             Resolve<IMessageReciever>().StartPolling(GetAddress());
         }
@@ -33,9 +40,10 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             return this.sendChannelSchema.FromAddress;
         }
 
-        public RequestReplyRecieverConfiguration WithPersistence()
+        public RequestReplyRecieverConfiguration WithDurability()
         {
-            this.sendChannelSchema.IsPersistent = true;
+            this.sendChannelSchema.IsDurable = true;
+            this.requestChannelSchema.IsSequenced = true;
             return this;
         }
 

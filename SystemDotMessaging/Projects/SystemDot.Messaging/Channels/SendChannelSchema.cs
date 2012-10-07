@@ -6,7 +6,7 @@ namespace SystemDot.Messaging.Channels
     {
         public EndpointAddress FromAddress { get; set; }
 
-        public bool IsPersistent { get; set; }
+        public bool IsDurable { get; set; }
 
         public IMessageExpiryStrategy ExpiryStrategy { get; set; }
     }

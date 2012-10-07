@@ -9,7 +9,8 @@ namespace SystemDot.Messaging.Configuration.Publishers
 {
     public class SubscribeToConfiguration : Initialiser
     {
-        readonly SubscriptionRequestChannelSchema schema;
+        readonly SubscriptionRequestChannelSchema requestSchema;
+        readonly SubscriberRecieveChannelSchema recieveSchema;
 
         public SubscribeToConfiguration(
             EndpointAddress subscriberAddress, 
@@ -21,28 +22,35 @@ namespace SystemDot.Messaging.Configuration.Publishers
             Contract.Requires(publisherAddress != EndpointAddress.Empty);
             Contract.Requires(buildActions != null);
 
-            this.schema = new SubscriptionRequestChannelSchema
+            this.requestSchema = new SubscriptionRequestChannelSchema
             {
                 PublisherAddress = publisherAddress,
                 SubscriberAddress = subscriberAddress
+            };
+
+            this.recieveSchema = new SubscriberRecieveChannelSchema
+            {
+                Address = subscriberAddress,
+                IsSequenced = false
             };
         }
 
         protected override void Build()
         {
-            Resolve<SubscriberRecieveChannelBuilder>().Build(this.schema.SubscriberAddress);
-            Resolve<SubscriptionRequestChannelBuilder>().Build(this.schema).Start();
-            Resolve<IMessageReciever>().StartPolling(this.schema.SubscriberAddress);
+            Resolve<SubscriberRecieveChannelBuilder>().Build(this.recieveSchema);
+            Resolve<SubscriptionRequestChannelBuilder>().Build(this.requestSchema).Start();
+            Resolve<IMessageReciever>().StartPolling(this.requestSchema.SubscriberAddress);
         }
 
         protected override EndpointAddress GetAddress()
         {
-            return this.schema.PublisherAddress;
+            return this.requestSchema.PublisherAddress;
         }
 
-        public SubscribeToConfiguration WithPersistence()
+        public SubscribeToConfiguration WithDurability()
         {
-            this.schema.IsPersistent = true;
+            this.requestSchema.IsPersistent = true;
+            this.recieveSchema.IsSequenced = true;
             return this;
         }
     }

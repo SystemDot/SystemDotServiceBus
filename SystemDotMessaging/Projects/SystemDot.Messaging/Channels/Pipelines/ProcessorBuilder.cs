@@ -21,6 +21,14 @@ namespace SystemDot.Messaging.Channels.Pipelines
             return new ProcessorBuilder<TOut>(pump);
         }
 
+        public ProcessorBuilder<TOut> Queue()
+        {
+            var queue = new Queue<TOut>(IocContainerLocator.Locate().Resolve<ITaskStarter>());
+            this.processor.MessageProcessed += queue.InputMessage;
+
+            return new ProcessorBuilder<TOut>(queue);
+        }
+
         public ProcessorBuilder<TNextOut> ToConverter<TNextOut>(IMessageProcessor<TOut, TNextOut> messageProcessor)
         {
             this.processor.MessageProcessed += messageProcessor.InputMessage;

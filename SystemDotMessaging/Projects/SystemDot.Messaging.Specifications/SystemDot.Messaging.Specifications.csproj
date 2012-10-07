@@ -50,6 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="channels\distribution\when_queueing_an_item.cs" />
+    <Compile Include="channels\distribution\when_queueing_items_on_a_with_no_pushed_item_listener.cs" />
     <Compile Include="channels\expiry\when_passing_a_message_that_is_not_repeat_attempt_expired_through_an_expirer.cs" />
     <Compile Include="channels\expiry\when_passing_a_message_that_is_repeat_attempt_expired_through_an_expirer.cs" />
     <Compile Include="channels\expiry\when_passing_a_message_through_a_expirer_with_a_pass_through_strategy.cs" />
@@ -62,6 +64,8 @@
     <Compile Include="channels\sequencing\when_passing_messages_in_the_incorrect_order_through_a_resequncer.cs" />
     <Compile Include="channels\storage\when_decaching_a_message.cs" />
     <Compile Include="configuration\publishing\ExclusionMessagePayloadListExtensions.cs" />
+    <Compile Include="configuration\request_reply\recieving\when_recieving_an_out_of_sequence_request_message_on_a_durable_request_reply_channel.cs" />
+    <Compile Include="configuration\request_reply\sending\when_recieving_an_out_of_sequence_reply_message_on_a_durable_request_reply_channel.cs" />
     <Compile Include="TestPersistence.cs" />
     <Compile Include="configuration\publishing\when_initialising_a_durable_subscriber_channel.cs" />
     <Compile Include="configuration\publishing\when_initialising_a_subscriber_channel.cs" />

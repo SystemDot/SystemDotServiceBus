@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
 
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel(ChannelName).ForPublishing().WithPersistence()
+                .OpenChannel(ChannelName).ForPublishing().WithDurability()
                 .Initialise();
 
             message = 1;
