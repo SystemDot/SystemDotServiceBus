@@ -6,6 +6,7 @@ using SystemDot.Messaging.Channels.Expiry;
 using SystemDot.Messaging.Channels.Filtering;
 using SystemDot.Messaging.Channels.Pipelines;
 using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Channels.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
@@ -17,45 +18,50 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
     {
         readonly IMessageSender messageSender;
         readonly ISerialiser serialiser;
-        readonly IPersistence persistence;
         readonly ICurrentDateProvider currentDateProvider;
         readonly IAcknowledgementChannelBuilder acknowledgementChannelBuilder;
         readonly ITaskRepeater taskRepeater;
         readonly MessageCacheBuilder cacheBuilder;
+        readonly IPersistenceFactory persistenceFactory;
 
         public RequestSendChannelBuilder(
             IMessageSender messageSender, 
             ISerialiser serialiser, 
-            IPersistence persistence, 
             ICurrentDateProvider currentDateProvider, 
             IAcknowledgementChannelBuilder acknowledgementChannelBuilder, 
             ITaskRepeater taskRepeater, 
-            MessageCacheBuilder cacheBuilder)
+            MessageCacheBuilder cacheBuilder, 
+            IPersistenceFactory persistenceFactory)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(serialiser != null);
-            Contract.Requires(persistence != null);
             Contract.Requires(currentDateProvider != null);
             Contract.Requires(acknowledgementChannelBuilder != null);
             Contract.Requires(taskRepeater != null);
             Contract.Requires(cacheBuilder != null);
+            Contract.Requires(persistenceFactory != null);
 
             this.messageSender = messageSender;
             this.serialiser = serialiser;
-            this.persistence = persistence;
             this.currentDateProvider = currentDateProvider;
             this.acknowledgementChannelBuilder = acknowledgementChannelBuilder;
             this.taskRepeater = taskRepeater;
             this.cacheBuilder = cacheBuilder;
+            this.persistenceFactory = persistenceFactory;
         }
 
         public void Build(RequestSendChannelSchema schema)
         {
-            IMessageCache cache = this.cacheBuilder.Create(schema); 
+            IPersistence persistence = this.persistenceFactory.CreatePersistence(
+                PersistenceUseType.RequestSend, 
+                schema.FromAddress);
+
+            IMessageCache cache = this.cacheBuilder.Create(schema, persistence); 
 
             MessagePipelineBuilder.Build()
                 .WithBusSendTo(new MessageFilter(schema.FilteringStrategy))
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
+                .ToProcessor(new Sequencer(persistence))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.RecieverAddress))
                 .ToMessageRepeater(cache, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new MessageCacher(cache))

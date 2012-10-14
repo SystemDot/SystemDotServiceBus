@@ -4,6 +4,7 @@ using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Storage.InMemory;
 using Machine.Fakes;
 using Machine.Specifications;
 using SystemDot.Messaging.Channels.Repeating;
@@ -23,8 +24,10 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
             message = new MessagePayload();
             message.SetFromAddress(The<EndpointAddress>());
             message.IncreaseAmountSent();
+
+            Configure<IPersistence>(new InMemoryPersistence());
+            Configure<IMessageCache>(new MessageCache(The<IPersistence>()));
             
-            Configure<IMessageCache>(new MessageCache(new TestPersistence(), The<EndpointAddress>()));
             The<IMessageCache>().Cache(message);
 
             acknowledgement = new MessagePayload();

@@ -30,8 +30,8 @@ using System.Threading.Tasks;
 
 namespace SQLite
 {
-	public class SQLiteAsyncConnection
-	{
+    public class SQLiteAsyncConnection
+    {
 		SQLiteConnectionString _connectionString;
 
 		public SQLiteAsyncConnection (string databasePath, bool storeDateTimeAsTicks = false)

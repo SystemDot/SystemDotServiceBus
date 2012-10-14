@@ -5,6 +5,7 @@ using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Storage.InMemory;
 using SystemDot.Specifications;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -22,7 +23,9 @@ namespace SystemDot.Messaging.Specifications.channels.repeating
             DateTime currentDate = DateTime.Now;
             
             var endpointAddress = new EndpointAddress("Channel", "Server");
-            Configure<IMessageCache>(new MessageCache(new TestPersistence(), endpointAddress));
+            Configure<IPersistence>(new InMemoryPersistence());
+            Configure<IMessageCache>(new MessageCache(The<IPersistence>()));
+            
             Configure<ICurrentDateProvider>(new TestCurrentDateProvider(currentDate));
             
             Subject.MessageProcessed += m => processedMessage = m;

@@ -9,8 +9,7 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
         {
             IIocContainer iocContainer = IocContainerLocator.Locate();
 
-            iocContainer.RegisterInstance<IPersistence, SqlitePersistence>();
-            iocContainer.Resolve<IPersistence>().As<SqlitePersistence>().Initialise();
+            iocContainer.RegisterInstance<IPersistenceFactory, SqlitePersistenceFactory>();
             
             return configuration;
         }

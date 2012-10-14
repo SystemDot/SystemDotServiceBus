@@ -116,6 +116,7 @@
   <ItemGroup>
     <Compile Include="MessagePayloadStorageItem.cs" />
     <Compile Include="SqliteMessageServerConfigurationExtensions.cs" />
+    <Compile Include="SqlitePersistenceFactory.cs" />
     <Compile Include="SqlitePersistence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

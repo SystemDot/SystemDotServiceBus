@@ -59,14 +59,15 @@
     <Compile Include="channels\expiry\when_passing_a_message_that_is_not_time_expired_through_an_expirer.cs" />
     <Compile Include="channels\publishing\when_starting_a_subscription_requestor_with_persistence_indicated_on_the_schema.cs" />
     <Compile Include="channels\sequencing\when_passing_a_message_without_a_sequence_number_header_through_a_resequncer.cs" />
-    <Compile Include="channels\sequencing\when_passing_a_message_through_an_sequencer.cs" />
+    <Compile Include="channels\sequencing\when_passing_a_message_through_a_sequencer.cs" />
     <Compile Include="channels\sequencing\when_passing_messages_in_the_correct_order_through_a_resequncer.cs" />
     <Compile Include="channels\sequencing\when_passing_messages_in_the_incorrect_order_through_a_resequncer.cs" />
+    <Compile Include="channels\storage\when_caching_a_message_for_the_second_time.cs" />
     <Compile Include="channels\storage\when_decaching_a_message.cs" />
+    <Compile Include="configuration\FakeAccessorExtensions.cs" />
     <Compile Include="configuration\publishing\ExclusionMessagePayloadListExtensions.cs" />
     <Compile Include="configuration\request_reply\recieving\when_recieving_an_out_of_sequence_request_message_on_a_durable_request_reply_channel.cs" />
     <Compile Include="configuration\request_reply\sending\when_recieving_an_out_of_sequence_reply_message_on_a_durable_request_reply_channel.cs" />
-    <Compile Include="TestPersistence.cs" />
     <Compile Include="configuration\publishing\when_initialising_a_durable_subscriber_channel.cs" />
     <Compile Include="configuration\publishing\when_initialising_a_subscriber_channel.cs" />
     <Compile Include="configuration\publishing\when_publishing_a_request_message_on_a_durable_publish_subscribe_channel.cs" />
@@ -94,6 +95,8 @@
     <Compile Include="configuration\request_reply\sending\when_sending_a_request_message_down_a_request_reply_channel.cs" />
     <Compile Include="configuration\request_reply\sending\when_sending_a_request_message_with_the_wrong_name_down_a_request_reply_channel_with_a_name_pattern_filter.cs" />
     <Compile Include="configuration\request_reply\sending\when_sending_a_time_expired_request_message_down_a_request_reply_channel.cs" />
+    <Compile Include="configuration\TestPersistenceFactory.cs" />
+    <Compile Include="configuration\TestPersistence.cs" />
     <Compile Include="configuration\when_logging_a_message_with_a_logging_mechanism_configured.cs" />
     <Compile Include="configuration\publishing\when_recieving_a_published_message_on_a_subscriber_channel.cs" />
     <Compile Include="configuration\publishing\when_publishing_a_request_message_on_a_publish_subscribe_channel.cs" />

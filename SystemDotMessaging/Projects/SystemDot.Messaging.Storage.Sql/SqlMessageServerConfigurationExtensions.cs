@@ -7,7 +7,7 @@ namespace SystemDot.Messaging.Storage.Sql
     {
         public static MessageServerConfiguration UsingSqlPersistence(this MessageServerConfiguration configuration)
         {
-            IocContainerLocator.Locate().RegisterInstance<IPersistence, SqlPersistence>();
+            IocContainerLocator.Locate().RegisterInstance<IPersistenceFactory, SqlPersistenceFactory>();
             return configuration;
         }
     }

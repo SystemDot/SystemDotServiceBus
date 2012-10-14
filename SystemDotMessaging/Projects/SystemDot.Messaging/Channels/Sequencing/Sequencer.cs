@@ -8,21 +8,17 @@ namespace SystemDot.Messaging.Channels.Sequencing
     public class Sequencer : IMessageProcessor<MessagePayload, MessagePayload>
     {
         readonly IPersistence persistence;
-        readonly EndpointAddress address;
 
-        public Sequencer(IPersistence persistence, EndpointAddress address)
+        public Sequencer(IPersistence persistence)
         {
             Contract.Requires(persistence != null);
-            Contract.Requires(address != null);
-            Contract.Requires(address != EndpointAddress.Empty);
             
             this.persistence = persistence;
-            this.address = address;
         }
 
         public void InputMessage(MessagePayload toInput)
         {
-            toInput.SetSequence(this.persistence.GetNextSequence(this.address));
+            toInput.SetSequence(this.persistence.GetSequence());
             MessageProcessed(toInput);
         }
 

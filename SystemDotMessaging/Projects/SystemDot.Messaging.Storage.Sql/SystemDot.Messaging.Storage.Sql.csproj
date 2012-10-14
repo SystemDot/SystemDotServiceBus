@@ -60,6 +60,7 @@
     <Compile Include="SqlCeConnectionExtensions.cs" />
     <Compile Include="SqlCeDataReaderExtensions.cs" />
     <Compile Include="SqlMessageServerConfigurationExtensions.cs" />
+    <Compile Include="SqlPersistenceFactory.cs" />
     <Compile Include="SqlPersistence.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -74,7 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Messaging.sdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

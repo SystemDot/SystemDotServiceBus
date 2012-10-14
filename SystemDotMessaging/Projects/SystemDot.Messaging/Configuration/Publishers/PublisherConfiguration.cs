@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Filtering;
 using SystemDot.Messaging.Channels.Publishing.Builders;
+using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Configuration.Publishers
@@ -24,7 +25,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
         {
             Resolve<SubscriptionHandlerChannelBuilder>().Build();
             Resolve<PublisherChannelBuilder>().Build(this.schema);
-            Resolve<IMessageReciever>().StartPolling(GetAddress());        
+            Resolve<IMessageReciever>().StartPolling(GetAddress());
         }
 
         protected override EndpointAddress GetAddress()

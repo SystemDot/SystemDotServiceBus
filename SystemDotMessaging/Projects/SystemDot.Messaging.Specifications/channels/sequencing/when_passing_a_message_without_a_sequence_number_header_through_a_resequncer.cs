@@ -1,8 +1,8 @@
 using System;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Sequencing;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Storage.InMemory;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.channels.sequencing
@@ -14,8 +14,8 @@ namespace SystemDot.Messaging.Specifications.channels.sequencing
 
         Establish context = () =>
         {
-            Configure(new EndpointAddress("Channel", "Server"));
-            Configure<IPersistence>(TestPersistence.WithSequenceOf(The<EndpointAddress>(), 1));
+            Configure<IPersistence>(new InMemoryPersistence());
+            The<IPersistence>().SetSequence(1);
         };
 
         Because of = () =>

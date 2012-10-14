@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Storage.InMemory;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -12,29 +11,20 @@ namespace SystemDot.Messaging.Specifications.channels.storage.in_memory
     public class when_getting_messages_for_a_channel : WithSubject<InMemoryPersistence>
     {
         static IEnumerable<MessagePayload> messages;
-        static EndpointAddress address;
         static MessagePayload message1;
         static MessagePayload message2;
 
         Establish context = () =>
         {
-            address = new EndpointAddress("Channel", "Server");
-
             message1 = new MessagePayload();
-            message1.SetFromAddress(address);
-            Subject.AddMessage(message1, address);
+            Subject.AddMessage(message1);
 
             message2 = new MessagePayload();
-            message2.SetFromAddress(address);
-            Subject.AddMessage(message2, address);
-
-            var message3 = new MessagePayload();
-            message3.SetFromAddress(new EndpointAddress("Channel1", "Server1"));
-            Subject.AddMessage(message3, new EndpointAddress("Channel1", "Server1"));
+            Subject.AddMessage(message2);
         };
 
-        Because of = () => messages = Subject.GetMessages(address);
+        Because of = () => messages = Subject.GetMessages();
 
-        It should_not_let_the_message_pass_through = () => messages.ShouldContainOnly(message1, message2);
+        It should_retreive_the_messages = () => messages.ShouldContain(message1, message2);
     }
 }

@@ -5,6 +5,7 @@ using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Pipelines;
 using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Storage.InMemory;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
 
@@ -38,7 +39,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
         {
             var requestor = new SubscriptionRequestor(schema.SubscriberAddress, schema.IsPersistent);
 
-            IMessageCache cache = new MessageCache(new InMemoryPersistence(), schema.SubscriberAddress);
+            IMessageCache cache = new MessageCache(new InMemoryPersistence());
 
             MessagePipelineBuilder.Build()
                 .With(requestor)

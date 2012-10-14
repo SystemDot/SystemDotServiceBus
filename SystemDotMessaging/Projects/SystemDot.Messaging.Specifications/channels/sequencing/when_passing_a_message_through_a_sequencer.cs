@@ -1,5 +1,3 @@
-using System.Collections.Concurrent;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Sequencing;
 using SystemDot.Messaging.Storage;
@@ -17,8 +15,7 @@ namespace SystemDot.Messaging.Specifications.channels.sequencing
 
         Establish context = () =>
         {
-            Configure<EndpointAddress>(new EndpointAddress("Channel", "Server"));
-            The<IPersistence>().WhenToldTo(p => p.GetNextSequence(The<EndpointAddress>())).Return(Sequence);
+            The<IPersistence>().WhenToldTo(p => p.GetSequence()).Return(Sequence);
             Subject.MessageProcessed += payload => processedMessage = payload;
             message = new MessagePayload();
         };

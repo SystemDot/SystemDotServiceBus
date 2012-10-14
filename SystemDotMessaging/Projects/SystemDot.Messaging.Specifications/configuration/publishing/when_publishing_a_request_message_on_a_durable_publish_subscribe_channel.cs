@@ -1,4 +1,5 @@
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Storage.InMemory;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing
@@ -12,13 +13,16 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
 
         static IBus bus;
         static int message;
-
         static TestPersistence persistence;
 
         Establish context = () =>
         {
+            var persistenceFactory = new TestPersistenceFactory();
+            ConfigureAndRegister<IPersistenceFactory>(persistenceFactory);
+
             persistence = new TestPersistence();
-            ConfigureAndRegister<IPersistence>(persistence);
+            persistenceFactory.AddPersistence(PersistenceUseType.PublisherSend, persistence);
+            persistenceFactory.AddPersistence(PersistenceUseType.SubscriberSend, new TestPersistence());
 
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
@@ -31,9 +35,8 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
 
         Because of = () => bus.Publish(message);
 
-        It should_have_persisted_the_message = () => persistence.StoredMessage.ShouldNotBeNull();
+        It should_have_persisted_the_message = () => persistence.LastAddedMessage.ShouldNotBeNull();
 
-        It should_have_decached_the_message_after_successful_publishing = () => 
-            persistence.GetMessages(BuildAddress(ChannelName)).ShouldBeEmpty();
+        It should_have_decached_the_message_after_successful_publishing = () => persistence.GetMessages().ShouldBeEmpty();
     }
 }

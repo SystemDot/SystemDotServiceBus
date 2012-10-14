@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.Contracts;
+using SystemDot.Logging;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Channels.Packaging.Headers;
 
 namespace SystemDot.Messaging.Channels.Sequencing
 {
@@ -10,21 +12,19 @@ namespace SystemDot.Messaging.Channels.Sequencing
     {
         readonly ConcurrentDictionary<int, MessagePayload> queue;
         readonly IPersistence persistence;
-        readonly EndpointAddress address;
 
-        public Resequencer(IPersistence persistence, EndpointAddress address)
+        public Resequencer(IPersistence persistence)
         {
             Contract.Requires(persistence != null);
-            Contract.Requires(address != null);
 
             this.persistence = persistence;
-            this.address = address;
             this.queue = new ConcurrentDictionary<int, MessagePayload>();
         }
 
         public void InputMessage(MessagePayload toInput)
         {
-            int startSequence = this.persistence.GetNextSequence(this.address);
+            Logger.Info("Resequencing message");
+            int startSequence = this.persistence.GetSequence();
             
             if(!toInput.HasSequence()) return;
             if (!AddMessageToQueue(toInput, startSequence)) return;
@@ -44,6 +44,7 @@ namespace SystemDot.Messaging.Channels.Sequencing
         {
             while (this.queue.ContainsKey(startSequence))
             {
+                Logger.Info("Releasing message from resequencer with sequence {0}", startSequence);
                 MessageProcessed(this.queue[startSequence]);
 
                 MessagePayload temp;
@@ -51,7 +52,7 @@ namespace SystemDot.Messaging.Channels.Sequencing
                 startSequence++;
             }
 
-            this.persistence.SetNextSequence(this.address, startSequence);
+            this.persistence.SetSequence(startSequence);
         }
 
         public event Action<MessagePayload> MessageProcessed;

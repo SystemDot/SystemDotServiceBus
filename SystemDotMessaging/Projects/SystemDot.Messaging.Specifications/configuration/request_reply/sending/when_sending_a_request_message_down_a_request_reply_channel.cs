@@ -6,6 +6,7 @@ using Machine.Fakes;
 using Machine.Specifications;
 using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Channels.Sequencing;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 {
@@ -16,9 +17,17 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
         const string RecieverAddress = "TestRecieverAddress";
         static IBus bus;
         static int message;
+        static TestPersistence persistence;
 
         Establish context = () =>
         {
+            var persistenceFactory = new TestPersistenceFactory();
+            ConfigureAndRegister<IPersistenceFactory>(persistenceFactory);
+
+            persistence = new TestPersistence();
+            persistenceFactory.AddPersistence(PersistenceUseType.RequestSend, persistence);
+            persistenceFactory.AddPersistence(PersistenceUseType.ReplyReceive, new TestPersistence());
+
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForRequestReplySendingTo(RecieverAddress)
@@ -38,14 +47,16 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
         It should_send_a_message_with_the_correct_content = () =>
             Deserialise<int>(MessageSender.SentMessages.First().GetBody()).ShouldEqual(message);
 
-        It should_mark_the_time_the_message_is_sent = () =>
+        It should_mark_the_message_with_the_time_the_message_is_sent = () =>
             MessageSender.SentMessages.First().GetLastTimeSent().ShouldBeGreaterThan(DateTime.MinValue);
 
-        It should_mark_the_amount_of_times_the_message_has_been_sent = () =>
+        It should_mark_the_message_with_the_amount_of_times_the_message_has_been_sent = () =>
             MessageSender.SentMessages.First().GetAmountSent().ShouldEqual(1);
 
-        It should_not_persist_the_message = () =>
-            Resolve<IPersistence>().GetMessages(BuildAddress(ChannelName)).ShouldBeEmpty();
+        It should_mark_the_message_with_the_sequence = () =>
+            MessageSender.SentMessages.First().GetSequence().ShouldEqual(1);
+
+        It should_not_persist_the_message = () => persistence.GetMessages().ShouldBeEmpty();
 
         It should_start_the_task_repeater = () => The<ITaskRepeater>().WasToldTo(r => r.Start());
     }

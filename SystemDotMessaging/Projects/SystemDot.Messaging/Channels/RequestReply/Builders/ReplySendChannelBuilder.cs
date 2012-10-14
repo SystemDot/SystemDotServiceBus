@@ -5,6 +5,7 @@ using SystemDot.Messaging.Channels.Expiry;
 using SystemDot.Messaging.Channels.Filtering;
 using SystemDot.Messaging.Channels.Pipelines;
 using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Channels.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
@@ -21,6 +22,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
         readonly ITaskRepeater taskRepeater;
         readonly IAcknowledgementChannelBuilder acknowledgementChannelBuilder;
         readonly MessageCacheBuilder cacheBuilder;
+        readonly IPersistenceFactory persistenceFactory;
 
         public ReplySendChannelBuilder(
             ReplyAddressLookup replyAddressLookup, 
@@ -29,7 +31,8 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             ICurrentDateProvider currentDateProvider, 
             ITaskRepeater taskRepeater, 
             IAcknowledgementChannelBuilder acknowledgementChannelBuilder, 
-            MessageCacheBuilder cacheBuilder)
+            MessageCacheBuilder cacheBuilder, 
+            IPersistenceFactory persistenceFactory)
         {
             Contract.Requires(replyAddressLookup != null);
             Contract.Requires(messageSender != null);
@@ -38,6 +41,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             Contract.Requires(taskRepeater != null);
             Contract.Requires(acknowledgementChannelBuilder != null);
             Contract.Requires(cacheBuilder != null);
+            Contract.Requires(persistenceFactory != null);
             
             this.replyAddressLookup = replyAddressLookup;
             this.messageSender = messageSender;
@@ -46,15 +50,21 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             this.taskRepeater = taskRepeater;
             this.acknowledgementChannelBuilder = acknowledgementChannelBuilder;
             this.cacheBuilder = cacheBuilder;
+            this.persistenceFactory = persistenceFactory;
         }
 
         public void Build(ReplySendChannelSchema schema)
         {
-            IMessageCache cache = this.cacheBuilder.Create(schema);
+            IPersistence persistence = this.persistenceFactory.CreatePersistence(
+                PersistenceUseType.ReplySend, 
+                schema.FromAddress);
 
+            IMessageCache cache = this.cacheBuilder.Create(schema, persistence); 
+            
             MessagePipelineBuilder.Build()
                 .WithBusReplyTo(new MessageFilter(GetFilterStrategy(schema)))
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
+                .ToProcessor(new Sequencer(persistence))
                 .ToProcessor(new ReplyChannelMessageAddresser(this.replyAddressLookup, schema.FromAddress))
                 .ToMessageRepeater(cache, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new MessageCacher(cache))

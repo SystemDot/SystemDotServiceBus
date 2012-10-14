@@ -1,5 +1,6 @@
 ﻿using System;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Storage.InMemory;
 using Machine.Fakes;
 using Machine.Specifications;
 

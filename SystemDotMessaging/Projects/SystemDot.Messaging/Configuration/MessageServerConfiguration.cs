@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Storage.InMemory;
 
 namespace SystemDot.Messaging.Configuration
 {
@@ -21,7 +22,7 @@ namespace SystemDot.Messaging.Configuration
         {
             Contract.Requires(!string.IsNullOrEmpty(name));
 
-            IocContainerLocator.Locate().RegisterInstance<IPersistence, InMemoryPersistence>();
+            IocContainerLocator.Locate().RegisterInstance<IPersistenceFactory, InMemoryPersistenceFactory>();
 
             return new ChannelConfiguration(
                 BuildEndpointAddress(name, this.messageServer.Name),

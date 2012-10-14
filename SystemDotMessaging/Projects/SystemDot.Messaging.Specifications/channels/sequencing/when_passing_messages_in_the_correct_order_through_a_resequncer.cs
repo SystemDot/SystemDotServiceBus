@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Sequencing;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Storage.InMemory;
 using Machine.Specifications;
-using Machine.Fakes;
 
 namespace SystemDot.Messaging.Specifications.channels.sequencing
 {
@@ -17,8 +16,8 @@ namespace SystemDot.Messaging.Specifications.channels.sequencing
 
         Establish context = () =>
         {
-            Configure(new EndpointAddress("Channel", "Server"));
-            Configure<IPersistence>(TestPersistence.WithSequenceOf(The<EndpointAddress>(), 2));
+            Configure<IPersistence>(new InMemoryPersistence());
+            The<IPersistence>().SetSequence(2);
             
             processedMessages = new List<MessagePayload>();
             Subject.MessageProcessed += payload => processedMessages.Add(payload);

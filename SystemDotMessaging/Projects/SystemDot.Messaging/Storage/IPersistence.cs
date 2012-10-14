@@ -6,35 +6,30 @@ using SystemDot.Messaging.Channels.Packaging;
 
 namespace SystemDot.Messaging.Storage
 {
-    [ContractClass(typeof(IPersistenceContract))]
+    [ContractClass(typeof(PersistenceContract))]
     public interface IPersistence
     {
-        IEnumerable<MessagePayload> GetMessages(EndpointAddress address);
-        void AddMessage(MessagePayload message, EndpointAddress address);
+        IEnumerable<MessagePayload> GetMessages();
+        void AddMessage(MessagePayload message);
         void UpdateMessage(MessagePayload message);
         void RemoveMessage(Guid id);
-        int GetNextSequence(EndpointAddress address);
-        void InitialiseChannel(EndpointAddress address);
-        void SetNextSequence(EndpointAddress address, int toSet);
+        int GetSequence();
+        void SetSequence(int toSet);
     }
 
     [ContractClassFor(typeof(IPersistence))]
-    public class IPersistenceContract : IPersistence
+    public class PersistenceContract : IPersistence
     {
-        public IEnumerable<MessagePayload> GetMessages(EndpointAddress address)
+        public IEnumerable<MessagePayload> GetMessages()
         {
-            Contract.Requires(address != null);
-            Contract.Requires(address != EndpointAddress.Empty);
             Contract.Ensures(Contract.Result<IEnumerable<MessagePayload>>() != null);
 
             return null;
         }
 
-        public void AddMessage(MessagePayload message, EndpointAddress address)
+        public void AddMessage(MessagePayload message)
         {
             Contract.Requires(message != null);
-            Contract.Requires(address != null);
-            Contract.Requires(address != EndpointAddress.Empty);
             Contract.Ensures(Contract.Result<IEnumerable<MessagePayload>>() != null);
         }
 
@@ -48,23 +43,14 @@ namespace SystemDot.Messaging.Storage
             Contract.Requires(id != Guid.Empty);
         }
 
-        public int GetNextSequence(EndpointAddress address)
+        public int GetSequence()
         {
-            Contract.Requires(address != null);
-            Contract.Requires(address != EndpointAddress.Empty);
+            Contract.Ensures(Contract.Result<int>() > 0);
             return default(int);
         }
 
-        public void InitialiseChannel(EndpointAddress address)
+        public void SetSequence(int toSet)
         {
-            Contract.Requires(address != null);
-            Contract.Requires(address != EndpointAddress.Empty);
-        }
-
-        public void SetNextSequence(EndpointAddress address, int toSet)
-        {
-            Contract.Requires(address != null);
-            Contract.Requires(address != EndpointAddress.Empty);
             Contract.Requires(toSet > 0);
         }
     }

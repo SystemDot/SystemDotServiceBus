@@ -14,15 +14,20 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
     public class SqlitePersistence : IPersistence
     {
         readonly ISerialiser serialiser;
+        private readonly PersistenceUseType useType;
+        readonly EndpointAddress address;
 
-        public SqlitePersistence(ISerialiser serialiser)
+        public SqlitePersistence(ISerialiser serialiser, PersistenceUseType useType, EndpointAddress address)
         {
             this.serialiser = serialiser;
+            this.useType = useType;
+            this.address = address;
+            Initialise();
         }
 
-        public IEnumerable<MessagePayload> GetMessages(EndpointAddress address)
+        public IEnumerable<MessagePayload> GetMessages()
         {
-            return GetForChannelAsync(address).Result.Select(m =>
+            return GetForChannelAsync().Result.Select(m =>
                 new MessagePayload
                 {
                     Id = new Guid(m.Id),
@@ -30,34 +35,37 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
                 });
         }
 
-        async Task<List<MessagePayloadStorageItem>> GetForChannelAsync(EndpointAddress address)
+        async Task<List<MessagePayloadStorageItem>> GetForChannelAsync()
         {
             var addressString = address.ToString();
+            var useTypeInt = this.useType.As<int>();
 
             return await GetAsyncConnection()
                 .Table<MessagePayloadStorageItem>()
-                .Where(m => m.Address == addressString)
+                .Where(m => m.Address == addressString && m.Type == useTypeInt)
                 .ToListAsync();
         }
 
-        public void AddMessage(MessagePayload message, EndpointAddress address)
+        public void AddMessage(MessagePayload message)
         {
             Logger.Info("Storing message in sqlite storage");
 
             GetAsyncConnection().RunInTransaction(c =>
             {
                 c.Execute(
-                    "update MessageSequence set sequencenumber = sequencenumber + 1 where address = ?",
-                    message.Id.ToString());
+                    "update MessageSequence set sequencenumber = sequencenumber + 1 where address = ? and type = ?",
+                    this.address.ToString(),
+                    this.useType);
 
                 c.Execute(
                     "insert into MessagePayloadStorageItem"
-                        + "(id, createdon, headers, address)"
-                        + "values(?, ?, ?, ?)",
+                        + "(id, createdon, headers, address, type)"
+                        + "values(?, ?, ?, ?, ?)",
                     message.Id.ToString(),
                     message.CreatedOn,
-                    message.GetFromAddress().ToString(),
-                    this.serialiser.Serialise(message.Headers));
+                    this.address.ToString(),
+                    this.serialiser.Serialise(message.Headers),
+                    this.useType);
             });
         }
 
@@ -80,44 +88,50 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
                 id.ToString());
         }
 
-        public int GetNextSequence(EndpointAddress address)
+        public int GetSequence()
         {
             return GetAsyncConnection().ExecuteScalar<int>(
-                "select sequencenumber from MessageSequence where address = ?", 
-                address.ToString());
+                "select sequencenumber from MessageSequence where address = ? and type = ?", 
+                this.address.ToString(),
+                this.useType);
         }
 
-        public async void InitialiseChannel(EndpointAddress address)
-        {
-            await GetAsyncConnection().ExecuteAsync(
-                "insert into MessageSequence(address, sequencenumber) values(?, 1)",
-                address.ToString());
-        }
-
-        public void SetNextSequence(EndpointAddress address, int toSet)
+        public void SetSequence(int toSet)
         {
             GetAsyncConnection().Execute(
-               "update MessageSequence set sequencenumber = ? where address = ?",
-               toSet,
-               address.ToString());
+                "update MessageSequence set sequencenumber = ? where address = ? and type = ?",
+                toSet,
+                this.address.ToString(),
+                this.useType);
         }
 
-        private static SQLiteAsyncConnection GetAsyncConnection()
-        {
-            return new SQLiteAsyncConnection("Messaging");
-        }
-
-        public async void Initialise()
+        async void Initialise()
         {
             await GetAsyncConnection().ExecuteAsync(
                 "create table if not exists MessagePayloadStorageItem(\n"
-                + "Id varchar(32) not null ,\n"
-                + "CreatedOn bigint not null ,\n"
-                + "Headers blob ,\n"
-                + "Address varchar(1000))");
+                + "Id varchar(32) not null, \n"
+                + "CreatedOn bigint not null, \n"
+                + "Headers blob, \n"
+                + "Address varchar(1000), \n"
+                + "Type int)");
 
             await GetAsyncConnection().ExecuteAsync(
-                "create table if not exists MessageSequence(Address varchar(1000), SequenceNumber int)");
+                "create table if not exists MessageSequence(Address varchar(1000), SequenceNumber int, Type int)");
+
+            if (await GetAsyncConnection().ExecuteScalarAsync<int>(
+                "select count(*) from MessageSequence where address = ? and type = ?",
+                 address.ToString(),
+                 this.useType) > 0) return;
+
+            await GetAsyncConnection().ExecuteAsync(
+                "insert into MessageSequence(address, sequencenumber, type) values(?, 1, ?)",
+                address.ToString(),
+                 this.useType);
+        }
+
+        protected static SQLiteAsyncConnection GetAsyncConnection()
+        {
+            return new SQLiteAsyncConnection("Messaging");
         }
     }
 }

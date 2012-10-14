@@ -5,6 +5,7 @@ using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Pipelines;
 using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Storage.InMemory;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
 
@@ -13,26 +14,26 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
     public class SubscriberSendChannelBuilder
     {
         readonly IMessageSender messageSender;
-        readonly IPersistence persistence;
+        readonly IPersistenceFactory persistenceFactory;
         readonly ICurrentDateProvider currentDateProvider;
         readonly ITaskRepeater taskRepeater;
         readonly IAcknowledgementChannelBuilder acknowledgementChannelBuilder;
         
         public SubscriberSendChannelBuilder(
             IMessageSender messageSender, 
-            IPersistence persistence, 
+            IPersistenceFactory persistenceFactory, 
             ICurrentDateProvider currentDateProvider, 
             ITaskRepeater taskRepeater, 
             IAcknowledgementChannelBuilder acknowledgementChannelBuilder)
         {
             Contract.Requires(messageSender != null);
-            Contract.Requires(persistence != null);
+            Contract.Requires(persistenceFactory != null);
             Contract.Requires(currentDateProvider != null);
             Contract.Requires(taskRepeater != null);
             Contract.Requires(acknowledgementChannelBuilder != null);
 
             this.messageSender = messageSender;
-            this.persistence = persistence;
+            this.persistenceFactory = persistenceFactory;
             this.currentDateProvider = currentDateProvider;
             this.taskRepeater = taskRepeater;
             this.acknowledgementChannelBuilder = acknowledgementChannelBuilder;
@@ -40,7 +41,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
 
         public IMessageInputter<MessagePayload> BuildChannel(SubscriberSendChannelSchema schema)
         {
-            IMessageCache cache = new MessageCache(GetPersistence(schema), schema.SubscriberAddress);
+            IMessageCache cache = new MessageCache(GetPersistence(schema));
         
             var addresser = new MessageAddresser(schema.FromAddress, schema.SubscriberAddress);
 
@@ -55,9 +56,11 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             return addresser;
         }
 
-        IPersistence GetPersistence(SendChannelSchema schema)
+        IPersistence GetPersistence(SubscriberSendChannelSchema schema)
         {
-            return schema.IsDurable ? this.persistence : new InMemoryPersistence();
+            return schema.IsDurable 
+                ? this.persistenceFactory.CreatePersistence(PersistenceUseType.SubscriberSend, schema.SubscriberAddress) 
+                : new InMemoryPersistence();
         }
         
     }

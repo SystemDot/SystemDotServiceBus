@@ -12,7 +12,7 @@ namespace SystemDot.Messaging.TestReciever
             var bus = Configure.Messaging()
               .UsingInProcessTransport()
               .UsingSqlitePersistence()
-              .OpenChannel("TestReciever").ForRequestReplyRecieving().WithPersistence()
+              .OpenChannel("TestReciever").ForRequestReplyRecieving().WithDurability()
               .Initialise();
 
             IocContainerLocator.Locate()
