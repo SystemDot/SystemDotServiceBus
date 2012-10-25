@@ -16,8 +16,8 @@ namespace SystemDot.Messaging.Channels.Sequencing
         {
             IMessageProcessor<MessagePayload, MessagePayload> processor;
             
-            if(schema.IsSequenced) 
-                processor = new Resequencer(persistence);    
+            if(schema.IsSequenced)
+                processor = new Resequencer(persistence, sender);    
             else 
                 processor = new MessageAcknowledger(sender);
 

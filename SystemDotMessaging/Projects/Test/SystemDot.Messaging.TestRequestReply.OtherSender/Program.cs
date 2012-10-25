@@ -16,7 +16,9 @@ namespace SystemDot.Messaging.TestRequestReply.OtherSender
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingHttpTransport(MessageServer.Local())
                 .UsingSqlPersistence()
-                .OpenChannel("TestOtherSender").ForRequestReplySendingTo("TestReciever")
+                .OpenChannel("TestOtherSender")
+                    .ForRequestReplySendingTo("TestReciever")
+                    .WithDurability()
                 .Initialise();
 
             IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());

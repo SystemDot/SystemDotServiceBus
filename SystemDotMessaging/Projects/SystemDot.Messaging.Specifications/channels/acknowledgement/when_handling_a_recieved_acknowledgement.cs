@@ -1,9 +1,6 @@
 using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Acknowledgement;
-using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Packaging.Headers;
-using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.InMemory;
 using Machine.Fakes;
@@ -15,27 +12,31 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
     {
         static MessagePayload acknowledgement;
         static MessagePayload message;
-        
+        static IPersistence persistence;
+
         Establish context = () =>
         {
+            var store = new InMemoryDatatore();
+            
+            persistence = new InMemoryPersistence(
+                store, 
+                PersistenceUseType.Other, 
+                new EndpointAddress("Channel", "Server"));
+
+            Subject.RegisterPersistence(persistence);
+            
             message = new MessagePayload();
-            message.IncreaseAmountSent();
+            var id = new MessagePersistenceId(message.Id, persistence.Address, persistence.UseType);
             
             acknowledgement = new MessagePayload();
-            acknowledgement.SetAcknowledgementId(message.Id);
-            
-            Configure(new EndpointAddress("Channel", "Server"));
-            acknowledgement.SetToAddress(The<EndpointAddress>());
+            acknowledgement.SetAcknowledgementId(id);
 
-            Configure<IPersistence>(new InMemoryPersistence());
-            Configure<IMessageCache>(new MessageCache(The<IPersistence>()));
-
-            The<IMessageCache>().Cache(message);
+            persistence.AddMessage(message);
         };
 
         Because of = () => Subject.InputMessage(acknowledgement);
 
         It should_remove_the_corresponding_message_from_the_message_store = () =>
-            The<IMessageCache>().GetAll().ShouldNotContain(message);
+            persistence.GetMessages().ShouldNotContain(message);
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Channels.Acknowledgement
 {
@@ -10,12 +11,12 @@ namespace SystemDot.Messaging.Channels.Acknowledgement
         {
         }
 
-        public AcknowledgementHeader(Guid toSet)
+        public AcknowledgementHeader(MessagePersistenceId toSet)
         {
-            Contract.Requires(toSet != Guid.Empty);
+            Contract.Requires(toSet != null);
             MessageId = toSet;
         }
 
-        public Guid MessageId { get; set; }
+        public MessagePersistenceId MessageId { get; set; }
     }
 }

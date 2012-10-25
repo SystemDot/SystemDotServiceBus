@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels;
-using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Channels.Acknowledgement.Builders;
 using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Configuration
@@ -26,7 +26,8 @@ namespace SystemDot.Messaging.Configuration
             this.buildActions.ForEach(a => a());
             
             Resolve<ITaskRepeater>().Start();
-            
+            Resolve<AcknowledgementChannelBuilder>().Build();
+
             return Resolve<IBus>();
         }
 

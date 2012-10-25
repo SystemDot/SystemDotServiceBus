@@ -44,15 +44,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Channels\Acknowledgement\Builders\AcknowledgementChannelBuilder.cs" />
-    <Compile Include="Channels\Acknowledgement\Builders\IAcknowledgementChannelBuilder.cs" />
     <Compile Include="Channels\Distribution\Queue.cs" />
     <Compile Include="Channels\Expiry\IMessageExpiryStrategy.cs" />
     <Compile Include="Channels\Expiry\MessageExpirer.cs" />
     <Compile Include="Channels\Expiry\PassthroughMessageExpiryStrategy.cs" />
     <Compile Include="Channels\Expiry\RepeatAttemptMessageExpiryStrategy.cs" />
     <Compile Include="Channels\Expiry\TimeMessageExpiryStrategy.cs" />
-    <Compile Include="Channels\MessageCacheBuilder.cs" />
     <Compile Include="Channels\Caching\MessageDecacher.cs" />
+    <Compile Include="Channels\PersistenceFactorySelector.cs" />
+    <Compile Include="Channels\Publishing\Builders\ISubscriberSendChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\SubscriberRecieveChannelSchema.cs" />
     <Compile Include="Channels\Publishing\Builders\SubscriptionRequestChannelSchema.cs" />
     <Compile Include="Channels\RecieveChannelSchema.cs" />
@@ -86,10 +86,10 @@
     <Compile Include="Channels\Filtering\NamespaceMessageFilterStrategy.cs" />
     <Compile Include="Channels\Filtering\PassThroughMessageFilterStategy.cs" />
     <Compile Include="Channels\Filtering\ReplyChannelMessageFilterStategy.cs" />
-    <Compile Include="Channels\Repeating\MessageRepeater.cs" />
-    <Compile Include="Channels\Repeating\LastSentHeader.cs" />
-    <Compile Include="Channels\Repeating\MessagePayloadRepeatExtensions.cs" />
-    <Compile Include="Channels\Repeating\RepeaterMessagePipelineBuilderExtensions.cs" />
+    <Compile Include="Channels\RequestReply\Repeating\MessageRepeater.cs" />
+    <Compile Include="Channels\RequestReply\Repeating\LastSentHeader.cs" />
+    <Compile Include="Channels\RequestReply\Repeating\MessagePayloadRepeatExtensions.cs" />
+    <Compile Include="Channels\RequestReply\Repeating\RepeaterMessagePipelineBuilderExtensions.cs" />
     <Compile Include="Channels\RequestReply\ReplyChannelMessageAddresser.cs" />
     <Compile Include="Channels\RequestReply\Builders\ReplyRecieveChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\RequestRecieveChannelBuilder.cs" />
@@ -136,6 +136,7 @@
     <Compile Include="Channels\RequestReply\ReplyChannelSelector.cs" />
     <Compile Include="Channels\RequestReply\ReplyAddressLookup.cs" />
     <Compile Include="Channels\Caching\IMessageCache.cs" />
+    <Compile Include="Storage\InMemory\InMemoryDatatore.cs" />
     <Compile Include="Storage\InMemory\InMemoryPersistenceFactory.cs" />
     <Compile Include="Storage\IPersistenceFactory.cs" />
     <Compile Include="Storage\IPersistence.cs" />
@@ -143,6 +144,9 @@
     <Compile Include="Channels\Acknowledgement\MessageAcknowledgementHandler.cs" />
     <Compile Include="Channels\Caching\MessageCache.cs" />
     <Compile Include="Channels\Caching\MessageCacher.cs" />
+    <Compile Include="Storage\MessagePayloadPersistenceExtensions.cs" />
+    <Compile Include="Storage\MessagePersistenceId.cs" />
+    <Compile Include="Storage\PersistenceHeader.cs" />
     <Compile Include="Storage\PersistenceUseType.cs" />
     <Compile Include="Transport\Http\HttpAddressExtensions.cs" />
     <Compile Include="Transport\IMessageSender.cs" />

@@ -23,14 +23,12 @@ namespace SystemDot.Messaging.Specifications.channels.expiry
             message = new MessagePayload();
             message.IncreaseAmountSent();
 
-            Configure<IPersistence>(new InMemoryPersistence());
-            Configure<IMessageCache>(new MessageCache(The<IPersistence>()));
-
-            The<IMessageCache>().Cache(message);
+            With<PersistenceBehaviour>();
+            The<IPersistence>().AddMessage(message);
 
             var expiryTime = new TimeSpan(0, 1, 0);
 
-           Configure<IMessageExpiryStrategy>(
+            Configure<IMessageExpiryStrategy>(
                 new TimeMessageExpiryStrategy(
                     expiryTime, 
                     new TestCurrentDateProvider(message.CreatedOn.Add(expiryTime).AddMilliseconds(-1))));
@@ -42,6 +40,7 @@ namespace SystemDot.Messaging.Specifications.channels.expiry
 
         It should_pass_the_message_through = () => processed.ShouldBeTheSameAs(message);
 
-        It should_remove_the_message_from_the_cache = () => The<IMessageCache>().GetAll().ShouldContain(message);
+        It should_remove_the_message_from_the_cache = () =>
+            The<IPersistence>().GetMessages().ShouldContain(message);
     }
 }

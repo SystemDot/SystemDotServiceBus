@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Channels.Caching
 {
@@ -10,7 +11,8 @@ namespace SystemDot.Messaging.Channels.Caching
     {
         IEnumerable<MessagePayload> GetAll();
         void Cache(MessagePayload toCache);
-        void Remove(Guid id);
+        EndpointAddress Address { get; }
+        PersistenceUseType UseType { get; }
     }
 
     [ContractClassFor(typeof(IMessageCache))]
@@ -28,9 +30,8 @@ namespace SystemDot.Messaging.Channels.Caching
             Contract.Requires(toCache != null);
         }
 
-        public void Remove(Guid id)
-        {
-            Contract.Requires(id != Guid.Empty);
-        }
+        public EndpointAddress Address { get; private set; }
+
+        public PersistenceUseType UseType { get; private set; }
     }
 }

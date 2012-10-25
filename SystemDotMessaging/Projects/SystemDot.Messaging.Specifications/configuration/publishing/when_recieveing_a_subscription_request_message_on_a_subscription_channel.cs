@@ -1,6 +1,7 @@
 using SystemDot.Messaging.Channels.Acknowledgement;
 using SystemDot.Messaging.Channels.Packaging;
 using Machine.Specifications;
+using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing
 {
@@ -26,6 +27,6 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
         Because of = () => MessageReciever.RecieveMessage(request);
 
         It should_send_an_acknowledgement_for_the_request = () => 
-            MessageSender.SentMessages.ShouldContain(a => a.GetAcknowledgementId() == request.Id);
+            MessageSender.SentMessages.ShouldContain(a => a.GetAcknowledgementId() == request.GetPersistenceId());
     }
 }

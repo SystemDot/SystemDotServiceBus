@@ -1,9 +1,6 @@
-﻿using SystemDot.Messaging.Channels;
-using SystemDot.Messaging.Channels.Caching;
+﻿using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Storage.InMemory;
 using Machine.Fakes;
 using Machine.Specifications;
 using SystemDot.Messaging.Channels.Repeating;
@@ -20,7 +17,7 @@ namespace SystemDot.Messaging.Specifications.channels.storage
             message = new MessagePayload();
             message.IncreaseAmountSent();
  
-            Configure<IPersistence>(new InMemoryPersistence());
+            With<PersistenceBehaviour>();
             Configure<IMessageCache>(new MessageCache(The<IPersistence>()));
 
             The<IMessageCache>().Cache(message);
@@ -28,6 +25,6 @@ namespace SystemDot.Messaging.Specifications.channels.storage
 
         Because of = () => Subject.InputMessage(message);
 
-        It should_cache_the_message = () => The<IMessageCache>().GetAll().ShouldNotContain(message);
+        It should_decache_the_message = () => The<IMessageCache>().GetAll().ShouldNotContain(message);
     }
 }

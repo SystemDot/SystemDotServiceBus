@@ -10,23 +10,19 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
         readonly IMessageReciever messageReciever;
         readonly IMessageSender messageSender;
         readonly IPublisherRegistry publisherRegistry;
-        readonly SubscriberSendChannelBuilder subscriberSendChannelBuilder;
-
+        
         public SubscriptionHandlerChannelBuilder(
             IMessageReciever messageReciever, 
             IMessageSender messageSender, 
-            IPublisherRegistry publisherRegistry,
-            SubscriberSendChannelBuilder subscriberSendChannelBuilder)
+            IPublisherRegistry publisherRegistry)
         {
             Contract.Requires(messageReciever != null);
             Contract.Requires(messageSender != null);
             Contract.Requires(publisherRegistry != null);
-            Contract.Requires(subscriberSendChannelBuilder != null);
             
             this.messageReciever = messageReciever;
             this.messageSender = messageSender;
             this.publisherRegistry = publisherRegistry;
-            this.subscriberSendChannelBuilder = subscriberSendChannelBuilder;
         }
 
         public void Build()
@@ -36,7 +32,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .ToProcessor(new SubscriptionRequestFilter())
                 .Pump()
                 .ToProcessor(new MessageAcknowledger(this.messageSender))
-                .ToEndPoint(new SubscriptionRequestHandler(this.publisherRegistry, this.subscriberSendChannelBuilder));
+                .ToEndPoint(new SubscriptionRequestHandler(this.publisherRegistry));
         }
     }
 }

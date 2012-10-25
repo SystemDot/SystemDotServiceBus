@@ -3,6 +3,7 @@ using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Specifications.channels.handling;
 using Machine.Specifications;
 using SystemDot.Messaging.Channels.Acknowledgement;
+using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 {
@@ -20,7 +21,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
         {
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                
                 .OpenChannel(ChannelName).ForRequestReplySendingTo(RecieverAddress)
                 .Initialise();
 
@@ -36,6 +36,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
         It should_push_the_message_to_any_registered_handlers = () => handler.HandledMessage.ShouldEqual(message);
 
         It should_send_an_acknowledgement_for_the_message = () =>
-            MessageSender.SentMessages.ShouldContain(a => a.GetAcknowledgementId() == payload.Id);
+            MessageSender.SentMessages.ShouldContain(a => a.GetAcknowledgementId() == payload.GetPersistenceId());
     }
 }

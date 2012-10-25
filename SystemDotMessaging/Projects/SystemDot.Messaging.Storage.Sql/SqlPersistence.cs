@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlServerCe;
+using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Serialisation;
@@ -10,14 +11,22 @@ namespace SystemDot.Messaging.Storage.Sql
     public class SqlPersistence : IPersistence
     {
         readonly ISerialiser serialiser;
-        readonly PersistenceUseType useType;
-        readonly EndpointAddress address;
 
-        public SqlPersistence(ISerialiser serialiser, PersistenceUseType useType, EndpointAddress address)
+        public EndpointAddress Address { get; private set; }
+        public PersistenceUseType UseType { get; private set; }
+
+        public SqlPersistence(
+            ISerialiser serialiser, 
+            PersistenceUseType useType, 
+            EndpointAddress address)
         {
+            Contract.Requires(serialiser != null);
+            Contract.Requires(address != null);
+            Contract.Requires(address != EndpointAddress.Empty);
+
             this.serialiser = serialiser;
-            this.useType = useType;
-            this.address = address;
+            UseType = useType;
+            Address = address;
             Initialise();
         }
 
@@ -25,10 +34,10 @@ namespace SystemDot.Messaging.Storage.Sql
         {
             var messages = new List<MessagePayload>();
 
-            using (SqlCeConnection connection = GetConnection())
+            using (SqlCeConnection connection = ConnectionHelper.GetConnection())
             {
                 connection.ExecuteReader(
-                    "select id, createdon, headers from MessagePayloadStorageItem where address = '" + this.address + "'",
+                    "select id, createdon, headers from MessagePayloadStorageItem where address = '" + Address + "'",
                     reader => messages.Add(
                         new MessagePayload
                         {
@@ -43,17 +52,17 @@ namespace SystemDot.Messaging.Storage.Sql
 
         public void AddMessage(MessagePayload message)
         {
-            using (SqlCeConnection connection = GetConnection())
+            using (SqlCeConnection connection = ConnectionHelper.GetConnection())
             {
                 using (SqlCeTransaction transaction = connection.BeginTransaction())
                 {
                     connection.Execute(
                         "update MessageSequence set sequencenumber = sequencenumber + 1 where address = @address and type = @type",
                         command =>
-                            {
-                                command.Parameters.AddWithValue("@address", this.address.ToString());
-                                command.Parameters.AddWithValue("@type", this.useType);
-                            });
+                        {
+                            command.Parameters.AddWithValue("@address", Address.ToString());
+                            command.Parameters.AddWithValue("@type", UseType);
+                        });
 
                     connection.Execute(
                         "insert into MessagePayloadStorageItem(id, createdon, headers, address, type) values(@id, @createdon, @headers, @address, @type)",
@@ -62,8 +71,8 @@ namespace SystemDot.Messaging.Storage.Sql
                             command.Parameters.AddWithValue("@id", message.Id);
                             command.Parameters.AddWithValue("@createdon", message.CreatedOn);
                             command.Parameters.AddWithValue("@headers", this.serialiser.Serialise(message.Headers));
-                            command.Parameters.AddWithValue("@address", this.address.ToString());
-                            command.Parameters.AddWithValue("@type", this.useType);
+                            command.Parameters.AddWithValue("@address", Address.ToString());
+                            command.Parameters.AddWithValue("@type", UseType);
                         });
 
                     transaction.Commit();
@@ -73,7 +82,7 @@ namespace SystemDot.Messaging.Storage.Sql
 
         public void UpdateMessage(MessagePayload message)
         {
-            using (SqlCeConnection connection = GetConnection())
+            using (SqlCeConnection connection = ConnectionHelper.GetConnection())
             {
                 connection.Execute(
                     "update MessagePayloadStorageItem set headers = @headers where id = @id",
@@ -85,72 +94,70 @@ namespace SystemDot.Messaging.Storage.Sql
             }
         }
 
-        public void RemoveMessage(Guid id)
-        {
-            using (SqlCeConnection connection = GetConnection())
-            {
-                connection.Execute(
-                    "delete from MessagePayloadStorageItem where id = @id",
-                    command => command.Parameters.AddWithValue("@id", id));
-            }
-        }
-
         public int GetSequence()
         {
-            using (SqlCeConnection connection = GetConnection())
+            using (SqlCeConnection connection = ConnectionHelper.GetConnection())
             {
                 return connection.ExecuteScalar<int>(
                     "select sequencenumber from MessageSequence where address = @address and type = @type",
                     command =>
-                        {
-                            command.Parameters.AddWithValue("@address", this.address.ToString());
-                            command.Parameters.AddWithValue("@type", this.useType);
-                        });
+                    {
+                        command.Parameters.AddWithValue("@address", Address.ToString());
+                        command.Parameters.AddWithValue("@type", UseType);
+                    })  ;
             }
         }
         
         public void SetSequence(int toSet)
         {
-            using (SqlCeConnection connection = GetConnection())
+            using (SqlCeConnection connection = ConnectionHelper.GetConnection())
             {
                 connection.Execute(
                     "update MessageSequence set sequencenumber = @sequence where address = @address and type = @type",
                     command =>
                     {
                         command.Parameters.AddWithValue("@sequence", toSet);
-                        command.Parameters.AddWithValue("@address", address.ToString());
-                        command.Parameters.AddWithValue("@type", this.useType);
+                        command.Parameters.AddWithValue("@address", Address.ToString());
+                        command.Parameters.AddWithValue("@type", UseType);
+                    });
+            }
+        }
+
+        public void Delete(Guid id)
+        {
+            using (SqlCeConnection connection = ConnectionHelper.GetConnection())
+            {
+                connection.Execute(
+                    "delete from MessagePayloadStorageItem where id = @id and address = @address and type = @type",
+                    command =>
+                    {
+                        command.Parameters.AddWithValue("@id", id);
+                        command.Parameters.AddWithValue("@address", Address.ToString());
+                        command.Parameters.AddWithValue("@type", UseType);
                     });
             }
         }
 
         public void Initialise()
         {
-            using (SqlCeConnection connection = GetConnection())
+            using (SqlCeConnection connection = ConnectionHelper.GetConnection())
             {
                 if (connection.ExecuteScalar<int>(
                     "select count(*) from MessageSequence where address = @address and type = @type",
                     command =>
-                        {
-                            command.Parameters.AddWithValue("@address", this.address.ToString());
-                            command.Parameters.AddWithValue("@type", this.useType);
-                        }) > 0) return;
+                    {
+                        command.Parameters.AddWithValue("@address", Address.ToString());
+                        command.Parameters.AddWithValue("@type", UseType);
+                    }) > 0) return;
 
                 connection.Execute(
                     "insert into MessageSequence(address, sequencenumber, type) values(@address, 1, @type)",
                     command =>
-                        {
-                            command.Parameters.AddWithValue("@address", this.address.ToString());
-                            command.Parameters.AddWithValue("@type", this.useType);
-                        });
+                    {
+                        command.Parameters.AddWithValue("@address", Address.ToString());
+                        command.Parameters.AddWithValue("@type", UseType);
+                    });
             }
-        }
-
-        SqlCeConnection GetConnection()
-        {
-            var connection = new SqlCeConnection("Data Source=|DataDirectory|\\Messaging.sdf");
-            connection.Open();
-            return connection;
         }
     }
 }

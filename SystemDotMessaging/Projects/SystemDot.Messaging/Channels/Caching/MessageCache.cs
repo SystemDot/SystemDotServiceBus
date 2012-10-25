@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Packaging;
@@ -31,9 +30,20 @@ namespace SystemDot.Messaging.Channels.Caching
                 this.persistence.AddMessage(toCache);
         }
 
-        public void Remove(Guid id)
+        public EndpointAddress Address 
+        { 
+            get
+            {
+                return this.persistence.Address;
+            }
+        }
+
+        public PersistenceUseType UseType
         {
-            this.persistence.RemoveMessage(id);
+            get
+            {
+                return this.persistence.UseType;
+            }
         }
     }
 }

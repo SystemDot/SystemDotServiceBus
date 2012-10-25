@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Packaging.Headers;
+using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Channels.Acknowledgement
@@ -27,7 +28,7 @@ namespace SystemDot.Messaging.Channels.Acknowledgement
         void SendAcknowledgement(MessagePayload toInput)
         {
             var acknowledgement = new MessagePayload();
-            acknowledgement.SetAcknowledgementId(toInput.Id);
+            acknowledgement.SetAcknowledgementId(toInput.GetPersistenceId());
             acknowledgement.SetToAddress(toInput.GetFromAddress());
 
             this.sender.InputMessage(acknowledgement);

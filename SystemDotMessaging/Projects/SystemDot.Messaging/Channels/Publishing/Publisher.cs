@@ -2,28 +2,39 @@ using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Channels.Repeating;
 
 namespace SystemDot.Messaging.Channels.Publishing
 {
     public class Publisher : IPublisher
     {
+        readonly EndpointAddress address;
         readonly MessagePayloadCopier messagePayloadCopier;
-        readonly ConcurrentDictionary<object, IMessageInputter<MessagePayload>> subscribers;
+        readonly ConcurrentDictionary<object, BuildContainer> subscribers;
+        readonly ISubscriberSendChannelBuilder builder;
 
         public event Action<MessagePayload> MessageProcessed;
 
-        public Publisher(MessagePayloadCopier messagePayloadCopier)
+        public Publisher(
+            EndpointAddress address, 
+            MessagePayloadCopier messagePayloadCopier, 
+            ISubscriberSendChannelBuilder builder)
         {
+            Contract.Requires(address != null);
+            Contract.Requires(address != EndpointAddress.Empty);
             Contract.Requires(messagePayloadCopier != null);
+            Contract.Requires(builder != null);
 
+            this.address = address;
             this.messagePayloadCopier = messagePayloadCopier;
-            this.subscribers = new ConcurrentDictionary<object, IMessageInputter<MessagePayload>>();
+            this.builder = builder;
+            this.subscribers = new ConcurrentDictionary<object, BuildContainer>();
         }
 
         public void InputMessage(MessagePayload toInput)
         {
-            this.subscribers.Values.ForEach(s => s.InputMessage(CopyMessage(toInput)));
+            this.subscribers.Values.ForEach(s => s.Channel.InputMessage(CopyMessage(toInput)));
             MessageProcessed(toInput);
         }
 
@@ -34,9 +45,32 @@ namespace SystemDot.Messaging.Channels.Publishing
             return copy;
         }
 
-        public void Subscribe(object key, IMessageInputter<MessagePayload> toSubscribe)
+        public void Subscribe(SubscriptionSchema schema)
         {
-            this.subscribers.TryAdd(key, toSubscribe);
+            IMessageInputter<MessagePayload> temp;
+
+            var buildContainer = new BuildContainer();
+
+            if(this.subscribers.TryAdd(schema.SubscriberAddress, buildContainer))
+                buildContainer.Channel = BuildChannel(schema);
+            
+        }
+
+        IMessageInputter<MessagePayload> BuildChannel(SubscriptionSchema schema)
+        {
+            return this.builder.BuildChannel(
+                new SubscriberSendChannelSchema
+                    { 
+                        FromAddress = this.address,
+                        SubscriberAddress = schema.SubscriberAddress,
+                        IsDurable = schema.IsPersistent
+                    });
+        }
+
+        class BuildContainer
+        {
+            public IMessageInputter<MessagePayload> Channel { get; set; }
         }
     }
+
 }

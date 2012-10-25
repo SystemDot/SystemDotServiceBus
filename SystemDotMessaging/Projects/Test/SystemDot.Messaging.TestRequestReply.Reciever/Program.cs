@@ -12,10 +12,12 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
         static void Main(string[] args)
         {
             IBus bus = Configure.Messaging()
-                .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = true })
+                .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingHttpTransport(MessageServer.Local())
                 .UsingSqlPersistence()
-                .OpenChannel("TestReciever").ForRequestReplyRecieving()
+                .OpenChannel("TestReciever")
+                    .ForRequestReplyRecieving()
+                    
                 .Initialise();
 
             IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer(bus));

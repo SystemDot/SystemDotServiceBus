@@ -9,15 +9,12 @@ namespace SystemDot.Messaging.Channels.Publishing
     public class SubscriptionRequestHandler : IMessageInputter<MessagePayload>
     {
         readonly IPublisherRegistry publisherRegistry;
-        readonly SubscriberSendChannelBuilder builder;
-
-        public SubscriptionRequestHandler(IPublisherRegistry publisherRegistry, SubscriberSendChannelBuilder builder)
+        
+        public SubscriptionRequestHandler(IPublisherRegistry publisherRegistry)
         {
             Contract.Requires(publisherRegistry != null);
-            Contract.Requires(builder != null);
             
             this.publisherRegistry = publisherRegistry;
-            this.builder = builder;
         }
 
         public void InputMessage(MessagePayload message)
@@ -27,15 +24,7 @@ namespace SystemDot.Messaging.Channels.Publishing
 
             Logger.Info("Handling request reply subscription request for {0}", schema.SubscriberAddress);
 
-            GetPublisher(fromAddress).Subscribe(
-                schema.SubscriberAddress,
-                this.builder.BuildChannel(
-                    new SubscriberSendChannelSchema
-                    {
-                        FromAddress = fromAddress,
-                        SubscriberAddress = schema.SubscriberAddress,
-                        IsDurable = schema.IsPersistent
-                    }));
+            GetPublisher(fromAddress).Subscribe(schema);
         }
 
         IPublisher GetPublisher(EndpointAddress address)

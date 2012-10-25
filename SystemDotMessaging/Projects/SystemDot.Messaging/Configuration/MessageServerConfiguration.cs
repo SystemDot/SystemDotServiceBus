@@ -22,12 +22,17 @@ namespace SystemDot.Messaging.Configuration
         {
             Contract.Requires(!string.IsNullOrEmpty(name));
 
-            IocContainerLocator.Locate().RegisterInstance<IPersistenceFactory, InMemoryPersistenceFactory>();
+            RegisterInMemoryPersistence(IocContainerLocator.Locate());
 
             return new ChannelConfiguration(
                 BuildEndpointAddress(name, this.messageServer.Name),
                 this.messageServer.Name,
                 new List<Action>());
+        }
+
+        private static void RegisterInMemoryPersistence(IIocContainer container)
+        {
+            container.RegisterInstance<IPersistenceFactory, InMemoryPersistenceFactory>();
         }
     }
 }

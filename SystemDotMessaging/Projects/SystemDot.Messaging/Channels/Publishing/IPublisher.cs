@@ -7,7 +7,7 @@ namespace SystemDot.Messaging.Channels.Publishing
     [ContractClass(typeof(PublisherContract))]
     public interface IPublisher : IMessageProcessor<MessagePayload, MessagePayload>
     {
-        void Subscribe(object key, IMessageInputter<MessagePayload> toSubscribe);
+        void Subscribe(SubscriptionSchema scheam);
     }
 
     [ContractClassFor(typeof(IPublisher))]
@@ -18,10 +18,9 @@ namespace SystemDot.Messaging.Channels.Publishing
             Contract.Requires(toInput != null);
         }
 
-        public void Subscribe(object key, IMessageInputter<MessagePayload> toSubscribe)
-        {
-            Contract.Requires(key != null);
-            Contract.Requires(toSubscribe != null);
+        public void Subscribe(SubscriptionSchema schema)
+        {        
+            Contract.Requires(schema != null);
         }
 
         public event Action<MessagePayload> MessageProcessed;

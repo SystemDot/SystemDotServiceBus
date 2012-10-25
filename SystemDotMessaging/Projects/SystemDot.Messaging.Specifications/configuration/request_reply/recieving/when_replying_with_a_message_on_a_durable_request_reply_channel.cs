@@ -1,5 +1,6 @@
 using SystemDot.Messaging.Channels.RequestReply;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Storage.InMemory;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.recieving
@@ -12,17 +13,9 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
 
         static IBus bus;
         static int message;
-        static TestPersistence persistence;
-
+        
         Establish context = () =>
         {
-            var persistenceFactory = new TestPersistenceFactory();
-            ConfigureAndRegister<IPersistenceFactory>(persistenceFactory);
-
-            persistence = new TestPersistence();
-            persistenceFactory.AddPersistence(PersistenceUseType.RequestReceive, new TestPersistence());
-            persistenceFactory.AddPersistence(PersistenceUseType.ReplySend, persistence);
-
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()                
                 .OpenChannel(ChannelName).ForRequestReplyRecieving().WithDurability()
@@ -36,6 +29,9 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
 
         Because of = () => bus.Reply(message);
 
-        It should_persist_the_message = () => persistence.GetMessages().ShouldNotBeEmpty();
+        It should_persist_the_message = () => 
+            Resolve<InMemoryDatatore>()
+                .GetMessages(PersistenceUseType.ReplySend, BuildAddress(ChannelName))
+                .ShouldNotBeEmpty();
     }
 }

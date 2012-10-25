@@ -28,25 +28,26 @@ namespace SystemDot.Messaging.Channels
             ServerName = serverName;
         }
 
-        public bool Equals(EndpointAddress other)
+        protected bool Equals(EndpointAddress other)
         {
-            return other.Channel == this.Channel;
+            return string.Equals(Channel, other.Channel) 
+                && string.Equals(ServerName, other.ServerName);
         }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) 
-                return false;
-            
-            if (obj.GetType() != typeof(EndpointAddress)) 
-                return false;
-            
-            return Equals((EndpointAddress)obj);
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((EndpointAddress) obj);
         }
 
         public override int GetHashCode()
         {
-            return this.Channel.GetHashCode();
+            unchecked
+            {
+                return (Channel.GetHashCode()*397) ^ ServerName.GetHashCode();
+            }
         }
 
         public static bool operator ==(EndpointAddress left, EndpointAddress right)

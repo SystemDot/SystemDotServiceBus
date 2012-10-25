@@ -13,7 +13,8 @@ using SystemDot.Messaging.Channels.Repeating;
 namespace SystemDot.Messaging.Specifications.channels.expiry
 {
     [Subject("Message expiry")]
-    public class when_passing_a_message_that_is_not_time_expired_through_an_expirer : WithSubject<MessageExpirer>
+    public class when_passing_a_message_that_is_not_time_expired_through_an_expirer : 
+        WithSubject<MessageExpirer>
     {
         static MessagePayload message;
         static MessagePayload processed;
@@ -22,11 +23,9 @@ namespace SystemDot.Messaging.Specifications.channels.expiry
         {
             message = new MessagePayload();
             message.IncreaseAmountSent();
-            
-            Configure<IPersistence>(new InMemoryPersistence());
-            Configure<IMessageCache>(new MessageCache(The<IPersistence>()));
-            
-            The<IMessageCache>().Cache(message);
+
+            With<PersistenceBehaviour>();
+            The<IPersistence>().AddMessage(message);
 
             var expiryTime = new TimeSpan(0, 1, 0);
             
@@ -42,6 +41,7 @@ namespace SystemDot.Messaging.Specifications.channels.expiry
 
         It should_not_pass_the_message_through = () => processed.ShouldBeNull();
 
-        It should_remove_the_message_from_the_cache = () => The<IMessageCache>().GetAll().ShouldBeEmpty();
+        It should_remove_the_message_from_the_cache = () =>
+            The<IPersistence>().GetMessages().ShouldBeEmpty();
     }
 }

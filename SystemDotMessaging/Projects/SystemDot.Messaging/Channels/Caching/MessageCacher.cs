@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Channels.Caching
 {
@@ -16,6 +17,7 @@ namespace SystemDot.Messaging.Channels.Caching
 
         public void InputMessage(MessagePayload toInput)
         {
+            toInput.SetPersistenceId(this.cache.Address, this.cache.UseType);
             this.cache.Cache(toInput);
             MessageProcessed(toInput);
         }

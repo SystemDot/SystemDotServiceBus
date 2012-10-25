@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.channels.repeating
         Establish context = () =>
         {
             var endpointAddress = new EndpointAddress("Channel", "Server");
-            Configure<IPersistence>(new InMemoryPersistence());
+            With<PersistenceBehaviour>();
             Configure<IMessageCache>(new MessageCache(The<IPersistence>()));
             
             DateTime currentDate = DateTime.Now;

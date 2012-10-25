@@ -1,21 +1,22 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Channels.Caching
 {
     public class MessageDecacher : IMessageInputter<MessagePayload>
     {
-        readonly IMessageCache cache;
+        readonly IPersistence persistence;
 
-        public MessageDecacher(IMessageCache cache)
+        public MessageDecacher(IPersistence persistence)
         {
-            Contract.Requires(cache != null);
-            this.cache = cache;
+            Contract.Requires(persistence != null);
+            this.persistence = persistence;
         }
 
         public void InputMessage(MessagePayload toInput)
         {
-            this.cache.Remove(toInput.Id);
+            this.persistence.Delete(toInput.Id);
         }
     }
 }

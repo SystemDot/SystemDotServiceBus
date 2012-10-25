@@ -1,6 +1,5 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Caching;
-using SystemDot.Messaging.Channels.Distribution;
 using SystemDot.Messaging.Channels.Filtering;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Pipelines;
@@ -19,44 +18,48 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
         readonly ISerialiser serialiser;
         readonly ICurrentDateProvider currentDateProvider;
         readonly ITaskRepeater taskRepeater;
-        readonly MessageCacheBuilder messageCacheBuilder;
-        readonly IPersistenceFactory persistenceFactory;
+        readonly PersistenceFactorySelector persistenceFactorySelector;
+        readonly ISubscriberSendChannelBuilder subscriberChannelBuilder;
 
         public PublisherChannelBuilder(
             IPublisherRegistry publisherRegistry, 
             MessagePayloadCopier messagePayloadCopier, 
             ISerialiser serialiser, 
             ICurrentDateProvider currentDateProvider, 
-            ITaskRepeater taskRepeater, 
-            MessageCacheBuilder messageCacheBuilder, 
-            IPersistenceFactory persistenceFactory)
+            ITaskRepeater taskRepeater,
+            PersistenceFactorySelector persistenceFactorySelector, 
+            ISubscriberSendChannelBuilder subscriberChannelBuilder)
         {
             Contract.Requires(publisherRegistry != null);
             Contract.Requires(messagePayloadCopier != null);
             Contract.Requires(serialiser != null);
             Contract.Requires(currentDateProvider != null);
             Contract.Requires(taskRepeater != null);
-            Contract.Requires(messageCacheBuilder != null);
-            Contract.Requires(persistenceFactory != null);
-
+            Contract.Requires(persistenceFactorySelector != null);
+            Contract.Requires(subscriberChannelBuilder != null);
+            
             this.publisherRegistry = publisherRegistry;
             this.messagePayloadCopier = messagePayloadCopier;
             this.serialiser = serialiser;
             this.currentDateProvider = currentDateProvider;
             this.taskRepeater = taskRepeater;
-            this.messageCacheBuilder = messageCacheBuilder;
-            this.persistenceFactory = persistenceFactory;
+            this.persistenceFactorySelector = persistenceFactorySelector;
+            this.subscriberChannelBuilder = subscriberChannelBuilder;
         }
 
         public void Build(PublisherChannelSchema schema)
         {
-            IPersistence persistence = this.persistenceFactory.CreatePersistence(
-                PersistenceUseType.PublisherSend, 
-                schema.FromAddress);
+            IPersistence persistence = this.persistenceFactorySelector.Select(schema)
+                .CreatePersistence(
+                    PersistenceUseType.PublisherSend, 
+                    schema.FromAddress);
 
-            IMessageCache cache = this.messageCacheBuilder.Create(schema, persistence); 
+            IMessageCache cache = new MessageCache(persistence); 
             
-            var publisherEndpoint = new Publisher(this.messagePayloadCopier);
+            var publisherEndpoint = new Publisher(
+                schema.FromAddress,
+                this.messagePayloadCopier, 
+                this.subscriberChannelBuilder);
 
             MessagePipelineBuilder.Build()
                 .WithBusPublishTo(new MessageFilter(schema.MessageFilterStrategy))
@@ -66,7 +69,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .ToProcessor(new MessageCacher(cache))
                 .Pump()
                 .ToProcessor(publisherEndpoint)
-                .ToEndPoint(new MessageDecacher(cache));
+                .ToEndPoint(new MessageDecacher(persistence));
 
             this.publisherRegistry.RegisterPublisher(schema.FromAddress, publisherEndpoint);
         }

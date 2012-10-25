@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.InMemory;
@@ -7,23 +8,28 @@ using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.channels.storage.in_memory
 {
-    [Subject("Message handling")]
-    public class when_getting_messages_for_a_channel : WithSubject<InMemoryPersistence>
+    [Subject("Message storage")]
+    public class when_getting_messages_for_a_channel : WithSubject<InMemoryPersistenceFactory>
     {
         static IEnumerable<MessagePayload> messages;
         static MessagePayload message1;
         static MessagePayload message2;
+        static IPersistence persistence;
 
         Establish context = () =>
         {
+            persistence = Subject.CreatePersistence(
+                PersistenceUseType.Other, 
+                new EndpointAddress("Channel", "Server"));
+
             message1 = new MessagePayload();
-            Subject.AddMessage(message1);
+            persistence.AddMessage(message1);
 
             message2 = new MessagePayload();
-            Subject.AddMessage(message2);
+            persistence.AddMessage(message2);
         };
 
-        Because of = () => messages = Subject.GetMessages();
+        Because of = () => messages = persistence.GetMessages();
 
         It should_retreive_the_messages = () => messages.ShouldContain(message1, message2);
     }

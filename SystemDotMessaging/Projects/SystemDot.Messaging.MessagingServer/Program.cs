@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.MessagingServer
 
         static HttpMessagingServer BuildMessagingServerHandler()
         {
-            var messagePayloadQueue = new MessagePayloadQueue(new TimeSpan(0, 0, 4));
+            var messagePayloadQueue = new MessagePayloadQueue(new TimeSpan(0, 0, 30));
 
             return new HttpMessagingServer(
                 new PlatformAgnosticSerialiser(),

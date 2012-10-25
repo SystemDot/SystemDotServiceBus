@@ -12,9 +12,11 @@ namespace SystemDot.Messaging.Storage
         IEnumerable<MessagePayload> GetMessages();
         void AddMessage(MessagePayload message);
         void UpdateMessage(MessagePayload message);
-        void RemoveMessage(Guid id);
         int GetSequence();
         void SetSequence(int toSet);
+        void Delete(Guid id);
+        EndpointAddress Address { get; }
+        PersistenceUseType UseType{ get; }
     }
 
     [ContractClassFor(typeof(IPersistence))]
@@ -38,11 +40,7 @@ namespace SystemDot.Messaging.Storage
             Contract.Requires(message != null);
         }
 
-        public void RemoveMessage(Guid id)
-        {
-            Contract.Requires(id != Guid.Empty);
-        }
-
+        
         public int GetSequence()
         {
             Contract.Ensures(Contract.Result<int>() > 0);
@@ -53,5 +51,13 @@ namespace SystemDot.Messaging.Storage
         {
             Contract.Requires(toSet > 0);
         }
+
+        public void Delete(Guid id)
+        {
+            Contract.Requires(id != Guid.Empty);
+        }
+
+        public EndpointAddress Address { get; set; }
+        public PersistenceUseType UseType { get; set; }
     }
 }

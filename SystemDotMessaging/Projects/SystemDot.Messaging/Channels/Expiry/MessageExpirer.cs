@@ -2,28 +2,29 @@ using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Channels.Expiry
 {
     public class MessageExpirer : IMessageProcessor<MessagePayload, MessagePayload>
     {
         readonly IMessageExpiryStrategy strategy;
-        readonly IMessageCache cache;
+        readonly IPersistence persistence;
 
-        public MessageExpirer(IMessageExpiryStrategy strategy, IMessageCache cache)
+        public MessageExpirer(IMessageExpiryStrategy strategy, IPersistence persistence)
         {
             Contract.Requires(strategy != null);
-            Contract.Requires(cache != null);
+            Contract.Requires(persistence != null);
 
             this.strategy = strategy;
-            this.cache = cache;
+            this.persistence = persistence;
         }
 
         public void InputMessage(MessagePayload toInput)
         {
             if (this.strategy.HasExpired(toInput))
             {
-                this.cache.Remove(toInput.Id);
+                this.persistence.Delete(toInput.Id);
                 return;
             }
 

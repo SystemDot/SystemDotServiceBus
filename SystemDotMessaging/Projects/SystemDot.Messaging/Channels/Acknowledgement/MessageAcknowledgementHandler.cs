@@ -1,29 +1,35 @@
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Channels.Caching;
+using System.Linq;
 using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Packaging.Headers;
+using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Channels.Acknowledgement
 {
     public class MessageAcknowledgementHandler : IMessageInputter<MessagePayload>
     {
-        readonly IMessageCache cache;
-        readonly EndpointAddress address;
+        private readonly List<IPersistence> persistences;
 
-        public MessageAcknowledgementHandler(IMessageCache cache, EndpointAddress address)
+        public MessageAcknowledgementHandler()
         {
-            Contract.Requires(cache != null);
-
-            this.cache = cache;
-            this.address = address;
+            this.persistences = new List<IPersistence>();
         }
 
         public void InputMessage(MessagePayload toInput)
         {
             if (!toInput.IsAcknowledgement()) return;
-            if (toInput.GetToAddress() != this.address) return;
+
+            var id = toInput.GetAcknowledgementId();
             
-            this.cache.Remove(toInput.GetAcknowledgementId());
+            this.persistences
+                .Single(p => p.UseType == id.UseType && p.Address == id.Address)
+                .Delete(id.MessageId);
+        }
+
+        public void RegisterPersistence(IPersistence toRegister)
+        {
+            Contract.Requires(toRegister != null);
+            this.persistences.Add(toRegister);
         }
     }
 }

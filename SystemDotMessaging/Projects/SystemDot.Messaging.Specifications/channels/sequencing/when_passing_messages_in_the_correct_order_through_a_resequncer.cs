@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Specifications.channels.sequencing
 
         Establish context = () =>
         {
-            Configure<IPersistence>(new InMemoryPersistence());
+            With<PersistenceBehaviour>();
             The<IPersistence>().SetSequence(2);
             
             processedMessages = new List<MessagePayload>();

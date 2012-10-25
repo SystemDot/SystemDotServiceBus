@@ -3,6 +3,7 @@ using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.RequestReply;
 using Machine.Specifications;
+using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.recieving
 {
@@ -35,7 +36,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
         It should_push_the_message_to_any_registered_handlers = () => handler.HandledMessage.ShouldEqual(message);
 
         It should_send_an_acknowledgement_for_the_message = () =>
-            MessageSender.SentMessages.ShouldContain(a => a.GetAcknowledgementId() == payload.Id);
+            MessageSender.SentMessages.ShouldContain(a => a.GetAcknowledgementId() == payload.GetPersistenceId());
 
         It should_store_the_reciever_address_for_the_reply_to_use = () => 
             Resolve<ReplyAddressLookup>().GetCurrentRecieverAddress().ShouldEqual(BuildAddress(ChannelName));

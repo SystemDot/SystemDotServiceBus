@@ -1,6 +1,5 @@
-using System;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Channels.Acknowledgement.Builders;
+using SystemDot.Messaging.Channels.Acknowledgement;
 using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Pipelines;
 using SystemDot.Messaging.Channels.Repeating;
@@ -16,30 +15,41 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
         readonly IMessageSender messageSender;
         readonly ICurrentDateProvider currentDateProvider;
         readonly ITaskRepeater taskRepeater;
-        readonly IAcknowledgementChannelBuilder acknowledgementChannelBuilder;
+        readonly InMemoryDatatore inMemoryDatatore;
+        readonly MessageAcknowledgementHandler acknowledgementHandler;
 
         public SubscriptionRequestChannelBuilder(
             IMessageSender messageSender, 
             ICurrentDateProvider currentDateProvider, 
             ITaskRepeater taskRepeater, 
-            IAcknowledgementChannelBuilder acknowledgementChannelBuilder)
+            InMemoryDatatore inMemoryDatatore, 
+            MessageAcknowledgementHandler acknowledgementHandler)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(currentDateProvider != null);
             Contract.Requires(taskRepeater != null);
-            Contract.Requires(acknowledgementChannelBuilder != null);
+            Contract.Requires(inMemoryDatatore != null);
+            Contract.Requires(acknowledgementHandler != null);
 
             this.messageSender = messageSender;
             this.currentDateProvider = currentDateProvider;
             this.taskRepeater = taskRepeater;
-            this.acknowledgementChannelBuilder = acknowledgementChannelBuilder;
+            this.inMemoryDatatore = inMemoryDatatore;
+            this.acknowledgementHandler = acknowledgementHandler;
         }
 
         public ISubscriptionRequestor Build(SubscriptionRequestChannelSchema schema)
         {
             var requestor = new SubscriptionRequestor(schema.SubscriberAddress, schema.IsPersistent);
+            
+            IPersistence persistence = new InMemoryPersistenceFactory(this.inMemoryDatatore)
+                .CreatePersistence(
+                    PersistenceUseType.Other, 
+                    schema.PublisherAddress);
 
-            IMessageCache cache = new MessageCache(new InMemoryPersistence());
+            IMessageCache cache = new MessageCache(persistence);
+
+            this.acknowledgementHandler.RegisterPersistence(persistence);
 
             MessagePipelineBuilder.Build()
                 .With(requestor)
@@ -47,8 +57,6 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .ToMessageRepeater(cache, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new MessageCacher(cache))
                 .ToEndPoint(this.messageSender);
-
-            this.acknowledgementChannelBuilder.Build(cache, schema.SubscriberAddress);
 
             return requestor;
         }

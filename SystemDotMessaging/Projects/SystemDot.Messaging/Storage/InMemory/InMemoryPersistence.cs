@@ -1,43 +1,47 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Packaging;
 
 namespace SystemDot.Messaging.Storage.InMemory
 {
     public class InMemoryPersistence : IPersistence
     {
-        readonly ConcurrentDictionary<Guid, MessagePayload> messages;
+        readonly InMemoryDatatore store;
         int sequence;
-        
-        public InMemoryPersistence()
+
+        public EndpointAddress Address { get; private set; }
+        public PersistenceUseType UseType { get; private set; }
+
+        public InMemoryPersistence(
+            InMemoryDatatore store, 
+            PersistenceUseType useType, 
+            EndpointAddress address)
         {
-            this.messages = new ConcurrentDictionary<Guid, MessagePayload>();
+            Contract.Requires(store != null);
+            Contract.Requires(address != null);
+            Contract.Requires(address != EndpointAddress.Empty);
+
+            this.store = store;
             this.sequence = 1;
+            UseType = useType;
+            Address = address;
         }
 
         public IEnumerable<MessagePayload> GetMessages()
         {
-            return this.messages.Values;
+            return this.store.GetMessages(UseType, Address);
         }
 
         public void AddMessage(MessagePayload message)
         {
-            this.messages.TryAdd(message.Id, message);
+            this.store.AddMessage(UseType, Address, message);
             this.sequence = this.sequence + 1;
         }
 
         public void UpdateMessage(MessagePayload message)
         {
-            this.messages[message.Id] = message;
-        }
-
-        public void RemoveMessage(Guid id)
-        {
-            if (!this.messages.ContainsKey(id)) return;
-
-            MessagePayload temp;
-            this.messages.TryRemove(id, out temp);
         }
 
         public int GetSequence()
@@ -48,6 +52,11 @@ namespace SystemDot.Messaging.Storage.InMemory
         public void SetSequence(int toSet)
         {
             this.sequence = toSet;
+        }
+
+        public void Delete(Guid id)
+        {
+            this.store.Remove(this.UseType, this.Address, id);
         }
     }
 }

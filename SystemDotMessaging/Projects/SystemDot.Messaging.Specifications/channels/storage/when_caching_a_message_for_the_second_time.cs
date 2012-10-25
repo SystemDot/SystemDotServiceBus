@@ -1,11 +1,8 @@
 using System;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Storage.InMemory;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -19,12 +16,10 @@ namespace SystemDot.Messaging.Specifications.channels.storage
 
         Establish context = () =>
         {
-            Configure(new EndpointAddress("Channel", "Server"));
             message = new MessagePayload();
-            message.SetFromAddress(The<EndpointAddress>());
             message.IncreaseAmountSent();
-            
-            Configure<IPersistence>(new InMemoryPersistence());
+
+            With<PersistenceBehaviour>();
             Configure<IMessageCache>(new MessageCache(The<IPersistence>()));
 
             Subject.MessageProcessed += m => { };

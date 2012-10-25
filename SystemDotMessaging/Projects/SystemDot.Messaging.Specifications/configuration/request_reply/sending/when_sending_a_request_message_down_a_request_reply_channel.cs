@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Storage.InMemory;
 using SystemDot.Parallelism;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -17,17 +18,9 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
         const string RecieverAddress = "TestRecieverAddress";
         static IBus bus;
         static int message;
-        static TestPersistence persistence;
-
+        
         Establish context = () =>
         {
-            var persistenceFactory = new TestPersistenceFactory();
-            ConfigureAndRegister<IPersistenceFactory>(persistenceFactory);
-
-            persistence = new TestPersistence();
-            persistenceFactory.AddPersistence(PersistenceUseType.RequestSend, persistence);
-            persistenceFactory.AddPersistence(PersistenceUseType.ReplyReceive, new TestPersistence());
-
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForRequestReplySendingTo(RecieverAddress)
@@ -56,7 +49,10 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
         It should_mark_the_message_with_the_sequence = () =>
             MessageSender.SentMessages.First().GetSequence().ShouldEqual(1);
 
-        It should_not_persist_the_message = () => persistence.GetMessages().ShouldBeEmpty();
+        It should_not_persist_the_message = () => 
+             Resolve<InMemoryDatatore>()
+                .GetMessages(PersistenceUseType.RequestSend, BuildAddress(ChannelName))
+                .ShouldBeEmpty();
 
         It should_start_the_task_repeater = () => The<ITaskRepeater>().WasToldTo(r => r.Start());
     }

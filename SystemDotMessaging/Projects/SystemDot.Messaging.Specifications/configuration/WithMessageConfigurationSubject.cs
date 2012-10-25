@@ -7,6 +7,7 @@ using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 using Machine.Specifications;
+using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Specifications.configuration
 {
@@ -37,6 +38,7 @@ namespace SystemDot.Messaging.Specifications.configuration
             payload.SetBody(Resolve<ISerialiser>().Serialise(message));
             payload.SetFromAddress(BuildAddress(fromAddress));
             payload.SetToAddress(BuildAddress(toAddress));
+            payload.SetPersistenceId(BuildAddress(toAddress), PersistenceUseType.Other);
 
             return payload;
         }

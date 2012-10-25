@@ -2,6 +2,7 @@ using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Messaging.Channels.Publishing;
+using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing
 {
@@ -27,6 +28,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
             request.SetFromAddress(subscriberAddress);
             request.SetToAddress(publisherAddress);
             request.SetSubscriptionRequest(new SubscriptionSchema { SubscriberAddress = subscriberAddress });
+            request.SetPersistenceId(subscriberAddress, PersistenceUseType.Other);
 
             return request;
         }
