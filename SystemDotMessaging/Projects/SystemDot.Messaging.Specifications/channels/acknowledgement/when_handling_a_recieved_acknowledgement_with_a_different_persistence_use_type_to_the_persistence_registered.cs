@@ -38,8 +38,8 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
                 acknowledgement = new MessagePayload();
                 acknowledgement.SetAcknowledgementId(id);
 
-                differingUseTypePersistence.AddMessage(message);
-                persistence.AddMessage(message);
+                differingUseTypePersistence.AddOrUpdateMessage(message);
+                persistence.AddOrUpdateMessage(message);
             };
 
         Because of = () => Subject.InputMessage(acknowledgement);

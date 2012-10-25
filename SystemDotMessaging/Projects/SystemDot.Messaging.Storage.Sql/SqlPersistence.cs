@@ -50,48 +50,58 @@ namespace SystemDot.Messaging.Storage.Sql
             return messages;
         }
 
-        public void AddMessage(MessagePayload message)
+        public void AddOrUpdateMessage(MessagePayload message)
         {
             using (SqlCeConnection connection = ConnectionHelper.GetConnection())
             {
                 using (SqlCeTransaction transaction = connection.BeginTransaction())
                 {
-                    connection.Execute(
-                        "update MessageSequence set sequencenumber = sequencenumber + 1 where address = @address and type = @type",
-                        command =>
-                        {
-                            command.Parameters.AddWithValue("@address", Address.ToString());
-                            command.Parameters.AddWithValue("@type", UseType);
-                        });
-
-                    connection.Execute(
-                        "insert into MessagePayloadStorageItem(id, createdon, headers, address, type) values(@id, @createdon, @headers, @address, @type)",
-                        command =>
-                        {
-                            command.Parameters.AddWithValue("@id", message.Id);
-                            command.Parameters.AddWithValue("@createdon", message.CreatedOn);
-                            command.Parameters.AddWithValue("@headers", this.serialiser.Serialise(message.Headers));
-                            command.Parameters.AddWithValue("@address", Address.ToString());
-                            command.Parameters.AddWithValue("@type", UseType);
-                        });
-
+                    if (UpdateMessage(message, connection) == 0) ;
+                    {
+                        IncrementSequence(connection);
+                        AddMessage(message, connection);
+                    }
                     transaction.Commit();
                 }
             }
         }
 
-        public void UpdateMessage(MessagePayload message)
+        int UpdateMessage(MessagePayload message, SqlCeConnection connection)
         {
-            using (SqlCeConnection connection = ConnectionHelper.GetConnection())
-            {
-                connection.Execute(
-                    "update MessagePayloadStorageItem set headers = @headers where id = @id",
-                    command =>
-                    {
-                        command.Parameters.AddWithValue("@id", message.Id);
-                        command.Parameters.AddWithValue("@headers", this.serialiser.Serialise(message.Headers));
-                    });
-            }
+            return connection.Execute(
+                "update MessagePayloadStorageItem set headers = @headers where id = @id and address = @address and type = @type",
+                command =>
+                {
+                    command.Parameters.AddWithValue("@id", message.Id);
+                    command.Parameters.AddWithValue("@headers", this.serialiser.Serialise(message.Headers));
+                    command.Parameters.AddWithValue("@address", Address.ToString());
+                    command.Parameters.AddWithValue("@type", UseType);
+                });
+        }
+
+        void IncrementSequence(SqlCeConnection connection)
+        {
+            connection.Execute(
+                "update MessageSequence set sequencenumber = sequencenumber + 1 where address = @address and type = @type",
+                command =>
+                {
+                    command.Parameters.AddWithValue("@address", Address.ToString());
+                    command.Parameters.AddWithValue("@type", UseType);
+                });
+        }
+
+        void AddMessage(MessagePayload message, SqlCeConnection connection)
+        {
+            connection.Execute(
+                "insert into MessagePayloadStorageItem(id, createdon, headers, address, type) values(@id, @createdon, @headers, @address, @type)",
+                command =>
+                {
+                    command.Parameters.AddWithValue("@id", message.Id);
+                    command.Parameters.AddWithValue("@createdon", message.CreatedOn);
+                    command.Parameters.AddWithValue("@headers", this.serialiser.Serialise(message.Headers));
+                    command.Parameters.AddWithValue("@address", Address.ToString());
+                    command.Parameters.AddWithValue("@type", UseType);
+                });
         }
 
         public int GetSequence()

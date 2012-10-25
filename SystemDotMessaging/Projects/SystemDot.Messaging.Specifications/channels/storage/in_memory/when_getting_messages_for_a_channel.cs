@@ -23,10 +23,10 @@ namespace SystemDot.Messaging.Specifications.channels.storage.in_memory
                 new EndpointAddress("Channel", "Server"));
 
             message1 = new MessagePayload();
-            persistence.AddMessage(message1);
+            persistence.AddOrUpdateMessage(message1);
 
             message2 = new MessagePayload();
-            persistence.AddMessage(message2);
+            persistence.AddOrUpdateMessage(message2);
         };
 
         Because of = () => messages = persistence.GetMessages();

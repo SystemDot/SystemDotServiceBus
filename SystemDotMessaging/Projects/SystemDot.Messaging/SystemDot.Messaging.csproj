@@ -135,15 +135,12 @@
     <Compile Include="Channels\Publishing\MessagePayloadSubscriptionRequestExtensions.cs" />
     <Compile Include="Channels\RequestReply\ReplyChannelSelector.cs" />
     <Compile Include="Channels\RequestReply\ReplyAddressLookup.cs" />
-    <Compile Include="Channels\Caching\IMessageCache.cs" />
     <Compile Include="Storage\InMemory\InMemoryDatatore.cs" />
     <Compile Include="Storage\InMemory\InMemoryPersistenceFactory.cs" />
     <Compile Include="Storage\IPersistenceFactory.cs" />
     <Compile Include="Storage\IPersistence.cs" />
     <Compile Include="Storage\InMemory\InMemoryPersistence.cs" />
     <Compile Include="Channels\Acknowledgement\MessageAcknowledgementHandler.cs" />
-    <Compile Include="Channels\Caching\MessageCache.cs" />
-    <Compile Include="Channels\Caching\MessageCacher.cs" />
     <Compile Include="Storage\MessagePayloadPersistenceExtensions.cs" />
     <Compile Include="Storage\MessagePersistenceId.cs" />
     <Compile Include="Storage\PersistenceHeader.cs" />

@@ -18,13 +18,10 @@ namespace SystemDot.Messaging.Specifications.channels.storage
             message.IncreaseAmountSent();
  
             With<PersistenceBehaviour>();
-            Configure<IMessageCache>(new MessageCache(The<IPersistence>()));
-
-            The<IMessageCache>().Cache(message);
         };
 
         Because of = () => Subject.InputMessage(message);
 
-        It should_decache_the_message = () => The<IMessageCache>().GetAll().ShouldNotContain(message);
+        It should_decache_the_message = () => The<IPersistence>().GetMessages().ShouldNotContain(message);
     }
 }

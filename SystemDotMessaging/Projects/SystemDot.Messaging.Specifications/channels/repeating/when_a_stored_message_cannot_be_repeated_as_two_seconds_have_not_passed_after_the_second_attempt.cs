@@ -22,7 +22,6 @@ namespace SystemDot.Messaging.Specifications.channels.repeating
         {
             var endpointAddress = new EndpointAddress("Channel", "Server");
             With<PersistenceBehaviour>();
-            Configure<IMessageCache>(new MessageCache(The<IPersistence>()));
             
             DateTime currentDate = DateTime.Now;
             Configure<ICurrentDateProvider>(new TestCurrentDateProvider(currentDate));
@@ -33,7 +32,7 @@ namespace SystemDot.Messaging.Specifications.channels.repeating
             message.SetFromAddress(endpointAddress);
             message.SetLastTimeSent(currentDate.Subtract(new TimeSpan(0, 0, 0, 0, 1999)));
             message.IncreaseAmountSent();
-            The<IMessageCache>().Cache(message);
+            The<IPersistence>().AddOrUpdateMessage(message);
             message.IncreaseAmountSent();
         };
 

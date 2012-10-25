@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
                 .UsingSqlPersistence()
                 .OpenChannel("TestReciever")
                     .ForRequestReplyRecieving()
-                    
+                    .WithDurability()
                 .Initialise();
 
             IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer(bus));

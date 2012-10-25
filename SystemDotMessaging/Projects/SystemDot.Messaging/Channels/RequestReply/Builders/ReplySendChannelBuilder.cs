@@ -1,16 +1,12 @@
-using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Acknowledgement;
-using SystemDot.Messaging.Channels.Acknowledgement.Builders;
 using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Expiry;
 using SystemDot.Messaging.Channels.Filtering;
-using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Pipelines;
-using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Channels.RequestReply.Repeating;
 using SystemDot.Messaging.Channels.Sequencing;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Storage.InMemory;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
@@ -60,8 +56,6 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
                     PersistenceUseType.ReplySend,
                     schema.FromAddress);
             
-            IMessageCache cache = new MessageCache(persistence);
-
             this.acknowledgementHandler.RegisterPersistence(persistence);
 
             MessagePipelineBuilder.Build()
@@ -69,10 +63,9 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
                 .ToProcessor(new Sequencer(persistence))
                 .ToProcessor(new ReplyChannelMessageAddresser(this.replyAddressLookup, schema.FromAddress))
-                .ToMessageRepeater(cache, this.currentDateProvider, this.taskRepeater)
-                .ToProcessor(new MessageCacher(cache))
-                .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, persistence))
+                .ToMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
                 .Pump()
+                .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, persistence))
                 .ToEndPoint(this.messageSender);
         }
 

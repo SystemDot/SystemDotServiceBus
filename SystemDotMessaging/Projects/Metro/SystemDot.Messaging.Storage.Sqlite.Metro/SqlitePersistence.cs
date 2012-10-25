@@ -54,39 +54,51 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
                 .ToListAsync();
         }
 
-        public void AddMessage(MessagePayload message)
+        public void AddOrUpdateMessage(MessagePayload message)
         {
             Logger.Info("Storing message in sqlite storage");
 
             GetAsyncConnection().RunInTransaction(c =>
             {
-                c.Execute(
-                    "update MessageSequence set sequencenumber = sequencenumber + 1 where address = ? and type = ?",
-                    Address.ToString(),
-                    UseType);
-
-                c.Execute(
-                    "insert into MessagePayloadStorageItem"
-                        + "(id, createdon, headers, address, type)"
-                        + "values(?, ?, ?, ?, ?)",
-                    message.Id.ToString(),
-                    message.CreatedOn,
-                    Address.ToString(),
-                    this.serialiser.Serialise(message.Headers),
-                    UseType);
+                if (UpdateMessage(message, c) == 0)
+                {
+                    IncrementSequence(c);
+                    AddMessage(message, c);
+                }
             });
         }
 
-        public async void UpdateMessage(MessagePayload message)
+        int UpdateMessage(MessagePayload message, SQLiteConnection connection)
         {
             Logger.Info("Storing message in sqlite storage");
 
-            const string statement = "update MessagePayloadStorageItem set headers = ? where id = ?";
-
-            await GetAsyncConnection().ExecuteAsync(
-                statement,
+            return connection.Execute(
+                "update MessagePayloadStorageItem set headers = ? where id = ? and address = ? and type = ?",
                 this.serialiser.Serialise(message.Headers),
-                message.Id.ToString());
+                message.Id.ToString(),
+                Address.ToString(),
+                UseType);
+        }
+
+        void IncrementSequence(SQLiteConnection connection)
+        {
+            connection.Execute(
+                "update MessageSequence set sequencenumber = sequencenumber + 1 where address = ? and type = ?",
+                Address.ToString(),
+                UseType);
+        }
+
+        void AddMessage(MessagePayload message, SQLiteConnection connection)
+        {
+            connection.Execute(
+                "insert into MessagePayloadStorageItem"
+                    + "(id, createdon, headers, address, type)"
+                    + "values(?, ?, ?, ?, ?)",
+                message.Id.ToString(),
+                message.CreatedOn,
+                this.serialiser.Serialise(message.Headers),
+                Address.ToString(),
+                UseType);
         }
 
         public async void RemoveMessage(Guid id)

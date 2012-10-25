@@ -2,37 +2,51 @@ using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Channels.Repeating
 {
     public class MessageRepeater : IMessageProcessor<MessagePayload, MessagePayload>
     {
-        readonly IMessageCache cache;
+        readonly IPersistence persistence;
         readonly ICurrentDateProvider currentDateProvider;
 
         public MessageRepeater(
-            IMessageCache cache, 
+            IPersistence persistence, 
             ICurrentDateProvider currentDateProvider)
         {
-            Contract.Requires(cache != null);
+            Contract.Requires(persistence != null);
             Contract.Requires(currentDateProvider != null);
-            
-            this.cache = cache;
+
+            this.persistence = persistence;
             this.currentDateProvider = currentDateProvider;
         }
 
         public void InputMessage(MessagePayload toInput)
         {
+            SetTimeOnMesage(toInput);
+            PersistMessage(toInput);
+
+            MessageProcessed(toInput);
+        }
+
+        void SetTimeOnMesage(MessagePayload toInput)
+        {
             toInput.SetLastTimeSent(this.currentDateProvider.Get());
             toInput.IncreaseAmountSent();
-            MessageProcessed(toInput);
+        }
+
+        void PersistMessage(MessagePayload toInput)
+        {
+            toInput.SetPersistenceId(this.persistence.Address, this.persistence.UseType);
+            this.persistence.AddOrUpdateMessage(toInput);
         }
 
         public event Action<MessagePayload> MessageProcessed;
 
         public void Start()
         {
-            this.cache.GetAll().ForEach(m =>
+            this.persistence.GetMessages().ForEach(m =>
             {
                 if (m.GetLastTimeSent() <= this.currentDateProvider.Get().AddSeconds(-GetDelay(m))) 
                     InputMessage(m);

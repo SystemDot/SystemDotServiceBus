@@ -4,6 +4,7 @@ using SystemDot.Messaging.Channels.Filtering;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Pipelines;
 using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Channels.RequestReply.Repeating;
 using SystemDot.Messaging.Channels.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Parallelism;
@@ -54,8 +55,6 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                     PersistenceUseType.PublisherSend, 
                     schema.FromAddress);
 
-            IMessageCache cache = new MessageCache(persistence); 
-            
             var publisherEndpoint = new Publisher(
                 schema.FromAddress,
                 this.messagePayloadCopier, 
@@ -65,8 +64,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .WithBusPublishTo(new MessageFilter(schema.MessageFilterStrategy))
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
                 .ToProcessor(new Sequencer(persistence))
-                .ToMessageRepeater(cache, this.currentDateProvider, this.taskRepeater)
-                .ToProcessor(new MessageCacher(cache))
+                .ToMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
                 .Pump()
                 .ToProcessor(publisherEndpoint)
                 .ToEndPoint(new MessageDecacher(persistence));

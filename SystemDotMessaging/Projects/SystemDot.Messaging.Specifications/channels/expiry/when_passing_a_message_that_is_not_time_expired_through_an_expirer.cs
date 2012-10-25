@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Specifications.channels.expiry
             message.IncreaseAmountSent();
 
             With<PersistenceBehaviour>();
-            The<IPersistence>().AddMessage(message);
+            The<IPersistence>().AddOrUpdateMessage(message);
 
             var expiryTime = new TimeSpan(0, 1, 0);
             

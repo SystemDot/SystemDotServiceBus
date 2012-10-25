@@ -65,8 +65,6 @@
     <Compile Include="channels\sequencing\when_passing_a_message_through_a_sequencer.cs" />
     <Compile Include="channels\sequencing\when_passing_messages_in_the_correct_order_through_a_resequncer.cs" />
     <Compile Include="channels\sequencing\when_passing_messages_in_the_incorrect_order_through_a_resequncer.cs" />
-    <Compile Include="channels\storage\when_caching_a_message_for_the_second_time.cs" />
-    <Compile Include="channels\storage\when_caching_a_message_that_has_a_persistence_id_already_set.cs" />
     <Compile Include="channels\storage\when_decaching_a_message.cs" />
     <Compile Include="configuration\FakeAccessorExtensions.cs" />
     <Compile Include="configuration\publishing\ExclusionMessagePayloadListExtensions.cs" />
@@ -132,7 +130,6 @@
     <Compile Include="channels\repeating\when_two_stored_messages_can_be_repeated_as_one_second_has_passed_after_their_first_attempts.cs" />
     <Compile Include="channels\storage\in_memory\when_getting_messages_for_a_channel.cs" />
     <Compile Include="channels\storage\in_memory\when_removing_a_message_that_does_not_exist.cs" />
-    <Compile Include="channels\storage\when_caching_a_message_for_the_first_time.cs" />
     <Compile Include="configuration\WithMessageConfigurationSubject.cs" />
     <Compile Include="PersistenceBehaviour.cs" />
     <Compile Include="TestMessageHandler.cs" />

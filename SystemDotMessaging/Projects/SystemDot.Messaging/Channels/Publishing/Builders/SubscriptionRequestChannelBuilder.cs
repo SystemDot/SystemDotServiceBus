@@ -2,7 +2,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Acknowledgement;
 using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Pipelines;
-using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Channels.RequestReply.Repeating;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.InMemory;
 using SystemDot.Messaging.Transport;
@@ -47,15 +47,13 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                     PersistenceUseType.Other, 
                     schema.PublisherAddress);
 
-            IMessageCache cache = new MessageCache(persistence);
-
             this.acknowledgementHandler.RegisterPersistence(persistence);
 
             MessagePipelineBuilder.Build()
                 .With(requestor)
                 .ToProcessor(new MessageAddresser(schema.SubscriberAddress, schema.PublisherAddress))
-                .ToMessageRepeater(cache, this.currentDateProvider, this.taskRepeater)
-                .ToProcessor(new MessageCacher(cache))
+                .ToMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
+                .Pump()
                 .ToEndPoint(this.messageSender);
 
             return requestor;

@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Storage.InMemory
                 .Select(m => m.Value);
         }
 
-        public void AddMessage(PersistenceUseType useType, EndpointAddress address, MessagePayload message)
+        public void AddOrUpdateMessage(PersistenceUseType useType, EndpointAddress address, MessagePayload message)
         {
             this.messages.TryAdd(
                 new MessagePersistenceId
