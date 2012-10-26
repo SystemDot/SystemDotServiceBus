@@ -1,12 +1,12 @@
 using System;
 using System.Linq;
+using SystemDot.Messaging.Channels.RequestReply.Repeating;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.InMemory;
 using SystemDot.Parallelism;
 using Machine.Fakes;
 using Machine.Specifications;
 using SystemDot.Messaging.Channels.Packaging.Headers;
-using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Channels.Sequencing;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending

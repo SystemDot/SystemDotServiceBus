@@ -1,10 +1,9 @@
 using System;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage;
 
-namespace SystemDot.Messaging.Channels.Repeating
+namespace SystemDot.Messaging.Channels.RequestReply.Repeating
 {
     public class MessageRepeater : IMessageProcessor<MessagePayload, MessagePayload>
     {

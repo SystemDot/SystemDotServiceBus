@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging.Headers;
 
 namespace SystemDot.Messaging.Storage

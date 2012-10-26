@@ -4,7 +4,6 @@ using System.Diagnostics.Contracts;
 using SystemDot.Logging;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Channels.Sequencing
 {
@@ -13,11 +12,10 @@ namespace SystemDot.Messaging.Channels.Sequencing
         readonly ConcurrentDictionary<int, MessagePayload> queue;
         readonly IPersistence persistence;
         
-        public Resequencer(IPersistence persistence, IMessageSender sender)
+        public Resequencer(IPersistence persistence)
         {
             Contract.Requires(persistence != null);
-            Contract.Requires(sender != null);
-
+            
             this.persistence = persistence;
             this.queue = new ConcurrentDictionary<int, MessagePayload>();
         }

@@ -4,7 +4,7 @@ using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Channels.Caching
 {
-    public class MessageDecacher : IMessageInputter<MessagePayload>
+    public class MessageDecacher : MessageProcessor
     {
         readonly IPersistence persistence;
 
@@ -14,9 +14,10 @@ namespace SystemDot.Messaging.Channels.Caching
             this.persistence = persistence;
         }
 
-        public void InputMessage(MessagePayload toInput)
+        public override void InputMessage(MessagePayload toInput)
         {
             this.persistence.Delete(toInput.Id);
+            OnMessageProcessed(toInput);
         }
     }
 }

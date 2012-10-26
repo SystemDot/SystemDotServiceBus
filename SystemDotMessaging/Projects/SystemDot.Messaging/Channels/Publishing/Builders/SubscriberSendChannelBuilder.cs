@@ -1,5 +1,7 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Acknowledgement;
+using SystemDot.Messaging.Channels.Addressing;
+using SystemDot.Messaging.Channels.Builders;
 using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Pipelines;

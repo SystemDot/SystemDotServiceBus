@@ -1,3 +1,5 @@
+using SystemDot.Messaging.Channels.Addressing;
+
 namespace SystemDot.Messaging.Channels.Publishing.Builders
 {
     public class SubscriptionRequestChannelSchema

@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics.Contracts;
 
-namespace SystemDot.Messaging.Channels
+namespace SystemDot.Messaging.Channels.Addressing
 {
     public class EndpointAddressBuilder
     {

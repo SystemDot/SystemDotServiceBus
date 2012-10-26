@@ -1,8 +1,8 @@
 using SystemDot.Messaging.Channels.Expiry;
 using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Channels.RequestReply.Repeating;
 using Machine.Fakes;
 using Machine.Specifications;
-using SystemDot.Messaging.Channels.Repeating;
 
 namespace SystemDot.Messaging.Specifications.channels.expiry
 {

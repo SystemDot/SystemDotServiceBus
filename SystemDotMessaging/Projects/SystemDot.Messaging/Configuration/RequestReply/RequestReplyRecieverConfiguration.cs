@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Expiry;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Transport;

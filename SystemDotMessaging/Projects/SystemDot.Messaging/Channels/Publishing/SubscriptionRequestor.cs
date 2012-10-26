@@ -1,5 +1,6 @@
 using System;
 using SystemDot.Logging;
+using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 
 namespace SystemDot.Messaging.Channels.Publishing

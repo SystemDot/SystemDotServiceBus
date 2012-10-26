@@ -1,7 +1,7 @@
 using System;
 using SystemDot.Messaging.Channels.Packaging;
 
-namespace SystemDot.Messaging.Channels.Repeating
+namespace SystemDot.Messaging.Channels.RequestReply.Repeating
 {
     public class LastSentHeader : IMessageHeader
     {

@@ -1,5 +1,6 @@
 using System.Diagnostics.Contracts;
 using System.Threading;
+using SystemDot.Messaging.Channels.Addressing;
 
 namespace SystemDot.Messaging.Channels.RequestReply
 {

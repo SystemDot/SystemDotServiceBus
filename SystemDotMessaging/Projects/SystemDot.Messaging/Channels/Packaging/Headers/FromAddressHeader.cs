@@ -1,3 +1,5 @@
+using SystemDot.Messaging.Channels.Addressing;
+
 namespace SystemDot.Messaging.Channels.Packaging.Headers
 {
     public class FromAddressHeader : AddressHeader

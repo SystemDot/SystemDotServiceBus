@@ -3,6 +3,7 @@ using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Storage.Sql;
 
 namespace SystemDot.Messaging.OtherTestSubscriber
 {
@@ -14,7 +15,10 @@ namespace SystemDot.Messaging.OtherTestSubscriber
 
             Configure.Messaging()
                 .UsingHttpTransport(MessageServer.Local())
-                .OpenChannel("TestOtherSubscriber").ForSubscribingTo("TestPublisher")
+                .UsingSqlPersistence()
+                .OpenChannel("TestOtherSubscriber")
+                    .ForSubscribingTo("TestPublisher")
+                    .WithDurability()
                 .Initialise();
 
             IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());

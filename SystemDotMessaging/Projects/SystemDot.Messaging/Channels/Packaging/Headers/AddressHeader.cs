@@ -1,4 +1,5 @@
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Channels.Addressing;
 
 namespace SystemDot.Messaging.Channels.Packaging.Headers
 {

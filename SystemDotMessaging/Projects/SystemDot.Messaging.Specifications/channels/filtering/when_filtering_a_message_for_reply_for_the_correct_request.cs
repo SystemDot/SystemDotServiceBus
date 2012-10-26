@@ -1,4 +1,5 @@
 using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Filtering;
 using SystemDot.Messaging.Channels.RequestReply;
 using Machine.Fakes;

@@ -5,6 +5,7 @@ using System.IO;
 using SystemDot.Http;
 using SystemDot.Logging;
 using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;

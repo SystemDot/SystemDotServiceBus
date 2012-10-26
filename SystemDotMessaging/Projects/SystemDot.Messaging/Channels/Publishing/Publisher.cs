@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Publishing.Builders;
-using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Channels.RequestReply.Repeating;
 
 namespace SystemDot.Messaging.Channels.Publishing
 {

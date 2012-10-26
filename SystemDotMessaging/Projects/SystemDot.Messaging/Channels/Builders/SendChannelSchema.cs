@@ -1,6 +1,7 @@
+using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Expiry;
 
-namespace SystemDot.Messaging.Channels
+namespace SystemDot.Messaging.Channels.Builders
 {
     public class SendChannelSchema
     {

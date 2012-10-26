@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.InMemory;

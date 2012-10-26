@@ -1,4 +1,6 @@
 using SystemDot.Messaging.Channels.Acknowledgement;
+using SystemDot.Messaging.Channels.Builders;
+using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Pipelines;
 using SystemDot.Messaging.Storage;
@@ -17,7 +19,7 @@ namespace SystemDot.Messaging.Channels.Sequencing
             IMessageProcessor<MessagePayload, MessagePayload> processor;
             
             if(schema.IsSequenced)
-                processor = new Resequencer(persistence, sender);    
+                processor = new Resequencer(persistence);    
             else 
                 processor = new MessageAcknowledger(sender);
 

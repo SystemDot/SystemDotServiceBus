@@ -44,6 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Channels\Acknowledgement\Builders\AcknowledgementChannelBuilder.cs" />
+    <Compile Include="Channels\Addressing\EndpointAddress.cs" />
+    <Compile Include="Channels\Addressing\EndpointAddressBuilder.cs" />
+    <Compile Include="Channels\Addressing\MessageAddresser.cs" />
     <Compile Include="Channels\Distribution\Queue.cs" />
     <Compile Include="Channels\Expiry\IMessageExpiryStrategy.cs" />
     <Compile Include="Channels\Expiry\MessageExpirer.cs" />
@@ -51,13 +54,14 @@
     <Compile Include="Channels\Expiry\RepeatAttemptMessageExpiryStrategy.cs" />
     <Compile Include="Channels\Expiry\TimeMessageExpiryStrategy.cs" />
     <Compile Include="Channels\Caching\MessageDecacher.cs" />
-    <Compile Include="Channels\PersistenceFactorySelector.cs" />
+    <Compile Include="Channels\MessageProcessor.cs" />
+    <Compile Include="Channels\Builders\PersistenceFactorySelector.cs" />
     <Compile Include="Channels\Publishing\Builders\ISubscriberSendChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\SubscriberRecieveChannelSchema.cs" />
     <Compile Include="Channels\Publishing\Builders\SubscriptionRequestChannelSchema.cs" />
-    <Compile Include="Channels\RecieveChannelSchema.cs" />
+    <Compile Include="Channels\Builders\RecieveChannelSchema.cs" />
     <Compile Include="Channels\RequestReply\Builders\RequestRecieveChannelSchema.cs" />
-    <Compile Include="Channels\SendChannelSchema.cs" />
+    <Compile Include="Channels\Builders\SendChannelSchema.cs" />
     <Compile Include="Channels\Publishing\Builders\PublisherChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\PublisherChannelSchema.cs" />
     <Compile Include="Channels\Publishing\Builders\SubscriberRecieveChannelBuilder.cs" />
@@ -80,7 +84,7 @@
     <Compile Include="Channels\Acknowledgement\AcknowledgementHeader.cs" />
     <Compile Include="Channels\Acknowledgement\MessageAcknowledgementExtensions.cs" />
     <Compile Include="Channels\Acknowledgement\MessageAcknowledger.cs" />
-    <Compile Include="Channels\BodyMessageFilter.cs" />
+    <Compile Include="Channels\Filtering\BodyMessageFilter.cs" />
     <Compile Include="Channels\Filtering\IMessageFilterStrategy.cs" />
     <Compile Include="Channels\Filtering\NamePatternMessageFilterStrategy.cs" />
     <Compile Include="Channels\Filtering\NamespaceMessageFilterStrategy.cs" />
@@ -114,14 +118,11 @@
     <Compile Include="Configuration\RequestReply\RequestReplyRecieverConfiguration.cs" />
     <Compile Include="IBus.cs" />
     <Compile Include="Channels\Publishing\IPublisher.cs" />
-    <Compile Include="Channels\EndpointAddress.cs" />
-    <Compile Include="Channels\EndpointAddressBuilder.cs" />
     <Compile Include="Channels\Packaging\Headers\AddressHeader.cs" />
     <Compile Include="Channels\Packaging\Headers\FromAddressHeader.cs" />
     <Compile Include="Channels\Filtering\MessageFilter.cs" />
     <Compile Include="Channels\Pipelines\MessagePipelineBuilder.cs" />
     <Compile Include="Channels\Pipelines\ProcessorBuilder.cs" />
-    <Compile Include="Channels\MessageAddresser.cs" />
     <Compile Include="Channels\Publishing\IPublisherRegistry.cs" />
     <Compile Include="Channels\Publishing\PublisherRegistry.cs" />
     <Compile Include="Channels\Distribution\Pipe.cs" />
@@ -162,10 +163,10 @@
     <Compile Include="Channels\Packaging\Headers\MessagePayloadBodyExtensions.cs" />
     <Compile Include="Channels\Packaging\IMessageHeader.cs" />
     <Compile Include="Transport\Http\LongPolling\Servers\HttpMessagingServer.cs" />
-    <Compile Include="Channels\MessagePayloadUnpackager.cs" />
+    <Compile Include="Channels\Packaging\MessagePayloadUnpackager.cs" />
     <Compile Include="Transport\Http\LongPolling\LongPollReciever.cs" />
     <Compile Include="Channels\Packaging\MessagePayload.cs" />
-    <Compile Include="Channels\MessagePayloadPackager.cs" />
+    <Compile Include="Channels\Packaging\MessagePayloadPackager.cs" />
     <Compile Include="Transport\Http\LongPolling\MessageSender.cs" />
     <Compile Include="Channels\Handling\MessageHandlerRouter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

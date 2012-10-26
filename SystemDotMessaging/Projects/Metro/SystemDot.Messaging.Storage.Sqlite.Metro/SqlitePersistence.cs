@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using SystemDot.Logging;
 using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Serialisation;
 using SQLite;
@@ -148,10 +149,10 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
                  Address.ToString(),
                  UseType) > 0) return;
 
-            await GetAsyncConnection().ExecuteAsync(
-                "insert into MessageSequence(address, sequencenumber, type) values(?, 1, ?)",
-                Address.ToString(),
-                UseType);
+                await GetAsyncConnection().ExecuteAsync(
+                    "insert into MessageSequence(address, sequencenumber, type) values(?, 1, ?)",
+                    Address.ToString(),
+                    UseType);
         }
 
         protected static SQLiteAsyncConnection GetAsyncConnection()

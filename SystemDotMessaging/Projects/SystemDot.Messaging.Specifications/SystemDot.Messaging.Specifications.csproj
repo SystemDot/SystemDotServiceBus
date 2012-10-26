@@ -66,6 +66,7 @@
     <Compile Include="channels\sequencing\when_passing_messages_in_the_correct_order_through_a_resequncer.cs" />
     <Compile Include="channels\sequencing\when_passing_messages_in_the_incorrect_order_through_a_resequncer.cs" />
     <Compile Include="channels\storage\when_decaching_a_message.cs" />
+    <Compile Include="channels\storage\when_decaching_a_message_with_no_output_processor_subscribed.cs" />
     <Compile Include="configuration\FakeAccessorExtensions.cs" />
     <Compile Include="configuration\publishing\ExclusionMessagePayloadListExtensions.cs" />
     <Compile Include="configuration\publishing\when_publishing_a_request_message_on_a_durable_publish_subscribe_channel.cs">

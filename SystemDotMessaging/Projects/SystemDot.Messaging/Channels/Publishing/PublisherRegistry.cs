@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Distribution;
 
 namespace SystemDot.Messaging.Channels.Publishing

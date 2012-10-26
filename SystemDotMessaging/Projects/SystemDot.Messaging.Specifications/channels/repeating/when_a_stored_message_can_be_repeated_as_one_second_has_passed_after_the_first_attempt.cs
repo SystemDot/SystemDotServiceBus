@@ -1,9 +1,10 @@
 using System;
 using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Packaging.Headers;
-using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Channels.RequestReply.Repeating;
 using SystemDot.Messaging.Storage;
 using SystemDot.Specifications;
 using Machine.Fakes;

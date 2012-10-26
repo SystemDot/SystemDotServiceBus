@@ -1,5 +1,6 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Acknowledgement;
+using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Pipelines;
 using SystemDot.Messaging.Channels.RequestReply.Repeating;

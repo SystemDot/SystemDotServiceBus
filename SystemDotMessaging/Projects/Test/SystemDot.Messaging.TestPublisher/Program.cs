@@ -1,6 +1,7 @@
 ﻿using System;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Storage.Sql;
 using SystemDot.Messaging.Test.Messages;
 
 namespace SystemDot.Messaging.TestPublisher
@@ -12,7 +13,10 @@ namespace SystemDot.Messaging.TestPublisher
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingHttpTransport(MessageServer.Local())
-                .OpenChannel("TestPublisher").ForPublishing()
+                .UsingSqlPersistence()
+                .OpenChannel("TestPublisher")
+                    .ForPublishing()
+                    .WithDurability()
                 .Initialise();
             
             do

@@ -1,4 +1,5 @@
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Channels.Builders;
 using SystemDot.Messaging.Channels.Filtering;
 
 namespace SystemDot.Messaging.Channels.Publishing.Builders

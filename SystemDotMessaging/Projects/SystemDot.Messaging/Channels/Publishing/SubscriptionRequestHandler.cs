@@ -1,5 +1,6 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Logging;
+using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Messaging.Channels.Publishing.Builders;

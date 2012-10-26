@@ -1,3 +1,4 @@
+using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Distribution;
 
 namespace SystemDot.Messaging.Channels.Publishing

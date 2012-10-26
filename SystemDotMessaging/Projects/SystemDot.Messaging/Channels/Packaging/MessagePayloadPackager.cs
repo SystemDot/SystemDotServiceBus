@@ -1,11 +1,10 @@
 using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Logging;
-using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Serialisation;
 
-namespace SystemDot.Messaging.Channels
+namespace SystemDot.Messaging.Channels.Packaging
 {
     public class MessagePayloadPackager : IMessageProcessor<object, MessagePayload>
     {

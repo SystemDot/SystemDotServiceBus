@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Linq;
 using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Distribution;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
+using SystemDot.Messaging.Channels.RequestReply.Repeating;
 using SystemDot.Messaging.Transport;
 using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;
-using SystemDot.Messaging.Channels.Repeating;
 
 namespace SystemDot.Messaging.Specifications.channels.publishing
 {

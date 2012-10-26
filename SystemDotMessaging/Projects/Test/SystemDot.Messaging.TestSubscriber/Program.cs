@@ -3,6 +3,7 @@ using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Storage.Sql;
 
 namespace SystemDot.Messaging.TestSubscriber
 {
@@ -13,7 +14,10 @@ namespace SystemDot.Messaging.TestSubscriber
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingHttpTransport(MessageServer.Local())
-                .OpenChannel("TestSubscriber").ForSubscribingTo("TestPublisher")
+                .UsingSqlPersistence()
+                .OpenChannel("TestSubscriber")
+                    .ForSubscribingTo("TestPublisher")
+                    .WithDurability()
                 .Initialise();
 
             IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());

@@ -2,7 +2,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.InMemory;
 
-namespace SystemDot.Messaging.Channels
+namespace SystemDot.Messaging.Channels.Builders
 {
     public class PersistenceFactorySelector 
     {

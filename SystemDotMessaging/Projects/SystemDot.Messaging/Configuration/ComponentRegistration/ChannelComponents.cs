@@ -2,6 +2,7 @@ using SystemDot.Ioc;
 using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Acknowledgement;
 using SystemDot.Messaging.Channels.Acknowledgement.Builders;
+using SystemDot.Messaging.Channels.Builders;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage.InMemory;

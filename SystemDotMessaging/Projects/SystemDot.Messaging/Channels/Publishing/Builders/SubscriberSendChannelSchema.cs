@@ -1,4 +1,6 @@
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Channels.Addressing;
+using SystemDot.Messaging.Channels.Builders;
 
 namespace SystemDot.Messaging.Channels.Publishing.Builders
 {

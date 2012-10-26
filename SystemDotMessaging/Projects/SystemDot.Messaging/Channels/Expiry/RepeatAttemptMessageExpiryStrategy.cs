@@ -1,5 +1,5 @@
 using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Channels.RequestReply.Repeating;
 
 namespace SystemDot.Messaging.Channels.Expiry
 {

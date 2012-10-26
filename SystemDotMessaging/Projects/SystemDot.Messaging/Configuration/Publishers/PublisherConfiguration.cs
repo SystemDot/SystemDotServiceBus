@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Filtering;
 using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Transport;

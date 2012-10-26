@@ -1,6 +1,7 @@
 using SystemDot.Http;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration

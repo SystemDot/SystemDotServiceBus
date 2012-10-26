@@ -4,7 +4,7 @@ using SystemDot.Logging;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Packaging.Headers;
 
-namespace SystemDot.Messaging.Channels
+namespace SystemDot.Messaging.Channels.Addressing
 {
     public class MessageAddresser : IMessageProcessor<MessagePayload, MessagePayload>
     {

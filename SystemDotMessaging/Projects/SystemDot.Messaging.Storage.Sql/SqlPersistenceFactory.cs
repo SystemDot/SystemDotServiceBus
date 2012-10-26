@@ -1,4 +1,5 @@
 using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Storage.Sql

@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using SystemDot.Messaging.Channels.Packaging.Headers;
-using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Parallelism;
 using Machine.Fakes;

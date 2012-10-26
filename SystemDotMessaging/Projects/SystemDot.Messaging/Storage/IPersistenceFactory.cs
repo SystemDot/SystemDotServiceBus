@@ -1,4 +1,5 @@
 using SystemDot.Messaging.Channels;
+using SystemDot.Messaging.Channels.Addressing;
 
 namespace SystemDot.Messaging.Storage
 {

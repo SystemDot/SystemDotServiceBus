@@ -1,4 +1,6 @@
-namespace SystemDot.Messaging.Channels
+using SystemDot.Messaging.Channels.Addressing;
+
+namespace SystemDot.Messaging.Channels.Builders
 {
     public class RecieveChannelSchema
     {
