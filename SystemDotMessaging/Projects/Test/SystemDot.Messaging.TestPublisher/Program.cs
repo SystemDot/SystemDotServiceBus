@@ -11,9 +11,9 @@ namespace SystemDot.Messaging.TestPublisher
         static void Main(string[] args)
         {
             IBus bus = Configure.Messaging()
-                .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
+                .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = true })
                 .UsingHttpTransport(MessageServer.Local())
-                .UsingSqlPersistence()
+                //.UsingSqlPersistence()
                 .OpenChannel("TestPublisher")
                     .ForPublishing()
                     .WithDurability()
@@ -24,14 +24,11 @@ namespace SystemDot.Messaging.TestPublisher
                 Console.WriteLine("Press a key to send message..");
                 Console.ReadLine();
                 Console.WriteLine("Sending message");
-                bus.Publish(new TestMessage("Hello"));
-                bus.Publish(new TestMessage("Hello1"));
-                bus.Publish(new TestMessage("Hello2"));
-                bus.Publish(new TestMessage("Hello3"));
-                bus.Publish(new TestMessage("Hello4"));
-                bus.Publish(new TestMessage("Hello5"));
-                bus.Publish(new TestMessage("Hello6"));
-                bus.Publish(new TestMessage("Hello7"));
+
+                for (int i = 0; i < 1000; i++)
+                {
+                    bus.Publish(new TestMessage("Hello" + i));                    
+                }
             }
             while (true);
         }

@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.channels.packaging
         Because of = () => packager.InputMessage(message);
 
         It should_send_the_message_to_the_bus_output_pipe = () =>
-            serialiser.Deserialise(processedPayload.Headers.OfType<BodyHeader>().First().Body).ShouldEqual(message);
+            serialiser.Deserialise(processedPayload.GetHeader<BodyHeader>().Body).ShouldEqual(message);
 
         
     }

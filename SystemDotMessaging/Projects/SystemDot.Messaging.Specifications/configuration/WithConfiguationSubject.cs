@@ -22,6 +22,11 @@ namespace SystemDot.Messaging.Specifications.configuration
             Configure(toSet);
             var concrete = The<T>();
 
+            Register(concrete);
+        }
+
+        protected static void Register<T>(T concrete) where T : class
+        {
             IocContainerLocator.Locate().RegisterInstance(() => concrete);
         }
 

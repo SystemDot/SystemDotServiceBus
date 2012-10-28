@@ -66,6 +66,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
                 .ToProcessor(new Sequencer(persistence))
                 .ToProcessor(new ReplyChannelMessageAddresser(this.replyAddressLookup, schema.FromAddress))
                 .ToMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
+                .ToProcessor(new SendChannelMessageCacher(persistence))
                 .Pump()
                 .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, persistence))
                 .ToEndPoint(this.messageSender);

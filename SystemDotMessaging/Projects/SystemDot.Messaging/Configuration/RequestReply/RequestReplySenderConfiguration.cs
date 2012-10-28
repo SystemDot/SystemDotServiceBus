@@ -31,8 +31,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
 
             this.recieveChannelSchema = new ReplyRecieveChannelSchema
             {
-                Address = address,
-                IsSequenced = false
+                Address = address
             };   
         }
 
@@ -67,7 +66,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         public RequestReplySenderConfiguration WithDurability()
         {
             this.sendChannelSchema.IsDurable = true;
-            this.recieveChannelSchema.IsSequenced = true;
+            this.recieveChannelSchema.IsDurable = true;
             return this;
         }
 

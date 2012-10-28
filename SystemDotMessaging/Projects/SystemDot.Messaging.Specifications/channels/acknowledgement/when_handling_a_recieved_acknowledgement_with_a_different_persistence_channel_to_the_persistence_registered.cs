@@ -4,6 +4,7 @@ using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.InMemory;
+using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -16,32 +17,32 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
         static IPersistence differingChannelPersistence;
 
         Establish context = () =>
-            {
-                var store = new InMemoryDatatore();
+        {
+            var store = new InMemoryDatastore(new MessagePayloadCopier(new PlatformAgnosticSerialiser()));
 
-                differingChannelPersistence = new InMemoryPersistence(
-                    store,
-                    PersistenceUseType.RequestSend,
-                    new EndpointAddress("Channel", "Server"));
+            differingChannelPersistence = new InMemoryPersistence(
+                store,
+                PersistenceUseType.RequestSend,
+                new EndpointAddress("Channel", "Server"));
 
-                Subject.RegisterPersistence(differingChannelPersistence);
+            Subject.RegisterPersistence(differingChannelPersistence);
 
-                var persistence = new InMemoryPersistence(
-                    store,
-                    differingChannelPersistence.UseType,
-                    new EndpointAddress("Channel1", "Server1"));
+            var persistence = new InMemoryPersistence(
+                store,
+                differingChannelPersistence.UseType,
+                new EndpointAddress("Channel1", "Server1"));
 
-                Subject.RegisterPersistence(persistence);
+            Subject.RegisterPersistence(persistence);
 
-                message = new MessagePayload();
-                var id = new MessagePersistenceId(message.Id, persistence.Address, persistence.UseType);
+            message = new MessagePayload();
+            var id = new MessagePersistenceId(message.Id, persistence.Address, persistence.UseType);
 
-                acknowledgement = new MessagePayload();
-                acknowledgement.SetAcknowledgementId(id);
+            acknowledgement = new MessagePayload();
+            acknowledgement.SetAcknowledgementId(id);
 
-                differingChannelPersistence.AddOrUpdateMessage(message);
-                persistence.AddOrUpdateMessage(message);
-            };
+            differingChannelPersistence.AddOrUpdateMessageAndIncrementSequence(message);
+            persistence.AddOrUpdateMessageAndIncrementSequence(message);
+        };
 
         Because of = () => Subject.InputMessage(acknowledgement);
 

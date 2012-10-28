@@ -29,8 +29,8 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
 
         Because of = () => bus.Reply(message);
 
-        It should_persist_the_message = () => 
-            Resolve<InMemoryDatatore>()
+        It should_persist_the_message = () =>
+            Resolve<IDatastore>()
                 .GetMessages(PersistenceUseType.ReplySend, BuildAddress(ChannelName))
                 .ShouldNotBeEmpty();
     }

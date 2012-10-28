@@ -1,7 +1,9 @@
 using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
+using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.InMemory;
+using SystemDot.Serialisation;
 using Machine.Fakes;
 
 namespace SystemDot.Messaging.Specifications
@@ -13,10 +15,10 @@ namespace SystemDot.Messaging.Specifications
 
         OnEstablish context = (accessor) => 
         {
-            accessor.Configure(new InMemoryDatatore());
+            accessor.Configure<IDatastore>(new InMemoryDatastore(new MessagePayloadCopier(new PlatformAgnosticSerialiser())));
 
             accessor.Configure<IPersistenceFactory>(
-                new InMemoryPersistenceFactory(accessor.The<InMemoryDatatore>()));
+                new InMemoryPersistenceFactory(accessor.The<IDatastore>()));
 
             accessor.Configure<IPersistence>(
                 accessor.The<IPersistenceFactory>()
@@ -30,7 +32,7 @@ namespace SystemDot.Messaging.Specifications
         }
 
         public PersistenceBehaviour()
-            : this(PersistenceUseType.Other, new EndpointAddress("Channel", "Server"))
+            : this(PersistenceUseType.SubscriberRequestSend, new EndpointAddress("Channel", "Server"))
         {
         }
     }

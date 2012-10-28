@@ -33,13 +33,14 @@ namespace SystemDot.Messaging.Specifications.configuration
         protected static MessagePayload CreateRecieveablePayload(
             object message,
             string fromAddress,
-            string toAddress)
+            string toAddress,
+            PersistenceUseType useType)
         {
             var payload = new MessagePayload();
             payload.SetBody(Resolve<ISerialiser>().Serialise(message));
             payload.SetFromAddress(BuildAddress(fromAddress));
             payload.SetToAddress(BuildAddress(toAddress));
-            payload.SetPersistenceId(BuildAddress(toAddress), PersistenceUseType.Other);
+            payload.SetPersistenceId(BuildAddress(fromAddress), useType);
 
             return payload;
         }

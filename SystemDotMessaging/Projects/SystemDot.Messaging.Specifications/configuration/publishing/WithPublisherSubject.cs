@@ -1,4 +1,3 @@
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Packaging.Headers;
@@ -29,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
             request.SetFromAddress(subscriberAddress);
             request.SetToAddress(publisherAddress);
             request.SetSubscriptionRequest(new SubscriptionSchema { SubscriberAddress = subscriberAddress });
-            request.SetPersistenceId(subscriberAddress, PersistenceUseType.Other);
+            request.SetPersistenceId(subscriberAddress, PersistenceUseType.SubscriberRequestSend);
 
             return request;
         }

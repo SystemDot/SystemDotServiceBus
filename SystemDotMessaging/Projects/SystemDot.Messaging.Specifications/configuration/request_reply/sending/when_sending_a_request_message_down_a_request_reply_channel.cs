@@ -1,9 +1,12 @@
 using System;
 using System.Linq;
+using SystemDot.Messaging.Channels.Addressing;
+using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.RequestReply.Repeating;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.InMemory;
 using SystemDot.Parallelism;
+using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;
 using SystemDot.Messaging.Channels.Packaging.Headers;
@@ -16,11 +19,16 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
     {
         const string ChannelName = "Test";
         const string RecieverAddress = "TestRecieverAddress";
+        
+        static InMemoryDatastore persistentMemoryDatastore; 
         static IBus bus;
         static int message;
         
         Establish context = () =>
         {
+            persistentMemoryDatastore = new InMemoryDatastore(new MessagePayloadCopier(new PlatformAgnosticSerialiser()));
+            ConfigureAndRegister<IPersistenceFactory>(new InMemoryPersistenceFactory(persistentMemoryDatastore));
+            
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForRequestReplySendingTo(RecieverAddress)
@@ -49,11 +57,12 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
         It should_mark_the_message_with_the_sequence = () =>
             MessageSender.SentMessages.First().GetSequence().ShouldEqual(1);
 
-        It should_not_persist_the_message = () => 
-             Resolve<InMemoryDatatore>()
+        It should_not_persist_the_message = () =>
+             persistentMemoryDatastore
                 .GetMessages(PersistenceUseType.RequestSend, BuildAddress(ChannelName))
                 .ShouldBeEmpty();
 
         It should_start_the_task_repeater = () => The<ITaskRepeater>().WasToldTo(r => r.Start());
     }
+
 }

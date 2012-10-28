@@ -52,5 +52,10 @@ namespace SystemDot.Messaging.Storage
                 return hashCode;
             }
         }
+
+        public override string ToString()
+        {
+            return String.Concat(Address, " ", UseType);
+        }
     }
 }

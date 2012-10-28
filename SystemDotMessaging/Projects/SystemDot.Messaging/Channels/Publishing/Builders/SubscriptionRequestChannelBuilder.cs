@@ -16,36 +16,36 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
         readonly IMessageSender messageSender;
         readonly ICurrentDateProvider currentDateProvider;
         readonly ITaskRepeater taskRepeater;
-        readonly InMemoryDatatore inMemoryDatatore;
+        readonly IDatastore datastore;
         readonly MessageAcknowledgementHandler acknowledgementHandler;
 
         public SubscriptionRequestChannelBuilder(
             IMessageSender messageSender, 
             ICurrentDateProvider currentDateProvider, 
             ITaskRepeater taskRepeater, 
-            InMemoryDatatore inMemoryDatatore, 
+            IDatastore datastore, 
             MessageAcknowledgementHandler acknowledgementHandler)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(currentDateProvider != null);
             Contract.Requires(taskRepeater != null);
-            Contract.Requires(inMemoryDatatore != null);
+            Contract.Requires(datastore != null);
             Contract.Requires(acknowledgementHandler != null);
 
             this.messageSender = messageSender;
             this.currentDateProvider = currentDateProvider;
             this.taskRepeater = taskRepeater;
-            this.inMemoryDatatore = inMemoryDatatore;
+            this.datastore = datastore;
             this.acknowledgementHandler = acknowledgementHandler;
         }
 
         public ISubscriptionRequestor Build(SubscriptionRequestChannelSchema schema)
         {
-            var requestor = new SubscriptionRequestor(schema.SubscriberAddress, schema.IsPersistent);
+            var requestor = new SubscriptionRequestor(schema.SubscriberAddress, schema.IsDurable);
             
-            IPersistence persistence = new InMemoryPersistenceFactory(this.inMemoryDatatore)
+            IPersistence persistence = new InMemoryPersistenceFactory(this.datastore)
                 .CreatePersistence(
-                    PersistenceUseType.Other, 
+                    PersistenceUseType.SubscriberRequestSend, 
                     schema.PublisherAddress);
 
             this.acknowledgementHandler.RegisterPersistence(persistence);
@@ -54,6 +54,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .With(requestor)
                 .ToProcessor(new MessageAddresser(schema.SubscriberAddress, schema.PublisherAddress))
                 .ToMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
+                .ToProcessor(new SendChannelMessageCacher(persistence))
                 .Pump()
                 .ToEndPoint(this.messageSender);
 

@@ -9,28 +9,28 @@ namespace SystemDot.Messaging.Channels.RequestReply.Repeating
         public static void SetLastTimeSent(this MessagePayload payload, DateTime toSet)
         {
             AddHeaderIfNonExistant(payload);
-            payload.Headers.OfType<LastSentHeader>().Single().Time = toSet;
+            payload.GetHeader<LastSentHeader>().Time = toSet;
         }
 
         public static DateTime GetLastTimeSent(this MessagePayload payload)
         {
-            return payload.Headers.OfType<LastSentHeader>().Single().Time;
+            return payload.GetHeader<LastSentHeader>().Time;
         }
 
         public static void IncreaseAmountSent(this MessagePayload payload)
         {
             AddHeaderIfNonExistant(payload);
-            payload.Headers.OfType<LastSentHeader>().Single().Amount++;
+            payload.GetHeader<LastSentHeader>().Amount++;
         }
 
         public static int GetAmountSent(this MessagePayload payload)
         {
-            return payload.Headers.OfType<LastSentHeader>().Single().Amount;
+            return payload.GetHeader<LastSentHeader>().Amount;
         }
 
         static void AddHeaderIfNonExistant(MessagePayload payload)
         {
-            if(payload.Headers.OfType<LastSentHeader>().Any()) return;
+            if(payload.HasHeader<LastSentHeader>()) return;
             payload.AddHeader(new LastSentHeader());
         }
     }

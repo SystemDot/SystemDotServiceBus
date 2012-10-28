@@ -35,13 +35,13 @@ namespace SystemDot.Messaging.Specifications.channels.repeating
             message1.SetFromAddress(endpointAddress);
             message1.SetLastTimeSent(currentDate.Subtract(new TimeSpan(0, 0, 0, 1)));
             message1.IncreaseAmountSent();
-            The<IPersistence>().AddOrUpdateMessage(message1);
+            The<IPersistence>().AddOrUpdateMessageAndIncrementSequence(message1);
 
             message2 = new MessagePayload();
             message2.SetFromAddress(endpointAddress);
             message2.SetLastTimeSent(currentDate.Subtract(new TimeSpan(0, 0, 0, 1)));
             message2.IncreaseAmountSent();
-            The<IPersistence>().AddOrUpdateMessage(message2);
+            The<IPersistence>().AddOrUpdateMessageAndIncrementSequence(message2);
         };
 
         Because of = () => Subject.Start();

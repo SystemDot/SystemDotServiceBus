@@ -4,6 +4,7 @@ using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.InMemory;
+using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -17,11 +18,11 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
 
         Establish context = () =>
         {
-            var store = new InMemoryDatatore();
+            var store = new InMemoryDatastore(new MessagePayloadCopier(new PlatformAgnosticSerialiser()));
             
             persistence = new InMemoryPersistence(
                 store, 
-                PersistenceUseType.Other, 
+                PersistenceUseType.SubscriberRequestSend, 
                 new EndpointAddress("Channel", "Server"));
 
             Subject.RegisterPersistence(persistence);
@@ -32,7 +33,7 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
             acknowledgement = new MessagePayload();
             acknowledgement.SetAcknowledgementId(id);
 
-            persistence.AddOrUpdateMessage(message);
+            persistence.AddOrUpdateMessageAndIncrementSequence(message);
         };
 
         Because of = () => Subject.InputMessage(acknowledgement);

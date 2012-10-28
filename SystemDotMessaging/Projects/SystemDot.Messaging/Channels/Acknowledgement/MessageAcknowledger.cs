@@ -21,14 +21,14 @@ namespace SystemDot.Messaging.Channels.Acknowledgement
 
         public void InputMessage(MessagePayload toInput)
         {
-            MessageProcessed(toInput);
             SendAcknowledgement(toInput);
+            MessageProcessed(toInput);
         }
 
         void SendAcknowledgement(MessagePayload toInput)
         {
             var acknowledgement = new MessagePayload();
-            acknowledgement.SetAcknowledgementId(toInput.GetPersistenceId());
+            acknowledgement.SetAcknowledgementId(toInput.GetLastPersistenceId());
             acknowledgement.SetToAddress(toInput.GetFromAddress());
 
             this.sender.InputMessage(acknowledgement);

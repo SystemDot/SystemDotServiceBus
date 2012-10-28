@@ -4,7 +4,7 @@ namespace SystemDot.Messaging.Storage
 {
     public class PersistenceHeader : IMessageHeader
     {
-        public MessagePersistenceId MessagePersistenceId { get; set; }
+        public MessagePersistenceId PersistenceId { get; set; }
 
         public PersistenceHeader()
         {
@@ -12,7 +12,12 @@ namespace SystemDot.Messaging.Storage
 
         public PersistenceHeader(MessagePersistenceId messagePersistenceId)
         {
-            MessagePersistenceId = messagePersistenceId;
+            PersistenceId = messagePersistenceId;
+        }
+
+        public override string ToString()
+        {
+            return string.Concat(this.GetType() ,": ", PersistenceId.ToString());
         }
     }
 }

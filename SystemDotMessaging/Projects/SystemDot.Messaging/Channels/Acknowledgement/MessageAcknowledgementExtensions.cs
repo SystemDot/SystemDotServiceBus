@@ -16,12 +16,12 @@ namespace SystemDot.Messaging.Channels.Acknowledgement
 
         public static MessagePersistenceId GetAcknowledgementId(this MessagePayload payload)
         {
-            return payload.Headers.OfType<AcknowledgementHeader>().Single().MessageId;
+            return payload.GetHeader<AcknowledgementHeader>().MessageId;
         }
         
         public static bool IsAcknowledgement(this MessagePayload payload)
         {
-            return payload.Headers.OfType<AcknowledgementHeader>().Any();
+            return payload.HasHeader<AcknowledgementHeader>();
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.Contracts;
+using SystemDot.Logging;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Publishing.Builders;
@@ -42,14 +43,13 @@ namespace SystemDot.Messaging.Channels.Publishing
         MessagePayload CopyMessage(MessagePayload toInput)
         {
             MessagePayload copy = this.messagePayloadCopier.Copy(toInput);
-            copy.Headers.RemoveAll(h => h is LastSentHeader);
+            copy.RemoveHeader(typeof(LastSentHeader));
             return copy;
         }
 
         public void Subscribe(SubscriptionSchema schema)
         {
-            IMessageInputter<MessagePayload> temp;
-
+            Logger.Info("Subscribing {0} to {1}", schema.SubscriberAddress, this.address);
             var buildContainer = new BuildContainer();
 
             if(this.subscribers.TryAdd(schema.SubscriberAddress, buildContainer))

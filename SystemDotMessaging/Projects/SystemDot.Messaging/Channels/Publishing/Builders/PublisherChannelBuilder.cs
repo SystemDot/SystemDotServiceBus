@@ -65,6 +65,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
                 .ToProcessor(new Sequencer(persistence))
                 .ToMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
+                .ToProcessor(new SendChannelMessageCacher(persistence))
                 .Pump()
                 .ToProcessor(publisherEndpoint)
                 .ToEndPoint(new MessageDecacher(persistence));

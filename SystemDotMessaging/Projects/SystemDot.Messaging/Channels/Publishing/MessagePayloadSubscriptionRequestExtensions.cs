@@ -15,14 +15,14 @@ namespace SystemDot.Messaging.Channels.Publishing
 
         public static bool IsSubscriptionRequest(this MessagePayload payload)
         {
-            return payload.Headers.OfType<SubscriptionRequestHeader>().Any();
+            return payload.HasHeader<SubscriptionRequestHeader>();
         }
 
         public static SubscriptionSchema GetSubscriptionRequestSchema(this MessagePayload payload)
         {
             Contract.Requires(payload.IsSubscriptionRequest());
 
-            return payload.Headers.OfType<SubscriptionRequestHeader>().Single().Schema;
+            return payload.GetHeader<SubscriptionRequestHeader>().Schema;
         }
     }
 }

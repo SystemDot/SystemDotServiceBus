@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Specifications.channels.repeating
             message.SetFromAddress(endpointAddress);
             message.SetLastTimeSent(currentDate.Subtract(new TimeSpan(0, 0, 0, 0, 999)));
             message.IncreaseAmountSent();
-            The<IPersistence>().AddOrUpdateMessage(message);
+            The<IPersistence>().AddOrUpdateMessageAndIncrementSequence(message);
         };
 
         Because of = () => Subject.Start();

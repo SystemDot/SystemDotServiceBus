@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.SqlServerCe;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Serialisation;
@@ -51,19 +50,29 @@ namespace SystemDot.Messaging.Storage.Sql
             return messages;
         }
 
-        public void AddOrUpdateMessage(MessagePayload message)
+        public void AddOrUpdateMessageAndIncrementSequence(MessagePayload message)
         {
             using (SqlCeConnection connection = ConnectionHelper.GetConnection())
             {
                 using (SqlCeTransaction transaction = connection.BeginTransaction())
                 {
-                    if (UpdateMessage(message, connection) == 0) ;
+                    if (UpdateMessage(message, connection) == 0)
                     {
                         IncrementSequence(connection);
                         AddMessage(message, connection);
                     }
+
                     transaction.Commit();
                 }
+            }
+        }
+
+        public void AddOrUpdateMessage(MessagePayload message)
+        {
+            using (SqlCeConnection connection = ConnectionHelper.GetConnection())
+            {
+                if (UpdateMessage(message, connection) == 0)
+                    AddMessage(message, connection);
             }
         }
 

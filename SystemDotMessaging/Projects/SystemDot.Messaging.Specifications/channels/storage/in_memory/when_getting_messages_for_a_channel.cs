@@ -4,6 +4,7 @@ using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.InMemory;
+using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -19,15 +20,17 @@ namespace SystemDot.Messaging.Specifications.channels.storage.in_memory
 
         Establish context = () =>
         {
+            Configure<IDatastore>(new InMemoryDatastore(new MessagePayloadCopier(new PlatformAgnosticSerialiser())));
+
             persistence = Subject.CreatePersistence(
-                PersistenceUseType.Other, 
+                PersistenceUseType.SubscriberRequestSend, 
                 new EndpointAddress("Channel", "Server"));
 
             message1 = new MessagePayload();
-            persistence.AddOrUpdateMessage(message1);
+            persistence.AddOrUpdateMessageAndIncrementSequence(message1);
 
             message2 = new MessagePayload();
-            persistence.AddOrUpdateMessage(message2);
+            persistence.AddOrUpdateMessageAndIncrementSequence(message2);
         };
 
         Because of = () => messages = persistence.GetMessages();

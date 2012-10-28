@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
 using SystemDot.Messaging.Transport;
@@ -31,8 +30,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
 
             this.recieveSchema = new SubscriberRecieveChannelSchema
             {
-                Address = subscriberAddress,
-                IsSequenced = false
+                Address = subscriberAddress
             };
         }
 
@@ -50,8 +48,8 @@ namespace SystemDot.Messaging.Configuration.Publishers
 
         public SubscribeToConfiguration WithDurability()
         {
-            this.requestSchema.IsPersistent = true;
-            this.recieveSchema.IsSequenced = true;
+            this.requestSchema.IsDurable = true;
+            this.recieveSchema.IsDurable = true;
             return this;
         }
     }

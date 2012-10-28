@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 
@@ -9,14 +8,14 @@ namespace SystemDot.Messaging.Storage.InMemory
 {
     public class InMemoryPersistence : IPersistence
     {
-        readonly InMemoryDatatore store;
+        readonly IDatastore store;
         int sequence;
 
         public EndpointAddress Address { get; private set; }
         public PersistenceUseType UseType { get; private set; }
 
         public InMemoryPersistence(
-            InMemoryDatatore store, 
+            IDatastore store, 
             PersistenceUseType useType, 
             EndpointAddress address)
         {
@@ -35,10 +34,15 @@ namespace SystemDot.Messaging.Storage.InMemory
             return this.store.GetMessages(UseType, Address);
         }
 
-        public void AddOrUpdateMessage(MessagePayload message)
+        public void AddOrUpdateMessageAndIncrementSequence(MessagePayload message)
         {
             this.store.AddOrUpdateMessage(UseType, Address, message);
             this.sequence = this.sequence + 1;
+        }
+
+        public void AddOrUpdateMessage(MessagePayload message)
+        {
+            this.store.AddOrUpdateMessage(UseType, Address, message);
         }
 
         public int GetSequence()

@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Linq;
+using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Channels.Packaging
 {
@@ -24,6 +27,27 @@ namespace SystemDot.Messaging.Channels.Packaging
             Contract.Requires(toAdd != null);
 
             this.Headers.Add(toAdd);
+        }
+
+        public void RemoveHeader(PersistenceHeader toRemove)
+        {
+            RemoveHeader(toRemove.GetType());
+        }
+
+        public void RemoveHeader(Type toRemove)
+        {
+            IMessageHeader temp;
+            this.Headers.RemoveAll(h => h.GetType() == toRemove);
+        }
+
+        public T GetHeader<T>()
+        {
+            return this.Headers.Single(h => h.GetType() == typeof(T)).As<T>();
+        }
+
+        public bool HasHeader<T>()
+        {
+            return this.Headers.Any(h =>  h.GetType() == typeof (T));
         }
     }
 }

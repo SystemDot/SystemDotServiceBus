@@ -1,4 +1,5 @@
 using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
@@ -19,13 +20,13 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                
-                .OpenChannel(ChannelName).ForRequestReplySendingTo(RecieverAddress)
-                .WithHook(hook)
+                .OpenChannel(ChannelName)
+                    .ForRequestReplySendingTo(RecieverAddress)
+                    .WithHook(hook)
                 .Initialise();
 
             message = 1;
-            payload = CreateRecieveablePayload(message, RecieverAddress, ChannelName);
+            payload = CreateRecieveablePayload(message, RecieverAddress, ChannelName, PersistenceUseType.ReplySend);
         };
 
         Because of = () => MessageReciever.RecieveMessage(payload);

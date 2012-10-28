@@ -24,8 +24,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
 
             this.requestChannelSchema = new RequestRecieveChannelSchema
             {
-                Address = address,
-                IsSequenced = false
+                Address = address
             };
         }
 
@@ -44,7 +43,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         public RequestReplyRecieverConfiguration WithDurability()
         {
             this.sendChannelSchema.IsDurable = true;
-            this.requestChannelSchema.IsSequenced = true;
+            this.requestChannelSchema.IsDurable = true;
             return this;
         }
 

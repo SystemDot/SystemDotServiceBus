@@ -15,12 +15,12 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
 
         public static bool IsLongPollRequest(this MessagePayload payload)
         {
-            return payload.Headers.OfType<LongPollRequestHeader>().Any();
+            return payload.HasHeader<LongPollRequestHeader>();
         }
 
         public static EndpointAddress GetLongPollRequestAddress(this MessagePayload payload)
         {
-            return payload.Headers.OfType<LongPollRequestHeader>().Single().Address;
+            return payload.GetHeader<LongPollRequestHeader>().Address;
         }
     }
 }

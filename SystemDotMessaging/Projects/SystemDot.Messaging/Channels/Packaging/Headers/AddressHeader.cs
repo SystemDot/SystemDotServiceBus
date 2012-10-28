@@ -14,5 +14,10 @@ namespace SystemDot.Messaging.Channels.Packaging.Headers
             Contract.Requires(address != null);
             Address = address;
         }
+
+        public override string ToString()
+        {
+            return string.Concat(this.GetType() ,": ", Address.ToString());
+        }
     }
 }

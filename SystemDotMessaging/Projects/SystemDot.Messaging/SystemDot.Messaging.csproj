@@ -47,6 +47,9 @@
     <Compile Include="Channels\Addressing\EndpointAddress.cs" />
     <Compile Include="Channels\Addressing\EndpointAddressBuilder.cs" />
     <Compile Include="Channels\Addressing\MessageAddresser.cs" />
+    <Compile Include="Channels\Builders\ChannelSchema.cs" />
+    <Compile Include="Channels\Caching\ReceiveChannelMessageCacher.cs" />
+    <Compile Include="Channels\Caching\SendChannelMessageCacher.cs" />
     <Compile Include="Channels\Distribution\Queue.cs" />
     <Compile Include="Channels\Expiry\IMessageExpiryStrategy.cs" />
     <Compile Include="Channels\Expiry\MessageExpirer.cs" />
@@ -136,12 +139,15 @@
     <Compile Include="Channels\Publishing\MessagePayloadSubscriptionRequestExtensions.cs" />
     <Compile Include="Channels\RequestReply\ReplyChannelSelector.cs" />
     <Compile Include="Channels\RequestReply\ReplyAddressLookup.cs" />
-    <Compile Include="Storage\InMemory\InMemoryDatatore.cs" />
+    <Compile Include="Storage\IDatastore.cs" />
+    <Compile Include="Storage\InMemory\InMemoryDatastore.cs" />
     <Compile Include="Storage\InMemory\InMemoryPersistenceFactory.cs" />
     <Compile Include="Storage\IPersistenceFactory.cs" />
     <Compile Include="Storage\IPersistence.cs" />
     <Compile Include="Storage\InMemory\InMemoryPersistence.cs" />
     <Compile Include="Channels\Acknowledgement\MessageAcknowledgementHandler.cs" />
+    <Compile Include="Storage\LastPersistenceHeader.cs" />
+    <Compile Include="Storage\MessagePayloadLastPersistenceExtensions.cs" />
     <Compile Include="Storage\MessagePayloadPersistenceExtensions.cs" />
     <Compile Include="Storage\MessagePersistenceId.cs" />
     <Compile Include="Storage\PersistenceHeader.cs" />

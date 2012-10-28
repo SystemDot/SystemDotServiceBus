@@ -14,5 +14,10 @@ namespace SystemDot.Messaging.Channels.Publishing
             Contract.Requires(schema != null);
             Schema = schema;
         }
+
+        public override string ToString()
+        {
+            return string.Concat(this.GetType(), ": ", Schema.ToString());
+        }
     }
 }

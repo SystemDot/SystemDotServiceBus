@@ -24,8 +24,8 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 
         Because of = () => bus.Send(message);
 
-        It should_persist_the_message = () => 
-            Resolve<InMemoryDatatore>()
+        It should_persist_the_message = () =>
+            Resolve<IDatastore>()
                 .GetMessages(PersistenceUseType.RequestSend, BuildAddress(ChannelName))
                 .ShouldNotBeEmpty();
     }

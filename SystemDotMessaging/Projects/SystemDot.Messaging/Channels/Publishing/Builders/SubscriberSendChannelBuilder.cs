@@ -54,6 +54,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             MessagePipelineBuilder.Build()
                 .With(addresser)
                 .ToMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
+                .ToProcessor(new SendChannelMessageCacher(persistence))
                 .Pump()
                 .ToEndPoint(this.messageSender);
 

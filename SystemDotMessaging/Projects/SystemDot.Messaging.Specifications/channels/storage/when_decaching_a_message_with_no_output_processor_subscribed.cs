@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.Specifications.channels.storage
     {
         static Exception exception;
 
-        Because of = () => Subject.InputMessage(new MessagePayload());
+        Because of = () => exception = Catch.Exception(() => Subject.InputMessage(new MessagePayload()));
 
         It should_not_fail = () => exception.ShouldBeNull();
     }

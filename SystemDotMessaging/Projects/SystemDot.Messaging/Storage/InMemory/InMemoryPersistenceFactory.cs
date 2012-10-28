@@ -1,14 +1,13 @@
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
 
 namespace SystemDot.Messaging.Storage.InMemory
 {
     public class InMemoryPersistenceFactory : IPersistenceFactory
     {
-        readonly InMemoryDatatore store;
+        readonly IDatastore store;
 
-        public InMemoryPersistenceFactory(InMemoryDatatore store)
+        public InMemoryPersistenceFactory(IDatastore store)
         {
             Contract.Requires(store != null);
             this.store = store;

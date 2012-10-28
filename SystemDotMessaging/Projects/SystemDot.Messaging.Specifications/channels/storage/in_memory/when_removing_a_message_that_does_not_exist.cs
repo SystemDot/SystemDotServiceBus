@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Specifications.channels.storage.in_memory
 
         Establish context = () =>
             persistence = Subject.CreatePersistence(
-                PersistenceUseType.Other,
+                PersistenceUseType.SubscriberRequestSend,
                 new EndpointAddress("Channel", "Server"));
 
         Because of = () => exception = Catch.Exception(() => persistence.Delete(Guid.NewGuid()));

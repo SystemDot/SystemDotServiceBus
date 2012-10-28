@@ -7,5 +7,10 @@ namespace SystemDot.Messaging.Channels.Publishing
         public EndpointAddress SubscriberAddress { get; set; }
 
         public bool IsPersistent { get; set; }
+
+        public override string ToString()
+        {
+            return SubscriberAddress.ToString();
+        }
     }
 }

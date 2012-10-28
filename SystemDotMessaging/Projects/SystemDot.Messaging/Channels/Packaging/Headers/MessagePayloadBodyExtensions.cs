@@ -9,7 +9,7 @@ namespace SystemDot.Messaging.Channels.Packaging.Headers
         {
             Contract.Requires(payload.HasBody());
 
-            return payload.Headers.OfType<BodyHeader>().Single().Body;
+            return payload.GetHeader<BodyHeader>().Body;
         }
 
         public static void SetBody(this MessagePayload payload, byte[] body)
@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Channels.Packaging.Headers
 
         public static bool HasBody(this MessagePayload payload)
         {
-            return payload.Headers.OfType<BodyHeader>().Any();
+            return payload.HasHeader<BodyHeader>();
         }
 
     }

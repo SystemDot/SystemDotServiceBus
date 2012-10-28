@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Channels.Packaging.Headers
 
         public static EndpointAddress GetFromAddress(this MessagePayload payload)
         {
-            return payload.Headers.OfType<FromAddressHeader>().Single().Address;
+            return payload.GetHeader<FromAddressHeader>().Address;
         }
 
         public static void SetToAddress(this MessagePayload payload, EndpointAddress address)
@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Channels.Packaging.Headers
 
         public static EndpointAddress GetToAddress(this MessagePayload payload)
         {
-            return payload.Headers.OfType<ToAddressHeader>().Single().Address;
+            return payload.GetHeader<ToAddressHeader>().Address;
         }
     }
 }

@@ -24,8 +24,6 @@ namespace SystemDot.Messaging.Channels.RequestReply.Repeating
         public void InputMessage(MessagePayload toInput)
         {
             SetTimeOnMesage(toInput);
-            PersistMessage(toInput);
-
             MessageProcessed(toInput);
         }
 
@@ -34,13 +32,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Repeating
             toInput.SetLastTimeSent(this.currentDateProvider.Get());
             toInput.IncreaseAmountSent();
         }
-
-        void PersistMessage(MessagePayload toInput)
-        {
-            toInput.SetPersistenceId(this.persistence.Address, this.persistence.UseType);
-            this.persistence.AddOrUpdateMessage(toInput);
-        }
-
+                
         public event Action<MessagePayload> MessageProcessed;
 
         public void Start()

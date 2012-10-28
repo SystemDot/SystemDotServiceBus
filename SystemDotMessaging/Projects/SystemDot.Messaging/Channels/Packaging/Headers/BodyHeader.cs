@@ -13,5 +13,10 @@ namespace SystemDot.Messaging.Channels.Packaging.Headers
             Contract.Requires(body != null);
             Body = body;
         }
+
+        public override string ToString()
+        {
+            return string.Concat(this.GetType() ,": ", Body.ToString());
+        }
     }
 }

@@ -61,10 +61,15 @@
     <Compile Include="channels\expiry\when_passing_a_message_that_is_not_time_expired_through_an_expirer.cs" />
     <Compile Include="channels\publishing\TestSubscriberSendChannelBuilder.cs" />
     <Compile Include="channels\publishing\when_starting_a_subscription_requestor_with_persistence_indicated_on_the_schema.cs" />
-    <Compile Include="channels\sequencing\when_passing_a_message_without_a_sequence_number_header_through_a_resequncer.cs" />
+    <Compile Include="channels\sequencing\when_passing_a_message_without_a_sequence_number_header_through_a_resequencer.cs" />
     <Compile Include="channels\sequencing\when_passing_a_message_through_a_sequencer.cs" />
-    <Compile Include="channels\sequencing\when_passing_messages_in_the_correct_order_through_a_resequncer.cs" />
-    <Compile Include="channels\sequencing\when_passing_messages_in_the_incorrect_order_through_a_resequncer.cs" />
+    <Compile Include="channels\sequencing\when_passing_messages_in_the_correct_order_through_a_resequencer.cs" />
+    <Compile Include="channels\sequencing\when_passing_messages_in_the_incorrect_order_through_a_resequencer.cs" />
+    <Compile Include="channels\storage\when_caching_a_message_with_a_receive_cacher_with_no_output_processor_subscribed.cs" />
+    <Compile Include="channels\storage\when_caching_a_message_with_a_recieve_cacher.cs" />
+    <Compile Include="channels\storage\when_caching_a_message_with_a_recieve_cacher_for_the_second_time.cs" />
+    <Compile Include="channels\storage\when_caching_a_message_with_a_send_cacher_with_no_output_processor_subscribed.cs" />
+    <Compile Include="channels\storage\when_caching_a_message_with_a_send_cacher.cs" />
     <Compile Include="channels\storage\when_decaching_a_message.cs" />
     <Compile Include="channels\storage\when_decaching_a_message_with_no_output_processor_subscribed.cs" />
     <Compile Include="configuration\FakeAccessorExtensions.cs" />
@@ -76,7 +81,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="configuration\publishing\when_recieving_an_out_of_sequence_published_message_on_a_durable_subscriber_channel.cs" />
+    <Compile Include="configuration\publishing\when_recieving_a_published_message_on_a_durable_subscriber_channel.cs" />
     <Compile Include="configuration\request_reply\recieving\when_recieving_an_out_of_sequence_request_message_on_a_durable_request_reply_channel.cs" />
+    <Compile Include="configuration\request_reply\recieving\when_recieving_a_request_message_on_a_durable_request_reply_channel.cs" />
     <Compile Include="configuration\request_reply\recieving\when_replying_with_a_message_on_a_request_reply_channel.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -96,6 +103,7 @@
     <Compile Include="configuration\request_reply\recieving\when_recieving_a_request_message_on_a_request_reply_channel.cs" />
     <Compile Include="configuration\request_reply\recieving\when_replying_with_a_message_on_a_durable_request_reply_channel.cs" />
     <Compile Include="configuration\request_reply\recieving\when_replying_with_a_message_on_two_request_reply_channels.cs" />
+    <Compile Include="configuration\request_reply\sending\when_recieving_a_reply_message_on_a_durable_request_reply_channel.cs" />
     <Compile Include="configuration\request_reply\sending\when_recieving_a_reply_message_on_a_request_reply_channel_with_no_body.cs" />
     <Compile Include="configuration\request_reply\sending\when_sending_a_message_down_two_request_reply_channels.cs" />
     <Compile Include="configuration\request_reply\sending\when_sending_a_repeat_attempt_expired_request_message_down_a_request_reply_channel.cs" />
@@ -133,6 +141,7 @@
     <Compile Include="channels\storage\in_memory\when_removing_a_message_that_does_not_exist.cs" />
     <Compile Include="configuration\WithMessageConfigurationSubject.cs" />
     <Compile Include="PersistenceBehaviour.cs" />
+    <Compile Include="TestDatastore.cs" />
     <Compile Include="TestMessageHandler.cs" />
     <Compile Include="TestMessageProcessorHook.cs" />
     <Compile Include="TestMessageReciever.cs" />

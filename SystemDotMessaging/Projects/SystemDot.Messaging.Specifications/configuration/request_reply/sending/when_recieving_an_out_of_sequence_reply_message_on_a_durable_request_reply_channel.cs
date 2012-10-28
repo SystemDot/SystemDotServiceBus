@@ -1,8 +1,7 @@
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Specifications.channels.handling;
+using SystemDot.Messaging.Storage;
 using Machine.Specifications;
-using SystemDot.Messaging.Channels.Acknowledgement;
 using SystemDot.Messaging.Channels.Sequencing;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
@@ -21,14 +20,16 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
         {
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel(ChannelName).ForRequestReplySendingTo(RecieverAddress).WithDurability()
+                .OpenChannel(ChannelName)
+                    .ForRequestReplySendingTo(RecieverAddress)
+                    .WithDurability()
                 .Initialise();
 
             handler = new TestMessageHandler<int>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             message = 1;
-            payload = CreateRecieveablePayload(message, RecieverAddress, ChannelName);
+            payload = CreateRecieveablePayload(message, RecieverAddress, ChannelName, PersistenceUseType.RequestSend);
             payload.SetSequence(2);
         };
 

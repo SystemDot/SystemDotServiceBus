@@ -7,21 +7,24 @@ namespace SystemDot.Messaging.Channels.Builders
     public class PersistenceFactorySelector 
     {
         readonly IPersistenceFactory persistenceFactory;
-        
-        public PersistenceFactorySelector(IPersistenceFactory persistenceFactory)
+        readonly IDatastore datastore;
+
+        public PersistenceFactorySelector(IPersistenceFactory persistenceFactory, IDatastore datastore)
         {
             Contract.Requires(persistenceFactory != null);
+            Contract.Requires(datastore != null);
             
             this.persistenceFactory = persistenceFactory;
+            this.datastore = datastore;
         }
 
-        public IPersistenceFactory Select(SendChannelSchema schema)
+        public IPersistenceFactory Select(ChannelSchema schema)
         {
             Contract.Requires(schema != null);
             
             return (schema.IsDurable) 
                 ? this.persistenceFactory
-                : new InMemoryPersistenceFactory(new InMemoryDatatore());
+                : new InMemoryPersistenceFactory(this.datastore);
         }
     }
 }

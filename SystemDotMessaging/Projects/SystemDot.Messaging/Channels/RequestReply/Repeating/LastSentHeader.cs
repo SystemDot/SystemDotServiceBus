@@ -8,5 +8,10 @@ namespace SystemDot.Messaging.Channels.RequestReply.Repeating
         public DateTime Time { get; set; }
 
         public int Amount { get; set; }
+
+        public override string ToString()
+        {
+            return string.Concat(this.GetType(), ": ", Time, " ", Amount);
+        }
     }
 }

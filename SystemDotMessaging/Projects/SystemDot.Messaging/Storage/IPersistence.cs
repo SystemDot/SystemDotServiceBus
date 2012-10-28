@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 
@@ -11,6 +10,7 @@ namespace SystemDot.Messaging.Storage
     public interface IPersistence
     {
         IEnumerable<MessagePayload> GetMessages();
+        void AddOrUpdateMessageAndIncrementSequence(MessagePayload message);
         void AddOrUpdateMessage(MessagePayload message);
         int GetSequence();
         void SetSequence(int toSet);
@@ -27,6 +27,12 @@ namespace SystemDot.Messaging.Storage
             Contract.Ensures(Contract.Result<IEnumerable<MessagePayload>>() != null);
 
             return null;
+        }
+
+        public void AddOrUpdateMessageAndIncrementSequence(MessagePayload message)
+        {
+            Contract.Requires(message != null);
+            Contract.Ensures(Contract.Result<IEnumerable<MessagePayload>>() != null);
         }
 
         public void AddOrUpdateMessage(MessagePayload message)

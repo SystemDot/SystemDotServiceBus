@@ -27,8 +27,8 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
 
         Because of = () => bus.Publish(message);
 
-        It should_have_persisted_the_message = () => 
-            Resolve<InMemoryDatatore>()
+        It should_have_persisted_the_message = () =>
+            Resolve<IDatastore>()
                 .GetMessages(PersistenceUseType.SubscriberSend, BuildAddress(SubscriberName))
                 .ShouldNotBeEmpty();
     }

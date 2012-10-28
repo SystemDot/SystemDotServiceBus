@@ -9,6 +9,7 @@ namespace SystemDot.Messaging.Storage
         PublisherSend,
         SubscriberSend,
         SubscriberReceive,
-        Other
+        SubscriberRequestSend,
+        SubscriberRequestReceive
     }
 }

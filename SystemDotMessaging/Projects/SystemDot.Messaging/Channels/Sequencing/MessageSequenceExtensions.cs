@@ -7,17 +7,17 @@ namespace SystemDot.Messaging.Channels.Sequencing
     {
         public static int GetSequence(this MessagePayload payload)
         {
-            return payload.Headers.OfType<SequenceHeader>().Single().Sequence;
+            return payload.GetHeader<SequenceHeader>().Sequence;
         }
 
         public static bool HasSequence(this MessagePayload payload)
         {
-            return payload.Headers.OfType<SequenceHeader>().Any();
+            return payload.HasHeader<SequenceHeader>();
         }
 
         public static void SetSequence(this MessagePayload payload, int sequence)
         {
-            payload.Headers.Add(new SequenceHeader { Sequence = sequence });
+            payload.AddHeader(new SequenceHeader { Sequence = sequence });
         }
     }
 }

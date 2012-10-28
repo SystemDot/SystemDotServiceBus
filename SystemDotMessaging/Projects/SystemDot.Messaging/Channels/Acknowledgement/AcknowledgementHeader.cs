@@ -18,5 +18,10 @@ namespace SystemDot.Messaging.Channels.Acknowledgement
         }
 
         public MessagePersistenceId MessageId { get; set; }
+
+        public override string ToString()
+        {
+            return string.Concat(this.GetType() ,": ", MessageId.ToString());
+        }
     }
 }
