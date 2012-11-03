@@ -150,6 +150,7 @@
     <Compile Include="Storage\IPersistence.cs" />
     <Compile Include="Storage\InMemory\InMemoryPersistence.cs" />
     <Compile Include="Channels\Acknowledgement\MessageAcknowledgementHandler.cs" />
+    <Compile Include="Storage\Persistence.cs" />
     <Compile Include="Storage\SourcePersistenceHeader.cs" />
     <Compile Include="Storage\MessagePayloadLastPersistenceExtensions.cs" />
     <Compile Include="Storage\MessagePayloadPersistenceExtensions.cs" />
