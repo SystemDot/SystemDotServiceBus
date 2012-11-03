@@ -24,11 +24,11 @@ namespace SystemDot.Messaging.Specifications.channels.sequencing
             
             message1 = new MessagePayload();
             message1.SetSequence(2);
-            The<IPersistence>().AddOrUpdateMessage(message1);
+            The<IPersistence>().AddMessage(message1);
             
             message2 = new MessagePayload();
             message2.SetSequence(3);
-            The<IPersistence>().AddOrUpdateMessage(message2);
+            The<IPersistence>().AddMessage(message2);
         };
 
         Because of = () =>

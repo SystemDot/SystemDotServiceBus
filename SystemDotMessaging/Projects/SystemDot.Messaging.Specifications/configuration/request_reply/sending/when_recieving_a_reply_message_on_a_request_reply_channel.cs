@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.RequestReply.Repeating;
+using SystemDot.Messaging.Channels.Repeating;
 using Machine.Specifications;
 using SystemDot.Messaging.Channels.Acknowledgement;
 using SystemDot.Messaging.Storage;
@@ -41,7 +41,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
         It should_push_the_message_to_any_registered_handlers = () => handler.HandledMessage.ShouldEqual(message);
 
         It should_send_an_acknowledgement_for_the_message = () =>
-            MessageSender.SentMessages.ShouldContain(a => a.GetAcknowledgementId() == payload.GetLastPersistenceId());
+            MessageSender.SentMessages.ShouldContain(a => a.GetAcknowledgementId() == payload.GetSourcePersistenceId());
 
         It should_mark_the_message_with_the_time_the_message_is_sent = () =>
             Resolve<IDatastore>().As<TestDatastore>()

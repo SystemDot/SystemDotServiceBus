@@ -10,8 +10,9 @@ namespace SystemDot.Messaging.Storage
     public interface IPersistence
     {
         IEnumerable<MessagePayload> GetMessages();
-        void AddOrUpdateMessageAndIncrementSequence(MessagePayload message);
-        void AddOrUpdateMessage(MessagePayload message);
+        void AddMessageAndIncrementSequence(MessagePayload message);
+        void AddMessage(MessagePayload message);
+        void UpdateMessage(MessagePayload message);
         int GetSequence();
         void SetSequence(int toSet);
         void Delete(Guid id);
@@ -29,16 +30,20 @@ namespace SystemDot.Messaging.Storage
             return null;
         }
 
-        public void AddOrUpdateMessageAndIncrementSequence(MessagePayload message)
+        public void AddMessageAndIncrementSequence(MessagePayload message)
         {
             Contract.Requires(message != null);
             Contract.Ensures(Contract.Result<IEnumerable<MessagePayload>>() != null);
         }
 
-        public void AddOrUpdateMessage(MessagePayload message)
+        public void AddMessage(MessagePayload message)
         {
             Contract.Requires(message != null);
-            Contract.Ensures(Contract.Result<IEnumerable<MessagePayload>>() != null);
+        }
+
+        public void UpdateMessage(MessagePayload message)
+        {
+            Contract.Requires(message != null);
         }
 
         public int GetSequence()

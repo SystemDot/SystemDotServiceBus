@@ -41,6 +41,7 @@ namespace SystemDot.Messaging.Specifications.configuration
             payload.SetFromAddress(BuildAddress(fromAddress));
             payload.SetToAddress(BuildAddress(toAddress));
             payload.SetPersistenceId(BuildAddress(fromAddress), useType);
+            payload.SetSourcePersistenceId(payload.GetPersistenceId());
 
             return payload;
         }

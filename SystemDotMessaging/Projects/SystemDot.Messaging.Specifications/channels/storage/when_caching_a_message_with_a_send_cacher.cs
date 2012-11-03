@@ -1,6 +1,6 @@
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Storage;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -11,12 +11,13 @@ namespace SystemDot.Messaging.Specifications.channels.storage
     {
         static MessagePayload message;
         static MessagePayload processedMessage;
-        
+
         Establish context = () =>
         {
             With<PersistenceBehaviour>();
 
             message = new MessagePayload();
+            message.IncreaseAmountSent();
             Subject.MessageProcessed += m => processedMessage = m;
         };
 
@@ -34,6 +35,13 @@ namespace SystemDot.Messaging.Specifications.channels.storage
         It should_increment_the_persistence_sequence = () =>
             The<IPersistence>().GetSequence().ShouldEqual(2);
 
-        It should_persist_the_message = () => The<IPersistence>().GetMessages().ShouldContain(message);
+        It should_set_the_source_persistence_id_the_same_as_the_persistence_id_on_the_message = () =>
+            message.GetSourcePersistenceId()
+                .ShouldEqual(new MessagePersistenceId(
+                    message.Id,
+                    The<IPersistence>().Address,
+                    The<IPersistence>().UseType));
+
+        It should_persist_the_message = () => The<IPersistence>().GetMessages().ShouldContain(m => message.Id == m.Id);
     }
 }

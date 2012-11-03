@@ -1,5 +1,6 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Channels.Caching
@@ -22,15 +23,11 @@ namespace SystemDot.Messaging.Channels.Caching
 
         void PersistMessage(MessagePayload toInput)
         {
-            MessagePersistenceId id = toInput.GetPersistenceId();
-
-            if (id.Address == this.persistence.Address) 
-                return;
-            
-            toInput.SetLastPersistenceId(id);
             toInput.SetPersistenceId(this.persistence.Address, this.persistence.UseType);
-            
-            this.persistence.AddOrUpdateMessage(toInput);
+            if (toInput.GetAmountSent() == 1)
+                this.persistence.AddMessage(toInput);
+            else
+                this.persistence.UpdateMessage(toInput);
         }
     }
 }

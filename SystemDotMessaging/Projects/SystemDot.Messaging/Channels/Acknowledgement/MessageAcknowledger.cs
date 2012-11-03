@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Channels.Acknowledgement
         void SendAcknowledgement(MessagePayload toInput)
         {
             var acknowledgement = new MessagePayload();
-            acknowledgement.SetAcknowledgementId(toInput.GetLastPersistenceId());
+            acknowledgement.SetAcknowledgementId(toInput.GetSourcePersistenceId());
             acknowledgement.SetToAddress(toInput.GetFromAddress());
 
             this.sender.InputMessage(acknowledgement);

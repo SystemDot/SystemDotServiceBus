@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.OtherTestSubscriber
 
             Configure.Messaging()
                 .UsingHttpTransport(MessageServer.Local())
-                //.UsingSqlPersistence()
+                .UsingSqlPersistence()
                 .OpenChannel("TestOtherSubscriber")
                     .ForSubscribingTo("TestPublisher")
                     .WithDurability()

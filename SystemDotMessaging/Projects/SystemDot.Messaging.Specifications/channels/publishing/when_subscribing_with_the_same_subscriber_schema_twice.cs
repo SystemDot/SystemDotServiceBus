@@ -21,7 +21,6 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
         Establish context = () =>
         {
             Configure(new EndpointAddress("Publisher", "Server"));
-            Configure(new MessagePayloadCopier(new PlatformAgnosticSerialiser()));
             Configure<ISerialiser>(new PlatformAgnosticSerialiser());
             Configure<IMessageSender>(new TestMessageSender());
             Configure<ISubscriberSendChannelBuilder>(new TestSubscriberSendChannelBuilder(The<IMessageSender>()));

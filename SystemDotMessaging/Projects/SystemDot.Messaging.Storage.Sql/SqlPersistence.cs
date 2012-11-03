@@ -4,6 +4,7 @@ using System.Data.SqlServerCe;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Storage.Sql.Connections;
 using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Storage.Sql
@@ -34,7 +35,7 @@ namespace SystemDot.Messaging.Storage.Sql
         {
             var messages = new List<MessagePayload>();
 
-            using (SqlCeConnection connection = ConnectionHelper.GetConnection())
+            using (var connection = new PooledConnection())
             {
                 connection.ExecuteReader(
                     "select id, createdon, headers from MessagePayloadStorageItem where address = '" + Address + "'",
@@ -50,46 +51,20 @@ namespace SystemDot.Messaging.Storage.Sql
             return messages;
         }
 
-        public void AddOrUpdateMessageAndIncrementSequence(MessagePayload message)
+        public void AddMessageAndIncrementSequence(MessagePayload message)
         {
-            using (SqlCeConnection connection = ConnectionHelper.GetConnection())
+            using (var connection = new PooledConnection())
             {
-                using (SqlCeTransaction transaction = connection.BeginTransaction())
+                using (SqlCeTransaction transaction = connection.Connection.BeginTransaction())
                 {
-                    if (UpdateMessage(message, connection) == 0)
-                    {
-                        IncrementSequence(connection);
-                        AddMessage(message, connection);
-                    }
-
+                    IncrementSequence(connection);
+                    AddMessage(message, connection);
                     transaction.Commit();
                 }
             }
         }
 
-        public void AddOrUpdateMessage(MessagePayload message)
-        {
-            using (SqlCeConnection connection = ConnectionHelper.GetConnection())
-            {
-                if (UpdateMessage(message, connection) == 0)
-                    AddMessage(message, connection);
-            }
-        }
-
-        int UpdateMessage(MessagePayload message, SqlCeConnection connection)
-        {
-            return connection.Execute(
-                "update MessagePayloadStorageItem set headers = @headers where id = @id and address = @address and type = @type",
-                command =>
-                {
-                    command.Parameters.AddWithValue("@id", message.Id);
-                    command.Parameters.AddWithValue("@headers", this.serialiser.Serialise(message.Headers));
-                    command.Parameters.AddWithValue("@address", Address.ToString());
-                    command.Parameters.AddWithValue("@type", UseType);
-                });
-        }
-
-        void IncrementSequence(SqlCeConnection connection)
+        void IncrementSequence(PooledConnection connection)
         {
             connection.Execute(
                 "update MessageSequence set sequencenumber = sequencenumber + 1 where address = @address and type = @type",
@@ -100,7 +75,15 @@ namespace SystemDot.Messaging.Storage.Sql
                 });
         }
 
-        void AddMessage(MessagePayload message, SqlCeConnection connection)
+        public void AddMessage(MessagePayload message)
+        {
+            using (var connection = new PooledConnection())
+            {
+                AddMessage(message, connection);
+            }
+        }
+
+        void AddMessage(MessagePayload message, PooledConnection connection)
         {
             connection.Execute(
                 "insert into MessagePayloadStorageItem(id, createdon, headers, address, type) values(@id, @createdon, @headers, @address, @type)",
@@ -114,9 +97,25 @@ namespace SystemDot.Messaging.Storage.Sql
                 });
         }
 
+        public void UpdateMessage(MessagePayload message)
+        {
+            using (var connection = new PooledConnection())
+            {
+                connection.Execute(
+                    "update MessagePayloadStorageItem set headers = @headers where id = @id and address = @address and type = @type",
+                    command =>
+                    {
+                        command.Parameters.AddWithValue("@id", message.Id);
+                        command.Parameters.AddWithValue("@headers", this.serialiser.Serialise(message.Headers));
+                        command.Parameters.AddWithValue("@address", Address.ToString());
+                        command.Parameters.AddWithValue("@type", UseType);
+                    });
+            }
+        }
+
         public int GetSequence()
         {
-            using (SqlCeConnection connection = ConnectionHelper.GetConnection())
+            using (var connection = new PooledConnection())
             {
                 return connection.ExecuteScalar<int>(
                     "select sequencenumber from MessageSequence where address = @address and type = @type",
@@ -130,7 +129,7 @@ namespace SystemDot.Messaging.Storage.Sql
         
         public void SetSequence(int toSet)
         {
-            using (SqlCeConnection connection = ConnectionHelper.GetConnection())
+            using (var connection = new PooledConnection())
             {
                 connection.Execute(
                     "update MessageSequence set sequencenumber = @sequence where address = @address and type = @type",
@@ -145,7 +144,7 @@ namespace SystemDot.Messaging.Storage.Sql
 
         public void Delete(Guid id)
         {
-            using (SqlCeConnection connection = ConnectionHelper.GetConnection())
+            using (var connection = new PooledConnection())
             {
                 connection.Execute(
                     "delete from MessagePayloadStorageItem where id = @id and address = @address and type = @type",
@@ -160,7 +159,7 @@ namespace SystemDot.Messaging.Storage.Sql
 
         public void Initialise()
         {
-            using (SqlCeConnection connection = ConnectionHelper.GetConnection())
+            using (var connection = new PooledConnection())
             {
                 if (connection.ExecuteScalar<int>(
                     "select count(*) from MessageSequence where address = @address and type = @type",

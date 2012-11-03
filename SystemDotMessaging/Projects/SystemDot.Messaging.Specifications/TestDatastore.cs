@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Specifications
 
         public TestDatastore()
         {
-            this.innerStore = new InMemoryDatastore(new MessagePayloadCopier(new PlatformAgnosticSerialiser()));
+            this.innerStore = new InMemoryDatastore(new PlatformAgnosticSerialiser());
             AddedMessages = new List<MessagePayload>();
         }
 
@@ -25,12 +25,12 @@ namespace SystemDot.Messaging.Specifications
             return this.innerStore.GetMessages(useType, address);
         }
 
-        public void AddOrUpdateMessage(PersistenceUseType useType, EndpointAddress address, MessagePayload message)
+        public void AddMessage(PersistenceUseType useType, EndpointAddress address, MessagePayload message)
         {
             if(!AddedMessages.Contains(message))
                 AddedMessages.Add(message);
 
-            this.innerStore.AddOrUpdateMessage(useType, address, message);
+            this.innerStore.AddMessage(useType, address, message);
         }
 
         public void Remove(PersistenceUseType useType, EndpointAddress address, Guid id)

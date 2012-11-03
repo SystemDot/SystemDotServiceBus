@@ -4,7 +4,6 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading.Tasks;
 using SystemDot.Logging;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Serialisation;
@@ -44,6 +43,8 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
                 });
         }
 
+        
+
         async Task<List<MessagePayloadStorageItem>> GetForChannelAsync()
         {
             var addressString = Address.ToString();
@@ -55,25 +56,27 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
                 .ToListAsync();
         }
 
-        public void AddOrUpdateMessage(MessagePayload message)
+        public void AddMessage(MessagePayload message)
+        {
+            GetAsyncConnection().RunInTransaction(c => AddMessage(message, c));
+        }
+
+        public void AddMessageAndIncrementSequence(MessagePayload message)
         {
             Logger.Info("Storing message in sqlite storage");
 
             GetAsyncConnection().RunInTransaction(c =>
             {
-                if (UpdateMessage(message, c) == 0)
-                {
-                    IncrementSequence(c);
-                    AddMessage(message, c);
-                }
+                IncrementSequence(c);
+                AddMessage(message, c);
             });
         }
 
-        int UpdateMessage(MessagePayload message, SQLiteConnection connection)
+        public void UpdateMessage(MessagePayload message)
         {
             Logger.Info("Storing message in sqlite storage");
 
-            return connection.Execute(
+            GetAsyncConnection().ExecuteAsync(
                 "update MessagePayloadStorageItem set headers = ? where id = ? and address = ? and type = ?",
                 this.serialiser.Serialise(message.Headers),
                 message.Id.ToString(),
@@ -102,9 +105,9 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
                 UseType);
         }
 
-        public async void RemoveMessage(Guid id)
+        public void Delete(Guid id)
         {
-            await GetAsyncConnection().ExecuteAsync(
+            GetAsyncConnection().ExecuteAsync(
                 "delete from MessagePayloadStorageItem where id = ?", 
                 id.ToString());
         }
@@ -124,11 +127,6 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
                 toSet,
                 Address.ToString(),
                 UseType);
-        }
-
-        public void Delete(Guid id)
-        {
-            throw new NotImplementedException();
         }
 
         async void Initialise()

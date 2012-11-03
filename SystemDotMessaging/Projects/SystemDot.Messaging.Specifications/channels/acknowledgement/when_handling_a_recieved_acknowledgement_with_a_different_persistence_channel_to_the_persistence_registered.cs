@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
 
         Establish context = () =>
         {
-            var store = new InMemoryDatastore(new MessagePayloadCopier(new PlatformAgnosticSerialiser()));
+            var store = new InMemoryDatastore(new PlatformAgnosticSerialiser());
 
             differingChannelPersistence = new InMemoryPersistence(
                 store,
@@ -40,8 +40,8 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
             acknowledgement = new MessagePayload();
             acknowledgement.SetAcknowledgementId(id);
 
-            differingChannelPersistence.AddOrUpdateMessageAndIncrementSequence(message);
-            persistence.AddOrUpdateMessageAndIncrementSequence(message);
+            differingChannelPersistence.AddMessageAndIncrementSequence(message);
+            persistence.AddMessageAndIncrementSequence(message);
         };
 
         Because of = () => Subject.InputMessage(acknowledgement);

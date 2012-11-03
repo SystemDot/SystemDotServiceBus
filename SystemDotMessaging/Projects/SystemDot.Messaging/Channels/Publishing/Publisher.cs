@@ -5,14 +5,13 @@ using SystemDot.Logging;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Publishing.Builders;
-using SystemDot.Messaging.Channels.RequestReply.Repeating;
+using SystemDot.Messaging.Channels.Repeating;
 
 namespace SystemDot.Messaging.Channels.Publishing
 {
     public class Publisher : IPublisher
     {
         readonly EndpointAddress address;
-        readonly MessagePayloadCopier messagePayloadCopier;
         readonly ConcurrentDictionary<object, BuildContainer> subscribers;
         readonly ISubscriberSendChannelBuilder builder;
 
@@ -20,31 +19,22 @@ namespace SystemDot.Messaging.Channels.Publishing
 
         public Publisher(
             EndpointAddress address, 
-            MessagePayloadCopier messagePayloadCopier, 
             ISubscriberSendChannelBuilder builder)
         {
             Contract.Requires(address != null);
             Contract.Requires(address != EndpointAddress.Empty);
-            Contract.Requires(messagePayloadCopier != null);
             Contract.Requires(builder != null);
 
             this.address = address;
-            this.messagePayloadCopier = messagePayloadCopier;
             this.builder = builder;
             this.subscribers = new ConcurrentDictionary<object, BuildContainer>();
         }
 
         public void InputMessage(MessagePayload toInput)
         {
-            this.subscribers.Values.ForEach(s => s.Channel.InputMessage(CopyMessage(toInput)));
+            toInput.RemoveHeader(typeof(LastSentHeader));
+            this.subscribers.Values.ForEach(s => s.Channel.InputMessage(toInput));
             MessageProcessed(toInput);
-        }
-
-        MessagePayload CopyMessage(MessagePayload toInput)
-        {
-            MessagePayload copy = this.messagePayloadCopier.Copy(toInput);
-            copy.RemoveHeader(typeof(LastSentHeader));
-            return copy;
         }
 
         public void Subscribe(SubscriptionSchema schema)
@@ -54,18 +44,17 @@ namespace SystemDot.Messaging.Channels.Publishing
 
             if(this.subscribers.TryAdd(schema.SubscriberAddress, buildContainer))
                 buildContainer.Channel = BuildChannel(schema);
-            
         }
 
         IMessageInputter<MessagePayload> BuildChannel(SubscriptionSchema schema)
         {
             return this.builder.BuildChannel(
                 new SubscriberSendChannelSchema
-                    { 
-                        FromAddress = this.address,
-                        SubscriberAddress = schema.SubscriberAddress,
-                        IsDurable = schema.IsPersistent
-                    });
+                { 
+                    FromAddress = this.address,
+                    SubscriberAddress = schema.SubscriberAddress,
+                    IsDurable = schema.IsDurable
+                });
         }
 
         class BuildContainer

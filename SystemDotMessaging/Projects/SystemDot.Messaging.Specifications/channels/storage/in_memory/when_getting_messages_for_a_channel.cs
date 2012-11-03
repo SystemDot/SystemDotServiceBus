@@ -20,17 +20,17 @@ namespace SystemDot.Messaging.Specifications.channels.storage.in_memory
 
         Establish context = () =>
         {
-            Configure<IDatastore>(new InMemoryDatastore(new MessagePayloadCopier(new PlatformAgnosticSerialiser())));
+            Configure<IDatastore>(new InMemoryDatastore(new PlatformAgnosticSerialiser()));
 
             persistence = Subject.CreatePersistence(
                 PersistenceUseType.SubscriberRequestSend, 
                 new EndpointAddress("Channel", "Server"));
 
             message1 = new MessagePayload();
-            persistence.AddOrUpdateMessageAndIncrementSequence(message1);
+            persistence.AddMessageAndIncrementSequence(message1);
 
             message2 = new MessagePayload();
-            persistence.AddOrUpdateMessageAndIncrementSequence(message2);
+            persistence.AddMessageAndIncrementSequence(message2);
         };
 
         Because of = () => messages = persistence.GetMessages();

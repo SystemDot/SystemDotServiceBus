@@ -6,7 +6,7 @@ using SystemDot.Messaging.Channels.Filtering;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Pipelines;
-using SystemDot.Messaging.Channels.RequestReply.Repeating;
+using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
@@ -53,15 +53,16 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
 
         public void Build(SubscriberRecieveChannelSchema schema)
         {
-            IPersistence persistence = this.persistenceFactory.Select(schema).CreatePersistence(
-                PersistenceUseType.SubscriberReceive, 
-                schema.Address);
+            IPersistence persistence = this.persistenceFactory
+                .Select(schema)
+                .CreatePersistence(PersistenceUseType.SubscriberReceive, schema.Address);
 
             MessagePipelineBuilder.Build()
                 .With(this.messageReciever)
+                .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .Pump()
                 .ToProcessor(new BodyMessageFilter(schema.Address))
-                .ToMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
+                .ToEscalatingTimeMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new ReceiveChannelMessageCacher(persistence))
                 .ToProcessor(new MessageAcknowledger(this.messageSender))
                 .Queue()

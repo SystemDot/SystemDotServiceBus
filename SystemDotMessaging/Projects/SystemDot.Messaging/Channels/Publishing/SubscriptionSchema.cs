@@ -6,7 +6,7 @@ namespace SystemDot.Messaging.Channels.Publishing
     {
         public EndpointAddress SubscriberAddress { get; set; }
 
-        public bool IsPersistent { get; set; }
+        public bool IsDurable { get; set; }
 
         public override string ToString()
         {

@@ -1,6 +1,6 @@
 using System.Data.SqlServerCe;
 
-namespace SystemDot.Messaging.Storage.Sql
+namespace SystemDot.Messaging.Storage.Sql.Connections
 {
     public static class ConnectionHelper
     {

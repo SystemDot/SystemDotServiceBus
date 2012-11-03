@@ -40,16 +40,11 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
 
         Because of = () => Subject.InputMessage(inputMessage);
 
-        It should_pass_a_copy_of_the_message_to_the_first_subscriber = () =>
+        It should_pass_the_message_to_both_subscribers = () =>
             The<IMessageSender>()
                 .As<TestMessageSender>()
                 .SentMessages
-                .ShouldContain(m => m.GetToAddress() == subscriber1.SubscriberAddress);
-
-        It should_pass_a_copy_of_the_message_to_the_second_subscriber = () =>
-            The<IMessageSender>()
-                .As<TestMessageSender>()
-                .SentMessages
-                .ShouldContain(m => m.GetToAddress() == subscriber2.SubscriberAddress);
+                .Count
+                .ShouldEqual(2);
     }
 }

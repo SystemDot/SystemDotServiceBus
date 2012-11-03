@@ -3,7 +3,7 @@ using SystemDot.Messaging.Channels.Acknowledgement;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Pipelines;
-using SystemDot.Messaging.Channels.RequestReply.Repeating;
+using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.InMemory;
 using SystemDot.Messaging.Transport;
@@ -53,7 +53,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             MessagePipelineBuilder.Build()
                 .With(requestor)
                 .ToProcessor(new MessageAddresser(schema.SubscriberAddress, schema.PublisherAddress))
-                .ToMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
+                .ToEscalatingTimeMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new SendChannelMessageCacher(persistence))
                 .Pump()
                 .ToEndPoint(this.messageSender);

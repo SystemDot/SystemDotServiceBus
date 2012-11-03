@@ -3,7 +3,7 @@ using System.Linq;
 using SystemDot.Messaging.Channels.Acknowledgement;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.RequestReply.Repeating;
+using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Storage.InMemory;
 using Machine.Specifications;
 using SystemDot.Messaging.Storage;

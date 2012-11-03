@@ -5,10 +5,11 @@ using SystemDot.Messaging.Channels.Builders;
 using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Pipelines;
-using SystemDot.Messaging.Channels.RequestReply.Repeating;
+using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
+using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Channels.Publishing.Builders
 {
@@ -19,13 +20,14 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
         readonly ICurrentDateProvider currentDateProvider;
         readonly ITaskRepeater taskRepeater;
         readonly MessageAcknowledgementHandler acknowledgementHandler;
-        
+        readonly ISerialiser serialiser;
+
         public SubscriberSendChannelBuilder(
             IMessageSender messageSender, 
             PersistenceFactorySelector persistenceFactorySelector, 
             ICurrentDateProvider currentDateProvider, 
             ITaskRepeater taskRepeater, 
-            MessageAcknowledgementHandler acknowledgementHandler)
+            MessageAcknowledgementHandler acknowledgementHandler, ISerialiser serialiser)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(persistenceFactorySelector != null);
@@ -38,27 +40,28 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             this.currentDateProvider = currentDateProvider;
             this.taskRepeater = taskRepeater;
             this.acknowledgementHandler = acknowledgementHandler;
+            this.serialiser = serialiser;
         }
 
         public IMessageInputter<MessagePayload> BuildChannel(SubscriberSendChannelSchema schema)
         {
-            IPersistence persistence = this.persistenceFactorySelector.Select(schema)
-                .CreatePersistence(
-                    PersistenceUseType.SubscriberSend, 
-                    schema.SubscriberAddress);
+            IPersistence persistence = this.persistenceFactorySelector
+                .Select(schema)
+                .CreatePersistence(PersistenceUseType.SubscriberSend, schema.SubscriberAddress);
 
             this.acknowledgementHandler.RegisterPersistence(persistence);
-        
-            var addresser = new MessageAddresser(schema.FromAddress, schema.SubscriberAddress);
+
+            var copier = new MessagePayloadCopier(this.serialiser);
 
             MessagePipelineBuilder.Build()
-                .With(addresser)
-                .ToMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
+                .With(copier)
+                .ToProcessor(new MessageAddresser(schema.FromAddress, schema.SubscriberAddress))
+                .ToEscalatingTimeMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new SendChannelMessageCacher(persistence))
                 .Pump()
                 .ToEndPoint(this.messageSender);
 
-            return addresser;
+            return copier;
         }
     }
 }

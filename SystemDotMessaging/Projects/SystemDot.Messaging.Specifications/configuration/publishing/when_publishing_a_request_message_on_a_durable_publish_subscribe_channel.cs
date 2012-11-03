@@ -1,5 +1,4 @@
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Storage.InMemory;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing

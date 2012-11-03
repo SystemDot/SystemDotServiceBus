@@ -1,6 +1,7 @@
 using System;
 using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Channels.Repeating;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -11,8 +12,15 @@ namespace SystemDot.Messaging.Specifications.channels.storage
         : WithSubject<SendChannelMessageCacher>
     {
         static Exception exception;
+        static MessagePayload message;
 
-        Because of = () => exception = Catch.Exception(() => Subject.InputMessage(new MessagePayload()));
+        Establish context = () =>
+        {
+            message = new MessagePayload();
+            message.IncreaseAmountSent();
+        };
+
+        Because of = () => exception = Catch.Exception(() => Subject.InputMessage(message));
 
         It should_not_fail = () => exception.ShouldBeNull();
     }

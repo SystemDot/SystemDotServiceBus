@@ -1,9 +1,6 @@
-﻿using SystemDot.Messaging.Channels;
-using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.Packaging;
+﻿using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
-using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -20,7 +17,6 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
         {
             publisher = new Publisher(
                 new EndpointAddress("Channel", "Address"), 
-                new MessagePayloadCopier(new PlatformAgnosticSerialiser()), 
                 The<ISubscriberSendChannelBuilder>());
             
             address = new EndpointAddress("TestAddress", "TestServer");

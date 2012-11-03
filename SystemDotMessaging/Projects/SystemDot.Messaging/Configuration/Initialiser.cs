@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Acknowledgement.Builders;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Parallelism;

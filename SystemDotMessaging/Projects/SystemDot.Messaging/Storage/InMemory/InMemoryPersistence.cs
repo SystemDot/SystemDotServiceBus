@@ -34,15 +34,20 @@ namespace SystemDot.Messaging.Storage.InMemory
             return this.store.GetMessages(UseType, Address);
         }
 
-        public void AddOrUpdateMessageAndIncrementSequence(MessagePayload message)
+        public void AddMessageAndIncrementSequence(MessagePayload message)
         {
-            this.store.AddOrUpdateMessage(UseType, Address, message);
+            this.store.AddMessage(UseType, Address, message);
             this.sequence = this.sequence + 1;
         }
 
-        public void AddOrUpdateMessage(MessagePayload message)
+        public void AddMessage(MessagePayload message)
         {
-            this.store.AddOrUpdateMessage(UseType, Address, message);
+            this.store.AddMessage(UseType, Address, message);
+        }
+
+        public void UpdateMessage(MessagePayload message)
+        {
+            this.store.UpdateMessage(UseType, Address, message);
         }
 
         public int GetSequence()

@@ -5,17 +5,17 @@ namespace SystemDot.Messaging.Storage
 {
     public static class MessagePayloadLastPersistenceExtensions
     {
-        public static MessagePersistenceId GetLastPersistenceId(this MessagePayload payload)
+        public static MessagePersistenceId GetSourcePersistenceId(this MessagePayload payload)
         {
-            return payload.GetHeader<LastPersistenceHeader>().PersistenceId;
+            return payload.GetHeader<SourcePersistenceHeader>().PersistenceId;
         }
 
-        public static void SetLastPersistenceId(this MessagePayload payload, MessagePersistenceId id)
+        public static void SetSourcePersistenceId(this MessagePayload payload, MessagePersistenceId id)
         {
             Contract.Requires(id != null);
 
-            payload.RemoveHeader(typeof(LastPersistenceHeader));
-            payload.AddHeader(new LastPersistenceHeader(id));
+            payload.RemoveHeader(typeof(SourcePersistenceHeader));
+            payload.AddHeader(new SourcePersistenceHeader(id));
         }
     }
 }

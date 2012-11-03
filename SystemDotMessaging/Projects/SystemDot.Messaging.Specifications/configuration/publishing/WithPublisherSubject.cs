@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
         protected static void SubscribeDurable(EndpointAddress subscriberAddress, EndpointAddress publisherAddress)
         {
             MessagePayload request = BuildSubscriptionRequest(subscriberAddress, publisherAddress);
-            request.GetSubscriptionRequestSchema().IsPersistent = true;
+            request.GetSubscriptionRequestSchema().IsDurable = true;
             MessageReciever.RecieveMessage(request);
         }
 
@@ -29,6 +29,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
             request.SetToAddress(publisherAddress);
             request.SetSubscriptionRequest(new SubscriptionSchema { SubscriberAddress = subscriberAddress });
             request.SetPersistenceId(subscriberAddress, PersistenceUseType.SubscriberRequestSend);
+            request.SetSourcePersistenceId(request.GetPersistenceId());
 
             return request;
         }

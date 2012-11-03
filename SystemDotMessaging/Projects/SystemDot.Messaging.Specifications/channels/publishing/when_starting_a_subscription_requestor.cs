@@ -28,6 +28,6 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
             request.GetSubscriptionRequestSchema().SubscriberAddress.ShouldEqual(address);
 
         It should_set_the_request_schema_to_indicate_no_persistence = () =>
-           request.GetSubscriptionRequestSchema().IsPersistent.ShouldBeFalse();
+           request.GetSubscriptionRequestSchema().IsDurable.ShouldBeFalse();
     }
 }

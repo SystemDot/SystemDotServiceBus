@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="channels\acknowledgement\when_handling_a_recieved_acknowledgement_with_a_different_persistence_channel_to_the_persistence_registered.cs" />
     <Compile Include="channels\acknowledgement\when_handling_a_recieved_acknowledgement_with_a_different_persistence_use_type_to_the_persistence_registered.cs" />
+    <Compile Include="channels\copying\when_copying_a_message.cs" />
     <Compile Include="channels\distribution\when_queueing_an_item.cs" />
     <Compile Include="channels\distribution\when_queueing_items_on_a_with_no_pushed_item_listener.cs" />
     <Compile Include="channels\expiry\when_passing_a_message_that_is_not_repeat_attempt_expired_through_an_expirer.cs" />
@@ -61,13 +62,17 @@
     <Compile Include="channels\expiry\when_passing_a_message_that_is_not_time_expired_through_an_expirer.cs" />
     <Compile Include="channels\publishing\TestSubscriberSendChannelBuilder.cs" />
     <Compile Include="channels\publishing\when_starting_a_subscription_requestor_with_persistence_indicated_on_the_schema.cs" />
+    <Compile Include="channels\repeating\when_inputting_items_into_a_repeater_with_no_listener.cs" />
+    <Compile Include="channels\repeating\when_starting_a_repeater_with_a_simple_repeat_strategy_for_the_second_time.cs" />
+    <Compile Include="channels\repeating\when_starting_a_repeater_with_a_simple_repeat_strategy_with_messages_in_the_persistence.cs" />
     <Compile Include="channels\sequencing\when_passing_a_message_without_a_sequence_number_header_through_a_resequencer.cs" />
     <Compile Include="channels\sequencing\when_passing_a_message_through_a_sequencer.cs" />
     <Compile Include="channels\sequencing\when_passing_messages_in_the_correct_order_through_a_resequencer.cs" />
     <Compile Include="channels\sequencing\when_passing_messages_in_the_incorrect_order_through_a_resequencer.cs" />
     <Compile Include="channels\storage\when_caching_a_message_with_a_receive_cacher_with_no_output_processor_subscribed.cs" />
     <Compile Include="channels\storage\when_caching_a_message_with_a_recieve_cacher.cs" />
-    <Compile Include="channels\storage\when_caching_a_message_with_a_recieve_cacher_for_the_second_time.cs" />
+    <Compile Include="channels\storage\when_caching_a_message_with_a_send_cacher_for_the_second_time.cs" />
+    <Compile Include="channels\storage\when_caching_a_message_with_a_send_cacher_that_been_sent_before.cs" />
     <Compile Include="channels\storage\when_caching_a_message_with_a_send_cacher_with_no_output_processor_subscribed.cs" />
     <Compile Include="channels\storage\when_caching_a_message_with_a_send_cacher.cs" />
     <Compile Include="channels\storage\when_decaching_a_message.cs" />

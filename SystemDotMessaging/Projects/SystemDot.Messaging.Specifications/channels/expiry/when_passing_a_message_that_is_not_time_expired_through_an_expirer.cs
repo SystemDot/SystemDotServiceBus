@@ -3,7 +3,7 @@ using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Expiry;
 using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.RequestReply.Repeating;
+using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.InMemory;
 using SystemDot.Specifications;
@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Specifications.channels.expiry
             message.IncreaseAmountSent();
 
             With<PersistenceBehaviour>();
-            The<IPersistence>().AddOrUpdateMessageAndIncrementSequence(message);
+            The<IPersistence>().AddMessageAndIncrementSequence(message);
 
             var expiryTime = new TimeSpan(0, 1, 0);
             

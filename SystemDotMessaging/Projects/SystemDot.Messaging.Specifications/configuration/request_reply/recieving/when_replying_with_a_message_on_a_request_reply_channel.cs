@@ -1,9 +1,8 @@
 using System;
 using System.Linq;
-using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Packaging.Headers;
+using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Channels.RequestReply;
-using SystemDot.Messaging.Channels.RequestReply.Repeating;
 using SystemDot.Messaging.Channels.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.InMemory;
@@ -26,7 +25,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
 
         Establish context = () =>
         {
-            persistentMemoryDatastore = new InMemoryDatastore(new MessagePayloadCopier(new PlatformAgnosticSerialiser()));
+            persistentMemoryDatastore = new InMemoryDatastore(new PlatformAgnosticSerialiser());
             ConfigureAndRegister<IPersistenceFactory>(new InMemoryPersistenceFactory(persistentMemoryDatastore));
 
             bus = Configuration.Configure.Messaging()

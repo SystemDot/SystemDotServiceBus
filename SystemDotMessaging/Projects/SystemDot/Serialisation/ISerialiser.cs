@@ -2,7 +2,7 @@ using System.IO;
 
 namespace SystemDot.Serialisation
 {
-    public interface ISerialiser 
+    public interface ISerialiser
     {
         byte[] Serialise(object toSerialise);
         void Serialise(Stream toSerialise, object graph);

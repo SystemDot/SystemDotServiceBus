@@ -1,6 +1,6 @@
 ﻿using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.RequestReply.Repeating;
+using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Storage;
 using Machine.Fakes;
 using Machine.Specifications;

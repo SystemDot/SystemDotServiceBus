@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Packaging.Headers;
-using SystemDot.Messaging.Channels.RequestReply.Repeating;
+using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Storage;
 using SystemDot.Specifications;
 using Machine.Fakes;
@@ -28,20 +27,21 @@ namespace SystemDot.Messaging.Specifications.channels.repeating
             With<PersistenceBehaviour>();
            
             Configure<ICurrentDateProvider>(new TestCurrentDateProvider(currentDate));
-
+            Configure<IRepeatStrategy>(new EscalatingTimeRepeatStrategy(The<ICurrentDateProvider>(), The<IPersistence>()));
+            
             Subject.MessageProcessed += m => processedMessages.Add(m);
 
             message1 = new MessagePayload();
             message1.SetFromAddress(endpointAddress);
             message1.SetLastTimeSent(currentDate.Subtract(new TimeSpan(0, 0, 0, 1)));
             message1.IncreaseAmountSent();
-            The<IPersistence>().AddOrUpdateMessageAndIncrementSequence(message1);
+            The<IPersistence>().AddMessage(message1);
 
             message2 = new MessagePayload();
             message2.SetFromAddress(endpointAddress);
             message2.SetLastTimeSent(currentDate.Subtract(new TimeSpan(0, 0, 0, 1)));
             message2.IncreaseAmountSent();
-            The<IPersistence>().AddOrUpdateMessageAndIncrementSequence(message2);
+            The<IPersistence>().AddMessage(message2);
         };
 
         Because of = () => Subject.Start();

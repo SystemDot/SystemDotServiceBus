@@ -1,8 +1,7 @@
 using System;
-using System.Linq;
 using SystemDot.Messaging.Channels.Packaging;
 
-namespace SystemDot.Messaging.Channels.RequestReply.Repeating
+namespace SystemDot.Messaging.Channels.Repeating
 {
     public static class MessagePayloadRepeatExtensions
     {

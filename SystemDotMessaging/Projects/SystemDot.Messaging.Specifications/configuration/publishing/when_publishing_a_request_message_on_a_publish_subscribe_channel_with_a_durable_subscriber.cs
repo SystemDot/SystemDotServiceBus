@@ -16,9 +16,12 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
         
         Establish context = () =>
         {
+            ConfigureAndRegister<IDatastore>(new TestDatastore());
+            
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForPublishing()
+                .WithDurability()
                 .Initialise();
 
             message = 1;
@@ -28,8 +31,6 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
         Because of = () => bus.Publish(message);
 
         It should_have_persisted_the_message = () =>
-            Resolve<IDatastore>()
-                .GetMessages(PersistenceUseType.SubscriberSend, BuildAddress(SubscriberName))
-                .ShouldNotBeEmpty();
+           Resolve<IDatastore>().As<TestDatastore>().AddedMessages.ShouldNotBeEmpty();
     }
 }

@@ -1,20 +1,25 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
+using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Storage.InMemory
 {
     public class InMemoryDatastore : IDatastore
     {
         readonly ConcurrentDictionary<MessagePersistenceId, MessagePayload> messages;
-        readonly MessagePayloadCopier copier;
+        readonly ISerialiser serialiser;
 
-        public InMemoryDatastore(MessagePayloadCopier copier)
+        public InMemoryDatastore(ISerialiser serialiser)
         {
-            this.copier = copier;
+            Contract.Requires(serialiser != null);
+         
+            this.serialiser = serialiser;
             this.messages = new ConcurrentDictionary<MessagePersistenceId, MessagePayload>();
         }
 
@@ -25,9 +30,9 @@ namespace SystemDot.Messaging.Storage.InMemory
                 .Select(m => m.Value);
         }
 
-        public void AddOrUpdateMessage(PersistenceUseType useType, EndpointAddress address, MessagePayload message)
+        public void AddMessage(PersistenceUseType useType, EndpointAddress address, MessagePayload message)
         {
-            this.messages.TryAdd(GetId(useType, address, message.Id), this.copier.Copy(message));
+            this.messages.TryAdd(GetId(useType, address, message.Id), this.serialiser.Copy(message));
         }
 
         public void Remove(PersistenceUseType useType, EndpointAddress address, Guid id)
@@ -38,7 +43,10 @@ namespace SystemDot.Messaging.Storage.InMemory
 
         public void UpdateMessage(PersistenceUseType useType, EndpointAddress address, MessagePayload message)
         {
-            this.messages[GetId(useType, address, message.Id)].Headers = message.Headers;
+            MessagePersistenceId id = GetId(useType, address, message.Id);
+            
+            if(this.messages.ContainsKey(id))
+                this.messages[id] = this.serialiser.Copy(message);
         }
 
         static MessagePersistenceId GetId(PersistenceUseType useType, EndpointAddress address, Guid id)

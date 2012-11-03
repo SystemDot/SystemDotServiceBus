@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.RequestReply.Repeating;
+using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.InMemory;
 using SystemDot.Parallelism;
@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
         
         Establish context = () =>
         {
-            persistentMemoryDatastore = new InMemoryDatastore(new MessagePayloadCopier(new PlatformAgnosticSerialiser()));
+            persistentMemoryDatastore = new InMemoryDatastore(new PlatformAgnosticSerialiser());
             ConfigureAndRegister<IPersistenceFactory>(new InMemoryPersistenceFactory(persistentMemoryDatastore));
             
             bus = Configuration.Configure.Messaging()

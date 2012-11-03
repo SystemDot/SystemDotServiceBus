@@ -8,14 +8,14 @@ namespace SystemDot.Messaging.Channels.Publishing
     public class SubscriptionRequestor : ISubscriptionRequestor
     {
         readonly EndpointAddress subscriberAddress;
-        readonly bool isPersistent;
+        readonly bool isDurable;
 
         public event Action<MessagePayload> MessageProcessed;
         
-        public SubscriptionRequestor(EndpointAddress subscriberAddress, bool isPersistent)
+        public SubscriptionRequestor(EndpointAddress subscriberAddress, bool isDurable)
         {
             this.subscriberAddress = subscriberAddress;
-            this.isPersistent = isPersistent;
+            this.isDurable = isDurable;
         }
 
         public void Start()
@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Channels.Publishing
             request.SetSubscriptionRequest(new SubscriptionSchema
             {
                 SubscriberAddress = subscriberAddress,
-                IsPersistent = this.isPersistent
+                IsDurable = this.isDurable
             });
             MessageProcessed(request);
         }

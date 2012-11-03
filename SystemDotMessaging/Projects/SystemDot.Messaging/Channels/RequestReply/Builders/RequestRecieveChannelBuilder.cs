@@ -6,10 +6,11 @@ using SystemDot.Messaging.Channels.Filtering;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Pipelines;
-using SystemDot.Messaging.Channels.RequestReply.Repeating;
+using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Channels.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport;
+using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Channels.RequestReply.Builders
@@ -23,6 +24,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
         readonly IMessageSender messageSender;
         readonly PersistenceFactorySelector persistenceFactorySelector;
         readonly ICurrentDateProvider currentDateProvider;
+        readonly ITaskRepeater taskRepeater;
 
         public RequestRecieveChannelBuilder(
             ReplyAddressLookup replyAddressLookup, 
@@ -31,7 +33,8 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             IMessageReciever messageReciever, 
             IMessageSender messageSender,
             PersistenceFactorySelector persistenceFactorySelector, 
-            ICurrentDateProvider currentDateProvider)
+            ICurrentDateProvider currentDateProvider, 
+            ITaskRepeater taskRepeater)
         {
             Contract.Requires(replyAddressLookup != null);
             Contract.Requires(serialiser != null);
@@ -40,6 +43,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             Contract.Requires(messageSender != null);
             Contract.Requires(persistenceFactorySelector != null);
             Contract.Requires(currentDateProvider != null);
+            Contract.Requires(taskRepeater != null);
 
             this.replyAddressLookup = replyAddressLookup;
             this.serialiser = serialiser;
@@ -48,19 +52,20 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             this.messageSender = messageSender;
             this.persistenceFactorySelector = persistenceFactorySelector;
             this.currentDateProvider = currentDateProvider;
+            this.taskRepeater = taskRepeater;
         }
 
         public void Build(RequestRecieveChannelSchema schema)
         {
-            IPersistence persistence = this.persistenceFactorySelector.Select(schema)
-                .CreatePersistence(
-                    PersistenceUseType.RequestReceive, 
-                    schema.Address);
+            IPersistence persistence = this.persistenceFactorySelector
+                .Select(schema)
+                .CreatePersistence(PersistenceUseType.RequestReceive, schema.Address);
 
             MessagePipelineBuilder.Build()
                 .With(this.messageReciever)
+                .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new BodyMessageFilter(schema.Address))
-                .ToProcessor(new MessageRepeater(persistence, this.currentDateProvider))
+                .ToEscalatingTimeMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new ReceiveChannelMessageCacher(persistence))
                 .Pump()
                 .ToProcessor(new MessageAcknowledger(this.messageSender))

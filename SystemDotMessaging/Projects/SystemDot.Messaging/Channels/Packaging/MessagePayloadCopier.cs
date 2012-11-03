@@ -1,9 +1,10 @@
+using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Channels.Packaging
 {
-    public class MessagePayloadCopier
+    public class MessagePayloadCopier : IMessageProcessor<MessagePayload, MessagePayload>
     {
         readonly ISerialiser serialiser;
 
@@ -13,11 +14,17 @@ namespace SystemDot.Messaging.Channels.Packaging
             this.serialiser = serialiser;
         }
 
-        public MessagePayload Copy(MessagePayload toCopy)
+        public void InputMessage(MessagePayload toInput)
         {
-            Contract.Requires(toCopy != null);
-
-            return serialiser.Deserialise(serialiser.Serialise(toCopy)).As<MessagePayload>();
+            MessagePayload copied = Copy(toInput);
+            MessageProcessed(copied);
         }
+
+        MessagePayload Copy(MessagePayload toCopy)
+        {
+            return this.serialiser.Copy(toCopy);
+        }
+
+        public event Action<MessagePayload> MessageProcessed;
     }
 }

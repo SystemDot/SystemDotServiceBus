@@ -23,6 +23,6 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
         Because of = () => Subject.Start();
         
         It should_set_the_request_schema_to_indicate_persistence = () =>
-            request.GetSubscriptionRequestSchema().IsPersistent.ShouldBeTrue();
+            request.GetSubscriptionRequestSchema().IsDurable.ShouldBeTrue();
     }
 }

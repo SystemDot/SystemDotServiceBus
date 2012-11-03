@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Linq;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.Distribution;
 using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
-using SystemDot.Messaging.Channels.RequestReply.Repeating;
+using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Transport;
 using SystemDot.Serialisation;
 using Machine.Fakes;
@@ -43,27 +39,13 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
 
         Because of = () => Subject.InputMessage(inputMessage);
 
-
         It should_pass_an_equivelent_message_to_the_subscriber = () => 
             The<IMessageSender>()
                 .As<TestMessageSender>()
-                .SentMessages.ShouldContain(m => 
-                    m.GetFromAddress() == The<EndpointAddress>()
-                    && m.GetToAddress() == subscriber.SubscriberAddress);
-
-        It should_copy_the_message_to_the_subscriber = () => 
-            The<IMessageSender>()
-                .As<TestMessageSender>()
-                .SentMessages.First()
-                .ShouldNotBeTheSameAs(message);
-
-        It should_remove_the_last_time_sent_and_amount_sent_from_the_copied_message = () =>
-            The<IMessageSender>()
-                .As<TestMessageSender>()
-                .SentMessages.First().Headers.OfType<LastSentHeader>()
-                .ShouldBeEmpty();
+                .SentMessages.ShouldContain(inputMessage);
 
         It should_process_the_message = () => processedMessage.ShouldBeTheSameAs(message);
-
+        
+        It should_reset_the_last_time_sent = () => processedMessage.HasHeader<LastSentHeader>().ShouldBeFalse();
     }
 }

@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.Specifications
 
         OnEstablish context = (accessor) => 
         {
-            accessor.Configure<IDatastore>(new InMemoryDatastore(new MessagePayloadCopier(new PlatformAgnosticSerialiser())));
+            accessor.Configure<IDatastore>(new InMemoryDatastore(new PlatformAgnosticSerialiser()));
 
             accessor.Configure<IPersistenceFactory>(
                 new InMemoryPersistenceFactory(accessor.The<IDatastore>()));

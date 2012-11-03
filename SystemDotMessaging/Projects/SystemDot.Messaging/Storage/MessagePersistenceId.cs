@@ -1,8 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.Packaging.Headers;
 
 namespace SystemDot.Messaging.Storage
 {
@@ -51,6 +49,16 @@ namespace SystemDot.Messaging.Storage
                 hashCode = (hashCode*397) ^ UseType.GetHashCode();
                 return hashCode;
             }
+        }
+
+        public static bool operator ==(MessagePersistenceId left, MessagePersistenceId right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(MessagePersistenceId left, MessagePersistenceId right)
+        {
+            return !left.Equals(right);
         }
 
         public override string ToString()

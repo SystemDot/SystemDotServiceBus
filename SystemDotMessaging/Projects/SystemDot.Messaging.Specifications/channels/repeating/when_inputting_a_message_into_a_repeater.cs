@@ -1,12 +1,13 @@
 using System;
 using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.RequestReply.Repeating;
+using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Specifications;
 using Machine.Fakes;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.channels.repeating
 {
+    [Subject("Repeating")]
     public class when_inputting_a_message_into_a_repeater : WithSubject<MessageRepeater>
     {
         static MessagePayload message;
