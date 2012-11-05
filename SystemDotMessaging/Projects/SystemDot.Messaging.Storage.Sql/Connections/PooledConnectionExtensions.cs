@@ -30,14 +30,5 @@ namespace SystemDot.Messaging.Storage.Sql.Connections
                 return command.ExecuteNonQuery();
             }
         }
-
-        public static T ExecuteScalar<T>(this PooledConnection connection, string toExecute, Action<SqlCeCommand> onCommandInit)
-        {
-            using (var command = connection.GetCommand(toExecute))
-            {
-                onCommandInit(command);
-                return command.ExecuteScalar().As<T>();
-            }
-        }
     }
 }

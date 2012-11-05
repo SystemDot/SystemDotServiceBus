@@ -5,7 +5,7 @@ using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Channels.RequestReply;
 using SystemDot.Messaging.Channels.Sequencing;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Storage.InMemory;
+using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 using Machine.Fakes;
@@ -19,14 +19,14 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
         const string ChannelName = "Test";
         const string SenderChannelName = "TestSender";
 
-        static InMemoryDatastore persistentMemoryDatastore;
+        static InMemoryChangeStore persistentMemoryChangeStore;
         static IBus bus;
         static int message;
 
         Establish context = () =>
         {
-            persistentMemoryDatastore = new InMemoryDatastore(new PlatformAgnosticSerialiser());
-            ConfigureAndRegister<IPersistenceFactory>(new InMemoryPersistenceFactory(persistentMemoryDatastore));
+            persistentMemoryChangeStore = new InMemoryChangeStore(new PlatformAgnosticSerialiser());
+            ConfigureAndRegister<IPersistenceFactory>(new PersistenceFactory(persistentMemoryChangeStore));
 
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
@@ -61,7 +61,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
             MessageSender.SentMessages.First().GetSequence().ShouldEqual(1);
 
         It should_not_persist_the_message = () =>
-            persistentMemoryDatastore
+            persistentMemoryChangeStore
                 .GetMessages(PersistenceUseType.ReplySend, BuildAddress(ChannelName))
                 .ShouldBeEmpty();
 

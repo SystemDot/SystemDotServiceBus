@@ -1,5 +1,4 @@
-using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Storage.InMemory;
+using SystemDot.Messaging.Storage.Changes;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing
@@ -16,8 +15,6 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
         
         Establish context = () =>
         {
-            ConfigureAndRegister<IDatastore>(new TestDatastore());
-            
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForPublishing()
@@ -31,6 +28,6 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
         Because of = () => bus.Publish(message);
 
         It should_have_persisted_the_message = () =>
-           Resolve<IDatastore>().As<TestDatastore>().AddedMessages.ShouldNotBeEmpty();
+           Resolve<IChangeStore>().GetAddedMessages().ShouldNotBeEmpty();
     }
 }

@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Storage.InMemory;
+using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -11,7 +10,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.channels.storage.in_memory
 {
     [Subject("Message storage")]
-    public class when_getting_messages_for_a_channel : WithSubject<InMemoryPersistenceFactory>
+    public class when_getting_messages_for_a_channel : WithSubject<PersistenceFactory>
     {
         static IEnumerable<MessagePayload> messages;
         static MessagePayload message1;
@@ -20,7 +19,7 @@ namespace SystemDot.Messaging.Specifications.channels.storage.in_memory
 
         Establish context = () =>
         {
-            Configure<IDatastore>(new InMemoryDatastore(new PlatformAgnosticSerialiser()));
+            Configure<IChangeStore>(new InMemoryChangeStore(new PlatformAgnosticSerialiser()));
 
             persistence = Subject.CreatePersistence(
                 PersistenceUseType.SubscriberRequestSend, 

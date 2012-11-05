@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Sequencing;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Storage.InMemory;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.channels.sequencing

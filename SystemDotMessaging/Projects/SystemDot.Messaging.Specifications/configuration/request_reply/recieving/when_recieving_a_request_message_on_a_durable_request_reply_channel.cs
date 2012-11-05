@@ -1,5 +1,6 @@
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Storage.Changes;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.recieving
@@ -14,8 +15,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
         
         Establish context = () =>
         {
-            ConfigureAndRegister<IDatastore>(new TestDatastore());
-            
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
@@ -29,6 +28,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
         Because of = () => MessageReciever.RecieveMessage(payload);
 
         It should_have_persisted_the_message = () =>
-            Resolve<IDatastore>().As<TestDatastore>().AddedMessages.ShouldContain(payload);
+           Resolve<IChangeStore>().GetAddedMessages().ShouldContain(payload);
     }
 }

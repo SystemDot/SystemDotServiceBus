@@ -63,8 +63,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlCeDataReaderExtensions.cs" />
     <Compile Include="SqlMessageServerConfigurationExtensions.cs" />
-    <Compile Include="SqlPersistenceFactory.cs" />
-    <Compile Include="SqlPersistence.cs" />
+    <Compile Include="SqlChangeStore.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SystemDot.Messaging\SystemDot.Messaging.csproj">

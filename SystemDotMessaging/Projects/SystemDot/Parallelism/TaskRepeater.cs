@@ -21,7 +21,8 @@ namespace SystemDot.Parallelism
 
         readonly ITaskScheduler scheduler;
         readonly List<RegisteredAction> registeredActions;
-        
+        bool started;
+
         public TaskRepeater(ITaskScheduler scheduler)
         {
             this.scheduler = scheduler;
@@ -33,18 +34,27 @@ namespace SystemDot.Parallelism
             Contract.Requires(delay != null);
             Contract.Requires(toLoop != null);
 
-            this.registeredActions.Add(new RegisteredAction(delay, toLoop));
+            if(this.started)
+                ScheduleTask(new RegisteredAction(delay, toLoop));
+            else
+                this.registeredActions.Add(new RegisteredAction(delay, toLoop));
         }
 
         public void Start()
         {
-            this.registeredActions.ForEach(a => this.scheduler.ScheduleTask(TimeSpan.FromMilliseconds(1), () => LoopTask(a)));
+            this.started = true;
+            this.registeredActions.ForEach(ScheduleTask);
         }
 
-        void LoopTask(RegisteredAction action)
+        void ScheduleTask(RegisteredAction task)
         {
-            action.ToLoop();
-            this.scheduler.ScheduleTask(action.Delay, () => LoopTask(action));
+            this.scheduler.ScheduleTask(TimeSpan.FromMilliseconds(1), () => LoopTask(task));
+        }
+
+        void LoopTask(RegisteredAction task)
+        {
+            task.ToLoop();
+            this.scheduler.ScheduleTask(task.Delay, () => LoopTask(task));
         }
     }
 

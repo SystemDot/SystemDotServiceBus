@@ -1,21 +1,22 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Storage.InMemory;
+using SystemDot.Messaging.Storage.Changes;
+using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Channels.Builders
 {
     public class PersistenceFactorySelector 
     {
         readonly IPersistenceFactory persistenceFactory;
-        readonly IDatastore datastore;
+        readonly InMemoryChangeStore inMemoryStore;
 
-        public PersistenceFactorySelector(IPersistenceFactory persistenceFactory, IDatastore datastore)
+        public PersistenceFactorySelector(IPersistenceFactory persistenceFactory, InMemoryChangeStore inMemoryStore)
         {
             Contract.Requires(persistenceFactory != null);
-            Contract.Requires(datastore != null);
+            Contract.Requires(inMemoryStore != null);
             
             this.persistenceFactory = persistenceFactory;
-            this.datastore = datastore;
+            this.inMemoryStore = inMemoryStore;
         }
 
         public IPersistenceFactory Select(ChannelSchema schema)
@@ -24,7 +25,7 @@ namespace SystemDot.Messaging.Channels.Builders
             
             return (schema.IsDurable) 
                 ? this.persistenceFactory
-                : new InMemoryPersistenceFactory(this.datastore);
+                : new PersistenceFactory(this.inMemoryStore);
         }
     }
 }

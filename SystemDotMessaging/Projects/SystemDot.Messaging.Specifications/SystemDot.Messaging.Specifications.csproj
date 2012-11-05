@@ -85,6 +85,7 @@
     <Compile Include="configuration\publishing\when_publishing_a_request_message_on_a_publish_subscribe_channel.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="configuration\publishing\when_publishing_a_request_message_on_a_publish_subscribe_channel_with_two_subscribers.cs" />
     <Compile Include="configuration\publishing\when_recieving_an_out_of_sequence_published_message_on_a_durable_subscriber_channel.cs" />
     <Compile Include="configuration\publishing\when_recieving_a_published_message_on_a_durable_subscriber_channel.cs" />
     <Compile Include="configuration\request_reply\recieving\when_recieving_an_out_of_sequence_request_message_on_a_durable_request_reply_channel.cs" />
@@ -145,8 +146,8 @@
     <Compile Include="channels\storage\in_memory\when_getting_messages_for_a_channel.cs" />
     <Compile Include="channels\storage\in_memory\when_removing_a_message_that_does_not_exist.cs" />
     <Compile Include="configuration\WithMessageConfigurationSubject.cs" />
+    <Compile Include="IChangeStoreExtensions.cs" />
     <Compile Include="PersistenceBehaviour.cs" />
-    <Compile Include="TestDatastore.cs" />
     <Compile Include="TestMessageHandler.cs" />
     <Compile Include="TestMessageProcessorHook.cs" />
     <Compile Include="TestMessageReciever.cs" />

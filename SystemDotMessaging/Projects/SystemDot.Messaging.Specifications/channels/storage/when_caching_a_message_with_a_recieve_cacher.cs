@@ -1,4 +1,3 @@
-using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Repeating;

@@ -1,5 +1,5 @@
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Storage.InMemory;
+using SystemDot.Messaging.Storage.Changes;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
         Because of = () => bus.Send(message);
 
         It should_persist_the_message = () =>
-            Resolve<IDatastore>()
+            Resolve<IChangeStore>()
                 .GetMessages(PersistenceUseType.RequestSend, BuildAddress(ChannelName))
                 .ShouldNotBeEmpty();
     }

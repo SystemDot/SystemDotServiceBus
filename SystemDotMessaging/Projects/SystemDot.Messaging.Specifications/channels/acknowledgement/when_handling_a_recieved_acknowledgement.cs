@@ -1,9 +1,8 @@
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Acknowledgement;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Storage.InMemory;
+using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -18,12 +17,12 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
 
         Establish context = () =>
         {
-            var store = new InMemoryDatastore(new PlatformAgnosticSerialiser());
+            var store = new InMemoryChangeStore(new PlatformAgnosticSerialiser());
             
-            persistence = new InMemoryPersistence(
-                store, 
-                PersistenceUseType.SubscriberRequestSend, 
-                new EndpointAddress("Channel", "Server"));
+            persistence = new Persistence(
+                store,
+                new EndpointAddress("Channel", "Server"), 
+                PersistenceUseType.SubscriberRequestSend);
 
             Subject.RegisterPersistence(persistence);
             

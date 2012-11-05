@@ -18,6 +18,7 @@ namespace SystemDot.Messaging.Storage
         void Delete(Guid id);
         EndpointAddress Address { get; }
         PersistenceUseType UseType{ get; }
+        void Initialise();
     }
 
     [ContractClassFor(typeof(IPersistence))]
@@ -60,6 +61,10 @@ namespace SystemDot.Messaging.Storage
         public void Delete(Guid id)
         {
             Contract.Requires(id != Guid.Empty);
+        }
+
+        public void Initialise()
+        {
         }
 
         public EndpointAddress Address { get; set; }

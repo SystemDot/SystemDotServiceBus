@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Channels.RequestReply;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Storage.InMemory;
+using SystemDot.Messaging.Storage.Changes;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.recieving
@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
         Because of = () => bus.Reply(message);
 
         It should_persist_the_message = () =>
-            Resolve<IDatastore>()
+            Resolve<IChangeStore>()
                 .GetMessages(PersistenceUseType.ReplySend, BuildAddress(ChannelName))
                 .ShouldNotBeEmpty();
     }

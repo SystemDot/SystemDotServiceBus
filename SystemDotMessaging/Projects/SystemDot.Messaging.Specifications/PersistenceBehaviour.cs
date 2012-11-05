@@ -1,8 +1,6 @@
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Storage.InMemory;
+using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Serialisation;
 using Machine.Fakes;
 
@@ -15,10 +13,10 @@ namespace SystemDot.Messaging.Specifications
 
         OnEstablish context = (accessor) => 
         {
-            accessor.Configure<IDatastore>(new InMemoryDatastore(new PlatformAgnosticSerialiser()));
+            accessor.Configure<IChangeStore>(new InMemoryChangeStore(new PlatformAgnosticSerialiser()));
 
             accessor.Configure<IPersistenceFactory>(
-                new InMemoryPersistenceFactory(accessor.The<IDatastore>()));
+                new PersistenceFactory(accessor.The<IChangeStore>()));
 
             accessor.Configure<IPersistence>(
                 accessor.The<IPersistenceFactory>()

@@ -3,8 +3,7 @@ using SystemDot.Messaging.Channels.Acknowledgement;
 using SystemDot.Messaging.Channels.Acknowledgement.Builders;
 using SystemDot.Messaging.Channels.Builders;
 using SystemDot.Messaging.Channels.Handling;
-using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Storage.InMemory;
+using SystemDot.Messaging.Storage.Changes;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {
@@ -17,7 +16,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<AcknowledgementChannelBuilder, AcknowledgementChannelBuilder>();
             container.RegisterInstance<MessageAcknowledgementHandler, MessageAcknowledgementHandler>();
             container.RegisterInstance<MessageAcknowledgementHandler, MessageAcknowledgementHandler>();
-            container.RegisterInstance<IDatastore, InMemoryDatastore>();
+            container.RegisterInstance<InMemoryChangeStore, InMemoryChangeStore>();
             container.RegisterInstance<PersistenceFactorySelector, PersistenceFactorySelector>();
         }
     }
