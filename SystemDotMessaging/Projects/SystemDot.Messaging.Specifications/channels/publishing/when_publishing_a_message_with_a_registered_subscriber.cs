@@ -1,4 +1,5 @@
 ﻿using System;
+using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Publishing;
@@ -44,8 +45,8 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
                 .As<TestMessageSender>()
                 .SentMessages.ShouldContain(inputMessage);
 
-        It should_process_the_message = () => processedMessage.ShouldBeTheSameAs(message);
-        
-        It should_reset_the_last_time_sent = () => processedMessage.HasHeader<LastSentHeader>().ShouldBeFalse();
+        It should_process_the_message = () => processedMessage.ShouldBeTheSameAs(message);        
     }
 }
+
+

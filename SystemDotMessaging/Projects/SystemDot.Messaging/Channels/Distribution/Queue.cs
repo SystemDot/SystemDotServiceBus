@@ -48,6 +48,7 @@ namespace SystemDot.Messaging.Channels.Distribution
 
             if (this.isDequeueing)
             {
+                
                 OnItemPushed(message);
                 Dequeue();
             }

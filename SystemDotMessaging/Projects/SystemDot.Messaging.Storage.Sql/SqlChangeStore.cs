@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlServerCe;
+using System.IO;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Messaging.Storage.Sql.Connections;
 using SystemDot.Serialisation;
@@ -10,6 +11,7 @@ namespace SystemDot.Messaging.Storage.Sql
     public class SqlChangeStore : IChangeStore
     {
         readonly ISerialiser serialiser;
+        readonly static object CreateDbLock = new object();
 
         public SqlChangeStore(ISerialiser serialiser)
         {
@@ -65,6 +67,48 @@ namespace SystemDot.Messaging.Storage.Sql
             }
 
             return change;
+        }
+
+        public void Initialise()
+        {
+            lock (CreateDbLock)
+            {
+                CreateDatabaseIfNonExistent();
+            }
+        }
+
+        void CreateDatabaseIfNonExistent()
+        {
+            using (var connection = new SqlCeConnection(ConnectionHelper.ConnectionString))
+            {
+                using (var engine = new SqlCeEngine(ConnectionHelper.ConnectionString))
+                {
+                    try
+                    {
+                        engine.CreateDatabase();
+                    }
+                    catch (Exception)
+                    {
+                        return;
+                    }
+                }
+
+                CreateInitialDatabaseObjects();
+            }
+        }
+
+        void CreateInitialDatabaseObjects()
+        {
+            using (var connection = new PooledConnection())
+            {
+                connection.Execute(
+                    @"CREATE TABLE ChangeStore(
+                        Id uniqueidentifier NOT NULL CONSTRAINT ChangeStore_PK PRIMARY KEY,
+                        ChangeRootId nvarchar(1000) NOT NULL,
+                        Change varbinary(8000) NULL,
+                        Sequence int IDENTITY(1, 1) NOT NULL)",
+                    command => { });
+            }
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Storage.Changes;
+using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -13,9 +15,10 @@ namespace SystemDot.Messaging.Specifications.channels.storage.in_memory
         static IPersistence persistence;
 
         Establish context = () =>
-            persistence = Subject.CreatePersistence(
-                PersistenceUseType.SubscriberRequestSend,
-                new EndpointAddress("Channel", "Server"));
+        {
+            Configure<IChangeStore>(new InMemoryChangeStore(new PlatformAgnosticSerialiser()));
+            persistence = Subject.CreatePersistence(PersistenceUseType.SubscriberRequestSend, new EndpointAddress("Channel", "Server"));
+        };
 
         Because of = () => exception = Catch.Exception(() => persistence.Delete(Guid.NewGuid()));
 

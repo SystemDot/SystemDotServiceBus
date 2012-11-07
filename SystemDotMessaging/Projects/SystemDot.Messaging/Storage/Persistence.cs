@@ -19,8 +19,9 @@ namespace SystemDot.Messaging.Storage
             Address = address;
             UseType = useType;
             Id = address + "|" + useType;
-
+            
             this.messages = new ConcurrentDictionary<Guid, MessagePayload>();
+            this.sequence = 1;
         }
 
         public IEnumerable<MessagePayload> GetMessages()
@@ -95,6 +96,5 @@ namespace SystemDot.Messaging.Storage
 
         public EndpointAddress Address { get; private set; }
         public PersistenceUseType UseType { get; private set; }
-
     }
 }

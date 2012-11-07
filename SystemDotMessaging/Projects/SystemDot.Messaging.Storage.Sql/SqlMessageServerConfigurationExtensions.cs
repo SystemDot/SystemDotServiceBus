@@ -11,6 +11,7 @@ namespace SystemDot.Messaging.Storage.Sql
         public static MessageServerConfiguration UsingSqlPersistence(this MessageServerConfiguration configuration)
         {
             IocContainerLocator.Locate().RegisterInstance<IChangeStore, SqlChangeStore>();
+            IocContainerLocator.Locate().Resolve<IChangeStore>().As<SqlChangeStore>().Initialise();
             return configuration;
         }
     }

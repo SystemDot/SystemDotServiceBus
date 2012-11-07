@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Storage.Changes;
 
 namespace SystemDot.Messaging.Configuration
 {
@@ -31,7 +32,7 @@ namespace SystemDot.Messaging.Configuration
 
         private static void RegisterInMemoryPersistence(IIocContainer container)
         {
-            container.RegisterInstance<IPersistenceFactory, PersistenceFactory>();
+            container.RegisterInstance<IChangeStore, InMemoryChangeStore>();
         }
     }
 }

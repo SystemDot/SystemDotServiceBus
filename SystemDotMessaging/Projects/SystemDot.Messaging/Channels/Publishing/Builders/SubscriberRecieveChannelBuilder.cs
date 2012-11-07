@@ -3,6 +3,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Acknowledgement;
 using SystemDot.Messaging.Channels.Builders;
 using SystemDot.Messaging.Channels.Caching;
+using SystemDot.Messaging.Channels.Expiry;
 using SystemDot.Messaging.Channels.Filtering;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Channels.Packaging;
@@ -63,7 +64,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .Pump()
                 .ToProcessor(new BodyMessageFilter(schema.Address))
-                .ToProcessor(new X())
+                .ToProcessor(new MessageSendTimeRemover())
                 .ToEscalatingTimeMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new ReceiveChannelMessageCacher(persistence))
                 .ToProcessor(new MessageAcknowledger(this.messageSender))
@@ -72,16 +73,5 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
                 .ToEndPoint(this.messageHandlerRouter);
         }
-    }
-
-    public class X : IMessageProcessor<MessagePayload, MessagePayload>
-    {
-        public void InputMessage(MessagePayload toInput)
-        {
-            toInput.RemoveHeader(typeof(LastSentHeader));
-            MessageProcessed(toInput);
-        }
-
-        public event Action<MessagePayload> MessageProcessed;
     }
 }

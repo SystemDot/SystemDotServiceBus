@@ -4,6 +4,7 @@ using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Storage;
 using Machine.Fakes;
 using Machine.Specifications;
+using SystemDot.Messaging.Channels.Sequencing;
 
 namespace SystemDot.Messaging.Specifications.channels.storage
 {

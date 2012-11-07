@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.TestPublisher
                 Console.ReadLine();
                 Console.WriteLine("Sending message");
 
-                for (int i = 0; i < 1000; i++)
+                for (int i = 0; i < 150; i++)
                 {
                     bus.Publish(new TestMessage("Hello" + i));                    
                 }

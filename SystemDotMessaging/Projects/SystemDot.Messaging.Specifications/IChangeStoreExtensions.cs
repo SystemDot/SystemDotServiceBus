@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
@@ -9,9 +8,15 @@ namespace SystemDot.Messaging.Specifications
 {
     public static class IChangeStoreExtensions
     {
-        public static IEnumerable<MessagePayload> GetAddedMessages(this IChangeStore store)
+        public static IEnumerable<MessagePayload> GetAddedMessages(
+            this IChangeStore store, 
+            PersistenceUseType useType, 
+            EndpointAddress address)
         {
-            return null;
+            var rebuilder = new TestMessageChangeRebuilder(store, address, useType);
+            rebuilder.Initialise();
+
+            return rebuilder.GetMessages();
         }
 
         public static IEnumerable<MessagePayload> GetMessages(

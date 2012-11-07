@@ -27,7 +27,9 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 
         Because of = () => MessageReciever.RecieveMessage(payload);
 
-        It should_have_persisted_the_message = () =>
-           Resolve<IChangeStore>().GetAddedMessages().ShouldContain(payload);
+        It should_have_persisted_the_message = () => 
+            Resolve<IChangeStore>()
+                .GetAddedMessages(PersistenceUseType.ReplyReceive, BuildAddress(ChannelName))
+                .ShouldContain(payload);
     }
 }

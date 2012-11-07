@@ -50,14 +50,14 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
             Resolve<ReplyAddressLookup>().GetCurrentSenderAddress().ShouldEqual(BuildAddress(SenderAddress));
 
         It should_mark_the_message_with_the_time_the_message_is_sent = () =>
-            Resolve<IChangeStore>()
-                .GetAddedMessages()
+            Resolve<InMemoryChangeStore>()
+                .GetAddedMessages(PersistenceUseType.RequestReceive, BuildAddress(ChannelName))
                 .First()
                 .GetLastTimeSent().ShouldBeGreaterThan(DateTime.MinValue);
 
         It should_mark_the_message_with_the_amount_of_times_the_message_has_been_sent = () =>
-           Resolve<IChangeStore>()
-                .GetAddedMessages()
+           Resolve<InMemoryChangeStore>()
+                .GetAddedMessages(PersistenceUseType.RequestReceive, BuildAddress(ChannelName))
                 .First()
                 .GetAmountSent().ShouldEqual(1);
     }

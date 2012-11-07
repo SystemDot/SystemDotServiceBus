@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using SystemDot.Logging;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage;
@@ -24,6 +25,9 @@ namespace SystemDot.Messaging.Channels.Sequencing
         {
             Logger.Info("Resequencing message");
             int startSequence = this.persistence.GetSequence();
+
+            Console.WriteLine("StartSequence: {0}", startSequence);
+            Console.WriteLine("lowest message sequence: {0}", this.persistence.GetMessages().Min(m => m.GetSequence()));
             
             if(!toInput.HasSequence()) return;
             if (!AddMessageToQueue(toInput, startSequence)) return;
@@ -33,7 +37,11 @@ namespace SystemDot.Messaging.Channels.Sequencing
 
         bool AddMessageToQueue(MessagePayload toInput, int startSequence)
         {
-            if (toInput.GetSequence() < startSequence) return false;
+            if (toInput.GetSequence() < startSequence)
+            {
+                this.persistence.Delete(toInput.Id);
+                return false;
+            }
 
             this.queue.TryAdd(toInput.GetSequence(), toInput);
             return true;

@@ -28,6 +28,8 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
         Because of = () => MessageReciever.RecieveMessage(payload);
 
         It should_have_persisted_the_message = () =>
-            Resolve<IChangeStore>().GetAddedMessages().ShouldContain(payload);
+            Resolve<IChangeStore>()
+                .GetAddedMessages(PersistenceUseType.SubscriberReceive, BuildAddress(ChannelName))
+                .ShouldContain(payload);
     }
 }

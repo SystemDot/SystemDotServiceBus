@@ -9,6 +9,7 @@ using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 using Machine.Specifications;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Channels.Repeating;
 
 namespace SystemDot.Messaging.Specifications.configuration
 {
@@ -42,6 +43,7 @@ namespace SystemDot.Messaging.Specifications.configuration
             payload.SetToAddress(BuildAddress(toAddress));
             payload.SetPersistenceId(BuildAddress(fromAddress), useType);
             payload.SetSourcePersistenceId(payload.GetPersistenceId());
+            payload.IncreaseAmountSent();
 
             return payload;
         }

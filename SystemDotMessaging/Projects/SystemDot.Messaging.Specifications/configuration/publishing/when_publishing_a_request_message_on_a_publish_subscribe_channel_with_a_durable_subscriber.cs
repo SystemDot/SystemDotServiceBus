@@ -1,3 +1,4 @@
+using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.Changes;
 using Machine.Specifications;
 
@@ -28,6 +29,8 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
         Because of = () => bus.Publish(message);
 
         It should_have_persisted_the_message = () =>
-           Resolve<IChangeStore>().GetAddedMessages().ShouldNotBeEmpty();
+            Resolve<IChangeStore>()
+                .GetAddedMessages(PersistenceUseType.PublisherSend, BuildAddress(ChannelName))
+                .ShouldNotBeEmpty();
     }
 }

@@ -4,9 +4,11 @@ namespace SystemDot.Messaging.Storage.Sql.Connections
 {
     public static class ConnectionHelper
     {
+        public const string ConnectionString = "Data Source=|DataDirectory|\\Messaging.sdf";
+
         public static SqlCeConnection GetConnection()
         {
-            var connection = new SqlCeConnection("Data Source=|DataDirectory|\\Messaging.sdf");
+            var connection = new SqlCeConnection(ConnectionString);
             connection.Open();
             return connection;
         }

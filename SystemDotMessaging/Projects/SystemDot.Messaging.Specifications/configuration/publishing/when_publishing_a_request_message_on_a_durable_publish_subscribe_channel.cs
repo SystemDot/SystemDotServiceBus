@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
         Because of = () => bus.Publish(message);
 
         It should_have_decached_the_message_after_successful_publishing = () =>
-            Resolve<IChangeStore>()
+            Resolve<InMemoryChangeStore>()
                 .GetMessages(PersistenceUseType.PublisherSend, BuildAddress(ChannelName))
                 .ShouldBeEmpty();
     }

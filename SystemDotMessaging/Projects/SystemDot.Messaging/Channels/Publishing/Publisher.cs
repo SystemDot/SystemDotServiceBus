@@ -32,7 +32,6 @@ namespace SystemDot.Messaging.Channels.Publishing
 
         public void InputMessage(MessagePayload toInput)
         {
-            toInput.RemoveHeader(typeof(LastSentHeader));
             this.subscribers.Values.ForEach(s => s.Channel.InputMessage(toInput));
             MessageProcessed(toInput);
         }

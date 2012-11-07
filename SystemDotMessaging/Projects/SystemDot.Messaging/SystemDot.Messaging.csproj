@@ -55,6 +55,7 @@
     <Compile Include="Channels\Expiry\MessageExpirer.cs" />
     <Compile Include="Channels\Expiry\PassthroughMessageExpiryStrategy.cs" />
     <Compile Include="Channels\Expiry\RepeatAttemptMessageExpiryStrategy.cs" />
+    <Compile Include="Channels\Expiry\MessageSendTimeRemover.cs" />
     <Compile Include="Channels\Expiry\TimeMessageExpiryStrategy.cs" />
     <Compile Include="Channels\Caching\MessageDecacher.cs" />
     <Compile Include="Channels\ISerialiserExtensions.cs" />
@@ -70,7 +71,7 @@
     <Compile Include="Channels\Repeating\MessagePayloadRepeatExtensions.cs" />
     <Compile Include="Channels\Repeating\MessageRepeater.cs" />
     <Compile Include="Channels\Repeating\RepeaterMessagePipelineBuilderExtensions.cs" />
-    <Compile Include="Channels\Repeating\SimpleMessageRepeater.cs" />
+    <Compile Include="Channels\Repeating\SimpleRepeatStrategy.cs" />
     <Compile Include="Channels\RequestReply\Builders\RequestRecieveChannelSchema.cs" />
     <Compile Include="Channels\Builders\SendChannelSchema.cs" />
     <Compile Include="Channels\Publishing\Builders\PublisherChannelBuilder.cs" />
