@@ -87,10 +87,26 @@ namespace SystemDot.Messaging.Storage
 
         void ApplyChange(DeleteMessageChange change)
         {
+            ApplyDelete(change.Id);
+        }
+
+        public void DeleteAndSetSequence(Guid id, int toSet)
+        {
+            AddChange(new DeleteMessageAndSetSequenceChange(id, toSet));
+        }
+
+        void ApplyChange(DeleteMessageAndSetSequenceChange change)
+        {
+            ApplyDelete(change.Id);
+            this.sequence = change.Sequence;
+        }
+
+        void ApplyDelete(Guid id)
+        {
             lock (deleteLock)
             {
                 MessagePayload temp;
-                this.messages.TryRemove(change.Id, out temp);
+                this.messages.TryRemove(id, out temp);
             }
         }
 

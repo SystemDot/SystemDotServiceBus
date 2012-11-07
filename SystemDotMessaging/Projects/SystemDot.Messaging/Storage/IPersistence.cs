@@ -16,6 +16,7 @@ namespace SystemDot.Messaging.Storage
         int GetSequence();
         void SetSequence(int toSet);
         void Delete(Guid id);
+        void DeleteAndSetSequence(Guid id, int toSet);
         EndpointAddress Address { get; }
         PersistenceUseType UseType{ get; }
         void Initialise();
@@ -61,6 +62,12 @@ namespace SystemDot.Messaging.Storage
         public void Delete(Guid id)
         {
             Contract.Requires(id != Guid.Empty);
+        }
+
+        public void DeleteAndSetSequence(Guid id, int toSet)
+        {
+            Contract.Requires(id != Guid.Empty);
+            Contract.Requires(toSet > 0);
         }
 
         public void Initialise()

@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.OtherTestSubscriber
     {
         static void Main(string[] args)
         {
-            Logger.LoggingMechanism = new ConsoleLoggingMechanism { ShowInfo = false };
+            Logger.LoggingMechanism = new ConsoleLoggingMechanism { ShowDebug = false };
 
             Configure.Messaging()
                 .UsingHttpTransport(MessageServer.Local())

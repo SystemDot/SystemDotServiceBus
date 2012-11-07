@@ -12,7 +12,7 @@ namespace SystemDot.Messaging.TestSubscriber
         static void Main(string[] args)
         {
             IBus bus = Configure.Messaging()
-                .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
+                .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = true })
                 .UsingHttpTransport(MessageServer.Local())
                 .UsingSqlPersistence()
                 .OpenChannel("TestSubscriber")

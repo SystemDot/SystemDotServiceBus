@@ -39,5 +39,7 @@ namespace SystemDot.Messaging.Specifications.channels.sequencing
         It should_pass_the_messages_through = () => processedMessages.ShouldContain(message1, message2);
 
         It should_decache_the_messages = () => The<IPersistence>().GetMessages().ShouldNotContain(message1, message2);
+
+        It should_persist_the_sequence_of_the_last_message_processed = () => The<IPersistence>().GetSequence().ShouldEqual(3);
     }
 }

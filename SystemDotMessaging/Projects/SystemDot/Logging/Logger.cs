@@ -22,6 +22,14 @@ namespace SystemDot.Logging
             LoggingMechanism.Info(String.Format(message, args));
         }
 
+        public static void Debug(string message, params object[] args)
+        {
+            if (LoggingMechanism == null) return;
+            if (!LoggingMechanism.ShowDebug) return;
+
+            LoggingMechanism.Debug(String.Format(message, args));
+        }
+
         public static void Error(string message)
         {
             if (LoggingMechanism == null) return;

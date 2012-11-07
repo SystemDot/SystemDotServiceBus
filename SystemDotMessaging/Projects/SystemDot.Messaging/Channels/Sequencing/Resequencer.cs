@@ -24,11 +24,14 @@ namespace SystemDot.Messaging.Channels.Sequencing
         public void InputMessage(MessagePayload toInput)
         {
             Logger.Info("Resequencing message");
+            
             int startSequence = this.persistence.GetSequence();
 
-            Console.WriteLine("StartSequence: {0}", startSequence);
-            Console.WriteLine("lowest message sequence: {0}", this.persistence.GetMessages().Min(m => m.GetSequence()));
-            
+            Logger.Debug("Start sequence: {0}", startSequence);
+            Logger.Debug("message sequence: {0}", toInput.GetSequence());
+            Logger.Debug("Lowest message sequence in persistence: {0}", persistence.GetMessages().Min(m => m.GetSequence()));
+            Logger.Debug("amount messages in persistence: {0}", persistence.GetMessages().Count());
+
             if(!toInput.HasSequence()) return;
             if (!AddMessageToQueue(toInput, startSequence)) return;
 
@@ -57,8 +60,7 @@ namespace SystemDot.Messaging.Channels.Sequencing
                 MessagePayload message;
                 this.queue.TryRemove(startSequence, out message);
                 startSequence++;
-                this.persistence.Delete(message.Id);
-                this.persistence.SetSequence(startSequence);
+                this.persistence.DeleteAndSetSequence(message.Id, startSequence);
             }
         }
 
