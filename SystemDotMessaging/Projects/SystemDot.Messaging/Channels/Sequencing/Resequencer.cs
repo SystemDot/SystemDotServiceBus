@@ -27,11 +27,6 @@ namespace SystemDot.Messaging.Channels.Sequencing
             
             int startSequence = this.persistence.GetSequence();
 
-            Logger.Debug("Start sequence: {0}", startSequence);
-            Logger.Debug("message sequence: {0}", toInput.GetSequence());
-            Logger.Debug("Lowest message sequence in persistence: {0}", persistence.GetMessages().Min(m => m.GetSequence()));
-            Logger.Debug("amount messages in persistence: {0}", persistence.GetMessages().Count());
-
             if(!toInput.HasSequence()) return;
             if (!AddMessageToQueue(toInput, startSequence)) return;
 
