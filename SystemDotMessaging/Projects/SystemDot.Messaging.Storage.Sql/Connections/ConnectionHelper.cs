@@ -4,7 +4,7 @@ namespace SystemDot.Messaging.Storage.Sql.Connections
 {
     public static class ConnectionHelper
     {
-        public const string ConnectionString = "Data Source=|DataDirectory|\\Messaging.sdf";
+        public static string ConnectionString = "Data Source=|DataDirectory|\\Messaging.sdf";
 
         public static SqlCeConnection GetConnection()
         {

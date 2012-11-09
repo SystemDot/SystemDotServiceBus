@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlServerCe;
-using System.IO;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Messaging.Storage.Sql.Connections;
 using SystemDot.Serialisation;
@@ -18,19 +17,31 @@ namespace SystemDot.Messaging.Storage.Sql
             this.serialiser = serialiser;
         }
 
+        public void SetDatabaseLocation(string location)
+        {
+            ConnectionHelper.ConnectionString = "Data Source=|DataDirectory|" + location;
+        }
+
         public Guid StoreChange(string changeRootId, Change change)
         {
             var id = Guid.NewGuid();
+
             using (var connection = new PooledConnection())
             {
-                connection.Execute(
-                    "insert into ChangeStore(id, changeRootId, change) values(@id, @changeRootId, @change)",
-                    command =>
-                    {
-                        command.Parameters.AddWithValue("@id", id);
-                        command.Parameters.AddWithValue("@changeRootId", changeRootId);
-                        command.Parameters.AddWithValue("@change", this.serialiser.Serialise(change));
-                    });
+                using (var transaction = connection.Connection.BeginTransaction())
+                {
+                    connection.Execute(
+                        transaction,
+                        "insert into ChangeStore(id, changeRootId, change) values(@id, @changeRootId, @change)",
+                        command =>
+                        {
+                            command.Parameters.AddWithValue("@id", id);
+                            command.Parameters.AddWithValue("@changeRootId", changeRootId);
+                            command.Parameters.AddWithValue("@change", this.serialiser.Serialise(change));
+                        });
+
+                    transaction.Commit(CommitMode.Immediate);
+                }
             }
 
             return id;

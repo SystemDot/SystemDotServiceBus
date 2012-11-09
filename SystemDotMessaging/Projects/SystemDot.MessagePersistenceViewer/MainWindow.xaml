@@ -1,8 +1,47 @@
 ﻿<Window x:Class="SystemDot.MessagePersistenceViewer.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:System="clr-namespace:System;assembly=mscorlib"
+        xmlns:Storage="clr-namespace:SystemDot.Messaging.Storage;assembly=SystemDot.Messaging" Title="MainWindow" 
+        Height="941" 
+        Width="1095.3"
+        DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ObjectDataProvider 
+            x:Key="PersistenceUseTypes"
+            MethodName="GetValues" 
+            ObjectType="{x:Type System:Enum}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="Storage:PersistenceUseType" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="11*"/>
+            <ColumnDefinition Width="72*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="64*"/>
+            <RowDefinition Height="803*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="{Binding Path=Sequence}" Grid.Row="0" Grid.ColumnSpan="2"/>
+        <Button Content="Refresh" Command="{Binding Path=RefreshCommand}" Grid.Row="1"/>
+        <TextBox Text="{Binding DatabaseLocation, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="0,0,0,39"/>
+        <TextBox Text="{Binding ChannelName, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="0,41,372,0"/>
+        <ComboBox SelectedItem="{Binding PersistenceUseType, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource PersistenceUseTypes}}" Grid.Row="1" Grid.Column="1" Margin="613,41,34,0"/>
+        <DataGrid 
+            AutoGenerateColumns="False" 
+            ItemsSource="{Binding Messages}" 
+            Grid.Row="2" Grid.ColumnSpan="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Sequence" Binding="{Binding Sequence, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Amount Sent" Binding="{Binding AmountSent, Mode=OneWay}"/>
+                <DataGridCheckBoxColumn Header="Deleted" Binding="{Binding IsDeleted}" ClipboardContentBinding="{x:Null}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
