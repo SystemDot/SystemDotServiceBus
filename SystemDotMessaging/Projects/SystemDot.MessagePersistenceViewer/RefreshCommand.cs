@@ -1,26 +1,22 @@
 using System;
 using System.Windows.Input;
-using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.Changes;
-using SystemDot.Messaging.Storage.Sql;
 
 namespace SystemDot.MessagePersistenceViewer
 {
     public class RefreshCommand : ICommand
     {
-        readonly IChangeStore changeStore;
         readonly MessageChangeViewModelBuilder builder;
+        MainViewModel viewModel;
 
-        public RefreshCommand(IChangeStore changeStore, MessageChangeViewModelBuilder builder)
+        public RefreshCommand(MessageChangeViewModelBuilder builder)
         {
-            this.changeStore = changeStore;
             this.builder = builder;
         }
 
         public void SetViewModel(MainViewModel toSet)
         {
-            this.builder.SetViewModel(toSet);
+            this.viewModel = toSet;
         }
 
         public bool CanExecute(object parameter)
@@ -30,7 +26,7 @@ namespace SystemDot.MessagePersistenceViewer
 
         public void Execute(object parameter)
         {
-            this.builder.Build();
+            this.builder.Build(this.viewModel);
         }
 
         public event EventHandler CanExecuteChanged;

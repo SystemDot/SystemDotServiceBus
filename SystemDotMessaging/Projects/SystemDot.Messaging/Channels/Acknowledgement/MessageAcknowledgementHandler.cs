@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Channels.Acknowledgement
             if (!toInput.IsAcknowledgement()) return;
 
             var id = toInput.GetAcknowledgementId();
-            
+
             this.persistences
                 .Single(p => p.UseType == id.UseType && p.Address == id.Address)
                 .Delete(id.MessageId);

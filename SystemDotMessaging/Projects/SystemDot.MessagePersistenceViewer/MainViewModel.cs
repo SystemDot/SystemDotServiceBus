@@ -39,9 +39,9 @@ namespace SystemDot.MessagePersistenceViewer
             this.refreshCommand = refreshCommand;
             this.refreshCommand.SetViewModel(this);
 
-            ChannelName = "TestSubscriber";
+            ChannelName = "TestOtherSubscriber";
             PersistenceUseType = PersistenceUseType.SubscriberReceive;
-            DatabaseLocation = "C:\\Work\\SystemDot\\SystemDotMessaging\\Projects\\Test\\SystemDot.Messaging.TestSubscriber\\bin\\Debug\\Messaging.sdf";
+            DatabaseLocation = "C:\\Work\\SystemDot\\SystemDotMessaging\\Projects\\Test\\SystemDot.Messaging.OtherTestSubscriber\\bin\\Debug\\Esent\\OtherTestSubscriber";
 
             this.messages = new ObservableCollection<MessageViewModel>();
         }
@@ -54,7 +54,10 @@ namespace SystemDot.MessagePersistenceViewer
 
         public void UpdateMessage(MessagePayload toUpdate)
         {
-            this.messages.Single(m => m.Id == toUpdate.Id).Message = toUpdate;
+            if (messages.Any(m => m.Id == toUpdate.Id))
+                this.messages.Single(m => m.Id == toUpdate.Id).Message = toUpdate;
+            else
+                this.messages.Add(new MessageViewModel(toUpdate) { UpdatedWithoutAdd = true});
         }
 
         public void DeleteMessage(Guid id)
@@ -64,6 +67,7 @@ namespace SystemDot.MessagePersistenceViewer
 
         public void Clear()
         {
+            this.Sequence = 0;
             this.messages.Clear(); 
         }
     }

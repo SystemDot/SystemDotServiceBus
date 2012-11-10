@@ -1,16 +1,20 @@
 using System;
+using System.Data.SqlClient;
 using System.Data.SqlServerCe;
 
 namespace SystemDot.Messaging.Storage.Sql.Connections
 {
     public static class PooledConnectionExtensions
     {
-        static SqlCeCommand GetCommand(this PooledConnection connection, string toExecute)
+        static SqlCommand GetCommand(this PooledConnection connection, string toExecute)
         {
-            return new SqlCeCommand(toExecute, connection.Connection);
+            SqlCommand command = connection.Connection.CreateCommand();
+            command.CommandText = toExecute;
+
+            return command;
         }
 
-        public static void ExecuteReader(this PooledConnection connection, string toExecute, Action<SqlCeDataReader> onRowRead)
+        public static void ExecuteReader(this PooledConnection connection, string toExecute, Action<SqlDataReader> onRowRead)
         {
             using (var command = connection.GetCommand(toExecute))
             {
@@ -22,7 +26,7 @@ namespace SystemDot.Messaging.Storage.Sql.Connections
             }
         }
 
-        public static int Execute(this PooledConnection connection, string toExecute, Action<SqlCeCommand> onCommandInit)
+        public static int Execute(this PooledConnection connection, string toExecute, Action<SqlCommand> onCommandInit)
         {
             using (var command = connection.GetCommand(toExecute))
             {
@@ -31,7 +35,7 @@ namespace SystemDot.Messaging.Storage.Sql.Connections
             }
         }
 
-        public static int Execute(this PooledConnection connection, SqlCeTransaction transaction, string toExecute, Action<SqlCeCommand> onCommandInit)
+        public static int Execute(this PooledConnection connection, SqlTransaction transaction, string toExecute, Action<SqlCommand> onCommandInit)
         {
             using (var command = connection.GetCommand(toExecute))
             {

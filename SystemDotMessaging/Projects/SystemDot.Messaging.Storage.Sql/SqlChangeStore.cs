@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Data.SqlServerCe;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Messaging.Storage.Sql.Connections;
@@ -17,31 +18,20 @@ namespace SystemDot.Messaging.Storage.Sql
             this.serialiser = serialiser;
         }
 
-        public void SetDatabaseLocation(string location)
-        {
-            ConnectionHelper.ConnectionString = "Data Source=|DataDirectory|" + location;
-        }
-
         public Guid StoreChange(string changeRootId, Change change)
         {
             var id = Guid.NewGuid();
 
             using (var connection = new PooledConnection())
             {
-                using (var transaction = connection.Connection.BeginTransaction())
-                {
-                    connection.Execute(
-                        transaction,
-                        "insert into ChangeStore(id, changeRootId, change) values(@id, @changeRootId, @change)",
-                        command =>
-                        {
-                            command.Parameters.AddWithValue("@id", id);
-                            command.Parameters.AddWithValue("@changeRootId", changeRootId);
-                            command.Parameters.AddWithValue("@change", this.serialiser.Serialise(change));
-                        });
-
-                    transaction.Commit(CommitMode.Immediate);
-                }
+                connection.Execute(
+                    "insert into ChangeStore(id, changeRootId, change) values(@id, @changeRootId, @change)",
+                    command =>
+                    {
+                        command.Parameters.AddWithValue("@id", id);
+                        command.Parameters.AddWithValue("@changeRootId", changeRootId);
+                        command.Parameters.AddWithValue("@change", this.serialiser.Serialise(change));
+                    });
             }
 
             return id;
@@ -61,7 +51,7 @@ namespace SystemDot.Messaging.Storage.Sql
             return messages;
         }
 
-        Change DeserialiseChange(SqlCeDataReader reader)
+        Change DeserialiseChange(SqlDataReader reader)
         {
             return this.serialiser.Deserialise(reader.GetBytes(0)).As<Change>();
         }
@@ -80,29 +70,12 @@ namespace SystemDot.Messaging.Storage.Sql
             return change;
         }
 
-        public void Initialise()
-        {
+        public void Initialise(string location)
+        {            
             lock (CreateDbLock)
             {
-                CreateDatabaseIfNonExistent();
-            }
-        }
-
-        void CreateDatabaseIfNonExistent()
-        {
-            using (var connection = new SqlCeConnection(ConnectionHelper.ConnectionString))
-            {
-                using (var engine = new SqlCeEngine(ConnectionHelper.ConnectionString))
-                {
-                    try
-                    {
-                        engine.CreateDatabase();
-                    }
-                    catch (Exception)
-                    {
-                        return;
-                    }
-                }
+                ConnectionPool.Clear();
+                ConnectionHelper.ConnectionString = location;
 
                 CreateInitialDatabaseObjects();
             }

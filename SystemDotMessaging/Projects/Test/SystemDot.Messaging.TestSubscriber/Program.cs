@@ -3,6 +3,7 @@ using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Storage.Esent;
 using SystemDot.Messaging.Storage.Sql;
 
 namespace SystemDot.Messaging.TestSubscriber
@@ -14,7 +15,7 @@ namespace SystemDot.Messaging.TestSubscriber
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = true })
                 .UsingHttpTransport(MessageServer.Local())
-                .UsingSqlPersistence()
+                .UsingEsentPersistence("Esent\\TestSubscriber")
                 .OpenChannel("TestSubscriber")
                     .ForSubscribingTo("TestPublisher")
                     .WithDurability()

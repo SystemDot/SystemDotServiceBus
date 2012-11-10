@@ -1,10 +1,10 @@
-using System.Data.SqlServerCe;
+using System.Data.SqlClient;
 
 namespace SystemDot.Messaging.Storage.Sql.Connections
 {
     public class PooledConnection : Disposable
     {
-        public SqlCeConnection Connection { get; private set; }
+        public SqlConnection Connection { get; private set; }
 
         public PooledConnection()
         {

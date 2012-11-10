@@ -1,71 +1,36 @@
 using System;
 using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Storage.Changes;
-using SystemDot.Messaging.Storage.Sql;
+using SystemDot.Messaging.Storage.Esent;
+using SystemDot.Serialisation;
 
 namespace SystemDot.MessagePersistenceViewer
 {
-    public class MessageChangeViewModelBuilder : ChangeRoot
+    public class MessageChangeViewModelBuilder
     {
-        readonly IChangeStore store;
-        MainViewModel mainViewModel;
+        readonly ISerialiser serialiser;
+        readonly EndpointAddressBuilder addressBuilder;
 
-        public MessageChangeViewModelBuilder(IChangeStore store)
-            : base(store)
+        public MessageChangeViewModelBuilder(ISerialiser serialiser, EndpointAddressBuilder addressBuilder)
         {
-            this.store = store;
+            this.serialiser = serialiser;
+            this.addressBuilder = addressBuilder;
         }
 
-        public void SetViewModel(MainViewModel toSet)
+        public void Build(MainViewModel mainViewModel)
         {
-            this.mainViewModel = toSet;
-        }
+            using (var store = new EsentChangeStore(this.serialiser))
+            {
+                store.Initialise(mainViewModel.DatabaseLocation);
 
-        public void Build()
-        {
-            this.store
-                .As<SqlChangeStore>()
-                .SetDatabaseLocation(this.mainViewModel.DatabaseLocation);
+                var changeRoot = new MessageChangeRoot(
+                    store,
+                    mainViewModel,
+                    this.addressBuilder.Build(mainViewModel.ChannelName, Environment.MachineName),
+                    mainViewModel.PersistenceUseType);
 
-            EndpointAddress address = new EndpointAddressBuilder().Build(this.mainViewModel.ChannelName, Environment.MachineName);
-            
-            Id = address + "|" + this.mainViewModel.PersistenceUseType;
-            this.mainViewModel.Clear();
-
-            Initialise();
-        }
-
-        void ApplyChange(AddMessageAndIncrementSequenceChange change)
-        {
-            this.mainViewModel.AddMessage(change.Message);
-            this.mainViewModel.Sequence = change.Sequence;
-        }
-
-        void ApplyChange(AddMessageChange change)
-        {
-            this.mainViewModel.AddMessage(change.Message);
-        }
-
-        void ApplyChange(UpdateMessageChange change)
-        {
-            this.mainViewModel.UpdateMessage(change.Message);
-        }
-
-        void ApplyChange(SetSequenceChange change)
-        {
-            this.mainViewModel.Sequence = change.Sequence;
-        }
-
-        void ApplyChange(DeleteMessageChange change)
-        {
-            this.mainViewModel.DeleteMessage(change.Id);
-        }
-
-        void ApplyChange(DeleteMessageAndSetSequenceChange change)
-        {
-            this.mainViewModel.DeleteMessage(change.Id);
-            this.mainViewModel.Sequence = change.Sequence;
+                mainViewModel.Clear();
+                changeRoot.Initialise();
+            }
         }
     }
 }

@@ -12,7 +12,9 @@
   See http://www.galasoft.ch/mvvm
 */
 
+using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Storage.Changes;
+using SystemDot.Messaging.Storage.Esent;
 using SystemDot.Messaging.Storage.Sql;
 using SystemDot.Serialisation;
 using GalaSoft.MvvmLight.Ioc;
@@ -39,7 +41,7 @@ namespace SystemDot.MessagePersistenceViewer
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<ISerialiser, PlatformAgnosticSerialiser>();
-            SimpleIoc.Default.Register<IChangeStore, SqlChangeStore>();
+            SimpleIoc.Default.Register<EndpointAddressBuilder, EndpointAddressBuilder>();
             SimpleIoc.Default.Register<MessageChangeViewModelBuilder>();
             SimpleIoc.Default.Register<RefreshCommand>();
         }

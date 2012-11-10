@@ -17,6 +17,8 @@ namespace SystemDot.MessagePersistenceViewer
 
         public bool IsDeleted { get; set; }
 
+        public bool UpdatedWithoutAdd { get; set; }
+
         public MessageViewModel(MessagePayload toAdd)
         {
             this.Id = toAdd.Id;

@@ -66,6 +66,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="MainViewModel.cs" />
+    <Compile Include="MessageChangeRoot.cs" />
     <Compile Include="MessageChangeViewModelBuilder.cs" />
     <Compile Include="MessageViewModel.cs" />
     <Compile Include="RefreshCommand.cs" />
@@ -112,6 +113,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SystemDot.Messaging.Storage.Esent\SystemDot.Messaging.Storage.Esent.csproj">
+      <Project>{c7dbf177-fcdb-4530-a6ca-3b1efbad63eb}</Project>
+      <Name>SystemDot.Messaging.Storage.Esent</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SystemDot.Messaging.Storage.Sql\SystemDot.Messaging.Storage.Sql.csproj">
       <Project>{80FFA53E-9C4D-45CE-A7D2-8FE0B6A9FBFB}</Project>
       <Name>SystemDot.Messaging.Storage.Sql</Name>

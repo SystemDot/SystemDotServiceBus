@@ -41,6 +41,7 @@
                 <DataGridTextColumn Header="Sequence" Binding="{Binding Sequence, Mode=OneWay}"/>
                 <DataGridTextColumn Header="Amount Sent" Binding="{Binding AmountSent, Mode=OneWay}"/>
                 <DataGridCheckBoxColumn Header="Deleted" Binding="{Binding IsDeleted}" ClipboardContentBinding="{x:Null}"/>
+                <DataGridCheckBoxColumn Header="UpdatedWithoutAdd" Binding="{Binding UpdatedWithoutAdd}" ClipboardContentBinding="{x:Null}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

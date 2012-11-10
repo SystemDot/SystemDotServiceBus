@@ -3,6 +3,7 @@ using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Storage.Esent;
 using SystemDot.Messaging.Storage.Sql;
 
 namespace SystemDot.Messaging.OtherTestSubscriber
@@ -15,7 +16,7 @@ namespace SystemDot.Messaging.OtherTestSubscriber
 
             Configure.Messaging()
                 .UsingHttpTransport(MessageServer.Local())
-                .UsingSqlPersistence()
+                .UsingEsentPersistence("Esent\\OtherTestSubscriber")
                 .OpenChannel("TestOtherSubscriber")
                     .ForSubscribingTo("TestPublisher")
                     .WithDurability()

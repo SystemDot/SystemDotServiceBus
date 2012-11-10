@@ -17,6 +17,10 @@ namespace SystemDot.Messaging.Storage.Changes
             this.changes = new ConcurrentDictionary<Guid, ChangeContainer>();
         }
 
+        public void Initialise(string connection)
+        {            
+        }
+
         public Guid StoreChange(string changeRootId, Change change)
         {
             var id = Guid.NewGuid();
