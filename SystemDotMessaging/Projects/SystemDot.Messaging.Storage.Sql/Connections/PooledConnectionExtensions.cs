@@ -18,10 +18,12 @@ namespace SystemDot.Messaging.Storage.Sql.Connections
         {
             using (var command = connection.GetCommand(toExecute))
             {
-                var reader = command.ExecuteReader();
-                while(reader.Read())
+                using (var reader = command.ExecuteReader())
                 {
-                    onRowRead(reader);
+                    while (reader.Read())
+                    {
+                        onRowRead(reader);
+                    }
                 }
             }
         }

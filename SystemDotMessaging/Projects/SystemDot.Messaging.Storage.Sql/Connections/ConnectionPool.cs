@@ -14,7 +14,6 @@ namespace SystemDot.Messaging.Storage.Sql.Connections
             if (!connections.TryDequeue(out connection))
             {
                 connection = ConnectionHelper.GetConnection();
-                connection.Open();
             }
 
             return connection;
@@ -27,7 +26,7 @@ namespace SystemDot.Messaging.Storage.Sql.Connections
 
         public static void Clear()
         {
-            while(true)
+            while (true)
             {
                 SqlConnection temp;
                 if (!connections.TryDequeue(out temp)) return;

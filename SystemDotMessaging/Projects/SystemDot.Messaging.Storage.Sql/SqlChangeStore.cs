@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Data.SqlServerCe;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Messaging.Storage.Sql.Connections;
 using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Storage.Sql
 {
-    public class SqlChangeStore : IChangeStore
+    public class SqlChangeStore : Disposable, IChangeStore
     {
         readonly ISerialiser serialiser;
         readonly static object CreateDbLock = new object();
@@ -59,7 +58,7 @@ namespace SystemDot.Messaging.Storage.Sql
         public Change GetChange(Guid id)
         {
             Change change = null;
-            
+
             using (var connection = new PooledConnection())
             {
                 connection.ExecuteReader(
@@ -71,7 +70,7 @@ namespace SystemDot.Messaging.Storage.Sql
         }
 
         public void Initialise(string location)
-        {            
+        {
             lock (CreateDbLock)
             {
                 ConnectionPool.Clear();
@@ -86,7 +85,8 @@ namespace SystemDot.Messaging.Storage.Sql
             using (var connection = new PooledConnection())
             {
                 connection.Execute(
-                    @"CREATE TABLE ChangeStore(
+                    @"IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'ChangeStore') AND type in (N'U'))
+                        CREATE TABLE ChangeStore(
                         Id uniqueidentifier NOT NULL CONSTRAINT ChangeStore_PK PRIMARY KEY,
                         ChangeRootId nvarchar(1000) NOT NULL,
                         Change varbinary(8000) NULL,
