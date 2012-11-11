@@ -35,7 +35,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Channels\Acknowledgement\Builders\AcknowledgementChannelBuilder.cs" />
+    <Compile Include="Channels\Acknowledgement\AcknowledgementSender.cs" />
+    <Compile Include="Channels\Acknowledgement\Builders\AcknowledgementRecieveChannelBuilder.cs" />
+    <Compile Include="Channels\Acknowledgement\Builders\AcknowledgementSendChannelBuilder.cs" />
     <Compile Include="Channels\Addressing\EndpointAddress.cs" />
     <Compile Include="Channels\Addressing\EndpointAddressBuilder.cs" />
     <Compile Include="Channels\Addressing\MessageAddresser.cs" />

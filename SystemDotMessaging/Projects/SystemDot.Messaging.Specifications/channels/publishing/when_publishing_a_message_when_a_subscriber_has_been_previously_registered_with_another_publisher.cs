@@ -11,7 +11,8 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.channels.publishing
 {
     [Subject("Message publishing")]
-    public class when_publishing_a_message_when_a_subscriber_has_been_previously_registered_with_another_publisher : WithSubject<Publisher>
+    public class when_publishing_a_message_when_a_subscriber_has_been_previously_registered_with_another_publisher 
+        : WithSubject<Publisher>
     {
         static SubscriptionSchema subscriber;
         static MessagePayload message;

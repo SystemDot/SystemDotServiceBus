@@ -26,7 +26,8 @@ namespace SystemDot.Messaging.Configuration
             this.buildActions.ForEach(a => a());
             
             Resolve<ITaskRepeater>().Start();
-            Resolve<AcknowledgementChannelBuilder>().Build();
+            Resolve<AcknowledgementSendChannelBuilder>().Build();
+            Resolve<AcknowledgementRecieveChannelBuilder>().Build();
 
             return Resolve<IBus>();
         }

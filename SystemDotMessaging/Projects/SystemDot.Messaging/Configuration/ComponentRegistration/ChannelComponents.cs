@@ -14,9 +14,10 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
         {
             container.RegisterInstance<IBus, MessageBus>();
             container.RegisterInstance<MessageHandlerRouter, MessageHandlerRouter>();
-            container.RegisterInstance<AcknowledgementChannelBuilder, AcknowledgementChannelBuilder>();
+            container.RegisterInstance<AcknowledgementSendChannelBuilder, AcknowledgementSendChannelBuilder>();
+            container.RegisterInstance<AcknowledgementRecieveChannelBuilder, AcknowledgementRecieveChannelBuilder>();
             container.RegisterInstance<MessageAcknowledgementHandler, MessageAcknowledgementHandler>();
-            container.RegisterInstance<MessageAcknowledgementHandler, MessageAcknowledgementHandler>();
+            container.RegisterInstance<AcknowledgementSender, AcknowledgementSender>();
             container.RegisterInstance<IPersistenceFactory, PersistenceFactory>();
             container.RegisterInstance<InMemoryChangeStore, InMemoryChangeStore>();
             container.RegisterInstance<PersistenceFactorySelector, PersistenceFactorySelector>();

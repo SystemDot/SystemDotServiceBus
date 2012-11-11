@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
         readonly ISerialiser serialiser;
         readonly MessageHandlerRouter messageHandlerRouter;
         readonly IMessageReciever messageReciever;
-        readonly IMessageSender messageSender;
+        readonly AcknowledgementSender acknowledgementSender;
         readonly PersistenceFactorySelector persistenceFactorySelector;
         readonly ICurrentDateProvider currentDateProvider;
         readonly ITaskRepeater taskRepeater;
@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             ISerialiser serialiser, 
             MessageHandlerRouter messageHandlerRouter, 
             IMessageReciever messageReciever, 
-            IMessageSender messageSender,
+            AcknowledgementSender acknowledgementSender,
             PersistenceFactorySelector persistenceFactorySelector, 
             ICurrentDateProvider currentDateProvider, 
             ITaskRepeater taskRepeater)
@@ -41,7 +41,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             Contract.Requires(serialiser != null);
             Contract.Requires(messageHandlerRouter != null);
             Contract.Requires(messageReciever != null);
-            Contract.Requires(messageSender != null);
+            Contract.Requires(acknowledgementSender != null);
             Contract.Requires(persistenceFactorySelector != null);
             Contract.Requires(currentDateProvider != null);
             Contract.Requires(taskRepeater != null);
@@ -50,7 +50,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             this.serialiser = serialiser;
             this.messageHandlerRouter = messageHandlerRouter;
             this.messageReciever = messageReciever;
-            this.messageSender = messageSender;
+            this.acknowledgementSender = acknowledgementSender;
             this.persistenceFactorySelector = persistenceFactorySelector;
             this.currentDateProvider = currentDateProvider;
             this.taskRepeater = taskRepeater;
@@ -70,7 +70,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
                 .ToEscalatingTimeMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new ReceiveChannelMessageCacher(persistence))
                 .Pump()
-                .ToProcessor(new MessageAcknowledger(this.messageSender))
+                .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))
                 .Queue()
                 .ToResequencerIfSequenced(persistence, schema)
                 .ToProcessor(new ReplyChannelSelector(this.replyAddressLookup))
