@@ -8,9 +8,10 @@ namespace SystemDot
     {
         private readonly CoreDispatcher dispatcher;
 
-        public bool ShowInfo { get; set; }
-        
         public ObservableCollection<string> Messages { get; private set; }
+        
+        public bool ShowInfo { get; set; }
+        public bool ShowDebug { get; set; }
 
         public ObservableLoggingMechanism(CoreDispatcher dispatcher)
         {
@@ -19,6 +20,11 @@ namespace SystemDot
         }
 
         public void Info(string message)
+        {
+            SendMessageToUiCollection(message);
+        }
+
+        public void Debug(string message)
         {
             SendMessageToUiCollection(message);
         }

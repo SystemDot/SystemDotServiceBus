@@ -102,7 +102,7 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <ProjectReference Include="..\SystemDot.Messaging\SystemDot.Messaging.csproj">
       <Project>{6a4f976c-fb85-4d3d-a145-d43626605212}</Project>
-      <Name>SystemDot.Messaging</Name>
+      <Name>SystemDot.Messaging %28Metro\SystemDot.Messaging%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\SystemDot.Sqlite\SystemDot.Sqlite.csproj">
       <Project>{ce5c1b4b-b8a2-490e-8489-25ebd028b755}</Project>
@@ -110,14 +110,13 @@
     </ProjectReference>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">
       <Project>{E9433834-D592-4A4A-8219-3EA48B5A2BCC}</Project>
-      <Name>SystemDot</Name>
+      <Name>SystemDot %28Metro\SystemDot%29</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MessagePayloadStorageItem.cs" />
+    <Compile Include="SqliteChangeContainer.cs" />
     <Compile Include="SqliteMessageServerConfigurationExtensions.cs" />
-    <Compile Include="SqlitePersistenceFactory.cs" />
-    <Compile Include="SqlitePersistence.cs" />
+    <Compile Include="SqliteChangeStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

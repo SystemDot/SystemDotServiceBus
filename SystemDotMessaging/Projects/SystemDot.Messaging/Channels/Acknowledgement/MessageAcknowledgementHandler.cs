@@ -21,6 +21,8 @@ namespace SystemDot.Messaging.Channels.Acknowledgement
 
             var id = toInput.GetAcknowledgementId();
 
+            if (!this.persistences.Any(p => p.UseType == id.UseType && p.Address == id.Address)) return;
+
             this.persistences
                 .Single(p => p.UseType == id.UseType && p.Address == id.Address)
                 .Delete(id.MessageId);

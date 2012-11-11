@@ -32,12 +32,7 @@ namespace SystemDot.Messaging.Storage.Changes
         void ReplayChange(Change change)
         {
             GetType()
-                .GetMethod(
-                    "ApplyChange", 
-                    BindingFlags.NonPublic | BindingFlags.Instance,
-                    null, 
-                    new Type[] {change.GetType()}, 
-                    new ParameterModifier[0])
+                .GetMethod("ApplyChange", new[] { change.GetType() })
                 .Invoke(this, new object[] { change });
         }
     }

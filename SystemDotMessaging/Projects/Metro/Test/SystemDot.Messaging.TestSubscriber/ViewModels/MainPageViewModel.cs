@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
             this.bus = Configure.Messaging()
                .LoggingWith(loggingMechanism)
                .UsingInProcessTransport()
-               .UsingSqlitePersistence()
+               .UsingSqlitePersistence("Messaging")
                .OpenChannel("TestSender").ForRequestReplySendingTo("TestReciever").WithDurability()
                .WithHook(new MessageMarshallingHook(CoreWindow.GetForCurrentThread().Dispatcher))
                .Initialise();

@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.TestReciever
         {
             var bus = Configure.Messaging()
               .UsingInProcessTransport()
-              .UsingSqlitePersistence()
+              .UsingSqlitePersistence("Messaging")
               .OpenChannel("TestReciever").ForRequestReplyRecieving().WithDurability()
               .Initialise();
 

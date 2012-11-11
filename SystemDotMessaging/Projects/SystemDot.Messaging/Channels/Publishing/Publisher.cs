@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Channels.Publishing
         {
             this.subscribers.Values.ForEach(s => s.Channel.InputMessage(toInput));
             MessageProcessed(toInput);
-        }
+        } 
 
         public void Subscribe(SubscriptionSchema schema)
         {

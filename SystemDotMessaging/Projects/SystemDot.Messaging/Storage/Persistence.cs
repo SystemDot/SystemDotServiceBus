@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Storage
             AddChange(new AddMessageAndIncrementSequenceChange(message, this.sequence + 1));
         }
 
-        void ApplyChange(AddMessageAndIncrementSequenceChange change)
+        public void ApplyChange(AddMessageAndIncrementSequenceChange change)
         {
             this.sequence = change.Sequence;
             this.messages.TryAdd(change.Message.Id, change.Message);
@@ -45,7 +45,7 @@ namespace SystemDot.Messaging.Storage
             AddChange(new AddMessageChange(message));
         }
 
-        void ApplyChange(AddMessageChange change)
+        public void ApplyChange(AddMessageChange change)
         {
             this.messages.TryAdd(change.Message.Id, change.Message);
         }
@@ -55,7 +55,7 @@ namespace SystemDot.Messaging.Storage
             AddChange(new UpdateMessageChange(message));
         }
 
-        void ApplyChange(UpdateMessageChange change)
+        public void ApplyChange(UpdateMessageChange change)
         {
             lock (deleteLock)
             {
@@ -75,7 +75,7 @@ namespace SystemDot.Messaging.Storage
             AddChange(new SetSequenceChange(toSet));
         }
 
-        void ApplyChange(SetSequenceChange change)
+        public void ApplyChange(SetSequenceChange change)
         {
             this.sequence = change.Sequence;
         }
@@ -85,7 +85,7 @@ namespace SystemDot.Messaging.Storage
             AddChange(new DeleteMessageChange(id));
         }
 
-        void ApplyChange(DeleteMessageChange change)
+        public void ApplyChange(DeleteMessageChange change)
         {
             ApplyDelete(change.Id);
         }
@@ -95,7 +95,7 @@ namespace SystemDot.Messaging.Storage
             AddChange(new DeleteMessageAndSetSequenceChange(id, toSet));
         }
 
-        void ApplyChange(DeleteMessageAndSetSequenceChange change)
+        public void ApplyChange(DeleteMessageAndSetSequenceChange change)
         {
             ApplyDelete(change.Id);
             this.sequence = change.Sequence;

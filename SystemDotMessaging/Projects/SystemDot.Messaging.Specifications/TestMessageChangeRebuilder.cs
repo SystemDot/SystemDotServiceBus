@@ -25,25 +25,25 @@ namespace SystemDot.Messaging.Specifications
             return this.messages;
         }
 
-        void ApplyChange(AddMessageAndIncrementSequenceChange change)
+        public void ApplyChange(AddMessageAndIncrementSequenceChange change)
         {
             this.messages.Add(change.Message);
         }
 
-        void ApplyChange(AddMessageChange change)
+        public void ApplyChange(AddMessageChange change)
         {
             this.messages.Add(change.Message);
         }
 
-        void ApplyChange(UpdateMessageChange change)
+        public void ApplyChange(UpdateMessageChange change)
         {
         }
 
-        void ApplyChange(SetSequenceChange change)
+        public void ApplyChange(SetSequenceChange change)
         {
         }
 
-        void ApplyChange(DeleteMessageChange change)
+        public void ApplyChange(DeleteMessageChange change)
         {
         }
 
