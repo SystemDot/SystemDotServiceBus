@@ -43,11 +43,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="channels\acknowledgement\when_handling_a_recieved_acknowledgement_with_a_different_persistence_channel_to_the_persistence_registered.cs" />
@@ -63,6 +58,8 @@
     <Compile Include="channels\expiry\when_processing_a_message_with_a_message_send_time_remover.cs" />
     <Compile Include="channels\expiry\when_processing_a_message_with_a_message_send_time_remover_with_no_processor_listening.cs" />
     <Compile Include="channels\publishing\TestSubscriberSendChannelBuilder.cs" />
+    <Compile Include="channels\publishing\when_publishing_a_message_when_a_subscriber_has_been_previously_registered_with_another_publisher.cs" />
+    <Compile Include="channels\publishing\when_publishing_a_message_with_a_previously_registered_subscriber.cs" />
     <Compile Include="channels\publishing\when_starting_a_subscription_requestor_with_persistence_indicated_on_the_schema.cs" />
     <Compile Include="channels\repeating\when_inputting_items_into_a_repeater_with_no_listener.cs" />
     <Compile Include="channels\repeating\when_starting_a_repeater_with_a_simple_repeat_strategy_for_the_second_time.cs" />
@@ -179,7 +176,7 @@
     <Compile Include="channels\request_reply\when_addressing_a_reply_channel_message.cs" />
     <Compile Include="channels\request_reply\when_passing_messages_through_a_reply_channel_selector.cs" />
     <Compile Include="channels\packaging\when_unpackaging_a_message_from_transportation_payload_that_does_not_have_a_body.cs" />
-    <Compile Include="channels\publishing\when_handling_a_subscribe_request_message.cs" />
+    <Compile Include="channels\publishing\when_handling_a_subscription_request_message.cs" />
     <Compile Include="channels\publishing\when_filtering_for_a_subscription_request_message_and_recieving_something_else.cs" />
     <Compile Include="channels\when_addressing_a_message.cs" />
     <Compile Include="channels\distribution\when_pumping_an_item.cs" />
@@ -217,10 +214,6 @@
     <ProjectReference Include="..\SystemDot.Messaging\SystemDot.Messaging.csproj">
       <Project>{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}</Project>
       <Name>SystemDot.Messaging %28Windows\SystemDot.Messaging%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SystemDot.NonMetro\SystemDot.NonMetro.csproj">
-      <Project>{FD8BB339-A3F0-4643-B09C-6FD9D6BD1E1A}</Project>
-      <Name>SystemDot.NonMetro %28Windows\SystemDot.NonMetro%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\SystemDot.Specifications\SystemDot.Specifications.csproj">
       <Project>{C35328BB-3E59-4DC8-8397-C0A7BB2F2E5E}</Project>

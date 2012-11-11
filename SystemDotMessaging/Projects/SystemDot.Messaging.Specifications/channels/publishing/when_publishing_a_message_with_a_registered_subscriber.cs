@@ -1,10 +1,8 @@
-﻿using System;
-using SystemDot.Messaging.Channels;
-using SystemDot.Messaging.Channels.Addressing;
+﻿using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
-using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Messaging.Transport;
 using SystemDot.Serialisation;
 using Machine.Fakes;
@@ -15,7 +13,6 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
     [Subject("Message publishing")]
     public class when_publishing_a_message_with_a_registered_subscriber : WithSubject<Publisher>
     {
-        static MessagePayload inputMessage;
         static SubscriptionSchema subscriber;
         static MessagePayload message;
         static MessagePayload processedMessage;
@@ -23,6 +20,7 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
         Establish context = () =>
         {
             Configure(new EndpointAddress("Publisher", "Server"));
+            Configure<IChangeStore>(new InMemoryChangeStore(new PlatformAgnosticSerialiser()));
             Configure<ISerialiser>(new PlatformAgnosticSerialiser());
             Configure<IMessageSender>(new TestMessageSender());
             Configure<ISubscriberSendChannelBuilder>(new TestSubscriberSendChannelBuilder(The<IMessageSender>()));
@@ -33,17 +31,14 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
             Subject.MessageProcessed += m => processedMessage = m;
 
             message = new MessagePayload();
-            message.SetLastTimeSent(DateTime.Now);
-            message.IncreaseAmountSent();
-            inputMessage = message;
         };
 
-        Because of = () => Subject.InputMessage(inputMessage);
+        Because of = () => Subject.InputMessage(message);
 
         It should_pass_an_equivelent_message_to_the_subscriber = () => 
             The<IMessageSender>()
                 .As<TestMessageSender>()
-                .SentMessages.ShouldContain(inputMessage);
+                .SentMessages.ShouldContain(message);
 
         It should_process_the_message = () => processedMessage.ShouldBeTheSameAs(message);        
     }

@@ -4,7 +4,6 @@ using SystemDot.Logging;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Storage.Esent;
-using SystemDot.Messaging.Storage.Sql;
 
 namespace SystemDot.Messaging.OtherTestSubscriber
 {

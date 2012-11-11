@@ -31,16 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Machine.Specifications">
-      <HintPath>..\SystemDot.Messaging.Specifications\bin\Debug\Machine.Specifications.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Channels\Acknowledgement\Builders\AcknowledgementChannelBuilder.cs" />
@@ -65,6 +57,9 @@
     <Compile Include="Channels\Publishing\Builders\SubscriberRecieveChannelSchema.cs" />
     <Compile Include="Channels\Publishing\Builders\SubscriptionRequestChannelSchema.cs" />
     <Compile Include="Channels\Builders\RecieveChannelSchema.cs" />
+    <Compile Include="Channels\Publishing\PersistentSubscriberCollection.cs" />
+    <Compile Include="Channels\Publishing\SubscribeChange.cs" />
+    <Compile Include="Channels\Publishing\Subscriber.cs" />
     <Compile Include="Channels\Repeating\EscalatingTimeRepeatStrategy.cs" />
     <Compile Include="Channels\Repeating\IRepeatStrategy.cs" />
     <Compile Include="Channels\Repeating\LastSentHeader.cs" />

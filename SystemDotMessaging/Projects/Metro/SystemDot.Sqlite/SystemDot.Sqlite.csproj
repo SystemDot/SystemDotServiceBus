@@ -99,15 +99,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <SDKReference Include="Microsoft.VCLibs, Version=11.0">
-      <Name>Microsoft Visual C++ Runtime Package</Name>
-    </SDKReference>
-    <SDKReference Include="SQLite.WinRT, Version=3.7.14">
-      <Name>SQLite for Windows Runtime</Name>
-    </SDKReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />

@@ -35,7 +35,6 @@ namespace SystemDot.Messaging.Channels.Packaging
 
         public void RemoveHeader(Type toRemove)
         {
-            IMessageHeader temp;
             this.Headers.RemoveAll(h => h.GetType() == toRemove);
         }
 

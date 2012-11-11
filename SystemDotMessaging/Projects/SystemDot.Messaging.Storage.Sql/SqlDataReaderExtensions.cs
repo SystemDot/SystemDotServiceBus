@@ -1,5 +1,4 @@
 using System.Data.SqlClient;
-using System.Data.SqlServerCe;
 
 namespace SystemDot.Messaging.Storage.Sql
 {

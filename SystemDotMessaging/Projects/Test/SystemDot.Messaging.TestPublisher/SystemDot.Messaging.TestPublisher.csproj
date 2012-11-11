@@ -36,11 +36,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -50,10 +45,6 @@
     <ProjectReference Include="..\..\SystemDot.Messaging.Storage.Esent\SystemDot.Messaging.Storage.Esent.csproj">
       <Project>{c7dbf177-fcdb-4530-a6ca-3b1efbad63eb}</Project>
       <Name>SystemDot.Messaging.Storage.Esent</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SystemDot.Messaging.Storage.Sql\SystemDot.Messaging.Storage.Sql.csproj">
-      <Project>{80ffa53e-9c4d-45ce-a7d2-8fe0b6a9fbfb}</Project>
-      <Name>SystemDot.Messaging.Storage.Sql</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\SystemDot.Messaging\SystemDot.Messaging.csproj">
       <Project>{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}</Project>

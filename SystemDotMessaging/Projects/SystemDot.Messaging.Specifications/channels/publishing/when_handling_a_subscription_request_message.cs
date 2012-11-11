@@ -1,4 +1,3 @@
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Packaging.Headers;
@@ -8,7 +7,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.channels.publishing
 {
     [Subject("Message publishing")]
-    public class when_handling_a_subscription_channel : WithMessageInputterSubject<SubscriptionRequestHandler>
+    public class when_handling_a_subscription_request_message : WithMessageInputterSubject<SubscriptionRequestHandler>
     {
         static EndpointAddress address;
         static TestPublisher publisher;

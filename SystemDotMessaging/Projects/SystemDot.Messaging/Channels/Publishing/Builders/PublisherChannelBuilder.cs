@@ -7,6 +7,7 @@ using SystemDot.Messaging.Channels.Pipelines;
 using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Channels.Sequencing;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 
@@ -20,6 +21,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
         readonly PersistenceFactorySelector persistenceFactorySelector;
         readonly ISubscriberSendChannelBuilder subscriberChannelBuilder;
         readonly ICurrentDateProvider currentDateProvider;
+        readonly IChangeStore changeStore;
 
         public PublisherChannelBuilder(
             IPublisherRegistry publisherRegistry, 
@@ -27,7 +29,8 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             ITaskRepeater taskRepeater,
             PersistenceFactorySelector persistenceFactorySelector, 
             ISubscriberSendChannelBuilder subscriberChannelBuilder, 
-            ICurrentDateProvider currentDateProvider)
+            ICurrentDateProvider currentDateProvider, 
+            IChangeStore changeStore)
         {
             Contract.Requires(publisherRegistry != null);
             Contract.Requires(serialiser != null);
@@ -35,6 +38,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             Contract.Requires(persistenceFactorySelector != null);
             Contract.Requires(subscriberChannelBuilder != null);
             Contract.Requires(currentDateProvider != null);
+            Contract.Requires(changeStore != null);
             
             this.publisherRegistry = publisherRegistry;
             this.serialiser = serialiser;
@@ -42,6 +46,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             this.persistenceFactorySelector = persistenceFactorySelector;
             this.subscriberChannelBuilder = subscriberChannelBuilder;
             this.currentDateProvider = currentDateProvider;
+            this.changeStore = changeStore;
         }
 
         public void Build(PublisherChannelSchema schema)
@@ -50,7 +55,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .Select(schema)
                 .CreatePersistence(PersistenceUseType.PublisherSend, schema.FromAddress);
 
-            var publisherEndpoint = new Publisher(schema.FromAddress, this.subscriberChannelBuilder);
+            var publisherEndpoint = new Publisher(schema.FromAddress, this.subscriberChannelBuilder, this.changeStore);
 
             MessagePipelineBuilder.Build()
                 .WithBusPublishTo(new MessageFilter(schema.MessageFilterStrategy))

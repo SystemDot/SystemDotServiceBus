@@ -13,8 +13,8 @@ namespace SystemDot.Messaging.Storage
         readonly ConcurrentDictionary<Guid, MessagePayload> messages;
         readonly object deleteLock = new object();
 
-        public Persistence(IChangeStore store, EndpointAddress address, PersistenceUseType useType)
-            : base(store)
+        public Persistence(IChangeStore changeStore, EndpointAddress address, PersistenceUseType useType)
+            : base(changeStore)
         {
             Address = address;
             UseType = useType;

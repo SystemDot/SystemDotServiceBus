@@ -3,6 +3,7 @@ using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
+using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Messaging.Transport;
 using SystemDot.Serialisation;
 using Machine.Fakes;
@@ -21,6 +22,7 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
         Establish context = () =>
         {
             Configure(new EndpointAddress("Publisher", "Server"));
+            Configure<IChangeStore>(new InMemoryChangeStore(new PlatformAgnosticSerialiser())); 
             Configure<ISerialiser>(new PlatformAgnosticSerialiser());
             Configure<IMessageSender>(new TestMessageSender());
             Configure<ISubscriberSendChannelBuilder>(new TestSubscriberSendChannelBuilder(The<IMessageSender>()));

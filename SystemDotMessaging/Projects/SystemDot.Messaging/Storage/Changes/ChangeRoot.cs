@@ -5,28 +5,28 @@ namespace SystemDot.Messaging.Storage.Changes
 {
     public class ChangeRoot
     {
-        readonly IChangeStore store;
+        readonly IChangeStore changeStore;
 
-        public ChangeRoot(IChangeStore store)
+        public ChangeRoot(IChangeStore changeStore)
         {
-            this.store = store;
+            this.changeStore = changeStore;
         }
 
         protected string Id { get; set; }
 
         public void Initialise()
         {
-            this.store.GetChanges(Id).ForEach(ReplayChange);
+            this.changeStore.GetChanges(Id).ForEach(ReplayChange);
         }
 
         protected void AddChange(Change change)
         {
-            ReplayChange(this.store.StoreChange(Id, change));   
+            ReplayChange(this.changeStore.StoreChange(Id, change));   
         }
 
         void ReplayChange(Guid changeId)
         {
-            ReplayChange(this.store.GetChange(changeId));
+            ReplayChange(this.changeStore.GetChange(changeId));
         }
 
         void ReplayChange(Change change)
