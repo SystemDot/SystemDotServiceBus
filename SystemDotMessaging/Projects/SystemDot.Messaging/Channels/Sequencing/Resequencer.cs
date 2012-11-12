@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.Contracts;
-using System.Linq;
 using SystemDot.Logging;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage;

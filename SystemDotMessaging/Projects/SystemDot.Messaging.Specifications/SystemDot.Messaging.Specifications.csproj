@@ -77,6 +77,8 @@
     <Compile Include="channels\storage\when_caching_a_message_with_a_send_cacher.cs" />
     <Compile Include="channels\storage\when_decaching_a_message.cs" />
     <Compile Include="channels\storage\when_decaching_a_message_with_no_output_processor_subscribed.cs" />
+    <Compile Include="channels\unitofwork\TestUnitOfWork.cs" />
+    <Compile Include="channels\unitofwork\when_passing_messages_in_the_incorrect_order_through_a_resequencer.cs" />
     <Compile Include="configuration\FakeAccessorExtensions.cs" />
     <Compile Include="configuration\publishing\ExclusionMessagePayloadListExtensions.cs" />
     <Compile Include="configuration\publishing\when_publishing_a_request_message_on_a_durable_publish_subscribe_channel.cs">
