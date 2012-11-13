@@ -4,6 +4,7 @@ using SystemDot.Messaging.Channels.Acknowledgement;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Channels.UnitOfWork;
 using SystemDot.Messaging.Storage.Changes;
 using Machine.Specifications;
 using SystemDot.Messaging.Storage;
@@ -54,5 +55,37 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
                 .GetAddedMessages(PersistenceUseType.SubscriberReceive, BuildAddress(ChannelName))
                 .First()
                 .GetAmountSent().ShouldEqual(1);
+    }
+
+    [Subject("Publishing configuration")]
+    public class when_publishing_a_message_with_a_unit_of_work_setup : WithPublisherSubject
+    {
+        const string ChannelName = "TestChannel";
+        const string PublisherName = "TestPublisher";
+        static MessagePayload payload;
+        static TestMessageHandler<int> handler;
+
+        Establish context = () =>
+        {
+            ConfigureAndRegister<IUnitOfWork>(new TestUnitOfWork());
+            
+            Configuration.Configure.Messaging()
+                .UsingInProcessTransport()
+                .OpenChannel(ChannelName)
+                    .ForSubscribingTo(PublisherName)
+                .Initialise();
+
+            handler = new TestMessageHandler<int>();
+            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+
+            payload = CreateRecieveablePayload(1, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
+        };
+
+        Because of = () => MessageReciever.RecieveMessage(payload);
+
+        It should_begin_the_unit_of_work = () =>
+            Resolve<IUnitOfWork>()
+                .As<TestUnitOfWork>()
+                .HasBegun().ShouldBeTrue();
     }
 }

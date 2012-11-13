@@ -53,6 +53,7 @@
     <Compile Include="Channels\Expiry\TimeMessageExpiryStrategy.cs" />
     <Compile Include="Channels\Caching\MessageDecacher.cs" />
     <Compile Include="Channels\ISerialiserExtensions.cs" />
+    <Compile Include="Channels\Local\Builders\LocalChannelBuilder.cs" />
     <Compile Include="Channels\MessageProcessor.cs" />
     <Compile Include="Channels\Builders\PersistenceFactorySelector.cs" />
     <Compile Include="Channels\Publishing\Builders\ISubscriberSendChannelBuilder.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Channels\Sequencing\Sequencer.cs" />
     <Compile Include="Channels\Sequencing\SequenceHeader.cs" />
     <Compile Include="Channels\UnitOfWork\IUnitOfWork.cs" />
+    <Compile Include="Channels\UnitOfWork\NullUnitOfWork.cs" />
     <Compile Include="Channels\UnitOfWork\UnitOfWorkRunner.cs" />
     <Compile Include="Configuration\ComponentRegistration\InProcessTransportComponents.cs" />
     <Compile Include="Configuration\FilteredBy.cs" />

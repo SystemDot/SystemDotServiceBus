@@ -10,6 +10,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
     {
         public static void Register(IIocContainer container)
         {
+            container.RegisterInstance<IIocContainer>(() => container);
             container.RegisterInstance<IWebRequestor, WebRequestor>();
             container.RegisterInstance<ISerialiser, PlatformAgnosticSerialiser>();
             container.RegisterInstance<EndpointAddressBuilder, EndpointAddressBuilder>();

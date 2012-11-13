@@ -1,7 +1,7 @@
 using System;
 using SystemDot.Messaging.Channels.UnitOfWork;
 
-namespace SystemDot.Messaging.Specifications.channels.unitofwork
+namespace SystemDot.Messaging.Specifications
 {
     public class TestUnitOfWork : IUnitOfWork
     {

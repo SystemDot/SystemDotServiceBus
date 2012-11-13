@@ -1,3 +1,4 @@
+using SystemDot.Messaging.Channels.UnitOfWork;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.Changes;
 using Machine.Specifications;

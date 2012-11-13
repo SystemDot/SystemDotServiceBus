@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.Acknowledgement;
 using SystemDot.Messaging.Channels.Builders;
 using SystemDot.Messaging.Channels.Caching;
@@ -9,6 +10,7 @@ using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Pipelines;
 using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Channels.UnitOfWork;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
@@ -26,6 +28,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
         readonly PersistenceFactorySelector persistenceFactory;
         readonly ICurrentDateProvider currentDateProvider;
         readonly ITaskRepeater taskRepeater;
+        readonly IIocContainer iocContainer;
 
         public SubscriberRecieveChannelBuilder(
             ISerialiser serialiser, 
@@ -34,7 +37,8 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             AcknowledgementSender acknowledgementSender,
             PersistenceFactorySelector persistenceFactory, 
             ICurrentDateProvider currentDateProvider, 
-            ITaskRepeater taskRepeater)
+            ITaskRepeater taskRepeater, 
+            IIocContainer iocContainer)
         {
             Contract.Requires(serialiser != null);
             Contract.Requires(messageHandlerRouter != null);
@@ -43,6 +47,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             Contract.Requires(persistenceFactory != null);
             Contract.Requires(currentDateProvider != null);
             Contract.Requires(taskRepeater != null);
+            Contract.Requires(iocContainer != null);
             
             this.serialiser = serialiser;
             this.messageHandlerRouter = messageHandlerRouter;
@@ -51,6 +56,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             this.persistenceFactory = persistenceFactory;
             this.currentDateProvider = currentDateProvider;
             this.taskRepeater = taskRepeater;
+            this.iocContainer = iocContainer;
         }
 
         public void Build(SubscriberRecieveChannelSchema schema)
@@ -71,6 +77,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .Queue()
                 .ToResequencerIfSequenced(persistence, schema)
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
+                .ToProcessor(new UnitOfWorkRunner(this.iocContainer))
                 .ToEndPoint(this.messageHandlerRouter);
         }
     }

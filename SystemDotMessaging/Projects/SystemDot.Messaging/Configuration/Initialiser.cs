@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Acknowledgement.Builders;
 using SystemDot.Messaging.Channels.Addressing;
+using SystemDot.Messaging.Channels.Local.Builders;
 using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Configuration
@@ -28,6 +29,7 @@ namespace SystemDot.Messaging.Configuration
             Resolve<ITaskRepeater>().Start();
             Resolve<AcknowledgementSendChannelBuilder>().Build();
             Resolve<AcknowledgementRecieveChannelBuilder>().Build();
+            Resolve<LocalChannelBuilder>().Build();
 
             return Resolve<IBus>();
         }

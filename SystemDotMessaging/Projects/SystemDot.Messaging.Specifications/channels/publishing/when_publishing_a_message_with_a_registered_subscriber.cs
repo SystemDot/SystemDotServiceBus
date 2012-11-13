@@ -2,6 +2,7 @@
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Publishing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
+using SystemDot.Messaging.Channels.UnitOfWork;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Messaging.Transport;
 using SystemDot.Serialisation;

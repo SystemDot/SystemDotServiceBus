@@ -77,8 +77,8 @@
     <Compile Include="channels\storage\when_caching_a_message_with_a_send_cacher.cs" />
     <Compile Include="channels\storage\when_decaching_a_message.cs" />
     <Compile Include="channels\storage\when_decaching_a_message_with_no_output_processor_subscribed.cs" />
-    <Compile Include="channels\unitofwork\TestUnitOfWork.cs" />
     <Compile Include="channels\unitofwork\when_passing_messages_in_the_incorrect_order_through_a_resequencer.cs" />
+    <Compile Include="channels\unitofwork\when_running_a_unit_of_work_and_the_target_processor_throws_an_exception.cs" />
     <Compile Include="configuration\FakeAccessorExtensions.cs" />
     <Compile Include="configuration\publishing\ExclusionMessagePayloadListExtensions.cs" />
     <Compile Include="configuration\publishing\when_publishing_a_request_message_on_a_durable_publish_subscribe_channel.cs">
@@ -92,6 +92,7 @@
     <Compile Include="configuration\publishing\when_recieving_a_published_message_on_a_durable_subscriber_channel.cs" />
     <Compile Include="configuration\request_reply\recieving\when_recieving_an_out_of_sequence_request_message_on_a_durable_request_reply_channel.cs" />
     <Compile Include="configuration\request_reply\recieving\when_recieving_a_request_message_on_a_durable_request_reply_channel.cs" />
+    <Compile Include="configuration\request_reply\recieving\when_recieving_a_request_message_with_a_unit_of_work_setup.cs" />
     <Compile Include="configuration\request_reply\recieving\when_replying_with_a_message_on_a_request_reply_channel.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -113,6 +114,7 @@
     <Compile Include="configuration\request_reply\recieving\when_replying_with_a_message_on_two_request_reply_channels.cs" />
     <Compile Include="configuration\request_reply\sending\when_recieving_a_reply_message_on_a_durable_request_reply_channel.cs" />
     <Compile Include="configuration\request_reply\sending\when_recieving_a_reply_message_on_a_request_reply_channel_with_no_body.cs" />
+    <Compile Include="configuration\request_reply\sending\when_recieving_a_reply_message_with_a_unit_of_work_setup.cs" />
     <Compile Include="configuration\request_reply\sending\when_sending_a_message_down_two_request_reply_channels.cs" />
     <Compile Include="configuration\request_reply\sending\when_sending_a_repeat_attempt_expired_request_message_down_a_request_reply_channel.cs" />
     <Compile Include="configuration\request_reply\sending\when_sending_a_request_message_down_a_durable_request_reply_channel.cs" />
@@ -156,6 +158,7 @@
     <Compile Include="TestMessageReciever.cs" />
     <Compile Include="TestMessageSender.cs" />
     <Compile Include="TestNamePatternMessage.cs" />
+    <Compile Include="TestUnitOfWork.cs" />
     <Compile Include="transport\long_polling\serving\when_handling_request_that_fails_deserialisation.cs" />
     <Compile Include="transport\long_polling\when_long_polling_for_messages_and_the_web_requestor_fails.cs" />
     <Compile Include="FailingSerialiser.cs" />
@@ -226,7 +229,9 @@
       <Name>SystemDot %28Windows\SystemDot%29</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="configuration\local\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

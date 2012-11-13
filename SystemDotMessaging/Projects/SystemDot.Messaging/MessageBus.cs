@@ -6,6 +6,7 @@ namespace SystemDot.Messaging
     public class MessageBus : IBus
     {
         public event Action<object> MessageSent;
+        public event Action<object> MessageSentLocal;
         public event Action<object> MessagePublished;
         public event Action<object> MessageReplied;
 
@@ -13,6 +14,12 @@ namespace SystemDot.Messaging
         {
             Contract.Requires(message != null);
             MessageSent(message);
+        }
+
+        public void SendLocal(object message)
+        {
+            Contract.Requires(message != null);
+            MessageSentLocal(message);
         }
 
         public void Reply(object message)
