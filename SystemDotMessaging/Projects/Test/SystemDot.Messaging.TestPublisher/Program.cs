@@ -13,7 +13,7 @@ namespace SystemDot.Messaging.TestPublisher
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = true })
                 .UsingHttpTransport(MessageServer.Local())
-                .UsingEsentPersistence("Esent\\TestPublisher")
+                //.UsingEsentPersistence("Esent\\TestPublisher")
                 .OpenChannel("TestPublisher")
                     .ForPublishing()
                     .WithDurability()
@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.TestPublisher
                 Console.ReadLine();
                 Console.WriteLine("Sending message");
 
-                for (int i = 0; i < 1300; i++)
+                for (int i = 0; i < 7300; i++)
                 {
                     Console.WriteLine("Hello" + i);
 
