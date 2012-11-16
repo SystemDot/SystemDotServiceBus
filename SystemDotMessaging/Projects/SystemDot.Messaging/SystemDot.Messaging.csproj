@@ -42,6 +42,7 @@
     <Compile Include="Channels\Addressing\EndpointAddressBuilder.cs" />
     <Compile Include="Channels\Addressing\MessageAddresser.cs" />
     <Compile Include="Channels\Builders\ChannelSchema.cs" />
+    <Compile Include="Channels\Caching\PersistenceSourceRecorder.cs" />
     <Compile Include="Channels\Caching\ReceiveChannelMessageCacher.cs" />
     <Compile Include="Channels\Caching\SendChannelMessageCacher.cs" />
     <Compile Include="Channels\Distribution\Queue.cs" />

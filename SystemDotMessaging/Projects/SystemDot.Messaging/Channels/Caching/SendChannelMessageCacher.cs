@@ -24,8 +24,7 @@ namespace SystemDot.Messaging.Channels.Caching
         void PersistMessage(MessagePayload toInput)
         {
             toInput.SetPersistenceId(this.persistence.Address, this.persistence.UseType);
-            toInput.SetSourcePersistenceId(toInput.GetPersistenceId());
-
+            
             if(toInput.GetAmountSent() == 1)
                 this.persistence.AddMessageAndIncrementSequence(toInput);
             else    

@@ -23,11 +23,6 @@ namespace SystemDot.Messaging.Specifications.channels.storage
 
         Because of = () => Subject.InputMessage(message);
 
-        It should_not_increment_the_persistence_sequence = () =>
-            The<IPersistence>().GetSequence().ShouldEqual(1);
-
-        It should_add_the_source_persistence_header_a_second_time = () =>
-            message.Headers.OfType<SourcePersistenceHeader>().Count().ShouldEqual(1);
-
+        It should_not_increment_the_persistence_sequence = () => The<IPersistence>().GetSequence().ShouldEqual(1);
     }
 }

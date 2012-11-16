@@ -71,12 +71,13 @@
     <Compile Include="channels\sequencing\when_passing_messages_in_the_incorrect_order_through_a_resequencer.cs" />
     <Compile Include="channels\storage\when_caching_a_message_with_a_receive_cacher_with_no_output_processor_subscribed.cs" />
     <Compile Include="channels\storage\when_caching_a_message_with_a_recieve_cacher.cs" />
-    <Compile Include="channels\storage\when_caching_a_message_with_a_send_cacher_for_the_second_time.cs" />
+    <Compile Include="channels\storage\when_recording_the_original_persistence_identifier_for_a_message_for_the_second_time.cs" />
     <Compile Include="channels\storage\when_caching_a_message_with_a_send_cacher_that_been_sent_before.cs" />
     <Compile Include="channels\storage\when_caching_a_message_with_a_send_cacher_with_no_output_processor_subscribed.cs" />
     <Compile Include="channels\storage\when_caching_a_message_with_a_send_cacher.cs" />
     <Compile Include="channels\storage\when_decaching_a_message.cs" />
     <Compile Include="channels\storage\when_decaching_a_message_with_no_output_processor_subscribed.cs" />
+    <Compile Include="channels\storage\when_recording_the_original_persistence_identifier_for_a_message.cs" />
     <Compile Include="channels\unitofwork\when_passing_messages_in_the_incorrect_order_through_a_resequencer.cs" />
     <Compile Include="channels\unitofwork\when_running_a_unit_of_work_and_the_target_processor_throws_an_exception.cs" />
     <Compile Include="configuration\FakeAccessorExtensions.cs" />
