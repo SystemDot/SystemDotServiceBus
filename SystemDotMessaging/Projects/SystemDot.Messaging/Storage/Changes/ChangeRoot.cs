@@ -6,8 +6,9 @@ namespace SystemDot.Messaging.Storage.Changes
     public class ChangeRoot
     {
         readonly IChangeStore changeStore;
+        bool hasChanged;
 
-        public ChangeRoot(IChangeStore changeStore)
+        protected ChangeRoot(IChangeStore changeStore)
         {
             this.changeStore = changeStore;
         }
@@ -18,6 +19,12 @@ namespace SystemDot.Messaging.Storage.Changes
         {
             this.changeStore.GetChanges(Id).ForEach(ReplayChange);
         }
+
+        public bool HasChanged()
+        {
+            return this.hasChanged;
+        }
+
 
         protected void AddChange(Change change)
         {
@@ -31,6 +38,8 @@ namespace SystemDot.Messaging.Storage.Changes
 
         void ReplayChange(Change change)
         {
+            this.hasChanged = true;
+            
             GetType()
                 .GetMethod("ApplyChange", new[] { change.GetType() })
                 .Invoke(this, new object[] { change });

@@ -5,7 +5,8 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 {
     [Subject("Request reply configuration")]
-    public class when_recieving_a_reply_message_on_a_request_reply_channel_with_a_hook : WithMessageConfigurationSubject
+    public class when_recieving_a_reply_message_on_a_request_reply_channel_with_a_hook 
+        : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
         const string RecieverAddress = "TestRecieverAddress";

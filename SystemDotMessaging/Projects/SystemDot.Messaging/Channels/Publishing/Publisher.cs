@@ -26,9 +26,15 @@ namespace SystemDot.Messaging.Channels.Publishing
 
         public void InputMessage(MessagePayload toInput)
         {
-            this.subscribers.ForEach(s => s.Channel.InputMessage(toInput));
+            this.subscribers.ForEach(s => SendMessageToSubscriber(toInput, s));
             MessageProcessed(toInput);
-        } 
+        }
+
+        static void SendMessageToSubscriber(MessagePayload toSend, Subscriber toSendTo)
+        {
+            if(toSendTo.Channel == null) return;
+            toSendTo.Channel.InputMessage(toSend);
+        }
 
         public void Subscribe(SubscriptionSchema schema)
         {

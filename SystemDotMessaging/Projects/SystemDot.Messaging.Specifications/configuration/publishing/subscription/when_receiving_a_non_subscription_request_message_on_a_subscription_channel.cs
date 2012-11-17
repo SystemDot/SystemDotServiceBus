@@ -3,10 +3,10 @@ using SystemDot.Messaging.Channels.Packaging;
 using Machine.Specifications;
 using SystemDot.Messaging.Channels.Packaging.Headers;
 
-namespace SystemDot.Messaging.Specifications.configuration.publishing
+namespace SystemDot.Messaging.Specifications.configuration.publishing.subscription
 {
-    [Subject("Publishing configuration")]
-    public class when_recieveing_a_non_subscription_request_message_on_a_subscription_channel
+    [Subject(SpecificationGroup.Description)]
+    public class when_receiving_a_non_subscription_request_message_on_a_subscription_channel
         : WithPublisherSubject
     {
         const string ChannelName = "Test";

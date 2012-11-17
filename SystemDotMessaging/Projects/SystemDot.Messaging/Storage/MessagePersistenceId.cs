@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Storage
             UseType = useType;
         }
 
-        protected bool Equals(MessagePersistenceId other)
+        bool Equals(MessagePersistenceId other)
         {
             return MessageId.Equals(other.MessageId) 
                 && Equals(Address, other.Address) 

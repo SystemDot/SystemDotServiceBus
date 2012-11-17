@@ -46,6 +46,17 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
         It should_send_a_message_with_the_correct_content = () =>
             Deserialise<int>(MessageSender.SentMessages.First().GetBody()).ShouldEqual(message);
 
+        It should_mark_the_message_with_the_persistence_id = () =>
+            MessageSender.SentMessages.First().GetPersistenceId()
+                .ShouldEqual(new MessagePersistenceId(
+                    MessageSender.SentMessages.First().Id,
+                    BuildAddress(ChannelName),
+                    PersistenceUseType.RequestSend));
+
+        It should_set_original_persistence_id_to_the_persistence_id_of_the_message_with_the_persistence_id = () =>
+           MessageSender.SentMessages.First().GetSourcePersistenceId()
+               .ShouldEqual(MessageSender.SentMessages.First().GetPersistenceId());
+
         It should_mark_the_message_with_the_time_the_message_is_sent = () =>
             MessageSender.SentMessages.First().GetLastTimeSent().ShouldBeGreaterThan(DateTime.MinValue);
 

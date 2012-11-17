@@ -47,6 +47,10 @@ namespace SystemDot.Messaging.Specifications
         {
         }
 
+        public void ApplyChange(DeleteMessageAndSetSequenceChange change)
+        {
+        }
+
         public EndpointAddress Address { get; private set; }
         public PersistenceUseType UseType { get; private set; }
     }

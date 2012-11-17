@@ -55,6 +55,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .ToProcessor(new MessageAddresser(schema.SubscriberAddress, schema.PublisherAddress))
                 .ToEscalatingTimeMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new SendChannelMessageCacher(persistence))
+                .ToProcessor(new PersistenceSourceRecorder())
                 .Pump()
                 .ToEndPoint(this.messageSender);
 

@@ -81,16 +81,25 @@
     <Compile Include="channels\unitofwork\when_passing_messages_in_the_incorrect_order_through_a_resequencer.cs" />
     <Compile Include="channels\unitofwork\when_running_a_unit_of_work_and_the_target_processor_throws_an_exception.cs" />
     <Compile Include="configuration\FakeAccessorExtensions.cs" />
+    <Compile Include="configuration\local\SpecificationGroup.cs" />
+    <Compile Include="configuration\local\when_sending_a_local_message_with_a_unit_of_work_setup.cs" />
     <Compile Include="configuration\publishing\ExclusionMessagePayloadListExtensions.cs" />
-    <Compile Include="configuration\publishing\when_publishing_a_request_message_on_a_durable_publish_subscribe_channel.cs">
+    <Compile Include="configuration\publishing\receiving\SpecificationGroup.cs" />
+    <Compile Include="configuration\publishing\receiving\when_publishing_with_a_unit_of_work_setup.cs" />
+    <Compile Include="configuration\publishing\receiving\when_recieving_the_first_message_on_a_durable_channel_that_had_subscribed_after_messages_were_published.cs" />
+    <Compile Include="configuration\publishing\receiving\when_recieving_the_second_message_on_a_durable_channel_that_had_subscribed_after_messages_were_published.cs" />
+    <Compile Include="configuration\publishing\requests\SpecificationGroup.cs" />
+    <Compile Include="configuration\publishing\when_publishing_on_a_durable_publish_subscribe_channel.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="configuration\publishing\when_publishing_a_request_message_on_a_publish_subscribe_channel.cs">
+    <Compile Include="configuration\publishing\when_publishing_on_a_publish_subscribe_channel.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="configuration\publishing\when_publishing_a_request_message_on_a_publish_subscribe_channel_with_two_subscribers.cs" />
-    <Compile Include="configuration\publishing\when_recieving_an_out_of_sequence_published_message_on_a_durable_subscriber_channel.cs" />
-    <Compile Include="configuration\publishing\when_recieving_a_published_message_on_a_durable_subscriber_channel.cs" />
+    <Compile Include="configuration\publishing\when_publishing_on_a_publish_subscribe_channel_with_two_subscribers.cs" />
+    <Compile Include="configuration\publishing\receiving\when_recieving_out_of_sequence_on_a_durable_subscriber_channel.cs" />
+    <Compile Include="configuration\publishing\receiving\when_recieving_on_a_durable_subscriber_channel.cs" />
+    <Compile Include="configuration\publishing\subscription\SpecificationGroup.cs" />
+    <Compile Include="configuration\publishing\when_publishing_when_the_subscriber_has_subscribed_after_messages_were_published.cs" />
     <Compile Include="configuration\request_reply\recieving\when_recieving_an_out_of_sequence_request_message_on_a_durable_request_reply_channel.cs" />
     <Compile Include="configuration\request_reply\recieving\when_recieving_a_request_message_on_a_durable_request_reply_channel.cs" />
     <Compile Include="configuration\request_reply\recieving\when_recieving_a_request_message_with_a_unit_of_work_setup.cs" />
@@ -98,15 +107,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="configuration\request_reply\sending\when_recieving_an_out_of_sequence_reply_message_on_a_durable_request_reply_channel.cs" />
-    <Compile Include="configuration\publishing\when_initialising_a_durable_subscriber_channel.cs" />
-    <Compile Include="configuration\publishing\when_initialising_a_subscriber_channel.cs" />
-    <Compile Include="configuration\publishing\when_publishing_a_request_message_on_a_publish_subscribe_channel_with_a_durable_subscriber.cs" />
-    <Compile Include="configuration\publishing\when_publishing_a_request_message_on_two_publish_subscribe_channels.cs" />
-    <Compile Include="configuration\publishing\when_publishing_a_request_message_with_the_correct_name_on_a_publish_subscribe_channel_with_a_name_filter.cs" />
-    <Compile Include="configuration\publishing\when_publishing_a_request_message_with_the_wrong_name_on_a_publish_subscribe_channel_with_a_name_filter.cs" />
-    <Compile Include="configuration\publishing\when_recieveing_a_non_subscription_request_message_on_a_subscription_channel.cs" />
-    <Compile Include="configuration\publishing\when_recieveing_a_subscription_request_message_on_a_subscription_channel.cs" />
-    <Compile Include="configuration\publishing\when_recieving_a_published_message_on_a_subscriber_channel_with_no_body.cs" />
+    <Compile Include="configuration\publishing\subscription\when_initialising_a_durable_subscriber_channel.cs" />
+    <Compile Include="configuration\publishing\subscription\when_initialising_a_subscriber_channel.cs" />
+    <Compile Include="configuration\publishing\when_publishing_on_a_publish_subscribe_channel_with_a_durable_subscriber.cs" />
+    <Compile Include="configuration\publishing\when_publishing_on_two_publish_subscribe_channels.cs" />
+    <Compile Include="configuration\publishing\when_publishing_with_the_correct_name_on_a_publish_subscribe_channel_with_a_name_filter.cs" />
+    <Compile Include="configuration\publishing\when_publishing_with_the_wrong_name_on_a_publish_subscribe_channel_with_a_name_filter.cs" />
+    <Compile Include="configuration\publishing\subscription\when_receiving_a_non_subscription_request_message_on_a_subscription_channel.cs" />
+    <Compile Include="configuration\publishing\subscription\when_recieving_a_subscription_request_message_on_a_subscription_channel.cs" />
+    <Compile Include="configuration\publishing\receiving\when_recieving_on_a_subscriber_channel_with_no_body.cs" />
     <Compile Include="configuration\publishing\WithPublisherSubject.cs" />
     <Compile Include="configuration\request_reply\recieving\when_replying_with_a_time_expired_message_on_a_request_reply_channel.cs" />
     <Compile Include="configuration\request_reply\recieving\when_recieving_a_request_message_on_a_request_reply_channel_with_no_body.cs" />
@@ -116,6 +125,7 @@
     <Compile Include="configuration\request_reply\sending\when_recieving_a_reply_message_on_a_durable_request_reply_channel.cs" />
     <Compile Include="configuration\request_reply\sending\when_recieving_a_reply_message_on_a_request_reply_channel_with_no_body.cs" />
     <Compile Include="configuration\request_reply\sending\when_recieving_a_reply_message_with_a_unit_of_work_setup.cs" />
+    <Compile Include="configuration\local\when_sending_a_local_message.cs" />
     <Compile Include="configuration\request_reply\sending\when_sending_a_message_down_two_request_reply_channels.cs" />
     <Compile Include="configuration\request_reply\sending\when_sending_a_repeat_attempt_expired_request_message_down_a_request_reply_channel.cs" />
     <Compile Include="configuration\request_reply\sending\when_sending_a_request_message_down_a_durable_request_reply_channel.cs" />
@@ -130,7 +140,7 @@
     <Compile Include="configuration\request_reply\sending\when_sending_a_request_message_with_the_wrong_name_down_a_request_reply_channel_with_a_name_pattern_filter.cs" />
     <Compile Include="configuration\request_reply\sending\when_sending_a_time_expired_request_message_down_a_request_reply_channel.cs" />
     <Compile Include="configuration\when_logging_a_message_with_a_logging_mechanism_configured.cs" />
-    <Compile Include="configuration\publishing\when_recieving_a_published_message_on_a_subscriber_channel.cs" />
+    <Compile Include="configuration\publishing\receiving\when_recieving_on_a_subscriber_channel.cs" />
     <Compile Include="configuration\WithConfiguationSubject.cs" />
     <Compile Include="channels\acknowledgement\when_acknowledging_a_message.cs" />
     <Compile Include="channels\acknowledgement\when_handling_a_message_that_is_not_an_acknowledgement.cs" />
@@ -230,9 +240,7 @@
       <Name>SystemDot %28Windows\SystemDot%29</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="configuration\local\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -9,6 +9,7 @@ namespace SystemDot.Messaging.Storage
     [ContractClass(typeof(PersistenceContract))]
     public interface IPersistence
     {
+        bool HasChanged();
         IEnumerable<MessagePayload> GetMessages();
         void AddMessageAndIncrementSequence(MessagePayload message);
         void AddMessage(MessagePayload message);
@@ -25,6 +26,11 @@ namespace SystemDot.Messaging.Storage
     [ContractClassFor(typeof(IPersistence))]
     public class PersistenceContract : IPersistence
     {
+        public bool HasChanged()
+        {
+            return false;
+        }
+
         public IEnumerable<MessagePayload> GetMessages()
         {
             Contract.Ensures(Contract.Result<IEnumerable<MessagePayload>>() != null);

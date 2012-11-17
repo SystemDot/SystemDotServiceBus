@@ -1,11 +1,12 @@
 using System.Linq;
 using SystemDot.Messaging.Channels.Packaging.Headers;
+using SystemDot.Messaging.Specifications.configuration.publishing.requests;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing
 {
-    [Subject("Publishing configuration")]
-    public class when_publishing_a_request_message_on_a_publish_subscribe_channel_with_two_subscribers
+    [Subject(SpecificationGroup.Description)]
+    public class when_publishing_on_a_publish_subscribe_channel_with_two_subscribers
         : WithPublisherSubject
     {
         const string ChannelName = "Test";

@@ -7,6 +7,7 @@ using SystemDot.Messaging.Channels.Expiry;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Pipelines;
 using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Channels.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
@@ -57,9 +58,11 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             MessagePipelineBuilder.Build()
                 .With(copier)
                 .ToProcessor(new MessageSendTimeRemover())
+                .ToProcessor(new FirstMessageSequenceRecorder(persistence))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.SubscriberAddress))
                 .ToEscalatingTimeMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
-                .ToProcessor(new SendChannelMessageCacher(persistence))
+                .ToProcessor(new ReceiveChannelMessageCacher(persistence))
+                .ToProcessor(new PersistenceSourceRecorder())
                 .Pump()
                 .ToEndPoint(this.messageSender);
 

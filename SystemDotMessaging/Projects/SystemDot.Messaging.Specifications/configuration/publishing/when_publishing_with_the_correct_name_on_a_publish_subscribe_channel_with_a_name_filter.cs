@@ -1,10 +1,11 @@
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Specifications.configuration.publishing.requests;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing
 {
-    [Subject("Publishing configuration")]
-    public class when_publishing_a_request_message_with_the_wrong_name_on_a_publish_subscribe_channel_with_a_name_filter 
+    [Subject(SpecificationGroup.Description)]
+    public class when_publishing_with_the_correct_name_on_a_publish_subscribe_channel_with_a_name_filter 
         : WithPublisherSubject
     {
         const string ChannelName = "Test";
@@ -16,7 +17,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForPublishing()
-                .OnlyForMessages(FilteredBy.NamePattern("SomeOtherThing"))
+                .OnlyForMessages(FilteredBy.NamePattern("Name"))
                 .Initialise();
 
             Subscribe(BuildAddress(SubscriberName), BuildAddress(ChannelName));
@@ -24,6 +25,6 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
 
         Because of = () => bus.Publish(new TestNamePatternMessage());
 
-        It should_not_pass_the_message_through = () => MessageSender.SentMessages.ExcludeAcknowledgements().ShouldBeEmpty();
+        It should_pass_the_message_through = () => MessageSender.SentMessages.ExcludeAcknowledgements().ShouldNotBeEmpty();
     }
 }

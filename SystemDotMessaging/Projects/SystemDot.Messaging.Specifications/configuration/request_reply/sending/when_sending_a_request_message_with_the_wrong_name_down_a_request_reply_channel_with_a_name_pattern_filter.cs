@@ -12,8 +12,8 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("Test")
-                .ForRequestReplySendingTo("TestRecieverAddress")
-                .OnlyForMessages(FilteredBy.NamePattern("SomethingElse"))
+                    .ForRequestReplySendingTo("TestRecieverAddress")
+                    .OnlyForMessages(FilteredBy.NamePattern("SomethingElse"))
                 .Initialise();
 
         Because of = () => bus.Send(new TestNamePatternMessage());

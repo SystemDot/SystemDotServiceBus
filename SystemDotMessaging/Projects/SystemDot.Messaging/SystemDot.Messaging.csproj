@@ -85,11 +85,15 @@
     <Compile Include="Channels\RequestReply\Builders\ReplyRecieveChannelSchema.cs" />
     <Compile Include="Channels\RequestReply\Builders\ReplySendChannelSchema.cs" />
     <Compile Include="Channels\RequestReply\Builders\RequestSendChannelSchema.cs" />
+    <Compile Include="Channels\Sequencing\FirstMessageSequenceRecorder.cs" />
+    <Compile Include="Channels\Sequencing\FirstSequenceHeader.cs" />
+    <Compile Include="Channels\Sequencing\MessageFirstSequenceExtensions.cs" />
     <Compile Include="Channels\Sequencing\MessageSequenceExtensions.cs" />
     <Compile Include="Channels\Sequencing\Resequencer.cs" />
     <Compile Include="Channels\Sequencing\ResequencerMessagePipelineBuilderExtensions.cs" />
     <Compile Include="Channels\Sequencing\Sequencer.cs" />
     <Compile Include="Channels\Sequencing\SequenceHeader.cs" />
+    <Compile Include="Channels\Sequencing\StartSequenceApplier.cs" />
     <Compile Include="Channels\UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="Channels\UnitOfWork\NullUnitOfWork.cs" />
     <Compile Include="Channels\UnitOfWork\UnitOfWorkRunner.cs" />

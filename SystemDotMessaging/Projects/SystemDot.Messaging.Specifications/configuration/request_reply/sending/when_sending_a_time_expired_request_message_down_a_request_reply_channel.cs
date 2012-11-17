@@ -17,8 +17,8 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                .ForRequestReplySendingTo(RecieverAddress)
-                .WithMessageExpiry(MessageExpiry.ByTime(TimeSpan.FromMinutes(0)))
+                    .ForRequestReplySendingTo(RecieverAddress)
+                    .WithMessageExpiry(MessageExpiry.ByTime(TimeSpan.FromMinutes(0)))
                 .Initialise();
 
             message = 1;

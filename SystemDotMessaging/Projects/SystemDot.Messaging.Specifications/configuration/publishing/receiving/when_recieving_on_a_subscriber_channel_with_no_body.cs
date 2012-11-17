@@ -1,13 +1,14 @@
 using System;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Packaging.Headers;
+using SystemDot.Messaging.Channels.Sequencing;
 using SystemDot.Messaging.Configuration;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.configuration.publishing
+namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving
 {
-    [Subject("Request reply configuration")]
-    public class when_recieving_a_published_message_on_a_subscriber_channel_with_no_body : WithMessageConfigurationSubject
+    [Subject(SpecificationGroup.Description)]
+    public class when_recieving_on_a_subscriber_channel_with_no_body : WithMessageConfigurationSubject
     {
         const string ChannelName = "TestChannel";
         const string PublisherName = "TestPublisher";
@@ -24,6 +25,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
 
             payload = new MessagePayload();
             payload.SetToAddress(BuildAddress(ChannelName));
+            payload.SetFirstSequence(1);
         };
 
         Because of = () => exception = Catch.Exception(() => MessageReciever.RecieveMessage(payload));
