@@ -10,6 +10,7 @@ using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;
+using SystemDot.Messaging.Specifications.configuration.publishing;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.recieving
 {
@@ -34,8 +35,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
                 .ForRequestReplyRecieving()
                 .Initialise();
 
-            Resolve<ReplyAddressLookup>().SetCurrentRecieverAddress(BuildAddress(ChannelName));
-            Resolve<ReplyAddressLookup>().SetCurrentSenderAddress(BuildAddress(SenderChannelName));
+            MessageReciever.RecieveMessage(CreateReceiveablePayload(1, SenderChannelName, ChannelName, PersistenceUseType.RequestSend));
 
             message = 1;
         };
@@ -43,37 +43,37 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
         Because of = () => bus.Reply(message);
 
         It should_send_a_message_with_the_correct_to_address = () =>
-            MessageSender.SentMessages.First().GetToAddress().ShouldEqual(BuildAddress(SenderChannelName));
+            MessageSender.SentMessages.ExcludeAcknowledgements().First().GetToAddress().ShouldEqual(BuildAddress(SenderChannelName));
 
         It should_send_a_message_with_the_correct_from_address = () =>
-            MessageSender.SentMessages.First().GetFromAddress().ShouldEqual(BuildAddress(ChannelName));
+            MessageSender.SentMessages.ExcludeAcknowledgements().First().GetFromAddress().ShouldEqual(BuildAddress(ChannelName));
 
         It should_send_a_message_with_the_correct_content = () =>
-            Deserialise<int>(MessageSender.SentMessages.First().GetBody()).ShouldEqual(message);
+            Deserialise<int>(MessageSender.SentMessages.ExcludeAcknowledgements().First().GetBody()).ShouldEqual(message);
 
         It should_mark_the_message_with_the_persistence_id = () =>
-            MessageSender.SentMessages.First().GetPersistenceId()
+            MessageSender.SentMessages.ExcludeAcknowledgements().First().GetPersistenceId()
                 .ShouldEqual(new MessagePersistenceId(
-                    MessageSender.SentMessages.First().Id,
-                    BuildAddress(ChannelName),
+                    MessageSender.SentMessages.ExcludeAcknowledgements().First().Id,
+                    BuildAddress(SenderChannelName),
                     PersistenceUseType.ReplySend));
 
         It should_set_original_persistence_id_to_the_persistence_id_of_the_message_with_the_persistence_id = () =>
-           MessageSender.SentMessages.First().GetSourcePersistenceId()
-               .ShouldEqual(MessageSender.SentMessages.First().GetPersistenceId());
+           MessageSender.SentMessages.ExcludeAcknowledgements().First().GetSourcePersistenceId()
+               .ShouldEqual(MessageSender.SentMessages.ExcludeAcknowledgements().First().GetPersistenceId());
 
         It should_mark_the_time_the_message_is_sent = () =>
-            MessageSender.SentMessages.First().GetLastTimeSent().ShouldBeGreaterThan(DateTime.MinValue);
+            MessageSender.SentMessages.ExcludeAcknowledgements().First().GetLastTimeSent().ShouldBeGreaterThan(DateTime.MinValue);
 
         It should_mark_the_amount_of_times_the_message_has_been_sent = () =>
-            MessageSender.SentMessages.First().GetAmountSent().ShouldEqual(1);
+            MessageSender.SentMessages.ExcludeAcknowledgements().First().GetAmountSent().ShouldEqual(1);
 
         It should_mark_the_message_with_the_sequence = () =>
-            MessageSender.SentMessages.First().GetSequence().ShouldEqual(1);
+            MessageSender.SentMessages.ExcludeAcknowledgements().First().GetSequence().ShouldEqual(1);
 
         It should_not_persist_the_message = () =>
             persistentMemoryChangeStore
-                .GetMessages(PersistenceUseType.ReplySend, BuildAddress(ChannelName))
+                .GetMessages(PersistenceUseType.ReplySend, BuildAddress(SenderChannelName))
                 .ShouldBeEmpty();
 
         It should_start_the_task_repeater = () => The<ITaskRepeater>().WasToldTo(r => r.Start());

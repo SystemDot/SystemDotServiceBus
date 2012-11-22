@@ -26,10 +26,9 @@ namespace SystemDot.Messaging.Channels.Pipelines
             return new ProcessorBuilder<T>(processor);
         }
 
-        public ProcessorBuilder<T> WithBusReplyTo<T>(IMessageProcessor<T, T> processor)
+        public void WithBusReplyTo<T>(IMessageInputter<T> processor)
         {
             IocContainerLocator.Locate().Resolve<IBus>().MessageReplied += o => processor.InputMessage(o.As<T>());
-            return new ProcessorBuilder<T>(processor);
         }
 
         public ProcessorBuilder<T> WithBusPublishTo<T>(IMessageProcessor<T, T> processor)

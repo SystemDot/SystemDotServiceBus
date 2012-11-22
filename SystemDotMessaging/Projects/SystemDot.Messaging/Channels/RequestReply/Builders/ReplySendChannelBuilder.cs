@@ -1,9 +1,9 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Acknowledgement;
+using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Builders;
 using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Expiry;
-using SystemDot.Messaging.Channels.Filtering;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Pipelines;
 using SystemDot.Messaging.Channels.Repeating;
@@ -17,7 +17,6 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
 {
     public class ReplySendChannelBuilder
     {
-        readonly ReplyAddressLookup replyAddressLookup;
         readonly IMessageSender messageSender;
         readonly ISerialiser serialiser;
         readonly ICurrentDateProvider currentDateProvider;
@@ -26,7 +25,6 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
         readonly MessageAcknowledgementHandler acknowledgementHandler;
 
         public ReplySendChannelBuilder(
-            ReplyAddressLookup replyAddressLookup, 
             IMessageSender messageSender, 
             ISerialiser serialiser, 
             ICurrentDateProvider currentDateProvider, 
@@ -34,7 +32,6 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             PersistenceFactorySelector persistenceFactorySelector, 
             MessageAcknowledgementHandler acknowledgementHandler)
         {
-            Contract.Requires(replyAddressLookup != null);
             Contract.Requires(messageSender != null);
             Contract.Requires(serialiser != null);
             Contract.Requires(currentDateProvider != null);
@@ -42,7 +39,6 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             Contract.Requires(persistenceFactorySelector != null);
             Contract.Requires(acknowledgementHandler != null);
             
-            this.replyAddressLookup = replyAddressLookup;
             this.messageSender = messageSender;
             this.serialiser = serialiser;
             this.currentDateProvider = currentDateProvider;
@@ -51,30 +47,28 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             this.acknowledgementHandler = acknowledgementHandler;
         }
 
-        public void Build(ReplySendChannelSchema schema)
+        public IMessageInputter<object> Build(ReplySendChannelSchema schema, EndpointAddress senderAddress)
         {
             IPersistence persistence = this.persistenceFactorySelector
                 .Select(schema)
-                .CreatePersistence(PersistenceUseType.ReplySend, schema.FromAddress);
+                .CreatePersistence(PersistenceUseType.ReplySend, senderAddress);
             
             this.acknowledgementHandler.RegisterPersistence(persistence);
 
+            var startPoint = new MessagePayloadPackager(this.serialiser);
+
             MessagePipelineBuilder.Build()
-                .WithBusReplyTo(new MessageFilter(GetFilterStrategy(schema)))
-                .ToConverter(new MessagePayloadPackager(this.serialiser))
+                .With(startPoint)
                 .ToProcessor(new Sequencer(persistence))
-                .ToProcessor(new ReplyChannelMessageAddresser(this.replyAddressLookup, schema.FromAddress))
+                .ToProcessor(new MessageAddresser(schema.FromAddress, senderAddress))
                 .ToEscalatingTimeMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new SendChannelMessageCacher(persistence))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Pump()
                 .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, persistence))
                 .ToEndPoint(this.messageSender);
-        }
 
-        ReplyChannelMessageFilterStategy GetFilterStrategy(ReplySendChannelSchema schema)
-        {
-            return new ReplyChannelMessageFilterStategy(this.replyAddressLookup, schema.FromAddress);
+            return startPoint;
         }
     }
 }

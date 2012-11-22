@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Specifications.transport.in_process
         Establish context = () =>
         {
             message = new MessagePayload();
-            message.SetToAddress(new EndpointAddress("Channel", "Server"));
+            message.SetToAddress(new EndpointAddress("GetChannel", "Server"));
             Subject = new MessageSender(The<InProcessMessageServer>());
             The<InProcessMessageServer>().MessageProcessed += m => processed = m;
         };

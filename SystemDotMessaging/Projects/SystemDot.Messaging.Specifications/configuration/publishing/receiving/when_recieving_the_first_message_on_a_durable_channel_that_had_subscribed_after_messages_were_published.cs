@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             message = 1;
-            payload = CreateRecieveablePayload(message, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
+            payload = CreateReceiveablePayload(message, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
             payload.SetFirstSequence(2);
             payload.SetSequence(2);
         };

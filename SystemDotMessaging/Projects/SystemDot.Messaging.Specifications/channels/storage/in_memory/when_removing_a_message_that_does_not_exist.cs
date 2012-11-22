@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Specifications.channels.storage.in_memory
         Establish context = () =>
         {
             Configure<IChangeStore>(new InMemoryChangeStore(new PlatformAgnosticSerialiser()));
-            persistence = Subject.CreatePersistence(PersistenceUseType.SubscriberRequestSend, new EndpointAddress("Channel", "Server"));
+            persistence = Subject.CreatePersistence(PersistenceUseType.SubscriberRequestSend, new EndpointAddress("GetChannel", "Server"));
         };
 
         Because of = () => exception = Catch.Exception(() => persistence.Delete(Guid.NewGuid()));

@@ -13,6 +13,7 @@ namespace SystemDot.Messaging.Combined.Server
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingHttpTransport(MessageServer.Local())
+                //.UsingEsentPersistence("Esent\\Server")
                 .OpenChannel("TestReciever").ForRequestReplyRecieving()
                 .OpenChannel("TestPublisher").ForPublishing()
                 .Initialise();

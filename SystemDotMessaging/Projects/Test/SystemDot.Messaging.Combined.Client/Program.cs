@@ -14,6 +14,7 @@ namespace SystemDot.Messaging.Combined.Client
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingHttpTransport(MessageServer.Local())
+                //.UsingEsentPersistence("Esent\\Client")
                 .OpenChannel("TestSender").ForRequestReplySendingTo("TestReciever")
                 .Initialise();
 

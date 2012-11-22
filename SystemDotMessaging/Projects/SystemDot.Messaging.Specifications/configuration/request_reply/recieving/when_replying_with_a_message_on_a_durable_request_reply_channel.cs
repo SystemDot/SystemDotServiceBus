@@ -1,7 +1,8 @@
-using SystemDot.Messaging.Channels.RequestReply;
+using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.Changes;
 using Machine.Specifications;
+using SystemDot.Messaging.Channels.Sequencing;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.recieving
 {
@@ -21,8 +22,9 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
                 .OpenChannel(ChannelName).ForRequestReplyRecieving().WithDurability()
                 .Initialise();
 
-            Resolve<ReplyAddressLookup>().SetCurrentRecieverAddress(BuildAddress(ChannelName));
-            Resolve<ReplyAddressLookup>().SetCurrentSenderAddress(BuildAddress(SenderChannelName));
+            MessagePayload request = CreateReceiveablePayload(1, SenderChannelName, ChannelName, PersistenceUseType.RequestSend);
+            request.SetSequence(1);
+            MessageReciever.RecieveMessage(request);
 
             message = 1;
         };
@@ -31,7 +33,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
 
         It should_persist_the_message = () =>
             Resolve<IChangeStore>()
-                .GetMessages(PersistenceUseType.ReplySend, BuildAddress(ChannelName))
+                .GetMessages(PersistenceUseType.ReplySend, BuildAddress(SenderChannelName))
                 .ShouldNotBeEmpty();
     }
 }

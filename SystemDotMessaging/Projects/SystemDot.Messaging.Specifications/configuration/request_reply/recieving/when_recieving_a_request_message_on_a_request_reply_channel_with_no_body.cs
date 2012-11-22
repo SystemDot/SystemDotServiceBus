@@ -21,6 +21,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
                 .Initialise();
 
             payload = new MessagePayload();
+            payload.SetFromAddress(BuildAddress("TestSender"));
             payload.SetToAddress(BuildAddress(ChannelName));
         };
 

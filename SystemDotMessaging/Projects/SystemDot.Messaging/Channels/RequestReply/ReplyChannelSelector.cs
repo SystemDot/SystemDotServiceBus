@@ -21,8 +21,7 @@ namespace SystemDot.Messaging.Channels.RequestReply
             Contract.Requires(toInput != null);
 
             this.addressLookup.SetCurrentSenderAddress(toInput.GetFromAddress());
-            this.addressLookup.SetCurrentRecieverAddress(toInput.GetToAddress());
-
+            
             MessageProcessed(toInput);
         }
 

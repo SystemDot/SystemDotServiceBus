@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
             
             persistence = new Persistence(
                 store,
-                new EndpointAddress("Channel", "Server"), 
+                new EndpointAddress("GetChannel", "Server"), 
                 PersistenceUseType.SubscriberRequestSend);
 
             Subject.RegisterPersistence(persistence);

@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.channels.repeating
             processedMessages = new List<MessagePayload>();
             DateTime currentDate = DateTime.Now;
 
-            var endpointAddress = new EndpointAddress("Channel", "Server");
+            var endpointAddress = new EndpointAddress("GetChannel", "Server");
             With<PersistenceBehaviour>();
            
             Configure<ICurrentDateProvider>(new TestCurrentDateProvider(currentDate));

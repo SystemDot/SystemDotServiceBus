@@ -33,7 +33,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             message = 1;
-            payload = CreateRecieveablePayload(message, SenderAddress, ChannelName, PersistenceUseType.RequestSend);
+            payload = CreateReceiveablePayload(message, SenderAddress, ChannelName, PersistenceUseType.RequestSend);
         };
 
         Because of = () => MessageReciever.RecieveMessage(payload);
@@ -43,21 +43,18 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
         It should_send_an_acknowledgement_for_the_message = () =>
             MessageSender.SentMessages.ShouldContain(a => a.GetAcknowledgementId() == payload.GetSourcePersistenceId());
 
-        It should_store_the_reciever_address_for_the_reply_to_use = () => 
-            Resolve<ReplyAddressLookup>().GetCurrentRecieverAddress().ShouldEqual(BuildAddress(ChannelName));
-
         It should_store_the_sender_address_for_the_reply_to_use = () =>
             Resolve<ReplyAddressLookup>().GetCurrentSenderAddress().ShouldEqual(BuildAddress(SenderAddress));
 
         It should_mark_the_message_with_the_time_the_message_is_sent = () =>
             Resolve<InMemoryChangeStore>()
-                .GetAddedMessages(PersistenceUseType.RequestReceive, BuildAddress(ChannelName))
+                .GetAddedMessages(PersistenceUseType.RequestReceive, BuildAddress(SenderAddress))
                 .First()
                 .GetLastTimeSent().ShouldBeGreaterThan(DateTime.MinValue);
 
         It should_mark_the_message_with_the_amount_of_times_the_message_has_been_sent = () =>
            Resolve<InMemoryChangeStore>()
-                .GetAddedMessages(PersistenceUseType.RequestReceive, BuildAddress(ChannelName))
+                .GetAddedMessages(PersistenceUseType.RequestReceive, BuildAddress(SenderAddress))
                 .First()
                 .GetAmountSent().ShouldEqual(1);
     }

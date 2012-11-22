@@ -182,14 +182,12 @@
     <Compile Include="channels\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel.cs" />
     <Compile Include="channels\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel_and_machine_name.cs" />
     <Compile Include="channels\endpoints\when_building_a_new_endpoint_address_with_a_specified_channel_machine_and_server.cs" />
-    <Compile Include="channels\filtering\when_filtering_a_message_for_reply_for_the_correct_request.cs" />
     <Compile Include="channels\filtering\when_filtering_a_message_by_name_pattern_that_does_not_match_the_specified_pattern.cs" />
     <Compile Include="channels\filtering\when_filtering_a_message_by_name_pattern_that_matches_the_specified_pattern.cs" />
     <Compile Include="channels\filtering\when_filtering_a_message_with_the_defualt_pass_through_strategy.cs" />
     <Compile Include="channels\filtering\TestMessage.cs" />
     <Compile Include="channels\filtering\when_filtering_a_message_by_namespace_that_is_in_the_specified_namespace.cs" />
     <Compile Include="channels\filtering\when_filtering_a_message_by_namespace_that_is_not_in_the_specified_namespace.cs" />
-    <Compile Include="channels\request_reply\when_addressing_a_reply_channel_message.cs" />
     <Compile Include="channels\request_reply\when_passing_messages_through_a_reply_channel_selector.cs" />
     <Compile Include="channels\packaging\when_unpackaging_a_message_from_transportation_payload_that_does_not_have_a_body.cs" />
     <Compile Include="channels\publishing\when_handling_a_subscription_request_message.cs" />

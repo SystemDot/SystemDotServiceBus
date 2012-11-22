@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
                     .WithDurability()
                 .Initialise();
 
-            payload = CreateRecieveablePayload(1, RecieverAddress, ChannelName, PersistenceUseType.ReplySend);
+            payload = CreateReceiveablePayload(1, RecieverAddress, ChannelName, PersistenceUseType.ReplySend);
         };
 
         Because of = () => MessageReciever.RecieveMessage(payload);

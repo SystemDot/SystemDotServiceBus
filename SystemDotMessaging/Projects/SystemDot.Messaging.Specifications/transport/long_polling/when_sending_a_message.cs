@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
         Establish context = () =>
         {
             message = new MessagePayload();
-            message.SetToAddress(new EndpointAddress("Channel", "Server"));
+            message.SetToAddress(new EndpointAddress("GetChannel", "Server"));
             serialiser = new TestSerialiser();
 
             Configure<ISerialiser>(serialiser);

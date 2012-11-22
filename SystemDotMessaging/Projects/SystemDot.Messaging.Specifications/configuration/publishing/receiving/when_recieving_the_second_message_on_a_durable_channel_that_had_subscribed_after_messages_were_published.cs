@@ -27,14 +27,14 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving
             handler = new TestMessageHandler<int>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
-            payload = CreateRecieveablePayload(1, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
+            payload = CreateReceiveablePayload(1, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
             payload.SetFirstSequence(2);
             payload.SetSequence(2);
 
             MessageReciever.RecieveMessage(payload);
 
             message = 2;
-            payload = CreateRecieveablePayload(message, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
+            payload = CreateReceiveablePayload(message, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
             payload.SetFirstSequence(2);
             payload.SetSequence(3);
         };

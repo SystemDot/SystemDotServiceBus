@@ -45,6 +45,8 @@
     <Compile Include="Channels\Caching\PersistenceSourceRecorder.cs" />
     <Compile Include="Channels\Caching\ReceiveChannelMessageCacher.cs" />
     <Compile Include="Channels\Caching\SendChannelMessageCacher.cs" />
+    <Compile Include="Channels\Distribution\ChannelDistributor.cs" />
+    <Compile Include="Channels\Distribution\IChannelDistrbutionStrategy.cs" />
     <Compile Include="Channels\Distribution\Queue.cs" />
     <Compile Include="Channels\Expiry\IMessageExpiryStrategy.cs" />
     <Compile Include="Channels\Expiry\MessageExpirer.cs" />
@@ -71,6 +73,11 @@
     <Compile Include="Channels\Repeating\MessageRepeater.cs" />
     <Compile Include="Channels\Repeating\RepeaterMessagePipelineBuilderExtensions.cs" />
     <Compile Include="Channels\Repeating\SimpleRepeatStrategy.cs" />
+    <Compile Include="Channels\RequestReply\Builders\ReplySendDistributionChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\Builders\ReplySendSubscriptionHandler.cs" />
+    <Compile Include="Channels\RequestReply\Builders\RequestReceiveDistributionChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\ReplySendChannelDistrbutionStrategy.cs" />
+    <Compile Include="Channels\RequestReply\RequestRecieveChannelDistrbutionStrategy.cs" />
     <Compile Include="Channels\RequestReply\Builders\RequestRecieveChannelSchema.cs" />
     <Compile Include="Channels\Builders\SendChannelSchema.cs" />
     <Compile Include="Channels\Publishing\Builders\PublisherChannelBuilder.cs" />
@@ -84,6 +91,7 @@
     <Compile Include="Channels\Publishing\SubscriptionRequestFilter.cs" />
     <Compile Include="Channels\RequestReply\Builders\ReplyRecieveChannelSchema.cs" />
     <Compile Include="Channels\RequestReply\Builders\ReplySendChannelSchema.cs" />
+    <Compile Include="Channels\RequestReply\Builders\RequestRecieveSubscriptionHandler.cs" />
     <Compile Include="Channels\RequestReply\Builders\RequestSendChannelSchema.cs" />
     <Compile Include="Channels\Sequencing\FirstMessageSequenceRecorder.cs" />
     <Compile Include="Channels\Sequencing\FirstSequenceHeader.cs" />
@@ -107,8 +115,6 @@
     <Compile Include="Channels\Filtering\NamePatternMessageFilterStrategy.cs" />
     <Compile Include="Channels\Filtering\NamespaceMessageFilterStrategy.cs" />
     <Compile Include="Channels\Filtering\PassThroughMessageFilterStategy.cs" />
-    <Compile Include="Channels\Filtering\ReplyChannelMessageFilterStategy.cs" />
-    <Compile Include="Channels\RequestReply\ReplyChannelMessageAddresser.cs" />
     <Compile Include="Channels\RequestReply\Builders\ReplyRecieveChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\RequestRecieveChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\ReplySendChannelBuilder.cs" />

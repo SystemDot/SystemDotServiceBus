@@ -30,8 +30,8 @@ namespace SystemDot.Messaging.Configuration.RequestReply
 
         protected override void Build()
         {
-            Resolve<RequestRecieveChannelBuilder>().Build(this.requestChannelSchema);
-            Resolve<ReplySendChannelBuilder>().Build(this.sendChannelSchema);
+            Resolve<RequestReceiveDistributionChannelBuilder>().Build(this.requestChannelSchema);
+            Resolve<ReplySendDistributionChannelBuilder>().Build(this.sendChannelSchema);
             Resolve<IMessageReciever>().StartPolling(GetAddress());
         }
 

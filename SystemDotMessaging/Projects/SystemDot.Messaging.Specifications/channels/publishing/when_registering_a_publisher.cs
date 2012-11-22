@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
             Configure<IChangeStore>(new InMemoryChangeStore(new PlatformAgnosticSerialiser()));
 
             publisher = new Publisher(
-                new EndpointAddress("Channel", "Address"), 
+                new EndpointAddress("GetChannel", "Address"), 
                 The<ISubscriberSendChannelBuilder>(), The<IChangeStore>());
             
             address = new EndpointAddress("TestAddress", "TestServer");

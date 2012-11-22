@@ -32,8 +32,7 @@ namespace SystemDot.Messaging.Channels.Publishing
 
         static void SendMessageToSubscriber(MessagePayload toSend, Subscriber toSendTo)
         {
-            if(toSendTo.Channel == null) return;
-            toSendTo.Channel.InputMessage(toSend);
+            toSendTo.GetChannel().InputMessage(toSend);
         }
 
         public void Subscribe(SubscriptionSchema schema)

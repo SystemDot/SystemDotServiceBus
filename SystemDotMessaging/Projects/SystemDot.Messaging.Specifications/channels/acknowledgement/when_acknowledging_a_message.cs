@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
             The<AcknowledgementSender>().MessageProcessed += m => processedAcknowedgement = m;
 
             message = new MessagePayload();
-            message.SetFromAddress(new EndpointAddress("Channel", "Server"));
+            message.SetFromAddress(new EndpointAddress("GetChannel", "Server"));
             message.SetSourcePersistenceId(new MessagePersistenceId(message.Id, message.GetFromAddress(), PersistenceUseType.ReplyReceive));           
             Subject.MessageProcessed += m => processedMessage = m;
         };

@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             message = 1;
-            payload = CreateRecieveablePayload(message, SenderAddress, ChannelName, PersistenceUseType.RequestSend);
+            payload = CreateReceiveablePayload(message, SenderAddress, ChannelName, PersistenceUseType.RequestSend);
             payload.SetSequence(2);
         };
 

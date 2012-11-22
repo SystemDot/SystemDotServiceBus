@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.configuration
         };
 
         
-        protected static MessagePayload CreateRecieveablePayload(
+        protected static MessagePayload CreateReceiveablePayload(
             object message,
             string fromAddress,
             string toAddress,

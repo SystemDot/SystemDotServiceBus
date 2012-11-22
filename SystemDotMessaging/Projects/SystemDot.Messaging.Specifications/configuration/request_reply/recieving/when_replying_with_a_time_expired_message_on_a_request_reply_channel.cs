@@ -2,7 +2,9 @@ using System;
 using SystemDot.Messaging.Channels.RequestReply;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Configuration.RequestReply;
+using SystemDot.Messaging.Storage;
 using Machine.Specifications;
+using SystemDot.Messaging.Specifications.configuration.publishing;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.recieving
 {
@@ -24,14 +26,13 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
                         .WithMessageExpiry(MessageExpiry.ByTime(TimeSpan.FromMinutes(0)))
                 .Initialise();
 
-            Resolve<ReplyAddressLookup>().SetCurrentRecieverAddress(BuildAddress(ChannelName));
-            Resolve<ReplyAddressLookup>().SetCurrentSenderAddress(BuildAddress(SenderChannelName));
+            MessageReciever.RecieveMessage(CreateReceiveablePayload(1, SenderChannelName, ChannelName, PersistenceUseType.RequestSend));
 
             message = 1;
         };
 
         Because of = () => bus.Reply(message);
 
-        It should_not_send_the_message = () => MessageSender.SentMessages.ShouldBeEmpty();
+        It should_not_send_the_message = () => MessageSender.SentMessages.ExcludeAcknowledgements().ShouldBeEmpty();
     }
 }

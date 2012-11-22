@@ -1,6 +1,7 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.Acknowledgement;
+using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Builders;
 using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Expiry;
@@ -12,7 +13,6 @@ using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Channels.Sequencing;
 using SystemDot.Messaging.Channels.UnitOfWork;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 
@@ -23,7 +23,6 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
         readonly ReplyAddressLookup replyAddressLookup;
         readonly ISerialiser serialiser;
         readonly MessageHandlerRouter messageHandlerRouter;
-        readonly IMessageReciever messageReciever;
         readonly AcknowledgementSender acknowledgementSender;
         readonly PersistenceFactorySelector persistenceFactorySelector;
         readonly ICurrentDateProvider currentDateProvider;
@@ -34,7 +33,6 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             ReplyAddressLookup replyAddressLookup, 
             ISerialiser serialiser, 
             MessageHandlerRouter messageHandlerRouter, 
-            IMessageReciever messageReciever, 
             AcknowledgementSender acknowledgementSender,
             PersistenceFactorySelector persistenceFactorySelector, 
             ICurrentDateProvider currentDateProvider, 
@@ -44,7 +42,6 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             Contract.Requires(replyAddressLookup != null);
             Contract.Requires(serialiser != null);
             Contract.Requires(messageHandlerRouter != null);
-            Contract.Requires(messageReciever != null);
             Contract.Requires(acknowledgementSender != null);
             Contract.Requires(persistenceFactorySelector != null);
             Contract.Requires(currentDateProvider != null);
@@ -54,7 +51,6 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             this.replyAddressLookup = replyAddressLookup;
             this.serialiser = serialiser;
             this.messageHandlerRouter = messageHandlerRouter;
-            this.messageReciever = messageReciever;
             this.acknowledgementSender = acknowledgementSender;
             this.persistenceFactorySelector = persistenceFactorySelector;
             this.currentDateProvider = currentDateProvider;
@@ -62,16 +58,16 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             this.iocContainer = iocContainer;
         }
 
-        public void Build(RequestRecieveChannelSchema schema)
+        public IMessageInputter<MessagePayload> Build(RequestRecieveChannelSchema schema, EndpointAddress senderAddress)
         {
             IPersistence persistence = this.persistenceFactorySelector
                 .Select(schema)
-                .CreatePersistence(PersistenceUseType.RequestReceive, schema.Address);
+                .CreatePersistence(PersistenceUseType.RequestReceive, senderAddress);
+
+            var startPoint = new MessagePayloadCopier(this.serialiser);
 
             MessagePipelineBuilder.Build()
-                .With(this.messageReciever)
-                .ToProcessor(new MessagePayloadCopier(this.serialiser))
-                .ToProcessor(new BodyMessageFilter(schema.Address))
+                .With(startPoint)
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToEscalatingTimeMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new ReceiveChannelMessageCacher(persistence))
@@ -83,6 +79,8 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
                 .ToProcessor(new UnitOfWorkRunner(this.iocContainer))
                 .ToEndPoint(this.messageHandlerRouter);
+
+            return startPoint;
         }
     }
 }

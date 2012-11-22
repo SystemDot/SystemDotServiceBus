@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Specifications.channels.storage
             With<PersistenceBehaviour>();
 
             message = new MessagePayload();
-            message.SetPersistenceId(new EndpointAddress("Channel", "Server"), PersistenceUseType.SubscriberSend);
+            message.SetPersistenceId(new EndpointAddress("GetChannel", "Server"), PersistenceUseType.SubscriberSend);
             Subject.MessageProcessed += m => processedMessage = m;
         };
 

@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             message = 1;
-            payload = CreateRecieveablePayload(message, RecieverAddress, ChannelName, PersistenceUseType.RequestSend);
+            payload = CreateReceiveablePayload(message, RecieverAddress, ChannelName, PersistenceUseType.RequestSend);
             payload.SetSequence(2);
         };
 

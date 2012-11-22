@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingHttpTransport(MessageServer.Local())
-                .UsingSqlPersistence("TO DO: Connection string to specify")
+                //.UsingEsentPersistence("Esent\\Receiver")
                 .OpenChannel("TestReciever")
                     .ForRequestReplyRecieving()
                     .WithDurability()

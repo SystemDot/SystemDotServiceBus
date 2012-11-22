@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
         {
             Configure<IWebRequestor>(new FailingWebRequestor());
             message = new MessagePayload();
-            message.SetToAddress(new EndpointAddress("Channel", "Server"));
+            message.SetToAddress(new EndpointAddress("GetChannel", "Server"));
         };
 
         Because of = () => exception = Catch.Exception(() => Subject.InputMessage(message));

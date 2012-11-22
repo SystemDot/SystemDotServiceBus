@@ -34,9 +34,6 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply
         It should_pass_the_message_through = () => processedMessage.ShouldBeTheSameAs(message);
 
         It should_have_set_the_current_sender_address_for_lookup = () => 
-            The<ReplyAddressLookup>().GetCurrentSenderAddress().ShouldBeTheSameAs(senderAddress);
-        
-        It should_have_set_the_current_reciever_address_for_lookup = () =>
-            The<ReplyAddressLookup>().GetCurrentRecieverAddress().ShouldBeTheSameAs(recieverAddress);
+            The<ReplyAddressLookup>().GetCurrentSenderAddress().ShouldBeTheSameAs(senderAddress);        
     }
 }

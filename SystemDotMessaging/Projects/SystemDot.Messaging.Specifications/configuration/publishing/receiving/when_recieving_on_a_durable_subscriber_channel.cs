@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving
                     .WithDurability()
                 .Initialise();
 
-            payload = CreateRecieveablePayload(1, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
+            payload = CreateReceiveablePayload(1, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
             payload.SetFirstSequence(1);
             payload.SetSequence(1); 
         };

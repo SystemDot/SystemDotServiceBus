@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingHttpTransport(MessageServer.Local())
-                .UsingSqlPersistence("TO DO: Connection string to specify")
+                //.UsingEsentPersistence("Esent\\Sender")
                 .OpenChannel("TestSender")
                     .ForRequestReplySendingTo("TestReciever")
                     .WithDurability()

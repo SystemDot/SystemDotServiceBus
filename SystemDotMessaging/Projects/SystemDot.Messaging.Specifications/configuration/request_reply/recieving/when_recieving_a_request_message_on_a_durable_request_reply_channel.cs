@@ -22,14 +22,14 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
                     .WithDurability()
                 .Initialise();
 
-            payload = CreateRecieveablePayload(1, SenderAddress, ChannelName, PersistenceUseType.RequestSend);
+            payload = CreateReceiveablePayload(1, SenderAddress, ChannelName, PersistenceUseType.RequestSend);
         };
 
         Because of = () => MessageReciever.RecieveMessage(payload);
 
         It should_have_persisted_the_message = () =>
             Resolve<IChangeStore>()
-                .GetAddedMessages(PersistenceUseType.RequestReceive, BuildAddress(ChannelName))               
+                .GetAddedMessages(PersistenceUseType.RequestReceive, BuildAddress(SenderAddress))               
                 .ShouldContain(payload);
     }
 }

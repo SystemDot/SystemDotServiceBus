@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.channels.storage.in_memory
 
             persistence = Subject.CreatePersistence(
                 PersistenceUseType.SubscriberRequestSend, 
-                new EndpointAddress("Channel", "Server"));
+                new EndpointAddress("GetChannel", "Server"));
 
             message1 = new MessagePayload();
             persistence.AddMessageAndIncrementSequence(message1);

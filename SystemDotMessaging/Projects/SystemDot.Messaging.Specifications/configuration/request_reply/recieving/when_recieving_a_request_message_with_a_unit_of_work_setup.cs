@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
             handler = new TestMessageHandler<int>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
-            payload = CreateRecieveablePayload(1, SenderAddress, ChannelName, PersistenceUseType.RequestSend);
+            payload = CreateReceiveablePayload(1, SenderAddress, ChannelName, PersistenceUseType.RequestSend);
         };
 
         Because of = () => MessageReciever.RecieveMessage(payload);

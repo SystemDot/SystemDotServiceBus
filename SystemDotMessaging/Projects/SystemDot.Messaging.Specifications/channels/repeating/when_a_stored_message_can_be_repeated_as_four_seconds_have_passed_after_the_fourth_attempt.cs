@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.channels.repeating
 
         Establish context = () =>
         {
-            var endpointAddress = new EndpointAddress("Channel", "Server");
+            var endpointAddress = new EndpointAddress("GetChannel", "Server");
             With<PersistenceBehaviour>();
             
             DateTime currentDate = DateTime.Now;

@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             message = 1;
-            payload = CreateRecieveablePayload(message, RecieverAddress, ChannelName, PersistenceUseType.ReplySend);
+            payload = CreateReceiveablePayload(message, RecieverAddress, ChannelName, PersistenceUseType.ReplySend);
         };
 
         Because of = () => MessageReciever.RecieveMessage(payload);

@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
 
             differingChannelPersistence = new Persistence(
                 store,
-                new EndpointAddress("Channel", "Server"),
+                new EndpointAddress("GetChannel", "Server"),
                 PersistenceUseType.RequestSend);
 
             Subject.RegisterPersistence(differingChannelPersistence);

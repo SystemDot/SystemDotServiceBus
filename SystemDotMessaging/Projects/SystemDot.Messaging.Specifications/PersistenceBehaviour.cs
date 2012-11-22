@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.Specifications
         }
 
         public PersistenceBehaviour()
-            : this(PersistenceUseType.SubscriberRequestSend, new EndpointAddress("Channel", "Server"))
+            : this(PersistenceUseType.SubscriberRequestSend, new EndpointAddress("GetChannel", "Server"))
         {
         }
     }
