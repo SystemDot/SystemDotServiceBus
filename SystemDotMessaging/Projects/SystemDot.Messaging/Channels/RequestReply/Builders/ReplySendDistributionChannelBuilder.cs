@@ -11,19 +11,23 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
         readonly IMessageReciever messageReciever;
         readonly ReplySendChannelBuilder builder;
         readonly ReplySendChannelDistrbutionStrategy channelDistrbutionStrategy;
+        readonly ReplyAddressLookup replyAddressLookup;
 
         public ReplySendDistributionChannelBuilder(
             IMessageReciever messageReciever,
             ReplySendChannelBuilder builder,
-            ReplySendChannelDistrbutionStrategy channelDistrbutionStrategy)
+            ReplySendChannelDistrbutionStrategy channelDistrbutionStrategy, 
+            ReplyAddressLookup replyAddressLookup)
         {
             Contract.Requires(messageReciever != null);
             Contract.Requires(builder != null);
             Contract.Requires(channelDistrbutionStrategy != null);
+            Contract.Requires(replyAddressLookup != null);
 
             this.messageReciever = messageReciever;
             this.builder = builder;
             this.channelDistrbutionStrategy = channelDistrbutionStrategy;
+            this.replyAddressLookup = replyAddressLookup;
         }
 
         public void Build(ReplySendChannelSchema schema)
@@ -37,7 +41,9 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
                 .ToProcessor(new BodyMessageFilter(schema.FromAddress))
                 .ToEndPoint(new ReplySendSubscriptionHandler(this.builder, distributor, schema));
 
-            MessagePipelineBuilder.Build().WithBusReplyTo(distributor);
+            MessagePipelineBuilder.Build()
+                .WithBusReplyTo(new MessageFilter(new ReplyChannelMessageFilterStategy(this.replyAddressLookup, schema.FromAddress)))
+                .ToEndPoint(distributor);
         }
     }
 }

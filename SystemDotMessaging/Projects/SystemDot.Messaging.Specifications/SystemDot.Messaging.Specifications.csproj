@@ -121,7 +121,7 @@
     <Compile Include="configuration\request_reply\recieving\when_recieving_a_request_message_on_a_request_reply_channel_with_no_body.cs" />
     <Compile Include="configuration\request_reply\recieving\when_recieving_a_request_message_on_a_request_reply_channel.cs" />
     <Compile Include="configuration\request_reply\recieving\when_replying_with_a_message_on_a_durable_request_reply_channel.cs" />
-    <Compile Include="configuration\request_reply\recieving\when_replying_with_a_message_on_two_request_reply_channels.cs" />
+    <Compile Include="configuration\request_reply\recieving\when_replying_with_a_message_on_a_request_reply_channel_with_another_setup.cs" />
     <Compile Include="configuration\request_reply\sending\when_recieving_a_reply_message_on_a_durable_request_reply_channel.cs" />
     <Compile Include="configuration\request_reply\sending\when_recieving_a_reply_message_on_a_request_reply_channel_with_no_body.cs" />
     <Compile Include="configuration\request_reply\sending\when_recieving_a_reply_message_with_a_unit_of_work_setup.cs" />
