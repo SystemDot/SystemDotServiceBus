@@ -3,7 +3,7 @@ using SQLite;
 
 namespace SystemDot.Messaging.Storage.Sqlite.Metro
 {
-    public class SqliteChangeContainer
+    public class ChangeStore
     {
         [PrimaryKey]
         public string Id { get; set; }

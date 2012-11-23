@@ -51,10 +51,10 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
                 .ToList();
         }
 
-        async Task<IEnumerable<SqliteChangeContainer>> GetChangesAsync(string changeRootId)
+        async Task<IEnumerable<ChangeStore>> GetChangesAsync(string changeRootId)
         {
             return await GetAsyncConnection()
-                .Table<SqliteChangeContainer>()
+                .Table<ChangeStore>()
                 .Where(m => m.ChangeRootId == changeRootId)
                 .ToListAsync();
         }
@@ -66,10 +66,10 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
                 .As<Change>();
         }
 
-        async Task<SqliteChangeContainer> GetChangeAsync(Guid id)
+        async Task<ChangeStore> GetChangeAsync(Guid id)
         {
             return await GetAsyncConnection()
-                .Table<SqliteChangeContainer>()
+                .Table<ChangeStore>()
                 .Where(m => m.Id == id.ToString())
                 .FirstAsync();
         }
