@@ -1,4 +1,5 @@
-using System.Collections.Generic;
+using System;
+using System.Collections.Concurrent;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using SystemDot.Messaging.Channels.Packaging;
@@ -8,11 +9,11 @@ namespace SystemDot.Messaging.Channels.Acknowledgement
 {
     public class MessageAcknowledgementHandler : IMessageInputter<MessagePayload>
     {
-        private readonly List<IPersistence> persistences;
+        private readonly ConcurrentDictionary<Guid, IPersistence> persistences;
 
         public MessageAcknowledgementHandler()
         {
-            this.persistences = new List<IPersistence>();
+            this.persistences = new ConcurrentDictionary<Guid, IPersistence>();
         }
 
         public void InputMessage(MessagePayload toInput)
@@ -22,6 +23,7 @@ namespace SystemDot.Messaging.Channels.Acknowledgement
             var id = toInput.GetAcknowledgementId();
 
             this.persistences
+                .Values
                 .Single(p => p.UseType == id.UseType && p.Address == id.Address)
                 .Delete(id.MessageId);
         }
@@ -29,7 +31,7 @@ namespace SystemDot.Messaging.Channels.Acknowledgement
         public void RegisterPersistence(IPersistence toRegister)
         {
             Contract.Requires(toRegister != null);
-            this.persistences.Add(toRegister);
+            this.persistences.TryAdd(Guid.NewGuid(), toRegister);
         }
     }
 }
