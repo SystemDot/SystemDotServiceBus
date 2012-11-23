@@ -18,11 +18,11 @@ namespace SystemDot.Messaging.Storage.Sqlite.Metro
             this.serialiser = serialiser;
         }
 
-        public async void Initialise(string connection)
+        public void Initialise(string connection)
         {
             this.databasePath = connection;
 
-            await GetAsyncConnection().ExecuteAsync(
+            GetConnection().Execute(
                 "create table if not exists ChangeStore(\n"
                 + "Id varchar(32) not null, \n"
                 + "ChangeRootId varchar(1000) not null, \n"
