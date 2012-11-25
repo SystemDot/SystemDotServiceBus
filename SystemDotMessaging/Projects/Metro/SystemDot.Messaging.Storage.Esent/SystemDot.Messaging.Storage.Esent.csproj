@@ -6,11 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{CE5C1B4B-B8A2-490E-8489-25EBD028B755}</ProjectGuid>
+    <ProjectGuid>{096A9E92-D753-4A6C-BB61-31E0EAB4425C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SystemDot.Sqlite</RootNamespace>
-    <AssemblyName>SystemDot.Sqlite</AssemblyName>
+    <RootNamespace>SystemDot.Messaging.Storage.Esent</RootNamespace>
+    <AssemblyName>SystemDot.Messaging.Storage.Esent</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -78,7 +78,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\..\..\Build\Metro\</OutputPath>
+    <OutputPath>bin\x86\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
@@ -99,17 +99,41 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SQLite.cs" />
-    <Compile Include="SQLiteAsync.cs" />
+    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <ProjectReference Include="..\SystemDot.Extensions.Metro\SystemDot.Extensions.Metro.csproj">
+      <Project>{4a01b283-9022-4549-b9ea-34782b3e25a3}</Project>
+      <Name>SystemDot.Extensions.Metro</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemDot.Messaging\SystemDot.Messaging.csproj">
+      <Project>{6a4f976c-fb85-4d3d-a145-d43626605212}</Project>
+      <Name>SystemDot.Messaging %28Metro\SystemDot.Messaging%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemDot\SystemDot.csproj">
+      <Project>{e9433834-d592-4a4a-8219-3ea48b5a2bcc}</Project>
+      <Name>SystemDot %28Metro\SystemDot%29</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="Microsoft.VCLibs, Version=11.0">
-      <Name>Microsoft Visual C++ Runtime Package</Name>
-    </SDKReference>
-    <SDKReference Include="SQLite.WinRT, Version=3.7.14.1">
-      <Name>SQLite for Windows Runtime</Name>
-    </SDKReference>
+    <Compile Include="..\..\SystemDot.Messaging.Storage.Esent\*.cs">
+      <Link>%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\..\SystemDot.Messaging.Storage.Esent\*\*.cs">
+      <Link>%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\..\SystemDot.Messaging.Storage.Esent\*\*\*.cs">
+      <Link>%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\..\SystemDot.Messaging.Storage.Esent\*\*\*\*.cs">
+      <Link>%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\..\SystemDot.Messaging.Storage.Esent\*\*\*\*\*.cs">
+      <Link>%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Esent.Interop">
+      <HintPath>..\..\..\Dependencies\ManagedEsent\Esent.Interop.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>

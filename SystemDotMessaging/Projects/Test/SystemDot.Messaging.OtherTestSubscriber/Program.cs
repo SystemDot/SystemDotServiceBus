@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.OtherTestSubscriber
 
             Configure.Messaging()
                 .UsingHttpTransport(MessageServer.Local())
-                //.UsingEsentPersistence("Esent\\OtherTestSubscriber")
+                .UsingFilePersistence()
                 .OpenChannel("TestOtherSubscriber")
                     .ForSubscribingTo("TestPublisher")
                     .WithDurability()

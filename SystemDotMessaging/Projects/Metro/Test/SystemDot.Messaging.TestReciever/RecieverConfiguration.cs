@@ -1,7 +1,7 @@
 ﻿using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Storage.Sqlite.Metro;
+//using SystemDot.Messaging.Storage.Esent;
 
 namespace SystemDot.Messaging.TestReciever
 {
@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.TestReciever
         {
             var bus = Configure.Messaging()
               .UsingInProcessTransport()
-              .UsingSqlitePersistence("Messaging1")
+              //.UsingFilePersistence("Messaging1")
               .OpenChannel("TestReciever")
                     .ForRequestReplyRecieving()
                     .WithDurability()

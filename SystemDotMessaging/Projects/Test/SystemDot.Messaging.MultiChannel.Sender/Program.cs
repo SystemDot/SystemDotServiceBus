@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.MultiChannel.Sender
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingHttpTransport(MessageServer.Local())
-                .UsingEsentPersistence("Esent\\Sender")
+                .UsingFilePersistence()
                 .OpenChannel("TestSenderA").ForRequestReplySendingTo("TestRecieverA").OnlyForMessages(FilteredBy.NamePattern("Channel1"))
                     .WithDurability()
                 .OpenChannel("TestSenderB").ForRequestReplySendingTo("TestRecieverB").OnlyForMessages(FilteredBy.NamePattern("Channel2"))

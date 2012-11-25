@@ -4,18 +4,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{51299507-FCAC-4D87-AFF7-ABC3F9C4C654}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{8692E5AB-3FC2-4416-B2D9-2F7B97CD73BE}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SystemDot.Messaging.TestReciever</RootNamespace>
-    <AssemblyName>SystemDot.Messaging.TestReciever</AssemblyName>
+    <RootNamespace>SystemDot.Messaging.Storage.Esent.Test</RootNamespace>
+    <AssemblyName>SystemDot.Messaging.Storage.Esent.Test</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <PackageCertificateKeyFile>SystemDot.Messaging.Storage.Esent.Test_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,6 +25,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -100,23 +101,57 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <ProjectReference Include="..\..\SystemDot.Messaging.Storage.Esent\SystemDot.Messaging.Storage.Esent.csproj">
+      <Project>{096A9E92-D753-4A6C-BB61-31E0EAB4425C}</Project>
+      <Name>SystemDot.Messaging.Storage.Esent %28Metro\SystemDot.Messaging.Storage.Esent%29</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SystemDot.Messaging\SystemDot.Messaging.csproj">
-      <Project>{6A4F976C-FB85-4D3D-A145-D43626605212}</Project>
-      <Name>SystemDot.Messaging</Name>
+      <Project>{6a4f976c-fb85-4d3d-a145-d43626605212}</Project>
+      <Name>SystemDot.Messaging %28Metro\SystemDot.Messaging%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SystemDot.Metro\SystemDot.Metro.csproj">
+      <Project>{09A377EE-27BB-468D-9B4E-E870424AEBA4}</Project>
+      <Name>SystemDot.Metro</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\SystemDot\SystemDot.csproj">
       <Project>{E9433834-D592-4A4A-8219-3EA48B5A2BCC}</Project>
-      <Name>SystemDot</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SystemDot.Messaging.Test.Messages\SystemDot.Messaging.Test.Messages.csproj">
-      <Project>{0D0FA9C5-9BDD-4192-978D-BE82EE49AA81}</Project>
-      <Name>SystemDot.Messaging.Test.Messages</Name>
+      <Name>SystemDot %28Metro\SystemDot%29</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RecieverConfiguration.cs" />
-    <Compile Include="RequestHandler.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+    <None Include="SystemDot.Messaging.Storage.Esent.Test_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Logo.png" />
+    <Content Include="Assets\SmallLogo.png" />
+    <Content Include="Assets\SplashScreen.png" />
+    <Content Include="Assets\StoreLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="Common\StandardStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>

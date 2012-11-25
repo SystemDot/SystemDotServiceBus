@@ -43,6 +43,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\SystemDot.Messaging.Storage.Esent\SystemDot.Messaging.Storage.Esent.csproj">
+      <Project>{C7DBF177-FCDB-4530-A6CA-3B1EFBAD63EB}</Project>
+      <Name>SystemDot.Messaging.Storage.Esent %28Windows\SystemDot.Messaging.Storage.Esent%29</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SystemDot.Messaging.Storage.Sql\SystemDot.Messaging.Storage.Sql.csproj">
       <Project>{80ffa53e-9c4d-45ce-a7d2-8fe0b6a9fbfb}</Project>
       <Name>SystemDot.Messaging.Storage.Sql</Name>

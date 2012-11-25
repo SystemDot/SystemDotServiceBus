@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.MultiChannel.RecieverA
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingHttpTransport(MessageServer.Local())
-                .UsingEsentPersistence("Esent\\ReceiverA")
+                .UsingFilePersistence()
                 .OpenChannel("TestRecieverA").ForRequestReplyRecieving()
                     .WithDurability()
                 .Initialise();

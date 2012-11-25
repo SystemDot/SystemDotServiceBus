@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SystemDot.Messaging.Storage.Sqlite.Metro")]
+[assembly: AssemblyTitle("SystemDot.Messaging.Storage.Esent")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SystemDot.Messaging.Storage.Sqlite.Metro")]
+[assembly: AssemblyProduct("SystemDot.Messaging.Storage.Esent")]
 [assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage;
@@ -20,11 +21,13 @@ namespace SystemDot.Messaging.Channels.Repeating
 
         public void Repeat(MessageRepeater repeater)
         {
-            persistence.GetMessages().ForEach(m =>
-                {
-                    if (m.GetLastTimeSent() <= this.currentDateProvider.Get().AddSeconds(-GetDelay(m)))
-                        repeater.InputMessage(m);
-                });
+            IEnumerable<MessagePayload> messages = persistence.GetMessages();
+
+            messages.ForEach(m =>
+            {
+                if (m.GetLastTimeSent() <= this.currentDateProvider.Get().AddSeconds(-GetDelay(m)))
+                    repeater.InputMessage(m);
+            });
         }
 
         static int GetDelay(MessagePayload toGetDelayFor)

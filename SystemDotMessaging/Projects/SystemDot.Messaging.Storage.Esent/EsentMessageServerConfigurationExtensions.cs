@@ -6,10 +6,10 @@ namespace SystemDot.Messaging.Storage.Esent
 {
     public static class EsentMessageServerConfigurationExtensions
     {
-        public static MessageServerConfiguration UsingEsentPersistence(this MessageServerConfiguration configuration, string path)
+        public static MessageServerConfiguration UsingFilePersistence(this MessageServerConfiguration configuration)
         {
             IocContainerLocator.Locate().RegisterInstance<IChangeStore, EsentChangeStore>();
-            IocContainerLocator.Locate().Resolve<IChangeStore>().Initialise(path);
+            IocContainerLocator.Locate().Resolve<IChangeStore>().Initialise(string.Empty);
 
             return configuration;
         }

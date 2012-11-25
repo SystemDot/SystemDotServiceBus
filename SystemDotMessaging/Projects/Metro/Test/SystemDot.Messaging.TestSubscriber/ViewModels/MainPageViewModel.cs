@@ -2,11 +2,11 @@
 using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Storage.Esent;
 using SystemDot.Messaging.Test.Messages;
 using SystemDot.Messaging.TestReciever;
 using Windows.UI.Core;
 using SystemDot.Messaging.TestSubscriber.Handlers;
-using SystemDot.Messaging.Storage.Sqlite.Metro;
 
 namespace SystemDot.Messaging.TestSubscriber.ViewModels
 {
@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
             this.bus = Configure.Messaging()
                .LoggingWith(loggingMechanism)
                .UsingInProcessTransport()
-               .UsingSqlitePersistence("Messaging2")
+               .UsingFilePersistence()
                .OpenChannel("TestSender").ForRequestReplySendingTo("TestReciever").WithDurability()
                .WithHook(new MessageMarshallingHook(CoreWindow.GetForCurrentThread().Dispatcher))
                .Initialise();

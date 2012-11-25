@@ -3,7 +3,7 @@ using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Storage.Sql;
+using SystemDot.Messaging.Storage.Esent;
 
 namespace SystemDot.Messaging.TestRequestReply.Reciever
 {
@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingHttpTransport(MessageServer.Local())
-                //.UsingEsentPersistence("Esent\\Receiver")
+                .UsingFilePersistence()
                 .OpenChannel("TestReciever")
                     .ForRequestReplyRecieving()
                     .WithDurability()
