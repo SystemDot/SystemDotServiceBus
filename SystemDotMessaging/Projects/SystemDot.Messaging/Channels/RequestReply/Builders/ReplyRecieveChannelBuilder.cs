@@ -27,7 +27,6 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
         readonly PersistenceFactorySelector persistenceFactorySelector;
         readonly ICurrentDateProvider currentDateProvider;
         readonly ITaskRepeater taskRepeater;
-        readonly IIocContainer iocContainer;
 
         public ReplyRecieveChannelBuilder(
             ISerialiser serialiser, 
@@ -36,8 +35,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             AcknowledgementSender acknowledgementSender,
             PersistenceFactorySelector persistenceFactorySelector, 
             ICurrentDateProvider currentDateProvider, 
-            ITaskRepeater taskRepeater, 
-            IIocContainer iocContainer)
+            ITaskRepeater taskRepeater)
         {
             Contract.Requires(serialiser != null);
             Contract.Requires(messageHandlerRouter != null);
@@ -46,7 +44,6 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             Contract.Requires(persistenceFactorySelector != null);
             Contract.Requires(currentDateProvider != null);
             Contract.Requires(taskRepeater != null);
-            Contract.Requires(iocContainer != null);
             
             this.serialiser = serialiser;
             this.messageHandlerRouter = messageHandlerRouter;
@@ -55,7 +52,6 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             this.persistenceFactorySelector = persistenceFactorySelector;
             this.currentDateProvider = currentDateProvider;
             this.taskRepeater = taskRepeater;
-            this.iocContainer = iocContainer;
         }
 
         public void Build(ReplyRecieveChannelSchema schema)
@@ -76,7 +72,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
                 .Queue()
                 .ToResequencerIfSequenced(persistence, schema)
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
-                .ToProcessor(new UnitOfWorkRunner(this.iocContainer))
+                .ToProcessor(schema.UnitOfWorkRunner)
                 .ToProcessors(schema.Hooks.ToArray())
                 .ToEndPoint(this.messageHandlerRouter);
         }

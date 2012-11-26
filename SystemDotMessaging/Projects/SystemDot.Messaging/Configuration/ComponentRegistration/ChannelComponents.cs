@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<IPersistenceFactory, PersistenceFactory>();
             container.RegisterInstance<InMemoryChangeStore, InMemoryChangeStore>();
             container.RegisterInstance<PersistenceFactorySelector, PersistenceFactorySelector>();
-            container.RegisterInstance<IUnitOfWork, NullUnitOfWork>();
+            container.RegisterInstance<NullUnitOfWorkFactory, NullUnitOfWorkFactory>();
         }
     }
 }

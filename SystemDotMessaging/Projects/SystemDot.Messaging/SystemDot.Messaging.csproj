@@ -104,7 +104,9 @@
     <Compile Include="Channels\Sequencing\SequenceHeader.cs" />
     <Compile Include="Channels\Sequencing\StartSequenceApplier.cs" />
     <Compile Include="Channels\UnitOfWork\IUnitOfWork.cs" />
+    <Compile Include="Channels\UnitOfWork\IUnitOfWorkFactory.cs" />
     <Compile Include="Channels\UnitOfWork\NullUnitOfWork.cs" />
+    <Compile Include="Channels\UnitOfWork\NullUnitOfWorkFactory.cs" />
     <Compile Include="Channels\UnitOfWork\UnitOfWorkRunner.cs" />
     <Compile Include="Configuration\ComponentRegistration\InProcessTransportComponents.cs" />
     <Compile Include="Configuration\FilteredBy.cs" />

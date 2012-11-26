@@ -1,19 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using SystemDot.Ioc;
 using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Expiry;
 using SystemDot.Messaging.Channels.Filtering;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
+using SystemDot.Messaging.Channels.UnitOfWork;
 using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Configuration.RequestReply
 {
     public class RequestReplySenderConfiguration : Initialiser
     {
-        readonly RequestSendChannelSchema sendChannelSchema;
-        readonly ReplyRecieveChannelSchema recieveChannelSchema;
+        readonly RequestSendChannelSchema sendSchema;
+        readonly ReplyRecieveChannelSchema recieveSchema;
 
         public RequestReplySenderConfiguration(
             EndpointAddress address, 
@@ -21,52 +23,53 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             List<Action> buildActions)
             : base(buildActions)
         {
-            this.sendChannelSchema = new RequestSendChannelSchema
+            this.sendSchema = new RequestSendChannelSchema
             {
                 FilteringStrategy = new PassThroughMessageFilterStategy(),
                 FromAddress = address,
                 RecieverAddress = recieverAddress,
-                ExpiryStrategy = new PassthroughMessageExpiryStrategy() 
+                ExpiryStrategy = new PassthroughMessageExpiryStrategy(),
             };
 
-            this.recieveChannelSchema = new ReplyRecieveChannelSchema
+            this.recieveSchema = new ReplyRecieveChannelSchema
             {
-                Address = address
-            };   
+                Address = address,
+                UnitOfWorkRunner = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>()
+            };
         }
 
         public RequestReplySenderConfiguration WithHook(IMessageProcessor<object, object> hook)
         {
             Contract.Requires(hook != null);
 
-            this.recieveChannelSchema.Hooks.Add(hook);
+            this.recieveSchema.Hooks.Add(hook);
             return this;
         }
 
         protected override void Build()
         {
-            Resolve<RequestSendChannelBuilder>().Build(this.sendChannelSchema);
-            Resolve<ReplyRecieveChannelBuilder>().Build(this.recieveChannelSchema);
+            Resolve<RequestSendChannelBuilder>().Build(this.sendSchema);
+            Resolve<ReplyRecieveChannelBuilder>().Build(this.recieveSchema);
             Resolve<IMessageReciever>().StartPolling(GetAddress());
         }
 
         protected override EndpointAddress GetAddress()
         {
-            return this.sendChannelSchema.FromAddress;
+            return this.sendSchema.FromAddress;
         }
 
         public RequestReplySenderConfiguration OnlyForMessages(IMessageFilterStrategy toFilterMessagesWith)
         {
             Contract.Requires(toFilterMessagesWith != null);
 
-            this.sendChannelSchema.FilteringStrategy = toFilterMessagesWith;
+            this.sendSchema.FilteringStrategy = toFilterMessagesWith;
             return this;
         }
 
         public RequestReplySenderConfiguration WithDurability()
         {
-            this.sendChannelSchema.IsDurable = true;
-            this.recieveChannelSchema.IsDurable = true;
+            this.sendSchema.IsDurable = true;
+            this.recieveSchema.IsDurable = true;
             return this;
         }
 
@@ -74,7 +77,14 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             Contract.Requires(strategy != null);
 
-            this.sendChannelSchema.ExpiryStrategy = strategy;
+            this.sendSchema.ExpiryStrategy = strategy;
+            return this;
+        }
+
+        public RequestReplySenderConfiguration WithUnitOfWork<TUnitOfWorkFactory>() 
+            where TUnitOfWorkFactory : class, IUnitOfWorkFactory
+        {
+            this.recieveSchema.UnitOfWorkRunner = CreateUnitOfWorkRunner<TUnitOfWorkFactory>();
             return this;
         }
     }

@@ -78,11 +78,10 @@
     <Compile Include="channels\storage\when_decaching_a_message.cs" />
     <Compile Include="channels\storage\when_decaching_a_message_with_no_output_processor_subscribed.cs" />
     <Compile Include="channels\storage\when_recording_the_original_persistence_identifier_for_a_message.cs" />
-    <Compile Include="channels\unitofwork\when_passing_messages_in_the_incorrect_order_through_a_resequencer.cs" />
+    <Compile Include="channels\unitofwork\when_running_a_unit_of_work.cs" />
     <Compile Include="channels\unitofwork\when_running_a_unit_of_work_and_the_target_processor_throws_an_exception.cs" />
     <Compile Include="configuration\FakeAccessorExtensions.cs" />
     <Compile Include="configuration\local\SpecificationGroup.cs" />
-    <Compile Include="configuration\local\when_sending_a_local_message_with_a_unit_of_work_setup.cs" />
     <Compile Include="configuration\publishing\ExclusionMessagePayloadListExtensions.cs" />
     <Compile Include="configuration\publishing\receiving\SpecificationGroup.cs" />
     <Compile Include="configuration\publishing\receiving\when_publishing_with_a_unit_of_work_setup.cs" />
@@ -170,6 +169,7 @@
     <Compile Include="TestMessageSender.cs" />
     <Compile Include="TestNamePatternMessage.cs" />
     <Compile Include="TestUnitOfWork.cs" />
+    <Compile Include="TestUnitOfWorkFactory.cs" />
     <Compile Include="transport\long_polling\serving\when_handling_request_that_fails_deserialisation.cs" />
     <Compile Include="transport\long_polling\when_long_polling_for_messages_and_the_web_requestor_fails.cs" />
     <Compile Include="FailingSerialiser.cs" />

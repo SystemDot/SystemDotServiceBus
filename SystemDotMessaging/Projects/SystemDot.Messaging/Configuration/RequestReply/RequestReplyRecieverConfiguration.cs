@@ -1,49 +1,52 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using SystemDot.Ioc;
 using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Expiry;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
+using SystemDot.Messaging.Channels.UnitOfWork;
 using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Configuration.RequestReply
 {
     public class RequestReplyRecieverConfiguration : Initialiser
     {
-        readonly ReplySendChannelSchema sendChannelSchema;
-        readonly RequestRecieveChannelSchema requestChannelSchema;
+        readonly ReplySendChannelSchema sendSchema;
+        readonly RequestRecieveChannelSchema requestSchema;
 
         public RequestReplyRecieverConfiguration(EndpointAddress address, List<Action> buildActions) : base(buildActions)
         {
-            this.sendChannelSchema = new ReplySendChannelSchema
+            this.sendSchema = new ReplySendChannelSchema
             {
                 FromAddress = address,
                 ExpiryStrategy = new PassthroughMessageExpiryStrategy()
             };
 
-            this.requestChannelSchema = new RequestRecieveChannelSchema
+            this.requestSchema = new RequestRecieveChannelSchema
             {
-                Address = address
+                Address = address,
+                UnitOfWorkRunner = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>()
             };
         }
 
         protected override void Build()
         {
-            Resolve<RequestReceiveDistributionChannelBuilder>().Build(this.requestChannelSchema);
-            Resolve<ReplySendDistributionChannelBuilder>().Build(this.sendChannelSchema);
+            Resolve<RequestReceiveDistributionChannelBuilder>().Build(this.requestSchema);
+            Resolve<ReplySendDistributionChannelBuilder>().Build(this.sendSchema);
             Resolve<IMessageReciever>().StartPolling(GetAddress());
         }
 
         protected override EndpointAddress GetAddress()
         {
-            return this.sendChannelSchema.FromAddress;
+            return this.sendSchema.FromAddress;
         }
 
         public RequestReplyRecieverConfiguration WithDurability()
         {
-            this.sendChannelSchema.IsDurable = true;
-            this.requestChannelSchema.IsDurable = true;
+            this.sendSchema.IsDurable = true;
+            this.requestSchema.IsDurable = true;
             return this;
         }
 
@@ -51,7 +54,14 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             Contract.Requires(strategy != null);
 
-            this.sendChannelSchema.ExpiryStrategy = strategy;
+            this.sendSchema.ExpiryStrategy = strategy;
+            return this;
+        }
+
+        public RequestReplyRecieverConfiguration WithUnitOfWork<TUnitOfWorkFactory>()
+            where TUnitOfWorkFactory : class, IUnitOfWorkFactory
+        {
+            this.requestSchema.UnitOfWorkRunner = CreateUnitOfWorkRunner<TUnitOfWorkFactory>();
             return this;
         }
     }

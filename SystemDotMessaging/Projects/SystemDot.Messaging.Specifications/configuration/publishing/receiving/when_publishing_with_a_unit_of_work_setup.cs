@@ -13,15 +13,18 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving
         const string ChannelName = "TestChannel";
         const string PublisherName = "TestPublisher";
         static MessagePayload payload;
-       
+        static TestUnitOfWork unitOfWork;
+        
         Establish context = () =>
         {
-            ConfigureAndRegister<IUnitOfWork>(new TestUnitOfWork());
-            
+            unitOfWork = new TestUnitOfWork();
+            ConfigureAndRegister<TestUnitOfWorkFactory>(new TestUnitOfWorkFactory(unitOfWork));
+
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                .ForSubscribingTo(PublisherName)
+                    .ForSubscribingTo(PublisherName)
+                    .WithUnitOfWork<TestUnitOfWorkFactory>()
                 .Initialise();
 
             var handler = new TestMessageHandler<int>();
@@ -34,7 +37,6 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving
 
         Because of = () => MessageReciever.RecieveMessage(payload);
 
-        It should_begin_the_unit_of_work = () =>
-            Resolve<IUnitOfWork>().As<TestUnitOfWork>().HasBegun().ShouldBeTrue();
+        It should_begin_the_unit_of_work = () => unitOfWork.HasBegun().ShouldBeTrue();
     }
 }

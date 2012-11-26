@@ -2,7 +2,6 @@
 using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Channels.Pipelines;
-using SystemDot.Messaging.Channels.UnitOfWork;
 
 namespace SystemDot.Messaging.Channels.Local.Builders
 {
@@ -24,8 +23,7 @@ namespace SystemDot.Messaging.Channels.Local.Builders
         {
             MessagePipelineBuilder
                 .Build()
-                .WithBusSendLocalTo(new UnitOfWorkRunner(this.iocContainer))
-                .ToEndPoint(this.messageHandlerRouter);
+                .WithBusSendLocalTo(this.messageHandlerRouter);
         }
     }
 }

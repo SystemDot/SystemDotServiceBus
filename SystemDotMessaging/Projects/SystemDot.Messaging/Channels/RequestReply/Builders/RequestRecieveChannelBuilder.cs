@@ -77,7 +77,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
                 .ToResequencerIfSequenced(persistence, schema)
                 .ToProcessor(new ReplyChannelSelector(this.replyAddressLookup))
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
-                .ToProcessor(new UnitOfWorkRunner(this.iocContainer))
+                .ToProcessor(schema.UnitOfWorkRunner)
                 .ToEndPoint(this.messageHandlerRouter);
 
             return startPoint;

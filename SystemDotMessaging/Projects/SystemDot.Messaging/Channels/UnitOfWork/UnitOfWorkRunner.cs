@@ -4,7 +4,8 @@ using SystemDot.Ioc;
 
 namespace SystemDot.Messaging.Channels.UnitOfWork
 {
-    public class UnitOfWorkRunner : IMessageProcessor<object, object>
+    public class UnitOfWorkRunner<TUnitOfWorkFactory> : IMessageProcessor<object, object>
+        where TUnitOfWorkFactory : class, IUnitOfWorkFactory
     {
         readonly IIocContainer iocContainer;
 
@@ -16,7 +17,9 @@ namespace SystemDot.Messaging.Channels.UnitOfWork
 
         public void InputMessage(object toInput)
         {
-            var unitOfWork = this.iocContainer.Resolve<IUnitOfWork>();
+            var unitOfWork = this.iocContainer
+                .Resolve<TUnitOfWorkFactory>()
+                .Create();
 
             unitOfWork.Begin();
 

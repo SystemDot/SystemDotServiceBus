@@ -6,34 +6,29 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.channels.unitofwork
 {
     [Subject("Unit of work")]
-    public class when_running_a_unit_of_work : WithSubject<UnitOfWorkRunner>
+    public class when_running_a_unit_of_work : WithSubject<UnitOfWorkRunner<TestUnitOfWorkFactory>>
     {
         static object message;
         static object processedMessage;
-        
+        static TestUnitOfWork unitOfWork;
+
         Establish context = () =>
         {
             message = new object();
             Configure<IIocContainer>(new IocContainer());
-            The<IIocContainer>().RegisterInstance<IUnitOfWork, TestUnitOfWork>();
+            
+            unitOfWork = new TestUnitOfWork();
+            The<IIocContainer>().RegisterInstance<TestUnitOfWorkFactory>(() => new TestUnitOfWorkFactory(unitOfWork));
 
             Subject.MessageProcessed += m => processedMessage = m;
         };
 
         Because of = () => Subject.InputMessage(message);
 
-        It should_begin_the_unit_of_work = () => 
-            The<IIocContainer>()
-                .Resolve<IUnitOfWork>()
-                .As<TestUnitOfWork>()
-                .HasBegun().ShouldBeTrue();
+        It should_begin_the_unit_of_work = () => unitOfWork.HasBegun().ShouldBeTrue();
 
         It should_process_the_message = () => processedMessage.ShouldBeTheSameAs(message);
 
-        It should_end_the_unit_of_work = () => 
-            The<IIocContainer>()
-                .Resolve<IUnitOfWork>()
-                .As<TestUnitOfWork>()
-                .HasEnded().ShouldBeTrue();
+        It should_end_the_unit_of_work = () => unitOfWork.HasEnded().ShouldBeTrue();
     }
 }

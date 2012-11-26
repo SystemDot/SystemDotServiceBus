@@ -14,15 +14,18 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
 
         static MessagePayload payload;
         static TestMessageHandler<int> handler;
+        static TestUnitOfWork unitOfWork;
 
         Establish context = () =>
         {
-            ConfigureAndRegister<IUnitOfWork>(new TestUnitOfWork());
-
+            unitOfWork = new TestUnitOfWork();
+            ConfigureAndRegister<TestUnitOfWorkFactory>(new TestUnitOfWorkFactory(unitOfWork));
+            
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                .ForRequestReplyRecieving()
+                    .ForRequestReplyRecieving()
+                    .WithUnitOfWork<TestUnitOfWorkFactory>()
                 .Initialise();
 
             handler = new TestMessageHandler<int>();
@@ -33,9 +36,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
 
         Because of = () => MessageReciever.RecieveMessage(payload);
 
-        It should_begin_the_unit_of_work = () =>
-            Resolve<IUnitOfWork>()
-                .As<TestUnitOfWork>()
-                .HasBegun().ShouldBeTrue();
+        It should_begin_the_unit_of_work = () => unitOfWork.HasBegun().ShouldBeTrue();
     }
 }

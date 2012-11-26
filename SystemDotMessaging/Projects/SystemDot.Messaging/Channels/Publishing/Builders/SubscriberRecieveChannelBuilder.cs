@@ -78,7 +78,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .Queue()
                 .ToResequencerIfSequenced(persistence, schema)
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
-                .ToProcessor(new UnitOfWorkRunner(this.iocContainer))
+                .ToProcessor(schema.UnitOfWorkRunner)
                 .ToEndPoint(this.messageHandlerRouter);
         }
     }

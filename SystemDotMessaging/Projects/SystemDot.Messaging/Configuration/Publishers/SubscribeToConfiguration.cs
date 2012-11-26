@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
+using SystemDot.Messaging.Channels.UnitOfWork;
 using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Configuration.Publishers
@@ -30,7 +32,8 @@ namespace SystemDot.Messaging.Configuration.Publishers
 
             this.recieveSchema = new SubscriberRecieveChannelSchema
             {
-                Address = subscriberAddress
+                Address = subscriberAddress,
+                UnitOfWorkRunner = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>()
             };
         }
 
@@ -50,6 +53,13 @@ namespace SystemDot.Messaging.Configuration.Publishers
         {
             this.requestSchema.IsDurable = true;
             this.recieveSchema.IsDurable = true;
+            return this;
+        }
+
+        public SubscribeToConfiguration WithUnitOfWork<TUnitOfWorkFactory>()
+            where TUnitOfWorkFactory : class, IUnitOfWorkFactory
+        {
+            this.recieveSchema.UnitOfWorkRunner = CreateUnitOfWorkRunner<TUnitOfWorkFactory>();
             return this;
         }
     }
