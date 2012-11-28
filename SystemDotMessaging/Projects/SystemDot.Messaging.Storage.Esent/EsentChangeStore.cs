@@ -29,7 +29,8 @@ namespace SystemDot.Messaging.Storage.Esent
 
         public void Initialise(string connection)
         {
-            this.instance = new Instance(InstanceName + Guid.NewGuid());
+            this.instance = new Instance(InstanceName);
+            this.instance.Parameters.MaxVerPages = 1024;
             instance.Init();
 
             using (var session = new Session(this.instance))
@@ -48,11 +49,12 @@ namespace SystemDot.Messaging.Storage.Esent
             {
                 JET_TABLEID tableId = Esent.CreateTable(dbId, session, ChangeStoreTable.Name);
 
-                Esent.AddColumn(session, tableId, ChangeStoreTable.SequenceColumn, JET_coltyp.Long, JET_CP.None, ColumndefGrbit.ColumnAutoincrement);
                 Esent.AddColumn(session, tableId, ChangeStoreTable.ChangeRootIdColumn, JET_coltyp.Text, JET_CP.Unicode);
+                Esent.AddColumn(session, tableId, ChangeStoreTable.SequenceColumn, JET_coltyp.Long, JET_CP.None, ColumndefGrbit.ColumnAutoincrement);
                 Esent.AddColumn(session, tableId, ChangeStoreTable.BodyColumn, JET_coltyp.LongText, JET_CP.Unicode);
-                Esent.CreatePrimaryIndex(session, tableId, ChangeStoreTable.PrimaryIndex, ChangeStoreTable.SequenceColumn);
-                Esent.CreateIndex(session, tableId, ChangeStoreTable.ChangeRootIndex, ChangeStoreTable.ChangeRootIdColumn);
+                
+                string keyDescription = string.Format("+{0}\0+{1}\0\0", ChangeStoreTable.ChangeRootIdColumn, ChangeStoreTable.SequenceColumn);
+                Esent.CreateIndex(session, tableId, ChangeStoreTable.Index, keyDescription);
                 
                 Esent.CloseTable(session, tableId);
 
@@ -66,7 +68,17 @@ namespace SystemDot.Messaging.Storage.Esent
                 StoreChange(session, changeRootId, change);            
         }
 
-        void StoreChange(Session session, string changeRootId, Change change)
+        public void CheckPoint(string changeRootId, Change change)
+        {
+            using (var session = new Session(this.instance))
+            {
+                int autoIncrement = StoreChange(session, changeRootId, change);
+                
+                DeleteBelowSequence(session, changeRootId, autoIncrement);
+            }
+        }
+
+        int StoreChange(Session session, string changeRootId, Change change)
         {
             JET_DBID dbId = Esent.OpenDatabase(session, DatabaseName);
 
@@ -76,21 +88,53 @@ namespace SystemDot.Messaging.Storage.Esent
 
                 using (var transaction = new Transaction(session))
                 {
-                    StoreChange(session, table, columns, changeRootId, change);
+                    int autoIncrement = StoreChange(session, table, columns, changeRootId, change);
                     transaction.Commit(CommitTransactionGrbit.None);
+
+                    return autoIncrement;
                 }
             }
         }
-
-        void StoreChange(Session session, Table table, IDictionary<string, JET_COLUMNID> columns, string changeRootId, Change change)
+        
+        int StoreChange(Session session, Table table, IDictionary<string, JET_COLUMNID> columns, string changeRootId, Change change)
         {
             using (var update = new Update(session, table, JET_prep.Insert))
             {
                 Esent.SetColumn(session, table, columns[ChangeStoreTable.ChangeRootIdColumn], changeRootId, Encoding.Unicode);
                 Esent.SetColumn(session, table, columns[ChangeStoreTable.BodyColumn], this.serialiser.Serialise(change));
-
+                int autoIncrement = Esent.RetrieveAutoIncrementColumn(session, table, columns[ChangeStoreTable.SequenceColumn]);
+                
                 update.Save();
+
+                return autoIncrement;
             }
+        }
+
+        void DeleteBelowSequence(Session session, string changeRootId, int sequence)
+        {
+            JET_DBID dbId = Esent.OpenDatabase(session, DatabaseName);
+
+            using (var table = new Table(session, dbId, ChangeStoreTable.Name, OpenTableGrbit.None))
+                DeleteBelowSequence(session, table, changeRootId, sequence);             
+        }
+
+        void DeleteBelowSequence(Session session, Table table, string changeRootId, int sequence)
+        {
+            IDictionary<string, JET_COLUMNID> columns = Esent.GetColumns(session, table);
+
+            Esent.UseIndex(session, table, ChangeStoreTable.Index);
+            Esent.SetFirstSearchKey(session, table, changeRootId, Encoding.Unicode);
+            Esent.SetSearchKey(session, table, 0);
+            
+            if (!Esent.TrySearchForGreaterThanKey(session, table)) return;
+
+            Esent.SetFirstSearchKey(session, table, changeRootId, Encoding.Unicode);
+            Esent.SetSearchKey(session, table, sequence);
+
+            if (!Esent.TrySetIndexRange(session, table, SetIndexRangeGrbit.RangeUpperLimit)) return;
+
+            while (Esent.TryMoveNext(session, table)) 
+                Api.JetDelete(session, table);
         }
 
         public IEnumerable<Change> GetChanges(string changeRootId)
@@ -100,8 +144,7 @@ namespace SystemDot.Messaging.Storage.Esent
                 JET_DBID dbId = Esent.OpenDatabase(session, DatabaseName);
 
                 using (var table = new Table(session, dbId, ChangeStoreTable.Name, OpenTableGrbit.None))
-                using (new Transaction(session))
-                    return GetChanges(changeRootId, session, table);                
+                return GetChanges(changeRootId, session, table);                
             }
         }
 
@@ -110,13 +153,17 @@ namespace SystemDot.Messaging.Storage.Esent
             var changes = new List<Change>();
             IDictionary<string, JET_COLUMNID> columns = Esent.GetColumns(session, table);
 
-            Esent.UseIndex(session, table, ChangeStoreTable.ChangeRootIndex);
+            Esent.UseIndex(session, table, ChangeStoreTable.Index);
             
-            Esent.SetSearchKey(session, table, changeRootId, Encoding.Unicode);
-            if (!Esent.TrySearchForEqualToKey(session, table)) return changes;
+            Esent.SetFirstSearchKey(session, table, changeRootId, Encoding.Unicode);
+            Esent.SetSearchKey(session, table, 0);
             
-            Esent.SetSearchKey(session, table, changeRootId, Encoding.Unicode);
-            Esent.SetIndexRange(session, table);
+            if (!Esent.TrySearchForGreaterThanKey(session, table)) return changes;
+
+            Esent.SetFirstSearchKey(session, table, changeRootId, Encoding.Unicode);
+            Esent.SetSearchKey(session, table, int.MaxValue);
+            
+            if (!Esent.TrySetIndexRange(session, table, SetIndexRangeGrbit.RangeUpperLimit)) return changes;
 
             while (Esent.TryMoveNext(session, table))
                 changes.Add(GetChangeFromColumn(session, table, columns[ChangeStoreTable.BodyColumn]));                

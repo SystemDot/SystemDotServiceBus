@@ -6,7 +6,6 @@ namespace SystemDot.Messaging.Storage.Esent
         public const string SequenceColumn = "Sequence";
         public const string ChangeRootIdColumn = "ChangeRootId";
         public const string BodyColumn = "Body";
-        public const string PrimaryIndex = "SequenceIndex";
-        public const string ChangeRootIndex = "ChangeRootIdIndex";
+        public const string Index = "Index";
     }
 }

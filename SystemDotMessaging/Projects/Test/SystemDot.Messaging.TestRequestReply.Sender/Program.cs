@@ -30,18 +30,14 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
                 
                 Console.WriteLine("Sending messages");
 
-                for (int i = 0; i < 500; i++)
-                {
-                    bus.Send(new TestMessage("Hello"));
-                    bus.Send(new TestMessage("Hello1"));
-                    bus.Send(new TestMessage("Hello2"));
-                    bus.Send(new TestMessage("Hello3"));
-                    bus.Send(new TestMessage("Hello4"));
-                    bus.Send(new TestMessage("Hello5"));
-                    bus.Send(new TestMessage("Hello6"));
-                    bus.Send(new TestMessage("Hello7"));    
-                }
-                
+                bus.Send(new TestMessage("Hello"));
+                bus.Send(new TestMessage("Hello1"));
+                bus.Send(new TestMessage("Hello2"));
+                bus.Send(new TestMessage("Hello3"));
+                bus.Send(new TestMessage("Hello4"));
+                bus.Send(new TestMessage("Hello5"));
+                bus.Send(new TestMessage("Hello6"));
+                bus.Send(new TestMessage("Hello7"));        
             }
             while (true);
         }

@@ -74,18 +74,19 @@ namespace SystemDot.Messaging.Storage.Esent
             return Api.RetrieveColumn(session, table, columnid);
         }
 
-        public static void CreatePrimaryIndex(JET_SESID session, JET_TABLEID tableId, string indexName, string toIndex)
+        public static int RetrieveInt32FromColumn(Session session, Table table, JET_COLUMNID columnid)
         {
-            string keyDescription = String.Format("+{0}\0\0", toIndex);
-
-            Api.JetCreateIndex(session, tableId, indexName, CreateIndexGrbit.IndexPrimary, keyDescription, keyDescription.Length, 100);
+            return Api.RetrieveColumnAsInt32(session, table, columnid).Value;
         }
 
-        public static void CreateIndex(JET_SESID session, JET_TABLEID tableId, string indexName, string toIndex)
+        public static int RetrieveAutoIncrementColumn(Session session, Table table, JET_COLUMNID columnid)
         {
-            string keyDescription = String.Format("+{0}\0\0", toIndex);
+            return Api.RetrieveColumnAsInt32(session, table, columnid, RetrieveColumnGrbit.RetrieveCopy).Value;
+        }
 
-            Api.JetCreateIndex(session, tableId, indexName, CreateIndexGrbit.None, keyDescription, keyDescription.Length, 100);
+        public static void CreateIndex(JET_SESID session, JET_TABLEID tableId, string indexName, string keyDescription)
+        {
+            Api.JetCreateIndex(session, tableId, indexName, CreateIndexGrbit.IndexUnique, keyDescription, keyDescription.Length, 100);
         }
 
         public static void UsePrimaryIndex(Session session, Table table)
@@ -98,12 +99,9 @@ namespace SystemDot.Messaging.Storage.Esent
             Api.JetSetCurrentIndex(session, table, indexName);
         }
 
-        public static void SetIndexRange(Session session, Table table)
+        public static bool TrySetIndexRange(Session session, Table table, SetIndexRangeGrbit rangeFlags)
         {
-            Api.JetSetIndexRange(
-                session,
-                table,
-                SetIndexRangeGrbit.RangeInclusive | SetIndexRangeGrbit.RangeUpperLimit);
+            return Api.TrySetIndexRange(session, table, rangeFlags);
         }
 
         public static void SetSearchKey(Session session, Table table, Guid toSet)
@@ -111,19 +109,24 @@ namespace SystemDot.Messaging.Storage.Esent
             Api.MakeKey(session, table, toSet, MakeKeyGrbit.NewKey);
         }
 
-        public static void SetSearchKey(Session session, Table table, string toSet, Encoding encoding)
+        public static void SetFirstSearchKey(Session session, Table table, string toSet, Encoding encoding)
         {
             Api.MakeKey(session, table, toSet, encoding, MakeKeyGrbit.NewKey);
         }
 
-        public static void SearchForEqualToKey(Session session, Table table)
+        public static void SetSearchKey(Session session, Table table, int toSet)
         {
-            Api.JetSeek(session, table, SeekGrbit.SeekEQ);
+            Api.MakeKey(session, table, toSet, MakeKeyGrbit.None);
         }
 
         public static bool TrySearchForEqualToKey(Session session, Table table)
         {
             return Api.TrySeek(session, table, SeekGrbit.SeekEQ);
+        }
+
+        public static bool TrySearchForGreaterThanKey(Session session, Table table)
+        {
+            return Api.TrySeek(session, table, SeekGrbit.SeekGT);
         }
 
         public static bool TryMoveNext(Session session, Table table)
