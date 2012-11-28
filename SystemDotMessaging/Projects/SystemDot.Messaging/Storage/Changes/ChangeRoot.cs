@@ -28,12 +28,8 @@ namespace SystemDot.Messaging.Storage.Changes
 
         protected void AddChange(Change change)
         {
-            ReplayChange(this.changeStore.StoreChange(Id, change));   
-        }
-
-        void ReplayChange(Guid changeId)
-        {
-            ReplayChange(this.changeStore.GetChange(changeId));
+            this.changeStore.StoreChange(Id, change);
+            ReplayChange(change);   
         }
 
         void ReplayChange(Change change)

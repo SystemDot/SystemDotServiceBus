@@ -21,9 +21,8 @@ namespace SystemDot.Messaging.Storage.Esent.Test
 
             for (int i = 0; i < 5000; i++)
             {
-                Guid id = store.StoreChange("Test", new TestChange { Number = i });
-                var change = store.GetChange(id).As<TestChange>();
-                Console.WriteLine(change.Number);                
+                store.StoreChange("Test", new TestChange { Number = i });
+                Console.WriteLine(i);                
             }
 
             var changes = store.GetChanges("Test");

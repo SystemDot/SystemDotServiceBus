@@ -1,6 +1,7 @@
 using SystemDot.Ioc;
 using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
+using SystemDot.Messaging.Channels.Pipelines;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -8,7 +9,11 @@ namespace SystemDot.Messaging.Specifications.configuration
 {
     public class WithConfiguationSubject : WithSubject<object>
     {
-        Establish context = () => IocContainerLocator.SetContainer(new IocContainer());
+        Establish context = () =>
+        {
+            IocContainerLocator.SetContainer(new IocContainer());
+            MessagePipelineBuilder.BuildSynchronousPipelines = true;
+        };
 
         Cleanup after = () => IocContainerLocator.SetContainer(null);
         

@@ -71,7 +71,6 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToEscalatingTimeMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new ReceiveChannelMessageCacher(persistence))
-                .Pump()
                 .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))
                 .Queue()
                 .ToResequencerIfSequenced(persistence, schema)

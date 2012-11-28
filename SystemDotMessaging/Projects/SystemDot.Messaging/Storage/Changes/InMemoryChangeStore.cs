@@ -21,16 +21,11 @@ namespace SystemDot.Messaging.Storage.Changes
         {            
         }
 
-        public Guid StoreChange(string changeRootId, Change change)
+        public void StoreChange(string changeRootId, Change change)
         {
-            var id = Guid.NewGuid();
-            this.changes.TryAdd(id, new ChangeContainer(changeRootId, this.serialiser.Serialise(change)));
-            return id;
-        }
-
-        public Change GetChange(Guid id)
-        {
-            return DerserialiseChange(this.changes[id]);
+            this.changes.TryAdd(
+                Guid.NewGuid(), 
+                new ChangeContainer(changeRootId, this.serialiser.Serialise(change)));
         }
 
         public IEnumerable<Change> GetChanges(string changeRootId)

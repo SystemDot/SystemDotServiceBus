@@ -4,6 +4,8 @@ namespace SystemDot.Messaging.Channels.Pipelines
 {
     public class MessagePipelineBuilder
     {
+        public static bool BuildSynchronousPipelines { get; set; }
+
         public static MessagePipelineBuilder Build()
         {
             return new MessagePipelineBuilder();

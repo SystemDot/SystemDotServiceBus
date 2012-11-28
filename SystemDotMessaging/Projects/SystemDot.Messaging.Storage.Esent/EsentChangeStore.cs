@@ -48,13 +48,11 @@ namespace SystemDot.Messaging.Storage.Esent
             {
                 JET_TABLEID tableId = Esent.CreateTable(dbId, session, ChangeStoreTable.Name);
 
-                Esent.AddColumn(session, tableId, ChangeStoreTable.IdColumn, JET_coltyp.Binary, JET_CP.None);
                 Esent.AddColumn(session, tableId, ChangeStoreTable.SequenceColumn, JET_coltyp.Long, JET_CP.None, ColumndefGrbit.ColumnAutoincrement);
                 Esent.AddColumn(session, tableId, ChangeStoreTable.ChangeRootIdColumn, JET_coltyp.Text, JET_CP.Unicode);
                 Esent.AddColumn(session, tableId, ChangeStoreTable.BodyColumn, JET_coltyp.LongText, JET_CP.Unicode);
                 Esent.CreatePrimaryIndex(session, tableId, ChangeStoreTable.PrimaryIndex, ChangeStoreTable.SequenceColumn);
                 Esent.CreateIndex(session, tableId, ChangeStoreTable.ChangeRootIndex, ChangeStoreTable.ChangeRootIdColumn);
-                Esent.CreateIndex(session, tableId, ChangeStoreTable.IdIndex, ChangeStoreTable.IdColumn);
                 
                 Esent.CloseTable(session, tableId);
 
@@ -62,17 +60,13 @@ namespace SystemDot.Messaging.Storage.Esent
             }
         }
 
-        public Guid StoreChange(string changeRootId, Change change)
+        public void StoreChange(string changeRootId, Change change)
         {
-            var id = Guid.NewGuid();
-
             using (var session = new Session(this.instance))
-                StoreChange(session, id, changeRootId, change);            
-
-            return id;
+                StoreChange(session, changeRootId, change);            
         }
 
-        void StoreChange(Session session, Guid id, string changeRootId, Change change)
+        void StoreChange(Session session, string changeRootId, Change change)
         {
             JET_DBID dbId = Esent.OpenDatabase(session, DatabaseName);
 
@@ -82,17 +76,16 @@ namespace SystemDot.Messaging.Storage.Esent
 
                 using (var transaction = new Transaction(session))
                 {
-                    StoreChange(session, table, columns, id, changeRootId, change);
+                    StoreChange(session, table, columns, changeRootId, change);
                     transaction.Commit(CommitTransactionGrbit.None);
                 }
             }
         }
 
-        void StoreChange(Session session, Table table, IDictionary<string, JET_COLUMNID> columns, Guid id, string changeRootId, Change change)
+        void StoreChange(Session session, Table table, IDictionary<string, JET_COLUMNID> columns, string changeRootId, Change change)
         {
             using (var update = new Update(session, table, JET_prep.Insert))
             {
-                Esent.SetColumn(session, table, columns[ChangeStoreTable.IdColumn], id);
                 Esent.SetColumn(session, table, columns[ChangeStoreTable.ChangeRootIdColumn], changeRootId, Encoding.Unicode);
                 Esent.SetColumn(session, table, columns[ChangeStoreTable.BodyColumn], this.serialiser.Serialise(change));
 
@@ -129,30 +122,6 @@ namespace SystemDot.Messaging.Storage.Esent
                 changes.Add(GetChangeFromColumn(session, table, columns[ChangeStoreTable.BodyColumn]));                
             
              return changes;
-        }
-
-        public Change GetChange(Guid id)
-        {
-            using (var session = new Session(this.instance))
-            {
-                JET_DBID dbId = Esent.OpenDatabase(session, DatabaseName);
-
-                using (var table = new Table(session, dbId, ChangeStoreTable.Name, OpenTableGrbit.None))
-                    using (new Transaction(session))
-                        return GetChange(id, session, table);                  
-            }
-        }
-
-        Change GetChange(Guid id, Session session, Table table)
-        {
-            Esent.UseIndex(session, table, ChangeStoreTable.IdIndex);
-            Esent.SetSearchKey(session, table, id);
-            Esent.SearchForEqualToKey(session, table);
-
-            return GetChangeFromColumn(
-                session,
-                table,
-                Esent.GetColumns(session, table)[ChangeStoreTable.BodyColumn]);
         }
 
         Change GetChangeFromColumn(Session session, Table table, JET_COLUMNID column)

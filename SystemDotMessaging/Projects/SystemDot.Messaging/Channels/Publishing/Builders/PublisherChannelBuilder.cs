@@ -63,7 +63,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .ToProcessor(new Sequencer(persistence))
                 .ToEscalatingTimeMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new SendChannelMessageCacher(persistence))
-                .Pump()
+                .Queue()
                 .ToProcessor(publisherEndpoint)
                 .ToEndPoint(new MessageDecacher(persistence));
 

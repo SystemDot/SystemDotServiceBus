@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.SqlClient;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Messaging.Storage.Sql.Connections;
@@ -17,23 +16,18 @@ namespace SystemDot.Messaging.Storage.Sql
             this.serialiser = serialiser;
         }
 
-        public Guid StoreChange(string changeRootId, Change change)
+        public void StoreChange(string changeRootId, Change change)
         {
-            var id = Guid.NewGuid();
-
             using (var connection = new PooledConnection())
             {
                 connection.Execute(
-                    "insert into ChangeStore(id, changeRootId, change) values(@id, @changeRootId, @change)",
+                    "insert into ChangeStore(changeRootId, change) values(@changeRootId, @change)",
                     command =>
                     {
-                        command.Parameters.AddWithValue("@id", id);
                         command.Parameters.AddWithValue("@changeRootId", changeRootId);
                         command.Parameters.AddWithValue("@change", this.serialiser.Serialise(change));
                     });
             }
-
-            return id;
         }
 
         public IEnumerable<Change> GetChanges(string changeRootId)
@@ -55,20 +49,6 @@ namespace SystemDot.Messaging.Storage.Sql
             return this.serialiser.Deserialise(reader.GetBytes(0)).As<Change>();
         }
 
-        public Change GetChange(Guid id)
-        {
-            Change change = null;
-
-            using (var connection = new PooledConnection())
-            {
-                connection.ExecuteReader(
-                    "select change from ChangeStore where id = '" + id + "'",
-                    reader => change = DeserialiseChange(reader));
-            }
-
-            return change;
-        }
-
         public void Initialise(string location)
         {
             lock (CreateDbLock)
@@ -87,7 +67,6 @@ namespace SystemDot.Messaging.Storage.Sql
                 connection.Execute(
                     @"IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'ChangeStore') AND type in (N'U'))
                         CREATE TABLE ChangeStore(
-                        Id uniqueidentifier NOT NULL CONSTRAINT ChangeStore_PK PRIMARY KEY,
                         ChangeRootId nvarchar(1000) NOT NULL,
                         Change varbinary(8000) NULL,
                         Sequence int IDENTITY(1, 1) NOT NULL)",

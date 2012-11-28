@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.TestPublisher
         static void Main(string[] args)
         {
             IBus bus = Configure.Messaging()
-                .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = true })
+                .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingHttpTransport(MessageServer.Local())
                 .UsingFilePersistence()
                 .OpenChannel("TestPublisher")

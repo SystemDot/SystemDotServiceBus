@@ -68,7 +68,6 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             MessagePipelineBuilder.Build()
                 .With(this.messageReciever)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
-                .Pump()
                 .ToProcessor(new BodyMessageFilter(schema.Address))
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToProcessor(new StartSequenceApplier(persistence))

@@ -15,7 +15,9 @@ namespace SystemDot.Messaging.Channels.Pipelines
 
         public ProcessorBuilder<TOut> Pump()
         {
-            var pump = new Pump<TOut>(IocContainerLocator.Locate().Resolve<ITaskStarter>());
+            if (MessagePipelineBuilder.BuildSynchronousPipelines) return Pipe();
+
+            var pump = new Pump<TOut>(GetTaskStarter());
             this.processor.MessageProcessed += pump.InputMessage;
 
             return new ProcessorBuilder<TOut>(pump);
@@ -23,10 +25,26 @@ namespace SystemDot.Messaging.Channels.Pipelines
 
         public ProcessorBuilder<TOut> Queue()
         {
-            var queue = new Queue<TOut>(IocContainerLocator.Locate().Resolve<ITaskStarter>());
+            if (MessagePipelineBuilder.BuildSynchronousPipelines) return Pipe();
+ 
+            var queue = new Queue<TOut>(GetTaskStarter());
             this.processor.MessageProcessed += queue.InputMessage;
-
+            queue.Start();
+            
             return new ProcessorBuilder<TOut>(queue);
+        }
+
+        ProcessorBuilder<TOut> Pipe()
+        {
+            var pipe = new Pipe<TOut>();
+            this.processor.MessageProcessed += pipe.InputMessage;
+
+            return new ProcessorBuilder<TOut>(pipe);
+        }
+
+        static ITaskStarter GetTaskStarter()
+        {
+            return IocContainerLocator.Locate().Resolve<ITaskStarter>();
         }
 
         public ProcessorBuilder<TNextOut> ToConverter<TNextOut>(IMessageProcessor<TOut, TNextOut> messageProcessor)

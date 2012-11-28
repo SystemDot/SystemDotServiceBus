@@ -48,8 +48,8 @@
     <Compile Include="channels\acknowledgement\when_handling_a_recieved_acknowledgement_with_a_different_persistence_channel_to_the_persistence_registered.cs" />
     <Compile Include="channels\acknowledgement\when_handling_a_recieved_acknowledgement_with_a_different_persistence_use_type_to_the_persistence_registered.cs" />
     <Compile Include="channels\copying\when_copying_a_message.cs" />
-    <Compile Include="channels\distribution\when_queueing_an_item.cs" />
-    <Compile Include="channels\distribution\when_queueing_items_on_a_with_no_pushed_item_listener.cs" />
+    <Compile Include="channels\distribution\when_queueing_an_item_and_then_starting_the_queue.cs" />
+    <Compile Include="channels\distribution\when_starting_a_queue_with_items_queued_with_no_pushed_item_listener.cs" />
     <Compile Include="channels\expiry\when_passing_a_message_that_is_not_repeat_attempt_expired_through_an_expirer.cs" />
     <Compile Include="channels\expiry\when_passing_a_message_that_is_repeat_attempt_expired_through_an_expirer.cs" />
     <Compile Include="channels\expiry\when_passing_a_message_through_a_expirer_with_a_pass_through_strategy.cs" />
