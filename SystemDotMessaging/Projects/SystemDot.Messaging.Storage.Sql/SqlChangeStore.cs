@@ -44,6 +44,10 @@ namespace SystemDot.Messaging.Storage.Sql
             return messages;
         }
 
+        public void CheckPoint(string changeRootId, Change change)
+        {
+        }
+
         Change DeserialiseChange(SqlDataReader reader)
         {
             return this.serialiser.Deserialise(reader.GetBytes(0)).As<Change>();
@@ -67,9 +71,9 @@ namespace SystemDot.Messaging.Storage.Sql
                 connection.Execute(
                     @"IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'ChangeStore') AND type in (N'U'))
                         CREATE TABLE ChangeStore(
-                        ChangeRootId nvarchar(1000) NOT NULL,
-                        Change varbinary(8000) NULL,
-                        Sequence int IDENTITY(1, 1) NOT NULL)",
+                            ChangeRootId nvarchar(1000) NOT NULL,
+                            Sequence int IDENTITY(1, 1) NOT NULL,
+                            Change varbinary(8000) NULL)",
                     command => { });
             }
         }
