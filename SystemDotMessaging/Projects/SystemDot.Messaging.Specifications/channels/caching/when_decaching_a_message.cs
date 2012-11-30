@@ -5,7 +5,7 @@ using SystemDot.Messaging.Storage;
 using Machine.Fakes;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.channels.storage
+namespace SystemDot.Messaging.Specifications.channels.caching
 {
     [Subject("Message caching")]
     public class when_decaching_a_message : WithSubject<MessageDecacher>
@@ -18,14 +18,13 @@ namespace SystemDot.Messaging.Specifications.channels.storage
             message = new MessagePayload();
             message.IncreaseAmountSent();
 
-            Subject.MessageProcessed += payload => processedMessage = payload;
-
             With<PersistenceBehaviour>();
+            Subject.MessageProcessed += payload => processedMessage = payload;
         };
 
         Because of = () => Subject.InputMessage(message);
 
-        It should_decache_the_message = () => The<IPersistence>().GetMessages().ShouldNotContain(message);
+        It should_decache_the_message = () => The<MessageCache>().GetMessages().ShouldNotContain(message);
 
         It should_process_the_message = () => processedMessage.ShouldBeTheSameAs(message);
     }

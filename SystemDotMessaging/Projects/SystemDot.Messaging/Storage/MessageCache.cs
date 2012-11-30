@@ -7,13 +7,16 @@ using SystemDot.Messaging.Storage.Changes;
 
 namespace SystemDot.Messaging.Storage
 {
-    public class Persistence : ChangeRoot, IPersistence
+    public class MessageCache : ChangeRoot
     {
         int sequence;
         readonly ConcurrentDictionary<Guid, MessagePayload> messages;
         readonly object deleteLock = new object();
 
-        public Persistence(IChangeStore changeStore, EndpointAddress address, PersistenceUseType useType)
+        public EndpointAddress Address { get; private set; }
+        public PersistenceUseType UseType { get; private set; }
+
+        public MessageCache(IChangeStore changeStore, EndpointAddress address, PersistenceUseType useType)
             : base(changeStore)
         {
             Address = address;
@@ -21,7 +24,7 @@ namespace SystemDot.Messaging.Storage
             Id = address + "|" + useType;
             
             this.messages = new ConcurrentDictionary<Guid, MessagePayload>();
-            this.sequence = 1;
+            this.sequence = 1;           
         }
 
         public IEnumerable<MessagePayload> GetMessages()
@@ -110,7 +113,15 @@ namespace SystemDot.Messaging.Storage
             }
         }
 
-        public EndpointAddress Address { get; private set; }
-        public PersistenceUseType UseType { get; private set; }
+        protected override void UrgeCheckPoint()
+        {
+            if (this.messages.Count == 0)
+                CheckPoint(new MessageCheckpointChange { Sequence = this.sequence });
+        }
+
+        public void ApplyChange(MessageCheckpointChange change)
+        {
+            this.sequence = change.Sequence;
+        }
     }
 }

@@ -61,21 +61,21 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
 
         public void Build(SubscriberRecieveChannelSchema schema)
         {
-            IPersistence persistence = this.persistenceFactory
+            MessageCache messageCache = this.persistenceFactory
                 .Select(schema)
-                .CreatePersistence(PersistenceUseType.SubscriberReceive, schema.Address);
+                .CreateCache(PersistenceUseType.SubscriberReceive, schema.Address);
 
             MessagePipelineBuilder.Build()
                 .With(this.messageReciever)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new BodyMessageFilter(schema.Address))
                 .ToProcessor(new MessageSendTimeRemover())
-                .ToProcessor(new StartSequenceApplier(persistence))
-                .ToEscalatingTimeMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
-                .ToProcessor(new ReceiveChannelMessageCacher(persistence))
+                .ToProcessor(new StartSequenceApplier(messageCache))
+                .ToEscalatingTimeMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater)
+                .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
                 .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))
                 .Queue()
-                .ToResequencerIfSequenced(persistence, schema)
+                .ToResequencerIfSequenced(messageCache, schema)
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
                 .ToProcessor(schema.UnitOfWorkRunner)
                 .ToEndPoint(this.messageHandlerRouter);

@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
         Establish context = () =>
         {
             persistentMemoryChangeStore = new InMemoryChangeStore(new PlatformAgnosticSerialiser());
-            ConfigureAndRegister<IPersistenceFactory>(new PersistenceFactory(persistentMemoryChangeStore));
+            ConfigureAndRegister<MessageCacheFactory>(new MessageCacheFactory(persistentMemoryChangeStore));
 
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()

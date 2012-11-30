@@ -16,18 +16,18 @@ namespace SystemDot.Messaging.Specifications.channels.sequencing
         Establish context = () =>
         {
             With<PersistenceBehaviour>();
-            The<IPersistence>().SetSequence(2);
+            The<MessageCache>().SetSequence(2);
             
             processedMessages = new List<MessagePayload>();
             Subject.MessageProcessed += payload => processedMessages.Add(payload);
             
             message1 = new MessagePayload();
             message1.SetSequence(2);
-            The<IPersistence>().AddMessage(message1);
+            The<MessageCache>().AddMessage(message1);
             
             message2 = new MessagePayload();
             message2.SetSequence(3);
-            The<IPersistence>().AddMessage(message2);
+            The<MessageCache>().AddMessage(message2);
         };
 
         Because of = () =>
@@ -38,8 +38,8 @@ namespace SystemDot.Messaging.Specifications.channels.sequencing
 
         It should_pass_the_messages_through = () => processedMessages.ShouldContain(message1, message2);
 
-        It should_decache_the_messages = () => The<IPersistence>().GetMessages().ShouldNotContain(message1, message2);
+        It should_decache_the_messages = () => The<MessageCache>().GetMessages().ShouldNotContain(message1, message2);
 
-        It should_persist_the_sequence_of_the_last_message_processed = () => The<IPersistence>().GetSequence().ShouldEqual(4);
+        It should_persist_the_sequence_of_the_last_message_processed = () => The<MessageCache>().GetSequence().ShouldEqual(4);
     }
 }

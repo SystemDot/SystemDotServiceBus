@@ -56,20 +56,20 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
 
         public void Build(ReplyRecieveChannelSchema schema)
         {
-            IPersistence persistence = this.persistenceFactorySelector
+            MessageCache messageCache = this.persistenceFactorySelector
                 .Select(schema)
-                .CreatePersistence(PersistenceUseType.ReplyReceive, schema.Address);
+                .CreateCache(PersistenceUseType.ReplyReceive, schema.Address);
 
             MessagePipelineBuilder.Build()
                 .With(this.messageReciever)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new BodyMessageFilter(schema.Address))
                 .ToProcessor(new MessageSendTimeRemover())
-                .ToEscalatingTimeMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
-                .ToProcessor(new ReceiveChannelMessageCacher(persistence))
+                .ToEscalatingTimeMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater)
+                .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
                 .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))
                 .Queue()
-                .ToResequencerIfSequenced(persistence, schema)
+                .ToResequencerIfSequenced(messageCache, schema)
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
                 .ToProcessor(schema.UnitOfWorkRunner)
                 .ToProcessors(schema.Hooks.ToArray())

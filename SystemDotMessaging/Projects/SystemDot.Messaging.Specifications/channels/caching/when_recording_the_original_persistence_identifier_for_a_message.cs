@@ -4,7 +4,7 @@ using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.channels.storage
+namespace SystemDot.Messaging.Specifications.channels.caching
 {
     public class when_recording_the_original_persistence_identifier_for_a_message 
         : WithMessageProcessorSubject<PersistenceSourceRecorder>

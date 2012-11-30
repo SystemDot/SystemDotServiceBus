@@ -9,11 +9,11 @@ namespace SystemDot.Messaging.Channels.Acknowledgement
 {
     public class MessageAcknowledgementHandler : IMessageInputter<MessagePayload>
     {
-        private readonly ConcurrentDictionary<Guid, IPersistence> persistences;
+        private readonly ConcurrentDictionary<Guid, MessageCache> persistences;
 
         public MessageAcknowledgementHandler()
         {
-            this.persistences = new ConcurrentDictionary<Guid, IPersistence>();
+            this.persistences = new ConcurrentDictionary<Guid, MessageCache>();
         }
 
         public void InputMessage(MessagePayload toInput)
@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Channels.Acknowledgement
                 .Delete(id.MessageId);
         }
 
-        public void RegisterPersistence(IPersistence toRegister)
+        public void RegisterPersistence(MessageCache toRegister)
         {
             Contract.Requires(toRegister != null);
             this.persistences.TryAdd(Guid.NewGuid(), toRegister);

@@ -9,22 +9,22 @@ namespace SystemDot.Messaging.Channels.Expiry
     public class MessageExpirer : IMessageProcessor<MessagePayload, MessagePayload>
     {
         readonly IMessageExpiryStrategy strategy;
-        readonly IPersistence persistence;
+        readonly MessageCache messageCache;
 
-        public MessageExpirer(IMessageExpiryStrategy strategy, IPersistence persistence)
+        public MessageExpirer(IMessageExpiryStrategy strategy, MessageCache messageCache)
         {
             Contract.Requires(strategy != null);
-            Contract.Requires(persistence != null);
+            Contract.Requires(messageCache != null);
 
             this.strategy = strategy;
-            this.persistence = persistence;
+            this.messageCache = messageCache;
         }
 
         public void InputMessage(MessagePayload toInput)
         {
             if (this.strategy.HasExpired(toInput))
             {
-                this.persistence.Delete(toInput.Id);
+                this.messageCache.Delete(toInput.Id);
                 return;
             }
 

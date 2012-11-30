@@ -4,12 +4,12 @@ namespace SystemDot.Messaging.Channels.Repeating
 {
     public class SimpleRepeatStrategy : IRepeatStrategy
     {
-        readonly IPersistence persistence;
+        readonly MessageCache messageCache;
         bool isStarted;
 
-        public SimpleRepeatStrategy(IPersistence persistence)
+        public SimpleRepeatStrategy(MessageCache messageCache)
         {
-            this.persistence = persistence;
+            this.messageCache = messageCache;
         }
 
         public void Repeat(MessageRepeater repeater)
@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Channels.Repeating
             if(this.isStarted) return;
 
             this.isStarted = true;
-            this.persistence.GetMessages().ForEach(repeater.InputMessage);
+            this.messageCache.GetMessages().ForEach(repeater.InputMessage);
         }
     }
 }

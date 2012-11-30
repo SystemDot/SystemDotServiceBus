@@ -7,12 +7,12 @@ namespace SystemDot.Messaging.Channels.Caching
 {
     public class ReceiveChannelMessageCacher : MessageProcessor
     {
-        readonly IPersistence persistence;
+        readonly MessageCache messageCache;
 
-        public ReceiveChannelMessageCacher(IPersistence persistence)
+        public ReceiveChannelMessageCacher(MessageCache messageCache)
         {
-            Contract.Requires(persistence != null);
-            this.persistence = persistence;
+            Contract.Requires(messageCache != null);
+            this.messageCache = messageCache;
         }
 
         public override void InputMessage(MessagePayload toInput)
@@ -23,11 +23,11 @@ namespace SystemDot.Messaging.Channels.Caching
 
         void PersistMessage(MessagePayload toInput)
         {
-            toInput.SetPersistenceId(this.persistence.Address, this.persistence.UseType);
+            toInput.SetPersistenceId(this.messageCache.Address, this.messageCache.UseType);
             if (toInput.GetAmountSent() == 1)
-                this.persistence.AddMessage(toInput);
+                this.messageCache.AddMessage(toInput);
             else
-                this.persistence.UpdateMessage(toInput);
+                this.messageCache.UpdateMessage(toInput);
         }
     }
 }

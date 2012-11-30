@@ -10,27 +10,27 @@ namespace SystemDot.Messaging.Channels.Repeating
     {
         public static ProcessorBuilder<MessagePayload> ToEscalatingTimeMessageRepeater(
             this ProcessorBuilder<MessagePayload> builder,
-            IPersistence persistence,
+            MessageCache messageCache,
             ICurrentDateProvider currentDateProvider,
             ITaskRepeater taskRepeater)
         {
             return builder.ToMessageRepeater(
                 currentDateProvider, 
                 taskRepeater, 
-                new EscalatingTimeRepeatStrategy(currentDateProvider, persistence));
+                new EscalatingTimeRepeatStrategy(currentDateProvider, messageCache));
         }
 
 
         public static ProcessorBuilder<MessagePayload> ToSimpleMessageRepeater(
             this ProcessorBuilder<MessagePayload> builder,
-            IPersistence persistence,
+            MessageCache messageCache,
             ICurrentDateProvider currentDateProvider,
             ITaskRepeater taskRepeater)
         {
             return builder.ToMessageRepeater(
                 currentDateProvider,
                 taskRepeater,
-                new SimpleRepeatStrategy(persistence));
+                new SimpleRepeatStrategy(messageCache));
         }
 
         static ProcessorBuilder<MessagePayload> ToMessageRepeater(

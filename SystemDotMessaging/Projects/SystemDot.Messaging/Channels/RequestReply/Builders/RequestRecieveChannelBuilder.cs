@@ -60,20 +60,20 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
 
         public IMessageInputter<MessagePayload> Build(RequestRecieveChannelSchema schema, EndpointAddress senderAddress)
         {
-            IPersistence persistence = this.persistenceFactorySelector
+            MessageCache messageCache = this.persistenceFactorySelector
                 .Select(schema)
-                .CreatePersistence(PersistenceUseType.RequestReceive, senderAddress);
+                .CreateCache(PersistenceUseType.RequestReceive, senderAddress);
 
             var startPoint = new MessagePayloadCopier(this.serialiser);
 
             MessagePipelineBuilder.Build()
                 .With(startPoint)
                 .ToProcessor(new MessageSendTimeRemover())
-                .ToEscalatingTimeMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
-                .ToProcessor(new ReceiveChannelMessageCacher(persistence))
+                .ToEscalatingTimeMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater)
+                .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
                 .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))
                 .Queue()
-                .ToResequencerIfSequenced(persistence, schema)
+                .ToResequencerIfSequenced(messageCache, schema)
                 .ToProcessor(new ReplyChannelSelector(this.replyAddressLookup))
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
                 .ToProcessor(schema.UnitOfWorkRunner)

@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.Specifications.channels.sequencing
         Establish context = () =>
         {
             With<PersistenceBehaviour>();
-            The<IPersistence>().SetSequence(1);
+            The<MessageCache>().SetSequence(1);
         };
 
         Because of = () =>

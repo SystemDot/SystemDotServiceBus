@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Specifications
             PersistenceUseType useType, 
             EndpointAddress address)
         {
-            var persistence = new Persistence(store, address, useType);
+            var persistence = new MessageCache(store, address, useType);
             persistence.Initialise();
 
             return persistence.GetMessages();

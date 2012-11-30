@@ -51,21 +51,21 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
 
         public void Build(PublisherChannelSchema schema)
         {
-            IPersistence persistence = this.persistenceFactorySelector
+            MessageCache messageCache = this.persistenceFactorySelector
                 .Select(schema)
-                .CreatePersistence(PersistenceUseType.PublisherSend, schema.FromAddress);
+                .CreateCache(PersistenceUseType.PublisherSend, schema.FromAddress);
 
             var publisherEndpoint = new Publisher(schema.FromAddress, this.subscriberChannelBuilder, this.changeStore);
 
             MessagePipelineBuilder.Build()
                 .WithBusPublishTo(new MessageFilter(schema.MessageFilterStrategy))
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
-                .ToProcessor(new Sequencer(persistence))
-                .ToEscalatingTimeMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
-                .ToProcessor(new SendChannelMessageCacher(persistence))
+                .ToProcessor(new Sequencer(messageCache))
+                .ToEscalatingTimeMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater)
+                .ToProcessor(new SendChannelMessageCacher(messageCache))
                 .Queue()
                 .ToProcessor(publisherEndpoint)
-                .ToEndPoint(new MessageDecacher(persistence));
+                .ToEndPoint(new MessageDecacher(messageCache));
 
             this.publisherRegistry.RegisterPublisher(schema.FromAddress, publisherEndpoint);
         }

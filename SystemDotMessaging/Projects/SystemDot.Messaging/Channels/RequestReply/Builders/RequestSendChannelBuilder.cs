@@ -51,22 +51,22 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
 
         public void Build(RequestSendChannelSchema schema)
         {
-            IPersistence persistence = this.persistenceFactory
+            MessageCache messageCache = this.persistenceFactory
                 .Select(schema)
-                .CreatePersistence(PersistenceUseType.RequestSend, schema.FromAddress);
+                .CreateCache(PersistenceUseType.RequestSend, schema.FromAddress);
 
-            this.acknowledgementHandler.RegisterPersistence(persistence);
+            this.acknowledgementHandler.RegisterPersistence(messageCache);
 
             MessagePipelineBuilder.Build()
                 .WithBusSendTo(new MessageFilter(schema.FilteringStrategy))
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
-                .ToProcessor(new Sequencer(persistence))
+                .ToProcessor(new Sequencer(messageCache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.RecieverAddress))
-                .ToEscalatingTimeMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
-                .ToProcessor(new SendChannelMessageCacher(persistence))
+                .ToEscalatingTimeMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater)
+                .ToProcessor(new SendChannelMessageCacher(messageCache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()
-                .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, persistence))
+                .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, messageCache))
                 .ToEndPoint(this.messageSender);
         }
     }

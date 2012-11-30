@@ -6,20 +6,20 @@ namespace SystemDot.Messaging.Channels.Sequencing
 {
     public class FirstMessageSequenceRecorder : MessageProcessor
     {
-        readonly IPersistence persistence;
+        readonly MessageCache messageCache;
 
-        public FirstMessageSequenceRecorder(IPersistence persistence)
+        public FirstMessageSequenceRecorder(MessageCache messageCache)
         {
-            Contract.Requires(persistence != null);
-            this.persistence = persistence;
+            Contract.Requires(messageCache != null);
+            this.messageCache = messageCache;
         }
 
         public override void InputMessage(MessagePayload toInput)
         {
-            if (!this.persistence.HasChanged()) 
-                this.persistence.SetSequence(toInput.GetSequence());
+            if (!this.messageCache.HasChanged()) 
+                this.messageCache.SetSequence(toInput.GetSequence());
             
-            toInput.SetFirstSequence(this.persistence.GetSequence());
+            toInput.SetFirstSequence(this.messageCache.GetSequence());
 
             OnMessageProcessed(toInput);
         }

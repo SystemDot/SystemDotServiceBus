@@ -43,18 +43,18 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
         {
             var requestor = new SubscriptionRequestor(schema.SubscriberAddress, schema.IsDurable);
             
-            IPersistence persistence = new PersistenceFactory(this.changeStore)
-                .CreatePersistence(
+            MessageCache messageCache = new MessageCacheFactory(this.changeStore)
+                .CreateCache(
                     PersistenceUseType.SubscriberRequestSend, 
                     schema.PublisherAddress);
 
-            this.acknowledgementHandler.RegisterPersistence(persistence);
+            this.acknowledgementHandler.RegisterPersistence(messageCache);
 
             MessagePipelineBuilder.Build()
                 .With(requestor)
                 .ToProcessor(new MessageAddresser(schema.SubscriberAddress, schema.PublisherAddress))
-                .ToEscalatingTimeMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
-                .ToProcessor(new SendChannelMessageCacher(persistence))
+                .ToEscalatingTimeMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater)
+                .ToProcessor(new SendChannelMessageCacher(messageCache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Pump()
                 .ToEndPoint(this.messageSender);

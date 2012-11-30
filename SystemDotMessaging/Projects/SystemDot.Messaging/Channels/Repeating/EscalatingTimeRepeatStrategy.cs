@@ -8,20 +8,20 @@ namespace SystemDot.Messaging.Channels.Repeating
     public class EscalatingTimeRepeatStrategy : IRepeatStrategy
     {
         readonly ICurrentDateProvider currentDateProvider;
-        readonly IPersistence persistence;
+        readonly MessageCache messageCache;
 
-        public EscalatingTimeRepeatStrategy(ICurrentDateProvider currentDateProvider, IPersistence persistence)
+        public EscalatingTimeRepeatStrategy(ICurrentDateProvider currentDateProvider, MessageCache messageCache)
         {
             Contract.Requires(currentDateProvider != null);
-            Contract.Requires(persistence != null);
+            Contract.Requires(messageCache != null);
             
             this.currentDateProvider = currentDateProvider;
-            this.persistence = persistence;
+            this.messageCache = messageCache;
         }
 
         public void Repeat(MessageRepeater repeater)
         {
-            IEnumerable<MessagePayload> messages = persistence.GetMessages();
+            IEnumerable<MessagePayload> messages = this.messageCache.GetMessages();
 
             messages.ForEach(m =>
             {

@@ -24,8 +24,22 @@ namespace SystemDot.Messaging.Storage.Changes
 
         public void StoreChange(string changeRootId, Change change)
         {
+            if (change is CheckPointChange) 
+                CheckPointChanges(changeRootId);
+
             var changeContainer = CreateContainer(changeRootId, change);
             this.changes.TryAdd(changeContainer.Sequence, changeContainer);
+        }
+
+        void CheckPointChanges(string changeRootId)
+        {
+            ChangeContainer temp;
+
+            this.changes.Values
+                .Where(c => c.ChangeRootId == changeRootId)
+                .Select(c => c.Sequence)
+                .ToList()
+                .ForEach(s => this.changes.TryRemove(s, out temp));
         }
 
         ChangeContainer CreateContainer(string changeRootId, Change change)
@@ -38,14 +52,6 @@ namespace SystemDot.Messaging.Storage.Changes
             return this.changes.Values
                 .Where(c => c.ChangeRootId == changeRootId)
                 .Select(DerserialiseChange);
-        }
-
-        public void CheckPoint(string changeRootId, Change change)
-        {
-            var changeContainer = CreateContainer(changeRootId, change);
-            this.changes.TryAdd(changeContainer.Sequence, changeContainer);
-
-           
         }
 
         Change DerserialiseChange(ChangeContainer container)

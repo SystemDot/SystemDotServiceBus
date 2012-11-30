@@ -54,5 +54,9 @@ namespace SystemDot.Messaging.Channels.Publishing
         {
             return GetEnumerator();
         }
+
+        protected override void UrgeCheckPoint()
+        {
+        }
     }
 }

@@ -19,7 +19,8 @@ namespace SystemDot.Messaging.Specifications.channels.expiry
             message.IncreaseAmountSent();
 
             Configure<IMessageExpiryStrategy>(new RepeatAttemptMessageExpiryStrategy(1));
-
+            With<PersistenceBehaviour>();
+    
             Subject.MessageProcessed += m => processed = m;
         };
 

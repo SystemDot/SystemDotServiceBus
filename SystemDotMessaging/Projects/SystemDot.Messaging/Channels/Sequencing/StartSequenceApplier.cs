@@ -5,17 +5,17 @@ namespace SystemDot.Messaging.Channels.Sequencing
 {
     public class StartSequenceApplier : MessageProcessor
     {
-        readonly IPersistence persistence;
+        readonly MessageCache messageCache;
 
-        public StartSequenceApplier(IPersistence persistence)
+        public StartSequenceApplier(MessageCache messageCache)
         {
-            this.persistence = persistence;
+            this.messageCache = messageCache;
         }
 
         public override void InputMessage(MessagePayload toInput)
         {
-            if (this.persistence.GetSequence() < toInput.GetFirstSequence())
-                this.persistence.SetSequence(toInput.GetFirstSequence());
+            if (this.messageCache.GetSequence() < toInput.GetFirstSequence())
+                this.messageCache.SetSequence(toInput.GetFirstSequence());
 
             OnMessageProcessed(toInput);
         }

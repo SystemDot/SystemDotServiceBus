@@ -15,12 +15,12 @@ namespace SystemDot.Messaging.Specifications.channels.repeating
         Establish context = () =>
             {
                 With<PersistenceBehaviour>();
-                Configure<IRepeatStrategy>(new SimpleRepeatStrategy(The<IPersistence>()));
+                Configure<IRepeatStrategy>(new SimpleRepeatStrategy(The<MessageCache>()));
         
                 messages = new List<MessagePayload>();
 
                 message1 = new MessagePayload();
-                The<IPersistence>().AddMessage(message1);
+                The<MessageCache>().AddMessage(message1);
             
                 Subject.MessageProcessed += m => messages.Add(m);
             };

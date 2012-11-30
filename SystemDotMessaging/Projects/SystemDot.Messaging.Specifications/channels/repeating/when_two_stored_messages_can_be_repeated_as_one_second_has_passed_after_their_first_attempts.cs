@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.channels.repeating
             With<PersistenceBehaviour>();
            
             Configure<ICurrentDateProvider>(new TestCurrentDateProvider(currentDate));
-            Configure<IRepeatStrategy>(new EscalatingTimeRepeatStrategy(The<ICurrentDateProvider>(), The<IPersistence>()));
+            Configure<IRepeatStrategy>(new EscalatingTimeRepeatStrategy(The<ICurrentDateProvider>(), The<MessageCache>()));
             
             Subject.MessageProcessed += m => processedMessages.Add(m);
 
@@ -35,13 +35,13 @@ namespace SystemDot.Messaging.Specifications.channels.repeating
             message1.SetFromAddress(endpointAddress);
             message1.SetLastTimeSent(currentDate.Subtract(new TimeSpan(0, 0, 0, 1)));
             message1.IncreaseAmountSent();
-            The<IPersistence>().AddMessage(message1);
+            The<MessageCache>().AddMessage(message1);
 
             message2 = new MessagePayload();
             message2.SetFromAddress(endpointAddress);
             message2.SetLastTimeSent(currentDate.Subtract(new TimeSpan(0, 0, 0, 1)));
             message2.IncreaseAmountSent();
-            The<IPersistence>().AddMessage(message2);
+            The<MessageCache>().AddMessage(message2);
         };
 
         Because of = () => Subject.Start();

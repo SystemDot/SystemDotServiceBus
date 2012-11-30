@@ -1,6 +1,6 @@
 namespace SystemDot.Messaging.Storage.Changes
 {
-    public class Change
+    public class CheckPointChange : Change
     {
     }
 }

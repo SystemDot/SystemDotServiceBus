@@ -10,13 +10,13 @@ namespace SystemDot.Messaging.Channels.Sequencing
     public class Resequencer : IMessageProcessor<MessagePayload, MessagePayload>
     {
         readonly ConcurrentDictionary<int, MessagePayload> queue;
-        readonly IPersistence persistence;
+        readonly MessageCache messageCache;
         
-        public Resequencer(IPersistence persistence)
+        public Resequencer(MessageCache messageCache)
         {
-            Contract.Requires(persistence != null);
+            Contract.Requires(messageCache != null);
             
-            this.persistence = persistence;
+            this.messageCache = messageCache;
             this.queue = new ConcurrentDictionary<int, MessagePayload>();
         }
 
@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Channels.Sequencing
         {
             Logger.Info("Resequencing message");
             
-            int startSequence = this.persistence.GetSequence();
+            int startSequence = this.messageCache.GetSequence();
 
             if(!toInput.HasSequence()) return;
             if (!AddMessageToQueue(toInput, startSequence)) return;
@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Channels.Sequencing
         {
             if (toInput.GetSequence() < startSequence)
             {
-                this.persistence.Delete(toInput.Id);
+                this.messageCache.Delete(toInput.Id);
                 return false;
             }
 
@@ -54,7 +54,7 @@ namespace SystemDot.Messaging.Channels.Sequencing
                 MessagePayload message;
                 this.queue.TryRemove(startSequence, out message);
                 startSequence++;
-                this.persistence.DeleteAndSetSequence(message.Id, startSequence);
+                this.messageCache.DeleteAndSetSequence(message.Id, startSequence);
             }
         }
 

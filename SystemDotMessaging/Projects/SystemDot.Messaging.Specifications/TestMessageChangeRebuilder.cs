@@ -53,5 +53,9 @@ namespace SystemDot.Messaging.Specifications
 
         public EndpointAddress Address { get; private set; }
         public PersistenceUseType UseType { get; private set; }
+        
+        protected override void UrgeCheckPoint()
+        {
+        }
     }
 }

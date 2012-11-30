@@ -1,12 +1,11 @@
-using System;
-using System.Reflection;
-
 namespace SystemDot.Messaging.Storage.Changes
 {
-    public class ChangeRoot
+    public abstract class ChangeRoot
     {
         readonly IChangeStore changeStore;
+        readonly object checkPointLock = new object();
         bool hasChanged;
+        int changeCount;
 
         protected ChangeRoot(IChangeStore changeStore)
         {
@@ -25,17 +24,45 @@ namespace SystemDot.Messaging.Storage.Changes
             return this.hasChanged;
         }
 
-
         protected void AddChange(Change change)
         {
-            this.changeStore.StoreChange(Id, change);
-            ReplayChange(change);   
+            if (ShouldCheckPoint())
+                UrgeCheckPoint();
+
+            AddChangeWithoutCheckPoint(change);
+        }
+
+        protected abstract void UrgeCheckPoint();
+
+        protected void CheckPoint(CheckPointChange change)
+        {
+            lock (this.checkPointLock)
+            {
+                if (!ShouldCheckPoint()) return;
+                
+                AddChangeWithoutCheckPoint(change);
+                
+                this.changeCount = 0;
+            }
+        }
+
+        bool ShouldCheckPoint()
+        {
+            return this.changeCount >= 1000;
+        }
+
+        void AddChangeWithoutCheckPoint(Change change)
+        {
+            this.changeStore.StoreChange(this.Id, change);
+            ReplayChange(change);
+
+            this.changeCount++;
         }
 
         void ReplayChange(Change change)
         {
             this.hasChanged = true;
-            
+
             GetType()
                 .GetMethod("ApplyChange", new[] { change.GetType() })
                 .Invoke(this, new object[] { change });

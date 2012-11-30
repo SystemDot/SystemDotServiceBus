@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<AcknowledgementRecieveChannelBuilder, AcknowledgementRecieveChannelBuilder>();
             container.RegisterInstance<MessageAcknowledgementHandler, MessageAcknowledgementHandler>();
             container.RegisterInstance<AcknowledgementSender, AcknowledgementSender>();
-            container.RegisterInstance<IPersistenceFactory, PersistenceFactory>();
+            container.RegisterInstance<MessageCacheFactory, MessageCacheFactory>();
             container.RegisterInstance<InMemoryChangeStore, InMemoryChangeStore>();
             container.RegisterInstance<PersistenceFactorySelector, PersistenceFactorySelector>();
             container.RegisterInstance<NullUnitOfWorkFactory, NullUnitOfWorkFactory>();

@@ -5,7 +5,7 @@ using SystemDot.Messaging.Channels.Repeating;
 using Machine.Fakes;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.channels.storage
+namespace SystemDot.Messaging.Specifications.channels.caching
 {
     [Subject("Message caching")]
     public class when_caching_a_message_with_a_receive_cacher_with_no_output_processor_subscribed
@@ -16,6 +16,8 @@ namespace SystemDot.Messaging.Specifications.channels.storage
 
         Establish context = () =>
         {
+            With<PersistenceBehaviour>();
+    
             message = new MessagePayload();
             message.IncreaseAmountSent();
         };

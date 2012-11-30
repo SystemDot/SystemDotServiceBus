@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Specifications.channels.sequencing
         Establish context = () =>
         {
             With<PersistenceBehaviour>();
-            The<IPersistence>().SetSequence(1);
+            The<MessageCache>().SetSequence(1);
             
             processedMessages = new List<MessagePayload>();
             Subject.MessageProcessed += payload => processedMessages.Add(payload);

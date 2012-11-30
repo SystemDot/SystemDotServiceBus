@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.channels.repeating
             
             DateTime currentDate = DateTime.Now;
             Configure<ICurrentDateProvider>(new TestCurrentDateProvider(currentDate));
-            Configure<IRepeatStrategy>(new EscalatingTimeRepeatStrategy(The<ICurrentDateProvider>(), The<IPersistence>()));
+            Configure<IRepeatStrategy>(new EscalatingTimeRepeatStrategy(The<ICurrentDateProvider>(), The<MessageCache>()));
             
             Subject.MessageProcessed += m => processedMessage = m;
 
@@ -33,7 +33,7 @@ namespace SystemDot.Messaging.Specifications.channels.repeating
             message.IncreaseAmountSent();
             message.IncreaseAmountSent();
             message.IncreaseAmountSent();
-            The<IPersistence>().AddMessage(message);
+            The<MessageCache>().AddMessage(message);
         };
 
         Because of = () => Subject.Start();

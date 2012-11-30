@@ -16,7 +16,8 @@ namespace SystemDot.Messaging.Specifications.channels.expiry
             message = new MessagePayload();
 
             Configure<IMessageExpiryStrategy>(new PassthroughMessageExpiryStrategy());
-
+            With<PersistenceBehaviour>();
+    
             Subject.MessageProcessed += m => processed = m;
         };
 

@@ -47,21 +47,21 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
 
         public IMessageInputter<MessagePayload> BuildChannel(SubscriberSendChannelSchema schema)
         {
-            IPersistence persistence = this.persistenceFactorySelector
+            MessageCache messageCache = this.persistenceFactorySelector
                 .Select(schema)
-                .CreatePersistence(PersistenceUseType.SubscriberSend, schema.SubscriberAddress);
+                .CreateCache(PersistenceUseType.SubscriberSend, schema.SubscriberAddress);
 
-            this.acknowledgementHandler.RegisterPersistence(persistence);
+            this.acknowledgementHandler.RegisterPersistence(messageCache);
 
             var copier = new MessagePayloadCopier(this.serialiser);
 
             MessagePipelineBuilder.Build()
                 .With(copier)
                 .ToProcessor(new MessageSendTimeRemover())
-                .ToProcessor(new FirstMessageSequenceRecorder(persistence))
+                .ToProcessor(new FirstMessageSequenceRecorder(messageCache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.SubscriberAddress))
-                .ToEscalatingTimeMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
-                .ToProcessor(new ReceiveChannelMessageCacher(persistence))
+                .ToEscalatingTimeMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater)
+                .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()
                 .ToEndPoint(this.messageSender);

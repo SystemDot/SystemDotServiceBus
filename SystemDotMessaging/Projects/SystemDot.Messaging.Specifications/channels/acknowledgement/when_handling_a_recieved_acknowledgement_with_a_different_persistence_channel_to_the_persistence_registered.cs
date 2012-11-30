@@ -13,23 +13,23 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
     {
         static MessagePayload acknowledgement;
         static MessagePayload message;
-        static IPersistence differingChannelPersistence;
+        static MessageCache differingChannelMessageCache;
 
         Establish context = () =>
         {
             var store = new InMemoryChangeStore(new PlatformAgnosticSerialiser());
 
-            differingChannelPersistence = new Persistence(
+            differingChannelMessageCache = new MessageCache(
                 store,
                 new EndpointAddress("GetChannel", "Server"),
                 PersistenceUseType.RequestSend);
 
-            Subject.RegisterPersistence(differingChannelPersistence);
+            Subject.RegisterPersistence(differingChannelMessageCache);
 
-            var persistence = new Persistence(
+            var persistence = new MessageCache(
                 store,
                 new EndpointAddress("Channel1", "Server1"),
-                differingChannelPersistence.UseType);
+                differingChannelMessageCache.UseType);
 
             Subject.RegisterPersistence(persistence);
 
@@ -39,13 +39,13 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
             acknowledgement = new MessagePayload();
             acknowledgement.SetAcknowledgementId(id);
 
-            differingChannelPersistence.AddMessageAndIncrementSequence(message);
+            differingChannelMessageCache.AddMessageAndIncrementSequence(message);
             persistence.AddMessageAndIncrementSequence(message);
         };
 
         Because of = () => Subject.InputMessage(acknowledgement);
 
         It should_not_remove_the_corresponding_message_from_the_message_store = () =>
-            differingChannelPersistence.GetMessages().ShouldContain(message);
+            differingChannelMessageCache.GetMessages().ShouldContain(message);
     }
 }

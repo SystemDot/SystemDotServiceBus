@@ -65,16 +65,12 @@ namespace SystemDot.Messaging.Storage.Esent
         public void StoreChange(string changeRootId, Change change)
         {
             using (var session = new Session(this.instance))
-                StoreChange(session, changeRootId, change);            
-        }
-
-        public void CheckPoint(string changeRootId, Change change)
-        {
-            using (var session = new Session(this.instance))
             {
-                int autoIncrement = StoreChange(session, changeRootId, change);
+                int sequence = StoreChange(session, changeRootId, change);
+
+                if (!(change is CheckPointChange)) return;
                 
-                DeleteBelowSequence(session, changeRootId, autoIncrement);
+                DeleteBelowSequence(session, changeRootId, sequence);
             }
         }
 

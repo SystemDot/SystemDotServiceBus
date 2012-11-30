@@ -5,7 +5,7 @@ using SystemDot.Messaging.Storage;
 using Machine.Fakes;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.channels.storage
+namespace SystemDot.Messaging.Specifications.channels.caching
 {
     public class when_caching_a_message_with_a_recieve_cacher : WithSubject<ReceiveChannelMessageCacher>
     {
@@ -25,15 +25,15 @@ namespace SystemDot.Messaging.Specifications.channels.storage
         It should_output_the_message = () => message.ShouldEqual(processedMessage);
 
         It should_not_increment_the_persistence_sequence = () =>
-            The<IPersistence>().GetSequence().ShouldEqual(1);
+            The<MessageCache>().GetSequence().ShouldEqual(1);
 
         It should_set_the_correct_persistence_id_on_the_message = () =>
             message.GetPersistenceId()
                 .ShouldEqual(new MessagePersistenceId(
                     message.Id,
-                    The<IPersistence>().Address,
-                    The<IPersistence>().UseType));
+                    The<MessageCache>().Address,
+                    The<MessageCache>().UseType));
 
-        It should_persist_the_message = () => The<IPersistence>().GetMessages().ShouldContain(m => message.Id == m.Id);
+        It should_persist_the_message = () => The<MessageCache>().GetMessages().ShouldContain(m => message.Id == m.Id);
     }
 }

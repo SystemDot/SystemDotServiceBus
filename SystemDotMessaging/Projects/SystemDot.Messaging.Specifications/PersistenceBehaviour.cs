@@ -14,13 +14,8 @@ namespace SystemDot.Messaging.Specifications
         OnEstablish context = (accessor) => 
         {
             accessor.Configure<IChangeStore>(new InMemoryChangeStore(new PlatformAgnosticSerialiser()));
-
-            accessor.Configure<IPersistenceFactory>(
-                new PersistenceFactory(accessor.The<IChangeStore>()));
-
-            accessor.Configure<IPersistence>(
-                accessor.The<IPersistenceFactory>()
-                    .CreatePersistence(persistenceUseType, channel));
+            accessor.Configure(new MessageCacheFactory(accessor.The<IChangeStore>()));
+            accessor.Configure(accessor.The<MessageCacheFactory>().CreateCache(persistenceUseType, channel));
         };
 
         public PersistenceBehaviour(PersistenceUseType persistenceUseType, EndpointAddress channel)

@@ -10,15 +10,15 @@ namespace SystemDot.Messaging.Channels.Sequencing
     {
         public static ProcessorBuilder<MessagePayload> ToResequencerIfSequenced(
             this ProcessorBuilder<MessagePayload> builder,
-            IPersistence persistence,
+            MessageCache messageCache,
             ChannelSchema schema)
         {
             IMessageProcessor<MessagePayload, MessagePayload> processor;
             
             if(schema.IsDurable)
-                processor = new Resequencer(persistence);    
+                processor = new Resequencer(messageCache);    
             else 
-                processor = new MessageDecacher(persistence);
+                processor = new MessageDecacher(messageCache);
 
             return builder.ToProcessor(processor);
         }

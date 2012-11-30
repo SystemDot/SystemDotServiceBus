@@ -15,12 +15,12 @@ namespace SystemDot.Messaging.Specifications.channels.sequencing
             With<PersistenceBehaviour>();
             message = new MessagePayload();
             message.SetSequence(1);
-            The<IPersistence>().SetSequence(2);
-            The<IPersistence>().AddMessage(message);
+            The<MessageCache>().SetSequence(2);
+            The<MessageCache>().AddMessage(message);
         };
 
         Because of = () => Subject.InputMessage(message);
 
-        It should_delete_the_message_from_persistence = () => The<IPersistence>().GetMessages().ShouldBeEmpty();
+        It should_delete_the_message_from_persistence = () => The<MessageCache>().GetMessages().ShouldBeEmpty();
     }
 }

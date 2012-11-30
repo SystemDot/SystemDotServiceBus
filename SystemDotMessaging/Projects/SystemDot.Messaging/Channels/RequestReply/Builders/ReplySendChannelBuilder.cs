@@ -49,23 +49,23 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
 
         public IMessageInputter<object> Build(ReplySendChannelSchema schema, EndpointAddress senderAddress)
         {
-            IPersistence persistence = this.persistenceFactorySelector
+            MessageCache messageCache = this.persistenceFactorySelector
                 .Select(schema)
-                .CreatePersistence(PersistenceUseType.ReplySend, senderAddress);
+                .CreateCache(PersistenceUseType.ReplySend, senderAddress);
             
-            this.acknowledgementHandler.RegisterPersistence(persistence);
+            this.acknowledgementHandler.RegisterPersistence(messageCache);
 
             var startPoint = new MessagePayloadPackager(this.serialiser);
 
             MessagePipelineBuilder.Build()
                 .With(startPoint)
-                .ToProcessor(new Sequencer(persistence))
+                .ToProcessor(new Sequencer(messageCache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, senderAddress))
-                .ToEscalatingTimeMessageRepeater(persistence, this.currentDateProvider, this.taskRepeater)
-                .ToProcessor(new SendChannelMessageCacher(persistence))
+                .ToEscalatingTimeMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater)
+                .ToProcessor(new SendChannelMessageCacher(messageCache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()
-                .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, persistence))
+                .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, messageCache))
                 .ToEndPoint(this.messageSender);
 
             return startPoint;

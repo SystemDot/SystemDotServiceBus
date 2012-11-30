@@ -8,6 +8,5 @@ namespace SystemDot.Messaging.Storage.Changes
         void Initialise(string connection);
         void StoreChange(string changeRootId, Change change);
         IEnumerable<Change> GetChanges(string changeRootId);
-        void CheckPoint(string changeRootId, Change change);
     }
 }

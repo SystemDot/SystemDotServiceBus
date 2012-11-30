@@ -6,17 +6,17 @@ namespace SystemDot.Messaging.Channels.Caching
 {
     public class MessageDecacher : MessageProcessor
     {
-        readonly IPersistence persistence;
+        readonly MessageCache messageCache;
 
-        public MessageDecacher(IPersistence persistence)
+        public MessageDecacher(MessageCache messageCache)
         {
-            Contract.Requires(persistence != null);
-            this.persistence = persistence;
+            Contract.Requires(messageCache != null);
+            this.messageCache = messageCache;
         }
 
         public override void InputMessage(MessagePayload toInput)
         {
-            this.persistence.Delete(toInput.Id);
+            this.messageCache.Delete(toInput.Id);
             OnMessageProcessed(toInput);
         }
     }

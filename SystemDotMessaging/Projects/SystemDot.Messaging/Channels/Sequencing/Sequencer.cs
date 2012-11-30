@@ -7,18 +7,18 @@ namespace SystemDot.Messaging.Channels.Sequencing
 {
     public class Sequencer : IMessageProcessor<MessagePayload, MessagePayload>
     {
-        readonly IPersistence persistence;
+        readonly MessageCache messageCache;
 
-        public Sequencer(IPersistence persistence)
+        public Sequencer(MessageCache messageCache)
         {
-            Contract.Requires(persistence != null);
+            Contract.Requires(messageCache != null);
             
-            this.persistence = persistence;
+            this.messageCache = messageCache;
         }
 
         public void InputMessage(MessagePayload toInput)
         {
-            toInput.SetSequence(this.persistence.GetSequence());
+            toInput.SetSequence(this.messageCache.GetSequence());
             MessageProcessed(toInput);
         }
 

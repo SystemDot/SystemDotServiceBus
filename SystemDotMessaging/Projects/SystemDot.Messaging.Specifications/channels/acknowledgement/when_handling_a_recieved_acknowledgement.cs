@@ -13,31 +13,31 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
     {
         static MessagePayload acknowledgement;
         static MessagePayload message;
-        static IPersistence persistence;
+        static MessageCache messageCache;
 
         Establish context = () =>
         {
             var store = new InMemoryChangeStore(new PlatformAgnosticSerialiser());
             
-            persistence = new Persistence(
+            messageCache = new MessageCache(
                 store,
                 new EndpointAddress("GetChannel", "Server"), 
                 PersistenceUseType.SubscriberRequestSend);
 
-            Subject.RegisterPersistence(persistence);
+            Subject.RegisterPersistence(messageCache);
             
             message = new MessagePayload();
-            var id = new MessagePersistenceId(message.Id, persistence.Address, persistence.UseType);
+            var id = new MessagePersistenceId(message.Id, messageCache.Address, messageCache.UseType);
             
             acknowledgement = new MessagePayload();
             acknowledgement.SetAcknowledgementId(id);
 
-            persistence.AddMessageAndIncrementSequence(message);
+            messageCache.AddMessageAndIncrementSequence(message);
         };
 
         Because of = () => Subject.InputMessage(acknowledgement);
 
         It should_remove_the_corresponding_message_from_the_message_store = () =>
-            persistence.GetMessages().ShouldNotContain(message);
+            messageCache.GetMessages().ShouldNotContain(message);
     }
 }
