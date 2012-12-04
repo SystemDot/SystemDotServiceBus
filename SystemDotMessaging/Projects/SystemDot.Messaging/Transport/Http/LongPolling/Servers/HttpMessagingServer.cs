@@ -44,9 +44,8 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling.Servers
             {
                 return this.formatter.Deserialise(inputStream);
             }
-            catch (CannotDeserialiseException e)
+            catch (CannotDeserialiseException)
             {
-                Logger.Error(e.Message);
                 return null;
             }
         }

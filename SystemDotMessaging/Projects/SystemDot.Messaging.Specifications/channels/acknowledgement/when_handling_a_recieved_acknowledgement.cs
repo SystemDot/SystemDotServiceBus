@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
                 new EndpointAddress("GetChannel", "Server"), 
                 PersistenceUseType.SubscriberRequestSend);
 
-            Subject.RegisterPersistence(messageCache);
+            Subject.RegisterCache(messageCache);
             
             message = new MessagePayload();
             var id = new MessagePersistenceId(message.Id, messageCache.Address, messageCache.UseType);

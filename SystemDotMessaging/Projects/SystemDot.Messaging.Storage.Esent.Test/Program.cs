@@ -41,8 +41,6 @@ namespace SystemDot.Messaging.Storage.Esent.Test
 
             changes = store.GetChanges("Test1");
             Console.WriteLine(changes.Count());
-
-            store.CheckPoint("Test", new TestChange());
         }
     }
 

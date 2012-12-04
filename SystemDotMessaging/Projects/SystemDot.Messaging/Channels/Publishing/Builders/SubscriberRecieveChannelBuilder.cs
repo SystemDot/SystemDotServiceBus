@@ -71,7 +71,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .ToProcessor(new BodyMessageFilter(schema.Address))
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToProcessor(new StartSequenceApplier(messageCache))
-                .ToEscalatingTimeMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater)
+                .ToSimpleMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
                 .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))
                 .Queue()

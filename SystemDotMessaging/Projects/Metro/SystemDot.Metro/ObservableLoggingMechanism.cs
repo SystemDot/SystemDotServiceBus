@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using SystemDot.Logging;
 using Windows.UI.Core;
 
@@ -29,9 +30,9 @@ namespace SystemDot
             SendMessageToUiCollection(message);
         }
 
-        public void Error(string message)
+        public void Error(Exception exception)
         {
-            SendMessageToUiCollection(message);
+            SendMessageToUiCollection(exception.Message);
         }
 
         private void SendMessageToUiCollection(string message)

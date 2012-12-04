@@ -30,9 +30,8 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
             {
                 this.requestor.SendPut(toInput.GetToAddress().GetUrl(), s => this.formatter.Serialise(s, toInput));
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Logger.Error(e.Message);
             }
         }
     }

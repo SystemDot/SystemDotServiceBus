@@ -18,9 +18,9 @@ namespace SystemDot.Logging
             Console.WriteLine(message);
         }
         
-        public void Error(string message)
+        public void Error(Exception exception)
         {
-            Console.WriteLine(message);
+            Console.WriteLine(exception.Message);
         }
     }
 }

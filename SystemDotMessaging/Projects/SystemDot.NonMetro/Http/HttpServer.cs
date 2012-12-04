@@ -48,9 +48,8 @@ namespace SystemDot.Http
                 this.handler.HandleRequest(context.Request.InputStream, context.Response.OutputStream);
                 context.Response.StatusCode = (int)HttpStatusCode.OK;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Logger.Error(e.Message);
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             }
             finally

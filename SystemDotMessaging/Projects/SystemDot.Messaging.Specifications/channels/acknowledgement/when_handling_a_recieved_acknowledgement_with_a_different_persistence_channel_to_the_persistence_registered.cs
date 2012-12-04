@@ -24,14 +24,14 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
                 new EndpointAddress("GetChannel", "Server"),
                 PersistenceUseType.RequestSend);
 
-            Subject.RegisterPersistence(differingChannelMessageCache);
+            Subject.RegisterCache(differingChannelMessageCache);
 
             var persistence = new MessageCache(
                 store,
                 new EndpointAddress("Channel1", "Server1"),
                 differingChannelMessageCache.UseType);
 
-            Subject.RegisterPersistence(persistence);
+            Subject.RegisterCache(persistence);
 
             message = new MessagePayload();
             var id = new MessagePersistenceId(message.Id, persistence.Address, persistence.UseType);

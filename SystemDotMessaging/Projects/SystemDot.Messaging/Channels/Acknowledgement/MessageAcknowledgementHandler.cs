@@ -9,29 +9,34 @@ namespace SystemDot.Messaging.Channels.Acknowledgement
 {
     public class MessageAcknowledgementHandler : IMessageInputter<MessagePayload>
     {
-        private readonly ConcurrentDictionary<Guid, MessageCache> persistences;
+        private readonly ConcurrentDictionary<Guid, MessageCache> caches;
 
         public MessageAcknowledgementHandler()
         {
-            this.persistences = new ConcurrentDictionary<Guid, MessageCache>();
+            this.caches = new ConcurrentDictionary<Guid, MessageCache>();
         }
 
         public void InputMessage(MessagePayload toInput)
         {
             if (!toInput.IsAcknowledgement()) return;
 
-            var id = toInput.GetAcknowledgementId();
+            MessageCache cache = GetCache(toInput.GetAcknowledgementId());
 
-            this.persistences
-                .Values
-                .Single(p => p.UseType == id.UseType && p.Address == id.Address)
-                .Delete(id.MessageId);
+            if (cache != null)
+                cache.Delete(toInput.GetAcknowledgementId().MessageId);
         }
 
-        public void RegisterPersistence(MessageCache toRegister)
+        MessageCache GetCache(MessagePersistenceId id)
+        {
+            return this.caches
+                .Values
+                .SingleOrDefault(p => p.UseType == id.UseType && p.Address == id.Address);
+        }
+
+        public void RegisterCache(MessageCache toRegister)
         {
             Contract.Requires(toRegister != null);
-            this.persistences.TryAdd(Guid.NewGuid(), toRegister);
+            this.caches.TryAdd(Guid.NewGuid(), toRegister);
         }
     }
 }

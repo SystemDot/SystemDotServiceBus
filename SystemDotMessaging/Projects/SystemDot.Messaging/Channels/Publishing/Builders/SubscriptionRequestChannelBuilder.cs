@@ -48,7 +48,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                     PersistenceUseType.SubscriberRequestSend, 
                     schema.PublisherAddress);
 
-            this.acknowledgementHandler.RegisterPersistence(messageCache);
+            this.acknowledgementHandler.RegisterCache(messageCache);
 
             MessagePipelineBuilder.Build()
                 .With(requestor)

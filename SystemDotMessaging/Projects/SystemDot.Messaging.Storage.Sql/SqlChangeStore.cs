@@ -20,14 +20,35 @@ namespace SystemDot.Messaging.Storage.Sql
         {
             using (var connection = new PooledConnection())
             {
-                connection.Execute(
-                    "insert into ChangeStore(changeRootId, change) values(@changeRootId, @change)",
-                    command =>
-                    {
-                        command.Parameters.AddWithValue("@changeRootId", changeRootId);
-                        command.Parameters.AddWithValue("@change", this.serialiser.Serialise(change));
-                    });
+                CheckPointIfPossible(connection, changeRootId, change);
+                StoreChange(connection, changeRootId, change);
             }
+        }
+
+        void CheckPointIfPossible(PooledConnection connection, string changeRootId, Change change)
+        {
+            if (change is CheckPointChange)
+            {
+                DeleteChanges(connection, changeRootId);
+            }
+        }
+
+        void DeleteChanges(PooledConnection connection, string changeRootId)
+        {
+            connection.Execute(
+                "delete from ChangeStore where changeRootId = @changeRootId",
+                command => command.Parameters.AddWithValue("@changeRootId", changeRootId));
+        }
+
+        void StoreChange(PooledConnection connection, string changeRootId, Change change)
+        {
+            connection.Execute(
+                "insert into ChangeStore(changeRootId, change) values(@changeRootId, @change)",
+                command =>
+                {
+                    command.Parameters.AddWithValue("@changeRootId", changeRootId);
+                    command.Parameters.AddWithValue("@change", this.serialiser.Serialise(change));
+                });
         }
 
         public IEnumerable<Change> GetChanges(string changeRootId)
@@ -42,10 +63,6 @@ namespace SystemDot.Messaging.Storage.Sql
             }
 
             return messages;
-        }
-
-        public void CheckPoint(string changeRootId, Change change)
-        {
         }
 
         Change DeserialiseChange(SqlDataReader reader)

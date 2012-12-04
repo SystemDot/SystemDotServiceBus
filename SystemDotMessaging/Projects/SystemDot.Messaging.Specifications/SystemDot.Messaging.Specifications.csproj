@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="channels\acknowledgement\when_handling_a_recieved_acknowledgement_with_a_different_persistence_channel_to_the_persistence_registered.cs" />
     <Compile Include="channels\acknowledgement\when_handling_a_recieved_acknowledgement_with_a_different_persistence_use_type_to_the_persistence_registered.cs" />
+    <Compile Include="channels\acknowledgement\when_handling_a_recieved_acknowledgement_with_no_persistences_registered.cs" />
     <Compile Include="channels\caching\persistence\checkpointing\SpecificationGroup.cs" />
     <Compile Include="channels\caching\persistence\checkpointing\when_adding_a_message_to_a_diferent_cache_after_checkpointing_from_the_other.cs" />
     <Compile Include="channels\caching\persistence\checkpointing\when_adding_a_new_message_after_less_than_1000_messages_have_occurred_after_a_checkpoint.cs" />

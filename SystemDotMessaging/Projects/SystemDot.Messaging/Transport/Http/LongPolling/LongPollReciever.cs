@@ -53,9 +53,8 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
                         StartNextPoll(address);
                     });
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Logger.Error(e.Message);
                 StartNextPoll(address);
             }
         }

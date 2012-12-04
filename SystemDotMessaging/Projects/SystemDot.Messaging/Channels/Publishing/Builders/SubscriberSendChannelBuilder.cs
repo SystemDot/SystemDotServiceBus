@@ -51,7 +51,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .Select(schema)
                 .CreateCache(PersistenceUseType.SubscriberSend, schema.SubscriberAddress);
 
-            this.acknowledgementHandler.RegisterPersistence(messageCache);
+            this.acknowledgementHandler.RegisterCache(messageCache);
 
             var copier = new MessagePayloadCopier(this.serialiser);
 

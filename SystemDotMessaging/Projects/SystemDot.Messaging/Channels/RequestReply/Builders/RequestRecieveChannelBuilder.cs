@@ -69,7 +69,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             MessagePipelineBuilder.Build()
                 .With(startPoint)
                 .ToProcessor(new MessageSendTimeRemover())
-                .ToEscalatingTimeMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater)
+                .ToSimpleMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
                 .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))
                 .Queue()

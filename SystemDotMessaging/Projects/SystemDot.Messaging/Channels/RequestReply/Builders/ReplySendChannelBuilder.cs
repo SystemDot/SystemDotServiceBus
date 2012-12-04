@@ -53,7 +53,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
                 .Select(schema)
                 .CreateCache(PersistenceUseType.ReplySend, senderAddress);
             
-            this.acknowledgementHandler.RegisterPersistence(messageCache);
+            this.acknowledgementHandler.RegisterCache(messageCache);
 
             var startPoint = new MessagePayloadPackager(this.serialiser);
 

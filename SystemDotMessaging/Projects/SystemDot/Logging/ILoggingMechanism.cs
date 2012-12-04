@@ -1,3 +1,5 @@
+using System;
+
 namespace SystemDot.Logging
 {
     public interface ILoggingMechanism
@@ -9,6 +11,6 @@ namespace SystemDot.Logging
 
         void Debug(string message);
 
-        void Error(string message);
+        void Error(Exception exception);
     }
 }

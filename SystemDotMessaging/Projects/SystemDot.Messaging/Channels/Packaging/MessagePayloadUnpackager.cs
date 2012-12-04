@@ -38,9 +38,8 @@ namespace SystemDot.Messaging.Channels.Packaging
             {
                 return this.serialiser.Deserialise(toDeserialise);
             }
-            catch (CannotDeserialiseException e)
+            catch (CannotDeserialiseException)
             {
-                Logger.Error(e.Message);
                 return null;
             }
         }

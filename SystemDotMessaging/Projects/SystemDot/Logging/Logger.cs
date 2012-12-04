@@ -30,11 +30,11 @@ namespace SystemDot.Logging
             LoggingMechanism.Debug(String.Format(message, args));
         }
 
-        public static void Error(string message)
+        public static void Error(Exception exception)
         {
             if (LoggingMechanism == null) return;
-            
-            LoggingMechanism.Error(message);
+
+            LoggingMechanism.Error(exception);
         }
     }
 }

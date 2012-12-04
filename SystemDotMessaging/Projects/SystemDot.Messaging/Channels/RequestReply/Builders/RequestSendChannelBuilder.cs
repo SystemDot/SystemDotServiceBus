@@ -55,7 +55,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
                 .Select(schema)
                 .CreateCache(PersistenceUseType.RequestSend, schema.FromAddress);
 
-            this.acknowledgementHandler.RegisterPersistence(messageCache);
+            this.acknowledgementHandler.RegisterCache(messageCache);
 
             MessagePipelineBuilder.Build()
                 .WithBusSendTo(new MessageFilter(schema.FilteringStrategy))
