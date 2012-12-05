@@ -5,7 +5,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.channels.distribution
 {
     [Subject("Message distribution")]
-    public class when_starting_a_queue_with_items_queued_with_no_pushed_item_listener
+    public class when_queueing_items_on_a_with_no_pushed_item_listener
     {
         static Exception exception;
         static Queue<object> queue;
@@ -14,15 +14,10 @@ namespace SystemDot.Messaging.Specifications.channels.distribution
         Establish context = () =>
         {
             message = new object();
-
             queue = new Queue<object>(new TestTaskStarter());
         };
 
-        Because of = () =>
-        {
-            queue.InputMessage(message);
-            exception = Catch.Exception(() => queue.Start());
-        };
+        Because of = () => exception = Catch.Exception(() => queue.InputMessage(message));
 
         It should_not_fail = () => exception.ShouldBeNull();
     }

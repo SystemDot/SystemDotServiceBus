@@ -18,11 +18,7 @@ namespace SystemDot.Messaging.Specifications.channels.distribution
             queue.MessageProcessed += m => pushedItem = m;
         };
 
-        Because of = () =>
-        {
-            queue.InputMessage(item);
-            queue.Start();
-        };
+        Because of = () => queue.InputMessage(item);
 
         It should_send_out_the_queued_item = () => pushedItem.ShouldBeTheSameAs(item);
     }

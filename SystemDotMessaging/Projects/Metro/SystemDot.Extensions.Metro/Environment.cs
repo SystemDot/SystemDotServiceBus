@@ -8,7 +8,7 @@ namespace SystemDot
     {
         public static string MachineName
         {
-            get { return NetworkInformation.GetHostNames().First(name => name.Type == HostNameType.DomainName).DisplayName.Split('.').First(); }
+            get { return NetworkInformation.GetHostNames().First(name => name.Type == HostNameType.DomainName).DisplayName.Split('.').First().ToUpper(); }
         }
     }
 }

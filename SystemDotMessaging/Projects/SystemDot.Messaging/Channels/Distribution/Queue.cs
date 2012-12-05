@@ -8,31 +8,50 @@ namespace SystemDot.Messaging.Channels.Distribution
     {
         readonly ConcurrentQueue<T> queue;
         readonly ITaskStarter taskStarter;
+        readonly object locker;
+        bool isDequeueing;
 
         public Queue(ITaskStarter taskStarter)
         {
             this.taskStarter = taskStarter;
             this.queue = new ConcurrentQueue<T>();
+            this.locker = new object();
         }
 
         public void InputMessage(T message)
         {
             this.queue.Enqueue(message);
+
+            ScheduleDequeuing();
         }
 
-        public void Start()
+        void ScheduleDequeuing()
         {
-            this.taskStarter.StartTask(Dequeue);
+            lock (this.locker)
+            {
+                if (!this.isDequeueing)
+                {
+                    this.isDequeueing = true;
+                    this.taskStarter.StartTask(Dequeue);
+                }
+            }
         }
 
         void Dequeue()
         {
             T message;
 
-            while(this.queue.TryDequeue(out message))
-                OnItemPushed(message);
+            lock (this.locker)
+            {
+                this.isDequeueing = this.queue.TryDequeue(out message);
+            }
 
-            Start();
+            if (this.isDequeueing)
+            {
+
+                OnItemPushed(message);
+                Dequeue();
+            }
         }
 
         void OnItemPushed(T message)

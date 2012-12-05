@@ -29,7 +29,6 @@ namespace SystemDot.Messaging.Channels.Pipelines
  
             var queue = new Queue<TOut>(GetTaskStarter());
             this.processor.MessageProcessed += queue.InputMessage;
-            queue.Start();
             
             return new ProcessorBuilder<TOut>(queue);
         }
