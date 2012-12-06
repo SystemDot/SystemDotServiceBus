@@ -6,6 +6,7 @@ using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;
+using SystemDot.Messaging.Channels.Sequencing;
 
 namespace SystemDot.Messaging.Specifications.channels.caching.persistence
 {

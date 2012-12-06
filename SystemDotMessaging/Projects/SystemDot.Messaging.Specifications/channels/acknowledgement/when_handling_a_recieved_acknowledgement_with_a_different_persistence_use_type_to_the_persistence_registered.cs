@@ -1,6 +1,7 @@
 using SystemDot.Messaging.Channels.Acknowledgement;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Channels.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Serialisation;
@@ -34,6 +35,7 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
             Subject.RegisterCache(persistence);
 
             message = new MessagePayload();
+            message.SetSequence(1);
             var id = new MessagePersistenceId(message.Id, persistence.Address, persistence.UseType);
 
             acknowledgement = new MessagePayload();

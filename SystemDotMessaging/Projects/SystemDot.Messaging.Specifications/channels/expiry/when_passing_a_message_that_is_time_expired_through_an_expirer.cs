@@ -2,6 +2,7 @@ using System;
 using SystemDot.Messaging.Channels.Expiry;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Channels.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Specifications;
 using Machine.Fakes;
@@ -18,6 +19,7 @@ namespace SystemDot.Messaging.Specifications.channels.expiry
         Establish context = () =>
         {
             message = new MessagePayload();
+            message.SetSequence(1);
             message.IncreaseAmountSent();
 
             With<PersistenceBehaviour>();

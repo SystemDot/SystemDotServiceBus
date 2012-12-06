@@ -1,6 +1,7 @@
 using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Channels.Sequencing;
 using SystemDot.Messaging.Storage;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -17,6 +18,7 @@ namespace SystemDot.Messaging.Specifications.channels.caching
             With<PersistenceBehaviour>();
 
             message = new MessagePayload();
+            message.SetSequence(1);
             message.IncreaseAmountSent();
             Subject.MessageProcessed += m => processedMessage = m;
         };

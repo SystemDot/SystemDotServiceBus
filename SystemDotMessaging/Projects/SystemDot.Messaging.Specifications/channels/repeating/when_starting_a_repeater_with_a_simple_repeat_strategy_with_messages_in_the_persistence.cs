@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Channels.Sequencing;
 using SystemDot.Messaging.Storage;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -21,9 +22,11 @@ namespace SystemDot.Messaging.Specifications.channels.repeating
             messages = new List<MessagePayload>();
                 
             message1 = new MessagePayload();
+            message1.SetSequence(1);
             The<MessageCache>().AddMessage(message1);
 
             message2 = new MessagePayload();
+            message2.SetSequence(2);
             The<MessageCache>().AddMessage(message2);
 
             Subject.MessageProcessed += m => messages.Add(m);

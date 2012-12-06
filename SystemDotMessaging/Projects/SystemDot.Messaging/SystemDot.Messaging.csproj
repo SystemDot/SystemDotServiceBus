@@ -170,7 +170,6 @@
     <Compile Include="Storage\Changes\IChangeStore.cs" />
     <Compile Include="Storage\Changes\InMemoryChangeStore.cs" />
     <Compile Include="Storage\Changes\SetSequenceChange.cs" />
-    <Compile Include="Storage\Changes\UpdateMessageChange.cs" />
     <Compile Include="Storage\MessageCache.cs" />
     <Compile Include="Storage\MessageCacheFactory.cs" />
     <Compile Include="Channels\Acknowledgement\MessageAcknowledgementHandler.cs" />

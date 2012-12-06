@@ -5,16 +5,14 @@ namespace SystemDot.Messaging.TestSubscriber.Handlers
 {
     public class ResponseHandler
     {
-        readonly IBus bus;
         readonly MainPageViewModel viewModel;
 
-        public ResponseHandler(IBus bus, MainPageViewModel viewModel)
+        public ResponseHandler(MainPageViewModel viewModel)
         {
-            this.bus = bus;
             this.viewModel = viewModel;
         }
 
-        public void Handle(TestResponse message)
+        public void Handle(TestMessage message)
         {
             viewModel.Replies.Add(message.Text);
         }

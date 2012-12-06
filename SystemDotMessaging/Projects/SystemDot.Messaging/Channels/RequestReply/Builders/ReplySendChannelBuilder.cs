@@ -62,6 +62,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
                 .ToProcessor(new Sequencer(messageCache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, senderAddress))
                 .ToEscalatingTimeMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater)
+                .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new SendChannelMessageCacher(messageCache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()

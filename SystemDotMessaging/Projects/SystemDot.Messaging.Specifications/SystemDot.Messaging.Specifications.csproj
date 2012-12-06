@@ -54,6 +54,7 @@
     <Compile Include="channels\caching\persistence\checkpointing\when_adding_a_new_message_after_1000_changes_have_occurred_and_all_messages_have_been_deleted.cs" />
     <Compile Include="channels\caching\persistence\checkpointing\when_adding_a_new_message_after_1000_changes_have_occurred_and_no_messages_have_been_deleted.cs" />
     <Compile Include="channels\caching\persistence\checkpointing\when_adding_a_new_message_after_over_1000_changes_have_occurred_and_all_messages_have_been_deleted.cs" />
+    <Compile Include="channels\caching\persistence\when_getting_two_messages_for_a_channel_that_are_not_stored_in_sequence_order.cs" />
     <Compile Include="channels\copying\when_copying_a_message.cs" />
     <Compile Include="channels\distribution\when_queueing_an_item_and_then_starting_the_queue.cs" />
     <Compile Include="channels\distribution\when_starting_a_queue_with_items_queued_with_no_pushed_item_listener.cs" />

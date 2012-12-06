@@ -35,10 +35,6 @@ namespace SystemDot.Messaging.Specifications
             this.messages.Add(change.Message);
         }
 
-        public void ApplyChange(UpdateMessageChange change)
-        {
-        }
-
         public void ApplyChange(SetSequenceChange change)
         {
         }

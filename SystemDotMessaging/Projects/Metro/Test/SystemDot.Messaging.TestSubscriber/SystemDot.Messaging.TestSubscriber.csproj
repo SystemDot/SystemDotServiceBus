@@ -121,10 +121,6 @@
       <Project>{e9433834-d592-4a4a-8219-3ea48b5a2bcc}</Project>
       <Name>SystemDot</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SystemDot.Messaging.TestReciever\SystemDot.Messaging.TestReciever.csproj">
-      <Project>{51299507-FCAC-4D87-AFF7-ABC3F9C4C654}</Project>
-      <Name>SystemDot.Messaging.TestReciever</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">

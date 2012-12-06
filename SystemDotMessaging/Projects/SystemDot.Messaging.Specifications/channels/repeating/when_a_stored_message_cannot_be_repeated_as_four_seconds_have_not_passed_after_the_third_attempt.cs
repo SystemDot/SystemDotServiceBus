@@ -3,6 +3,7 @@ using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Channels.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Specifications;
 using Machine.Fakes;
@@ -28,6 +29,7 @@ namespace SystemDot.Messaging.Specifications.channels.repeating
             Subject.MessageProcessed += m => processedMessage = m;
 
             message = new MessagePayload();
+            message.SetSequence(1);
             message.SetFromAddress(endpointAddress);
             message.SetLastTimeSent(currentDate.Subtract(new TimeSpan(0, 0, 0, 0, 3999)));
             message.IncreaseAmountSent();

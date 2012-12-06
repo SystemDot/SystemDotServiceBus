@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage.Changes;
+using SystemDot.Messaging.Channels.Sequencing;
 
 namespace SystemDot.Messaging.Storage
 {
@@ -11,8 +13,7 @@ namespace SystemDot.Messaging.Storage
     {
         int sequence;
         readonly ConcurrentDictionary<Guid, MessagePayload> messages;
-        readonly object deleteLock = new object();
-
+        
         public EndpointAddress Address { get; private set; }
         public PersistenceUseType UseType { get; private set; }
 
@@ -29,7 +30,12 @@ namespace SystemDot.Messaging.Storage
 
         public IEnumerable<MessagePayload> GetMessages()
         {
-            return this.messages.Values;
+            return this.messages.Values.OrderBy(GetMessageSequence);
+        }
+
+        static int GetMessageSequence(MessagePayload message)
+        {
+            return message.HasSequence() ? message.GetSequence() : 0;
         }
 
         public void AddMessageAndIncrementSequence(MessagePayload message)
@@ -55,17 +61,8 @@ namespace SystemDot.Messaging.Storage
 
         public void UpdateMessage(MessagePayload message)
         {
-            AddChange(new UpdateMessageChange(message));
-        }
-
-        public void ApplyChange(UpdateMessageChange change)
-        {
-            lock (deleteLock)
-            {
-                MessagePayload temp;
-                if (this.messages.TryGetValue(change.Message.Id, out temp))
-                    this.messages[change.Message.Id] = change.Message;
-            }
+            MessagePayload temp;
+            if (this.messages.TryGetValue(message.Id, out temp)) this.messages[message.Id] = message;
         }
 
         public int GetSequence()
@@ -105,12 +102,9 @@ namespace SystemDot.Messaging.Storage
         }
 
         void ApplyDelete(Guid id)
-        {
-            lock (deleteLock)
-            {
-                MessagePayload temp;
-                this.messages.TryRemove(id, out temp);
-            }
+        {       
+            MessagePayload temp;
+            this.messages.TryRemove(id, out temp);
         }
 
         protected override void UrgeCheckPoint()

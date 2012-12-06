@@ -4,7 +4,6 @@ using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Storage.Esent;
 using SystemDot.Messaging.Test.Messages;
-using SystemDot.Messaging.TestReciever;
 using Windows.UI.Core;
 using SystemDot.Messaging.TestSubscriber.Handlers;
 
@@ -33,22 +32,20 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
 
             this.bus = Configure.Messaging()
                .LoggingWith(loggingMechanism)
-               .UsingInProcessTransport()
+               .UsingHttpTransport(MessageServer.Local())
                .UsingFilePersistence()
-               .OpenChannel("TestSender").ForRequestReplySendingTo("TestReciever").WithDurability()
+               .OpenChannel("TestMetroSender").ForRequestReplySendingTo("TestReciever").WithDurability()
                .WithHook(new MessageMarshallingHook(CoreWindow.GetForCurrentThread().Dispatcher))
                .Initialise();
 
             IocContainerLocator.Locate()
                 .Resolve<MessageHandlerRouter>()
-                .RegisterHandler(new ResponseHandler(this.bus, this));
-
-            RecieverConfiguration.ConfigureMessaging();
+                .RegisterHandler(new ResponseHandler(this));
         }
 
         public void SendMessage(int i)
         {
-            var query = new TestQuery {Text = "Hello" + i};
+            var query = new TestMessage {Text = "Hello" + i};
             Messages.Add(query.Text);
             bus.Send(query);
         }
