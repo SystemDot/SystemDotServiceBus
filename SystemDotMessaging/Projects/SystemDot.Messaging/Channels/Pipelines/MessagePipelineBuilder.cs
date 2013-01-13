@@ -22,9 +22,10 @@ namespace SystemDot.Messaging.Channels.Pipelines
             return new ProcessorBuilder<T>(processor);
         }
 
-        public void WithBusSendLocalTo<T>(IMessageInputter<T> processor)
+        public ProcessorBuilder<T> WithBusSendLocalTo<T>(IMessageProcessor<T, T> processor)
         {
             IocContainerLocator.Locate().Resolve<IBus>().MessageSentLocal += o => processor.InputMessage(o.As<T>());
+            return new ProcessorBuilder<T>(processor);
         }
 
         public ProcessorBuilder<T> WithBusReplyTo<T>(IMessageProcessor<T, T> processor)

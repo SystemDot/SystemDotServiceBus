@@ -57,6 +57,8 @@
     <Compile Include="Channels\Caching\MessageDecacher.cs" />
     <Compile Include="Channels\ISerialiserExtensions.cs" />
     <Compile Include="Channels\Local\Builders\LocalChannelBuilder.cs" />
+    <Compile Include="Channels\Local\Builders\LocalChannelSchema.cs" />
+    <Compile Include="Channels\Local\NoLocalChannelConfiguredException.cs" />
     <Compile Include="Channels\MessageProcessor.cs" />
     <Compile Include="Channels\Builders\PersistenceFactorySelector.cs" />
     <Compile Include="Channels\Publishing\Builders\ISubscriberSendChannelBuilder.cs" />
@@ -132,6 +134,7 @@
     <Compile Include="Configuration\ComponentRegistration\ThreadingComponents.cs" />
     <Compile Include="Channels\Publishing\SubscriptionRequestor.cs" />
     <Compile Include="Configuration\Configurer.cs" />
+    <Compile Include="Configuration\Local\LocalChannelConfiguration.cs" />
     <Compile Include="Configuration\MessageExpiry.cs" />
     <Compile Include="Configuration\MessageServer.cs" />
     <Compile Include="Configuration\MessageServerConfiguration.cs" />

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
-using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Configuration.Local;
 using SystemDot.Messaging.Storage.Changes;
 
 namespace SystemDot.Messaging.Configuration
@@ -27,6 +27,15 @@ namespace SystemDot.Messaging.Configuration
             return new ChannelConfiguration(
                 BuildEndpointAddress(name, this.messageServer.Name),
                 this.messageServer.Name,
+                new List<Action>());
+        }
+
+        public LocalChannelConfiguration OpenLocalChannel()
+        {
+            RegisterInMemoryPersistence(IocContainerLocator.Locate());
+            
+            return new LocalChannelConfiguration(
+                BuildEndpointAddress(string.Empty, this.messageServer.Name), 
                 new List<Action>());
         }
 

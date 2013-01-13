@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Channels.Local;
 
 namespace SystemDot.Messaging
 {
@@ -19,6 +20,8 @@ namespace SystemDot.Messaging
         public void SendLocal(object message)
         {
             Contract.Requires(message != null);
+
+            if (MessageSentLocal == null) throw new NoLocalChannelConfiguredException();
             MessageSentLocal(message);
         }
 

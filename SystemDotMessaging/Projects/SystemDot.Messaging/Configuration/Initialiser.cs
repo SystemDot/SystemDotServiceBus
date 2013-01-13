@@ -6,6 +6,7 @@ using SystemDot.Messaging.Channels.Acknowledgement.Builders;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Local.Builders;
 using SystemDot.Messaging.Channels.UnitOfWork;
+using SystemDot.Messaging.Configuration.Local;
 using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Configuration
@@ -29,10 +30,10 @@ namespace SystemDot.Messaging.Configuration
             this.buildActions.ForEach(a => a());
             
             Resolve<ITaskRepeater>().Start();
+
             Resolve<AcknowledgementSendChannelBuilder>().Build();
             Resolve<AcknowledgementRecieveChannelBuilder>().Build();
-            Resolve<LocalChannelBuilder>().Build();
-
+            
             return Resolve<IBus>();
         }
 
@@ -44,6 +45,13 @@ namespace SystemDot.Messaging.Configuration
                 BuildEndpointAddress(name, GetAddress().ServerName),
                 GetAddress().ServerName,
                 this.buildActions);
+        }
+
+        public LocalChannelConfiguration OpenLocalChannel()
+        {
+            return new LocalChannelConfiguration(
+                GetAddress(),
+                new List<Action>());
         }
 
         protected abstract EndpointAddress GetAddress();
