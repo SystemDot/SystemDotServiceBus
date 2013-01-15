@@ -4,7 +4,6 @@ using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.Acknowledgement.Builders;
 using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.Local.Builders;
 using SystemDot.Messaging.Channels.UnitOfWork;
 using SystemDot.Messaging.Configuration.Local;
 using SystemDot.Parallelism;
@@ -49,9 +48,7 @@ namespace SystemDot.Messaging.Configuration
 
         public LocalChannelConfiguration OpenLocalChannel()
         {
-            return new LocalChannelConfiguration(
-                GetAddress(),
-                new List<Action>());
+            return new LocalChannelConfiguration(GetAddress(), this.buildActions);
         }
 
         protected abstract EndpointAddress GetAddress();

@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.Acknowledgement;
@@ -10,7 +9,6 @@ using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Pipelines;
 using SystemDot.Messaging.Channels.Repeating;
-using SystemDot.Messaging.Channels.UnitOfWork;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
@@ -71,7 +69,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .ToProcessor(new BodyMessageFilter(schema.Address))
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToProcessor(new StartSequenceApplier(messageCache))
-                .ToEscalatingTimeMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater)
+                .ToSimpleMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
                 .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))

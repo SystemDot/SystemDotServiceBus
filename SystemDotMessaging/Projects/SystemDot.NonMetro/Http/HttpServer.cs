@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Net;
 using System.Threading.Tasks;
-using SystemDot.Logging;
 
 namespace SystemDot.Http
 {

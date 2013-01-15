@@ -96,6 +96,7 @@
     <Compile Include="configuration\local\when_sending_a_local_message_after_configuring_a_local_channel_and_then_another.cs" />
     <Compile Include="configuration\local\when_sending_a_local_message_without_configuring_a_local_channel.cs" />
     <Compile Include="configuration\local\when_sending_a_local_message_with_a_unit_of_work_setup.cs" />
+    <Compile Include="configuration\local\when_sending_a_message_after_configuring_a_channel_and_then_a_local_channel.cs" />
     <Compile Include="configuration\publishing\ExclusionMessagePayloadListExtensions.cs" />
     <Compile Include="configuration\publishing\receiving\SpecificationGroup.cs" />
     <Compile Include="configuration\publishing\receiving\when_publishing_with_a_unit_of_work_setup.cs" />

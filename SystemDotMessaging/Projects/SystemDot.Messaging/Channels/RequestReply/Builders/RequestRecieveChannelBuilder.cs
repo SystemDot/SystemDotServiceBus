@@ -5,13 +5,11 @@ using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Builders;
 using SystemDot.Messaging.Channels.Caching;
 using SystemDot.Messaging.Channels.Expiry;
-using SystemDot.Messaging.Channels.Filtering;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Pipelines;
 using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Channels.Sequencing;
-using SystemDot.Messaging.Channels.UnitOfWork;
 using SystemDot.Messaging.Storage;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
@@ -69,7 +67,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             MessagePipelineBuilder.Build()
                 .With(startPoint)
                 .ToProcessor(new MessageSendTimeRemover())
-                .ToEscalatingTimeMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater)
+                .ToSimpleMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
                 .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))
