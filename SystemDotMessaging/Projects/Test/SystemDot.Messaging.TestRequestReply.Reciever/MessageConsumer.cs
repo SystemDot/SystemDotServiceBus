@@ -15,6 +15,9 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
 
         public void Handle(TestMessage message)
         {
+            if (message == null)
+                throw new Exception();
+            
             Console.WriteLine(
                 "recieved message {0} on thread {1} sending reply...", 
                 message.Text, 

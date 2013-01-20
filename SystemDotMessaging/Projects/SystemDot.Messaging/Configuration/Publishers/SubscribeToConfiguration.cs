@@ -53,6 +53,10 @@ namespace SystemDot.Messaging.Configuration.Publishers
         {
             this.requestSchema.IsDurable = true;
             this.recieveSchema.IsDurable = true;
+
+            this.requestSchema.QueueErrors = true;
+            this.recieveSchema.QueueErrors = true;
+            
             return this;
         }
 

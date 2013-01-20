@@ -4,6 +4,7 @@ using SystemDot.Messaging.Channels.Acknowledgement;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Builders;
 using SystemDot.Messaging.Channels.Caching;
+using SystemDot.Messaging.Channels.Errors;
 using SystemDot.Messaging.Channels.Expiry;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Channels.Packaging;
@@ -26,6 +27,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
         readonly ICurrentDateProvider currentDateProvider;
         readonly ITaskRepeater taskRepeater;
         readonly IIocContainer iocContainer;
+        readonly ErrorReciever errorReciever;
 
         public RequestRecieveChannelBuilder(
             ReplyAddressLookup replyAddressLookup, 
@@ -35,7 +37,8 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             PersistenceFactorySelector persistenceFactorySelector, 
             ICurrentDateProvider currentDateProvider, 
             ITaskRepeater taskRepeater, 
-            IIocContainer iocContainer)
+            IIocContainer iocContainer, 
+            ErrorReciever errorReciever)
         {
             Contract.Requires(replyAddressLookup != null);
             Contract.Requires(serialiser != null);
@@ -54,6 +57,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             this.currentDateProvider = currentDateProvider;
             this.taskRepeater = taskRepeater;
             this.iocContainer = iocContainer;
+            this.errorReciever = errorReciever;
         }
 
         public IMessageInputter<MessagePayload> Build(RequestRecieveChannelSchema schema, EndpointAddress senderAddress)
@@ -74,6 +78,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
                 .Queue()
                 .ToResequencerIfSequenced(messageCache, schema)
                 .ToProcessor(new ReplyChannelSelector(this.replyAddressLookup))
+                .ToProcessorIf(schema.QueueErrors, new ErrorHandler(this.errorReciever))
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
                 .ToProcessor(schema.UnitOfWorkRunner)
                 .ToEndPoint(this.messageHandlerRouter);

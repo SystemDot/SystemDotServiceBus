@@ -3,6 +3,7 @@ using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.Acknowledgement;
 using SystemDot.Messaging.Channels.Builders;
 using SystemDot.Messaging.Channels.Caching;
+using SystemDot.Messaging.Channels.Errors;
 using SystemDot.Messaging.Channels.Expiry;
 using SystemDot.Messaging.Channels.Filtering;
 using SystemDot.Messaging.Channels.Handling;
@@ -27,6 +28,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
         readonly ICurrentDateProvider currentDateProvider;
         readonly ITaskRepeater taskRepeater;
         readonly IIocContainer iocContainer;
+        readonly ErrorReciever errorReciever;
 
         public SubscriberRecieveChannelBuilder(
             ISerialiser serialiser, 
@@ -36,7 +38,8 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             PersistenceFactorySelector persistenceFactory, 
             ICurrentDateProvider currentDateProvider, 
             ITaskRepeater taskRepeater, 
-            IIocContainer iocContainer)
+            IIocContainer iocContainer, 
+            ErrorReciever errorReciever)
         {
             Contract.Requires(serialiser != null);
             Contract.Requires(messageHandlerRouter != null);
@@ -55,6 +58,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             this.currentDateProvider = currentDateProvider;
             this.taskRepeater = taskRepeater;
             this.iocContainer = iocContainer;
+            this.errorReciever = errorReciever;
         }
 
         public void Build(SubscriberRecieveChannelSchema schema)
@@ -75,6 +79,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))
                 .Queue()
                 .ToResequencerIfSequenced(messageCache, schema)
+                .ToProcessorIf(schema.QueueErrors, new ErrorHandler(this.errorReciever))
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
                 .ToProcessor(schema.UnitOfWorkRunner)
                 .ToEndPoint(this.messageHandlerRouter);

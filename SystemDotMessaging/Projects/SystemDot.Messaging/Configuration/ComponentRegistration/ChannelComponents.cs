@@ -2,6 +2,8 @@ using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.Acknowledgement;
 using SystemDot.Messaging.Channels.Acknowledgement.Builders;
 using SystemDot.Messaging.Channels.Builders;
+using SystemDot.Messaging.Channels.Errors;
+using SystemDot.Messaging.Channels.Errors.Builders;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Channels.Local.Builders;
 using SystemDot.Messaging.Channels.UnitOfWork;
@@ -25,6 +27,10 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<InMemoryChangeStore, InMemoryChangeStore>();
             container.RegisterInstance<PersistenceFactorySelector, PersistenceFactorySelector>();
             container.RegisterInstance<NullUnitOfWorkFactory, NullUnitOfWorkFactory>();
+            container.RegisterInstance<ErrorRecieveChannelBuilder, ErrorRecieveChannelBuilder>();
+            container.RegisterInstance<ErrorReciever, ErrorReciever>();
+            container.RegisterInstance<ErrorResendChannelBuilder, ErrorResendChannelBuilder>();
+            container.RegisterInstance<ErrorResender, ErrorResender>();
         }
     }
 }

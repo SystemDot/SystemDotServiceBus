@@ -21,7 +21,5 @@ namespace SystemDot.Messaging.Channels.Acknowledgement
             this.sender.SendAcknowledgement(toInput);
             MessageProcessed(toInput);
         }
-
-        
     }
 }

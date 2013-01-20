@@ -49,10 +49,23 @@ namespace SystemDot.Messaging.Channels.Sequencing
             while (this.queue.ContainsKey(startSequence))
             {
                 Logger.Info("Releasing message from resequencer with sequence {0}", startSequence);
-                MessageProcessed(this.queue[startSequence]);
 
-                MessagePayload message;
-                this.queue.TryRemove(startSequence, out message);
+                MessagePayload message = this.queue[startSequence];
+                
+                try
+                {
+                    MessageProcessed(message);
+                }
+                catch (Exception)
+                {
+                    this.messageCache.Delete(message.Id);
+                    return;
+                }
+                finally
+                {
+                    this.queue.TryRemove(startSequence, out message);  
+                }
+
                 startSequence++;
                 this.messageCache.DeleteAndSetSequence(message.Id, startSequence);
             }

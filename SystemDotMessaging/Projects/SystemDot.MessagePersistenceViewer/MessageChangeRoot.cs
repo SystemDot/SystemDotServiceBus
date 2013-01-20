@@ -30,11 +30,6 @@ namespace SystemDot.MessagePersistenceViewer
             this.mainViewModel.AddMessage(change.Message);
         }
 
-        void ApplyChange(UpdateMessageChange change)
-        {
-            this.mainViewModel.UpdateMessage(change.Message);
-        }
-
         void ApplyChange(SetSequenceChange change)
         {
             this.mainViewModel.Sequence = change.Sequence;
@@ -49,6 +44,11 @@ namespace SystemDot.MessagePersistenceViewer
         {
             this.mainViewModel.DeleteMessage(change.Id);
             this.mainViewModel.Sequence = change.Sequence;
+        }
+
+        protected override void UrgeCheckPoint()
+        {
+            
         }
     }
 }

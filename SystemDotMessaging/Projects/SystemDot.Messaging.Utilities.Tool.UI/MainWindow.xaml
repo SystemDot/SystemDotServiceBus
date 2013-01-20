@@ -1,0 +1,8 @@
+﻿<Window x:Class="SystemDot.Messaging.Utilities.Tool.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="517.775" Width="706.628">
+    <Grid Background="Black">
+        
+    </Grid>
+</Window>

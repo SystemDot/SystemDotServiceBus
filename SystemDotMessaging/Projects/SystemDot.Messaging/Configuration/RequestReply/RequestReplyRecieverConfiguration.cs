@@ -47,6 +47,10 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             this.sendSchema.IsDurable = true;
             this.requestSchema.IsDurable = true;
+
+            this.sendSchema.QueueErrors = true;
+            this.requestSchema.QueueErrors = true;
+
             return this;
         }
 

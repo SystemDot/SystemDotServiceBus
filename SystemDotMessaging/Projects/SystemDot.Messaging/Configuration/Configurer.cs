@@ -1,5 +1,4 @@
 using SystemDot.Ioc;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
 
 namespace SystemDot.Messaging.Configuration
@@ -13,7 +12,7 @@ namespace SystemDot.Messaging.Configuration
 
         protected EndpointAddress BuildEndpointAddress(string address, string defaultServerName)
         {
-            return IocContainerLocator.Locate().Resolve<EndpointAddressBuilder>().Build(address, defaultServerName);
+            return Resolve<EndpointAddressBuilder>().Build(address, defaultServerName);
         }
     }
 }

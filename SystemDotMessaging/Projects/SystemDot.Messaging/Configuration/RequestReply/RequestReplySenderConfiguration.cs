@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using SystemDot.Ioc;
 using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Expiry;
@@ -70,6 +69,10 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             this.sendSchema.IsDurable = true;
             this.recieveSchema.IsDurable = true;
+
+            this.sendSchema.QueueErrors = true;
+            this.recieveSchema.QueueErrors = true;
+
             return this;
         }
 

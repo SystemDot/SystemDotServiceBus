@@ -58,6 +58,11 @@ namespace SystemDot.Messaging.Channels.Pipelines
             return new ProcessorBuilder<TOut>(messageProcessor);
         }
 
+        public ProcessorBuilder<TOut> ToProcessorIf(bool condition, IMessageProcessor<TOut, TOut> messageProcessor)
+        {
+            return condition ? ToProcessor(messageProcessor) : this;
+        }
+
         public ProcessorBuilder<TOut> ToProcessors(params IMessageProcessor<TOut, TOut>[] processors)
         {
             var builder = this;

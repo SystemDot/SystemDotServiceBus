@@ -2,6 +2,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Acknowledgement;
 using SystemDot.Messaging.Channels.Builders;
 using SystemDot.Messaging.Channels.Caching;
+using SystemDot.Messaging.Channels.Errors;
 using SystemDot.Messaging.Channels.Expiry;
 using SystemDot.Messaging.Channels.Filtering;
 using SystemDot.Messaging.Channels.Handling;
@@ -25,6 +26,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
         readonly PersistenceFactorySelector persistenceFactorySelector;
         readonly ICurrentDateProvider currentDateProvider;
         readonly ITaskRepeater taskRepeater;
+        readonly ErrorReciever errorReciever;
 
         public ReplyRecieveChannelBuilder(
             ISerialiser serialiser, 
@@ -33,7 +35,8 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             AcknowledgementSender acknowledgementSender,
             PersistenceFactorySelector persistenceFactorySelector, 
             ICurrentDateProvider currentDateProvider, 
-            ITaskRepeater taskRepeater)
+            ITaskRepeater taskRepeater, 
+            ErrorReciever errorReciever)
         {
             Contract.Requires(serialiser != null);
             Contract.Requires(messageHandlerRouter != null);
@@ -50,6 +53,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             this.persistenceFactorySelector = persistenceFactorySelector;
             this.currentDateProvider = currentDateProvider;
             this.taskRepeater = taskRepeater;
+            this.errorReciever = errorReciever;
         }
 
         public void Build(ReplyRecieveChannelSchema schema)
@@ -69,6 +73,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
                 .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))
                 .Queue()
                 .ToResequencerIfSequenced(messageCache, schema)
+                .ToProcessorIf(schema.QueueErrors, new ErrorHandler(this.errorReciever))
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
                 .ToProcessor(schema.UnitOfWorkRunner)
                 .ToProcessors(schema.Hooks.ToArray())

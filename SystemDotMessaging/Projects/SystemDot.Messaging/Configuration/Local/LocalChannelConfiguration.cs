@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.Builders;
 using SystemDot.Messaging.Channels.Local.Builders;
 using SystemDot.Messaging.Channels.UnitOfWork;
 
@@ -18,7 +17,8 @@ namespace SystemDot.Messaging.Configuration.Local
             this.address = address;
             this.schema = new LocalChannelSchema
             {
-                UnitOfWorkRunner = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>() 
+                UnitOfWorkRunner = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>(),
+                QueueErrors = true
             };
         }
 

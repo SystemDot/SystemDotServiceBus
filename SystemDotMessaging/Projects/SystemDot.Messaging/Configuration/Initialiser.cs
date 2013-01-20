@@ -4,6 +4,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.Acknowledgement.Builders;
 using SystemDot.Messaging.Channels.Addressing;
+using SystemDot.Messaging.Channels.Errors.Builders;
 using SystemDot.Messaging.Channels.UnitOfWork;
 using SystemDot.Messaging.Configuration.Local;
 using SystemDot.Parallelism;
@@ -32,6 +33,7 @@ namespace SystemDot.Messaging.Configuration
 
             Resolve<AcknowledgementSendChannelBuilder>().Build();
             Resolve<AcknowledgementRecieveChannelBuilder>().Build();
+            Resolve<ErrorRecieveChannelBuilder>().Build(BuildEndpointAddress("errors", GetAddress().ServerName));
             
             return Resolve<IBus>();
         }
