@@ -1,8 +1,6 @@
 ﻿using System;
-using SystemDot.Http;
 using SystemDot.Logging;
-using SystemDot.Messaging.Transport.Http.LongPolling.Servers;
-using SystemDot.Serialisation;
+using SystemDot.Messaging.Transport.Http.LongPolling.Servers.Builders;
 
 namespace SystemDot.Messaging.MessagingServer
 {
@@ -12,25 +10,11 @@ namespace SystemDot.Messaging.MessagingServer
         {
             Logger.LoggingMechanism = new ConsoleLoggingMechanism { ShowInfo = true };
 
-            BuildMessagingServer().Start();
+            MessagingServerBuilder.Build().Start();
 
-            Console.Write("I am the message server. Press enter to exit.");
+            Logger.Info("I am the message server. Press enter to exit.");
+
             Console.ReadLine();
-        }
-
-        private static HttpServer BuildMessagingServer()
-        {
-            return new HttpServer(new FixedPortAddress(Environment.MachineName), BuildMessagingServerHandler());
-        }
-
-        static HttpMessagingServer BuildMessagingServerHandler()
-        {
-            var messagePayloadQueue = new MessagePayloadQueue(new TimeSpan(0, 0, 30));
-
-            return new HttpMessagingServer(
-                new PlatformAgnosticSerialiser(),
-                new SentMessageHandler(messagePayloadQueue),
-                new LongPollHandler(messagePayloadQueue));
         }
     }
 }

@@ -183,6 +183,7 @@
     <Compile Include="Storage\PersistenceHeader.cs" />
     <Compile Include="Storage\PersistenceUseType.cs" />
     <Compile Include="Transport\Http\HttpAddressExtensions.cs" />
+    <Compile Include="Transport\Http\LongPolling\Servers\Builders\MessagingServerBuilder.cs" />
     <Compile Include="Transport\IMessageSender.cs" />
     <Compile Include="Transport\IMessageReciever.cs" />
     <Compile Include="Transport\Http\LongPolling\LongPollRequestHeader.cs" />
