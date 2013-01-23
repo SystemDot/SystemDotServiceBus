@@ -7,7 +7,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_recieving_the_first_message_on_a_durable_channel_that_had_subscribed_after_messages_were_published : WithNoRepeaterMessageConfigurationSubject
+    public class when_recieving_the_first_message_on_a_durable_channel_that_had_subscribed_after_messages_were_published : WithMessageConfigurationSubject
     {
         const string ChannelName = "TestChannel";
         const string PublisherName = "TestPublisher";

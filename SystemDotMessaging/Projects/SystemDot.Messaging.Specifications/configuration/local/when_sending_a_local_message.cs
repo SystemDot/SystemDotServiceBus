@@ -4,7 +4,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.configuration.local
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_a_local_message : WithNoRepeaterMessageConfigurationSubject
+    public class when_sending_a_local_message : WithMessageConfigurationSubject
     {
         static int message;
         static IBus bus;

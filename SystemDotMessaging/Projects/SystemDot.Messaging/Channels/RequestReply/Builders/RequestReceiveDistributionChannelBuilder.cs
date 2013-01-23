@@ -11,27 +11,31 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
         readonly IMessageReciever messageReciever;
         readonly RequestRecieveChannelBuilder builder;
         readonly IChangeStore changeStore;
+        readonly InMemoryChangeStore inMemoryStore;
 
         public RequestReceiveDistributionChannelBuilder(
             IMessageReciever messageReciever, 
             RequestRecieveChannelBuilder builder, 
-            IChangeStore changeStore)
+            IChangeStore changeStore, 
+            InMemoryChangeStore inMemoryStore)
         {
             Contract.Requires(messageReciever != null);
             Contract.Requires(builder != null);
             Contract.Requires(changeStore != null);
+            Contract.Requires(inMemoryStore != null);
             
             this.messageReciever = messageReciever;
             this.builder = builder;
             this.changeStore = changeStore;
+            this.inMemoryStore = inMemoryStore;
         }
 
         public void Build(RequestRecieveChannelSchema schema)
         {
             Contract.Requires(schema != null);
 
-            var distributor = new RequestRecieveChannelDistributor(this.changeStore, this.builder, schema);
-
+            var distributor = new RequestRecieveChannelDistributor(GetChangeStore(schema), this.builder, schema);
+            
             MessagePipelineBuilder.Build()  
                 .With(this.messageReciever)
                 .ToProcessor(new BodyMessageFilter(schema.Address))
@@ -41,6 +45,13 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
                 .With(this.messageReciever)
                 .ToProcessor(new BodyMessageFilter(schema.Address))
                 .ToEndPoint(distributor);
+
+            distributor.Initialise();
+        }
+
+        IChangeStore GetChangeStore(RequestRecieveChannelSchema schema)
+        {
+            return schema.IsDurable ? this.changeStore : this.inMemoryStore;
         }
     }
 }

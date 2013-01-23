@@ -63,6 +63,6 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
         It should_mark_the_first_sequence_number_in_the_subscriber_as_one = () =>
             MessageSender.SentMessages.ExcludeAcknowledgements().First().GetFirstSequence().ShouldEqual(1);
 
-        It should_start_the_task_repeater = () => The<ITaskRepeater>().WasToldTo(r => r.Start());
+        It should_start_the_task_repeater = () => TaskRepeater.Started.ShouldBeTrue();
     }
 }

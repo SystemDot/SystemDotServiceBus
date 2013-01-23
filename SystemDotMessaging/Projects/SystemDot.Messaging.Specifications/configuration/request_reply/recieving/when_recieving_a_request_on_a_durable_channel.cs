@@ -5,8 +5,8 @@ using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.recieving
 {
-    [Subject("Request reply configuration")]
-    public class when_recieving_a_request_message_on_a_durable_request_reply_channel : WithNoRepeaterMessageConfigurationSubject
+    [Subject(SpecificationGroup.Description)]
+    public class when_recieving_a_request_on_a_durable_channel : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
         const string SenderAddress = "TestSenderAddress";

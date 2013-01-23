@@ -6,7 +6,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.configuration.publishing.subscription
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_initialising_a_subscriber_channel : WithNoRepeaterMessageConfigurationSubject
+    public class when_initialising_a_subscriber_channel : WithMessageConfigurationSubject
     {
         const string ChannelName = "TestChannel";
         const string PublisherName = "TestPublisher";

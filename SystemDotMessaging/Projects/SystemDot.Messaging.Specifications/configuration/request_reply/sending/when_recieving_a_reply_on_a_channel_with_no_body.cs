@@ -5,8 +5,8 @@ using SystemDot.Messaging.Channels.Packaging.Headers;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 {
-    [Subject("Request reply configuration")]
-    public class when_recieving_a_reply_message_on_a_request_reply_channel_with_no_body : WithNoRepeaterMessageConfigurationSubject
+    [Subject(SpecificationGroup.Description)]
+    public class when_recieving_a_reply_on_a_channel_with_no_body : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
         const string RecieverAddress = "TestRecieverAddress";

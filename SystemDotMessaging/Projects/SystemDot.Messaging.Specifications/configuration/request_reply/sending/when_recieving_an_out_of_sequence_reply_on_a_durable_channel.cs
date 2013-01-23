@@ -1,37 +1,41 @@
+using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
+using SystemDot.Messaging.Channels.Sequencing;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 {
-    [Subject("Request reply configuration")]
-    public class when_recieving_a_reply_message_on_a_request_reply_channel_with_a_hook 
-        : WithNoRepeaterMessageConfigurationSubject
+    [Subject(SpecificationGroup.Description)]
+    public class when_recieving_an_out_of_sequence_reply_on_a_durable_channel 
+        : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
         const string RecieverAddress = "TestRecieverAddress";
 
         static int message;
         static MessagePayload payload;
-        static TestMessageProcessorHook hook;
+        static TestMessageHandler<int> handler;
 
         Establish context = () =>
         {
-            hook = new TestMessageProcessorHook();
-
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                     .ForRequestReplySendingTo(RecieverAddress)
-                    .WithHook(hook)
+                    .WithDurability()
                 .Initialise();
 
+            handler = new TestMessageHandler<int>();
+            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+
             message = 1;
-            payload = new MessagePayload().MakeReceiveable(message, RecieverAddress, ChannelName, PersistenceUseType.ReplySend);
+            payload = new MessagePayload().MakeReceiveable(message, RecieverAddress, ChannelName, PersistenceUseType.RequestSend);
+            payload.SetSequence(2);
         };
 
         Because of = () => MessageReciever.RecieveMessage(payload);
 
-        It should_run_the_message_through_the_hook = () => hook.Message.ShouldEqual(message);
+        It should_not_push_the_message_to_any_registered_handlers = () => handler.HandledMessage.ShouldEqual(0);
     }
 }

@@ -1,15 +1,13 @@
-using SystemDot.Messaging.Channels.Acknowledgement;
 using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.RequestReply;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 using SystemDot.Messaging.Channels.Sequencing;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.recieving
 {
-    [Subject("Request reply configuration")]
-    public class when_recieving_an_out_of_sequence_request_message_on_a_durable_request_reply_channel : WithNoRepeaterMessageConfigurationSubject
+    [Subject(SpecificationGroup.Description)]
+    public class when_recieving_an_out_of_sequence_request_on_a_durable_channel : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
         const string SenderAddress = "TestSenderAddress";

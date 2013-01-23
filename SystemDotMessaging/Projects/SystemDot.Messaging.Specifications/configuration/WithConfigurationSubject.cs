@@ -1,5 +1,4 @@
 using SystemDot.Ioc;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Pipelines;
 using SystemDot.Messaging.Configuration;
@@ -13,9 +12,14 @@ namespace SystemDot.Messaging.Specifications.configuration
     {
         Establish context = () =>
         {
-            IocContainerLocator.SetContainer(new IocContainer());
+            ResetIoc();
             MessagePipelineBuilder.BuildSynchronousPipelines = true;
         };
+
+        protected static void ResetIoc()
+        {
+            IocContainerLocator.SetContainer(new IocContainer());
+        }
 
         Cleanup after = () => IocContainerLocator.SetContainer(null);
         

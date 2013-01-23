@@ -6,6 +6,7 @@ using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Storage;
 using SystemDot.Serialisation;
+using SystemDot.Messaging.Channels.Sequencing;
 
 namespace SystemDot.Messaging.Specifications.configuration
 {
@@ -28,6 +29,25 @@ namespace SystemDot.Messaging.Specifications.configuration
             return payload;
         }
 
+        public static MessagePayload MakeSequencedReceivable(
+            this MessagePayload payload,
+            object message,
+            string fromAddress,
+            string toAddress,
+            PersistenceUseType useType)
+        {
+            payload.MakeReceiveable(message, fromAddress, toAddress, useType);
+            payload.SetSequence(1);
+            return payload;
+        } 
+        
+        public static T DeserialiseTo<T>(this MessagePayload payload)
+        {
+            return Resolve<ISerialiser>()
+                .Deserialise(payload.GetBody())
+                .As<T>();
+        }
+
         static T Resolve<T>() where T : class
         {
             return IocContainerLocator.Locate().Resolve<T>();
@@ -38,5 +58,6 @@ namespace SystemDot.Messaging.Specifications.configuration
             return Resolve<EndpointAddressBuilder>()
                 .Build(fromAddress, MessageServer.Local().Name);
         }
+
     }
 }

@@ -6,7 +6,7 @@ using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing
 {
-    public class WithPublisherSubject : WithNoRepeaterMessageConfigurationSubject
+    public class WithPublisherSubject : WithMessageConfigurationSubject
     {
         protected static void Subscribe(EndpointAddress subscriberAddress, EndpointAddress publisherAddress)
         {

@@ -8,7 +8,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving
 {
     [Subject(SpecificationGroup.Description)]
     public class when_recieving_out_of_sequence_on_a_durable_subscriber_channel : 
-        WithNoRepeaterMessageConfigurationSubject
+        WithMessageConfigurationSubject
     {
         const string ChannelName = "TestChannel";
         const string PublisherName = "TestPublisher";

@@ -4,9 +4,9 @@ namespace SystemDot.Messaging.Specifications
     {
         public T HandledMessage { get; private set; }
 
-        public void Handle(T message)
+        public virtual void Handle(T message)
         {
-            this.HandledMessage = message;
+            HandledMessage = message;
         }
     }
 }

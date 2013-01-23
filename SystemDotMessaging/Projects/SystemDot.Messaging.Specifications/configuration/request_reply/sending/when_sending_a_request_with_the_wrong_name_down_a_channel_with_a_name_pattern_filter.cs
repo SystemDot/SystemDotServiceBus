@@ -3,8 +3,8 @@ using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 {
-    [Subject("Request reply configuration")]
-    public class when_sending_a_request_message_with_the_wrong_name_down_a_request_reply_channel_with_a_name_pattern_filter : WithNoRepeaterMessageConfigurationSubject
+    [Subject(SpecificationGroup.Description)]
+    public class when_sending_a_request_with_the_wrong_name_down_a_channel_with_a_name_pattern_filter : WithMessageConfigurationSubject
     {
         static IBus bus;
 

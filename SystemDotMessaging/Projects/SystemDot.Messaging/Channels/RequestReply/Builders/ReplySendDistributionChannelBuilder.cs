@@ -12,22 +12,26 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
         readonly ReplySendChannelBuilder builder;
         readonly ReplyAddressLookup replyAddressLookup;
         readonly IChangeStore changeStore;
+        readonly InMemoryChangeStore inMemoryStore;
 
         public ReplySendDistributionChannelBuilder(
             IMessageReciever messageReciever,
             ReplySendChannelBuilder builder, 
             ReplyAddressLookup replyAddressLookup, 
-            IChangeStore changeStore)
+            IChangeStore changeStore, 
+            InMemoryChangeStore inMemoryStore)
         {
             Contract.Requires(messageReciever != null);
             Contract.Requires(builder != null);
             Contract.Requires(replyAddressLookup != null);
             Contract.Requires(changeStore != null);
+            Contract.Requires(inMemoryStore != null);
 
             this.messageReciever = messageReciever;
             this.builder = builder;
             this.replyAddressLookup = replyAddressLookup;
             this.changeStore = changeStore;
+            this.inMemoryStore = inMemoryStore;
         }
 
         public void Build(ReplySendChannelSchema schema)
@@ -35,7 +39,7 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
             Contract.Requires(schema != null);
 
             var distributor = new ReplySendChannelDistributor(
-                this.changeStore, 
+                GetChangeStore(schema), 
                 this.replyAddressLookup, 
                 this.builder, 
                 schema);
@@ -49,6 +53,13 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
                 .WithBusReplyTo(new MessageFilter(
                     new ReplyChannelMessageFilterStategy(this.replyAddressLookup, schema.FromAddress)))
                 .ToEndPoint(distributor);
+
+            distributor.Initialise();
+        }
+
+        IChangeStore GetChangeStore(ReplySendChannelSchema schema)
+        {
+            return schema.IsDurable ? this.changeStore : this.inMemoryStore;
         }
     }
 }

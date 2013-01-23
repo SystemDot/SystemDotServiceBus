@@ -3,8 +3,8 @@ using SystemDot.Messaging.Channels.Packaging.Headers;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 {
-    [Subject("Request reply configuration")] 
-    public class when_sending_a_message_down_two_request_reply_channels : WithNoRepeaterMessageConfigurationSubject
+    [Subject(SpecificationGroup.Description)]
+    public class when_sending_a_request_down_two_channels : WithMessageConfigurationSubject
     {
         const string Channel1Name = "Test1";
         const string Reciever1Address = "TestRecieverAddress1";

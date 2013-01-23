@@ -4,6 +4,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.Acknowledgement.Builders;
 using SystemDot.Messaging.Channels.Addressing;
+using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Channels.UnitOfWork;
 using SystemDot.Messaging.Configuration.Local;
 using SystemDot.Parallelism;
@@ -26,13 +27,13 @@ namespace SystemDot.Messaging.Configuration
 
         public IBus Initialise()
         {
+            Resolve<AcknowledgementSendChannelBuilder>().Build();
+            Resolve<AcknowledgementRecieveChannelBuilder>().Build();
+
             this.buildActions.ForEach(a => a());
             
             Resolve<ITaskRepeater>().Start();
 
-            Resolve<AcknowledgementSendChannelBuilder>().Build();
-            Resolve<AcknowledgementRecieveChannelBuilder>().Build();
-            
             return Resolve<IBus>();
         }
 
@@ -44,6 +45,12 @@ namespace SystemDot.Messaging.Configuration
                 BuildEndpointAddress(name, GetAddress().ServerName),
                 GetAddress().ServerName,
                 this.buildActions);
+        }
+
+        public Initialiser RegisterHandlers(Action<MessageHandlerRouter> registrationAction)
+        {
+            registrationAction(Resolve<MessageHandlerRouter>());
+            return this;
         }
 
         public LocalChannelConfiguration OpenLocalChannel()
