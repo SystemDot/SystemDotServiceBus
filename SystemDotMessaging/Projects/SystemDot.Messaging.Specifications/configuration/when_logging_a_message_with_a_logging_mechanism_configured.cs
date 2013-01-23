@@ -7,7 +7,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.configuration
 {
     [Subject("Configuration")] 
-    public class when_logging_a_message_with_a_logging_mechanism_configured : WithConfiguationSubject
+    public class when_logging_a_message_with_a_logging_mechanism_configured : WithConfigurationSubject
     {
         static Exception exception;
         static ILoggingMechanism toLogWith;    

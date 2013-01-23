@@ -78,9 +78,11 @@
     <Compile Include="Channels\RequestReply\Builders\ReplySendDistributionChannelBuilder.cs" />
     <Compile Include="Channels\RequestReply\Builders\ReplySendSubscriptionHandler.cs" />
     <Compile Include="Channels\RequestReply\Builders\RequestReceiveDistributionChannelBuilder.cs" />
+    <Compile Include="Channels\RequestReply\RegisterReplySendChannelChange.cs" />
+    <Compile Include="Channels\RequestReply\RegisterRequestReceiveChannelChange.cs" />
     <Compile Include="Channels\RequestReply\ReplyChannelMessageFilterStategy.cs" />
-    <Compile Include="Channels\RequestReply\ReplySendChannelDistrbutionStrategy.cs" />
-    <Compile Include="Channels\RequestReply\RequestRecieveChannelDistrbutionStrategy.cs" />
+    <Compile Include="Channels\RequestReply\ReplySendChannelDistributor.cs" />
+    <Compile Include="Channels\RequestReply\RequestRecieveChannelDistributor.cs" />
     <Compile Include="Channels\RequestReply\Builders\RequestRecieveChannelSchema.cs" />
     <Compile Include="Channels\Builders\SendChannelSchema.cs" />
     <Compile Include="Channels\Publishing\Builders\PublisherChannelBuilder.cs" />

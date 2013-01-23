@@ -7,29 +7,18 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
 {
     public class RequestRecieveSubscriptionHandler : IMessageInputter<MessagePayload>
     {
-        readonly RequestRecieveChannelBuilder builder;
-        readonly ChannelDistributor<MessagePayload> distributor;
-        readonly RequestRecieveChannelSchema schema;
+        readonly RequestRecieveChannelDistributor distributor;
 
-        public RequestRecieveSubscriptionHandler(
-            RequestRecieveChannelBuilder builder, 
-            ChannelDistributor<MessagePayload> distributor, 
-            RequestRecieveChannelSchema schema)
+        public RequestRecieveSubscriptionHandler(RequestRecieveChannelDistributor distributor)
         {
-            Contract.Requires(builder != null);
             Contract.Requires(distributor != null);
-            Contract.Requires(schema != null);
             
-            this.builder = builder;
             this.distributor = distributor;
-            this.schema = schema;
         }
 
         public void InputMessage(MessagePayload toInput)
         {
-            this.distributor.RegisterChannel(
-                toInput.GetFromAddress(), 
-                () => this.builder.Build(this.schema, toInput.GetFromAddress()));
+            this.distributor.RegisterChannel(toInput.GetFromAddress());
         }
     }
 }

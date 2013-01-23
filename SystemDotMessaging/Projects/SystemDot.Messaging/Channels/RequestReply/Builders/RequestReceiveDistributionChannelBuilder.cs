@@ -1,8 +1,7 @@
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Channels.Distribution;
 using SystemDot.Messaging.Channels.Filtering;
-using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Pipelines;
+using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Channels.RequestReply.Builders
@@ -11,32 +10,32 @@ namespace SystemDot.Messaging.Channels.RequestReply.Builders
     {
         readonly IMessageReciever messageReciever;
         readonly RequestRecieveChannelBuilder builder;
-        readonly RequestRecieveChannelDistrbutionStrategy channelDistrbutionStrategy;
+        readonly IChangeStore changeStore;
 
         public RequestReceiveDistributionChannelBuilder(
             IMessageReciever messageReciever, 
             RequestRecieveChannelBuilder builder, 
-            RequestRecieveChannelDistrbutionStrategy channelDistrbutionStrategy)
+            IChangeStore changeStore)
         {
             Contract.Requires(messageReciever != null);
             Contract.Requires(builder != null);
-            Contract.Requires(channelDistrbutionStrategy != null);
+            Contract.Requires(changeStore != null);
             
             this.messageReciever = messageReciever;
             this.builder = builder;
-            this.channelDistrbutionStrategy = channelDistrbutionStrategy;
+            this.changeStore = changeStore;
         }
 
         public void Build(RequestRecieveChannelSchema schema)
         {
             Contract.Requires(schema != null);
 
-            var distributor = new ChannelDistributor<MessagePayload>(this.channelDistrbutionStrategy);
+            var distributor = new RequestRecieveChannelDistributor(this.changeStore, this.builder, schema);
 
             MessagePipelineBuilder.Build()  
                 .With(this.messageReciever)
                 .ToProcessor(new BodyMessageFilter(schema.Address))
-                .ToEndPoint(new RequestRecieveSubscriptionHandler(this.builder, distributor, schema));
+                .ToEndPoint(new RequestRecieveSubscriptionHandler(distributor));
 
             MessagePipelineBuilder.Build()
                 .With(this.messageReciever)

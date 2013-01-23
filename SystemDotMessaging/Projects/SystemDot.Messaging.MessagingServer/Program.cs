@@ -8,7 +8,7 @@ namespace SystemDot.Messaging.MessagingServer
     {
         static void Main(string[] args)
         {
-            Logger.LoggingMechanism = new ConsoleLoggingMechanism { ShowInfo = true };
+            Logger.LoggingMechanism = new ConsoleLoggingMechanism { ShowInfo = true, ShowDebug = true };
 
             MessagingServerBuilder.Build().Start();
 

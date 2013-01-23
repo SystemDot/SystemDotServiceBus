@@ -1,40 +1,43 @@
 using System;
 using System.Collections.Concurrent;
-using System.Diagnostics.Contracts;
 using System.Threading;
 using SystemDot.Messaging.Channels.Addressing;
+using SystemDot.Messaging.Storage.Changes;
 
 namespace SystemDot.Messaging.Channels.Distribution
 {
-    public class ChannelDistributor<T> : IMessageInputter<T>
+    public abstract class ChannelDistributor<T> : ChangeRoot, IMessageInputter<T>
     {
         readonly ConcurrentDictionary<EndpointAddress, ChannelContainer> channels;
-        readonly IChannelDistrbutionStrategy<T> distrbutionStrategy;
 
-        public ChannelDistributor(IChannelDistrbutionStrategy<T> distrbutionStrategy)
+        protected ChannelDistributor(IChangeStore changeStore)
+            : base(changeStore)
         {
-            Contract.Requires(distrbutionStrategy != null);
-
-            this.distrbutionStrategy = distrbutionStrategy;
             this.channels = new ConcurrentDictionary<EndpointAddress, ChannelContainer>();
         }
 
         public void InputMessage(T toInput)
         {
-            this.distrbutionStrategy.Distribute(this, toInput);
+            Distribute(toInput);
         }
+
+        protected abstract void Distribute(T toDistibute);
 
         public IMessageInputter<T> GetChannel(EndpointAddress address)
         {
             return this.channels[address].GetChannel();
         }
 
-        public void RegisterChannel(EndpointAddress address, Func<IMessageInputter<T>> toRegister)
+        protected void RegisterChannel(EndpointAddress address, Func<IMessageInputter<T>> toRegister)
         {
             var channelContainer = new ChannelContainer(toRegister);
 
             if (this.channels.TryAdd(address, channelContainer))
                 channelContainer.BuildChannel();
+        }
+
+        protected override void UrgeCheckPoint()
+        {
         }
 
         class ChannelContainer

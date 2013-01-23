@@ -24,9 +24,9 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling.Servers
 
             EndpointAddress address = toHandle.GetLongPollRequestAddress();
 
-            Logger.Info("Handling long pole request for {0}", address);
+            Logger.Debug("Handling long pole request for {0}", address);
             outgoingMessages.AddRange(this.outgoingQueue.DequeueAll(address));
-            Logger.Info("Handled long pole request for {0}", address);
+            Logger.Debug("Handled long pole request for {0}", address);
         }
     }
 }

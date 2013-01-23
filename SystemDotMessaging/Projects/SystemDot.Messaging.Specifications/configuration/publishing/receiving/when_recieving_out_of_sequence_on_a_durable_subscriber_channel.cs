@@ -8,7 +8,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving
 {
     [Subject(SpecificationGroup.Description)]
     public class when_recieving_out_of_sequence_on_a_durable_subscriber_channel : 
-        WithMessageConfigurationSubject
+        WithNoRepeaterMessageConfigurationSubject
     {
         const string ChannelName = "TestChannel";
         const string PublisherName = "TestPublisher";
@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             message = 1;
-            payload = CreateReceiveablePayload(message, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
+            payload = new MessagePayload().MakeReceiveable(message, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
             payload.SetFirstSequence(1);
             payload.SetSequence(2);
         };

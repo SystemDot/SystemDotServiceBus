@@ -12,7 +12,7 @@ using SystemDot.Messaging.Storage;
 namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_recieving_on_a_subscriber_channel : WithMessageConfigurationSubject
+    public class when_recieving_on_a_subscriber_channel : WithNoRepeaterMessageConfigurationSubject
     {
         const string ChannelName = "TestChannel";
         const string PublisherName = "TestPublisher";
@@ -33,7 +33,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             message = 1;
-            payload = CreateReceiveablePayload(message, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
+            payload = new MessagePayload().MakeReceiveable(message, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
             originalPersistenceId = payload.GetPersistenceId();
             payload.SetSequence(1); 
             payload.SetFirstSequence(1);
