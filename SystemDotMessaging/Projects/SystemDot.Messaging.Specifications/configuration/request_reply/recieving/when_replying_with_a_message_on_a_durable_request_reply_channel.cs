@@ -7,7 +7,7 @@ using SystemDot.Messaging.Channels.Sequencing;
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.recieving
 {
     [Subject("Request reply configuration")]
-    public class when_replying_with_a_message_on_a_durable_request_reply_channel : WithMessageConfigurationSubject
+    public class when_replying_with_a_message_on_a_durable_request_reply_channel : WithNoRepeaterMessageConfigurationSubject
     {
         const string ChannelName = "Test";
         const string SenderChannelName = "TestSender";
@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
                 .OpenChannel(ChannelName).ForRequestReplyRecieving().WithDurability()
                 .Initialise();
 
-            MessagePayload request = CreateReceiveablePayload(1, SenderChannelName, ChannelName, PersistenceUseType.RequestSend);
+            MessagePayload request = new MessagePayload().MakeReceiveable(1, SenderChannelName, ChannelName, PersistenceUseType.RequestSend);
             request.SetSequence(1);
             MessageReciever.RecieveMessage(request);
 

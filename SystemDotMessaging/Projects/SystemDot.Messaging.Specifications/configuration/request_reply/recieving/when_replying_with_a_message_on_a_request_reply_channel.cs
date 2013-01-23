@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
+using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Messaging.Channels.Repeating;
-using SystemDot.Messaging.Channels.RequestReply;
 using SystemDot.Messaging.Channels.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.Changes;
@@ -15,7 +15,7 @@ using SystemDot.Messaging.Specifications.configuration.publishing;
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.recieving
 {
     [Subject("Request reply configuration")]
-    public class when_replying_with_a_message_on_a_request_reply_channel : WithMessageConfigurationSubject
+    public class when_replying_with_a_message_on_a_request_reply_channel : WithNoRepeaterMessageConfigurationSubject
     {
         const string ChannelName = "Test";
         const string SenderChannelName = "TestSender";
@@ -35,7 +35,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
                 .ForRequestReplyRecieving()
                 .Initialise();
 
-            MessageReciever.RecieveMessage(CreateReceiveablePayload(1, SenderChannelName, ChannelName, PersistenceUseType.RequestSend));
+            MessageReciever.RecieveMessage(new MessagePayload().MakeReceiveable(1, SenderChannelName, ChannelName, PersistenceUseType.RequestSend));
 
             message = 1;
         };

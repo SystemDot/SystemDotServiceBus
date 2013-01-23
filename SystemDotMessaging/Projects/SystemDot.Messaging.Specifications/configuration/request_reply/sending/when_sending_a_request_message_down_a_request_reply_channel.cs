@@ -13,7 +13,7 @@ using SystemDot.Messaging.Channels.Sequencing;
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 {
     [Subject("Request reply configuration")] 
-    public class when_sending_a_request_message_down_a_request_reply_channel : WithMessageConfigurationSubject
+    public class when_sending_a_request_message_down_a_request_reply_channel : WithNoRepeaterMessageConfigurationSubject
     {
         const string ChannelName = "Test";
         const string RecieverAddress = "TestRecieverAddress";

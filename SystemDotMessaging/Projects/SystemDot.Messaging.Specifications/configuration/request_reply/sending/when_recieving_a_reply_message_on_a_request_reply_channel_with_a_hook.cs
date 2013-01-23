@@ -6,7 +6,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 {
     [Subject("Request reply configuration")]
     public class when_recieving_a_reply_message_on_a_request_reply_channel_with_a_hook 
-        : WithMessageConfigurationSubject
+        : WithNoRepeaterMessageConfigurationSubject
     {
         const string ChannelName = "Test";
         const string RecieverAddress = "TestRecieverAddress";
@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
                 .Initialise();
 
             message = 1;
-            payload = CreateReceiveablePayload(message, RecieverAddress, ChannelName, PersistenceUseType.ReplySend);
+            payload = new MessagePayload().MakeReceiveable(message, RecieverAddress, ChannelName, PersistenceUseType.ReplySend);
         };
 
         Because of = () => MessageReciever.RecieveMessage(payload);

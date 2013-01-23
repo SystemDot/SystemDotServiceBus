@@ -3,7 +3,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.configuration.local
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_a_local_message_with_a_unit_of_work_setup : WithMessageConfigurationSubject
+    public class when_sending_a_local_message_with_a_unit_of_work_setup : WithNoRepeaterMessageConfigurationSubject
     {
         static TestUnitOfWork unitOfWork;
         static IBus bus;

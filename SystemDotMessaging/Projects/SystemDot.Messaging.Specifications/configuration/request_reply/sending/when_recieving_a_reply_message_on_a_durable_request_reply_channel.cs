@@ -6,7 +6,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 {
     [Subject("Request reply configuration")]
-    public class when_recieving_a_reply_message_on_a_durable_request_reply_channel : WithMessageConfigurationSubject
+    public class when_recieving_a_reply_message_on_a_durable_request_reply_channel : WithNoRepeaterMessageConfigurationSubject
     {
         const string ChannelName = "Test";
         const string RecieverAddress = "TestRecieverAddress";
@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
                     .WithDurability()
                 .Initialise();
 
-            payload = CreateReceiveablePayload(1, RecieverAddress, ChannelName, PersistenceUseType.ReplySend);
+            payload = new MessagePayload().MakeReceiveable(1, RecieverAddress, ChannelName, PersistenceUseType.ReplySend);
         };
 
         Because of = () => MessageReciever.RecieveMessage(payload);

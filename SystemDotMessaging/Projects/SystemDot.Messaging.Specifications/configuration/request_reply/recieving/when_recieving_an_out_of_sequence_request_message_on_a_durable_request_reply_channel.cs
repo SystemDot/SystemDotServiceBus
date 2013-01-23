@@ -9,7 +9,7 @@ using SystemDot.Messaging.Channels.Sequencing;
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.recieving
 {
     [Subject("Request reply configuration")]
-    public class when_recieving_an_out_of_sequence_request_message_on_a_durable_request_reply_channel : WithMessageConfigurationSubject
+    public class when_recieving_an_out_of_sequence_request_message_on_a_durable_request_reply_channel : WithNoRepeaterMessageConfigurationSubject
     {
         const string ChannelName = "Test";
         const string SenderAddress = "TestSenderAddress";
@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             message = 1;
-            payload = CreateReceiveablePayload(message, SenderAddress, ChannelName, PersistenceUseType.RequestSend);
+            payload = new MessagePayload().MakeReceiveable(message, SenderAddress, ChannelName, PersistenceUseType.RequestSend);
             payload.SetSequence(2);
         };
 

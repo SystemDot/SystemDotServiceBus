@@ -8,7 +8,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_recieving_on_a_subscriber_channel_with_no_body : WithMessageConfigurationSubject
+    public class when_recieving_on_a_subscriber_channel_with_no_body : WithNoRepeaterMessageConfigurationSubject
     {
         const string ChannelName = "TestChannel";
         const string PublisherName = "TestPublisher";

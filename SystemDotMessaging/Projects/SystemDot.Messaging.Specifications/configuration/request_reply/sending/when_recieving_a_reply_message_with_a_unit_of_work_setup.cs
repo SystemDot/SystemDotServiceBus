@@ -7,7 +7,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 {
     [Subject("Request reply configuration")]
-    public class when_recieving_a_reply_message_with_a_unit_of_work_setup : WithMessageConfigurationSubject
+    public class when_recieving_a_reply_message_with_a_unit_of_work_setup : WithNoRepeaterMessageConfigurationSubject
     {
         const string ChannelName = "Test";
         const string RecieverAddress = "TestRecieverAddress";
@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
             handler = new TestMessageHandler<int>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
-            payload = CreateReceiveablePayload(1, RecieverAddress, ChannelName, PersistenceUseType.ReplySend);
+            payload = new MessagePayload().MakeReceiveable(1, RecieverAddress, ChannelName, PersistenceUseType.ReplySend);
         };
 
         Because of = () => MessageReciever.RecieveMessage(payload);
