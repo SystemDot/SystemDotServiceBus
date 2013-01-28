@@ -41,27 +41,28 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
         Because of = () => bus.Reply(message);
 
         It should_send_a_message_with_the_correct_to_address = () =>
-            MessageSender.SentMessages.ExcludeAcknowledgements().First().GetToAddress().ShouldEqual(BuildAddress(SenderChannelName));
+            MessageSender.SentMessages.ExcludeAcknowledgements().First().GetToAddress()
+                .ShouldEqual(BuildAddress(SenderChannelName));
 
         It should_send_a_message_with_the_correct_from_address = () =>
-            MessageSender.SentMessages.ExcludeAcknowledgements().First().GetFromAddress().ShouldEqual(BuildAddress(ChannelName));
+            MessageSender.SentMessages.ExcludeAcknowledgements().First().GetFromAddress()
+                .ShouldEqual(BuildAddress(ChannelName));
 
         It should_send_a_message_with_the_correct_content = () =>
-            MessageSender.SentMessages.ExcludeAcknowledgements().First().DeserialiseTo<int>().ShouldEqual(message);
+            MessageSender.SentMessages.ExcludeAcknowledgements().First().DeserialiseTo<int>()
+                .ShouldEqual(message);
 
         It should_mark_the_message_with_the_persistence_id = () =>
-            MessageSender.SentMessages.ExcludeAcknowledgements().First().GetPersistenceId()
-                .ShouldEqual(new MessagePersistenceId(
-                    MessageSender.SentMessages.ExcludeAcknowledgements().First().Id,
-                    BuildAddress(SenderChannelName),
-                    PersistenceUseType.ReplySend));
+            MessageSender.SentMessages.ExcludeAcknowledgements().First()
+                .ShouldHaveCorrectPersistenceId(SenderChannelName, PersistenceUseType.ReplySend);
 
         It should_set_original_persistence_id_to_the_persistence_id_of_the_message_with_the_persistence_id = () =>
            MessageSender.SentMessages.ExcludeAcknowledgements().First().GetSourcePersistenceId()
                .ShouldEqual(MessageSender.SentMessages.ExcludeAcknowledgements().First().GetPersistenceId());
 
         It should_mark_the_time_the_message_is_sent = () =>
-            MessageSender.SentMessages.ExcludeAcknowledgements().First().GetLastTimeSent().ShouldBeGreaterThan(DateTime.MinValue);
+            MessageSender.SentMessages.ExcludeAcknowledgements().First().GetLastTimeSent()
+                .ShouldBeGreaterThan(DateTime.MinValue);
 
         It should_mark_the_amount_of_times_the_message_has_been_sent = () =>
             MessageSender.SentMessages.ExcludeAcknowledgements().First().GetAmountSent().ShouldEqual(1);

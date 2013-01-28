@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Specifications.channels.repeating
         Establish context = () =>
         {
             With<PersistenceBehaviour>();
-            Configure<IRepeatStrategy>(new SimpleRepeatStrategy(The<MessageCache>()));
+            Configure<IRepeatStrategy>(new SimpleRepeatStrategy());
             
             messages = new List<MessagePayload>();
                 

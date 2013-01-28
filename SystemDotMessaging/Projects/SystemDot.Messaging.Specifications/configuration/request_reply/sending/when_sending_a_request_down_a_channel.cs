@@ -16,14 +16,14 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
         const string ChannelName = "Test";
         const string RecieverAddress = "TestRecieverAddress";
         
-        static InMemoryChangeStore persistentMemoryChangeStore; 
+        static InMemoryChangeStore inMemoryChangeStore; 
         static IBus bus;
         static int message;
         
         Establish context = () =>
         {
-            persistentMemoryChangeStore = new InMemoryChangeStore(new PlatformAgnosticSerialiser());
-            ConfigureAndRegister<MessageCacheFactory>(new MessageCacheFactory(persistentMemoryChangeStore));
+            inMemoryChangeStore = new InMemoryChangeStore(new PlatformAgnosticSerialiser());
+            ConfigureAndRegister<MessageCacheFactory>(new MessageCacheFactory(inMemoryChangeStore));
             
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
@@ -42,7 +42,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
             MessageSender.SentMessages.First().GetFromAddress().ShouldEqual(BuildAddress(ChannelName));
 
         It should_send_a_message_with_the_correct_content = () =>
-            Deserialise<int>(MessageSender.SentMessages.First().GetBody()).ShouldEqual(message);
+            MessageSender.SentMessages.First().DeserialiseTo<int>().ShouldEqual(message);
 
         It should_mark_the_message_with_the_persistence_id = () =>
             MessageSender.SentMessages.First().GetPersistenceId()
@@ -65,7 +65,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
             MessageSender.SentMessages.First().GetSequence().ShouldEqual(1);
 
         It should_not_persist_the_message = () =>
-             persistentMemoryChangeStore
+             inMemoryChangeStore
                 .GetMessages(PersistenceUseType.RequestSend, BuildAddress(ChannelName))
                 .ShouldBeEmpty();
 

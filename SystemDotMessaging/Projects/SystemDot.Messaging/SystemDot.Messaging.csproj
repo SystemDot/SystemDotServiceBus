@@ -61,6 +61,8 @@
     <Compile Include="Channels\Local\NoLocalChannelConfiguredException.cs" />
     <Compile Include="Channels\MessageProcessor.cs" />
     <Compile Include="Channels\Builders\PersistenceFactorySelector.cs" />
+    <Compile Include="Channels\PointToPoint\Builders\PointToPointSendChannelBuilder.cs" />
+    <Compile Include="Channels\PointToPoint\Builders\PointToPointSendChannelSchema.cs" />
     <Compile Include="Channels\Publishing\Builders\ISubscriberSendChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\SubscriberRecieveChannelSchema.cs" />
     <Compile Include="Channels\Publishing\Builders\SubscriptionRequestChannelSchema.cs" />
@@ -68,6 +70,7 @@
     <Compile Include="Channels\Publishing\PersistentSubscriberCollection.cs" />
     <Compile Include="Channels\Publishing\SubscribeChange.cs" />
     <Compile Include="Channels\Publishing\Subscriber.cs" />
+    <Compile Include="Channels\Repeating\ConstantTimeRepeatStrategy.cs" />
     <Compile Include="Channels\Repeating\EscalatingTimeRepeatStrategy.cs" />
     <Compile Include="Channels\Repeating\IRepeatStrategy.cs" />
     <Compile Include="Channels\Repeating\LastSentHeader.cs" />
@@ -113,6 +116,7 @@
     <Compile Include="Channels\UnitOfWork\NullUnitOfWorkFactory.cs" />
     <Compile Include="Channels\UnitOfWork\UnitOfWorkRunner.cs" />
     <Compile Include="Configuration\ComponentRegistration\InProcessTransportComponents.cs" />
+    <Compile Include="Configuration\ComponentRegistration\PointToPointComponents.cs" />
     <Compile Include="Configuration\FilteredBy.cs" />
     <Compile Include="Channels\Acknowledgement\AcknowledgementHeader.cs" />
     <Compile Include="Channels\Acknowledgement\MessageAcknowledgementExtensions.cs" />
@@ -142,6 +146,8 @@
     <Compile Include="Configuration\MessageServerConfiguration.cs" />
     <Compile Include="Configuration\Initialiser.cs" />
     <Compile Include="Configuration\MessagingConfiguration.cs" />
+    <Compile Include="Configuration\PointToPoint\PointToPointSenderConfiguration.cs" />
+    <Compile Include="Configuration\RepeatMessages.cs" />
     <Compile Include="Configuration\RequestReply\RequestReplySenderConfiguration.cs" />
     <Compile Include="Configuration\RequestReply\RequestReplyRecieverConfiguration.cs" />
     <Compile Include="IBus.cs" />

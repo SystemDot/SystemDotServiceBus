@@ -14,10 +14,7 @@ namespace SystemDot.Messaging.Channels.Repeating
             ICurrentDateProvider currentDateProvider,
             ITaskRepeater taskRepeater)
         {
-            return builder.ToMessageRepeater(
-                currentDateProvider, 
-                taskRepeater, 
-                new EscalatingTimeRepeatStrategy(currentDateProvider, messageCache));
+            return builder.ToMessageRepeater(messageCache, currentDateProvider, taskRepeater, new EscalatingTimeRepeatStrategy());
         }
 
 
@@ -27,19 +24,17 @@ namespace SystemDot.Messaging.Channels.Repeating
             ICurrentDateProvider currentDateProvider,
             ITaskRepeater taskRepeater)
         {
-            return builder.ToMessageRepeater(
-                currentDateProvider,
-                taskRepeater,
-                new SimpleRepeatStrategy(messageCache));
+            return builder.ToMessageRepeater(messageCache, currentDateProvider, taskRepeater, new SimpleRepeatStrategy());
         }
 
-        static ProcessorBuilder<MessagePayload> ToMessageRepeater(
-            this ProcessorBuilder<MessagePayload> builder,
-            ICurrentDateProvider currentDateProvider,
-            ITaskRepeater taskRepeater,
+        public static ProcessorBuilder<MessagePayload> ToMessageRepeater(
+            this ProcessorBuilder<MessagePayload> builder, 
+            MessageCache messageCache, 
+            ICurrentDateProvider currentDateProvider, 
+            ITaskRepeater taskRepeater, 
             IRepeatStrategy strategy)
         {
-            var repeater = new MessageRepeater(strategy, currentDateProvider);
+            var repeater = new MessageRepeater(strategy, currentDateProvider, messageCache);
             taskRepeater.Register(TimeSpan.FromSeconds(1), repeater.Start);
 
             return builder.ToProcessor(repeater);

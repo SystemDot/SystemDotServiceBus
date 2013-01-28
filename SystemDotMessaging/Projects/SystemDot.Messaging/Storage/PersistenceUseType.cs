@@ -10,6 +10,7 @@ namespace SystemDot.Messaging.Storage
         SubscriberSend,
         SubscriberReceive,
         SubscriberRequestSend,
-        SubscriberRequestReceive
+        SubscriberRequestReceive,
+        PointToPointSend
     }
 }

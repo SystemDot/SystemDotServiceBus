@@ -19,6 +19,7 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
                 .OpenChannel("TestSender")
                     .ForRequestReplySendingTo("TestReciever")
                     .WithDurability()
+                    .WithMessageRepeating(RepeatMessages.Every(TimeSpan.FromSeconds(10)))
                 .Initialise();
 
             IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());

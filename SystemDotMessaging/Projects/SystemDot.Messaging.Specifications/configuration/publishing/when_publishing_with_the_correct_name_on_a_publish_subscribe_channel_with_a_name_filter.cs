@@ -1,5 +1,4 @@
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Specifications.configuration.publishing.requests;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing

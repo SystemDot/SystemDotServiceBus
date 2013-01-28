@@ -1,7 +1,6 @@
 using System.Linq;
 using SystemDot.Messaging.Configuration;
 using Machine.Specifications;
-using SystemDot.Messaging.Channels.Packaging.Headers;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
 {
@@ -21,6 +20,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
         Because of = () => bus.Send(new TestNamePatternMessage());
 
         It should_pass_the_message_through = () => 
-            Deserialise<TestNamePatternMessage>(MessageSender.SentMessages.First().GetBody()).ShouldNotBeNull();
+           MessageSender.SentMessages.First().DeserialiseTo<TestNamePatternMessage>().ShouldNotBeNull();
     }
 }

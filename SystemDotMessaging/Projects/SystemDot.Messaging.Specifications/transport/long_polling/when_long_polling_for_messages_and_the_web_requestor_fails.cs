@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
             Configure<ITaskStarter>(starter);            
         };
 
-        Because of = () => Subject.StartPolling(address);
+        Because of = () => Subject.RegisterAddress(address);
 
         It should_not_fail_but_continue_polling = () => starter.InvocationCount.ShouldEqual(2);
         

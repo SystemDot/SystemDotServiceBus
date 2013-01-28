@@ -1,4 +1,4 @@
-namespace SystemDot.Messaging.Specifications.configuration.publishing.requests
+namespace SystemDot.Messaging.Specifications.configuration.publishing
 {
     public static class SpecificationGroup
     {

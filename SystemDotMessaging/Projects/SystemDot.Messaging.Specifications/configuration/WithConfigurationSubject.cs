@@ -55,10 +55,5 @@ namespace SystemDot.Messaging.Specifications.configuration
         {
             return The<EndpointAddressBuilder>().Build(channelName, serverName);
         }
-
-        protected static T Deserialise<T>(byte[] toDeserialise)
-        {
-            return Resolve<ISerialiser>().Deserialise(toDeserialise).As<T>();
-        }
     }
 }

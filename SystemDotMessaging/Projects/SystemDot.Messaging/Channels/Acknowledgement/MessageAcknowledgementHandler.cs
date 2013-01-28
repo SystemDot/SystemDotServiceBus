@@ -22,8 +22,10 @@ namespace SystemDot.Messaging.Channels.Acknowledgement
 
             MessageCache cache = GetCache(toInput.GetAcknowledgementId());
 
+            var messageId = toInput.GetAcknowledgementId().MessageId;
+                
             if (cache != null)
-                cache.Delete(toInput.GetAcknowledgementId().MessageId);
+                cache.Delete(messageId);
         }
 
         MessageCache GetCache(MessagePersistenceId id)

@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Specifications.channels.repeating
             With<PersistenceBehaviour>();
             
             Configure<ICurrentDateProvider>(new TestCurrentDateProvider(currentDate));
-            Configure<IRepeatStrategy>(new EscalatingTimeRepeatStrategy(The<ICurrentDateProvider>(), The<MessageCache>()));
+            Configure<IRepeatStrategy>(new EscalatingTimeRepeatStrategy());
             
             Subject.MessageProcessed += m => processedMessage = m;
 

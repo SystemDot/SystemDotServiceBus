@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Transport.InProcess
             server.MessageProcessed += payload => MessageProcessed(payload);
         }
 
-        public void StartPolling(EndpointAddress toRegister)
+        public void RegisterAddress(EndpointAddress toRegister)
         {
             Contract.Requires(toRegister != EndpointAddress.Empty);
         }

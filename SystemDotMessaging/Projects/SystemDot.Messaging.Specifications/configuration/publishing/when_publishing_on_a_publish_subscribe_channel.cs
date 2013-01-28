@@ -4,7 +4,6 @@ using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging.Headers;
 using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Channels.Sequencing;
-using SystemDot.Messaging.Specifications.configuration.publishing.requests;
 using SystemDot.Parallelism;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -49,7 +48,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
                .ShouldEqual(MessageSender.SentMessages.ExcludeAcknowledgements().First().GetPersistenceId());
 
         It should_send_a_message_with_the_correct_content = () => 
-            Deserialise<int>(MessageSender.SentMessages.ExcludeAcknowledgements().First().GetBody()).ShouldEqual(message);
+            MessageSender.SentMessages.ExcludeAcknowledgements().First().DeserialiseTo<int>().ShouldEqual(message);
 
         It should_mark_the_time_the_message_is_sent = () => 
             MessageSender.SentMessages.ExcludeAcknowledgements().First().GetLastTimeSent().ShouldBeGreaterThan(DateTime.MinValue);

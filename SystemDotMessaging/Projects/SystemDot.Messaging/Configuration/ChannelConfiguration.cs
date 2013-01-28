@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Addressing;
+using SystemDot.Messaging.Configuration.PointToPoint;
 using SystemDot.Messaging.Configuration.Publishers;
 using SystemDot.Messaging.Configuration.RequestReply;
 
@@ -49,5 +50,14 @@ namespace SystemDot.Messaging.Configuration
                 BuildEndpointAddress(publisherAddress, this.messageServerName),
                 this.buildActions);
         }
+
+        public PointToPointSenderConfiguration ForPointToPointSendingTo(string recieverAddress)
+        {
+            return new PointToPointSenderConfiguration(
+                this.buildActions,
+                BuildEndpointAddress(recieverAddress, this.messageServerName));
+        }
     }
+
+    
 }

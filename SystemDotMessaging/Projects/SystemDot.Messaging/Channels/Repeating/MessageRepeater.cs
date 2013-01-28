@@ -1,5 +1,6 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Channels.Repeating
 {
@@ -7,14 +8,17 @@ namespace SystemDot.Messaging.Channels.Repeating
     {
         readonly IRepeatStrategy repeatStrategy;
         readonly ICurrentDateProvider currentDateProvider;
-        
-        public MessageRepeater(IRepeatStrategy repeatStrategy, ICurrentDateProvider currentDateProvider)
+        readonly MessageCache messageCache;
+
+        public MessageRepeater(IRepeatStrategy repeatStrategy, ICurrentDateProvider currentDateProvider, MessageCache messageCache)
         {
             Contract.Requires(repeatStrategy != null);
             Contract.Requires(currentDateProvider != null);
+            Contract.Requires(messageCache != null);
         
             this.repeatStrategy = repeatStrategy;
             this.currentDateProvider = currentDateProvider;
+            this.messageCache = messageCache;
         }
 
         public override void InputMessage(MessagePayload toInput)
@@ -31,7 +35,7 @@ namespace SystemDot.Messaging.Channels.Repeating
                 
         public void Start()
         {
-            this.repeatStrategy.Repeat(this);
+            this.repeatStrategy.Repeat(this, this.messageCache, this.currentDateProvider);
         }
     }
 }

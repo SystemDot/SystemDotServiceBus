@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Specifications
             MessageProcessed(toRecieve);
         }
 
-        public void StartPolling(EndpointAddress address)
+        public void RegisterAddress(EndpointAddress address)
         {
             this.pollingAddresses.Add(address);
         }

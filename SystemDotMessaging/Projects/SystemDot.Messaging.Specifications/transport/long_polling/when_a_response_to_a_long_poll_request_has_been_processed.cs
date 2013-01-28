@@ -38,7 +38,7 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
             Subject.MessageProcessed += payload => messagePayloads.Add(payload);
         };
 
-        Because of = () => Subject.StartPolling(messagePayload.GetToAddress());
+        Because of = () => Subject.RegisterAddress(messagePayload.GetToAddress());
 
         It should_poll_again = () => messagePayloads.Count.ShouldEqual(2);
     }

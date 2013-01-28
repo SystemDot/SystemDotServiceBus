@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Transport.Http.LongPolling
             this.starter = starter;
         }
 
-        public void StartPolling(EndpointAddress address)
+        public void RegisterAddress(EndpointAddress address)
         {
             Contract.Requires(address != EndpointAddress.Empty);
 

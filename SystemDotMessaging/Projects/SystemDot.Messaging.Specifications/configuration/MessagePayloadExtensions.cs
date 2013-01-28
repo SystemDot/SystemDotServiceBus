@@ -7,6 +7,7 @@ using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Storage;
 using SystemDot.Serialisation;
 using SystemDot.Messaging.Channels.Sequencing;
+using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration
 {
@@ -46,6 +47,18 @@ namespace SystemDot.Messaging.Specifications.configuration
             return Resolve<ISerialiser>()
                 .Deserialise(payload.GetBody())
                 .As<T>();
+        }
+
+        public static void ShouldHaveCorrectPersistenceId(
+            this MessagePayload payload, 
+            string address, 
+            PersistenceUseType persistenceUseType)
+        {
+            payload.GetPersistenceId()
+                .ShouldEqual(new MessagePersistenceId(
+                    payload.Id,
+                    BuildAddress(address),
+                    persistenceUseType));
         }
 
         static T Resolve<T>() where T : class

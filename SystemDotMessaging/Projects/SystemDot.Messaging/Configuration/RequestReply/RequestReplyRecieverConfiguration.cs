@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using SystemDot.Ioc;
-using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Expiry;
+using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Channels.UnitOfWork;
 using SystemDot.Messaging.Transport;
@@ -16,12 +15,14 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         readonly ReplySendChannelSchema sendSchema;
         readonly RequestRecieveChannelSchema requestSchema;
 
-        public RequestReplyRecieverConfiguration(EndpointAddress address, List<Action> buildActions) : base(buildActions)
+        public RequestReplyRecieverConfiguration(EndpointAddress address, List<Action> buildActions) 
+            : base(buildActions)
         {
             this.sendSchema = new ReplySendChannelSchema
             {
                 FromAddress = address,
-                ExpiryStrategy = new PassthroughMessageExpiryStrategy()
+                ExpiryStrategy = new PassthroughMessageExpiryStrategy(),
+                RepeatStrategy = new EscalatingTimeRepeatStrategy()
             };
 
             this.requestSchema = new RequestRecieveChannelSchema
@@ -35,7 +36,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             Resolve<RequestReceiveDistributionChannelBuilder>().Build(this.requestSchema);
             Resolve<ReplySendDistributionChannelBuilder>().Build(this.sendSchema);
-            Resolve<IMessageReciever>().StartPolling(GetAddress());
+            Resolve<IMessageReciever>().RegisterAddress(GetAddress());
         }
 
         protected override EndpointAddress GetAddress()
@@ -55,6 +56,14 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             Contract.Requires(strategy != null);
 
             this.sendSchema.ExpiryStrategy = strategy;
+            return this;
+        }
+
+        public RequestReplyRecieverConfiguration WithMessageRepeating(IRepeatStrategy strategy)
+        {
+            Contract.Requires(strategy != null);
+
+            this.sendSchema.RepeatStrategy = strategy;
             return this;
         }
 

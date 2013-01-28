@@ -37,7 +37,7 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
             
         };
 
-        Because of = () => Subject.StartPolling(new EndpointAddress("Address2", "TestServer"));
+        Because of = () => Subject.RegisterAddress(new EndpointAddress("Address2", "TestServer"));
 
         It should_output_any_messages_from_the_queue = () => messagePayloads.ShouldBeEmpty();
     }

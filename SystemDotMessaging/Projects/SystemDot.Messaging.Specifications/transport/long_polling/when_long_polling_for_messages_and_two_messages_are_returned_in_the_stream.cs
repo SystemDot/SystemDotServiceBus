@@ -47,7 +47,7 @@ namespace SystemDot.Messaging.Specifications.transport.long_polling
             Subject.MessageProcessed += payload => messagePayloads.Add(payload);            
         };
 
-        Because of = () => Subject.StartPolling(endpointAddress);
+        Because of = () => Subject.RegisterAddress(endpointAddress);
 
         It should_output_the_first_recieved_message = () =>
             messagePayloads.First().GetToAddress().ShouldEqual(messagePayload1.GetToAddress());

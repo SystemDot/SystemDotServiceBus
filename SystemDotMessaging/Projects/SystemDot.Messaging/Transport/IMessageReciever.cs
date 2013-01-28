@@ -6,6 +6,6 @@ namespace SystemDot.Messaging.Transport
 {
     public interface IMessageReciever : IMessageProcessor<MessagePayload> 
     {
-        void StartPolling(EndpointAddress address);
+        void RegisterAddress(EndpointAddress address);
     }
 }

@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using SystemDot.Ioc;
 using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Expiry;
 using SystemDot.Messaging.Channels.Filtering;
+using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Channels.RequestReply.Builders;
 using SystemDot.Messaging.Channels.UnitOfWork;
 using SystemDot.Messaging.Transport;
@@ -29,6 +29,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
                 FromAddress = address,
                 RecieverAddress = recieverAddress,
                 ExpiryStrategy = new PassthroughMessageExpiryStrategy(),
+                RepeatStrategy = new EscalatingTimeRepeatStrategy()
             };
 
             this.recieveSchema = new ReplyRecieveChannelSchema
@@ -50,7 +51,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             Resolve<RequestSendChannelBuilder>().Build(this.sendSchema);
             Resolve<ReplyRecieveChannelBuilder>().Build(this.recieveSchema);
-            Resolve<IMessageReciever>().StartPolling(GetAddress());
+            Resolve<IMessageReciever>().RegisterAddress(GetAddress());
         }
 
         protected override EndpointAddress GetAddress()
@@ -78,6 +79,14 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             Contract.Requires(strategy != null);
 
             this.sendSchema.ExpiryStrategy = strategy;
+            return this;
+        }
+
+        public RequestReplySenderConfiguration WithMessageRepeating(IRepeatStrategy strategy)
+        {
+            Contract.Requires(strategy != null);
+
+            this.sendSchema.RepeatStrategy = strategy;
             return this;
         }
 
