@@ -1,23 +1,23 @@
 using System;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.configuration.local
+namespace SystemDot.Messaging.Specifications.configuration.publishing
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_a_local_message_without_configuring_a_local_channel : WithMessageConfigurationSubject
+    public class when_publishing_without_configuring_a_publish_channel : WithMessageConfigurationSubject
     {
         static IBus bus;
         static Exception exception;
-
+        
         Establish context = () =>
-        {
+        {    
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel("Channel").ForRequestReplyRecieving()
+                .OpenLocalChannel()
                 .Initialise();
         };
 
-        Because of = () => exception = Catch.Exception(() => bus.SendLocal(new object()));
+        Because of = () => exception = Catch.Exception(() => bus.Publish(1));
 
         It should_not_fail = () => exception.ShouldBeNull();
     }

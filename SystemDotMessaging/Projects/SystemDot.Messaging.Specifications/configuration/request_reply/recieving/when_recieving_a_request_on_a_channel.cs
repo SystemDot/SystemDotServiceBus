@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
             payload = new MessagePayload().MakeReceiveable(message, SenderAddress, ChannelName, PersistenceUseType.RequestSend);
         };
 
-        Because of = () => MessageReciever.RecieveMessage(payload);
+        Because of = () => MessageReciever.ReceiveMessage(payload);
 
         It should_push_the_message_to_any_registered_handlers = () => handler.HandledMessage.ShouldEqual(message);
 

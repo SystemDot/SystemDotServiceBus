@@ -46,7 +46,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\SystemDot.Messaging.Storage.Esent\SystemDot.Messaging.Storage.Esent.csproj">
       <Project>{C7DBF177-FCDB-4530-A6CA-3B1EFBAD63EB}</Project>
-      <Name>SystemDot.Messaging.Storage.Esent</Name>
+      <Name>SystemDot.Messaging.Storage.Esent %28Windows\SystemDot.Messaging.Storage.Esent%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\SystemDot.Messaging\SystemDot.Messaging.csproj">
       <Project>{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}</Project>

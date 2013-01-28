@@ -1,3 +1,4 @@
+
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.Changes;
@@ -30,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
                 .RegisterHandlers(r => r.RegisterHandler(new FailingMessageHandler<int>()))
                 .Initialise();
 
-            Catch.Exception(() => MessageReciever.RecieveMessage(
+            Catch.Exception(() => MessageReciever.ReceiveMessage(
                 new MessagePayload().MakeSequencedReceivable(
                     Message, 
                     SenderAddress, 

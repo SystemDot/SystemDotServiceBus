@@ -33,7 +33,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
             payload = new MessagePayload().MakeReceiveable(1, SenderAddress, ChannelName, PersistenceUseType.RequestSend);
         };
 
-        Because of = () => MessageReciever.RecieveMessage(payload);
+        Because of = () => MessageReciever.ReceiveMessage(payload);
 
         It should_begin_the_unit_of_work = () => unitOfWork.HasBegun().ShouldBeTrue();
     }

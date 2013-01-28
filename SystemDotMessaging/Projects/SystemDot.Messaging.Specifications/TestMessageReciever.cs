@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Specifications
 
         public event Action<MessagePayload> MessageProcessed;
 
-        public void RecieveMessage(MessagePayload toRecieve)
+        public void ReceiveMessage(MessagePayload toRecieve)
         {
             if (!this.pollingAddresses.Contains(toRecieve.GetToAddress())) 
                 return;

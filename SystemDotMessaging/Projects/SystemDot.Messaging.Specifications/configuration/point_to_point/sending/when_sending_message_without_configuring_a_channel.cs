@@ -1,10 +1,10 @@
 using System;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.configuration.local
+namespace SystemDot.Messaging.Specifications.configuration.point_to_point.sending
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_a_local_message_without_configuring_a_local_channel : WithMessageConfigurationSubject
+    public class when_sending_message_without_configuring_a_channel : WithMessageConfigurationSubject
     {
         static IBus bus;
         static Exception exception;
@@ -13,11 +13,11 @@ namespace SystemDot.Messaging.Specifications.configuration.local
         {
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel("Channel").ForRequestReplyRecieving()
+                .OpenLocalChannel()
                 .Initialise();
         };
 
-        Because of = () => exception = Catch.Exception(() => bus.SendLocal(new object()));
+        Because of = () => exception = Catch.Exception(() => bus.Send(new object()));
 
         It should_not_fail = () => exception.ShouldBeNull();
     }

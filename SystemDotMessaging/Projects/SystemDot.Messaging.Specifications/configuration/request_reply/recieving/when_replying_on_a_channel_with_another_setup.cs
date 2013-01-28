@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
                 .OpenChannel("Test2").ForRequestReplyRecieving()
                 .Initialise();
 
-            MessageReciever.RecieveMessage(new MessagePayload().MakeReceiveable(1, "TestSender", ChannelName, PersistenceUseType.RequestSend));
+            MessageReciever.ReceiveMessage(new MessagePayload().MakeReceiveable(1, "TestSender", ChannelName, PersistenceUseType.RequestSend));
         };
 
         Because of = () => bus.Reply(1);

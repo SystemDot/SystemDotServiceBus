@@ -10,14 +10,14 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
     {
         protected static void Subscribe(EndpointAddress subscriberAddress, EndpointAddress publisherAddress)
         {
-            MessageReciever.RecieveMessage(BuildSubscriptionRequest(subscriberAddress, publisherAddress));
+            MessageReciever.ReceiveMessage(BuildSubscriptionRequest(subscriberAddress, publisherAddress));
         }
         
         protected static void SubscribeDurable(EndpointAddress subscriberAddress, EndpointAddress publisherAddress)
         {
             MessagePayload request = BuildSubscriptionRequest(subscriberAddress, publisherAddress);
             request.GetSubscriptionRequestSchema().IsDurable = true;
-            MessageReciever.RecieveMessage(request);
+            MessageReciever.ReceiveMessage(request);
         }
 
         protected static MessagePayload BuildSubscriptionRequest(

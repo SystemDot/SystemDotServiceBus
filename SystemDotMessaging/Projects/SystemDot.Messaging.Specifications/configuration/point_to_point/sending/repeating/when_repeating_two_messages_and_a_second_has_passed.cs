@@ -1,20 +1,18 @@
 using System;
-using SystemDot.Messaging.Configuration;
 using SystemDot.Parallelism;
 using SystemDot.Specifications;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.configuration.point_to_point
+namespace SystemDot.Messaging.Specifications.configuration.point_to_point.sending.repeating
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_a_message_with_a_constant_time_repeat_on_the_channel_and_that_time_has_passed 
+    public class when_repeating_two_messages_and_a_second_has_passed
         : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
-        const string ReceiverName = "TestReceiver";
+        const string SenderChannelName = "TestSender";
 
         static IBus bus;
-        static int message;
         static TestCurrentDateProvider currentDateProvider;
 
         Establish context = () =>
@@ -25,19 +23,17 @@ namespace SystemDot.Messaging.Specifications.configuration.point_to_point
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                    .ForPointToPointSendingTo(ReceiverName)
-                    .WithMessageRepeating(RepeatMessages.Every(TimeSpan.FromSeconds(10)))
+                .ForPointToPointSendingTo(SenderChannelName)
                 .Initialise();
 
-            message = 1;
+            bus.Send(1);
+            bus.Send(2);
 
-            bus.Send(message);
-
-            currentDateProvider.AddToCurrentDate(TimeSpan.FromSeconds(10));
+            currentDateProvider.AddToCurrentDate(TimeSpan.FromSeconds(1));
         };
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_repeat_the_message = () => MessageSender.SentMessages.Count.ShouldEqual(2);
+        It should_repeat_the_messages = () => MessageSender.SentMessages.Count.ShouldEqual(4);
     }
 }

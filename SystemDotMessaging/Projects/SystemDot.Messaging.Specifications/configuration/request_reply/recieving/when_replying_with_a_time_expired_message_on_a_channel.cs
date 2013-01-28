@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
                         .WithMessageExpiry(MessageExpiry.ByTime(TimeSpan.FromMinutes(0)))
                 .Initialise();
 
-            MessageReciever.RecieveMessage(new MessagePayload().MakeReceiveable(1, SenderChannelName, ChannelName, PersistenceUseType.RequestSend));
+            MessageReciever.ReceiveMessage(new MessagePayload().MakeReceiveable(1, SenderChannelName, ChannelName, PersistenceUseType.RequestSend));
 
             message = 1;
         };

@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
                 .WithDurability()
                 .Initialise();
 
-            Catch.Exception(() => MessageReciever.RecieveMessage(
+            Catch.Exception(() => MessageReciever.ReceiveMessage(
                 new MessagePayload().MakeSequencedReceivable(
                     Request,
                     SenderAddress,

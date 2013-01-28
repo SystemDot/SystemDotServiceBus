@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.recievi
 
             MessagePayload request = new MessagePayload().MakeReceiveable(1, SenderChannelName, ChannelName, PersistenceUseType.RequestSend);
             request.SetSequence(1);
-            MessageReciever.RecieveMessage(request);
+            MessageReciever.ReceiveMessage(request);
 
             message = 1;
         };

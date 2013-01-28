@@ -57,7 +57,10 @@ namespace SystemDot.Messaging.Configuration
                 this.buildActions,
                 BuildEndpointAddress(recieverAddress, this.messageServerName));
         }
-    }
 
-    
+        public PointToPointReceiverConfiguration ForPointToPointReceiving()
+        {
+            return new PointToPointReceiverConfiguration(address, this.buildActions);
+        }
+    }
 }

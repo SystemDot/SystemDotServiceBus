@@ -6,7 +6,7 @@ using SystemDot.Messaging.Specifications.configuration.publishing;
 using Machine.Specifications;
 using SystemDot.Messaging.Storage;
 
-namespace SystemDot.Messaging.Specifications.configuration.point_to_point
+namespace SystemDot.Messaging.Specifications.configuration.point_to_point.sending
 {
     [Subject(SpecificationGroup.Description)]
     public class when_sending_on_a_channel : WithMessageConfigurationSubject

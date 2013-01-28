@@ -39,7 +39,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving
             payload.SetSequence(1); 
         };
 
-        Because of = () => MessageReciever.RecieveMessage(payload);
+        Because of = () => MessageReciever.ReceiveMessage(payload);
 
         It should_begin_the_unit_of_work = () => unitOfWork.HasBegun().ShouldBeTrue();
     }

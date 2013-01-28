@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Serialisation;
@@ -34,8 +36,13 @@ namespace SystemDot.Messaging.Storage.Esent
             instance.Init();
 
             using (var session = new Session(this.instance))
-                if (!this.fileSystem.FileExists(DatabaseName)) 
-                    CreateDatabaseAndTables(session, DatabaseName);            
+                if (!this.fileSystem.FileExists(GetDatabaseFileName())) 
+                    CreateDatabaseAndTables(session, GetDatabaseFileName());            
+        }
+        
+        string GetDatabaseFileName()
+        {
+            return DatabaseName;
         }
 
         static void CreateDatabaseAndTables(Session session, string databaseName)
@@ -76,7 +83,7 @@ namespace SystemDot.Messaging.Storage.Esent
 
         int StoreChange(Session session, string changeRootId, Change change)
         {
-            JET_DBID dbId = Esent.OpenDatabase(session, DatabaseName);
+            JET_DBID dbId = Esent.OpenDatabase(session, GetDatabaseFileName());
 
             using (var table = new Table(session, dbId, ChangeStoreTable.Name, OpenTableGrbit.None))
             {
@@ -108,7 +115,7 @@ namespace SystemDot.Messaging.Storage.Esent
 
         void DeleteBelowSequence(Session session, string changeRootId, int sequence)
         {
-            JET_DBID dbId = Esent.OpenDatabase(session, DatabaseName);
+            JET_DBID dbId = Esent.OpenDatabase(session, GetDatabaseFileName());
 
             using (var table = new Table(session, dbId, ChangeStoreTable.Name, OpenTableGrbit.None))
                 DeleteBelowSequence(session, table, changeRootId, sequence);             
@@ -137,7 +144,7 @@ namespace SystemDot.Messaging.Storage.Esent
         {                    
             using (var session = new Session(this.instance))
             {
-                JET_DBID dbId = Esent.OpenDatabase(session, DatabaseName);
+                JET_DBID dbId = Esent.OpenDatabase(session, GetDatabaseFileName());
 
                 using (var table = new Table(session, dbId, ChangeStoreTable.Name, OpenTableGrbit.None))
                 return GetChanges(changeRootId, session, table);                

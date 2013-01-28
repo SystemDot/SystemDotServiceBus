@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.sending
             payload = new MessagePayload().MakeReceiveable(message, RecieverAddress, ChannelName, PersistenceUseType.ReplySend);
         };
 
-        Because of = () => MessageReciever.RecieveMessage(payload);
+        Because of = () => MessageReciever.ReceiveMessage(payload);
 
         It should_run_the_message_through_the_hook = () => hook.Message.ShouldEqual(message);
     }

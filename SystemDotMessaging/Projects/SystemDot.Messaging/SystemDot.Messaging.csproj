@@ -58,11 +58,11 @@
     <Compile Include="Channels\ISerialiserExtensions.cs" />
     <Compile Include="Channels\Local\Builders\LocalChannelBuilder.cs" />
     <Compile Include="Channels\Local\Builders\LocalChannelSchema.cs" />
-    <Compile Include="Channels\Local\NoLocalChannelConfiguredException.cs" />
     <Compile Include="Channels\MessageProcessor.cs" />
     <Compile Include="Channels\Builders\PersistenceFactorySelector.cs" />
     <Compile Include="Channels\PointToPoint\Builders\PointToPointSendChannelBuilder.cs" />
     <Compile Include="Channels\PointToPoint\Builders\PointToPointSendChannelSchema.cs" />
+    <Compile Include="Channels\PointToPoint\PointToPointReceiveChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\ISubscriberSendChannelBuilder.cs" />
     <Compile Include="Channels\Publishing\Builders\SubscriberRecieveChannelSchema.cs" />
     <Compile Include="Channels\Publishing\Builders\SubscriptionRequestChannelSchema.cs" />
@@ -146,6 +146,7 @@
     <Compile Include="Configuration\MessageServerConfiguration.cs" />
     <Compile Include="Configuration\Initialiser.cs" />
     <Compile Include="Configuration\MessagingConfiguration.cs" />
+    <Compile Include="Configuration\PointToPoint\PointToPointReceiverConfiguration.cs" />
     <Compile Include="Configuration\PointToPoint\PointToPointSenderConfiguration.cs" />
     <Compile Include="Configuration\RepeatMessages.cs" />
     <Compile Include="Configuration\RequestReply\RequestReplySenderConfiguration.cs" />

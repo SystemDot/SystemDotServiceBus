@@ -33,7 +33,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving
             payload.SetSequence(2);
         };
 
-        Because of = () => MessageReciever.RecieveMessage(payload);
+        Because of = () => MessageReciever.ReceiveMessage(payload);
 
         It should_push_the_message_to_any_registered_handlers = () => handler.HandledMessage.ShouldEqual(message);    
     }

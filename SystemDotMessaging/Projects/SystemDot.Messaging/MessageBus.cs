@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Channels.Local;
 
 namespace SystemDot.Messaging
 {
@@ -14,6 +13,8 @@ namespace SystemDot.Messaging
         public void Send(object message)
         {
             Contract.Requires(message != null);
+            
+            if (MessageSent == null) return;
             MessageSent(message);
         }
 
@@ -21,19 +22,23 @@ namespace SystemDot.Messaging
         {
             Contract.Requires(message != null);
 
-            if (MessageSentLocal == null) throw new NoLocalChannelConfiguredException();
+            if (MessageSentLocal == null) return;
             MessageSentLocal(message);
         }
 
         public void Reply(object message)
         {
             Contract.Requires(message != null);
+
+            if (MessageReplied == null) return;
             MessageReplied(message);
         }
 
         public void Publish(object message)
         {
             Contract.Requires(message != null);
+
+            if (MessagePublished == null) return;
             MessagePublished(message);
         }
     }
