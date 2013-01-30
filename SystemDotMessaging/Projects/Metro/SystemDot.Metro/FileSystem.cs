@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace SystemDot
@@ -10,14 +9,10 @@ namespace SystemDot
         public bool FileExists(string path)
         {
             path = path.Replace(ApplicationData.Current.LocalFolder.Path + "\\", "");
-            return FileExistsAsync(path).Result;
-        }
 
-        public async Task<bool> FileExistsAsync(string path)
-        {
             try
             {
-                await ApplicationData.Current.LocalFolder.GetFileAsync(path);
+                ApplicationData.Current.LocalFolder.GetFileAsync(path).GetAwaiter().GetResult();
             }
             catch (FileNotFoundException)
             {
