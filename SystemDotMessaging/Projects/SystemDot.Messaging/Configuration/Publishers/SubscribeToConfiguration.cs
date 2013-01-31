@@ -4,6 +4,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Publishing.Builders;
+using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Channels.UnitOfWork;
 using SystemDot.Messaging.Transport;
 
@@ -27,7 +28,8 @@ namespace SystemDot.Messaging.Configuration.Publishers
             this.requestSchema = new SubscriptionRequestChannelSchema
             {
                 PublisherAddress = publisherAddress,
-                SubscriberAddress = subscriberAddress
+                SubscriberAddress = subscriberAddress,
+                RepeatStrategy = new EscalatingTimeRepeatStrategy()
             };
 
             this.recieveSchema = new SubscriberRecieveChannelSchema

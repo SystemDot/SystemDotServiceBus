@@ -3,6 +3,7 @@ using System.Threading;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Packaging;
 using SystemDot.Messaging.Channels.Publishing.Builders;
+using SystemDot.Messaging.Channels.Repeating;
 
 namespace SystemDot.Messaging.Channels.Publishing
 {
@@ -31,7 +32,8 @@ namespace SystemDot.Messaging.Channels.Publishing
                 {
                     FromAddress = address,
                     SubscriberAddress = schema.SubscriberAddress,
-                    IsDurable = schema.IsDurable
+                    IsDurable = schema.IsDurable,
+                    RepeatStrategy = new EscalatingTimeRepeatStrategy()
                 });
 
             lock (this.locker)

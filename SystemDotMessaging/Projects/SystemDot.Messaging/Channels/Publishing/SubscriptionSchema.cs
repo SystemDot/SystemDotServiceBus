@@ -1,4 +1,5 @@
 using SystemDot.Messaging.Channels.Addressing;
+using SystemDot.Messaging.Channels.Repeating;
 
 namespace SystemDot.Messaging.Channels.Publishing
 {

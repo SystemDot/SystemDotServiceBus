@@ -4,6 +4,7 @@ using SystemDot.Messaging.Channels;
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Filtering;
 using SystemDot.Messaging.Channels.Publishing.Builders;
+using SystemDot.Messaging.Channels.Repeating;
 using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Configuration.Publishers
@@ -17,7 +18,8 @@ namespace SystemDot.Messaging.Configuration.Publishers
             this.schema = new PublisherChannelSchema
             {
                 FromAddress = address,  
-                MessageFilterStrategy = new PassThroughMessageFilterStategy()
+                MessageFilterStrategy = new PassThroughMessageFilterStategy(),
+                RepeatStrategy = new EscalatingTimeRepeatStrategy()
             };
         }
 

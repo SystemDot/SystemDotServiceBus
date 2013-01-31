@@ -1,5 +1,6 @@
 using SystemDot.Messaging.Channels.Addressing;
 using SystemDot.Messaging.Channels.Builders;
+using SystemDot.Messaging.Channels.Repeating;
 
 namespace SystemDot.Messaging.Channels.Publishing.Builders
 {
@@ -8,5 +9,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
         public EndpointAddress SubscriberAddress { get; set; }
 
         public EndpointAddress PublisherAddress { get; set; }
+
+        public IRepeatStrategy RepeatStrategy { get; set; }
     }
 }
