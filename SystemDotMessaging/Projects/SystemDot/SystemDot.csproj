@@ -45,6 +45,8 @@
     <Compile Include="ICurrentDateProvider.cs" />
     <Compile Include="IEnumerableExtensions.cs" />
     <Compile Include="IFileSystem.cs" />
+    <Compile Include="Ioc\AssemblyScanner.cs" />
+    <Compile Include="Ioc\AutoRegistrar.cs" />
     <Compile Include="Ioc\ConcreteInstance.cs" />
     <Compile Include="Ioc\IIocContainer.cs" />
     <Compile Include="Ioc\IocContainer.cs" />
