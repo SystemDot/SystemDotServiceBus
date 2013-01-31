@@ -59,7 +59,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
             MessagePipelineBuilder.Build()
                 .With(requestor)
                 .ToProcessor(new MessageAddresser(schema.SubscriberAddress, schema.PublisherAddress))
-                .ToMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater, schema.RepeatStrategy)
+                .ToMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater, EscalatingTimeRepeatStrategy.Default)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new SendChannelMessageCacher(messageCache))
                 .ToProcessor(new PersistenceSourceRecorder())

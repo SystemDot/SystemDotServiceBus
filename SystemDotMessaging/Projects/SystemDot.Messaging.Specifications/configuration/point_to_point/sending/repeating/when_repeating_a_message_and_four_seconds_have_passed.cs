@@ -6,7 +6,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.configuration.point_to_point.sending.repeating
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_repeating_a_message_and_a_second_has_not_passed
+    public class when_repeating_a_message_and_four_seconds_have_passed
         : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
@@ -31,11 +31,11 @@ namespace SystemDot.Messaging.Specifications.configuration.point_to_point.sendin
 
             bus.Send(message);
 
-            currentDateProvider.AddToCurrentDate(TimeSpan.FromSeconds(1).Subtract(TimeSpan.FromTicks(1)));
+            currentDateProvider.AddToCurrentDate(TimeSpan.FromSeconds(4));
         };
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_not_repeat_the_message = () => MessageSender.SentMessages.Count.ShouldEqual(1);
+        It should_repeat_the_message = () => MessageSender.SentMessages.Count.ShouldEqual(2);
     }
 }

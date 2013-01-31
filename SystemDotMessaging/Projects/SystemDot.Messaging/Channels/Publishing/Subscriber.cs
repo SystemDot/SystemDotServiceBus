@@ -33,7 +33,7 @@ namespace SystemDot.Messaging.Channels.Publishing
                     FromAddress = address,
                     SubscriberAddress = schema.SubscriberAddress,
                     IsDurable = schema.IsDurable,
-                    RepeatStrategy = new EscalatingTimeRepeatStrategy()
+                    RepeatStrategy = EscalatingTimeRepeatStrategy.Default
                 });
 
             lock (this.locker)

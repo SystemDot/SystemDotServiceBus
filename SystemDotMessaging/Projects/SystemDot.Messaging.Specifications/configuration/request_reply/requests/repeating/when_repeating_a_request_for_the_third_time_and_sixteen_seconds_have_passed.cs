@@ -3,10 +3,10 @@ using SystemDot.Parallelism;
 using SystemDot.Specifications;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.configuration.point_to_point.sending.repeating
+namespace SystemDot.Messaging.Specifications.configuration.request_reply.requests.repeating
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_repeating_a_message_for_the_second_time_and_two_seconds_have_passed
+    public class when_repeating_a_request_for_the_third_time_and_sixteen_seconds_have_not_passed
         : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
@@ -24,18 +24,22 @@ namespace SystemDot.Messaging.Specifications.configuration.point_to_point.sendin
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                .ForPointToPointSendingTo(SenderChannelName)
+                .ForRequestReplySendingTo(SenderChannelName)
                 .Initialise();
 
             message = 1;
 
             bus.Send(message);
 
-            currentDateProvider.AddToCurrentDate(TimeSpan.FromSeconds(1));
+            currentDateProvider.AddToCurrentDate(TimeSpan.FromSeconds(4));
 
             The<ITaskRepeater>().Start();
 
-            currentDateProvider.AddToCurrentDate(TimeSpan.FromSeconds(2));
+            currentDateProvider.AddToCurrentDate(TimeSpan.FromSeconds(8));
+
+            The<ITaskRepeater>().Start();
+
+            currentDateProvider.AddToCurrentDate(TimeSpan.FromSeconds(16).Subtract(TimeSpan.FromTicks(1)));
         };
 
         Because of = () => The<ITaskRepeater>().Start();

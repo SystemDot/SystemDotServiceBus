@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
         {
             this.sendSchema = new PointToPointSendChannelSchema
             {
-                RepeatStrategy = new EscalatingTimeRepeatStrategy(),
+                RepeatStrategy = EscalatingTimeRepeatStrategy.Default,
                 FromAddress = address
             };
         }

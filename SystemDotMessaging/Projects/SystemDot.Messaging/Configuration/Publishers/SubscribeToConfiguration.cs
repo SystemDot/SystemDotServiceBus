@@ -28,8 +28,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
             this.requestSchema = new SubscriptionRequestChannelSchema
             {
                 PublisherAddress = publisherAddress,
-                SubscriberAddress = subscriberAddress,
-                RepeatStrategy = new EscalatingTimeRepeatStrategy()
+                SubscriberAddress = subscriberAddress
             };
 
             this.recieveSchema = new SubscriberRecieveChannelSchema

@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
                 FromAddress = address,
                 RecieverAddress = recieverAddress,
                 ExpiryStrategy = new PassthroughMessageExpiryStrategy(),
-                RepeatStrategy = new EscalatingTimeRepeatStrategy()
+                RepeatStrategy = EscalatingTimeRepeatStrategy.Default
             };
 
             this.recieveSchema = new ReplyRecieveChannelSchema

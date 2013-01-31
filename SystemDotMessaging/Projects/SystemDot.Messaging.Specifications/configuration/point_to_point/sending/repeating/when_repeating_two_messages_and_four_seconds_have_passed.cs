@@ -6,14 +6,13 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.configuration.point_to_point.sending.repeating
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_repeating_a_message_and_a_second_has_passed
+    public class when_repeating_two_messages_and_four_seconds_have_passed
         : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
         const string SenderChannelName = "TestSender";
 
         static IBus bus;
-        static int message;
         static TestCurrentDateProvider currentDateProvider;
 
         Establish context = () =>
@@ -27,15 +26,14 @@ namespace SystemDot.Messaging.Specifications.configuration.point_to_point.sendin
                 .ForPointToPointSendingTo(SenderChannelName)
                 .Initialise();
 
-            message = 1;
+            bus.Send(1);
+            bus.Send(2);
 
-            bus.Send(message);
-
-            currentDateProvider.AddToCurrentDate(TimeSpan.FromSeconds(1));
+            currentDateProvider.AddToCurrentDate(TimeSpan.FromSeconds(4));
         };
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_repeat_the_message = () => MessageSender.SentMessages.Count.ShouldEqual(2);
+        It should_repeat_the_messages = () => MessageSender.SentMessages.Count.ShouldEqual(4);
     }
 }

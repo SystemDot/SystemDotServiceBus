@@ -61,7 +61,7 @@ namespace SystemDot.Messaging.Channels.Publishing.Builders
                 .WithBusPublishTo(new MessageFilter(schema.MessageFilterStrategy))
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
                 .ToProcessor(new Sequencer(messageCache))
-                .ToMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater, schema.RepeatStrategy)
+                .ToMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater, EscalatingTimeRepeatStrategy.Default)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new SendChannelMessageCacher(messageCache))
                 .Queue()

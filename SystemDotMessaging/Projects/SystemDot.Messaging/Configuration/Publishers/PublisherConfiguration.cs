@@ -18,8 +18,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
             this.schema = new PublisherChannelSchema
             {
                 FromAddress = address,  
-                MessageFilterStrategy = new PassThroughMessageFilterStategy(),
-                RepeatStrategy = new EscalatingTimeRepeatStrategy()
+                MessageFilterStrategy = new PassThroughMessageFilterStategy()
             };
         }
 

@@ -6,10 +6,25 @@ namespace SystemDot.Messaging.Channels.Repeating
 {
     public class EscalatingTimeRepeatStrategy : IRepeatStrategy
     {
-        const int Start = 1;
-        const int Multiplier = 2;
-        const int Maximum = 4;
-        
+        public static EscalatingTimeRepeatStrategy Default
+        {
+            get
+            {
+                return new EscalatingTimeRepeatStrategy(4, 2, 16);
+            }
+        }
+
+        readonly int start;
+        readonly int multiplier;
+        readonly int maximum;
+
+        public EscalatingTimeRepeatStrategy(int start, int multiplier, int maximum)
+        {
+            this.start = start;
+            this.multiplier = multiplier;
+            this.maximum = maximum;
+        }
+
         public void Repeat(
             MessageRepeater repeater, 
             MessageCache messageCache, 
@@ -24,17 +39,25 @@ namespace SystemDot.Messaging.Channels.Repeating
             });
         }
 
-        static int GetDelay(MessagePayload toGetDelayFor)
+        int GetDelay(MessagePayload toGetDelayFor)
         {
-             return GetUnlimitedDelay(toGetDelayFor) < Maximum ? GetUnlimitedDelay(toGetDelayFor) : Maximum;
+            int unlimitedDelay = GetUnlimitedDelay(toGetDelayFor);
+
+            return unlimitedDelay < this.maximum 
+                ? unlimitedDelay 
+                : this.maximum;
         }
 
-        static int GetUnlimitedDelay(MessagePayload toGetDelayFor)
+        int GetUnlimitedDelay(MessagePayload toGetDelayFor)
         {
-            if (toGetDelayFor.GetAmountSent() == 1)
-                return Start;
+            return toGetDelayFor.GetAmountSent() == 1 
+                ? this.start 
+                : this.start * GetMultiplier(toGetDelayFor);
+        }
 
-            return Start * ((toGetDelayFor.GetAmountSent() - 1) * Multiplier);
+        int GetMultiplier(MessagePayload toGetDelayFor)
+        {
+            return (toGetDelayFor.GetAmountSent() - 1) * this.multiplier;
         }
     }
 }

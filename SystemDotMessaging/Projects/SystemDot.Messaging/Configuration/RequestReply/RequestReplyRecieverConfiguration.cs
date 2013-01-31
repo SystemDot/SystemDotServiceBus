@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             {
                 FromAddress = address,
                 ExpiryStrategy = new PassthroughMessageExpiryStrategy(),
-                RepeatStrategy = new EscalatingTimeRepeatStrategy()
+                RepeatStrategy = EscalatingTimeRepeatStrategy.Default
             };
 
             this.requestSchema = new RequestRecieveChannelSchema
