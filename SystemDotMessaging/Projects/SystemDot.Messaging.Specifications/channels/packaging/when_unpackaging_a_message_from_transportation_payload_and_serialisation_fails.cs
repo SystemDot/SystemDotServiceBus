@@ -1,7 +1,6 @@
 ﻿using System;
-using SystemDot.Messaging.Channels;
-using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Packaging.Headers;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Packaging.Headers;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.channels.packaging

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Logging;
-using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Packaging.Headers;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Packaging.Headers;
 
 namespace SystemDot.Messaging.Transport.Http.LongPolling.Servers
 {

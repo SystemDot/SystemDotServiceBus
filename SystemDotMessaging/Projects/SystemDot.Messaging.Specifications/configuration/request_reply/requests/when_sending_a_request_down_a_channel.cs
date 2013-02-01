@@ -1,10 +1,10 @@
 using System;
 using System.Linq;
-using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Packaging.Headers;
+using SystemDot.Messaging.Repeating;
+using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
-using SystemDot.Messaging.Channels.Packaging.Headers;
-using SystemDot.Messaging.Channels.Sequencing;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.replies
 {

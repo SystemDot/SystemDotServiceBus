@@ -1,5 +1,5 @@
 using System.Linq;
-using SystemDot.Messaging.Channels.Packaging.Headers;
+using SystemDot.Messaging.Packaging.Headers;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing

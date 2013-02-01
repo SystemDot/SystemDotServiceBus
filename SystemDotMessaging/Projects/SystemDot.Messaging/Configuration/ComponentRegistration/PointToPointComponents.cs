@@ -1,7 +1,7 @@
 using SystemDot.Ioc;
-using SystemDot.Messaging.Channels.PointToPoint;
-using SystemDot.Messaging.Channels.PointToPoint.Builders;
 using SystemDot.Messaging.Configuration.RequestReply;
+using SystemDot.Messaging.PointToPoint;
+using SystemDot.Messaging.PointToPoint.Builders;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {

@@ -1,11 +1,12 @@
 using System;
 using System.Linq;
-using SystemDot.Messaging.Channels.Acknowledgement;
-using SystemDot.Messaging.Channels.Handling;
-using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Repeating;
-using SystemDot.Messaging.Channels.Sequencing;
+using SystemDot.Messaging.Acknowledgement;
+using SystemDot.Messaging.Handling;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Repeating;
+using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage.Changes;
+using SystemDot.Storage.Changes;
 using Machine.Specifications;
 using SystemDot.Messaging.Storage;
 

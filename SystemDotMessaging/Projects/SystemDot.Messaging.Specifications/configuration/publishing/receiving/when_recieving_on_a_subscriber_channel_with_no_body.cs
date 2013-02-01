@@ -1,8 +1,8 @@
 using System;
-using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Packaging.Headers;
-using SystemDot.Messaging.Channels.Sequencing;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Packaging.Headers;
+using SystemDot.Messaging.Sequencing;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving

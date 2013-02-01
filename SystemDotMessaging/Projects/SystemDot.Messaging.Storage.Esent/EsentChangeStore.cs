@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Serialisation;
+using SystemDot.Storage.Changes;
 using Microsoft.Isam.Esent.Interop;
 
 namespace SystemDot.Messaging.Storage.Esent

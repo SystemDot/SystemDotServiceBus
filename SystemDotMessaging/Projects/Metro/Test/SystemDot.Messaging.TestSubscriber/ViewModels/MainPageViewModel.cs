@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using SystemDot.Ioc;
-using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Storage.Esent;
 using SystemDot.Messaging.Test.Messages;
 using Windows.UI.Core;

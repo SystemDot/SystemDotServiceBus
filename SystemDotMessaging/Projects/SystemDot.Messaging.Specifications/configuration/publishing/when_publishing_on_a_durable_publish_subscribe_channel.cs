@@ -1,5 +1,6 @@
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.Changes;
+using SystemDot.Storage.Changes;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing

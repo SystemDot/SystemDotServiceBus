@@ -1,9 +1,8 @@
 using System;
 using System.Linq;
-using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.Packaging.Headers;
-using SystemDot.Messaging.Channels.Repeating;
-using SystemDot.Messaging.Channels.Sequencing;
+using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Repeating;
+using SystemDot.Messaging.Sequencing;
 using SystemDot.Parallelism;
 using Machine.Fakes;
 using Machine.Specifications;

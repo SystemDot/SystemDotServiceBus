@@ -1,4 +1,5 @@
 ﻿using System;
+using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Storage.Changes
 {

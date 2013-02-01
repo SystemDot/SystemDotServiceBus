@@ -1,5 +1,5 @@
 using SystemDot.Ioc;
-using SystemDot.Messaging.Channels.Addressing;
+using SystemDot.Messaging.Addressing;
 
 namespace SystemDot.Messaging.Configuration
 {

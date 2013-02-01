@@ -4,7 +4,7 @@ using System.Diagnostics.Contracts;
 using System.IO;
 using SystemDot.Http;
 using SystemDot.Logging;
-using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Packaging;
 using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Transport.Http.LongPolling.Servers

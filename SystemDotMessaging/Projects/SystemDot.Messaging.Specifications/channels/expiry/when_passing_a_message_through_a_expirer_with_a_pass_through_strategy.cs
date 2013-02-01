@@ -1,5 +1,5 @@
-using SystemDot.Messaging.Channels.Expiry;
-using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Expiry;
+using SystemDot.Messaging.Packaging;
 using Machine.Fakes;
 using Machine.Specifications;
 

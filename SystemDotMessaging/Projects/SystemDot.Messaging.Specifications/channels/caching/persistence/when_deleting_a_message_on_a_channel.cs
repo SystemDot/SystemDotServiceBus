@@ -1,8 +1,9 @@
-using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Serialisation;
+using SystemDot.Storage.Changes;
 using Machine.Fakes;
 using Machine.Specifications;
 

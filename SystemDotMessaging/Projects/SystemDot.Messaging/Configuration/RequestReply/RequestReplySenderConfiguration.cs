@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Channels;
-using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.Expiry;
-using SystemDot.Messaging.Channels.Filtering;
-using SystemDot.Messaging.Channels.Repeating;
-using SystemDot.Messaging.Channels.RequestReply.Builders;
-using SystemDot.Messaging.Channels.UnitOfWork;
+using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Expiry;
+using SystemDot.Messaging.Filtering;
+using SystemDot.Messaging.Repeating;
+using SystemDot.Messaging.RequestReply.Builders;
 using SystemDot.Messaging.Transport;
+using SystemDot.Messaging.UnitOfWork;
 
 namespace SystemDot.Messaging.Configuration.RequestReply
 {

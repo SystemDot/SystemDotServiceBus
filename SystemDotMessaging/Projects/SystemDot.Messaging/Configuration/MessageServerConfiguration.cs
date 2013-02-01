@@ -4,6 +4,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Configuration.Local;
 using SystemDot.Messaging.Storage.Changes;
+using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Configuration
 {

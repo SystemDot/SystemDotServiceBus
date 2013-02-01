@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
-using SystemDot.Messaging.Channels.Expiry;
+using SystemDot.Messaging.Expiry;
 
 namespace SystemDot.Messaging.Configuration
 {

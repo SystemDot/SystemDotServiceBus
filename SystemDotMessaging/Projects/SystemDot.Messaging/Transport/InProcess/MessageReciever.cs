@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Packaging;
 
 namespace SystemDot.Messaging.Transport.InProcess
 {

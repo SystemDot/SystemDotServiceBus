@@ -1,4 +1,4 @@
-using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 

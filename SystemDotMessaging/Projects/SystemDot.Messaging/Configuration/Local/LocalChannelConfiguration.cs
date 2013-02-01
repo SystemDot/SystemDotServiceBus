@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.Builders;
-using SystemDot.Messaging.Channels.Local.Builders;
-using SystemDot.Messaging.Channels.UnitOfWork;
+using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Local.Builders;
+using SystemDot.Messaging.UnitOfWork;
 
 namespace SystemDot.Messaging.Configuration.Local
 {

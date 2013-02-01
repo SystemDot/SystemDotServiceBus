@@ -1,12 +1,13 @@
 using SystemDot.Ioc;
-using SystemDot.Messaging.Channels.Acknowledgement;
-using SystemDot.Messaging.Channels.Acknowledgement.Builders;
-using SystemDot.Messaging.Channels.Builders;
-using SystemDot.Messaging.Channels.Handling;
-using SystemDot.Messaging.Channels.Local.Builders;
-using SystemDot.Messaging.Channels.UnitOfWork;
+using SystemDot.Messaging.Acknowledgement;
+using SystemDot.Messaging.Acknowledgement.Builders;
+using SystemDot.Messaging.Builders;
+using SystemDot.Messaging.Handling;
+using SystemDot.Messaging.Local.Builders;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.Changes;
+using SystemDot.Messaging.UnitOfWork;
+using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {

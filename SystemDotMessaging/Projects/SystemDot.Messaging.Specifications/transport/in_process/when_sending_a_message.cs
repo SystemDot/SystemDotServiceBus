@@ -1,7 +1,6 @@
-using SystemDot.Messaging.Channels;
-using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Packaging.Headers;
+using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Transport.InProcess;
 using Machine.Fakes;
 using Machine.Specifications;

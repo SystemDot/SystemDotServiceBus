@@ -1,6 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Channels.Addressing;
+using SystemDot.Messaging.Addressing;
 
 namespace SystemDot.Messaging.Storage
 {

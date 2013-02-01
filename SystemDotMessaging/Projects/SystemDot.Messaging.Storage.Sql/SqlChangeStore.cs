@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Messaging.Storage.Sql.Connections;
 using SystemDot.Serialisation;
+using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Storage.Sql
 {

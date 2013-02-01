@@ -1,5 +1,5 @@
 using System.Linq;
-using SystemDot.Messaging.Channels.Sequencing;
+using SystemDot.Messaging.Sequencing;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing

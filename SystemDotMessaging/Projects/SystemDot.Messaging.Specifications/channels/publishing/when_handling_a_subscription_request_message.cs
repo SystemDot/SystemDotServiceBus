@@ -1,7 +1,7 @@
-using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Packaging.Headers;
-using SystemDot.Messaging.Channels.Publishing;
+using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Packaging.Headers;
+using SystemDot.Messaging.Publishing;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.channels.publishing

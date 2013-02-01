@@ -1,4 +1,4 @@
-using SystemDot.Messaging.Channels.Handling;
+using SystemDot.Messaging.Handling;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.local

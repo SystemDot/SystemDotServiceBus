@@ -1,4 +1,4 @@
-using SystemDot.Messaging.Channels.UnitOfWork;
+using SystemDot.Messaging.UnitOfWork;
 
 namespace SystemDot.Messaging.Specifications
 {

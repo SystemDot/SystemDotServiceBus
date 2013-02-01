@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Publishing;
-using SystemDot.Messaging.Channels.Acknowledgement;
+using SystemDot.Messaging.Acknowledgement;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Publishing;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing
 {

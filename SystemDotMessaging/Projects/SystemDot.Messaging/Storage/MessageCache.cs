@@ -2,10 +2,11 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage.Changes;
-using SystemDot.Messaging.Channels.Sequencing;
+using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Storage
 {

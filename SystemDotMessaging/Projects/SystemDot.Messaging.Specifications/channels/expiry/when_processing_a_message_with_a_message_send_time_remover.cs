@@ -1,7 +1,7 @@
 using System;
-using SystemDot.Messaging.Channels.Expiry;
-using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Expiry;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Repeating;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.channels.expiry

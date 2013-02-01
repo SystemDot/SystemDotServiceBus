@@ -1,6 +1,6 @@
-using SystemDot.Messaging.Channels.Acknowledgement;
-using SystemDot.Messaging.Channels.Handling;
-using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Acknowledgement;
+using SystemDot.Messaging.Handling;
+using SystemDot.Messaging.Packaging;
 using Machine.Specifications;
 using SystemDot.Messaging.Storage;
 

@@ -1,5 +1,4 @@
 using System;
-using SystemDot.Messaging.Channels;
 
 namespace SystemDot.Messaging.Specifications
 {

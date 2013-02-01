@@ -1,5 +1,5 @@
 using System;
-using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Parallelism;
 using SystemDot.Specifications;

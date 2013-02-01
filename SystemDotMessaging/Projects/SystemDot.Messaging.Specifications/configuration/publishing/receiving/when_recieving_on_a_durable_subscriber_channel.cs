@@ -1,7 +1,8 @@
-using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Sequencing;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.Changes;
+using SystemDot.Storage.Changes;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving

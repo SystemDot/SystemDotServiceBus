@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
-using SystemDot.Messaging.Channels.Repeating;
-using SystemDot.Messaging.Channels.Sequencing;
+using SystemDot.Messaging.Repeating;
+using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Specifications.configuration.publishing;
 using Machine.Specifications;
 using SystemDot.Messaging.Storage;

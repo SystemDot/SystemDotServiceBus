@@ -1,7 +1,7 @@
 using SystemDot.Ioc;
-using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.Pipelines;
+using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Pipelines;
 using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;

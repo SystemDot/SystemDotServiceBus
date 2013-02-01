@@ -1,5 +1,4 @@
-﻿using SystemDot.Messaging.Channels.Distribution;
-using SystemDot.Messaging.Channels.Packaging;
+﻿using SystemDot.Messaging.Packaging;
 using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;

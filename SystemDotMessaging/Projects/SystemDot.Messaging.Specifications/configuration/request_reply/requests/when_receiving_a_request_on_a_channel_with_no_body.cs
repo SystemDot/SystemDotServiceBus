@@ -1,7 +1,7 @@
 using System;
-using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Packaging.Headers;
 using Machine.Specifications;
-using SystemDot.Messaging.Channels.Packaging.Headers;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.requests
 {

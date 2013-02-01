@@ -1,6 +1,7 @@
 using SystemDot.Ioc;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Storage.Changes;
+using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Storage.Sql
 {

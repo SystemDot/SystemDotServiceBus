@@ -4,8 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using SystemDot.Http;
-using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Packaging.Headers;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Transport.Http.LongPolling;
 using SystemDot.Serialisation;
 

@@ -1,6 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Repeating;
 
 namespace SystemDot.Messaging.Configuration
 {

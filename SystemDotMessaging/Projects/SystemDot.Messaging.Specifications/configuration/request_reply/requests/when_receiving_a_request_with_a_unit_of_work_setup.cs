@@ -1,5 +1,5 @@
-using SystemDot.Messaging.Channels.Handling;
-using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Handling;
+using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 

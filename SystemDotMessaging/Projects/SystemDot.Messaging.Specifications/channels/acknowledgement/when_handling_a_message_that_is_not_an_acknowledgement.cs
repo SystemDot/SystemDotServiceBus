@@ -1,8 +1,7 @@
 using System;
-using SystemDot.Messaging.Channels;
-using SystemDot.Messaging.Channels.Acknowledgement;
-using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Acknowledgement;
+using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Packaging;
 using Machine.Fakes;
 using Machine.Specifications;
 

@@ -1,6 +1,6 @@
 using SystemDot.Logging;
-using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Packaging.Headers;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Transport.Http;
 
 namespace SystemDot.Messaging.Transport.InProcess

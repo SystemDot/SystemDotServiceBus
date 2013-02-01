@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
-using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.Publishing.Builders;
-using SystemDot.Messaging.Channels.Repeating;
-using SystemDot.Messaging.Channels.UnitOfWork;
+using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Publishing.Builders;
 using SystemDot.Messaging.Transport;
+using SystemDot.Messaging.UnitOfWork;
 
 namespace SystemDot.Messaging.Configuration.Publishers
 {

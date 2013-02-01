@@ -1,5 +1,5 @@
 using System.Linq;
-using SystemDot.Messaging.Channels.Publishing;
+using SystemDot.Messaging.Publishing;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing.subscription

@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using SystemDot.Messaging.Channels;
-using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.Filtering;
-using SystemDot.Messaging.Channels.Publishing.Builders;
-using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Filtering;
+using SystemDot.Messaging.Publishing.Builders;
 using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Configuration.Publishers

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.PointToPoint.Builders;
-using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.PointToPoint.Builders;
+using SystemDot.Messaging.Repeating;
 
 namespace SystemDot.Messaging.Configuration.PointToPoint
 {

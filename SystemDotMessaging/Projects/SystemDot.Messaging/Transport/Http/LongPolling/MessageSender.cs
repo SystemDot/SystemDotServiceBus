@@ -2,8 +2,8 @@ using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Http;
 using SystemDot.Logging;
-using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Packaging.Headers;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Transport.Http.LongPolling

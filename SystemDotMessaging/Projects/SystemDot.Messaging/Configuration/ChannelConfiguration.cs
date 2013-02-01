@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Channels.Addressing;
+using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.PointToPoint;
 using SystemDot.Messaging.Configuration.Publishers;
 using SystemDot.Messaging.Configuration.RequestReply;

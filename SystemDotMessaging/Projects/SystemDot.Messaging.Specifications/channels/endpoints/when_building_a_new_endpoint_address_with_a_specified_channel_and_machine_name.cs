@@ -1,5 +1,4 @@
-using SystemDot.Messaging.Channels;
-using SystemDot.Messaging.Channels.Addressing;
+using SystemDot.Messaging.Addressing;
 using Machine.Fakes;
 using Machine.Specifications;
 

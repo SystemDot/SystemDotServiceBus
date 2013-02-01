@@ -1,6 +1,7 @@
 ﻿using System;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Serialisation;
+using SystemDot.Storage.Changes;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 

@@ -1,6 +1,6 @@
 using System;
-using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Publishing;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Publishing;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.channels.publishing

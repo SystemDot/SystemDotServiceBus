@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.PointToPoint;
+using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.PointToPoint;
 using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Configuration.PointToPoint

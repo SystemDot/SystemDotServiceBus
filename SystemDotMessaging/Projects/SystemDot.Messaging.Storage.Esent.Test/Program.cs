@@ -2,6 +2,7 @@
 using System.Linq;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Serialisation;
+using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Storage.Esent.Test
 {

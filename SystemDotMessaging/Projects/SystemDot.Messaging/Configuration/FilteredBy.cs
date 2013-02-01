@@ -1,4 +1,4 @@
-using SystemDot.Messaging.Channels.Filtering;
+using SystemDot.Messaging.Filtering;
 
 namespace SystemDot.Messaging.Configuration
 {

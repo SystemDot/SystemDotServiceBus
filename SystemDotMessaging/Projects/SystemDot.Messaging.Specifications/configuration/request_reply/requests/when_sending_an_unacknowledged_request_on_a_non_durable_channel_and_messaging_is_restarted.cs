@@ -3,6 +3,7 @@ using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 using SystemDot.Specifications;
+using SystemDot.Storage.Changes;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.requests

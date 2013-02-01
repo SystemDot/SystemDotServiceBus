@@ -1,12 +1,12 @@
 using SystemDot.Ioc;
-using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Packaging.Headers;
-using SystemDot.Messaging.Channels.Repeating;
+using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Packaging.Headers;
+using SystemDot.Messaging.Repeating;
+using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Serialisation;
-using SystemDot.Messaging.Channels.Sequencing;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration

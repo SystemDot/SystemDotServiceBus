@@ -1,8 +1,8 @@
 ﻿using System;
 using SystemDot.Ioc;
 using SystemDot.Logging;
-using SystemDot.Messaging.Channels.Handling;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Storage.Esent;
 
 namespace SystemDot.Messaging.TestSubscriber

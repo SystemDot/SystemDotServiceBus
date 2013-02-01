@@ -1,9 +1,9 @@
 using System;
 using System.Linq;
-using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Packaging.Headers;
-using SystemDot.Messaging.Channels.Repeating;
-using SystemDot.Messaging.Channels.Sequencing;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Packaging.Headers;
+using SystemDot.Messaging.Repeating;
+using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 using SystemDot.Messaging.Specifications.configuration.publishing;

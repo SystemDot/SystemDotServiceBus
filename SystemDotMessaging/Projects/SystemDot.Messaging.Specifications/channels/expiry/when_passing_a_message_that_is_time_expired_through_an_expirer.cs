@@ -1,8 +1,8 @@
 using System;
-using SystemDot.Messaging.Channels.Expiry;
-using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Repeating;
-using SystemDot.Messaging.Channels.Sequencing;
+using SystemDot.Messaging.Expiry;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Repeating;
+using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Specifications;
 using Machine.Fakes;

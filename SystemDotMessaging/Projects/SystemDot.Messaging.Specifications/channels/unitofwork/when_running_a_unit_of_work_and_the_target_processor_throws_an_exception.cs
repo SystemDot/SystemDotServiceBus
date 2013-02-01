@@ -1,13 +1,14 @@
 using System;
 using SystemDot.Ioc;
-using SystemDot.Messaging.Channels.UnitOfWork;
+using SystemDot.Messaging.UnitOfWork;
 using Machine.Fakes;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.channels.unitofwork
 {
     [Subject("Unit of work")]
-    public class when_running_a_unit_of_work_and_the_target_processor_throws_an_exception : WithSubject<UnitOfWorkRunner<TestUnitOfWorkFactory>>
+    public class when_running_a_unit_of_work_and_the_target_processor_throws_an_exception 
+        : WithSubject<UnitOfWorkRunner<TestUnitOfWorkFactory>>
     {
         static object message;
         static Exception exception;

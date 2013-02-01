@@ -1,10 +1,11 @@
-using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.Packaging;
-using SystemDot.Messaging.Channels.Publishing;
-using SystemDot.Messaging.Channels.Publishing.Builders;
+using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Publishing;
+using SystemDot.Messaging.Publishing.Builders;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Messaging.Transport;
 using SystemDot.Serialisation;
+using SystemDot.Storage.Changes;
 using Machine.Fakes;
 using Machine.Specifications;
 

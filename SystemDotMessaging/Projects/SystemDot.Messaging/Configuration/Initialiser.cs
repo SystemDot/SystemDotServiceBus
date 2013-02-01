@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
-using SystemDot.Messaging.Channels.Acknowledgement.Builders;
-using SystemDot.Messaging.Channels.Addressing;
-using SystemDot.Messaging.Channels.Handling;
-using SystemDot.Messaging.Channels.UnitOfWork;
+using SystemDot.Messaging.Acknowledgement.Builders;
+using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.Local;
+using SystemDot.Messaging.Handling;
+using SystemDot.Messaging.UnitOfWork;
 using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Configuration

@@ -1,6 +1,5 @@
 using SystemDot.Http;
-using SystemDot.Messaging.Channels;
-using SystemDot.Messaging.Channels.Addressing;
+using SystemDot.Messaging.Addressing;
 
 namespace SystemDot.Messaging.Transport.Http
 {

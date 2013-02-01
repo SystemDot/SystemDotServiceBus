@@ -1,8 +1,8 @@
-using SystemDot.Messaging.Channels.Handling;
-using SystemDot.Messaging.Channels.Packaging;
+using SystemDot.Messaging.Handling;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
-using SystemDot.Messaging.Channels.Sequencing;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.requests
 {
