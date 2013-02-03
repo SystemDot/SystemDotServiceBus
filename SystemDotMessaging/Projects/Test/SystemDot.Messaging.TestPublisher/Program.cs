@@ -3,6 +3,7 @@ using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Storage.Esent;
 using SystemDot.Messaging.Test.Messages;
+using SystemDot.Messaging.Transport.Http.Configuration;
 
 namespace SystemDot.Messaging.TestPublisher
 {

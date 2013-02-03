@@ -6,6 +6,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage.Changes;
+using SystemDot.Messaging.Transport.InProcess.Configuration;
 using SystemDot.Storage.Changes;
 using Machine.Specifications;
 using SystemDot.Messaging.Storage;

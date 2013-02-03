@@ -2,6 +2,7 @@ using System;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 using SystemDot.Messaging.Specifications.configuration.publishing;
 

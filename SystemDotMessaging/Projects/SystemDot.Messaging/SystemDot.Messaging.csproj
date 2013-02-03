@@ -110,12 +110,15 @@
     <Compile Include="Sequencing\Sequencer.cs" />
     <Compile Include="Sequencing\SequenceHeader.cs" />
     <Compile Include="Sequencing\StartSequenceApplier.cs" />
+    <Compile Include="Transport\Http\Configuration\HttpTransportComponents.cs" />
+    <Compile Include="Transport\Http\Configuration\MessagingConfigurationExtensions.cs" />
+    <Compile Include="Transport\InProcess\Configuration\InProcessTransportComponents.cs" />
+    <Compile Include="Transport\InProcess\Configuration\MessagingConfigurationExtensions.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="UnitOfWork\IUnitOfWorkFactory.cs" />
     <Compile Include="UnitOfWork\NullUnitOfWork.cs" />
     <Compile Include="UnitOfWork\NullUnitOfWorkFactory.cs" />
     <Compile Include="UnitOfWork\UnitOfWorkRunner.cs" />
-    <Compile Include="Configuration\ComponentRegistration\InProcessTransportComponents.cs" />
     <Compile Include="Configuration\ComponentRegistration\PointToPointComponents.cs" />
     <Compile Include="Configuration\FilteredBy.cs" />
     <Compile Include="Acknowledgement\AcknowledgementHeader.cs" />
@@ -135,7 +138,6 @@
     <Compile Include="Configuration\ComponentRegistration\Components.cs" />
     <Compile Include="Configuration\ComponentRegistration\PublishingComponents.cs" />
     <Compile Include="Configuration\ComponentRegistration\CoreComponents.cs" />
-    <Compile Include="Configuration\ComponentRegistration\HttpLongPollingTransportComponents.cs" />
     <Compile Include="Configuration\ComponentRegistration\RequestReplyComponents.cs" />
     <Compile Include="Configuration\ComponentRegistration\ThreadingComponents.cs" />
     <Compile Include="Publishing\SubscriptionRequestor.cs" />

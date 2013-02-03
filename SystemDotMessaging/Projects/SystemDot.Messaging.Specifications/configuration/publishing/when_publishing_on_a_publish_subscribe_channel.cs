@@ -3,6 +3,7 @@ using System.Linq;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.Sequencing;
+using SystemDot.Messaging.Transport.InProcess.Configuration;
 using SystemDot.Parallelism;
 using Machine.Fakes;
 using Machine.Specifications;

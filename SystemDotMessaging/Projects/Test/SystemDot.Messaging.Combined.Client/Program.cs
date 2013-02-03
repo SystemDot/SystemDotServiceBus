@@ -4,6 +4,7 @@ using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Test.Messages;
+using SystemDot.Messaging.Transport.Http.Configuration;
 
 namespace SystemDot.Messaging.Combined.Client
 {

@@ -1,8 +1,6 @@
 using SystemDot.Ioc;
-using SystemDot.Messaging.Transport;
-using SystemDot.Messaging.Transport.InProcess;
 
-namespace SystemDot.Messaging.Configuration.ComponentRegistration
+namespace SystemDot.Messaging.Transport.InProcess.Configuration
 {
     public static class InProcessTransportComponents
     {

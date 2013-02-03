@@ -1,4 +1,5 @@
 using System;
+using SystemDot.Messaging.Transport.InProcess.Configuration;
 using SystemDot.Parallelism;
 using SystemDot.Specifications;
 using Machine.Specifications;

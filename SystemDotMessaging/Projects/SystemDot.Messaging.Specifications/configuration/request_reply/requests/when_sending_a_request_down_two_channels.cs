@@ -1,4 +1,5 @@
 using SystemDot.Messaging.Packaging.Headers;
+using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.requests

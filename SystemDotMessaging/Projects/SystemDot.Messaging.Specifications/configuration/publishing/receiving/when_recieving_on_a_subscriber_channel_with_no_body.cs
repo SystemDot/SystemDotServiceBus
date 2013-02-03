@@ -3,6 +3,7 @@ using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Sequencing;
+using SystemDot.Messaging.Transport.Http.Configuration;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving

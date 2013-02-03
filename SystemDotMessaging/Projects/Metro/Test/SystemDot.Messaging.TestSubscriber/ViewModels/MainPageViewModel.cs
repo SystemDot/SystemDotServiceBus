@@ -4,6 +4,7 @@ using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Storage.Esent;
 using SystemDot.Messaging.Test.Messages;
+using SystemDot.Messaging.Transport.Http.Configuration;
 using Windows.UI.Core;
 using SystemDot.Messaging.TestSubscriber.Handlers;
 

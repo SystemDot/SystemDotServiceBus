@@ -1,5 +1,6 @@
 using System.Linq;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.requests

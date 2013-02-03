@@ -1,5 +1,6 @@
 using System;
 using SystemDot.Messaging.Storage.Changes;
+using SystemDot.Messaging.Transport.InProcess.Configuration;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 using SystemDot.Specifications;

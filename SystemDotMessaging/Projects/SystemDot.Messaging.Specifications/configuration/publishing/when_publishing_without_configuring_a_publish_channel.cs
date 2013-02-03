@@ -1,4 +1,5 @@
 using System;
+using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing
