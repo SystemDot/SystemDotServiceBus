@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Linq;
 using SystemDot.Files;
-using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
 
-namespace SystemDot.Messaging.Storage.Esent.Test
+namespace SystemDot.Esent.Test
 {
     class Program
     {

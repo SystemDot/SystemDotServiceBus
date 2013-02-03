@@ -101,9 +101,9 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <ProjectReference Include="..\..\SystemDot.Messaging.Storage.Esent\SystemDot.Messaging.Storage.Esent.csproj">
-      <Project>{096a9e92-d753-4a6c-bb61-31e0eab4425c}</Project>
-      <Name>SystemDot.Messaging.Storage.Esent %28Metro\SystemDot.Messaging.Storage.Esent%29</Name>
+    <ProjectReference Include="..\..\SystemDot.Esent\SystemDot.Esent.csproj">
+      <Project>{096A9E92-D753-4A6C-BB61-31E0EAB4425C}</Project>
+      <Name>SystemDot.Esent %28Metro\SystemDot.Esent%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\SystemDot.Messaging.Test.Messages\SystemDot.Messaging.Test.Messages.csproj">
       <Project>{0D0FA9C5-9BDD-4192-978D-BE82EE49AA81}</Project>

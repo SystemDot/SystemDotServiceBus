@@ -2,7 +2,7 @@ using SystemDot.Ioc;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Storage.Changes;
 
-namespace SystemDot.Messaging.Storage.Esent
+namespace SystemDot.Esent
 {
     public static class EsentMessageServerConfigurationExtensions
     {

@@ -1,6 +1,6 @@
 using System.Data.SqlClient;
 
-namespace SystemDot.Messaging.Storage.Sql
+namespace SystemDot.Sql
 {
     public static class SqlDataReaderExtensions
     {

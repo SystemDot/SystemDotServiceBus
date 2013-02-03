@@ -9,8 +9,8 @@
     <ProjectGuid>{096A9E92-D753-4A6C-BB61-31E0EAB4425C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SystemDot.Messaging.Storage.Esent</RootNamespace>
-    <AssemblyName>SystemDot.Messaging.Storage.Esent</AssemblyName>
+    <RootNamespace>SystemDot.Esent</RootNamespace>
+    <AssemblyName>SystemDot.Esent</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -100,10 +100,6 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <ProjectReference Include="..\SystemDot.Extensions.Metro\SystemDot.Extensions.Metro.csproj">
-      <Project>{4a01b283-9022-4549-b9ea-34782b3e25a3}</Project>
-      <Name>SystemDot.Extensions.Metro</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SystemDot.Messaging\SystemDot.Messaging.csproj">
       <Project>{6a4f976c-fb85-4d3d-a145-d43626605212}</Project>
       <Name>SystemDot.Messaging %28Metro\SystemDot.Messaging%29</Name>
@@ -114,19 +110,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\SystemDot.Messaging.Storage.Esent\*.cs">
+    <Compile Include="..\..\SystemDot.Esent\*.cs">
       <Link>%(RecursiveDir)%(FileName)</Link>
     </Compile>
-    <Compile Include="..\..\SystemDot.Messaging.Storage.Esent\*\*.cs">
+    <Compile Include="..\..\SystemDot.Esent\*\*.cs">
       <Link>%(RecursiveDir)%(FileName)</Link>
     </Compile>
-    <Compile Include="..\..\SystemDot.Messaging.Storage.Esent\*\*\*.cs">
+    <Compile Include="..\..\SystemDot.Esent\*\*\*.cs">
       <Link>%(RecursiveDir)%(FileName)</Link>
     </Compile>
-    <Compile Include="..\..\SystemDot.Messaging.Storage.Esent\*\*\*\*.cs">
+    <Compile Include="..\..\SystemDot.Esent\*\*\*\*.cs">
       <Link>%(RecursiveDir)%(FileName)</Link>
     </Compile>
-    <Compile Include="..\..\SystemDot.Messaging.Storage.Esent\*\*\*\*\*.cs">
+    <Compile Include="..\..\SystemDot.Esent\*\*\*\*\*.cs">
       <Link>%(RecursiveDir)%(FileName)</Link>
     </Compile>
   </ItemGroup>

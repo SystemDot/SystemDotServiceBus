@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
-using SystemDot.Messaging.Storage.Changes;
-using SystemDot.Messaging.Storage.Sql.Connections;
 using SystemDot.Serialisation;
+using SystemDot.Sql.Connections;
 using SystemDot.Storage.Changes;
 
-namespace SystemDot.Messaging.Storage.Sql
+namespace SystemDot.Sql
 {
     public class SqlChangeStore : Disposable, IChangeStore
     {

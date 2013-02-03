@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Isam.Esent.Interop;
 
-namespace SystemDot.Messaging.Storage.Esent
+namespace SystemDot.Esent
 {
     public static class Esent
     {

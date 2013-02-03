@@ -1,8 +1,8 @@
 ﻿using System.Collections.ObjectModel;
+using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Handling;
-using SystemDot.Messaging.Storage.Esent;
 using SystemDot.Messaging.Test.Messages;
 using SystemDot.Messaging.Transport.Http.Configuration;
 using Windows.UI.Core;
@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
             this.bus = Configure.Messaging()
                .LoggingWith(loggingMechanism)
                .UsingHttpTransport(MessageServer.Local())
-               //.UsingFilePersistence()
+               .UsingFilePersistence()
                .OpenChannel("TestMetroSender").ForRequestReplySendingTo("TestReciever").WithDurability()
                .WithHook(new MessageMarshallingHook(CoreWindow.GetForCurrentThread().Dispatcher))
                .Initialise();

@@ -1,4 +1,4 @@
-namespace SystemDot.Messaging.Storage.Esent
+namespace SystemDot.Esent
 {
     public static class ChangeStoreTable
     {
