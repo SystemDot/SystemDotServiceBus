@@ -40,20 +40,26 @@
   <ItemGroup>
     <Compile Include="CurrentDateProvider.cs" />
     <Compile Include="Disposable.cs" />
+    <Compile Include="Files\FileSystem.cs" />
+    <Compile Include="Http\HttpServer.cs" />
     <Compile Include="Http\FixedPortAddress.cs" />
     <Compile Include="Http\IWebRequestor.cs" />
+    <Compile Include="Http\WebRequestor.cs" />
     <Compile Include="ICurrentDateProvider.cs" />
     <Compile Include="IEnumerableExtensions.cs" />
-    <Compile Include="IFileSystem.cs" />
+    <Compile Include="Files\IFileSystem.cs" />
     <Compile Include="Ioc\ConcreteInstance.cs" />
     <Compile Include="Ioc\IIocContainer.cs" />
     <Compile Include="Ioc\IocContainer.cs" />
     <Compile Include="Ioc\IocContainerLocator.cs" />
+    <Compile Include="Logging\ConsoleLoggingMechanism.cs" />
     <Compile Include="Logging\ILoggingMechanism.cs" />
+    <Compile Include="Logging\Log4NetLoggingMechanism.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="ObjectExtensions.cs" />
     <Compile Include="Parallelism\ITaskRepeater.cs" />
     <Compile Include="Parallelism\TaskRepeater.cs" />
+    <Compile Include="Parallelism\TaskScheduler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Http\IHttpHandler.cs" />
     <Compile Include="Serialisation\CannotDeserialiseException.cs" />
@@ -70,7 +76,12 @@
     <Compile Include="Storage\Changes\IChangeStore.cs" />
     <Compile Include="Storage\Changes\InMemoryChangeStore.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SystemDot.Extensions\SystemDot.Extensions.csproj">
+      <Project>{c68777be-fc18-47e1-abae-7cd6d5d0f7bc}</Project>
+      <Name>SystemDot.Extensions %28Windows\SystemDot.Extensions%29</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

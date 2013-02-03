@@ -4,6 +4,7 @@ using System.Diagnostics.Contracts;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using SystemDot.Files;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;

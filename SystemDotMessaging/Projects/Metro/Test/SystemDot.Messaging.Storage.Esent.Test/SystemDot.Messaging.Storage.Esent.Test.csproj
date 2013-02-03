@@ -109,10 +109,6 @@
       <Project>{6a4f976c-fb85-4d3d-a145-d43626605212}</Project>
       <Name>SystemDot.Messaging %28Metro\SystemDot.Messaging%29</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\SystemDot.Metro\SystemDot.Metro.csproj">
-      <Project>{09A377EE-27BB-468D-9B4E-E870424AEBA4}</Project>
-      <Name>SystemDot.Metro</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\SystemDot\SystemDot.csproj">
       <Project>{E9433834-D592-4A4A-8219-3EA48B5A2BCC}</Project>
       <Name>SystemDot %28Metro\SystemDot%29</Name>

@@ -33,7 +33,7 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
             this.bus = Configure.Messaging()
                .LoggingWith(loggingMechanism)
                .UsingHttpTransport(MessageServer.Local())
-               .UsingFilePersistence()
+               //.UsingFilePersistence()
                .OpenChannel("TestMetroSender").ForRequestReplySendingTo("TestReciever").WithDurability()
                .WithHook(new MessageMarshallingHook(CoreWindow.GetForCurrentThread().Dispatcher))
                .Initialise();

@@ -102,8 +102,18 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PutSender.cs" />
+    <Compile Include="Console.cs" />
+    <Compile Include="File.cs" />
+    <Compile Include="Net\HttpListener.cs" />
+    <Compile Include="Net\HttpListenerContext.cs" />
+    <Compile Include="Net\Request.cs" />
+    <Compile Include="Net\Response.cs" />
+    <Compile Include="Timers\ElapsedEventHandler.cs" />
+    <Compile Include="Timers\ElapsedEventHandlerArgs.cs" />
     <Compile Include="Environment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Timers\Timer.cs" />
     <Compile Include="TypeExtensions.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">

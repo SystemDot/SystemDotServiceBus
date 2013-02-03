@@ -2,26 +2,17 @@
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
-using SystemDot.Logging;
 
-namespace SystemDot.Http
+namespace SystemDot
 {
-    public class WebRequestor : IWebRequestor
+    public class PutSender
     {
-        public void SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest)
+        public static async void Send(Action<Stream> toPerformOnRequest, Action<Stream> toPerformOnResponse, string url)
         {
-            SendPut(address, toPerformOnRequest, s => { });
+            ProcessResponse(toPerformOnResponse, await SendRequest(toPerformOnRequest, url));
         }
 
-        public async void SendPut(
-            FixedPortAddress address, 
-            Action<Stream> toPerformOnRequest, 
-            Action<Stream> toPerformOnResponse)
-        {
-            ProcessResponse(toPerformOnResponse, await SendRequest(address, toPerformOnRequest));
-        }
-
-        static async Task<HttpResponseMessage> SendRequest(FixedPortAddress address, Action<Stream> toPerformOnRequest)
+        static async Task<HttpResponseMessage> SendRequest(Action<Stream> toPerformOnRequest, string url)
         {
             var stream = new MemoryStream();
             toPerformOnRequest(stream);
@@ -29,7 +20,7 @@ namespace SystemDot.Http
 
             HttpResponseMessage response = await new HttpClient()
                 .SendAsync(
-                    new HttpRequestMessage(HttpMethod.Put, address.Url)
+                    new HttpRequestMessage(HttpMethod.Put, url)
                     {
                         Content = new StreamContent(stream)
                     });
@@ -46,6 +37,6 @@ namespace SystemDot.Http
             toPerformOnResponse(responseStream);
 
             responseStream.Dispose();
-        }
+        } 
     }
 }

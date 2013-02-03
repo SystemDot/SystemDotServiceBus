@@ -55,6 +55,12 @@
       <Link>%(RecursiveDir)%(FileName)</Link>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SystemDot.Extensions\SystemDot.Extensions.csproj">
+      <Project>{34f8b744-4d0b-4151-ae4c-5530479342aa}</Project>
+      <Name>SystemDot.Extensions %28Android\SystemDot.Extensions%29</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

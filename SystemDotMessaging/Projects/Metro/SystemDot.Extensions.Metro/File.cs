@@ -4,9 +4,9 @@ using Windows.Storage;
 
 namespace SystemDot
 {
-    public class FileSystem : IFileSystem
+    public static class File
     {
-        public bool FileExists(string path)
+        public static bool Exists(string path)
         {
             path = path.Replace(ApplicationData.Current.LocalFolder.Path + "\\", "");
 

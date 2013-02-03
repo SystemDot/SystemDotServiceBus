@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{8526C041-50B4-4001-B28B-09CE8ABFF6A5}</ProjectGuid>
+    <ProjectGuid>{34F8B744-4D0B-4151-AE4C-5530479342AA}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SystemDot.NonMetro</RootNamespace>
-    <AssemblyName>SystemDot.NonMetro</AssemblyName>
+    <RootNamespace>SystemDot.Extensions</RootNamespace>
+    <AssemblyName>SystemDot.Extensions</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
@@ -39,27 +39,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\SystemDot.NonMetro\*.cs">
+    <Compile Include="..\..\SystemDot.Extensions\*.cs">
       <Link>%(RecursiveDir)%(FileName)</Link>
     </Compile>
-    <Compile Include="..\..\SystemDot.NonMetro\*\*.cs">
+    <Compile Include="..\..\SystemDot.Extensions\*\*.cs">
       <Link>%(RecursiveDir)%(FileName)</Link>
     </Compile>
-    <Compile Include="..\..\SystemDot.NonMetro\*\*\*.cs">
+    <Compile Include="..\..\SystemDot.Extensions\*\*\*.cs">
       <Link>%(RecursiveDir)%(FileName)</Link>
     </Compile>
-    <Compile Include="..\..\SystemDot.NonMetro\*\*\*\*.cs">
+    <Compile Include="..\..\SystemDot.Extensions\*\*\*\*.cs">
       <Link>%(RecursiveDir)%(FileName)</Link>
     </Compile>
-    <Compile Include="..\..\SystemDot.NonMetro\*\*\*\*\*.cs">
-      <Link>%(RecursiveDir)%(FileName)</Link>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SystemDot\SystemDot.csproj">
-      <Project>{00DE20F1-75AD-48F8-B882-66BD2D9F0F8B}</Project>
-      <Name>SystemDot %28Android\SystemDot%29</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

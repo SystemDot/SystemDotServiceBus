@@ -1,28 +1,22 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using SystemDot.Logging;
 
-namespace SystemDot.Http
+namespace SystemDot
 {
-    public class WebRequestor : IWebRequestor
+    public static class PutSender
     {
-        public void SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest)
+        public static void Send(Action<Stream> toPerformOnRequest, Action<Stream> toPerformOnResponse, string url)
         {
-            SendPut(address, toPerformOnRequest, s => { });
-        }
-
-        public void SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest, Action<Stream> toPerformOnResponse)
-        {
-            var request = CreateRequest(address);
+            var request = CreateRequest(url);
 
             SendRequest(toPerformOnRequest, request);
             RecieveResponse(toPerformOnResponse, request);
         }
 
-        static HttpWebRequest CreateRequest(FixedPortAddress address)
+        static HttpWebRequest CreateRequest(string url)
         {
-            var request = (HttpWebRequest) WebRequest.Create(address.Url);
+            var request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "PUT";
             return request;
         }
@@ -39,5 +33,6 @@ namespace SystemDot.Http
             using (Stream stream = response.GetResponseStream())
                 toPerformOnResponse(stream);
         }
+        
     }
 }

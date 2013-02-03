@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace SystemDot
+namespace SystemDot.Files
 {
     public class FileSystem : IFileSystem
     {

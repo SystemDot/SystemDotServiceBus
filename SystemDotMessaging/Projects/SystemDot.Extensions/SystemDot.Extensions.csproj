@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FD8BB339-A3F0-4643-B09C-6FD9D6BD1E1A}</ProjectGuid>
+    <ProjectGuid>{C68777BE-FC18-47E1-ABAE-7CD6D5D0F7BC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SystemDot</RootNamespace>
-    <AssemblyName>SystemDot.NonMetro</AssemblyName>
+    <RootNamespace>SystemDot.Extensions</RootNamespace>
+    <AssemblyName>SystemDot.Extensions</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,21 +33,15 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileSystem.cs" />
-    <Compile Include="Http\WebRequestor.cs" />
-    <Compile Include="Http\HttpServer.cs" />
-    <Compile Include="Logging\ConsoleLoggingMechanism.cs" />
-    <Compile Include="Logging\Log4NetLoggingMechanism.cs" />
-    <Compile Include="Parallelism\TaskScheduler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SystemDot\SystemDot.csproj">
-      <Project>{ded30506-f4ec-4528-b535-8fa9373c5b52}</Project>
-      <Name>SystemDot %28Windows\SystemDot%29</Name>
-    </ProjectReference>
+    <Compile Include="PutSender.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

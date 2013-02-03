@@ -56,10 +56,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SystemDot.NonMetro\SystemDot.NonMetro.csproj">
-      <Project>{8526C041-50B4-4001-B28B-09CE8ABFF6A5}</Project>
-      <Name>SystemDot.NonMetro %28Android\SystemDot.NonMetro%29</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">
       <Project>{00DE20F1-75AD-48F8-B882-66BD2D9F0F8B}</Project>
       <Name>SystemDot %28Android\SystemDot%29</Name>

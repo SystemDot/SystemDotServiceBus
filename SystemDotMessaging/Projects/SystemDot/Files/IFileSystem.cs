@@ -1,4 +1,4 @@
-﻿namespace SystemDot
+﻿namespace SystemDot.Files
 {
     public interface IFileSystem
     {

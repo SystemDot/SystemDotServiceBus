@@ -56,10 +56,6 @@
       <Project>{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}</Project>
       <Name>SystemDot.Messaging %28Windows\SystemDot.Messaging%29</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SystemDot.NonMetro\SystemDot.NonMetro.csproj">
-      <Project>{FD8BB339-A3F0-4643-B09C-6FD9D6BD1E1A}</Project>
-      <Name>SystemDot.NonMetro %28Windows\SystemDot.NonMetro%29</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">
       <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>
       <Name>SystemDot %28Windows\SystemDot%29</Name>
