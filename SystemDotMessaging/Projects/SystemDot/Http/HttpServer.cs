@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SystemDot.Http
 {
-    public class HttpServer
+    public class HttpServer : IHttpServer
     {
         readonly FixedPortAddress address;
         readonly IHttpHandler handler;

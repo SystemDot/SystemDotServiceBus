@@ -41,8 +41,11 @@
     <Compile Include="CurrentDateProvider.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="Files\FileSystem.cs" />
+    <Compile Include="Http\Builders\HttpServerBuilder.cs" />
+    <Compile Include="Http\Builders\IHttpServerBuilder.cs" />
     <Compile Include="Http\HttpServer.cs" />
     <Compile Include="Http\FixedPortAddress.cs" />
+    <Compile Include="Http\IHttpServer.cs" />
     <Compile Include="Http\IWebRequestor.cs" />
     <Compile Include="Http\WebRequestor.cs" />
     <Compile Include="ICurrentDateProvider.cs" />

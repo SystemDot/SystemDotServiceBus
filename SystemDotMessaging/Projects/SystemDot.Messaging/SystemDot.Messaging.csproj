@@ -112,6 +112,7 @@
     <Compile Include="Sequencing\StartSequenceApplier.cs" />
     <Compile Include="Transport\Http\Configuration\HttpTransportComponents.cs" />
     <Compile Include="Transport\Http\Configuration\MessagingConfigurationExtensions.cs" />
+    <Compile Include="Transport\ITransportBuilder.cs" />
     <Compile Include="Transport\InProcess\Configuration\InProcessTransportComponents.cs" />
     <Compile Include="Transport\InProcess\Configuration\MessagingConfigurationExtensions.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
@@ -188,7 +189,7 @@
     <Compile Include="Storage\PersistenceHeader.cs" />
     <Compile Include="Storage\PersistenceUseType.cs" />
     <Compile Include="Transport\Http\HttpAddressExtensions.cs" />
-    <Compile Include="Transport\Http\LongPolling\Servers\Builders\MessagingServerBuilder.cs" />
+    <Compile Include="Transport\Http\LongPolling\Servers\Builders\HttpRemoteTransportBuilder.cs" />
     <Compile Include="Transport\IMessageSender.cs" />
     <Compile Include="Transport\IMessageReciever.cs" />
     <Compile Include="Transport\Http\LongPolling\LongPollRequestHeader.cs" />
