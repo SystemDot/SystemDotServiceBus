@@ -66,7 +66,12 @@
     <Compile Include="Parallelism\TaskStarter.cs" />
     <Compile Include="Serialisation\PlatformAgnosticSerialiser.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SystemDot.Extensions.NonMetro\SystemDot.Extensions.NonMetro.csproj">
+      <Project>{CC56CFA3-4BB3-491A-8B4D-8FBD8FEFFFC4}</Project>
+      <Name>SystemDot.Extensions.NonMetro</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -26,5 +26,15 @@ namespace SystemDot
         {
             return type.GetTypeInfo().ImplementedInterfaces.ToArray();
         }
+
+        public static IEnumerable<Type> GetNonBaseInterfaces(this Type type)
+        {
+            throw new PlatformNotSupportedException("");
+        }
+
+        public static IEnumerable<Type> GetBaseInterfaces(this Type type)
+        {
+            throw new PlatformNotSupportedException("");
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using SystemDot.Ioc;
+using SystemDot.Specifications.ioc.TestTypes;
 using Machine.Fakes;
 using Machine.Specifications;
 using Machine.Specifications.Model;

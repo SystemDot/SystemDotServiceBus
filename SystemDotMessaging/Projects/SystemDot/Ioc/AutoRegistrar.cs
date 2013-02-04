@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace SystemDot.Ioc
 {
-    public class AutoRegistrar
+    internal class AutoRegistrar
     {
         readonly IocContainer iocContainer;
 
@@ -18,7 +18,7 @@ namespace SystemDot.Ioc
         {
             foreach (var type in types)
             {
-                if (type.GetInterfaces().Any())
+                if (type.GetNonBaseInterfaces().Any())
                 {
                     RegisterConcreteByInterface(type);
                 }
@@ -31,7 +31,7 @@ namespace SystemDot.Ioc
 
         void RegisterConcreteByInterface(Type type)
         {
-            GetRegisterInstanceConcreteByInterface(type.GetInterfaces().First(), type)
+            GetRegisterInstanceConcreteByInterface(type.GetNonBaseInterfaces().First(), type)
                 .Invoke(iocContainer, null);
         }
 

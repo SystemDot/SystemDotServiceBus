@@ -1,24 +1,25 @@
 ﻿using SystemDot.Ioc;
+using SystemDot.Specifications.ioc.TestTypes;
 using Machine.Fakes;
 using Machine.Specifications;
 
 namespace SystemDot.Specifications.ioc
 {
     [Subject("Ioc")]
-    public class when_auto_registering_types_from_an_assembley_in_the_container_the_second_time : WithSubject<IocContainer>
+    public class when_auto_registering_types_in_the_container_from_an_assembley_the_second_time : WithSubject<IocContainer>
     {
         static ITestInterface1 instance1;
         static ITestInterface1 instance2;
 
         Establish on = () =>
         {
-            Subject.RegisterFromAssemblyOf<when_auto_registering_types_from_an_assembley_in_the_container_the_second_time>();
+            Subject.RegisterFromAssemblyOf<when_auto_registering_types_in_the_container_from_an_assembley_the_second_time>();
             instance1 = Subject.Resolve<ITestInterface1>();
         };
 
         Because of = () =>
         {
-            Subject.RegisterFromAssemblyOf<when_auto_registering_types_from_an_assembley_in_the_container_the_second_time>();
+            Subject.RegisterFromAssemblyOf<when_auto_registering_types_in_the_container_from_an_assembley_the_second_time>();
             instance2 = Subject.Resolve<ITestInterface1>();
         };
 

@@ -20,7 +20,10 @@ namespace SystemDot.Ioc
 #else
         static IEnumerable<Type> FindTypes<TType>()
         {
-            return typeof(TType).Assembly.GetTypes().Where(t => !t.IsInterface);
+            return typeof(TType)
+                .Assembly
+                .GetTypes()
+                .Where(t => !t.IsInterface && !t.IsAbstract && t.IsClass && !t.ContainsGenericParameters);
         }
 #endif
     }
