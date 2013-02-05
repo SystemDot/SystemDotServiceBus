@@ -3,8 +3,8 @@ using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.channels.distribution
 {
-    [Subject("Message distribution")]
-    public class when_queueing_an_item_and_then_starting_the_queue
+    [Subject(SpecificationGroup.Description)]
+    public class when_queueing_an_item
     {
         static Queue<object> queue;
         static object item;

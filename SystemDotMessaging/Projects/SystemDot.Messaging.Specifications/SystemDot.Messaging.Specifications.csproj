@@ -56,8 +56,10 @@
     <Compile Include="channels\caching\persistence\checkpointing\when_adding_a_new_message_after_over_1000_changes_have_occurred_and_all_messages_have_been_deleted.cs" />
     <Compile Include="channels\caching\persistence\when_getting_two_messages_for_a_channel_that_are_not_stored_in_sequence_order.cs" />
     <Compile Include="channels\copying\when_copying_a_message.cs" />
-    <Compile Include="channels\distribution\when_queueing_an_item_and_then_starting_the_queue.cs" />
-    <Compile Include="channels\distribution\when_starting_a_queue_with_items_queued_with_no_pushed_item_listener.cs" />
+    <Compile Include="channels\distribution\SpecificationGroup.cs" />
+    <Compile Include="channels\distribution\when_queueing_an_item.cs" />
+    <Compile Include="channels\distribution\when_queueing_an_item_that_fails_when_pushed_then_queueing_another.cs" />
+    <Compile Include="channels\distribution\when_queueing_items_on_a_with_no_pushed_item_listener.cs" />
     <Compile Include="channels\expiry\when_passing_a_message_that_is_not_repeat_attempt_expired_through_an_expirer.cs" />
     <Compile Include="channels\expiry\when_passing_a_message_that_is_repeat_attempt_expired_through_an_expirer.cs" />
     <Compile Include="channels\expiry\when_passing_a_message_through_a_expirer_with_a_pass_through_strategy.cs" />

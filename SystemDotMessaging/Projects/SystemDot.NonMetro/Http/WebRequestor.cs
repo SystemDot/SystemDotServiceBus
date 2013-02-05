@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using SystemDot.Logging;
 
 namespace SystemDot.Http
 {
@@ -14,17 +13,10 @@ namespace SystemDot.Http
 
         public void SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest, Action<Stream> toPerformOnResponse)
         {
-            try
-            {
-                var request = CreateRequest(address);
+            var request = CreateRequest(address);
 
-                SendRequest(toPerformOnRequest, request);
-                RecieveResponse(toPerformOnResponse, request);
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e);
-            }
+            SendRequest(toPerformOnRequest, request);
+            RecieveResponse(toPerformOnResponse, request);
         }
 
         static HttpWebRequest CreateRequest(FixedPortAddress address)

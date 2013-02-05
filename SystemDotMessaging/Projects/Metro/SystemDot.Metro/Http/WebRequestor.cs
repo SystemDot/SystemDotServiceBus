@@ -18,14 +18,7 @@ namespace SystemDot.Http
             Action<Stream> toPerformOnRequest,
             Action<Stream> toPerformOnResponse)
         {
-            try
-            {
-                ProcessResponse(toPerformOnResponse, await SendRequest(address, toPerformOnRequest));
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e);
-            }
+            ProcessResponse(toPerformOnResponse, await SendRequest(address, toPerformOnRequest));
         }
 
         static async Task<HttpResponseMessage> SendRequest(FixedPortAddress address, Action<Stream> toPerformOnRequest)

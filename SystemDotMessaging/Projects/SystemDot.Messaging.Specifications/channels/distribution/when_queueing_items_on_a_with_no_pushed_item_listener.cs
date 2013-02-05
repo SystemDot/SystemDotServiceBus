@@ -4,7 +4,7 @@ using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.channels.distribution
 {
-    [Subject("Message distribution")]
+    [Subject(SpecificationGroup.Description)]
     public class when_queueing_items_on_a_with_no_pushed_item_listener
     {
         static Exception exception;
