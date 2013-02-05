@@ -3,7 +3,7 @@ using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.channels.distribution
 {
-    [Subject("Message distribution")]
+    [Subject(SpecificationGroup.Description)]
     public class when_pumping_an_item
     {
         static Pump<object> pump;

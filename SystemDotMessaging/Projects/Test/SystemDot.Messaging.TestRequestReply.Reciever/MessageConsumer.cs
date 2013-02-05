@@ -7,7 +7,7 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
     public class MessageConsumer
     {
         readonly IBus bus;
-
+        
         public MessageConsumer(IBus bus)
         {
             this.bus = bus;
@@ -21,6 +21,7 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
                 Thread.CurrentThread.ManagedThreadId);
 
             this.bus.Reply(new TestMessage("reply to " + message.Text));
+            
         }
     }
 }

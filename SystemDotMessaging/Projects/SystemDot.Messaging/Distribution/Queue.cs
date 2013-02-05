@@ -46,12 +46,22 @@ namespace SystemDot.Messaging.Distribution
                 this.isDequeueing = this.queue.TryDequeue(out message);
             }
 
-            if (this.isDequeueing)
-            {
+            if (!this.isDequeueing) return;
 
+            try
+            {
                 OnItemPushed(message);
-                Dequeue();
             }
+            catch (Exception)
+            {
+                lock (this.locker)
+                {
+                    this.isDequeueing = false;
+                }
+                throw;
+            }
+                
+            Dequeue();
         }
 
         void OnItemPushed(T message)

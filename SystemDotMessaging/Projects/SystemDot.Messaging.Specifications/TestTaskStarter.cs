@@ -5,7 +5,7 @@ namespace SystemDot.Messaging.Specifications
 {
     public class TestTaskStarter : ITaskStarter
     {
-        public static ITaskStarter Umlimited()
+        public static ITaskStarter Unlimited()
         {
             return new TestTaskStarter(0);
         }
