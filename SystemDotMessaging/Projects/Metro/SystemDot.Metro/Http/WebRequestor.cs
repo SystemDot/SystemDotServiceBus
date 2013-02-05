@@ -14,11 +14,18 @@ namespace SystemDot.Http
         }
 
         public async void SendPut(
-            FixedPortAddress address, 
-            Action<Stream> toPerformOnRequest, 
+            FixedPortAddress address,
+            Action<Stream> toPerformOnRequest,
             Action<Stream> toPerformOnResponse)
         {
-            ProcessResponse(toPerformOnResponse, await SendRequest(address, toPerformOnRequest));
+            try
+            {
+                ProcessResponse(toPerformOnResponse, await SendRequest(address, toPerformOnRequest));
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+            }
         }
 
         static async Task<HttpResponseMessage> SendRequest(FixedPortAddress address, Action<Stream> toPerformOnRequest)

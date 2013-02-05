@@ -14,10 +14,17 @@ namespace SystemDot.Http
 
         public void SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest, Action<Stream> toPerformOnResponse)
         {
-            var request = CreateRequest(address);
+            try
+            {
+                var request = CreateRequest(address);
 
-            SendRequest(toPerformOnRequest, request);
-            RecieveResponse(toPerformOnResponse, request);
+                SendRequest(toPerformOnRequest, request);
+                RecieveResponse(toPerformOnResponse, request);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+            }
         }
 
         static HttpWebRequest CreateRequest(FixedPortAddress address)
