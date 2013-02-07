@@ -43,7 +43,7 @@ namespace SystemDot.Ioc
 
         MethodInfo GetRegisterInstanceConcreteByInterface(Type plugin, Type concrete)
         {
-            var methods = GetMethodsByName(iocContainer, GetRegisterInstanceTConcreteAction(iocContainer));
+            var methods = iocContainer.GetType().GetMethodsByName(GetRegisterInstanceTConcreteAction(iocContainer));
             var method = GetMethodByGenericParamentName(methods, "TPlugin", "TConcrete");
             return method.MakeGenericMethod(plugin, concrete);
         }
@@ -59,17 +59,5 @@ namespace SystemDot.Ioc
             return methods
                 .Single(m => m.GetGenericArguments().All(a => names.Contains(a.Name)) && m.GetGenericArguments().Count() == names.Count());
         }
-
-#if (NETFX_CORE)
-        static IEnumerable<MethodInfo> GetMethodsByName(IIocContainer iocContainer, Action genMethod)
-        {
-            return iocContainer.GetType().GetTypeInfo().DeclaredMethods.Where(m => m.Name == "RegisterInstance");
-        }
-#else
-        static IEnumerable<MethodInfo> GetMethodsByName(IIocContainer iocContainer, Action genMethod)
-        {
-            return iocContainer.GetType().GetMethods().Where(m => m.Name == genMethod.Method.Name);
-        }
-#endif
     }
 }

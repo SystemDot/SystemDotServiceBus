@@ -36,5 +36,17 @@ namespace SystemDot
         {
             throw new PlatformNotSupportedException("");
         }
+
+        public static IEnumerable<Type> FindTypes<TType>(this object type)
+        {
+            return typeof(TType).GetTypeInfo().Assembly.ExportedTypes.Where(t => !t.GetTypeInfo().IsInterface);
+        }
+
+        public static IEnumerable<MethodInfo> GetMethodsByName(this Type type, Action genMethod)
+        {
+            return type.GetTypeInfo().DeclaredMethods.Where(m => m.Name == "RegisterInstance");
+
+        }
+
     }
 }

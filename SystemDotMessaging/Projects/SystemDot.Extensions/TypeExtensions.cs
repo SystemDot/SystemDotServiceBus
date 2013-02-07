@@ -18,15 +18,28 @@ namespace SystemDot
             var types = new List<Type>();
             var baseType = type.BaseType;
 
-            if (baseType == typeof(MemberInfo)) return types;
+            if (baseType == typeof (MemberInfo)) return types;
 
             while (baseType != null)
             {
                 types.AddRange(baseType.GetInterfaces());
                 baseType = baseType.BaseType;
-                if (baseType == typeof(MemberInfo)) return types;
+                if (baseType == typeof (MemberInfo)) return types;
             }
             return types;
+        }
+
+        public static IEnumerable<Type> FindTypes<TType>(this object type)
+        {
+            return typeof(TType)
+                .Assembly
+                .GetTypes()
+                .Where(t => !t.IsInterface && !t.IsAbstract && t.IsClass && !t.ContainsGenericParameters);
+        }
+
+        public static IEnumerable<MethodInfo> GetMethodsByName(this Type type, Action genMethod)
+        {
+            return type.GetMethods().Where(m => m.Name == genMethod.Method.Name);
         }
     }
 }

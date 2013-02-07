@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
 namespace SystemDot.Ioc
 {
@@ -9,22 +7,7 @@ namespace SystemDot.Ioc
     {
         public IEnumerable<Type> GetConcreteTypesFromAssemblyOf<TType>()
         {
-            return FindTypes<TType>();
+            return typeof(TType).FindTypes<TType>();
         }
-
-#if (NETFX_CORE)
-        static IEnumerable<Type> FindTypes<TType>()
-        {
-            return typeof (TType).GetTypeInfo().Assembly.ExportedTypes.Where(t => !t.GetTypeInfo().IsInterface);
-        }
-#else
-        static IEnumerable<Type> FindTypes<TType>()
-        {
-            return typeof(TType)
-                .Assembly
-                .GetTypes()
-                .Where(t => !t.IsInterface && !t.IsAbstract && t.IsClass && !t.ContainsGenericParameters);
-        }
-#endif
     }
 }
