@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace SystemDot
@@ -11,9 +12,29 @@ namespace SystemDot
             return type.GetRuntimeMethod(name, types);
         }
 
+        public static IEnumerable<MethodInfo> GetMethods(this Type type)
+        {
+            return type.GetRuntimeMethods();
+        }
+
         public static IEnumerable<ConstructorInfo> GetConstructors(this Type type)
         {
             return type.GetTypeInfo().DeclaredConstructors;
+        }
+
+        public static Type[] GetInterfaces(this Type type)
+        {
+            return type.GetTypeInfo().ImplementedInterfaces.ToArray();
+        }
+
+        public static IEnumerable<Type> GetNonBaseInterfaces(this Type type)
+        {
+            throw new PlatformNotSupportedException("");
+        }
+
+        public static IEnumerable<Type> GetBaseInterfaces(this Type type)
+        {
+            throw new PlatformNotSupportedException("");
         }
     }
 }

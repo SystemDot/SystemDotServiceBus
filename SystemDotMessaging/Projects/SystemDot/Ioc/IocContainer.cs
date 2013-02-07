@@ -7,7 +7,7 @@ namespace SystemDot.Ioc
     public class IocContainer : IIocContainer
     {
         readonly Dictionary<Type, ConcreteInstance> components = new Dictionary<Type, ConcreteInstance>();
-        
+
         public void RegisterInstance<TPlugin>(Func<TPlugin> instanceFactory) where TPlugin : class
         {
             if (ComponentExists<TPlugin>()) return;
@@ -57,6 +57,11 @@ namespace SystemDot.Ioc
             for (var i = 0; i < parameters.Count(); i++) parameterInstances[i] = Resolve(parameters[i].ParameterType);
 
             return concreteType.SetObjectInstance(Activator.CreateInstance(concreteType.ObjectType, parameterInstances));
+        }
+
+        public void RegisterFromAssemblyOf<TAssemblyOf>()
+        {
+            new AutoRegistrar(this).Register(new AssemblyScanner().GetConcreteTypesFromAssemblyOf<TAssemblyOf>());
         }
     }
 }
