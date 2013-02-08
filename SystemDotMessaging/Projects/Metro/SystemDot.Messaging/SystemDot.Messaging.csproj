@@ -125,6 +125,9 @@
     <Compile Include="..\..\SystemDot.Messaging\*\*\*\*\*.cs">
       <Link>%(RecursiveDir)%(FileName)</Link>
     </Compile>
+    <Compile Include="..\..\SystemDot.Messaging\*\*\*\*\*\*.cs">
+      <Link>%(RecursiveDir)%(FileName)</Link>
+    </Compile>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>

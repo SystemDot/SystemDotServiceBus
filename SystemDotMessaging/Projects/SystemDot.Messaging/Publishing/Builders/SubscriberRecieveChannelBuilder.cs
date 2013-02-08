@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly IMessageReciever messageReciever;
         readonly AcknowledgementSender acknowledgementSender;
         readonly PersistenceFactorySelector persistenceFactory;
-        readonly ICurrentDateProvider currentDateProvider;
+        readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
         readonly IIocContainer iocContainer;
 
@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             IMessageReciever messageReciever,
             AcknowledgementSender acknowledgementSender,
             PersistenceFactorySelector persistenceFactory, 
-            ICurrentDateProvider currentDateProvider, 
+            ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 
             IIocContainer iocContainer)
         {
@@ -43,7 +43,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             Contract.Requires(messageReciever != null);
             Contract.Requires(acknowledgementSender != null);
             Contract.Requires(persistenceFactory != null);
-            Contract.Requires(currentDateProvider != null);
+            Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
             Contract.Requires(iocContainer != null);
             
@@ -52,7 +52,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             this.messageReciever = messageReciever;
             this.acknowledgementSender = acknowledgementSender;
             this.persistenceFactory = persistenceFactory;
-            this.currentDateProvider = currentDateProvider;
+            this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
             this.iocContainer = iocContainer;
         }
@@ -69,7 +69,7 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .ToProcessor(new BodyMessageFilter(schema.Address))
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToProcessor(new StartSequenceApplier(messageCache))
-                .ToSimpleMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater)
+                .ToSimpleMessageRepeater(messageCache, this.systemTime, this.taskRepeater)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
                 .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))

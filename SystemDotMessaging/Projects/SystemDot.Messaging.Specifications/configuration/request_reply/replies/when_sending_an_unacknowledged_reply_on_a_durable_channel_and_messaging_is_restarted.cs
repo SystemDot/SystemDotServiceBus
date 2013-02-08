@@ -50,7 +50,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.replies
 
             ConfigureAndRegister<IChangeStore>(changeStore);
             ConfigureAndRegister<ITaskRepeater>(new TestTaskRepeater());
-            ConfigureAndRegister<ICurrentDateProvider>(new TestCurrentDateProvider(DateTime.Now.AddDays(1)));
+            ConfigureAndRegister<ISystemTime>(new TestSystemTime(DateTime.Now.AddDays(1)));
         };
 
         Because of = () =>

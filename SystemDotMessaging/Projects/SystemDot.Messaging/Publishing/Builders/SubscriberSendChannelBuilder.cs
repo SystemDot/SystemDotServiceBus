@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Publishing.Builders
     {
         readonly IMessageSender messageSender;
         readonly PersistenceFactorySelector persistenceFactorySelector;
-        readonly ICurrentDateProvider currentDateProvider;
+        readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
         readonly MessageAcknowledgementHandler acknowledgementHandler;
         readonly ISerialiser serialiser;
@@ -27,19 +27,19 @@ namespace SystemDot.Messaging.Publishing.Builders
         public SubscriberSendChannelBuilder(
             IMessageSender messageSender, 
             PersistenceFactorySelector persistenceFactorySelector, 
-            ICurrentDateProvider currentDateProvider, 
+            ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 
             MessageAcknowledgementHandler acknowledgementHandler, ISerialiser serialiser)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(persistenceFactorySelector != null);
-            Contract.Requires(currentDateProvider != null);
+            Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
             Contract.Requires(acknowledgementHandler != null);
 
             this.messageSender = messageSender;
             this.persistenceFactorySelector = persistenceFactorySelector;
-            this.currentDateProvider = currentDateProvider;
+            this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
             this.acknowledgementHandler = acknowledgementHandler;
             this.serialiser = serialiser;
@@ -60,7 +60,7 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToProcessor(new FirstMessageSequenceRecorder(messageCache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.SubscriberAddress))
-                .ToMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater, schema.RepeatStrategy)
+                .ToMessageRepeater(messageCache, this.systemTime, this.taskRepeater, schema.RepeatStrategy)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
                 .ToProcessor(new PersistenceSourceRecorder())

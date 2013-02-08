@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Specifications.configuration.publishing;
@@ -30,9 +31,15 @@ namespace SystemDot.Messaging.Specifications.configuration.point_to_point.sendin
 
         Because of = () => bus.Send(message);
 
+        It should_send_a_message_with_the_correct_to_address = () =>
+            MessageSender.SentMessages.First().GetToAddress().ShouldEqual(BuildAddress(ReceiverName));
+
+        It should_send_a_message_with_the_correct_from_address = () =>
+            MessageSender.SentMessages.First().GetFromAddress().ShouldEqual(BuildAddress(ChannelName));
+
         It should_mark_the_message_with_the_persistence_id = () =>
             MessageSender.SentMessages.ExcludeAcknowledgements().First()
-                .ShouldHaveCorrectPersistenceId(ReceiverName, PersistenceUseType.PointToPointSend);
+                .ShouldHaveCorrectPersistenceId(ChannelName, PersistenceUseType.PointToPointSend);
 
         It should_set_original_persistence_id_to_the_persistence_id_of_the_message_with_the_persistence_id = () =>
            MessageSender.SentMessages.ExcludeAcknowledgements().First().GetSourcePersistenceId()

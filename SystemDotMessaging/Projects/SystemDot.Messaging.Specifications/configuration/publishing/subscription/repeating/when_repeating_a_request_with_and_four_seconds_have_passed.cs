@@ -13,19 +13,19 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing.subscripti
         const string ChannelName = "Test";
         const string PublisherName = "PublisherName";
 
-        static TestCurrentDateProvider currentDateProvider;
+        static TestSystemTime systemTime;
 
         Establish context = () =>
         {
-            currentDateProvider = new TestCurrentDateProvider(DateTime.Now);
-            ConfigureAndRegister<ICurrentDateProvider>(currentDateProvider);
+            systemTime = new TestSystemTime(DateTime.Now);
+            ConfigureAndRegister<ISystemTime>(systemTime);
 
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForSubscribingTo(PublisherName)
                 .Initialise();
 
-            currentDateProvider.AddToCurrentDate(TimeSpan.FromSeconds(4));
+            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
         };
 
         Because of = () => The<ITaskRepeater>().Start();

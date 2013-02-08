@@ -13,7 +13,7 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
         static void Main(string[] args)
         {
             IBus bus = Configure.Messaging()
-                .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
+                .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false, ShowDebug = false })
                 .UsingHttpTransport(MessageServer.Local())
                 .OpenChannel("TestSender")
                     .ForRequestReplySendingTo("TestReciever")
@@ -30,13 +30,13 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
                 Console.WriteLine("Sending messages");
 
                 bus.Send(new TestMessage("Hello"));
-                bus.Send(new TestMessage("Hello1"));
-                bus.Send(new TestMessage("Hello2"));
-                bus.Send(new TestMessage("Hello3"));
-                bus.Send(new TestMessage("Hello4"));
-                bus.Send(new TestMessage("Hello5"));
-                bus.Send(new TestMessage("Hello6"));
-                bus.Send(new TestMessage("Hello7"));        
+                //bus.Send(new TestMessage("Hello1"));
+                //bus.Send(new TestMessage("Hello2"));
+                //bus.Send(new TestMessage("Hello3"));
+                //bus.Send(new TestMessage("Hello4"));
+                //bus.Send(new TestMessage("Hello5"));
+                //bus.Send(new TestMessage("Hello6"));
+                //bus.Send(new TestMessage("Hello7"));        
             }
             while (true);
         }

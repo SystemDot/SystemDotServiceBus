@@ -54,6 +54,9 @@
     <Compile Include="..\..\SystemDot.Messaging\*\*\*\*\*.cs">
       <Link>%(RecursiveDir)%(FileName)</Link>
     </Compile>
+    <Compile Include="..\..\SystemDot.Messaging\*\*\*\*\*\*.cs">
+      <Link>%(RecursiveDir)%(FileName)</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">

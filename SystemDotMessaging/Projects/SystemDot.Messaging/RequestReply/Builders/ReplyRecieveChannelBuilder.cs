@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly IMessageReciever messageReciever;
         readonly AcknowledgementSender acknowledgementSender;
         readonly PersistenceFactorySelector persistenceFactorySelector;
-        readonly ICurrentDateProvider currentDateProvider;
+        readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
 
         public ReplyRecieveChannelBuilder(
@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             IMessageReciever messageReciever, 
             AcknowledgementSender acknowledgementSender,
             PersistenceFactorySelector persistenceFactorySelector, 
-            ICurrentDateProvider currentDateProvider, 
+            ISystemTime systemTime, 
             ITaskRepeater taskRepeater)
         {
             Contract.Requires(serialiser != null);
@@ -40,7 +40,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(messageReciever != null);
             Contract.Requires(acknowledgementSender != null);
             Contract.Requires(persistenceFactorySelector != null);
-            Contract.Requires(currentDateProvider != null);
+            Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
             
             this.serialiser = serialiser;
@@ -48,7 +48,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             this.messageReciever = messageReciever;
             this.acknowledgementSender = acknowledgementSender;
             this.persistenceFactorySelector = persistenceFactorySelector;
-            this.currentDateProvider = currentDateProvider;
+            this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
         }
 
@@ -63,7 +63,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new BodyMessageFilter(schema.Address))
                 .ToProcessor(new MessageSendTimeRemover())
-                .ToSimpleMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater)
+                .ToSimpleMessageRepeater(messageCache, this.systemTime, this.taskRepeater)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
                 .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))

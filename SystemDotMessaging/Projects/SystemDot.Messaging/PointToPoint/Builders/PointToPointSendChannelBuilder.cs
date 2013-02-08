@@ -19,14 +19,14 @@ namespace SystemDot.Messaging.PointToPoint.Builders
         readonly IMessageSender messageSender;
         readonly ISerialiser serialiser;
         InMemoryChangeStore inMemoryChangeStore;
-        ICurrentDateProvider currentDateProvider;
+        ISystemTime systemTime;
         ITaskRepeater taskRepeater;
 
         public PointToPointSendChannelBuilder(
             IMessageSender messageSender, 
             ISerialiser serialiser, 
             InMemoryChangeStore inMemoryChangeStore, 
-            ICurrentDateProvider currentDateProvider, 
+            ISystemTime systemTime, 
             ITaskRepeater taskRepeater)
         {
             Contract.Requires(messageSender != null);
@@ -35,7 +35,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             this.messageSender = messageSender;
             this.serialiser = serialiser;
             this.inMemoryChangeStore = inMemoryChangeStore;
-            this.currentDateProvider = currentDateProvider;
+            this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
         }
 
@@ -49,7 +49,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
                 .ToProcessor(new Sequencer(messageCache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.RecieverAddress))
-                .ToMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater, schema.RepeatStrategy)
+                .ToMessageRepeater(messageCache, this.systemTime, this.taskRepeater, schema.RepeatStrategy)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new SendChannelMessageCacher(messageCache))
                 .ToProcessor(new PersistenceSourceRecorder())

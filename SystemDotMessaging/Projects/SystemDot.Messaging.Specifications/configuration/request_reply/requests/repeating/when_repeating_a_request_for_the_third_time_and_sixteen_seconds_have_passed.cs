@@ -15,12 +15,12 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.request
 
         static IBus bus;
         static int message;
-        static TestCurrentDateProvider currentDateProvider;
+        static TestSystemTime systemTime;
 
         Establish context = () =>
         {
-            currentDateProvider = new TestCurrentDateProvider(DateTime.Now);
-            ConfigureAndRegister<ICurrentDateProvider>(currentDateProvider);
+            systemTime = new TestSystemTime(DateTime.Now);
+            ConfigureAndRegister<ISystemTime>(systemTime);
 
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
@@ -32,15 +32,15 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.request
 
             bus.Send(message);
 
-            currentDateProvider.AddToCurrentDate(TimeSpan.FromSeconds(4));
+            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
 
             The<ITaskRepeater>().Start();
 
-            currentDateProvider.AddToCurrentDate(TimeSpan.FromSeconds(8));
+            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(8));
 
             The<ITaskRepeater>().Start();
 
-            currentDateProvider.AddToCurrentDate(TimeSpan.FromSeconds(16).Subtract(TimeSpan.FromTicks(1)));
+            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(16).Subtract(TimeSpan.FromTicks(1)));
         };
 
         Because of = () => The<ITaskRepeater>().Start();

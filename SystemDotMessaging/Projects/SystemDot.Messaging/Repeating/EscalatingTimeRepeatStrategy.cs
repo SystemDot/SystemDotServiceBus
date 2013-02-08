@@ -28,13 +28,13 @@ namespace SystemDot.Messaging.Repeating
         public void Repeat(
             MessageRepeater repeater, 
             MessageCache messageCache, 
-            ICurrentDateProvider currentDateProvider)
+            ISystemTime systemTime)
         {
             IEnumerable<MessagePayload> messages = messageCache.GetMessages();
 
             messages.ForEach(m =>
             {
-                if (m.GetLastTimeSent().Ticks <= currentDateProvider.Get().AddSeconds(-GetDelay(m)).Ticks)
+                if (m.GetLastTimeSent().Ticks <= systemTime.GetCurrentDate().AddSeconds(-GetDelay(m)).Ticks)
                     repeater.InputMessage(m);
             });
         }

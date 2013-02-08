@@ -1,6 +1,4 @@
-using SystemDot.Ioc;
 using SystemDot.Logging;
-using SystemDot.Messaging.Configuration.ComponentRegistration;
 
 namespace SystemDot.Messaging.Configuration
 {

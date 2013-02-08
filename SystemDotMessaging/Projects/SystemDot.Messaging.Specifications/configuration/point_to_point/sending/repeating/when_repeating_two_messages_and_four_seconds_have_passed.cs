@@ -14,12 +14,12 @@ namespace SystemDot.Messaging.Specifications.configuration.point_to_point.sendin
         const string SenderChannelName = "TestSender";
 
         static IBus bus;
-        static TestCurrentDateProvider currentDateProvider;
+        static TestSystemTime systemTime;
 
         Establish context = () =>
         {
-            currentDateProvider = new TestCurrentDateProvider(DateTime.Now);
-            ConfigureAndRegister<ICurrentDateProvider>(currentDateProvider);
+            systemTime = new TestSystemTime(DateTime.Now);
+            ConfigureAndRegister<ISystemTime>(systemTime);
 
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.configuration.point_to_point.sendin
             bus.Send(1);
             bus.Send(2);
 
-            currentDateProvider.AddToCurrentDate(TimeSpan.FromSeconds(4));
+            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
         };
 
         Because of = () => The<ITaskRepeater>().Start();

@@ -6,13 +6,13 @@ namespace SystemDot.Specifications
     public class TestTaskScheduler : ITaskScheduler
     {
         readonly int schedulesPermitted;
-        readonly TestCurrentDateProvider currentDateProvider;
+        readonly TestSystemTime systemTime;
         int schedulesExecuted;
 
-        public TestTaskScheduler(int schedulesPermitted, TestCurrentDateProvider currentDateProvider)
+        public TestTaskScheduler(int schedulesPermitted, TestSystemTime systemTime)
         {
             this.schedulesPermitted = schedulesPermitted;
-            this.currentDateProvider = currentDateProvider;
+            this.systemTime = systemTime;
         }
 
         public TimeSpan LastDelay { get; private set;  }
@@ -23,7 +23,7 @@ namespace SystemDot.Specifications
                 return;
 
             this.LastDelay = delay;
-            this.currentDateProvider.AddToCurrentDate(delay);
+            this.systemTime.AddToCurrentDate(delay);
             task.Invoke();
 
         }

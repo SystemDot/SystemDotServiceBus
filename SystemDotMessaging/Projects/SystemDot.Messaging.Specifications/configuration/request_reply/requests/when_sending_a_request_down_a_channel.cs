@@ -7,9 +7,9 @@ using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.configuration.request_reply.replies
+namespace SystemDot.Messaging.Specifications.configuration.request_reply.requests
 {
-    [Subject(SpecificationGroup.Description)]
+    [Subject(replies.SpecificationGroup.Description)]
     public class when_sending_a_request_down_a_channel : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";

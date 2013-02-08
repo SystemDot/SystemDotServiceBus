@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.Configuration
         {
             Contract.Requires(time != null);
 
-            return new TimeMessageExpiryStrategy(time, IocContainerLocator.Locate().Resolve<ICurrentDateProvider>());
+            return new TimeMessageExpiryStrategy(time, IocContainerLocator.Locate().Resolve<ISystemTime>());
         }
 
         public static IMessageExpiryStrategy ByRepeatAttempt(int attempts)

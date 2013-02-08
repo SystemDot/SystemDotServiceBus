@@ -54,8 +54,9 @@ namespace SystemDot.Messaging.Configuration
         public PointToPointSenderConfiguration ForPointToPointSendingTo(string recieverAddress)
         {
             return new PointToPointSenderConfiguration(
-                this.buildActions,
-                BuildEndpointAddress(recieverAddress, this.messageServerName));
+                this.address,
+                BuildEndpointAddress(recieverAddress, this.messageServerName), 
+                this.buildActions);
         }
 
         public PointToPointReceiverConfiguration ForPointToPointReceiving()

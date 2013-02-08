@@ -10,13 +10,14 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
     {
         readonly PointToPointSendChannelSchema sendSchema;
         
-        public PointToPointSenderConfiguration(List<Action> buildActions, EndpointAddress address)
+        public PointToPointSenderConfiguration(EndpointAddress fromAddress, EndpointAddress toAddress, List<Action> buildActions)
             : base(buildActions)
         {
             this.sendSchema = new PointToPointSendChannelSchema
             {
                 RepeatStrategy = EscalatingTimeRepeatStrategy.Default,
-                FromAddress = address
+                RecieverAddress = toAddress,
+                FromAddress = fromAddress
             };
         }
 
@@ -27,7 +28,7 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
 
         protected override EndpointAddress GetAddress()
         {
-            return this.sendSchema.FromAddress;
+            return this.sendSchema.RecieverAddress;
         }
 
         public PointToPointSenderConfiguration WithMessageRepeating(IRepeatStrategy strategy)

@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.channels.expiry
             Configure<IMessageExpiryStrategy>(
                 new TimeMessageExpiryStrategy(
                     expiryTime, 
-                    new TestCurrentDateProvider(message.CreatedOn.Add(expiryTime).AddMilliseconds(-1))));
+                    new TestSystemTime(message.CreatedOn.Add(expiryTime).AddMilliseconds(-1))));
 
             Subject.MessageProcessed += m => processed = m;
         };

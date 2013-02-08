@@ -11,20 +11,20 @@ namespace SystemDot.Messaging.Repeating
         public static ProcessorBuilder<MessagePayload> ToSimpleMessageRepeater(
             this ProcessorBuilder<MessagePayload> builder,
             MessageCache messageCache,
-            ICurrentDateProvider currentDateProvider,
+            ISystemTime systemTime,
             ITaskRepeater taskRepeater)
         {
-            return builder.ToMessageRepeater(messageCache, currentDateProvider, taskRepeater, new SimpleRepeatStrategy());
+            return builder.ToMessageRepeater(messageCache, systemTime, taskRepeater, new SimpleRepeatStrategy());
         }
 
         public static ProcessorBuilder<MessagePayload> ToMessageRepeater(
             this ProcessorBuilder<MessagePayload> builder, 
             MessageCache messageCache, 
-            ICurrentDateProvider currentDateProvider, 
+            ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 
             IRepeatStrategy strategy)
         {
-            var repeater = new MessageRepeater(strategy, currentDateProvider, messageCache);
+            var repeater = new MessageRepeater(strategy, systemTime, messageCache);
             taskRepeater.Register(TimeSpan.FromSeconds(1), repeater.Start);
 
             return builder.ToProcessor(repeater);

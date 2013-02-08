@@ -1,9 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Handling;
-using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Test.Messages;
 using SystemDot.Messaging.Transport.Http.Configuration;
 using Windows.UI.Core;

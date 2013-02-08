@@ -14,13 +14,13 @@ namespace SystemDot.Messaging.Repeating
             this.toRepeatEvery = toRepeatEvery;
         }
 
-        public void Repeat(MessageRepeater repeater, MessageCache messageCache, ICurrentDateProvider currentDateProvider)
+        public void Repeat(MessageRepeater repeater, MessageCache messageCache, ISystemTime systemTime)
         {
             IEnumerable<MessagePayload> messages = messageCache.GetMessages();
 
             messages.ForEach(m =>
             {
-                if (m.GetLastTimeSent() <= currentDateProvider.Get().Add(-this.toRepeatEvery))
+                if (m.GetLastTimeSent() <= systemTime.GetCurrentDate().Add(-this.toRepeatEvery))
                     repeater.InputMessage(m);
             });
         }

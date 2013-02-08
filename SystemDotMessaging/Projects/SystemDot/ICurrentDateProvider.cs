@@ -2,8 +2,10 @@ using System;
 
 namespace SystemDot
 {
-    public interface ICurrentDateProvider
+    public interface ISystemTime
     {
-        DateTime Get();
+        DateTime GetCurrentDate();
+
+        TimeSpan SpanFromSeconds(int seconds);
     }
 }

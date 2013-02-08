@@ -1,0 +1,43 @@
+using System.Collections.Generic;
+using SystemDot.Http;
+using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Packaging.Headers;
+using SystemDot.Messaging.Transport.Http.Remote;
+using SystemDot.Parallelism;
+using SystemDot.Serialisation;
+using Machine.Fakes;
+using Machine.Specifications;
+
+namespace SystemDot.Messaging.Specifications.transport.http.remote
+{
+    [Subject("Long polling")]
+    public class when_long_polling_for_messages_with_addresses_that_are_not_in_the_queue_ : WithSubject<LongPollReciever>
+    {
+        static List<MessagePayload> messagePayloads;
+        static MessagePayload messagePayload;
+            
+        Establish context = () =>
+        {
+            messagePayloads = new List<MessagePayload>();
+            messagePayload = new MessagePayload();
+            messagePayload.SetToAddress(new EndpointAddress("Address1", "TestServer"));
+
+            Configure<ISerialiser>(new PlatformAgnosticSerialiser());
+
+            var requestor = new TestWebRequestor(The<ISerialiser>(), new FixedPortAddress());
+            Configure<IWebRequestor>(requestor); 
+            requestor.AddMessages(messagePayload);
+
+            var starter = new TestTaskStarter(1);
+            Configure<ITaskStarter>(starter);
+
+            Subject.MessageProcessed += payload => messagePayloads.Add(payload);
+            
+        };
+
+        Because of = () => Subject.RegisterAddress(new EndpointAddress("Address2", "TestServer"));
+
+        It should_output_any_messages_from_the_queue = () => messagePayloads.ShouldBeEmpty();
+    }
+}

@@ -1,7 +1,8 @@
 ﻿using System.ServiceProcess;
 using SystemDot.Http.Builders;
 using SystemDot.Logging;
-using SystemDot.Messaging.Transport.Http.LongPolling.Servers.Builders;
+using SystemDot.Messaging.Transport.Http.Configuration;
+using SystemDot.Messaging.Transport.Http.Remote.Servers.Configuration;
 
 namespace SystemDot.Messaging.MessagingServer.WindowsService
 {
@@ -14,9 +15,11 @@ namespace SystemDot.Messaging.MessagingServer.WindowsService
 
         protected override void OnStart(string[] args)
         {
-            Logger.LoggingMechanism = new Log4NetLoggingMechanism { ShowInfo = true };
-
-            new HttpRemoteTransportBuilder(new HttpServerBuilder()).Build();
+            Configuration.Configure.Messaging()
+                .LoggingWith(new Log4NetLoggingMechanism { ShowInfo = true })
+                .UsingHttpTransport()
+                .AsARemoteServer()
+                .Initialise();
 
             Logger.Info("I am the message server");
         }

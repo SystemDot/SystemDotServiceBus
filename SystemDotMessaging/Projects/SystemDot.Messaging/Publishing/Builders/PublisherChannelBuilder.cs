@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly ITaskRepeater taskRepeater;
         readonly PersistenceFactorySelector persistenceFactorySelector;
         readonly ISubscriberSendChannelBuilder subscriberChannelBuilder;
-        readonly ICurrentDateProvider currentDateProvider;
+        readonly ISystemTime systemTime;
         readonly IChangeStore changeStore;
 
         public PublisherChannelBuilder(
@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             ITaskRepeater taskRepeater,
             PersistenceFactorySelector persistenceFactorySelector, 
             ISubscriberSendChannelBuilder subscriberChannelBuilder, 
-            ICurrentDateProvider currentDateProvider, 
+            ISystemTime systemTime, 
             IChangeStore changeStore)
         {
             Contract.Requires(publisherRegistry != null);
@@ -37,7 +37,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             Contract.Requires(taskRepeater != null);
             Contract.Requires(persistenceFactorySelector != null);
             Contract.Requires(subscriberChannelBuilder != null);
-            Contract.Requires(currentDateProvider != null);
+            Contract.Requires(systemTime != null);
             Contract.Requires(changeStore != null);
             
             this.publisherRegistry = publisherRegistry;
@@ -45,7 +45,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             this.taskRepeater = taskRepeater;
             this.persistenceFactorySelector = persistenceFactorySelector;
             this.subscriberChannelBuilder = subscriberChannelBuilder;
-            this.currentDateProvider = currentDateProvider;
+            this.systemTime = systemTime;
             this.changeStore = changeStore;
         }
 
@@ -61,7 +61,7 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .WithBusPublishTo(new MessageFilter(schema.MessageFilterStrategy))
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
                 .ToProcessor(new Sequencer(messageCache))
-                .ToMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater, EscalatingTimeRepeatStrategy.Default)
+                .ToMessageRepeater(messageCache, this.systemTime, this.taskRepeater, EscalatingTimeRepeatStrategy.Default)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new SendChannelMessageCacher(messageCache))
                 .Queue()

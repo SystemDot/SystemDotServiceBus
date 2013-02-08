@@ -16,7 +16,7 @@ namespace SystemDot.Specifications.parallelism
 
         Establish context = () =>
         {
-            scheduler = new TestTaskScheduler(3, new TestCurrentDateProvider(DateTime.Now));
+            scheduler = new TestTaskScheduler(3, new TestSystemTime(DateTime.Now));
             Configure<ITaskScheduler>(scheduler);
 
             delay = TimeSpan.FromSeconds(1);

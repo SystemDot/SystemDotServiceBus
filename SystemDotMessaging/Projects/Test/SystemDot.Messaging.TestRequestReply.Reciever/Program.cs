@@ -3,7 +3,6 @@ using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Handling;
-using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Transport.Http.Configuration;
 
 namespace SystemDot.Messaging.TestRequestReply.Reciever
@@ -12,10 +11,8 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
     {
         static void Main(string[] args)
         {
-            //MessagePipelineBuilder.BuildSynchronousPipelines = true;
-
             IBus bus = Configure.Messaging()
-                .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
+                .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = true })
                 .UsingHttpTransport(MessageServer.Local())
                 .OpenChannel("TestReciever")
                     .ForRequestReplyRecieving()

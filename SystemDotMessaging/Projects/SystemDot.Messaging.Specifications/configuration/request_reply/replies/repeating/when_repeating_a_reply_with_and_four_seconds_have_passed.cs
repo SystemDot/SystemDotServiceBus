@@ -19,12 +19,12 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.replies
         const int Reply = 2;
 
         static IBus bus;
-        static TestCurrentDateProvider currentDateProvider;
+        static TestSystemTime systemTime;
 
         Establish context = () =>
         {
-            currentDateProvider = new TestCurrentDateProvider(DateTime.Now);
-            ConfigureAndRegister<ICurrentDateProvider>(currentDateProvider);
+            systemTime = new TestSystemTime(DateTime.Now);
+            ConfigureAndRegister<ISystemTime>(systemTime);
 
             bus = Configuration.Configure.Messaging()
                  .UsingInProcessTransport()
@@ -41,7 +41,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.replies
 
             bus.Reply(Reply);
 
-            currentDateProvider.AddToCurrentDate(TimeSpan.FromSeconds(4));
+            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
         };
 
         Because of = () => The<ITaskRepeater>().Start();
