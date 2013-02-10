@@ -41,12 +41,12 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving
             payload.SetFirstSequence(1);
         };
 
-        Because of = () => MessageReciever.ReceiveMessage(payload);
+        Because of = () => MessageServer.ReceiveMessage(payload);
 
-        It should_push_the_message_to_any_registered_handlers = () => handler.HandledMessage.ShouldEqual(message);
+        It should_push_the_message_to_any_registered_handlers = () => handler.LastHandledMessage.ShouldEqual(message);
 
         It should_send_an_acknowledgement_for_the_message = () =>
-            MessageSender.SentMessages.ExcludeSubscriptionRequests().ShouldContain(a => a.GetAcknowledgementId() == originalPersistenceId);
+            MessageServer.SentMessages.ExcludeSubscriptionRequests().ShouldContain(a => a.GetAcknowledgementId() == originalPersistenceId);
 
         It should_mark_the_message_with_the_time_the_message_is_sent = () =>
             Resolve<InMemoryChangeStore>()

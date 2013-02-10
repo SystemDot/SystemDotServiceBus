@@ -6,6 +6,7 @@ using SystemDot.Messaging.Acknowledgement.Builders;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.Local;
 using SystemDot.Messaging.Handling;
+using SystemDot.Messaging.Transport;
 using SystemDot.Messaging.UnitOfWork;
 using SystemDot.Parallelism;
 
@@ -31,7 +32,7 @@ namespace SystemDot.Messaging.Configuration
             Resolve<AcknowledgementRecieveChannelBuilder>().Build();
 
             this.buildActions.ForEach(a => a());
-            
+
             Resolve<ITaskRepeater>().Start();
 
             return Resolve<IBus>();

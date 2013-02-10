@@ -29,6 +29,6 @@ namespace SystemDot.Messaging.Specifications.configuration.local
         Because of = () => bus.SendLocal(message);
 
         It should_send_the_message_to_any_handlers_registered_for_that_message = () => 
-            handler.HandledMessage.ShouldEqual(message);
+            handler.LastHandledMessage.ShouldEqual(message);
     }
 }

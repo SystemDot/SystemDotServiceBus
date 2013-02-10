@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.replies
                 .OpenChannel("Test2").ForRequestReplyRecieving()
                 .Initialise();
 
-            MessageReciever.ReceiveMessage(new MessagePayload().MakeReceiveable(
+            MessageServer.ReceiveMessage(new MessagePayload().MakeReceiveable(
                 1, 
                 "TestSender", 
                 ChannelName, 
@@ -31,6 +31,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.replies
         Because of = () => bus.Reply(1);
 
         It should_only_send_the_message_to_the_correct_channel = () =>
-            MessageSender.SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(1);
+            MessageServer.SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(1);
     }
 }

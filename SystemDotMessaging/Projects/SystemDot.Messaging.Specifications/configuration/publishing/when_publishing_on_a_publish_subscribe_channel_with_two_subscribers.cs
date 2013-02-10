@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing
         Because of = () => bus.Publish(message);
 
         It should_use_a_different_copy_of_the_message_payload_on_each_subscriber = () => 
-            MessageSender.SentMessages
+            MessageServer.SentMessages
                 .ExcludeAcknowledgements()
                 .First()
                 .Headers.OfType<AddressHeader>()

@@ -26,6 +26,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.request
 
         Because of = () => bus.Send(message);
 
-        It should_not_send_the_message = () => MessageSender.SentMessages.ShouldBeEmpty();
+        It should_not_send_the_message = () => MessageServer.SentMessages.ShouldBeEmpty();
     }
 }

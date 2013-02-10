@@ -22,6 +22,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.request
         Because of = () => bus.Send(new TestNamePatternMessage());
 
         It should_pass_the_message_through = () => 
-           MessageSender.SentMessages.First().DeserialiseTo<TestNamePatternMessage>().ShouldNotBeNull();
+           MessageServer.SentMessages.First().DeserialiseTo<TestNamePatternMessage>().ShouldNotBeNull();
     }
 }

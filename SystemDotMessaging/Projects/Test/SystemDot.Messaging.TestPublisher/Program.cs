@@ -13,7 +13,8 @@ namespace SystemDot.Messaging.TestPublisher
         {
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
-                .UsingHttpTransport(MessageServer.Local())
+                .UsingHttpTransport()
+                .AsARemoteClientOf(MessageServer.Local())
                 .UsingFilePersistence()
                 .OpenChannel("TestPublisher")
                     .ForPublishing()

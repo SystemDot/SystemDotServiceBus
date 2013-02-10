@@ -5,6 +5,7 @@ using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Transport.Http.Remote;
+using SystemDot.Messaging.Transport.Http.Remote.Clients;
 using Machine.Specifications;
 using SystemDot.Messaging.Transport.Http.Configuration;
 

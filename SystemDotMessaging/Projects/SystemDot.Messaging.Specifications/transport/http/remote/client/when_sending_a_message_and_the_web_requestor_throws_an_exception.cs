@@ -5,7 +5,7 @@ using SystemDot.Messaging.Specifications.configuration;
 using SystemDot.Messaging.Transport.Http.Configuration;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.transport.http
+namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 {
     [Subject(SpecificationGroup.Description)]
     public class when_sending_a_message_and_the_web_requestor_throws_an_exception : WithConfigurationSubject
@@ -17,7 +17,8 @@ namespace SystemDot.Messaging.Specifications.transport.http
         {
             ConfigureAndRegister<IWebRequestor>(new FailingWebRequestor());
             bus = Configuration.Configure.Messaging()
-                .UsingHttpTransport(MessageServer.Local())
+                .UsingHttpTransport()
+                .AsARemoteClientOf(MessageServer.Local())
                 .OpenChannel("TestSender")
                 .ForPointToPointSendingTo("TestReceiver")
                 .Initialise();

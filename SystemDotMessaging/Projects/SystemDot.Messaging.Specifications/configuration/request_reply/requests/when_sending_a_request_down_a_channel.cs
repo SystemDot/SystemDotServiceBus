@@ -31,30 +31,30 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.request
         Because of = () => bus.Send(message);
 
         It should_send_a_message_with_the_correct_to_address = () =>
-            MessageSender.SentMessages.First().GetToAddress().ShouldEqual(BuildAddress(RecieverAddress));
+            MessageServer.SentMessages.First().GetToAddress().ShouldEqual(BuildAddress(RecieverAddress));
 
         It should_send_a_message_with_the_correct_from_address = () =>
-            MessageSender.SentMessages.First().GetFromAddress().ShouldEqual(BuildAddress(ChannelName));
+            MessageServer.SentMessages.First().GetFromAddress().ShouldEqual(BuildAddress(ChannelName));
 
         It should_send_a_message_with_the_correct_content = () =>
-            MessageSender.SentMessages.First().DeserialiseTo<int>().ShouldEqual(message);
+            MessageServer.SentMessages.First().DeserialiseTo<int>().ShouldEqual(message);
 
         It should_mark_the_message_with_the_persistence_id = () =>
-            MessageSender.SentMessages.First()
+            MessageServer.SentMessages.First()
                 .ShouldHaveCorrectPersistenceId(ChannelName, PersistenceUseType.RequestSend);
 
         It should_set_original_persistence_id_to_the_persistence_id_of_the_message_with_the_persistence_id = () =>
-           MessageSender.SentMessages.First().GetSourcePersistenceId()
-               .ShouldEqual(MessageSender.SentMessages.First().GetPersistenceId());
+           MessageServer.SentMessages.First().GetSourcePersistenceId()
+               .ShouldEqual(MessageServer.SentMessages.First().GetPersistenceId());
 
         It should_mark_the_message_with_the_time_the_message_is_sent = () =>
-            MessageSender.SentMessages.First().GetLastTimeSent().ShouldBeGreaterThan(DateTime.MinValue);
+            MessageServer.SentMessages.First().GetLastTimeSent().ShouldBeGreaterThan(DateTime.MinValue);
 
         It should_mark_the_message_with_the_amount_of_times_the_message_has_been_sent = () =>
-            MessageSender.SentMessages.First().GetAmountSent().ShouldEqual(1);
+            MessageServer.SentMessages.First().GetAmountSent().ShouldEqual(1);
 
         It should_mark_the_message_with_the_sequence = () =>
-            MessageSender.SentMessages.First().GetSequence().ShouldEqual(1);
+            MessageServer.SentMessages.First().GetSequence().ShouldEqual(1);
 
         It should_start_the_task_repeater = () => TaskRepeater.Started.ShouldBeTrue();
     }

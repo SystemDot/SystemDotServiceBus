@@ -7,18 +7,18 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Servers.Configuration
 {
     public class RemoteServerConfiguration : Initialiser
     {
-        public RemoteServerConfiguration(List<Action> buildActions) : base(buildActions)
+        public RemoteServerConfiguration(List<Action> actions) : base(actions)
         {
         }
 
         protected override void Build()
         {
-            Resolve<ITransportBuilder>().Build();
+            Resolve<ITransportBuilder>().Build(GetAddress());
         }
 
         protected override EndpointAddress GetAddress()
         {
-            throw new NotImplementedException();
+            return new EndpointAddress();
         }
     }
 }

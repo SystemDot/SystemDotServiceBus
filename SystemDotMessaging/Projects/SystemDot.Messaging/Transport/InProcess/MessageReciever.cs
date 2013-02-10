@@ -1,22 +1,17 @@
-using System;
-using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging;
 
 namespace SystemDot.Messaging.Transport.InProcess
 {
-    public class MessageReciever : IMessageReciever
-    {      
-        public event Action<MessagePayload> MessageProcessed;
-
-        public MessageReciever(InProcessMessageServer server)
+    public class MessageReciever : MessageProcessor, IMessageReciever
+    {
+        public MessageReciever(IInProcessMessageServer server)
         {
-            server.MessageProcessed += payload => MessageProcessed(payload);
+            server.MessageProcessed += InputMessage;
         }
 
-        public void RegisterAddress(EndpointAddress toRegister)
+        public override void InputMessage(MessagePayload toInput)
         {
-            Contract.Requires(toRegister != EndpointAddress.Empty);
+            OnMessageProcessed(toInput);
         }
     }
 }

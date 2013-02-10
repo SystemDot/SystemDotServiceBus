@@ -9,7 +9,6 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
         public static void Register(IIocContainer container)
         {
             container.RegisterInstance<IHttpServerBuilder, HttpServerBuilder>();
-            container.RegisterInstance<IMessageReciever, LongPollReciever>();
             container.RegisterInstance<IMessageSender, MessageSender>();
         }
     }

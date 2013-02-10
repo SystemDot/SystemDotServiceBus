@@ -1,6 +1,6 @@
 using System;
-using System.Timers;
 using SystemDot.Logging;
+using System.Timers;
 
 namespace SystemDot.Parallelism
 {

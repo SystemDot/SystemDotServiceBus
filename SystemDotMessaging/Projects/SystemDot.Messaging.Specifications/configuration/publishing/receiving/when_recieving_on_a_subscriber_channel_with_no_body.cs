@@ -4,6 +4,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Transport.Http.Configuration;
+using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving
@@ -20,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving
         Establish context = () =>
         {
             Configuration.Configure.Messaging()
-                .UsingHttpTransport(MessageServer.Local())
+                .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForSubscribingTo(PublisherName)
                 .Initialise();
 
@@ -29,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving
             payload.SetFirstSequence(1);
         };
 
-        Because of = () => exception = Catch.Exception(() => MessageReciever.ReceiveMessage(payload));
+        Because of = () => exception = Catch.Exception(() => MessageServer.ReceiveMessage(payload));
 
         It should_not_fail = () => exception.ShouldBeNull();
     }

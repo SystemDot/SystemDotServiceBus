@@ -11,6 +11,8 @@ namespace SystemDot.Messaging.Specifications
         }
 
         readonly int allowedInvocationCount;
+        bool paused;
+        Action action;
 
         public int InvocationCount { get; private set; }
 
@@ -27,9 +29,24 @@ namespace SystemDot.Messaging.Specifications
         public void StartTask(Action action)
         {
             if (allowedInvocationCount > 0 && InvocationCount == allowedInvocationCount) return;
+            this.action = action;
 
             InvocationCount++;
-            action.Invoke();
+            
+            if (this.paused) return;
+
+            this.action.Invoke();
+        }
+
+        public void UnPause()
+        {
+            this.paused = false;
+            this.action.Invoke();
+        }
+
+        public void Pause()
+        {
+            this.paused = true;
         }
     }
 }

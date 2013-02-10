@@ -25,9 +25,9 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing.subscripti
             request = BuildSubscriptionRequest(BuildAddress(SubscriberName), BuildAddress(ChannelName));
         };
 
-        Because of = () => MessageReciever.ReceiveMessage(request);
+        Because of = () => MessageServer.ReceiveMessage(request);
 
         It should_send_an_acknowledgement_for_the_request = () => 
-            MessageSender.SentMessages.ShouldContain(a => a.GetAcknowledgementId() == request.GetPersistenceId());
+            MessageServer.SentMessages.ShouldContain(a => a.GetAcknowledgementId() == request.GetPersistenceId());
     }
 }

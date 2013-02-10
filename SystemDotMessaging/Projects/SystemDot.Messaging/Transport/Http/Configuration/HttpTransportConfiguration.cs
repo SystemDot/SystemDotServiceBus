@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Transport.Http.Remote.Clients.Configuration;
 using SystemDot.Messaging.Transport.Http.Remote.Servers.Configuration;
 
 namespace SystemDot.Messaging.Transport.Http.Configuration
@@ -17,10 +18,22 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
             this.buildActions = buildActions;
         }
 
-        public Initialiser AsARemoteServer()
+        public RemoteServerConfiguration AsARemoteServer()
         {
             HttpRemoteServerComponents.Configure(IocContainerLocator.Locate());
             return new RemoteServerConfiguration(this.buildActions);
+        }
+
+        public MessageServerConfiguration AsARemoteClientOf(MessageServer server)
+        {
+            HttpRemoteClientComponents.Configure(IocContainerLocator.Locate());
+            return new MessageServerConfiguration(server);
+        }
+
+        public MessageServerConfiguration AsAServer()
+        {
+            HttpServerComponents.Configure(IocContainerLocator.Locate());
+            return new MessageServerConfiguration(MessageServer.Local());
         }
     }
 }

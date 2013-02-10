@@ -13,7 +13,8 @@ namespace SystemDot.Messaging.Combined.Subscriber
         {
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
-                .UsingHttpTransport(MessageServer.Local())
+                .UsingHttpTransport()
+                .AsARemoteClientOf(MessageServer.Local())
                 //.UsingEsentPersistence("Esent\\Subscriber")
                 .OpenChannel("TestSubscriber").ForSubscribingTo("TestPublisher")
                 .Initialise();

@@ -50,6 +50,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.request
                 .Initialise();
 
         It should_not_send_the_message_again = () =>
-            MessageSender.SentMessages.ShouldNotContain(m => m.DeserialiseTo<int>() == Request);
+            MessageServer.SentMessages.ShouldNotContain(m => m.DeserialiseTo<int>() == Request);
     }
 }

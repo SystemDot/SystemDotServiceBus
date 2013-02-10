@@ -30,6 +30,6 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing.subscripti
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_repeat_the_message = () => MessageSender.SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(2);
+        It should_repeat_the_message = () => MessageServer.SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(2);
     }
 }

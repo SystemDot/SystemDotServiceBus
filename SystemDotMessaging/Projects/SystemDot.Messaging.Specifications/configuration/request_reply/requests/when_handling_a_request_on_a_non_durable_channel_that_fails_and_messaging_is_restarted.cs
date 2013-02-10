@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.request
                 .RegisterHandlers(r => r.RegisterHandler(new FailingMessageHandler<int>()))
                 .Initialise();
 
-            Catch.Exception(() => MessageReciever.ReceiveMessage(
+            Catch.Exception(() => MessageServer.ReceiveMessage(
                 new MessagePayload().MakeSequencedReceivable(
                     Message, 
                     SenderAddress, 
@@ -53,6 +53,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.request
                 .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
 
-        It should_not_repeat_the_message_when_restarted = () => handler.HandledMessage.ShouldNotEqual(Message);
+        It should_not_repeat_the_message_when_restarted = () => handler.LastHandledMessage.ShouldNotEqual(Message);
     }
 }

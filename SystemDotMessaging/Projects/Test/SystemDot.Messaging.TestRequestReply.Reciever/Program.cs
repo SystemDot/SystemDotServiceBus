@@ -13,7 +13,8 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
         {
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = true })
-                .UsingHttpTransport(MessageServer.Local())
+                .UsingHttpTransport()
+                .AsARemoteClientOf(MessageServer.Local())
                 .OpenChannel("TestReciever")
                     .ForRequestReplyRecieving()
                     .WithDurability()

@@ -24,6 +24,6 @@ namespace SystemDot.Messaging.Specifications.channels.handling
         Because of = () => router.InputMessage("Test");
 
         It should_handle_the_message_only_in_the_handler_for_the_meesage_type = () => 
-            handler1.HandledMessage.ShouldEqual("Test");
+            handler1.LastHandledMessage.ShouldEqual("Test");
     }
 }

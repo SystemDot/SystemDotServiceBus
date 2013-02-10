@@ -38,7 +38,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.request
                 PersistenceUseType.RequestSend);
         };
 
-        Because of = () => MessageReciever.ReceiveMessage(payload);
+        Because of = () => MessageServer.ReceiveMessage(payload);
 
         It should_begin_the_unit_of_work = () => unitOfWork.HasBegun().ShouldBeTrue();
     }

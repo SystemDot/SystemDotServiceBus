@@ -2,6 +2,7 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Http;
 using SystemDot.Http.Builders;
+using SystemDot.Messaging.Addressing;
 using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Transport.Http.Remote.Servers.Configuration
@@ -19,7 +20,7 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Servers.Configuration
             this.systemTime = systemTime;
         }
 
-        public void Build()
+        public void Build(EndpointAddress address)
         {
             this.httpServerBuilder
                 .Build(new FixedPortAddress(Environment.MachineName), BuildMessagingServerHandler())

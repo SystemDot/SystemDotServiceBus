@@ -6,7 +6,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Serialisation;
 
-namespace SystemDot.Messaging.Transport.Http.Remote
+namespace SystemDot.Messaging.Transport.Http
 {
     public class MessageSender : IMessageSender
     {

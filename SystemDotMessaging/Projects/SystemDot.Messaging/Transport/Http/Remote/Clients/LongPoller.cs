@@ -9,25 +9,30 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 
-namespace SystemDot.Messaging.Transport.Http.Remote
+namespace SystemDot.Messaging.Transport.Http.Remote.Clients
 {
-    public class LongPollReciever : IMessageReciever
+    public class LongPoller
     {
         readonly IWebRequestor requestor;
         readonly ISerialiser formatter;
         readonly ITaskStarter starter;
+        readonly IMessageReciever receiver;
 
-        public event Action<MessagePayload> MessageProcessed;
-
-        public LongPollReciever(IWebRequestor requestor, ISerialiser formatter, ITaskStarter starter)
+        public LongPoller(
+            IWebRequestor requestor, 
+            ISerialiser formatter, 
+            ITaskStarter starter, 
+            IMessageReciever receiver)
         {
             Contract.Requires(requestor != null);
             Contract.Requires(formatter != null);
             Contract.Requires(starter != null);
+            Contract.Requires(receiver != null);
 
             this.requestor = requestor;
             this.formatter = formatter;
             this.starter = starter;
+            this.receiver = receiver;
         }
 
         public void RegisterAddress(EndpointAddress address)
@@ -78,7 +83,7 @@ namespace SystemDot.Messaging.Transport.Http.Remote
             foreach (var message in messages)
             {
                 Logger.Info("Recieved message");
-                this.MessageProcessed(message);
+                this.receiver.InputMessage(message);
             }
         }
     }

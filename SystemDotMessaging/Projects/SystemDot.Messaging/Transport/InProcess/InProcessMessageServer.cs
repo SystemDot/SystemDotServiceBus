@@ -1,15 +1,12 @@
-using System;
 using SystemDot.Messaging.Packaging;
 
 namespace SystemDot.Messaging.Transport.InProcess
 {
-    public class InProcessMessageServer : IMessageProcessor<MessagePayload, MessagePayload>
+    public class InProcessMessageServer : MessageProcessor, IInProcessMessageServer
     {
-        public void InputMessage(MessagePayload toInput)
+        public override void InputMessage(MessagePayload toInput)
         {
-            MessageProcessed(toInput);
+            OnMessageProcessed(toInput);
         }
-
-        public event Action<MessagePayload> MessageProcessed;
     }
 }

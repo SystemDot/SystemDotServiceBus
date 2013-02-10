@@ -35,6 +35,6 @@ namespace SystemDot.Messaging.Specifications.configuration.point_to_point.sendin
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_repeat_the_messages = () => MessageSender.SentMessages.Count.ShouldEqual(4);
+        It should_repeat_the_messages = () => MessageServer.SentMessages.Count.ShouldEqual(4);
     }
 }

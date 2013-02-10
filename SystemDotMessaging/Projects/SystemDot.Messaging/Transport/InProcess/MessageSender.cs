@@ -1,3 +1,4 @@
+using System.Diagnostics.Contracts;
 using SystemDot.Logging;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
@@ -7,17 +8,18 @@ namespace SystemDot.Messaging.Transport.InProcess
 {
     public class MessageSender : IMessageSender
     {
-        readonly InProcessMessageServer server;
+        readonly IInProcessMessageServer server;
 
-        public MessageSender(InProcessMessageServer server)
+        public MessageSender(IInProcessMessageServer server)
         {
+            Contract.Requires(server != null);
             this.server = server;
         }
 
         public void InputMessage(MessagePayload toInput)
         {
             Logger.Info("Sending message to {0}", toInput.GetToAddress().GetUrl());
-            server.InputMessage(toInput);
+            this.server.InputMessage(toInput);
         }
     }
 }

@@ -14,7 +14,8 @@ namespace SystemDot.Messaging.TestSubscriber
         {
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = true })
-                .UsingHttpTransport(MessageServer.Local())
+                .UsingHttpTransport()
+                .AsARemoteClientOf(MessageServer.Local())
                 .UsingFilePersistence()
                 .OpenChannel("TestSubscriber")
                     .ForSubscribingTo("TestPublisher")

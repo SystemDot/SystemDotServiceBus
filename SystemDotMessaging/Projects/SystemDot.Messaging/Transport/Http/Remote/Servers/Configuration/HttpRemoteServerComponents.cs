@@ -8,6 +8,7 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Servers.Configuration
         public static void Configure(IIocContainer container)
         {
             Contract.Requires(container != null);
+            container.RegisterInstance<IMessageReciever, MessageReciever>();
             container.RegisterInstance<ITransportBuilder, HttpRemoteServerTransportBuilder>();
         }
     }

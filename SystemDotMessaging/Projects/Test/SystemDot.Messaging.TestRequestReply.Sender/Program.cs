@@ -14,7 +14,8 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
         {
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false, ShowDebug = false })
-                .UsingHttpTransport(MessageServer.Local())
+                .UsingHttpTransport()
+                .AsARemoteClientOf(MessageServer.Local())
                 .OpenChannel("TestSender")
                     .ForRequestReplySendingTo("TestReciever")
                     .WithDurability()

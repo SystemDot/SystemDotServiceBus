@@ -3,6 +3,7 @@ using System.Diagnostics.Contracts;
 using System.Net;
 using System.Threading.Tasks;
 using SystemDot.Logging;
+using System.Net;
 
 namespace SystemDot.Http
 {

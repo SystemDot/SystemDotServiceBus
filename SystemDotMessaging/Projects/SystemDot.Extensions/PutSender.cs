@@ -1,8 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Net;
 
-namespace SystemDot
+namespace System
 {
     public static class PutSender
     {

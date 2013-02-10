@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.replies
                 PersistenceUseType.ReplySend);
         };
 
-        Because of = () => MessageReciever.ReceiveMessage(payload);
+        Because of = () => MessageServer.ReceiveMessage(payload);
 
         It should_have_persisted_the_message = () => 
             Resolve<IChangeStore>()

@@ -35,8 +35,8 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving
             payload.SetSequence(2);
         };
 
-        Because of = () => MessageReciever.ReceiveMessage(payload);
+        Because of = () => MessageServer.ReceiveMessage(payload);
 
-        It should_not_push_the_message_to_any_registered_handlers = () => handler.HandledMessage.ShouldEqual(0);
+        It should_not_push_the_message_to_any_registered_handlers = () => handler.LastHandledMessage.ShouldEqual(0);
     }
 }

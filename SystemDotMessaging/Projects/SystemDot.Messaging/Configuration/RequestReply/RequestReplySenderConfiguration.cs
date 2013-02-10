@@ -50,7 +50,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             Resolve<RequestSendChannelBuilder>().Build(this.sendSchema);
             Resolve<ReplyRecieveChannelBuilder>().Build(this.recieveSchema);
-            Resolve<IMessageReciever>().RegisterAddress(GetAddress());
+            Resolve<ITransportBuilder>().Build(GetAddress());
         }
 
         protected override EndpointAddress GetAddress()

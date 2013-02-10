@@ -36,11 +36,11 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.replies
                 PersistenceUseType.ReplySend);
         };
 
-        Because of = () => MessageReciever.ReceiveMessage(payload);
+        Because of = () => MessageServer.ReceiveMessage(payload);
 
-        It should_push_the_message_to_any_registered_handlers = () => handler.HandledMessage.ShouldEqual(message);
+        It should_push_the_message_to_any_registered_handlers = () => handler.LastHandledMessage.ShouldEqual(message);
 
         It should_send_an_acknowledgement_for_the_message = () =>
-            MessageSender.SentMessages.ShouldContain(a => a.GetAcknowledgementId() == payload.GetSourcePersistenceId());
+            MessageServer.SentMessages.ShouldContain(a => a.GetAcknowledgementId() == payload.GetSourcePersistenceId());
     }
 }

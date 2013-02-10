@@ -17,6 +17,6 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing.subscripti
             .Initialise();
 
         It should_send_a_request_for_non_persistent_subscriber_channel = () =>
-            MessageSender.SentMessages.Single().GetSubscriptionRequestSchema().IsDurable.ShouldBeTrue();
+            MessageServer.SentMessages.Single().GetSubscriptionRequestSchema().IsDurable.ShouldBeTrue();
     }
 }

@@ -53,6 +53,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.request
                 .Initialise();
 
         It should_send_the_message_again = () =>
-            MessageSender.SentMessages.ShouldContain(m => m.DeserialiseTo<int>() == Request);
+            MessageServer.SentMessages.ShouldContain(m => m.DeserialiseTo<int>() == Request);
     }
 }

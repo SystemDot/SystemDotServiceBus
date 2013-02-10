@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Specifications.configuration.publishing.receiving
             payload.SetSequence(1); 
         };
 
-        Because of = () => MessageReciever.ReceiveMessage(payload);
+        Because of = () => MessageServer.ReceiveMessage(payload);
 
         It should_have_persisted_the_message = () =>
             Resolve<IChangeStore>()

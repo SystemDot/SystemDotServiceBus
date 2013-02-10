@@ -45,6 +45,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.request
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_repeat_the_message = () => MessageSender.SentMessages.Count.ShouldEqual(3);
+        It should_repeat_the_message = () => MessageServer.SentMessages.Count.ShouldEqual(3);
     }
 }

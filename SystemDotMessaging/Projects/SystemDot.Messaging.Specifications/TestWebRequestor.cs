@@ -6,6 +6,7 @@ using SystemDot.Http;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Transport.Http.Remote;
+using SystemDot.Messaging.Transport.Http.Remote.Clients;
 using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Specifications
@@ -16,13 +17,14 @@ namespace SystemDot.Messaging.Specifications
         readonly ISerialiser formatter;
         readonly FixedPortAddress toCheck;
 
-        public Stream LastPutRequestSent { get; set; }
+        public List<Stream> RequestsMade { get; private set; }
 
         public TestWebRequestor(ISerialiser formatter, FixedPortAddress toCheck)
         {
             this.formatter = formatter;
             this.toCheck = toCheck;
             this.messages = new List<MessagePayload>();
+            RequestsMade = new List<Stream>();
         }
 
         public void SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest)
@@ -32,8 +34,8 @@ namespace SystemDot.Messaging.Specifications
 
             var request = new MemoryStream();
             toPerformOnRequest(request);
-
-            LastPutRequestSent = request;
+            
+            RequestsMade.Add(request);
         }
 
         public void SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest, Action<Stream> toPerformOnResponse)
@@ -43,8 +45,8 @@ namespace SystemDot.Messaging.Specifications
 
             var request = new MemoryStream();
             toPerformOnRequest(request);
-
-            LastPutRequestSent = request;
+            
+            RequestsMade.Add(request);
 
             var requestMessagePayload = request.Deserialise<MessagePayload>(this.formatter);
             
@@ -53,11 +55,13 @@ namespace SystemDot.Messaging.Specifications
 
             var response = new MemoryStream();
 
-            response.Serialise(
+            List<MessagePayload> matching = 
                 this.messages
-                    .Where(m => m.GetToAddress() == requestMessagePayload.GetLongPollRequestAddress())
-                    .ToList(), 
-                this.formatter);
+                    .Where(m => m.GetToAddress() == requestMessagePayload.GetLongPollRequestAddress()).ToList();
+
+            response.Serialise(matching, this.formatter);
+
+            matching.ForEach(m => this.messages.Remove(m));
 
             toPerformOnResponse(response);
         }

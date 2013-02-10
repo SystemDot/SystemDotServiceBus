@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
             Configure(new EndpointAddress("Publisher", "Server"));
             Configure<IChangeStore>(new InMemoryChangeStore(new PlatformAgnosticSerialiser()));
             Configure<ISerialiser>(new PlatformAgnosticSerialiser());
-            Configure<IMessageSender>(new TestMessageSender());
+            Configure<In>(new TestMessageServer());
             Configure<ISubscriberSendChannelBuilder>(new TestSubscriberSendChannelBuilder(The<IMessageSender>()));
 
             subscriber = new SubscriptionSchema { SubscriberAddress = new EndpointAddress("Subsrcriber", "Server") };

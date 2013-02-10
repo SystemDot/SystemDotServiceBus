@@ -3,8 +3,8 @@ using SystemDot.Messaging.Packaging;
 
 namespace SystemDot.Messaging.Transport
 {
-    public interface IMessageReciever : IMessageProcessor<MessagePayload> 
+    public interface IMessageReciever : IMessageProcessor<MessagePayload, MessagePayload>
     {
-        void RegisterAddress(EndpointAddress address);
+
     }
 }

@@ -6,7 +6,8 @@ namespace SystemDot.Messaging.Transport.InProcess.Configuration
     {
         public static void Register(IIocContainer iocContainer)
         {
-            iocContainer.RegisterInstance<InProcessMessageServer, InProcessMessageServer>();
+            iocContainer.RegisterInstance<ITransportBuilder, InProcessTransportBuilder>();
+            iocContainer.RegisterInstance<IInProcessMessageServer, InProcessMessageServer>();
             iocContainer.RegisterInstance<IMessageReciever, MessageReciever>();
             iocContainer.RegisterInstance<IMessageSender, MessageSender>();
         }

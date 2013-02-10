@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.replies
                 .ForRequestReplyRecieving()
                 .Initialise();
 
-            MessageReciever.ReceiveMessage(new MessagePayload().MakeReceiveable(
+            MessageServer.ReceiveMessage(new MessagePayload().MakeReceiveable(
                 1, 
                 SenderChannelName, 
                 ChannelName, 
@@ -40,34 +40,34 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.replies
         Because of = () => bus.Reply(message);
 
         It should_send_a_message_with_the_correct_to_address = () =>
-            MessageSender.SentMessages.ExcludeAcknowledgements().First().GetToAddress()
+            MessageServer.SentMessages.ExcludeAcknowledgements().First().GetToAddress()
                 .ShouldEqual(BuildAddress(SenderChannelName));
 
         It should_send_a_message_with_the_correct_from_address = () =>
-            MessageSender.SentMessages.ExcludeAcknowledgements().First().GetFromAddress()
+            MessageServer.SentMessages.ExcludeAcknowledgements().First().GetFromAddress()
                 .ShouldEqual(BuildAddress(ChannelName));
 
         It should_send_a_message_with_the_correct_content = () =>
-            MessageSender.SentMessages.ExcludeAcknowledgements().First().DeserialiseTo<int>()
+            MessageServer.SentMessages.ExcludeAcknowledgements().First().DeserialiseTo<int>()
                 .ShouldEqual(message);
 
         It should_mark_the_message_with_the_persistence_id = () =>
-            MessageSender.SentMessages.ExcludeAcknowledgements().First()
+            MessageServer.SentMessages.ExcludeAcknowledgements().First()
                 .ShouldHaveCorrectPersistenceId(SenderChannelName, PersistenceUseType.ReplySend);
 
         It should_set_original_persistence_id_to_the_persistence_id_of_the_message_with_the_persistence_id = () =>
-           MessageSender.SentMessages.ExcludeAcknowledgements().First().GetSourcePersistenceId()
-               .ShouldEqual(MessageSender.SentMessages.ExcludeAcknowledgements().First().GetPersistenceId());
+           MessageServer.SentMessages.ExcludeAcknowledgements().First().GetSourcePersistenceId()
+               .ShouldEqual(MessageServer.SentMessages.ExcludeAcknowledgements().First().GetPersistenceId());
 
         It should_mark_the_time_the_message_is_sent = () =>
-            MessageSender.SentMessages.ExcludeAcknowledgements().First().GetLastTimeSent()
+            MessageServer.SentMessages.ExcludeAcknowledgements().First().GetLastTimeSent()
                 .ShouldBeGreaterThan(DateTime.MinValue);
 
         It should_mark_the_amount_of_times_the_message_has_been_sent = () =>
-            MessageSender.SentMessages.ExcludeAcknowledgements().First().GetAmountSent().ShouldEqual(1);
+            MessageServer.SentMessages.ExcludeAcknowledgements().First().GetAmountSent().ShouldEqual(1);
 
         It should_mark_the_message_with_the_sequence = () =>
-            MessageSender.SentMessages.ExcludeAcknowledgements().First().GetSequence().ShouldEqual(1);
+            MessageServer.SentMessages.ExcludeAcknowledgements().First().GetSequence().ShouldEqual(1);
 
         It should_start_the_task_repeater = () => TaskRepeater.Started.ShouldBeTrue();
     }

@@ -23,8 +23,8 @@ namespace SystemDot.Messaging.Specifications.channels.handling
 
         Because of = () => router.InputMessage("Test");
 
-        It should_handle_the_message_in_the_first_handler = () => handler1.HandledMessage.ShouldEqual("Test");
+        It should_handle_the_message_in_the_first_handler = () => handler1.LastHandledMessage.ShouldEqual("Test");
 
-        It should_handle_the_message_in_the_second_handler = () => handler2.HandledMessage.ShouldEqual("Test");
+        It should_handle_the_message_in_the_second_handler = () => handler2.LastHandledMessage.ShouldEqual("Test");
     }
 }

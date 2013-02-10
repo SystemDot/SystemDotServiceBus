@@ -21,8 +21,6 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
 
         public MainPageViewModel()
         {
-            //MessagePipelineBuilder.BuildSynchronousPipelines = true;
-
             var loggingMechanism = new ObservableLoggingMechanism(CoreWindow.GetForCurrentThread().Dispatcher)
             {
                 ShowInfo = true
@@ -34,7 +32,8 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
 
             this.bus = Configure.Messaging()
                .LoggingWith(loggingMechanism)
-               .UsingHttpTransport(MessageServer.Local())
+               .UsingHttpTransport()
+               .AsARemoteClientOf(MessageServer.Local())
                //.UsingFilePersistence()
                .OpenChannel("TestMetroSender").ForRequestReplySendingTo("TestReciever").WithDurability()
                .WithHook(new MessageMarshallingHook(CoreWindow.GetForCurrentThread().Dispatcher))

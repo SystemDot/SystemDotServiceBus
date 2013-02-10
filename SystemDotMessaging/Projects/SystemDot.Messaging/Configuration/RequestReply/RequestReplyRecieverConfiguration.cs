@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             Resolve<RequestReceiveDistributionChannelBuilder>().Build(this.requestSchema);
             Resolve<ReplySendDistributionChannelBuilder>().Build(this.sendSchema);
-            Resolve<IMessageReciever>().RegisterAddress(GetAddress());
+            Resolve<ITransportBuilder>().Build(GetAddress());
         }
 
         protected override EndpointAddress GetAddress()

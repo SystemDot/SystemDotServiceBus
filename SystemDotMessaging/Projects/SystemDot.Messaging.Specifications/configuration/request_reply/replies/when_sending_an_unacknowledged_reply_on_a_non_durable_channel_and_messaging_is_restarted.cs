@@ -35,7 +35,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.replies
                 .ForRequestReplyRecieving()
                 .Initialise();
 
-            MessageReciever.ReceiveMessage(
+            MessageServer.ReceiveMessage(
                 new MessagePayload().MakeSequencedReceivable(
                     Request,
                     SenderAddress,
@@ -60,6 +60,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.replies
                 .Initialise();
 
         It should_not_send_the_message_again = () => 
-            MessageSender.SentMessages.ShouldNotContain(m => m.DeserialiseTo<int>() == Reply);
+            MessageServer.SentMessages.ShouldNotContain(m => m.DeserialiseTo<int>() == Reply);
     }
 }

@@ -15,7 +15,8 @@ namespace SystemDot.Messaging.OtherTestSubscriber
             Logger.LoggingMechanism = new ConsoleLoggingMechanism { ShowDebug = false };
 
             Configure.Messaging()
-                .UsingHttpTransport(MessageServer.Local())
+                .UsingHttpTransport()
+                .AsARemoteClientOf(MessageServer.Local())
                 .UsingFilePersistence()
                 .OpenChannel("TestOtherSubscriber")
                     .ForSubscribingTo("TestPublisher")

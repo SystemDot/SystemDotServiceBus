@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.replies
                 .WithDurability()
                 .Initialise();
 
-            MessageReciever.ReceiveMessage(
+            MessageServer.ReceiveMessage(
                 new MessagePayload().MakeSequencedReceivable(
                     Request,
                     SenderAddress,
@@ -62,6 +62,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.replies
                 .Initialise();
 
         It should_send_the_message_again = () => 
-            MessageSender.SentMessages.ShouldContain(m => m.DeserialiseTo<int>() == Reply);
+            MessageServer.SentMessages.ShouldContain(m => m.DeserialiseTo<int>() == Reply);
     }
 }

@@ -41,7 +41,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
         {
             Resolve<SubscriberRecieveChannelBuilder>().Build(this.recieveSchema);
             Resolve<SubscriptionRequestChannelBuilder>().Build(this.requestSchema).Start();
-            Resolve<IMessageReciever>().RegisterAddress(this.requestSchema.SubscriberAddress);
+            Resolve<ITransportBuilder>().Build(this.requestSchema.SubscriberAddress);
         }
 
         protected override EndpointAddress GetAddress()

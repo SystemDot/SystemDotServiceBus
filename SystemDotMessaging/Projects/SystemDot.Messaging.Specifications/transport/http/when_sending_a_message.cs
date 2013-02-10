@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Linq;
 using SystemDot.Http;
-using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.configuration;
 using SystemDot.Serialisation;
@@ -25,7 +25,8 @@ namespace SystemDot.Messaging.Specifications.transport.http
             ConfigureAndRegister<IWebRequestor>(webRequestor);
 
             bus = Configuration.Configure.Messaging()
-                .UsingHttpTransport(MessageServer.Local())
+                .UsingHttpTransport()
+                .AsAServer()
                 .OpenChannel("TestSender")
                 .ForPointToPointSendingTo("TestReceiver")
                 .Initialise();
@@ -36,7 +37,7 @@ namespace SystemDot.Messaging.Specifications.transport.http
         Because of = () => bus.Send(message);
 
         It should_serialise_the_message_and_send_it_as_a_put_request_to_the_message_server = () =>
-            webRequestor.LastPutRequestSent
+            webRequestor.RequestsMade.Single()
                 .Deserialise<MessagePayload>(Resolve<ISerialiser>())
                     .DeserialiseTo<int>()
                         .ShouldEqual(message);

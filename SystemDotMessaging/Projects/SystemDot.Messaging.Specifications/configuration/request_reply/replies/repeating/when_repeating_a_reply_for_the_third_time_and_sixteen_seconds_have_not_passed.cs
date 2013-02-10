@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.replies
                  .ForRequestReplyRecieving()
                  .Initialise();
 
-            MessageReciever.ReceiveMessage(
+            MessageServer.ReceiveMessage(
                 new MessagePayload().MakeReceiveable(
                     Request,
                     SenderAddress,
@@ -55,6 +55,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.replies
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_repeat_the_message = () => MessageSender.SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(3);
+        It should_repeat_the_message = () => MessageServer.SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(3);
     }
 }

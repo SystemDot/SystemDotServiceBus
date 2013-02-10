@@ -20,6 +20,6 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.request
 
         Because of = () => bus.Send(new TestNamePatternMessage());
 
-        It should_not_pass_the_message_through = () => MessageSender.SentMessages.ShouldBeEmpty();
+        It should_not_pass_the_message_through = () => MessageServer.SentMessages.ShouldBeEmpty();
     }
 }
