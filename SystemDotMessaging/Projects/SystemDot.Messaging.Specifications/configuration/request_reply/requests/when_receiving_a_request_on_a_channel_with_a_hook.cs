@@ -3,14 +3,14 @@ using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.configuration.request_reply.replies
+namespace SystemDot.Messaging.Specifications.configuration.request_reply.requests
 {
-    [Subject(SpecificationGroup.Description)]
-    public class when_receiving_a_reply_on_a_channel_with_a_hook 
+    [Subject(replies.SpecificationGroup.Description)]
+    public class when_receiving_a_request_on_a_channel_with_a_hook
         : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
-        const string RecieverAddress = "TestRecieverAddress";
+        const string SenderAddress = "TestSenderAddress";
 
         static int message;
         static MessagePayload payload;
@@ -23,16 +23,16 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.replies
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                    .ForRequestReplySendingTo(RecieverAddress)
-                    .WithReceiveHook(hook)
+                .ForRequestReplyRecieving()
+                .WithReceiveHook(hook)
                 .Initialise();
 
             message = 1;
             payload = new MessagePayload().MakeReceiveable(
-                message, 
-                RecieverAddress,
-                ChannelName, 
-                PersistenceUseType.ReplySend);
+                message,
+                SenderAddress,
+                ChannelName,
+                PersistenceUseType.RequestSend);
         };
 
         Because of = () => MessageServer.ReceiveMessage(payload);

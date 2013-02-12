@@ -58,6 +58,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
             MessagePipelineBuilder.Build()
                 .WithBusSendTo(new MessageFilter(schema.FilteringStrategy))
+                .ToProcessors(schema.Hooks.ToArray())
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
                 .ToProcessor(new Sequencer(messageCache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.RecieverAddress))

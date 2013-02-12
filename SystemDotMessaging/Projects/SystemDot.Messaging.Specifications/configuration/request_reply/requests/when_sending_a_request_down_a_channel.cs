@@ -58,5 +58,4 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.request
 
         It should_start_the_task_repeater = () => TaskRepeater.Started.ShouldBeTrue();
     }
-
 }

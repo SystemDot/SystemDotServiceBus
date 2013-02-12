@@ -6,36 +6,36 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.configuration.request_reply.replies
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_a_reply_on_a_channel_with_a_hook 
-        : WithMessageConfigurationSubject
+    public class when_replying_on_a_channel_with_a_hook : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
-        const string RecieverAddress = "TestRecieverAddress";
+        const string SenderChannelName = "TestSender";
 
+        static IBus bus;
         static int message;
-        static MessagePayload payload;
         static TestMessageProcessorHook hook;
 
         Establish context = () =>
         {
             hook = new TestMessageProcessorHook();
 
-            Configuration.Configure.Messaging()
+            bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                    .ForRequestReplySendingTo(RecieverAddress)
-                    .WithReceiveHook(hook)
+                .ForRequestReplyRecieving()
+                .WithReplyHook(hook)
                 .Initialise();
 
+            MessageServer.ReceiveMessage(new MessagePayload().MakeReceiveable(
+                1,
+                SenderChannelName,
+                ChannelName,
+                PersistenceUseType.RequestSend));
+
             message = 1;
-            payload = new MessagePayload().MakeReceiveable(
-                message, 
-                RecieverAddress,
-                ChannelName, 
-                PersistenceUseType.ReplySend);
         };
 
-        Because of = () => MessageServer.ReceiveMessage(payload);
+        Because of = () => bus.Reply(message);
 
         It should_run_the_message_through_the_hook = () => hook.Message.ShouldEqual(message);
     }

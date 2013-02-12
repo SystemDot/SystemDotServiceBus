@@ -32,8 +32,14 @@ namespace SystemDot.Messaging.RequestReply.Builders
             MessageHandlerRouter messageHandlerRouter, 
             AcknowledgementSender acknowledgementSender,
             PersistenceFactorySelector persistenceFactorySelector, 
+<<<<<<< HEAD
             ISystemTime systemTime, 
+            ITaskRepeater taskRepeater, 
+            IIocContainer iocContainer)
+=======
+            ICurrentDateProvider currentDateProvider, 
             ITaskRepeater taskRepeater)
+>>>>>>> origin/HEAD
         {
             Contract.Requires(replyAddressLookup != null);
             Contract.Requires(serialiser != null);
