@@ -11,5 +11,6 @@ namespace SystemDot.Ioc
             where TConcrete : class;
 
         T Resolve<T>() where T : class;
+        void RegisterFromAssemblyOf<TAssemblyOf>();
     }
 }

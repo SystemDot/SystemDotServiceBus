@@ -1,4 +1,4 @@
-namespace SystemDot.Specifications.ioc
+namespace SystemDot.Specifications.ioc.TestTypes
 {
     class TestComponentWithParameters : ITestComponentWithParameters
     {
