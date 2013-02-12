@@ -12,13 +12,13 @@ namespace SystemDot.Messaging.Configuration.RequestReply
 {
     public class RequestReplyRecieverConfiguration : Initialiser
     {
-        readonly ReplySendChannelSchema sendSchema;
+        readonly ReplySendChannelSchema replySchema;
         readonly RequestRecieveChannelSchema requestSchema;
 
         public RequestReplyRecieverConfiguration(EndpointAddress address, List<Action> buildActions) 
             : base(buildActions)
         {
-            this.sendSchema = new ReplySendChannelSchema
+            this.replySchema = new ReplySendChannelSchema
             {
                 FromAddress = address,
                 ExpiryStrategy = new PassthroughMessageExpiryStrategy(),
@@ -35,18 +35,18 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         protected override void Build()
         {
             Resolve<RequestReceiveDistributionChannelBuilder>().Build(this.requestSchema);
-            Resolve<ReplySendDistributionChannelBuilder>().Build(this.sendSchema);
+            Resolve<ReplySendDistributionChannelBuilder>().Build(this.replySchema);
             Resolve<IMessageReciever>().RegisterAddress(GetAddress());
         }
 
         protected override EndpointAddress GetAddress()
         {
-            return this.sendSchema.FromAddress;
+            return this.replySchema.FromAddress;
         }
 
         public RequestReplyRecieverConfiguration WithDurability()
         {
-            this.sendSchema.IsDurable = true;
+            this.replySchema.IsDurable = true;
             this.requestSchema.IsDurable = true;
             return this;
         }
@@ -55,7 +55,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             Contract.Requires(strategy != null);
 
-            this.sendSchema.ExpiryStrategy = strategy;
+            this.replySchema.ExpiryStrategy = strategy;
             return this;
         }
 
@@ -63,7 +63,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             Contract.Requires(strategy != null);
 
-            this.sendSchema.RepeatStrategy = strategy;
+            this.replySchema.RepeatStrategy = strategy;
             return this;
         }
 
@@ -71,6 +71,22 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory
         {
             this.requestSchema.UnitOfWorkRunner = CreateUnitOfWorkRunner<TUnitOfWorkFactory>();
+            return this;
+        }
+
+        public RequestReplyRecieverConfiguration WithReceiveHook(IMessageProcessor<object, object> hook)
+        {
+            Contract.Requires(hook != null);
+
+            this.requestSchema.Hooks.Add(hook);
+            return this;
+        }
+
+        public RequestReplyRecieverConfiguration WithReplyHook(IMessageProcessor<object, object> hook)
+        {
+            Contract.Requires(hook != null);
+
+            this.replySchema.Hooks.Add(hook);
             return this;
         }
     }

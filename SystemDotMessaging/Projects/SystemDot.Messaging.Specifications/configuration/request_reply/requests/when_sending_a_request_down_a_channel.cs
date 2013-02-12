@@ -6,9 +6,9 @@ using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.configuration.request_reply.replies
+namespace SystemDot.Messaging.Specifications.configuration.request_reply.requests
 {
-    [Subject(SpecificationGroup.Description)]
+    [Subject(replies.SpecificationGroup.Description)]
     public class when_sending_a_request_down_a_channel : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
@@ -57,5 +57,4 @@ namespace SystemDot.Messaging.Specifications.configuration.request_reply.replies
 
         It should_start_the_task_repeater = () => TaskRepeater.Started.ShouldBeTrue();
     }
-
 }

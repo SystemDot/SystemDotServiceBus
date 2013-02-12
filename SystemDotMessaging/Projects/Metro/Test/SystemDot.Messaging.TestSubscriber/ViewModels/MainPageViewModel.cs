@@ -35,7 +35,7 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
                .UsingHttpTransport(MessageServer.Local())
                .UsingFilePersistence()
                .OpenChannel("TestMetroSender").ForRequestReplySendingTo("TestReciever").WithDurability()
-               .WithHook(new MessageMarshallingHook(CoreWindow.GetForCurrentThread().Dispatcher))
+               .WithReceiveHook(new MessageMarshallingHook(CoreWindow.GetForCurrentThread().Dispatcher))
                .Initialise();
 
             IocContainerLocator.Locate()

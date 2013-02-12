@@ -38,14 +38,6 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             };
         }
 
-        public RequestReplySenderConfiguration WithHook(IMessageProcessor<object, object> hook)
-        {
-            Contract.Requires(hook != null);
-
-            this.recieveSchema.Hooks.Add(hook);
-            return this;
-        }
-
         protected override void Build()
         {
             Resolve<RequestSendChannelBuilder>().Build(this.sendSchema);
@@ -93,6 +85,22 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory
         {
             this.recieveSchema.UnitOfWorkRunner = CreateUnitOfWorkRunner<TUnitOfWorkFactory>();
+            return this;
+        }
+
+        public RequestReplySenderConfiguration WithReceiveHook(IMessageProcessor<object, object> hook)
+        {
+            Contract.Requires(hook != null);
+
+            this.recieveSchema.Hooks.Add(hook);
+            return this;
+        }
+
+        public RequestReplySenderConfiguration WithSendHook(IMessageProcessor<object, object> hook)
+        {
+            Contract.Requires(hook != null);
+
+            this.sendSchema.Hooks.Add(hook);
             return this;
         }
     }

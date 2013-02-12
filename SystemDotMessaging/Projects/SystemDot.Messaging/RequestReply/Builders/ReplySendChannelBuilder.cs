@@ -3,6 +3,7 @@ using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
+using SystemDot.Messaging.Distribution;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Pipelines;
@@ -55,10 +56,12 @@ namespace SystemDot.Messaging.RequestReply.Builders
             
             this.acknowledgementHandler.RegisterCache(messageCache);
 
-            var startPoint = new MessagePayloadPackager(this.serialiser);
+            var startPoint = new Pipe<object>();
 
             MessagePipelineBuilder.Build()
                 .With(startPoint)
+                .ToProcessors(schema.Hooks.ToArray())
+                .ToConverter(new MessagePayloadPackager(this.serialiser))
                 .ToProcessor(new Sequencer(messageCache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, senderAddress))
                 .ToMessageRepeater(messageCache, this.currentDateProvider, this.taskRepeater, schema.RepeatStrategy)

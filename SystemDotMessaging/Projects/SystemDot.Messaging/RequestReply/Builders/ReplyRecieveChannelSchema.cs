@@ -9,7 +9,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
         public ReplyRecieveChannelSchema()
         {
-            this.Hooks = new List<IMessageProcessor<object, object>>();
+            Hooks = new List<IMessageProcessor<object, object>>();
         }
     }
 }
