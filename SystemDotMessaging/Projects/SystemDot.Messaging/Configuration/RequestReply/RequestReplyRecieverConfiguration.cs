@@ -36,12 +36,11 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             Resolve<RequestReceiveDistributionChannelBuilder>().Build(this.requestSchema);
             Resolve<ReplySendDistributionChannelBuilder>().Build(this.sendSchema);
-            Resolve<ITransportBuilder>().Build(GetAddress());
         }
 
-        protected override EndpointAddress GetAddress()
+        protected override ServerPath GetServerPath()
         {
-            return this.sendSchema.FromAddress;
+            return this.sendSchema.FromAddress.ServerPath;
         }
 
         public RequestReplyRecieverConfiguration WithDurability()

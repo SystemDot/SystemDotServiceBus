@@ -47,12 +47,12 @@ namespace SystemDot.Messaging.Specifications.configuration
 
         protected static EndpointAddress BuildAddress(string fromAddress)
         {
-            return Resolve<EndpointAddressBuilder>().Build(fromAddress, MessageServer.Local().Name);
+            return GetEndpointAddress(fromAddress, MessageServer.Local().Name);
         }
 
         protected static EndpointAddress GetEndpointAddress(string channelName, string serverName)
         {
-            return The<EndpointAddressBuilder>().Build(channelName, serverName);
+            return TestEndpointAddressBuilder.Build(channelName, serverName);
         }
     }
 }

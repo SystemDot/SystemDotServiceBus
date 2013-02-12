@@ -68,9 +68,7 @@ namespace SystemDot.Messaging.Specifications.configuration
 
         static EndpointAddress BuildAddress(string fromAddress)
         {
-            return Resolve<EndpointAddressBuilder>()
-                .Build(fromAddress, MessageServer.Local().Name);
+            return TestEndpointAddressBuilder.Build(fromAddress, MessageServer.Local().Name);
         }
-
     }
 }

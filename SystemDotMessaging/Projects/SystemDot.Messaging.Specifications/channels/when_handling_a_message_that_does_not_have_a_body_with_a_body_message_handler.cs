@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Specifications.channels
 
         Establish context = () =>
         {
-            Subject = new BodyMessageFilter(new EndpointAddress("GetChannel", "Server"));
+            Subject = new BodyMessageFilter(TestEndpointAddressBuilder.Build("GetChannel", "Server"));
             Subject.MessageProcessed += m => processedMessage = m; 
             message = new MessagePayload();
         };

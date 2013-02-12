@@ -5,25 +5,20 @@ namespace SystemDot.Messaging.Addressing
 {
     public class EndpointAddressBuilder
     {
-        public EndpointAddress Build(string address, string messageServerName)
+        public EndpointAddress Build(string address, ServerPath defaultServerPath)
         {
             Contract.Requires(!string.IsNullOrEmpty(address));
-            Contract.Requires(!string.IsNullOrEmpty(messageServerName));
+            Contract.Requires(defaultServerPath != null);
 
-            string serverName = messageServerName;
-            
-            string[] addressParts = address.Split('.');
-            if (addressParts.Length == 2)
-                serverName = addressParts[1];
+            string[] channelParts = address.Split('@');
+            if (channelParts.Length == 1)
+                return new EndpointAddress(address, defaultServerPath);
 
-            string[] channelParts = addressParts[0].Split('@');
-            
-            if(channelParts.Length == 1)
-                return new EndpointAddress(
-                    string.Concat(channelParts[0], "@", Environment.MachineName),
-                    serverName);
+            string[] serverPathParts = channelParts[1].Split('.');
+            if (serverPathParts.Length == 1)
+                return new EndpointAddress(channelParts[0], new ServerPath(MessageServer.Named(serverPathParts[0]), defaultServerPath.RoutedVia));
 
-            return new EndpointAddress(addressParts[0], serverName);
+            return new EndpointAddress(channelParts[0], new ServerPath(MessageServer.Named(serverPathParts[0]), MessageServer.Named(serverPathParts[1])));
         }
     }
 }

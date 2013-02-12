@@ -23,14 +23,14 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
 
             differingChannelMessageCache = new MessageCache(
                 store,
-                new EndpointAddress("GetChannel", "Server"),
+                TestEndpointAddressBuilder.Build("GetChannel", "Server"),
                 PersistenceUseType.RequestSend);
 
             Subject.RegisterCache(differingChannelMessageCache);
 
             var persistence = new MessageCache(
                 store,
-                new EndpointAddress("Channel1", "Server1"),
+                TestEndpointAddressBuilder.Build("Channel1", "Server1"),
                 differingChannelMessageCache.UseType);
 
             Subject.RegisterCache(persistence);

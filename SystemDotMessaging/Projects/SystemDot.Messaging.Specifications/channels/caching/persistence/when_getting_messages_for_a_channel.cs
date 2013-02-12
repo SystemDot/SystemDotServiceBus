@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Specifications.channels.caching.persistence
 
             messageCache = Subject.CreateCache(
                 PersistenceUseType.SubscriberRequestSend, 
-                new EndpointAddress("GetChannel", "Server"));
+                TestEndpointAddressBuilder.Build("GetChannel", "Server"));
 
             message1 = new MessagePayload();
             messageCache.AddMessageAndIncrementSequence(message1);

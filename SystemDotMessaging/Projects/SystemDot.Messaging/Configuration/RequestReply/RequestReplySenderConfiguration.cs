@@ -50,12 +50,11 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             Resolve<RequestSendChannelBuilder>().Build(this.sendSchema);
             Resolve<ReplyRecieveChannelBuilder>().Build(this.recieveSchema);
-            Resolve<ITransportBuilder>().Build(GetAddress());
         }
 
-        protected override EndpointAddress GetAddress()
+        protected override ServerPath GetServerPath()
         {
-            return this.sendSchema.FromAddress;
+            return this.sendSchema.FromAddress.ServerPath;
         }
 
         public RequestReplySenderConfiguration OnlyForMessages(IMessageFilterStrategy toFilterMessagesWith)

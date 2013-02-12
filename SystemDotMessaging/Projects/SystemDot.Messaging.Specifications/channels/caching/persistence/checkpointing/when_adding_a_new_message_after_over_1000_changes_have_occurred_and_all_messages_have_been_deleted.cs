@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.channels.caching.persistence.checkp
 
             messageCache = Subject.CreateCache(
                 PersistenceUseType.SubscriberRequestSend,
-                new EndpointAddress("GetChannel", "Server"));
+                TestEndpointAddressBuilder.Build("GetChannel", "Server"));
 
             messages = new List<MessagePayload>();
 

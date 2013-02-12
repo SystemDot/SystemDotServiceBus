@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.channels.caching.persistence
             
             messageCache = Subject.CreateCache(
                 PersistenceUseType.SubscriberRequestSend, 
-                new EndpointAddress("GetChannel", "Server"));
+                TestEndpointAddressBuilder.Build("GetChannel", "Server"));
         };
 
         Because of = () => exception = Catch.Exception(() => messageCache.Delete(Guid.NewGuid()));

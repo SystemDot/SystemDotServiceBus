@@ -5,18 +5,18 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients
 {
     public class LongPollRequestHeader : IMessageHeader 
     {
-        public EndpointAddress Address { get; set; }
+        public ServerPath ServerPath { get; set; }
 
         public LongPollRequestHeader() {}
 
-        public LongPollRequestHeader(EndpointAddress address)
+        public LongPollRequestHeader(ServerPath serverPath)
         {
-            this.Address = address;
+            this.ServerPath = serverPath;
         }
 
         public override string ToString()
         {
-            return string.Concat(this.GetType() ,": ", this.Address.ToString());
+            return string.Concat(GetType() ,": ", ServerPath.ToString());
         }
     }
 }

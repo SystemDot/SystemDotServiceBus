@@ -31,11 +31,11 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
                 .Initialise();
 
             sentMessageInQueue = new MessagePayload();
-            sentMessageInQueue.SetToAddress(new EndpointAddress("Address1", "TestServer"));
+            sentMessageInQueue.SetToAddress(TestEndpointAddressBuilder.Build("Address1", "TestServer"));
             SendMessagesToRemoteServer(sentMessageInQueue);
 
             longPollRequest = new MessagePayload();
-            longPollRequest.SetLongPollRequest(new EndpointAddress("Address2", "TestServer"));
+            longPollRequest.SetLongPollRequest(TestEndpointAddressBuilder.Build("Address1", "TestServer1").ServerPath);
         };
 
         Because of = () => returnedMessages = SendMessagesToRemoteServer(longPollRequest);

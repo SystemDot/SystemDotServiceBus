@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Specifications.channels.caching
         Establish context = () =>
         {
             message = new MessagePayload();
-            message.SetPersistenceId(new EndpointAddress("GetChannel", "Server"), PersistenceUseType.SubscriberSend);
+            message.SetPersistenceId(TestEndpointAddressBuilder.Build("GetChannel", "Server"), PersistenceUseType.SubscriberSend);
         };
 
         Because of = () =>

@@ -31,8 +31,17 @@ namespace SystemDot.Messaging.Specifications.configuration.point_to_point.sendin
 
         Because of = () => bus.Send(message);
 
-        It should_send_a_message_with_the_correct_to_address = () =>
-            MessageServer.SentMessages.First().GetToAddress().ShouldEqual(BuildAddress(ReceiverName));
+        It should_send_a_message_with_the_correct_to_address_channel_name = () =>
+            MessageServer.SentMessages.First().GetToAddress()
+                .Channel.ShouldEqual(ReceiverName);
+
+        It should_send_a_message_with_the_to_address_server_set_to_local = () =>
+            MessageServer.SentMessages.First().GetToAddress()
+                .ServerPath.LocatedAt.Name.ShouldEqual(Environment.MachineName);
+
+        It should_send_a_message_with_the_to_address_set_to_the_local_message_server_name = () =>
+            MessageServer.SentMessages.First().GetToAddress()
+                .ServerPath.RoutedVia.Name.ShouldEqual(Environment.MachineName);
 
         It should_send_a_message_with_the_correct_from_address = () =>
             MessageServer.SentMessages.First().GetFromAddress().ShouldEqual(BuildAddress(ChannelName));

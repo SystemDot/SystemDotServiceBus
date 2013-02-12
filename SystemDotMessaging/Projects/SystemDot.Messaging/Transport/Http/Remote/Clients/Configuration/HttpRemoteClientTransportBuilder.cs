@@ -13,9 +13,9 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients.Configuration
             this.longPoller = longPoller;
         }
 
-        public void Build(EndpointAddress address)
+        public void Build(ServerPath toListenFor)
         {
-            this.longPoller.RegisterAddress(address);
+            this.longPoller.ListenTo(toListenFor);
         }
     }
 }

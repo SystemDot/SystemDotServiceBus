@@ -4,7 +4,7 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
 {
     public class HttpServerTransportBuilder : ITransportBuilder
     {
-        public void Build(EndpointAddress address)
+        public void Build(ServerPath toListenFor)
         {
             
         }

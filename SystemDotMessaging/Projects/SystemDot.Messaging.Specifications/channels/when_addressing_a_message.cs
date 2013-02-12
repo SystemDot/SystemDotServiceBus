@@ -16,8 +16,8 @@ namespace SystemDot.Messaging.Specifications.channels
 
         Establish context = () =>
         {
-            fromAddress = new EndpointAddress("TestFromAddress", "TestFromServer");
-            toAddress = new EndpointAddress("TestToAddress", "TestToServer");
+            fromAddress = TestEndpointAddressBuilder.Build("TestFromAddress", "TestFromServer");
+            toAddress = TestEndpointAddressBuilder.Build("TestToAddress", "TestToServer");
 
             Subject = new MessageAddresser(fromAddress, toAddress);
 

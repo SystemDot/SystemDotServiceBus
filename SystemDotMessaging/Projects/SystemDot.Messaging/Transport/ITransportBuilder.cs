@@ -4,6 +4,6 @@ namespace SystemDot.Messaging.Transport
 {
     public interface ITransportBuilder
     {
-        void Build(EndpointAddress address);
+        void Build(ServerPath toListenFor);
     }
 }

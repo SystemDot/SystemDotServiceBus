@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using SystemDot.Http;
+using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;

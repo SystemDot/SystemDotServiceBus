@@ -41,12 +41,11 @@ namespace SystemDot.Messaging.Configuration.Publishers
         {
             Resolve<SubscriberRecieveChannelBuilder>().Build(this.recieveSchema);
             Resolve<SubscriptionRequestChannelBuilder>().Build(this.requestSchema).Start();
-            Resolve<ITransportBuilder>().Build(this.requestSchema.SubscriberAddress);
         }
 
-        protected override EndpointAddress GetAddress()
+        protected override ServerPath GetServerPath()
         {
-            return this.requestSchema.PublisherAddress;
+            return this.requestSchema.PublisherAddress.ServerPath;
         }
 
         public SubscribeToConfiguration WithDurability()

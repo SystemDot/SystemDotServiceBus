@@ -10,9 +10,9 @@ namespace SystemDot.Messaging.Configuration
             return IocContainerLocator.Locate().Resolve<T>();
         }
 
-        protected EndpointAddress BuildEndpointAddress(string address, string defaultServerName)
+        protected EndpointAddress BuildEndpointAddress(string address, ServerPath serverPath)
         {
-            return IocContainerLocator.Locate().Resolve<EndpointAddressBuilder>().Build(address, defaultServerName);
+            return IocContainerLocator.Locate().Resolve<EndpointAddressBuilder>().Build(address, serverPath);
         }
     }
 }

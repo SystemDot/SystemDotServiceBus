@@ -3,30 +3,28 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.PointToPoint;
-using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Configuration.PointToPoint
 {
     public class PointToPointReceiverConfiguration : Initialiser
     {
-        readonly EndpointAddress address;
+        readonly ServerPath serverPath;
 
-        public PointToPointReceiverConfiguration(EndpointAddress address, List<Action> buildActions) 
+        public PointToPointReceiverConfiguration(ServerPath serverPath, List<Action> buildActions) 
             : base(buildActions)
         {
-            Contract.Requires(address != EndpointAddress.Empty);
-            this.address = address;
+            Contract.Requires(serverPath != null);
+            this.serverPath = serverPath;
         }
 
         protected override void Build()
         {
             Resolve<PointToPointReceiveChannelBuilder>().Build();
-            Resolve<ITransportBuilder>().Build(GetAddress());
         }
 
-        protected override EndpointAddress GetAddress()
+        protected override ServerPath GetServerPath()
         {
-            return this.address;
+            return this.serverPath;
         }
     }
 }

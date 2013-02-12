@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
             
             messageCache = new MessageCache(
                 store,
-                new EndpointAddress("GetChannel", "Server"), 
+                TestEndpointAddressBuilder.Build("GetChannel", "Server"), 
                 PersistenceUseType.SubscriberRequestSend);
 
             Subject.RegisterCache(messageCache);

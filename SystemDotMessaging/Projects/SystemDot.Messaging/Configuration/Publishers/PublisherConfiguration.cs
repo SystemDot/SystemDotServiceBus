@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Publishing.Builders;
-using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Configuration.Publishers
 {
@@ -24,12 +23,11 @@ namespace SystemDot.Messaging.Configuration.Publishers
         {
             Resolve<SubscriptionHandlerChannelBuilder>().Build();
             Resolve<PublisherChannelBuilder>().Build(this.schema);
-            Resolve<ITransportBuilder>().Build(GetAddress());
         }
 
-        protected override EndpointAddress GetAddress()
+        protected override ServerPath GetServerPath()
         {
-            return this.schema.FromAddress;
+            return this.schema.FromAddress.ServerPath;
         }
 
         public PublisherConfiguration OnlyForMessages(IMessageFilterStrategy toFilterWith)

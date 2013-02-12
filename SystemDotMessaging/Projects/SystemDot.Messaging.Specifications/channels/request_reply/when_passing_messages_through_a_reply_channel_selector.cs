@@ -17,8 +17,8 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply
         
         Establish context = () =>
         {
-            senderAddress = new EndpointAddress("SenderChannel", "SenderServer");
-            recieverAddress = new EndpointAddress("RecieverChannel", "RecieverServer");
+            senderAddress = TestEndpointAddressBuilder.Build("SenderChannel", "SenderServer");
+            recieverAddress = TestEndpointAddressBuilder.Build("RecieverChannel", "RecieverServer");
             
             Subject = new ReplyChannelSelector(The<ReplyAddressLookup>());
             Subject.MessageProcessed += i => processedMessage = i;

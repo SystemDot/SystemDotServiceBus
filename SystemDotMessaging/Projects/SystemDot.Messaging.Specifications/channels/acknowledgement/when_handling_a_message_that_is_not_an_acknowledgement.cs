@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
 
         Establish context = () =>
         {
-            Configure<EndpointAddress>(new EndpointAddress("GetChannel", "Server"));
+            Configure<EndpointAddress>(TestEndpointAddressBuilder.Build("GetChannel", "Server"));
 
             message = new MessagePayload();
         };

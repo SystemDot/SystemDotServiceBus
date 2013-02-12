@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Servers.Configuration
             this.systemTime = systemTime;
         }
 
-        public void Build(EndpointAddress address)
+        public void Build(ServerPath toListenFor)
         {
             this.httpServerBuilder
                 .Build(new FixedPortAddress(Environment.MachineName), BuildMessagingServerHandler())

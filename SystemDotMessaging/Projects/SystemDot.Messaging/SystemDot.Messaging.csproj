@@ -41,6 +41,7 @@
     <Compile Include="Addressing\EndpointAddress.cs" />
     <Compile Include="Addressing\EndpointAddressBuilder.cs" />
     <Compile Include="Addressing\MessageAddresser.cs" />
+    <Compile Include="Addressing\ServerPath.cs" />
     <Compile Include="Builders\ChannelSchema.cs" />
     <Compile Include="Caching\PersistenceSourceRecorder.cs" />
     <Compile Include="Caching\ReceiveChannelMessageCacher.cs" />
@@ -155,7 +156,7 @@
     <Compile Include="Configuration\Configurer.cs" />
     <Compile Include="Configuration\Local\LocalChannelConfiguration.cs" />
     <Compile Include="Configuration\MessageExpiry.cs" />
-    <Compile Include="Configuration\MessageServer.cs" />
+    <Compile Include="Addressing\MessageServer.cs" />
     <Compile Include="Configuration\MessageServerConfiguration.cs" />
     <Compile Include="Configuration\Initialiser.cs" />
     <Compile Include="Configuration\MessagingConfiguration.cs" />
@@ -198,7 +199,7 @@
     <Compile Include="Storage\MessagePersistenceId.cs" />
     <Compile Include="Storage\PersistenceHeader.cs" />
     <Compile Include="Storage\PersistenceUseType.cs" />
-    <Compile Include="Transport\Http\HttpAddressExtensions.cs" />
+    <Compile Include="Transport\Http\HttpServerPathExtensions.cs" />
     <Compile Include="Transport\Http\Remote\Servers\Configuration\HttpRemoteServerTransportBuilder.cs" />
     <Compile Include="Transport\IMessageSender.cs" />
     <Compile Include="Transport\IMessageReciever.cs" />

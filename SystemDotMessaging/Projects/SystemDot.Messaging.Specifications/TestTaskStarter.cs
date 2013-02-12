@@ -41,7 +41,7 @@ namespace SystemDot.Messaging.Specifications
         public void UnPause()
         {
             this.paused = false;
-            this.action.Invoke();
+            if(this.action != null) this.action.Invoke();
         }
 
         public void Pause()

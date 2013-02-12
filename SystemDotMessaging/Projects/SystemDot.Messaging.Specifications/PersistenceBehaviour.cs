@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Specifications
         }
 
         public PersistenceBehaviour()
-            : this(PersistenceUseType.SubscriberRequestSend, new EndpointAddress("GetChannel", "Server"))
+            : this(PersistenceUseType.SubscriberRequestSend, TestEndpointAddressBuilder.Build("GetChannel", "Server"))
         {
         }
     }

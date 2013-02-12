@@ -12,7 +12,8 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.channels.caching.persistence.checkpointing
 {
     [Subject(persistence.SpecificationGroup.Description)]
-    public class when_adding_a_message_to_a_diferent_cache_after_checkpointing_from_the_other : WithSubject<MessageCacheFactory>
+    public class when_adding_a_message_to_a_diferent_cache_after_checkpointing_from_the_other 
+        : WithSubject<MessageCacheFactory>
     {
         static List<MessagePayload> messages;
         static MessageCache messageCache;
@@ -24,7 +25,7 @@ namespace SystemDot.Messaging.Specifications.channels.caching.persistence.checkp
 
             messageCache = Subject.CreateCache(
                 PersistenceUseType.SubscriberRequestSend,
-                new EndpointAddress("GetChannel", "Server"));
+                TestEndpointAddressBuilder.Build("GetChannel", "Server"));
 
             messages = new List<MessagePayload>();
 
@@ -36,7 +37,7 @@ namespace SystemDot.Messaging.Specifications.channels.caching.persistence.checkp
 
             MessageCache otherMessageCache = Subject.CreateCache(
                 PersistenceUseType.SubscriberRequestSend,
-                new EndpointAddress("GetChannel1", "Server1"));
+                TestEndpointAddressBuilder.Build("GetChannel1", "Server1"));
 
             otherMessageCache.AddMessageAndIncrementSequence(new MessagePayload());
 

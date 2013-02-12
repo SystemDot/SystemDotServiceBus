@@ -1,6 +1,7 @@
 ﻿using System;
 using SystemDot.Esent;
 using SystemDot.Logging;
+using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Test.Messages;
 using SystemDot.Messaging.Transport.Http.Configuration;

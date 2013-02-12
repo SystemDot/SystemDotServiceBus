@@ -15,23 +15,23 @@ namespace SystemDot.Messaging.Addressing
 
         public string Channel { get; set; }
 
-        public string ServerName { get; set; }
+        public ServerPath ServerPath { get; set; }
         
         public EndpointAddress() {}
 
-        public EndpointAddress(string channel, string serverName) 
+        public EndpointAddress(string channel, ServerPath serverPath) 
         {
             Contract.Requires(!string.IsNullOrEmpty(channel));
-            Contract.Requires(!string.IsNullOrEmpty(serverName));
+            Contract.Requires(serverPath != null);
 
             this.Channel = channel;
-            this.ServerName = serverName;
+            this.ServerPath = serverPath;
         }
 
         protected bool Equals(EndpointAddress other)
         {
             return string.Equals(this.Channel, other.Channel) 
-                && string.Equals(this.ServerName, other.ServerName);
+                && string.Equals(this.ServerPath, other.ServerPath);
         }
 
         public override bool Equals(object obj)
@@ -46,7 +46,7 @@ namespace SystemDot.Messaging.Addressing
         {
             unchecked
             {
-                return (this.Channel.GetHashCode()*397) ^ this.ServerName.GetHashCode();
+                return (this.Channel.GetHashCode()*397) ^ this.ServerPath.GetHashCode();
             }
         }
 
@@ -62,7 +62,7 @@ namespace SystemDot.Messaging.Addressing
 
         public override string ToString()
         {
-            return String.Concat(this.Channel, ".", this.ServerName);
+            return String.Concat(this.Channel, ".", this.ServerPath);
         }
     }
 }

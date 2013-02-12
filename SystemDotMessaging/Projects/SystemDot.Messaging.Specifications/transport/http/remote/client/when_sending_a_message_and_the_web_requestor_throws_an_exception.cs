@@ -1,5 +1,6 @@
 ﻿using System;
 using SystemDot.Http;
+using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Specifications.configuration;
 using SystemDot.Messaging.Transport.Http.Configuration;

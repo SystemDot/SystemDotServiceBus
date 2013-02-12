@@ -24,11 +24,11 @@ namespace SystemDot.Messaging.Transport.Http
 
         public void InputMessage(MessagePayload toInput)
         {
-            Logger.Info("Sending message to {0}", toInput.GetToAddress().GetUrl());
+            Logger.Info("Sending message to {0}", toInput.GetToAddress().ServerPath.GetUrl());
 
             try
             {
-                this.requestor.SendPut(toInput.GetToAddress().GetUrl(), s => this.formatter.Serialise(s, toInput));
+                this.requestor.SendPut(toInput.GetToAddress().ServerPath.GetUrl(), s => this.formatter.Serialise(s, toInput));
             }
             catch (Exception)
             {

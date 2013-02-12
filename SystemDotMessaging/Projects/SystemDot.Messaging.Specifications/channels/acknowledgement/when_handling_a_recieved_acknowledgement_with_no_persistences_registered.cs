@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
             acknowledgement.SetAcknowledgementId(
                 new MessagePersistenceId(
                     Guid.NewGuid(), 
-                    new EndpointAddress("Channel", "Server"), 
+                    TestEndpointAddressBuilder.Build("Channel", "Server"), 
                     PersistenceUseType.RequestReceive));
         };
 

@@ -33,6 +33,7 @@ namespace SystemDot.Messaging.Configuration
 
             this.buildActions.ForEach(a => a());
 
+            Resolve<ITransportBuilder>().Build(GetServerPath());
             Resolve<ITaskRepeater>().Start();
 
             return Resolve<IBus>();
@@ -43,8 +44,8 @@ namespace SystemDot.Messaging.Configuration
             Contract.Requires(!string.IsNullOrEmpty(name));
 
             return new ChannelConfiguration(
-                BuildEndpointAddress(name, GetAddress().ServerName),
-                GetAddress().ServerName,
+                new EndpointAddress(name, GetServerPath()),
+                GetServerPath(),
                 this.buildActions);
         }
 
@@ -56,10 +57,10 @@ namespace SystemDot.Messaging.Configuration
 
         public LocalChannelConfiguration OpenLocalChannel()
         {
-            return new LocalChannelConfiguration(GetAddress(), this.buildActions);
+            return new LocalChannelConfiguration(GetServerPath(), this.buildActions);
         }
 
-        protected abstract EndpointAddress GetAddress();
+        protected abstract ServerPath GetServerPath();
 
         protected static UnitOfWorkRunner<TUnitOfWorkFactory> CreateUnitOfWorkRunner<TUnitOfWorkFactory>() 
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory

@@ -35,43 +35,43 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients
             this.receiver = receiver;
         }
 
-        public void RegisterAddress(EndpointAddress address)
+        public void ListenTo(ServerPath toListenFor)
         {
-            Contract.Requires(address != EndpointAddress.Empty);
+            Contract.Requires(toListenFor != null);
 
-            StartNextPoll(address);
+            StartNextPoll(toListenFor);
         }
 
-        void Poll(EndpointAddress address)
+        void Poll(ServerPath toListenFor)
         {
-            Logger.Info("Long polling for messages for {0}", address);
+            Logger.Info("Long polling for messages for {0}", toListenFor);
 
             try
             {
                 this.requestor.SendPut(
-                    address.GetUrl(),
-                    requestStream => this.formatter.Serialise(requestStream, CreateLongPollPayload(address)),
+                    toListenFor.GetUrl(),
+                    requestStream => this.formatter.Serialise(requestStream, CreateLongPollPayload(toListenFor)),
                     response =>
                     {
                         RecieveResponse(response);
-                        StartNextPoll(address);
+                        StartNextPoll(toListenFor);
                     });
             }
             catch (Exception)
             {
-                StartNextPoll(address);
+                StartNextPoll(toListenFor);
             }
         }
 
-        void StartNextPoll(EndpointAddress address)
+        void StartNextPoll(ServerPath toListenFor)
         {
-            this.starter.StartTask(() => Poll(address));
+            this.starter.StartTask(() => Poll(toListenFor));
         }
 
-        MessagePayload CreateLongPollPayload(EndpointAddress address)
+        MessagePayload CreateLongPollPayload(ServerPath toListenFor)
         {
             var payload = new MessagePayload();
-            payload.SetLongPollRequest(address);
+            payload.SetLongPollRequest(toListenFor);
 
             return payload;
         }

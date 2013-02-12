@@ -8,13 +8,13 @@ namespace SystemDot.Messaging.Configuration.Local
 {
     public class LocalChannelConfiguration : Initialiser
     {
-        readonly EndpointAddress address;
+        readonly ServerPath serverPath;
         readonly LocalChannelSchema schema;
 
-        public LocalChannelConfiguration(
-            EndpointAddress address, List<Action> buildActions) : base(buildActions)
+        public LocalChannelConfiguration(ServerPath serverPath, List<Action> buildActions)
+            : base(buildActions)
         {
-            this.address = address;
+            this.serverPath = serverPath;
             this.schema = new LocalChannelSchema
             {
                 UnitOfWorkRunner = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>() 
@@ -26,9 +26,9 @@ namespace SystemDot.Messaging.Configuration.Local
             Resolve<LocalChannelBuilder>().Build(this.schema);
         }
 
-        protected override EndpointAddress GetAddress()
+        protected override ServerPath GetServerPath()
         {
-            return this.address;
+            return this.serverPath;
         }
 
         public LocalChannelConfiguration WithUnitOfWork<TUnitOfWorkFactory>()

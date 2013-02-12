@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using SystemDot.Ioc;
+using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Test.Messages;

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
 using SystemDot.Http;
+using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.configuration;
+using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 using Machine.Specifications;
 using SystemDot.Messaging.Transport.Http.Configuration;
@@ -19,6 +21,8 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
        
         Establish context = () =>
         {
+            ConfigureAndRegister<ITaskStarter>();
+
             webRequestor = new TestWebRequestor(
                 new PlatformAgnosticSerialiser(), 
                 new FixedPortAddress(Environment.MachineName));

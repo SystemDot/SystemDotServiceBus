@@ -11,17 +11,17 @@ namespace SystemDot.Messaging.Configuration
     public class ChannelConfiguration : Configurer
     {
         readonly EndpointAddress address;
-        readonly string messageServerName;
+        readonly ServerPath serverPath;
         readonly List<Action> buildActions;
 
-        public ChannelConfiguration(EndpointAddress address, string messageServerName, List<Action> buildActions)
+        public ChannelConfiguration(EndpointAddress address, ServerPath serverPath, List<Action> buildActions)
         {
             Contract.Requires(address != EndpointAddress.Empty);
-            Contract.Requires(!String.IsNullOrEmpty(messageServerName));
+            Contract.Requires(serverPath != null);
             Contract.Requires(buildActions != null);
 
             this.address = address;
-            this.messageServerName = messageServerName;
+            this.serverPath = serverPath;
             this.buildActions = buildActions;
         }
 
@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Configuration
         {
             return new RequestReplySenderConfiguration(
                 this.address,
-                BuildEndpointAddress(recieverAddress, this.messageServerName),
+                BuildEndpointAddress(recieverAddress, this.serverPath),
                 this.buildActions);
         }
 
@@ -47,7 +47,7 @@ namespace SystemDot.Messaging.Configuration
         {
             return new SubscribeToConfiguration(
                 this.address, 
-                BuildEndpointAddress(publisherAddress, this.messageServerName),
+                BuildEndpointAddress(publisherAddress, this.serverPath),
                 this.buildActions);
         }
 
@@ -55,13 +55,15 @@ namespace SystemDot.Messaging.Configuration
         {
             return new PointToPointSenderConfiguration(
                 this.address,
-                BuildEndpointAddress(recieverAddress, this.messageServerName), 
+                BuildEndpointAddress(recieverAddress, this.serverPath), 
                 this.buildActions);
         }
 
         public PointToPointReceiverConfiguration ForPointToPointReceiving()
         {
-            return new PointToPointReceiverConfiguration(address, this.buildActions);
+            return new PointToPointReceiverConfiguration(this.serverPath, this.buildActions);
         }
     }
+
+    
 }

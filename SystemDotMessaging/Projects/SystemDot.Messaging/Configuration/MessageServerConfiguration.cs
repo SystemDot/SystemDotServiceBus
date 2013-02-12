@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
+using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.Local;
 using SystemDot.Storage.Changes;
 
@@ -9,13 +10,13 @@ namespace SystemDot.Messaging.Configuration
 {
     public class MessageServerConfiguration : Configurer
     {
-        readonly MessageServer messageServer;
+        readonly ServerPath serverPath;
 
-        public MessageServerConfiguration(MessageServer messageServer)
+        public MessageServerConfiguration(ServerPath serverPath)
         {
-            Contract.Requires(messageServer != null);
+            Contract.Requires(serverPath != null);
 
-            this.messageServer = messageServer;
+            this.serverPath = serverPath;
         }
 
         public ChannelConfiguration OpenChannel(string name)
@@ -25,8 +26,8 @@ namespace SystemDot.Messaging.Configuration
             RegisterInMemoryPersistence(IocContainerLocator.Locate());
 
             return new ChannelConfiguration(
-                BuildEndpointAddress(name, this.messageServer.Name),
-                this.messageServer.Name,
+                new EndpointAddress(name, this.serverPath),
+                this.serverPath,
                 new List<Action>());
         }
 
@@ -35,7 +36,7 @@ namespace SystemDot.Messaging.Configuration
             RegisterInMemoryPersistence(IocContainerLocator.Locate());
             
             return new LocalChannelConfiguration(
-                BuildEndpointAddress(string.Empty, this.messageServer.Name), 
+                this.serverPath, 
                 new List<Action>());
         }
 
