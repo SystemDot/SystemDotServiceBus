@@ -10,15 +10,33 @@ namespace SystemDot.Messaging.Addressing
             Contract.Requires(!string.IsNullOrEmpty(address));
             Contract.Requires(defaultServerPath != null);
 
-            string[] channelParts = address.Split('@');
-            if (channelParts.Length == 1)
-                return new EndpointAddress(address, defaultServerPath);
+            string channel = GetChannelName(address);
+            ServerPath path = GetServerPath(address, defaultServerPath);
 
-            string[] serverPathParts = channelParts[1].Split('.');
-            if (serverPathParts.Length == 1)
-                return new EndpointAddress(channelParts[0], new ServerPath(MessageServer.Named(serverPathParts[0]), defaultServerPath.RoutedVia));
-
-            return new EndpointAddress(channelParts[0], new ServerPath(MessageServer.Named(serverPathParts[0]), MessageServer.Named(serverPathParts[1])));
+            return new EndpointAddress(channel, path);
         }
-    }
+
+        string GetChannelName(string address)
+        {
+            return address.Split('@')[0];
+        }
+
+        ServerPath GetServerPath(string address, ServerPath defaultServerPath)
+        {
+            if (address.Split('@').Length == 1)
+                return defaultServerPath;
+
+            string serverPath = address.Split('@')[1];
+
+            if(serverPath.Split('.').Length == 1)
+                return new ServerPath(GetMessageServer(serverPath), defaultServerPath.Proxy);
+
+            return new ServerPath(GetMessageServer(serverPath.Split('.')[0]), GetMessageServer(serverPath.Split('.')[1]));
+        }
+
+        MessageServer GetMessageServer(string server)
+        {
+            return MessageServer.Named(server.Split('/')[0], server.Split('/')[1]);
+        }
+    }   
 }

@@ -1,9 +1,7 @@
 using SystemDot.Http;
 using SystemDot.Messaging.Addressing;
-using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.Specifications.configuration;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.Http.Configuration;
 using SystemDot.Parallelism;
@@ -17,6 +15,8 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
     {
         const string ReceiverName = "ReceiverName";
         const string SenderName = "SenderName";
+        const string RemoteClientInstance = "RemoteClientInstance";
+        const string RemoteProxyInstance = "RemoteProxyInstance";
 
         static TestTaskStarter taskStarter; 
         static MessagePayload messagePayload;
@@ -25,7 +25,10 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
         Establish context = () =>
         {
-            requestor = new TestWebRequestor(new PlatformAgnosticSerialiser(), new FixedPortAddress("DifferentServer"));
+            requestor = new TestWebRequestor(
+                new PlatformAgnosticSerialiser(), 
+                new FixedPortAddress(null, "DifferentServer"));
+
             ConfigureAndRegister<IWebRequestor>(requestor);
 
             taskStarter = new TestTaskStarter(1);
@@ -34,14 +37,20 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsARemoteClientOf(MessageServer.Local())
+                .AsARemoteClient(RemoteClientInstance)
+                .UsingProxy(MessageServer.Local(RemoteProxyInstance))
                 .OpenChannel(ReceiverName)
                 .ForPointToPointReceiving()
                 .Initialise();
 
             messagePayload =
-                 new MessagePayload()
-                    .MakeReceiveable(1, SenderName, "DifferentReceiver", PersistenceUseType.PointToPointSend);
+                 new MessagePayload().MakeReceiveable(
+                 1, 
+                 SenderName, 
+                 "DifferentReceiver", 
+                 RemoteClientInstance,
+                 RemoteProxyInstance,
+                 PersistenceUseType.PointToPointSend);
 
             handler = new TestMessageHandler<int>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);

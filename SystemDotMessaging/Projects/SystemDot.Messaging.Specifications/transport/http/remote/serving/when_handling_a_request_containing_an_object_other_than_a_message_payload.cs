@@ -7,7 +7,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
 {
     [Subject(SpecificationGroup.Description)]
     public class when_handling_a_request_containing_an_object_other_than_a_message_payload
-        : WithRemoteServerConfigurationSubject
+        : WithServerConfigurationSubject
     {
         static Exception exception;
 
@@ -17,11 +17,10 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
             
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsARemoteServer()
-                .Initialise();
+                .AsARemoteServer("RemoteServerInstance");
         };
 
-        Because of = () => exception = Catch.Exception(() => SendObjectsToRemoteServer(new object()));
+        Because of = () => exception = Catch.Exception(() => SendObjectsToServer(new object()));
 
         It should_not_fail = () => exception.ShouldBeNull();         
     }

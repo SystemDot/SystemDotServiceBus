@@ -17,10 +17,10 @@ namespace SystemDot.Messaging.OtherTestSubscriber
 
             Configure.Messaging()
                 .UsingHttpTransport()
-                .AsARemoteClientOf(MessageServer.Local())
+                .AsAServer("OtherSubscriberServer")
                 .UsingFilePersistence()
                 .OpenChannel("TestOtherSubscriber")
-                    .ForSubscribingTo("TestPublisher")
+                    .ForSubscribingTo("TestPublisher@CHRIS-NEW-PC/PublisherServer.CHRIS-NEW-PC/PublisherServer")
                     .WithDurability()
                 .Initialise();
 

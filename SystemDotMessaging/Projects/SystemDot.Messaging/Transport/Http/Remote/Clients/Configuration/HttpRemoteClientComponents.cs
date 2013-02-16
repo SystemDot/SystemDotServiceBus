@@ -9,7 +9,6 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients.Configuration
         {
             Contract.Requires(container != null); 
 
-            container.RegisterInstance<IMessageReciever, MessageReciever>();
             container.RegisterInstance<LongPoller, LongPoller>();
             container.RegisterInstance<ITransportBuilder, HttpRemoteClientTransportBuilder>();
         }

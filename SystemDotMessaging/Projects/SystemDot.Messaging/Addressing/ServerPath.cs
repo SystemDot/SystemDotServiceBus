@@ -2,17 +2,22 @@ namespace SystemDot.Messaging.Addressing
 {
     public class ServerPath
     {
-        public MessageServer LocatedAt { get; set; }
-        public MessageServer RoutedVia { get; set; }
+        public static ServerPath None
+        {
+            get { return new ServerPath(MessageServer.None, MessageServer.None ); }
+        }
 
+        public MessageServer Server { get; set; }
+        public MessageServer Proxy { get; set; }
+        
         public ServerPath()
         {
         }
 
-        public ServerPath(MessageServer serverName, MessageServer remoteProxy)
+        public ServerPath(MessageServer server, MessageServer proxy)
         {
-            this.LocatedAt = serverName;
-            this.RoutedVia = remoteProxy;
+            Server = server;
+            Proxy = proxy;
         }
 
         public static bool operator ==(ServerPath left, ServerPath right)
@@ -27,7 +32,7 @@ namespace SystemDot.Messaging.Addressing
 
         protected bool Equals(ServerPath other)
         {
-            return string.Equals(this.LocatedAt, other.LocatedAt) && string.Equals(this.RoutedVia, other.RoutedVia);
+            return string.Equals(Server, other.Server) && string.Equals(this.Proxy, other.Proxy);
         }
 
         public override bool Equals(object obj)
@@ -42,13 +47,13 @@ namespace SystemDot.Messaging.Addressing
         {
             unchecked
             {
-                return ((this.LocatedAt != null ? this.LocatedAt.GetHashCode() : 0)*397) ^ (this.RoutedVia != null ? this.RoutedVia.GetHashCode() : 0);
+                return ((Server != null ? Server.GetHashCode() : 0)*397) ^ (Proxy != null ? Proxy.GetHashCode() : 0);
             }
         }
 
         public override string ToString()
         {
-            return string.Concat(LocatedAt, ".", RoutedVia);
+            return string.Concat(Server, ".", Proxy);
         }
     }
 }

@@ -113,9 +113,10 @@
     <Compile Include="Sequencing\StartSequenceApplier.cs" />
     <Compile Include="Transport\Http\Configuration\HttpServerComponents.cs" />
     <Compile Include="Transport\Http\Configuration\HttpServerTransportBuilder.cs" />
+    <Compile Include="Transport\Http\MessageReceiverHandler.cs" />
+    <Compile Include="Transport\Http\Configuration\RemoteClientConfiguration.cs" />
     <Compile Include="Transport\InProcess\IInProcessMessageServer.cs" />
-    <Compile Include="Transport\MessageReciever.cs" />
-    <Compile Include="Transport\Http\Remote\Servers\Configuration\RemoteServerConfiguration.cs" />
+    <Compile Include="Transport\MessageReceiver.cs" />
     <Compile Include="Transport\Http\Remote\Clients\Configuration\HttpRemoteClientComponents.cs" />
     <Compile Include="Transport\Http\Remote\Clients\Configuration\HttpRemoteClientTransportBuilder.cs" />
     <Compile Include="Transport\Http\Remote\Servers\Configuration\HttpRemoteServerComponents.cs" />
@@ -200,9 +201,9 @@
     <Compile Include="Storage\PersistenceHeader.cs" />
     <Compile Include="Storage\PersistenceUseType.cs" />
     <Compile Include="Transport\Http\HttpServerPathExtensions.cs" />
-    <Compile Include="Transport\Http\Remote\Servers\Configuration\HttpRemoteServerTransportBuilder.cs" />
+    <Compile Include="Transport\Http\Remote\Servers\Configuration\HttpRemoteServerBuilder.cs" />
     <Compile Include="Transport\IMessageSender.cs" />
-    <Compile Include="Transport\IMessageReciever.cs" />
+    <Compile Include="Transport\IMessageReceiver.cs" />
     <Compile Include="Transport\Http\Remote\Clients\LongPollRequestHeader.cs" />
     <Compile Include="Transport\Http\Remote\Clients\MessagePayloadLongPollRequestExtensions.cs" />
     <Compile Include="Distribution\Pump.cs" />
@@ -228,7 +229,7 @@
     <Compile Include="Transport\Http\Remote\Servers\MessagePayloadQueue.cs" />
     <Compile Include="Transport\Http\Remote\Servers\SentMessageHandler.cs" />
     <Compile Include="Transport\InProcess\InProcessMessageServer.cs" />
-    <Compile Include="Transport\InProcess\MessageReciever.cs" />
+    <Compile Include="Transport\InProcess\MessageReceiver.cs" />
     <Compile Include="Transport\InProcess\MessageSender.cs" />
   </ItemGroup>
   <ItemGroup>

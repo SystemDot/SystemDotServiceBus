@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
@@ -34,9 +35,12 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
             this.bus = Configure.Messaging()
                .LoggingWith(loggingMechanism)
                .UsingHttpTransport()
-               .AsARemoteClientOf(MessageServer.Local())
-               //.UsingFilePersistence()
-               .OpenChannel("TestMetroSender").ForRequestReplySendingTo("TestReciever").WithDurability()
+               .AsARemoteClient("MetroClient")
+               .UsingProxy(MessageServer.Local("MetroProxy"))
+               .UsingFilePersistence()
+               .OpenChannel("TestMetroRequest")
+                    .ForRequestReplySendingTo("TestReply@CHRIS-NEW-PC/ReceiverServer.CHRIS-NEW-PC/ReceiverServer")
+                    .WithDurability()
                .WithReceiveHook(new MessageMarshallingHook(CoreWindow.GetForCurrentThread().Dispatcher))
                .Initialise();
 

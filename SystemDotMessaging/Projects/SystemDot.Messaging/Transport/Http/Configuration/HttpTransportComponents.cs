@@ -8,6 +8,7 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
     {
         public static void Register(IIocContainer container)
         {
+            container.RegisterInstance<IMessageReceiver, MessageReceiver>();
             container.RegisterInstance<IHttpServerBuilder, HttpServerBuilder>();
             container.RegisterInstance<IMessageSender, MessageSender>();
         }

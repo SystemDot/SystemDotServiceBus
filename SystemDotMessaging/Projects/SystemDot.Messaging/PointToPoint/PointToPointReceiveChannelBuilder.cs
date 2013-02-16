@@ -10,13 +10,13 @@ namespace SystemDot.Messaging.PointToPoint
 {
     public class PointToPointReceiveChannelBuilder
     {
-        readonly IMessageReciever messageReceiver;
+        readonly IMessageReceiver messageReceiver;
         readonly ISerialiser serialiser;
         readonly AcknowledgementSender acknowledgementSender;
         readonly MessageHandlerRouter messageHandlerRouter;
 
         public PointToPointReceiveChannelBuilder(
-            IMessageReciever messageReceiver, 
+            IMessageReceiver messageReceiver, 
             ISerialiser serialiser, 
             AcknowledgementSender acknowledgementSender, 
             MessageHandlerRouter messageHandlerRouter)

@@ -8,26 +8,26 @@ namespace SystemDot.Messaging.RequestReply.Builders
 {
     public class ReplySendDistributionChannelBuilder
     {
-        readonly IMessageReciever messageReciever;
+        readonly IMessageReceiver messageReceiver;
         readonly ReplySendChannelBuilder builder;
         readonly ReplyAddressLookup replyAddressLookup;
         readonly IChangeStore changeStore;
         readonly InMemoryChangeStore inMemoryStore;
 
         public ReplySendDistributionChannelBuilder(
-            IMessageReciever messageReciever,
+            IMessageReceiver messageReceiver,
             ReplySendChannelBuilder builder, 
             ReplyAddressLookup replyAddressLookup, 
             IChangeStore changeStore, 
             InMemoryChangeStore inMemoryStore)
         {
-            Contract.Requires(messageReciever != null);
+            Contract.Requires(messageReceiver != null);
             Contract.Requires(builder != null);
             Contract.Requires(replyAddressLookup != null);
             Contract.Requires(changeStore != null);
             Contract.Requires(inMemoryStore != null);
 
-            this.messageReciever = messageReciever;
+            this.messageReceiver = messageReceiver;
             this.builder = builder;
             this.replyAddressLookup = replyAddressLookup;
             this.changeStore = changeStore;
@@ -45,7 +45,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 schema);
 
             MessagePipelineBuilder.Build()      
-                .With(this.messageReciever)
+                .With(this.messageReceiver)
                 .ToProcessor(new BodyMessageFilter(schema.FromAddress))
                 .ToEndPoint(new ReplySendSubscriptionHandler(distributor));
 

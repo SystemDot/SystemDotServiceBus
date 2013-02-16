@@ -4,7 +4,7 @@ using SystemDot.Http;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.Specifications.configuration;
+using SystemDot.Messaging.Specifications.channels;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.Http.Configuration;
 using SystemDot.Messaging.Transport.Http.Remote.Clients;
@@ -17,6 +17,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
     [Subject(SpecificationGroup.Description)]
     public class when_a_message_recieved_has_been_processed : WithConfigurationSubject
     {
+        const string ProxyInstance = "ProxyInstance";
         const string ReceiverName = "ReceiverName";
         const string SenderName = "SenderName";
 
@@ -26,7 +27,10 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
         Establish context = () =>
         {
-            requestor = new TestWebRequestor(new PlatformAgnosticSerialiser(), new FixedPortAddress(Environment.MachineName));
+            requestor = new TestWebRequestor(
+                new PlatformAgnosticSerialiser(),
+                new FixedPortAddress(Environment.MachineName, ProxyInstance));
+
             ConfigureAndRegister<IWebRequestor>(requestor);
 
             taskStarter = new TestTaskStarter(2);
@@ -36,7 +40,8 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsARemoteClientOf(MessageServer.Local())
+                .AsARemoteClient("RemoteClientInstance")
+                .UsingProxy(MessageServer.Local(ProxyInstance))
                 .OpenChannel(ReceiverName)
                 .ForPointToPointReceiving()
                 .Initialise();

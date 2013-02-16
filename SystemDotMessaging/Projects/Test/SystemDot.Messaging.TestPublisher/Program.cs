@@ -1,7 +1,6 @@
 ﻿using System;
 using SystemDot.Esent;
 using SystemDot.Logging;
-using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Test.Messages;
 using SystemDot.Messaging.Transport.Http.Configuration;
@@ -15,7 +14,7 @@ namespace SystemDot.Messaging.TestPublisher
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingHttpTransport()
-                .AsARemoteClientOf(MessageServer.Local())
+                .AsAServer("PublisherServer")
                 .UsingFilePersistence()
                 .OpenChannel("TestPublisher")
                     .ForPublishing()

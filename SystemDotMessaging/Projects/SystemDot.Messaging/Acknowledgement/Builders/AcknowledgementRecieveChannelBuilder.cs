@@ -8,20 +8,20 @@ namespace SystemDot.Messaging.Acknowledgement.Builders
 {
     public class AcknowledgementRecieveChannelBuilder
     {
-        readonly IMessageReciever messageReciever;
+        readonly IMessageReceiver messageReceiver;
         readonly MessageAcknowledgementHandler handler;
         readonly ISerialiser serialiser;
 
         public AcknowledgementRecieveChannelBuilder(
-            IMessageReciever messageReciever, 
+            IMessageReceiver messageReceiver, 
             MessageAcknowledgementHandler handler, 
             ISerialiser serialiser)
         {
-            Contract.Requires(messageReciever != null);
+            Contract.Requires(messageReceiver != null);
             Contract.Requires(handler != null);
             Contract.Requires(serialiser != null);
 
-            this.messageReciever = messageReciever;
+            this.messageReceiver = messageReceiver;
             this.handler = handler;
             this.serialiser = serialiser;
         }
@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Acknowledgement.Builders
         public void Build()
         {
             MessagePipelineBuilder.Build()
-                .With(this.messageReciever)
+                .With(this.messageReceiver)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .Pump()
                 .ToEndPoint(this.handler);

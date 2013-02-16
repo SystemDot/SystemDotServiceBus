@@ -27,6 +27,11 @@ namespace SystemDot.Messaging.Specifications
             RequestsMade = new List<Stream>();
         }
 
+        public T DeserialiseSingleRequest<T>()
+        {
+            return RequestsMade.Single().Deserialise<T>(this.formatter);
+        }
+
         public void SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest)
         {
             if (this.toCheck.Url != address.Url)

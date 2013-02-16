@@ -8,23 +8,23 @@ namespace SystemDot.Messaging.RequestReply.Builders
 {
     public class RequestReceiveDistributionChannelBuilder 
     {
-        readonly IMessageReciever messageReciever;
+        readonly IMessageReceiver messageReceiver;
         readonly RequestRecieveChannelBuilder builder;
         readonly IChangeStore changeStore;
         readonly InMemoryChangeStore inMemoryStore;
 
         public RequestReceiveDistributionChannelBuilder(
-            IMessageReciever messageReciever, 
+            IMessageReceiver messageReceiver, 
             RequestRecieveChannelBuilder builder, 
             IChangeStore changeStore, 
             InMemoryChangeStore inMemoryStore)
         {
-            Contract.Requires(messageReciever != null);
+            Contract.Requires(messageReceiver != null);
             Contract.Requires(builder != null);
             Contract.Requires(changeStore != null);
             Contract.Requires(inMemoryStore != null);
             
-            this.messageReciever = messageReciever;
+            this.messageReceiver = messageReceiver;
             this.builder = builder;
             this.changeStore = changeStore;
             this.inMemoryStore = inMemoryStore;
@@ -37,12 +37,12 @@ namespace SystemDot.Messaging.RequestReply.Builders
             var distributor = new RequestRecieveChannelDistributor(GetChangeStore(schema), this.builder, schema);
             
             MessagePipelineBuilder.Build()  
-                .With(this.messageReciever)
+                .With(this.messageReceiver)
                 .ToProcessor(new BodyMessageFilter(schema.Address))
                 .ToEndPoint(new RequestRecieveSubscriptionHandler(distributor));
 
             MessagePipelineBuilder.Build()
-                .With(this.messageReciever)
+                .With(this.messageReceiver)
                 .ToProcessor(new BodyMessageFilter(schema.Address))
                 .ToEndPoint(distributor);
 

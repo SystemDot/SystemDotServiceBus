@@ -1,7 +1,7 @@
 ﻿using System;
+using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Logging;
-using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Test.Messages;
@@ -16,9 +16,10 @@ namespace SystemDot.Messaging.Combined.Client
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingHttpTransport()
-                .AsARemoteClientOf(MessageServer.Local())
-                //.UsingEsentPersistence("Esent\\Client")
-                .OpenChannel("TestSender").ForRequestReplySendingTo("TestReciever")
+                .AsAServer("SenderServer")
+                .UsingFilePersistence()
+                .OpenChannel("TestSender")
+                    .ForRequestReplySendingTo("TestReceiver@CHRIS-NEW-PC/ReceiverPublisherServer.CHRIS-NEW-PC/ReceiverPublisherServer")
                 .Initialise();
 
             IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());

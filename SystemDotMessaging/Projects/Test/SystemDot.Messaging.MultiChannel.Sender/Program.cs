@@ -17,11 +17,15 @@ namespace SystemDot.Messaging.MultiChannel.Sender
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingHttpTransport()
-                .AsARemoteClientOf(MessageServer.Local())
+                .AsAServer("Server")
                 .UsingFilePersistence()
-                .OpenChannel("TestSenderA").ForRequestReplySendingTo("TestRecieverA").OnlyForMessages(FilteredBy.NamePattern("Channel1"))
+                .OpenChannel("TestSenderA")
+                    .ForRequestReplySendingTo("TestRecieverA@CHRIS-NEW-PC/ServerA.CHRIS-NEW-PC/ServerA")
+                    .OnlyForMessages(FilteredBy.NamePattern("Channel1"))
                     .WithDurability()
-                .OpenChannel("TestSenderB").ForRequestReplySendingTo("TestRecieverB").OnlyForMessages(FilteredBy.NamePattern("Channel2"))
+                .OpenChannel("TestSenderB")
+                    .ForRequestReplySendingTo("TestRecieverB@CHRIS-NEW-PC/ServerB.CHRIS-NEW-PC/ServerB")
+                    .OnlyForMessages(FilteredBy.NamePattern("Channel2"))
                     .WithDurability()
                 .Initialise();
 

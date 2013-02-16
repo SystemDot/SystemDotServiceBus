@@ -16,10 +16,10 @@ namespace SystemDot.Messaging.TestSubscriber
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = true })
                 .UsingHttpTransport()
-                .AsARemoteClientOf(MessageServer.Local())
+                .AsAServer("SubscriberServer")
                 .UsingFilePersistence()
                 .OpenChannel("TestSubscriber")
-                    .ForSubscribingTo("TestPublisher")
+                    .ForSubscribingTo("TestPublisher@CHRIS-NEW-PC/PublisherServer.CHRIS-NEW-PC/PublisherServer")
                     .WithDurability()
                 .Initialise();
 

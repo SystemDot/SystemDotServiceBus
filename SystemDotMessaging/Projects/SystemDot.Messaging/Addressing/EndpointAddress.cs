@@ -30,8 +30,8 @@ namespace SystemDot.Messaging.Addressing
 
         protected bool Equals(EndpointAddress other)
         {
-            return string.Equals(this.Channel, other.Channel) 
-                && string.Equals(this.ServerPath, other.ServerPath);
+            return string.Equals(Channel, other.Channel) 
+                && string.Equals(ServerPath, other.ServerPath);
         }
 
         public override bool Equals(object obj)
@@ -46,7 +46,7 @@ namespace SystemDot.Messaging.Addressing
         {
             unchecked
             {
-                return (this.Channel.GetHashCode()*397) ^ this.ServerPath.GetHashCode();
+                return (Channel.GetHashCode()*397) ^ ServerPath.GetHashCode();
             }
         }
 
@@ -62,7 +62,7 @@ namespace SystemDot.Messaging.Addressing
 
         public override string ToString()
         {
-            return String.Concat(this.Channel, ".", this.ServerPath);
+            return String.Concat(Channel, "@", ServerPath);
         }
     }
 }

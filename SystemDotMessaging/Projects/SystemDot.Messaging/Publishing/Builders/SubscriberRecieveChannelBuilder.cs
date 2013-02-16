@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Publishing.Builders
     {
         readonly ISerialiser serialiser;
         readonly MessageHandlerRouter messageHandlerRouter;
-        readonly IMessageReciever messageReciever;
+        readonly IMessageReceiver messageReceiver;
         readonly AcknowledgementSender acknowledgementSender;
         readonly PersistenceFactorySelector persistenceFactory;
         readonly ISystemTime systemTime;
@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Publishing.Builders
         public SubscriberRecieveChannelBuilder(
             ISerialiser serialiser, 
             MessageHandlerRouter messageHandlerRouter, 
-            IMessageReciever messageReciever,
+            IMessageReceiver messageReceiver,
             AcknowledgementSender acknowledgementSender,
             PersistenceFactorySelector persistenceFactory, 
             ISystemTime systemTime, 
@@ -40,7 +40,7 @@ namespace SystemDot.Messaging.Publishing.Builders
         {
             Contract.Requires(serialiser != null);
             Contract.Requires(messageHandlerRouter != null);
-            Contract.Requires(messageReciever != null);
+            Contract.Requires(messageReceiver != null);
             Contract.Requires(acknowledgementSender != null);
             Contract.Requires(persistenceFactory != null);
             Contract.Requires(systemTime != null);
@@ -49,7 +49,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             
             this.serialiser = serialiser;
             this.messageHandlerRouter = messageHandlerRouter;
-            this.messageReciever = messageReciever;
+            this.messageReceiver = messageReceiver;
             this.acknowledgementSender = acknowledgementSender;
             this.persistenceFactory = persistenceFactory;
             this.systemTime = systemTime;
@@ -64,7 +64,7 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .CreateCache(PersistenceUseType.SubscriberReceive, schema.Address);
 
             MessagePipelineBuilder.Build()
-                .With(this.messageReciever)
+                .With(this.messageReceiver)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new BodyMessageFilter(schema.Address))
                 .ToProcessor(new MessageSendTimeRemover())

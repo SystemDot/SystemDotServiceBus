@@ -9,7 +9,6 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
         {
             Contract.Requires(container != null); 
 
-            container.RegisterInstance<IMessageReciever, MessageReciever>();
             container.RegisterInstance<ITransportBuilder, HttpServerTransportBuilder>();
         }
     }

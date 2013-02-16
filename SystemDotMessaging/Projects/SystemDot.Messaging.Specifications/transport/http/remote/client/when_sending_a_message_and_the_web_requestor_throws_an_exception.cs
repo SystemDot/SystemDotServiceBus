@@ -2,7 +2,7 @@
 using SystemDot.Http;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Specifications.configuration;
+using SystemDot.Messaging.Specifications.channels;
 using SystemDot.Messaging.Transport.Http.Configuration;
 using Machine.Specifications;
 
@@ -19,7 +19,8 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
             ConfigureAndRegister<IWebRequestor>(new FailingWebRequestor());
             bus = Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsARemoteClientOf(MessageServer.Local())
+                .AsARemoteClient("RemoteClientInstance")
+                .UsingProxy(MessageServer.Local("RemoteProxyInstance"))
                 .OpenChannel("TestSender")
                 .ForPointToPointSendingTo("TestReceiver")
                 .Initialise();

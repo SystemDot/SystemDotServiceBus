@@ -4,30 +4,34 @@ namespace SystemDot.Messaging.Addressing
 {
     public class MessageServer
     {
-        public static MessageServer Local()
+        public static MessageServer None { get { return new MessageServer(); } }
+
+        public static MessageServer Local(string instance)
         {
-            return new MessageServer(Environment.MachineName); 
+            return Named(Environment.MachineName, instance); 
         }
 
-        public static MessageServer Named(string name)
+        public static MessageServer Named(string name, string instance)
         {
-            return new MessageServer(name);
+            return new MessageServer(name, instance);
         }
 
         public string Name { get; set; }
-
+        public string Instance { get; set; }
+        
         public MessageServer()
         {
         }
 
-        private MessageServer(string name)
+        private MessageServer(string name, string instance)
         {
             Name = name;
+            Instance = instance;
         }
 
         protected bool Equals(MessageServer other)
         {
-            return string.Equals(this.Name, other.Name);
+            return string.Equals(Instance, other.Instance) && string.Equals(Name, other.Name);
         }
 
         public override bool Equals(object obj)
@@ -38,9 +42,19 @@ namespace SystemDot.Messaging.Addressing
             return Equals((MessageServer) obj);
         }
 
+        public override string ToString()
+        {
+            if (Name == null) return "{NoServer}";
+            return String.Concat(Name, "/", Instance);
+        }
+
         public override int GetHashCode()
         {
-            return (this.Name != null ? this.Name.GetHashCode() : 0);
+            unchecked
+            {
+                return ((this.Instance != null ? Instance.GetHashCode() : 0)*397) 
+                    ^ (this.Name != null ? Name.GetHashCode() : 0);
+            }
         }
 
         public static bool operator ==(MessageServer left, MessageServer right)

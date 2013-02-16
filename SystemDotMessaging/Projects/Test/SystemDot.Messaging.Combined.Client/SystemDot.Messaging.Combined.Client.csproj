@@ -46,6 +46,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\SystemDot.Esent\SystemDot.Esent.csproj">
+      <Project>{C7DBF177-FCDB-4530-A6CA-3B1EFBAD63EB}</Project>
+      <Name>SystemDot.Esent %28Windows\SystemDot.Esent%29</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SystemDot.Messaging\SystemDot.Messaging.csproj">
       <Project>{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}</Project>
       <Name>SystemDot.Messaging %28Windows\SystemDot.Messaging%29</Name>

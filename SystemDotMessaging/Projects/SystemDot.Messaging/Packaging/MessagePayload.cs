@@ -70,5 +70,7 @@ namespace SystemDot.Messaging.Packaging
         {
             return String.Concat("Message payload ", this.Id);
         }
+
+        
     }
 }

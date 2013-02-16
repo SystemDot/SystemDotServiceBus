@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Publishing.Builders;
-using SystemDot.Messaging.Transport;
 using SystemDot.Messaging.UnitOfWork;
 
 namespace SystemDot.Messaging.Configuration.Publishers
@@ -45,7 +43,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
 
         protected override ServerPath GetServerPath()
         {
-            return this.requestSchema.PublisherAddress.ServerPath;
+            return this.requestSchema.SubscriberAddress.ServerPath;
         }
 
         public SubscribeToConfiguration WithDurability()

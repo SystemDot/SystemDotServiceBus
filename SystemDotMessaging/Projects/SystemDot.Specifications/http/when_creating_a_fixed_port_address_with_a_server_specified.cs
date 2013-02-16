@@ -5,16 +5,14 @@ namespace SystemDot.Specifications.http
 {
     public class when_creating_a_fixed_port_address_with_a_server_specified
     {
-        static FixedPortAddress address;
-        static string server;
+        const string Server = "test";
+        const string Instance = "Instance";
         
-        Establish context = () =>
-        {
-            server = "test";
-        };
+        static FixedPortAddress address;
+         
+        Because of = () => address = new FixedPortAddress(Server, Instance);
 
-        Because of = () => address = new FixedPortAddress(server);
-
-        It should_provide_a_url_with_the_correct_address = () => address.Url.ShouldEqual("http://" + server + ":8090/");
+        It should_provide_a_url_with_the_correct_address = () => 
+            address.Url.ShouldEqual("http://" + Server + "/" + Instance + ":8090/");
     }
 }
