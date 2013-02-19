@@ -11,7 +11,7 @@ using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport;
 using SystemDot.Serialisation;
 
-namespace SystemDot.Messaging.PointToPoint
+namespace SystemDot.Messaging.PointToPoint.Builders
 {
     public class PointToPointReceiveChannelBuilder
     {

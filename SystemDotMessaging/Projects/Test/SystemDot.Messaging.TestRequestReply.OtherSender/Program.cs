@@ -3,6 +3,7 @@ using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Handling;
+using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Test.Messages;
 using SystemDot.Messaging.Transport.Http.Configuration;
 
@@ -12,12 +13,14 @@ namespace SystemDot.Messaging.TestRequestReply.OtherSender
     {
         static void Main(string[] args)
         {
+            MessagePipelineBuilder.BuildSynchronousPipelines = true;
+
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false, ShowDebug = false })
                 .UsingHttpTransport()
                 .AsAServer("OtherSenderServer")
                 .OpenChannel("OtherTestRequest")
-                    .ForRequestReplySendingTo("TestReply@CHRIS-NEW-PC/ReceiverServer.CHRIS-NEW-PC/ReceiverServer")
+                    .ForRequestReplySendingTo("TestReply@CHRIS-NEW-PC/ReceiverServer")
                     .WithDurability()
                 .Initialise();
 
@@ -30,14 +33,17 @@ namespace SystemDot.Messaging.TestRequestReply.OtherSender
 
                 Console.WriteLine("Sending messages");
 
-                bus.Send(new TestMessage("Hello"));
-                bus.Send(new TestMessage("Hello1"));
-                bus.Send(new TestMessage("Hello2"));
-                bus.Send(new TestMessage("Hello3"));
-                bus.Send(new TestMessage("Hello4"));
-                bus.Send(new TestMessage("Hello5"));
-                bus.Send(new TestMessage("Hello6"));
-                bus.Send(new TestMessage("Hello7"));
+                using (bus.Aggregate())
+                {
+                    bus.Send(new TestMessage("Hello"));
+                    bus.Send(new TestMessage("Hello1"));
+                    bus.Send(new TestMessage("Hello2"));
+                    bus.Send(new TestMessage("Hello3"));
+                    bus.Send(new TestMessage("Hello4"));
+                    bus.Send(new TestMessage("Hello5"));
+                    bus.Send(new TestMessage("Hello6"));
+                    bus.Send(new TestMessage("Hello7"));
+                }
             }
             while (true);
         }

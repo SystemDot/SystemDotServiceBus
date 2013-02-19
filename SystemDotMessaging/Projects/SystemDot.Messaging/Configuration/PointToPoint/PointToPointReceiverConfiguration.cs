@@ -4,6 +4,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.PointToPoint;
+using SystemDot.Messaging.PointToPoint.Builders;
 
 namespace SystemDot.Messaging.Configuration.PointToPoint
 {
