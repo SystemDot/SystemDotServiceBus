@@ -5,8 +5,9 @@ using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.channels.sequencing
 {
-    [Subject("Message processing")]
-    public class when_passing_a_message_with_a_lower_sequence_of_that_of_the_resequencer : WithMessageProcessorSubject<Resequencer>
+    [Subject(SpecificationGroup.Description)]
+    public class when_passing_a_message_with_a_lower_sequence_of_that_of_the_resequencer 
+        : WithMessageProcessorSubject<Resequencer>
     {
         static MessagePayload message;
         

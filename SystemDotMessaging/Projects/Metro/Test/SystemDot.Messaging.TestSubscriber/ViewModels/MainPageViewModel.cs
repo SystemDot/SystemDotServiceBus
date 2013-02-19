@@ -39,7 +39,7 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
                .UsingProxy(MessageServer.Local("MetroProxy"))
                .UsingFilePersistence()
                .OpenChannel("TestMetroRequest")
-                    .ForRequestReplySendingTo("TestReply@CHRIS-NEW-PC/ReceiverServer.CHRIS-NEW-PC/ReceiverServer")
+                    .ForRequestReplySendingTo("TestReply@CHRIS-NEW-PC/ReceiverServer")
                     .WithDurability()
                .WithReceiveHook(new MessageMarshallingHook(CoreWindow.GetForCurrentThread().Dispatcher))
                .Initialise();

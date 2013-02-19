@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Combined.Client
                 .AsAServer("SenderServer")
                 .UsingFilePersistence()
                 .OpenChannel("TestSender")
-                    .ForRequestReplySendingTo("TestReceiver@CHRIS-NEW-PC/ReceiverPublisherServer.CHRIS-NEW-PC/ReceiverPublisherServer")
+                    .ForRequestReplySendingTo("TestReceiver@CHRIS-NEW-PC/ReceiverPublisherServer")
                 .Initialise();
 
             IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());

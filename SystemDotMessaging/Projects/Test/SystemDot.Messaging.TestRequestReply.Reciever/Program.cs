@@ -12,7 +12,7 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
         static void Main(string[] args)
         {
             IBus bus = Configure.Messaging()
-                .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = true })
+                .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false })
                 .UsingHttpTransport()
                 .AsARemoteServer("MetroProxy")
                 .AsAServer("ReceiverServer")
