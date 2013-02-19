@@ -34,8 +34,8 @@ namespace SystemDot.Messaging.Configuration.RequestReply
 
         protected override void Build()
         {
-            Resolve<RequestReceiveDistributionChannelBuilder>().Build(this.requestSchema);
             Resolve<ReplySendDistributionChannelBuilder>().Build(this.replySchema);
+            Resolve<RequestReceiveDistributionChannelBuilder>().Build(this.requestSchema);
         }
 
         protected override ServerPath GetServerPath()

@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
             {
                 Console.WriteLine("I am the sender. Press enter to send messages..");
                 Console.ReadLine();
-                
+
                 Console.WriteLine("Sending messages");
 
                 bus.Send(new TestMessage("Hello"));
@@ -39,9 +39,9 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
                 bus.Send(new TestMessage("Hello4"));
                 bus.Send(new TestMessage("Hello5"));
                 bus.Send(new TestMessage("Hello6"));
-                bus.Send(new TestMessage("Hello7"));        
-            }
-            while (true);
+                bus.Send(new TestMessage("Hello7"));
+
+            } while (true);
         }
     }
 }

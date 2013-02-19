@@ -1,5 +1,7 @@
 using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Aggregation;
+using SystemDot.Messaging.PointToPoint.Builders;
 
 namespace SystemDot.Messaging
 {
@@ -40,6 +42,11 @@ namespace SystemDot.Messaging
 
             if (MessagePublished == null) return;
             MessagePublished(message);
+        }
+
+        public Aggregate Aggregate()
+        {
+            return new Aggregate();
         }
     }
 }

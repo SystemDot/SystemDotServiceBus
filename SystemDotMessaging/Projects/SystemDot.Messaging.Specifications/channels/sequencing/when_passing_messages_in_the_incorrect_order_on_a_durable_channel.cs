@@ -44,7 +44,6 @@ namespace SystemDot.Messaging.Specifications.channels.sequencing
             Server.ReceiveMessage(messagePayload2);
         };
 
-
         It should_not_pass_the_messages_through = () => handler.HandledMessages.ShouldNotContain(Message1, Message2);
     }
 }

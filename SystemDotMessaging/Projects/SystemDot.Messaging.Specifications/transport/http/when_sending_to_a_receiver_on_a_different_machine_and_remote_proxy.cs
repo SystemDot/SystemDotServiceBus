@@ -1,5 +1,5 @@
 using SystemDot.Http;
-using SystemDot.Messaging.Addressing;
+using SystemDot.Http.Builders;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Transport.Http.Configuration;
@@ -29,6 +29,8 @@ namespace SystemDot.Messaging.Specifications.transport.http
             receiverName = ReceiverChannelName + "@"
                 + ReceiverServerName + '/' + ReceiverServerInstance + "." 
                 + RemoteProxyName + '/' + RemoteProxyInstance;
+
+            ConfigureAndRegister<IHttpServerBuilder>(new TestHttpServerBuilder());
 
             ConfigureAndRegister<ITaskStarter>();
 

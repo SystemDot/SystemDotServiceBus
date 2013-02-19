@@ -1,15 +1,12 @@
 ﻿using System;
 using SystemDot.Ioc;
 using SystemDot.Logging;
-using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Handling;
-using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Test.Messages;
-using SystemDot.Messaging.TestRequestReply.OtherSender;
 using SystemDot.Messaging.Transport.Http.Configuration;
 
-namespace SystemDot.Messaging.TestRequestReply.Sender
+namespace SystemDot.Messaging.TestRequestReply.OtherSender
 {
     class Program
     {

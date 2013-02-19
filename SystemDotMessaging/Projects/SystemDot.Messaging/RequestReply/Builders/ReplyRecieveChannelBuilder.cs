@@ -1,5 +1,6 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
+using SystemDot.Messaging.Aggregation;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Expiry;
@@ -71,6 +72,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToResequencerIfSequenced(messageCache, schema)
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
                 .ToProcessor(schema.UnitOfWorkRunner)
+                .ToProcessor(new AggregateUnpackager())
                 .ToProcessors(schema.Hooks.ToArray())
                 .ToEndPoint(this.messageHandlerRouter);
         }

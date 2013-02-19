@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.Contracts;
 
 namespace SystemDot.Messaging.Addressing
@@ -48,6 +49,10 @@ namespace SystemDot.Messaging.Addressing
         MessageServer GetMessageServer(string server)
         {
             string[] messageServerParts = ParseMessageServer(server);
+
+            if(messageServerParts[0].Length == 0)
+                return MessageServer.Named(Environment.MachineName, (messageServerParts[1]));
+
             return MessageServer.Named(messageServerParts[0], (messageServerParts[1]));
         }
 

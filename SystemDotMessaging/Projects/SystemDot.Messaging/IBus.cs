@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using SystemDot.Messaging.Aggregation;
+using SystemDot.Messaging.PointToPoint.Builders;
 
 namespace SystemDot.Messaging
 {
@@ -13,5 +16,8 @@ namespace SystemDot.Messaging
         void SendLocal(object message);
         void Reply(object message);
         void Publish(object message);
+        Aggregate Aggregate();
     }
+
+    
 }

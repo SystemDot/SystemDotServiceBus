@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using SystemDot.Http;
+using SystemDot.Http.Builders;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Specifications.channels;
@@ -21,6 +22,8 @@ namespace SystemDot.Messaging.Specifications.transport.http
        
         Establish context = () =>
         {
+            ConfigureAndRegister<IHttpServerBuilder>(new TestHttpServerBuilder());
+
             webRequestor = new TestWebRequestor(
                 new PlatformAgnosticSerialiser(), 
                 new FixedPortAddress(Environment.MachineName, ServerInstance));

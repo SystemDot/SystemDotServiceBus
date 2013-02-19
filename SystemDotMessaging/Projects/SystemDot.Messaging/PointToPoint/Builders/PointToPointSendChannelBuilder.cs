@@ -1,5 +1,6 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Aggregation;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Packaging;
@@ -18,9 +19,9 @@ namespace SystemDot.Messaging.PointToPoint.Builders
     {
         readonly IMessageSender messageSender;
         readonly ISerialiser serialiser;
-        InMemoryChangeStore inMemoryChangeStore;
-        ISystemTime systemTime;
-        ITaskRepeater taskRepeater;
+        readonly InMemoryChangeStore inMemoryChangeStore;
+        readonly ISystemTime systemTime;
+        readonly ITaskRepeater taskRepeater;
 
         public PointToPointSendChannelBuilder(
             IMessageSender messageSender, 
@@ -46,6 +47,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
 
             MessagePipelineBuilder.Build()
                 .WithBusSendTo(new MessageFilter(new PassThroughMessageFilterStategy()))
+                .ToProcessor(new AggregatePackager())
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
                 .ToProcessor(new Sequencer(messageCache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.RecieverAddress))
