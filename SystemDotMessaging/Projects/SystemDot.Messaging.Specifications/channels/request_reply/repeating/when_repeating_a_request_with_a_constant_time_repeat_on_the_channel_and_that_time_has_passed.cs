@@ -5,10 +5,10 @@ using SystemDot.Parallelism;
 using SystemDot.Specifications;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.channels.request_reply.requests.repeating
+namespace SystemDot.Messaging.Specifications.channels.request_reply.repeating      
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_repeating_a_request_with_a_constant_time_repeat_on_the_channel_and_that_time_has_not_passed
+    public class when_repeating_a_request_with_a_constant_time_repeat_on_the_channel_and_that_time_has_passed 
         : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
@@ -26,19 +26,19 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests.rep
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                .ForRequestReplySendingTo(SenderChannelName)
-                .WithMessageRepeating(RepeatMessages.Every(TimeSpan.FromSeconds(10)))
+                    .ForPointToPointSendingTo(SenderChannelName)
+                    .WithMessageRepeating(RepeatMessages.Every(TimeSpan.FromSeconds(10)))
                 .Initialise();
 
             message = 1;
 
             bus.Send(message);
 
-            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(10).Subtract(TimeSpan.FromTicks(1)));
+            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(10));
         };
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_not_repeat_the_message = () => Server.SentMessages.Count.ShouldEqual(1);
+        It should_repeat_the_message = () => Server.SentMessages.Count.ShouldEqual(2);
     }
 }

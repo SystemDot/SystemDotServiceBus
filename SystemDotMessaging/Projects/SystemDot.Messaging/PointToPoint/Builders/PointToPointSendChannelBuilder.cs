@@ -1,6 +1,6 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
-using SystemDot.Messaging.Aggregation;
+using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Packaging;
@@ -47,7 +47,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
 
             MessagePipelineBuilder.Build()
                 .WithBusSendTo(new MessageFilter(new PassThroughMessageFilterStategy()))
-                .ToProcessor(new AggregatePackager())
+                .ToProcessor(new BatchPackager())
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
                 .ToProcessor(new Sequencer(messageCache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.RecieverAddress))

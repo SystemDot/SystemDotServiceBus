@@ -4,7 +4,7 @@ using SystemDot.Parallelism;
 using SystemDot.Specifications;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.channels.request_reply.requests.repeating
+namespace SystemDot.Messaging.Specifications.channels.request_reply.repeating
 {
     [Subject(SpecificationGroup.Description)]
     public class when_repeating_a_request_for_the_third_time_and_sixteen_seconds_have_not_passed

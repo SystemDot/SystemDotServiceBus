@@ -2,7 +2,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
-using SystemDot.Messaging.Aggregation;
+using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Expiry;
@@ -72,8 +72,8 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToResequencerIfSequenced(messageCache, schema)
                 .ToProcessor(new ReplyChannelSelector(this.replyAddressLookup))
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
-                .ToProcessor(new AggregateUnpackager())
                 .ToProcessor(schema.UnitOfWorkRunner)
+                .ToProcessor(new BatchUnpackager())
                 .ToProcessors(schema.Hooks.ToArray())
                 .ToEndPoint(this.messageHandlerRouter);
 

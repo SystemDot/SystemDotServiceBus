@@ -1,4 +1,5 @@
 ﻿using System;
+using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
@@ -12,13 +13,12 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
     {
         static void Main(string[] args)
         {
-            MessagePipelineBuilder.BuildSynchronousPipelines = true;
-
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false })
                 .UsingHttpTransport()
                 .AsARemoteServer("MetroProxy")
                 .AsAServer("ReceiverServer")
+                .UsingFilePersistence()
                 .OpenChannel("TestReply")
                     .ForRequestReplyRecieving()
                     .WithDurability()

@@ -1,5 +1,5 @@
 using System.Linq;
-using SystemDot.Messaging.Aggregation;
+using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
@@ -7,10 +7,10 @@ using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 using SystemDot.Messaging.Specifications.channels.publishing;
 
-namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
+namespace SystemDot.Messaging.Specifications.channels.request_reply.batching
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_requests_inside_an_aggregation_and_replying_to_each : WithMessageConfigurationSubject
+    public class when_receiving_requests_inside_a_batch_and_replying_to_each : WithMessageConfigurationSubject
     {
         const int Message1 = 1;
         const int Message2 = 2;
@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
                 .OpenChannel(ReceiverAddress).ForRequestReplyRecieving()
                 .Initialise();
 
-            var aggregateMessage = new AggregateMessage();
+            var aggregateMessage = new BatchMessage();
             aggregateMessage.Messages.Add(Message1);
             aggregateMessage.Messages.Add(Message2);
 
@@ -40,8 +40,8 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
 
         Because of = () => Server.ReceiveMessage(messagePayload);
 
-        It should_send_an_aggregated_package_containing_both_replied_messages = () =>
+        It should_send_a_batch_containing_both_replied_messages = () =>
             Server.SentMessages.ExcludeAcknowledgements().Single()
-                .DeserialiseTo<AggregateMessage>().Messages.ShouldContain(Message1, Message2);
+                .DeserialiseTo<BatchMessage>().Messages.ShouldContain(Message1, Message2);
     }
 }

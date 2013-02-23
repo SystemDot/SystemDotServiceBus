@@ -1,18 +1,19 @@
 using System;
 using System.Threading;
 
-namespace SystemDot.Messaging.Aggregation
+namespace SystemDot.Messaging.Batching
 {
-    public class Aggregate : Disposable
+    public class Batch : Disposable
     {
-        static readonly ThreadLocal<Aggregate> current = new ThreadLocal<Aggregate>();
+        static readonly ThreadLocal<Batch> current = new ThreadLocal<Batch>();
+        bool completed;
 
-        public static Aggregate GetCurrent()
+        public static Batch GetCurrent()
         {
             return current.Value;
         }
 
-        static void SetCurrent(Aggregate toSet)
+        static void SetCurrent(Batch toSet)
         {
             current.Value = toSet;
         }
@@ -22,9 +23,9 @@ namespace SystemDot.Messaging.Aggregation
             return GetCurrent() != null;
         }
 
-        public event Action Finished;
+        public event Action<bool> Finished;
 
-        public Aggregate()
+        public Batch()
         {
             SetCurrent(this);
         }
@@ -39,7 +40,12 @@ namespace SystemDot.Messaging.Aggregation
 
         void OnFinished()
         {
-            if (this.Finished != null) this.Finished();
+            if (this.Finished != null) this.Finished(this.completed);
+        }
+
+        public void Complete()
+        {
+            this.completed = true;
         }
     }
 }

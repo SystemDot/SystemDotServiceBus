@@ -1,7 +1,7 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
-using SystemDot.Messaging.Aggregation;
+using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Expiry;
@@ -60,7 +60,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             MessagePipelineBuilder.Build()
                 .WithBusSendTo(new MessageFilter(schema.FilteringStrategy))
                 .ToProcessors(schema.Hooks.ToArray())
-                .ToProcessor(new AggregatePackager())
+                .ToProcessor(new BatchPackager())
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
                 .ToProcessor(new Sequencer(messageCache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.RecieverAddress))

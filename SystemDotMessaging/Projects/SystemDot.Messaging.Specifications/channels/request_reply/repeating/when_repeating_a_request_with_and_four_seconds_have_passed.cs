@@ -1,14 +1,13 @@
 using System;
-using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using SystemDot.Parallelism;
 using SystemDot.Specifications;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.channels.request_reply.requests.repeating      
+namespace SystemDot.Messaging.Specifications.channels.request_reply.repeating
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_repeating_a_request_with_a_constant_time_repeat_on_the_channel_and_that_time_has_passed 
+    public class when_repeating_a_request_with_and_four_seconds_have_passed
         : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
@@ -26,15 +25,14 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests.rep
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                    .ForPointToPointSendingTo(SenderChannelName)
-                    .WithMessageRepeating(RepeatMessages.Every(TimeSpan.FromSeconds(10)))
+                .ForRequestReplySendingTo(SenderChannelName)
                 .Initialise();
 
             message = 1;
 
             bus.Send(message);
 
-            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(10));
+            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
         };
 
         Because of = () => The<ITaskRepeater>().Start();

@@ -1,6 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Aggregation;
+using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.PointToPoint.Builders;
 
 namespace SystemDot.Messaging
@@ -44,9 +44,9 @@ namespace SystemDot.Messaging
             MessagePublished(message);
         }
 
-        public Aggregate Aggregate()
+        public Batch BatchSend()
         {
-            return new Aggregate();
+            return new Batch();
         }
     }
 }

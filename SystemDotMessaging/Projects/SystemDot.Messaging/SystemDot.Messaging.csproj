@@ -42,10 +42,10 @@
     <Compile Include="Addressing\EndpointAddressBuilder.cs" />
     <Compile Include="Addressing\MessageAddresser.cs" />
     <Compile Include="Addressing\ServerPath.cs" />
-    <Compile Include="Aggregation\Aggregate.cs" />
-    <Compile Include="Aggregation\AggregateMessage.cs" />
-    <Compile Include="Aggregation\AggregatePackager.cs" />
-    <Compile Include="Aggregation\AggregateUnpackager.cs" />
+    <Compile Include="Batching\Batch.cs" />
+    <Compile Include="Batching\BatchMessage.cs" />
+    <Compile Include="Batching\BatchPackager.cs" />
+    <Compile Include="Batching\BatchUnpackager.cs" />
     <Compile Include="Builders\ChannelSchema.cs" />
     <Compile Include="Caching\PersistenceSourceRecorder.cs" />
     <Compile Include="Caching\ReceiveChannelMessageCacher.cs" />

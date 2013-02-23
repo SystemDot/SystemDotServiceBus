@@ -1,14 +1,14 @@
-using SystemDot.Messaging.Aggregation;
+using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
+namespace SystemDot.Messaging.Specifications.channels.request_reply.batching
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_replies_inside_an_aggregation : WithMessageConfigurationSubject
+    public class when_receiving_replies_inside_a_batch : WithMessageConfigurationSubject
     {
         const int Message1 = 1;
         const int Message2 = 2;
@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
                 .OpenChannel(SenderAddress).ForRequestReplySendingTo(ReceiverAddress)
                 .Initialise();
 
-            var aggregateMessage = new AggregateMessage();
+            var aggregateMessage = new BatchMessage();
             aggregateMessage.Messages.Add(Message1);
             aggregateMessage.Messages.Add(Message2);
 

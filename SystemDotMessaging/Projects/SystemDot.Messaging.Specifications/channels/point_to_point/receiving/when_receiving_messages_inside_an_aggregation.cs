@@ -1,4 +1,4 @@
-using SystemDot.Messaging.Aggregation;
+using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.receiving
                 .OpenChannel("ReceiverAddress").ForPointToPointReceiving()
                 .Initialise();
 
-            var aggregateMessage = new AggregateMessage();
+            var aggregateMessage = new BatchMessage();
             aggregateMessage.Messages.Add(Message1);
             aggregateMessage.Messages.Add(Message2);
 

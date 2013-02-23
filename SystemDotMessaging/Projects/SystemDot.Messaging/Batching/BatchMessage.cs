@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 
-namespace SystemDot.Messaging.Aggregation
+namespace SystemDot.Messaging.Batching
 {
-    public class AggregateMessage
+    public class BatchMessage
     {
         public List<object> Messages { get; set; }
 
-        public AggregateMessage()
+        public BatchMessage()
         {
             this.Messages = new List<object>();
         }

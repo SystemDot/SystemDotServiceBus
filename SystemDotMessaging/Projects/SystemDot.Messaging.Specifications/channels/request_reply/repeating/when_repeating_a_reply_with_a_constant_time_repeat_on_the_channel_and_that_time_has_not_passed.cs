@@ -1,4 +1,5 @@
 using System;
+using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.channels.publishing;
 using SystemDot.Messaging.Storage;
@@ -7,17 +8,17 @@ using SystemDot.Parallelism;
 using SystemDot.Specifications;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.channels.request_reply.replies.repeating
+namespace SystemDot.Messaging.Specifications.channels.request_reply.repeating
 {
-    [Subject(requests.SpecificationGroup.Description)]
-    public class when_repeating_a_reply_with_and_four_seconds_have_passed
+    [Subject(SpecificationGroup.Description)]
+    public class when_repeating_a_reply_with_a_constant_time_repeat_on_the_channel_and_that_time_has_not_passed
         : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
         const string SenderAddress = "TestSender";
         const int Request = 1;
         const int Reply = 2;
-
+        
         static IBus bus;
         static TestSystemTime systemTime;
 
@@ -27,10 +28,11 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies.repe
             ConfigureAndRegister<ISystemTime>(systemTime);
 
             bus = Configuration.Configure.Messaging()
-                 .UsingInProcessTransport()
-                 .OpenChannel(ChannelName)
-                 .ForRequestReplyRecieving()
-                 .Initialise();
+                .UsingInProcessTransport()
+                .OpenChannel(ChannelName)
+                .ForRequestReplyRecieving()
+                .WithMessageRepeating(RepeatMessages.Every(TimeSpan.FromSeconds(10)))
+                .Initialise();
 
             Server.ReceiveMessage(
                 new MessagePayload().MakeReceiveable(
@@ -41,11 +43,11 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies.repe
 
             bus.Reply(Reply);
 
-            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
+            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(10).Subtract(TimeSpan.FromTicks(1)));
         };
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_repeat_the_message = () => Server.SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(2);
+        It should_not_repeat_the_message = () => Server.SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(1);
     }
 }

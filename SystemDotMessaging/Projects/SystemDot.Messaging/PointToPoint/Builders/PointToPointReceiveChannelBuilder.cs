@@ -1,7 +1,7 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
-using SystemDot.Messaging.Aggregation;
+using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
@@ -50,7 +50,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
                 .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))
                 .ToResequencerIfSequenced(messageCache, schema)
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
-                .ToProcessor(new AggregateUnpackager())
+                .ToProcessor(new BatchUnpackager())
                 .ToEndPoint(this.messageHandlerRouter);
         }
     }
