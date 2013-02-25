@@ -10,7 +10,7 @@ namespace SystemDot.Messaging.Repeating
     {
         public static ProcessorBuilder<MessagePayload> ToSimpleMessageRepeater(
             this ProcessorBuilder<MessagePayload> builder,
-            MessageCache messageCache,
+            IMessageCache messageCache,
             ISystemTime systemTime,
             ITaskRepeater taskRepeater)
         {
@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Repeating
 
         public static ProcessorBuilder<MessagePayload> ToMessageRepeater(
             this ProcessorBuilder<MessagePayload> builder, 
-            MessageCache messageCache, 
+            IMessageCache messageCache, 
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 
             IRepeatStrategy strategy)

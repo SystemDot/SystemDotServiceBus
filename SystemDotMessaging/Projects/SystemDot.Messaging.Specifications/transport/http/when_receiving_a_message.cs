@@ -1,6 +1,8 @@
-﻿using SystemDot.Http.Builders;
+﻿using System;
+using SystemDot.Http.Builders;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.Http.Configuration;
 using Machine.Specifications;
@@ -35,6 +37,10 @@ namespace SystemDot.Messaging.Specifications.transport.http
                     ServerInstance,
                     ServerInstance,
                     PersistenceUseType.PointToPointSend);
+
+            messagePayload.SetSequenceOriginSetOn(DateTime.Today);
+            messagePayload.SetFirstSequence(1);
+            messagePayload.SetSequence(1);
 
             handler = new TestMessageHandler<int>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);

@@ -34,10 +34,8 @@ namespace SystemDot.Messaging.Specifications.channels.publishing.receiving
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             message = 1;
-            payload = new MessagePayload().MakeReceiveable(message, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
+            payload = new MessagePayload().MakeSequencedReceivable(message, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
             originalPersistenceId = payload.GetPersistenceId();
-            payload.SetSequence(1); 
-            payload.SetFirstSequence(1);
         };
 
         Because of = () => Server.ReceiveMessage(payload);

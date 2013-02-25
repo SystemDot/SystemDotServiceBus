@@ -49,7 +49,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SystemDot.Messaging.Storage.Sql\SystemDot.Messaging.Storage.Sql.csproj">
+    <ProjectReference Include="..\..\SystemDot.Sql\SystemDot.Sql.csproj">
       <Project>{80FFA53E-9C4D-45CE-A7D2-8FE0B6A9FBFB}</Project>
       <Name>SystemDot.Messaging.Storage.Sql</Name>
     </ProjectReference>

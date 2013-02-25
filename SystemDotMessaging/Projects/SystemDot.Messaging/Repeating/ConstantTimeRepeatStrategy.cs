@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Repeating
             this.toRepeatEvery = toRepeatEvery;
         }
 
-        public void Repeat(MessageRepeater repeater, MessageCache messageCache, ISystemTime systemTime)
+        public void Repeat(MessageRepeater repeater, IMessageCache messageCache, ISystemTime systemTime)
         {
             IEnumerable<MessagePayload> messages = messageCache.GetMessages();
 

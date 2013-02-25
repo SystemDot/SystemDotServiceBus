@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
                 .ForRequestReplyRecieving()
                 .Initialise();
 
-            Server.ReceiveMessage(new MessagePayload().MakeReceiveable(
+            Server.ReceiveMessage(new MessagePayload().MakeSequencedReceivable(
                 1, 
                 SenderChannelName, 
                 ChannelName, 
@@ -68,6 +68,9 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
 
         It should_mark_the_message_with_the_sequence = () =>
             Server.SentMessages.ExcludeAcknowledgements().First().GetSequence().ShouldEqual(1);
+
+        It should_mark_the_message_with_first_sequence = () =>
+            Server.SentMessages.ExcludeAcknowledgements().First().GetFirstSequence().ShouldEqual(1);
 
         It should_start_the_task_repeater = () => TaskRepeater.Started.ShouldBeTrue();
     }

@@ -49,8 +49,8 @@ namespace SystemDot.Messaging.Publishing.Builders
         {
             var requestor = new SubscriptionRequestor(schema.SubscriberAddress, schema.IsDurable);
             
-            MessageCache messageCache = new MessageCacheFactory(this.changeStore)
-                .CreateCache(
+            SendMessageCache messageCache = new MessageCacheFactory(this.changeStore, this.systemTime)
+                .CreateSendCache(
                     PersistenceUseType.SubscriberRequestSend, 
                     schema.PublisherAddress);
 

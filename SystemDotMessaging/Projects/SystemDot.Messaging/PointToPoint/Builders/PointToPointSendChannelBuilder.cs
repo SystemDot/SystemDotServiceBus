@@ -19,31 +19,34 @@ namespace SystemDot.Messaging.PointToPoint.Builders
     {
         readonly IMessageSender messageSender;
         readonly ISerialiser serialiser;
-        readonly InMemoryChangeStore inMemoryChangeStore;
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
+        readonly MessageCacheFactory messageCacheFactory;
 
         public PointToPointSendChannelBuilder(
             IMessageSender messageSender, 
             ISerialiser serialiser, 
-            InMemoryChangeStore inMemoryChangeStore, 
             ISystemTime systemTime, 
-            ITaskRepeater taskRepeater)
+            ITaskRepeater taskRepeater, 
+            MessageCacheFactory messageCacheFactory)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(serialiser != null);
 
             this.messageSender = messageSender;
             this.serialiser = serialiser;
-            this.inMemoryChangeStore = inMemoryChangeStore;
             this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
+            this.messageCacheFactory = messageCacheFactory;
         }
 
         public void Build(PointToPointSendChannelSchema schema)
         {
             Contract.Requires(schema != null);
-            var messageCache = new MessageCache(this.inMemoryChangeStore, schema.FromAddress, PersistenceUseType.PointToPointSend);
+
+            SendMessageCache messageCache = this.messageCacheFactory.CreateSendCache(
+                PersistenceUseType.PointToPointSend, 
+                schema.FromAddress);
 
             MessagePipelineBuilder.Build()
                 .WithBusSendTo(new MessageFilter(new PassThroughMessageFilterStategy()))
@@ -54,6 +57,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
                 .ToMessageRepeater(messageCache, this.systemTime, this.taskRepeater, schema.RepeatStrategy)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new SendChannelMessageCacher(messageCache))
+                .ToProcessor(new SequenceOriginRecorder(messageCache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()
                 .ToEndPoint(this.messageSender);

@@ -3,7 +3,6 @@ using System.Linq;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Repeating;
-using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Specifications.channels.publishing;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
@@ -59,9 +58,6 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.sending
 
         It should_mark_the_amount_of_times_the_message_has_been_sent = () => 
             Server.SentMessages.ExcludeAcknowledgements().First().GetAmountSent().ShouldEqual(1);
-
-        It should_mark_the_message_with_the_sequence = () =>
-            Server.SentMessages.ExcludeAcknowledgements().First().GetSequence().ShouldEqual(1);
 
         It should_start_the_task_repeater = () => TaskRepeater.Started.ShouldBeTrue();
     }

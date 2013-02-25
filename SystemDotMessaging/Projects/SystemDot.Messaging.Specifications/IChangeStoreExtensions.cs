@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.Changes;
+using SystemDot.Specifications;
 using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Specifications
@@ -25,7 +27,7 @@ namespace SystemDot.Messaging.Specifications
             PersistenceUseType useType, 
             EndpointAddress address)
         {
-            var persistence = new MessageCache(store, address, useType);
+            var persistence = new SendMessageCache(new TestSystemTime(DateTime.Now), store, address, useType);
             persistence.Initialise();
 
             return persistence.GetMessages();

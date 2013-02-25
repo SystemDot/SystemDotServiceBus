@@ -24,8 +24,7 @@ namespace SystemDot.Messaging.Specifications.transport.http
             payload.SetToAddress(BuildAddress(toAddress, serverInstance, proxyInstance));
             payload.SetPersistenceId(BuildAddress(fromAddress, serverInstance, proxyInstance), useType);
             payload.SetSourcePersistenceId(payload.GetPersistenceId());
-            payload.IncreaseAmountSent();
-
+            
             return payload;
         }
 

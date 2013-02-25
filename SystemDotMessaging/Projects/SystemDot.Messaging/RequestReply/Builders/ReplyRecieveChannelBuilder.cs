@@ -55,14 +55,15 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
         public void Build(ReplyRecieveChannelSchema schema)
         {
-            MessageCache messageCache = this.persistenceFactorySelector
+            ReceiveMessageCache messageCache = this.persistenceFactorySelector
                 .Select(schema)
-                .CreateCache(PersistenceUseType.ReplyReceive, schema.Address);
+                .CreateReceiveCache(PersistenceUseType.ReplyReceive, schema.Address);
 
             MessagePipelineBuilder.Build()
                 .With(this.messageReceiver)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new BodyMessageFilter(schema.Address))
+                .ToProcessor(new SequenceOriginApplier(messageCache))
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToSimpleMessageRepeater(messageCache, this.systemTime, this.taskRepeater)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))

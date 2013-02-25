@@ -47,9 +47,9 @@ namespace SystemDot.Messaging.Publishing.Builders
 
         public IMessageInputter<MessagePayload> BuildChannel(SubscriberSendChannelSchema schema)
         {
-            MessageCache messageCache = this.persistenceFactorySelector
+            SendMessageCache messageCache = this.persistenceFactorySelector
                 .Select(schema)
-                .CreateCache(PersistenceUseType.SubscriberSend, schema.SubscriberAddress);
+                .CreateSendCache(PersistenceUseType.SubscriberSend, schema.SubscriberAddress);
 
             this.acknowledgementHandler.RegisterCache(messageCache);
 
@@ -58,11 +58,11 @@ namespace SystemDot.Messaging.Publishing.Builders
             MessagePipelineBuilder.Build()
                 .With(copier)
                 .ToProcessor(new MessageSendTimeRemover())
-                .ToProcessor(new FirstMessageSequenceRecorder(messageCache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.SubscriberAddress))
                 .ToMessageRepeater(messageCache, this.systemTime, this.taskRepeater, schema.RepeatStrategy)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
-                .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
+                .ToProcessor(new SendChannelMessageCacher(messageCache))
+                .ToProcessor(new SequenceOriginRecorder(messageCache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()
                 .ToEndPoint(this.messageSender);

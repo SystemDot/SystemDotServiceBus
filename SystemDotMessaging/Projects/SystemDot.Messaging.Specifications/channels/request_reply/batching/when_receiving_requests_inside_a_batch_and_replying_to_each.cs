@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.batching
             aggregateMessage.Messages.Add(Message2);
 
             messagePayload = new MessagePayload()
-                .MakeReceiveable(aggregateMessage, SenderAddress, ReceiverAddress, PersistenceUseType.RequestReceive);
+                .MakeSequencedReceivable(aggregateMessage, SenderAddress, ReceiverAddress, PersistenceUseType.RequestReceive);
 
             handler = new TestReplyMessageHandler<int>(bus);
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);

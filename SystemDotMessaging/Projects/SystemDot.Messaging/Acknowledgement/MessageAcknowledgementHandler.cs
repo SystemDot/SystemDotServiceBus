@@ -9,18 +9,18 @@ namespace SystemDot.Messaging.Acknowledgement
 {
     public class MessageAcknowledgementHandler : IMessageInputter<MessagePayload>
     {
-        private readonly ConcurrentDictionary<Guid, MessageCache> caches;
+        private readonly ConcurrentDictionary<Guid, IMessageCache> caches;
 
         public MessageAcknowledgementHandler()
         {
-            this.caches = new ConcurrentDictionary<Guid, MessageCache>();
+            this.caches = new ConcurrentDictionary<Guid, IMessageCache>();
         }
 
         public void InputMessage(MessagePayload toInput)
         {
             if (!toInput.IsAcknowledgement()) return;
 
-            MessageCache cache = GetCache(toInput.GetAcknowledgementId());
+            IMessageCache cache = GetCache(toInput.GetAcknowledgementId());
 
             var messageId = toInput.GetAcknowledgementId().MessageId;
                 
@@ -28,14 +28,14 @@ namespace SystemDot.Messaging.Acknowledgement
                 cache.Delete(messageId);
         }
 
-        MessageCache GetCache(MessagePersistenceId id)
+        IMessageCache GetCache(MessagePersistenceId id)
         {
             return this.caches
                 .Values
                 .SingleOrDefault(p => p.UseType == id.UseType && p.Address == id.Address);
         }
 
-        public void RegisterCache(MessageCache toRegister)
+        public void RegisterCache(IMessageCache toRegister)
         {
             Contract.Requires(toRegister != null);
             this.caches.TryAdd(Guid.NewGuid(), toRegister);

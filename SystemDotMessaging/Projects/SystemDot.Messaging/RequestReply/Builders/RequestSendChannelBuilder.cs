@@ -51,9 +51,9 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
         public void Build(RequestSendChannelSchema schema)
         {
-            MessageCache messageCache = this.persistenceFactory
+            SendMessageCache messageCache = this.persistenceFactory
                 .Select(schema)
-                .CreateCache(PersistenceUseType.RequestSend, schema.FromAddress);
+                .CreateSendCache(PersistenceUseType.RequestSend, schema.FromAddress);
 
             this.acknowledgementHandler.RegisterCache(messageCache);
 
@@ -67,6 +67,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToMessageRepeater(messageCache, this.systemTime, this.taskRepeater, schema.RepeatStrategy)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new SendChannelMessageCacher(messageCache))
+                .ToProcessor(new SequenceOriginRecorder(messageCache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()
                 .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, messageCache))

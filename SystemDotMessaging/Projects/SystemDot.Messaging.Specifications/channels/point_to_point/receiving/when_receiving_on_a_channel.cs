@@ -1,6 +1,7 @@
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 using SystemDot.Messaging.Storage;
@@ -29,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.receiving
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             message = 1;
-            payload = new MessagePayload().MakeReceiveable(
+            payload = new MessagePayload().MakeSequencedReceivable(
                 message, 
                 SenderAddress, 
                 ChannelName, 

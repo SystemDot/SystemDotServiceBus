@@ -4,7 +4,6 @@ namespace SystemDot.Storage.Changes
     {
         readonly IChangeStore changeStore;
         readonly object checkPointLock = new object();
-        bool hasChanged;
         int changeCount;
 
         protected ChangeRoot(IChangeStore changeStore)
@@ -17,11 +16,6 @@ namespace SystemDot.Storage.Changes
         public void Initialise()
         {
             this.changeStore.GetChanges(this.Id).ForEach(ReplayChange);
-        }
-
-        public bool HasChanged()
-        {
-            return this.hasChanged;
         }
 
         protected void AddChange(Change change)
@@ -61,8 +55,6 @@ namespace SystemDot.Storage.Changes
 
         void ReplayChange(Change change)
         {
-            this.hasChanged = true;
-
             GetType()
                 .GetMethod("ApplyChange", new[] { change.GetType() })
                 .Invoke(this, new object[] { change });

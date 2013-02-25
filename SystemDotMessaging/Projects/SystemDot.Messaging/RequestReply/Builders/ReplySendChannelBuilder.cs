@@ -51,9 +51,9 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
         public IMessageInputter<object> Build(ReplySendChannelSchema schema, EndpointAddress senderAddress)
         {
-            MessageCache messageCache = this.persistenceFactorySelector
+            SendMessageCache messageCache = this.persistenceFactorySelector
                 .Select(schema)
-                .CreateCache(PersistenceUseType.ReplySend, senderAddress);
+                .CreateSendCache(PersistenceUseType.ReplySend, senderAddress);
             
             this.acknowledgementHandler.RegisterCache(messageCache);
 
@@ -69,6 +69,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToMessageRepeater(messageCache, this.systemTime, this.taskRepeater, schema.RepeatStrategy)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new SendChannelMessageCacher(messageCache))
+                .ToProcessor(new SequenceOriginRecorder(messageCache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()
                 .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, messageCache))

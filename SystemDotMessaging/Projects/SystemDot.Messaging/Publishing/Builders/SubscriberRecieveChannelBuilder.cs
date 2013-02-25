@@ -59,16 +59,16 @@ namespace SystemDot.Messaging.Publishing.Builders
 
         public void Build(SubscriberRecieveChannelSchema schema)
         {
-            MessageCache messageCache = this.persistenceFactory
+            ReceiveMessageCache messageCache = this.persistenceFactory
                 .Select(schema)
-                .CreateCache(PersistenceUseType.SubscriberReceive, schema.Address);
+                .CreateReceiveCache(PersistenceUseType.SubscriberReceive, schema.Address);
 
             MessagePipelineBuilder.Build()
                 .With(this.messageReceiver)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new BodyMessageFilter(schema.Address))
                 .ToProcessor(new MessageSendTimeRemover())
-                .ToProcessor(new StartSequenceApplier(messageCache))
+                .ToProcessor(new SequenceOriginApplier(messageCache))
                 .ToSimpleMessageRepeater(messageCache, this.systemTime, this.taskRepeater)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))

@@ -1,3 +1,4 @@
+using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Transport.InProcess;
 using SystemDot.Parallelism;
 using Machine.Specifications;
@@ -18,6 +19,8 @@ namespace SystemDot.Messaging.Specifications.channels
 
             Server = new TestMessageServer();
             ConfigureAndRegister<IInProcessMessageServer>(Server);
+
+            ConfigureAndRegister<MessageHandlerRouter>(new MessageHandlerRouter());
         }
     }
 }

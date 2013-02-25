@@ -6,7 +6,7 @@ namespace SystemDot.Messaging.Repeating
     {
         bool isStarted;
 
-        public void Repeat(MessageRepeater repeater, MessageCache messageCache, ISystemTime systemTime)
+        public void Repeat(MessageRepeater repeater, IMessageCache messageCache, ISystemTime systemTime)
         {
             if(this.isStarted) return;
 

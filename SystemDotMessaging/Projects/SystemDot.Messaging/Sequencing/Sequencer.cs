@@ -7,9 +7,9 @@ namespace SystemDot.Messaging.Sequencing
 {
     public class Sequencer : IMessageProcessor<MessagePayload, MessagePayload>
     {
-        readonly MessageCache messageCache;
+        readonly SendMessageCache messageCache;
 
-        public Sequencer(MessageCache messageCache)
+        public Sequencer(SendMessageCache messageCache)
         {
             Contract.Requires(messageCache != null);
             

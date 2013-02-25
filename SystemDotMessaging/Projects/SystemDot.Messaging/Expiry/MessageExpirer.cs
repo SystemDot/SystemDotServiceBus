@@ -8,9 +8,9 @@ namespace SystemDot.Messaging.Expiry
     public class MessageExpirer : IMessageProcessor<MessagePayload, MessagePayload>
     {
         readonly IMessageExpiryStrategy strategy;
-        readonly MessageCache messageCache;
+        readonly IMessageCache messageCache;
 
-        public MessageExpirer(IMessageExpiryStrategy strategy, MessageCache messageCache)
+        public MessageExpirer(IMessageExpiryStrategy strategy, IMessageCache messageCache)
         {
             Contract.Requires(strategy != null);
             Contract.Requires(messageCache != null);

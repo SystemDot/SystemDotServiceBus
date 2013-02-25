@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
                         .WithMessageExpiry(MessageExpiry.ByTime(TimeSpan.FromMinutes(0)))
                 .Initialise();
 
-            Server.ReceiveMessage(new MessagePayload().MakeReceiveable(
+            Server.ReceiveMessage(new MessagePayload().MakeSequencedReceivable(
                 1, 
                 SenderChannelName, 
                 ChannelName, 

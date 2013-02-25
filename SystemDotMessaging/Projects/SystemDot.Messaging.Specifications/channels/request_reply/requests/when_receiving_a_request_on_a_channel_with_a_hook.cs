@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
                 .Initialise();
 
             message = 1;
-            payload = new MessagePayload().MakeReceiveable(
+            payload = new MessagePayload().MakeSequencedReceivable(
                 message,
                 SenderAddress,
                 ChannelName,

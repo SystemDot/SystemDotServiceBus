@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
                     .WithDurability()
                 .Initialise();
 
-            payload = new MessagePayload().MakeReceiveable(
+            payload = new MessagePayload().MakeSequencedReceivable(
                 1, 
                 RecieverAddress, 
                 ChannelName, 

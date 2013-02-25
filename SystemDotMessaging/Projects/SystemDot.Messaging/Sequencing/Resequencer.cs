@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using SystemDot.Logging;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
@@ -10,9 +11,9 @@ namespace SystemDot.Messaging.Sequencing
     public class Resequencer : IMessageProcessor<MessagePayload, MessagePayload>
     {
         readonly ConcurrentDictionary<int, MessagePayload> queue;
-        readonly MessageCache messageCache;
-        
-        public Resequencer(MessageCache messageCache)
+        readonly ReceiveMessageCache messageCache;
+
+        public Resequencer(ReceiveMessageCache messageCache)
         {
             Contract.Requires(messageCache != null);
             
@@ -27,12 +28,12 @@ namespace SystemDot.Messaging.Sequencing
             int startSequence = this.messageCache.GetSequence();
 
             if(!toInput.HasSequence()) return;
-            if (!AddMessageToQueue(toInput, startSequence)) return;
+            if (!CheckMessageCanPass(toInput, startSequence)) return;
 
             AttemptToSendMessages(startSequence);
         }
 
-        bool AddMessageToQueue(MessagePayload toInput, int startSequence)
+        bool CheckMessageCanPass(MessagePayload toInput, int startSequence)
         {
             if (toInput.GetSequence() < startSequence)
             {
@@ -40,20 +41,21 @@ namespace SystemDot.Messaging.Sequencing
                 return false;
             }
 
-            this.queue.TryAdd(toInput.GetSequence(), toInput);
             return true;
         }
 
         void AttemptToSendMessages(int startSequence)
         {
-            while (this.queue.ContainsKey(startSequence))
+            while (this.messageCache.GetMessages().Any(m => m.GetSequence() == startSequence))
             {
                 Logger.Info("Releasing message from resequencer with sequence {0}", startSequence);
-                this.MessageProcessed(this.queue[startSequence]);
 
-                MessagePayload message;
-                this.queue.TryRemove(startSequence, out message);
+                MessagePayload message = this.messageCache.GetMessages().Single(m => m.GetSequence() == startSequence);
+                
+                MessageProcessed(message);
+
                 startSequence++;
+
                 this.messageCache.DeleteAndSetSequence(message.Id, startSequence);
             }
         }

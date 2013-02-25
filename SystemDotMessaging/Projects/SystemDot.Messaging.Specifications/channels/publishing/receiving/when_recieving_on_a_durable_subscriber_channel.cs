@@ -23,14 +23,11 @@ namespace SystemDot.Messaging.Specifications.channels.publishing.receiving
                     .WithDurability()
                 .Initialise();
 
-            payload = new MessagePayload().MakeReceiveable(
+            payload = new MessagePayload().MakeSequencedReceivable(
                 1, 
                 PublisherName, 
                 ChannelName, 
                 PersistenceUseType.SubscriberSend);
-
-            payload.SetFirstSequence(1);
-            payload.SetSequence(1); 
         };
 
         Because of = () => Server.ReceiveMessage(payload);

@@ -35,7 +35,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.repeating
                 .Initialise();
 
             Server.ReceiveMessage(
-                new MessagePayload().MakeReceiveable(
+                new MessagePayload().MakeSequencedReceivable(
                     Request,
                     SenderAddress,
                     ChannelName,

@@ -55,14 +55,15 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
         public IMessageInputter<MessagePayload> Build(RequestRecieveChannelSchema schema, EndpointAddress senderAddress)
         {
-            MessageCache messageCache = this.persistenceFactorySelector
+            ReceiveMessageCache messageCache = this.persistenceFactorySelector
                 .Select(schema)
-                .CreateCache(PersistenceUseType.RequestReceive, senderAddress);
+                .CreateReceiveCache(PersistenceUseType.RequestReceive, senderAddress);
 
             var startPoint = new MessagePayloadCopier(this.serialiser);
 
             MessagePipelineBuilder.Build()
                 .With(startPoint)
+                .ToProcessor(new SequenceOriginApplier(messageCache))
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToSimpleMessageRepeater(messageCache, this.systemTime, this.taskRepeater)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))

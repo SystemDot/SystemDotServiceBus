@@ -1,9 +1,11 @@
+using System;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Serialisation;
+using SystemDot.Specifications;
 using SystemDot.Storage.Changes;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -14,13 +16,14 @@ namespace SystemDot.Messaging.Specifications.channels.acknowledgement
     {
         static MessagePayload acknowledgement;
         static MessagePayload message;
-        static MessageCache messageCache;
+        static SendMessageCache messageCache;
 
         Establish context = () =>
         {
             var store = new InMemoryChangeStore(new PlatformAgnosticSerialiser());
-            
-            messageCache = new MessageCache(
+
+            messageCache = new SendMessageCache(
+                new TestSystemTime(DateTime.Now), 
                 store,
                 TestEndpointAddressBuilder.Build("GetChannel", "Server"), 
                 PersistenceUseType.SubscriberRequestSend);

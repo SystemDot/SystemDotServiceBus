@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
             handler = new TestMessageHandler<int>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
-            payload = new MessagePayload().MakeReceiveable(1, RecieverAddress, ChannelName, PersistenceUseType.ReplySend);
+            payload = new MessagePayload().MakeSequencedReceivable(1, RecieverAddress, ChannelName, PersistenceUseType.ReplySend);
         };
 
         Because of = () => Server.ReceiveMessage(payload);

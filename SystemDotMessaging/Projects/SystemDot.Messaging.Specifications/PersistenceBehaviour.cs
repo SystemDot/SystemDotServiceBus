@@ -1,6 +1,5 @@
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
 using Machine.Fakes;
@@ -15,8 +14,9 @@ namespace SystemDot.Messaging.Specifications
         OnEstablish context = (accessor) => 
         {
             accessor.Configure<IChangeStore>(new InMemoryChangeStore(new PlatformAgnosticSerialiser()));
-            accessor.Configure(new MessageCacheFactory(accessor.The<IChangeStore>()));
-            accessor.Configure(accessor.The<MessageCacheFactory>().CreateCache(persistenceUseType, channel));
+            accessor.Configure(new MessageCacheFactory(accessor.The<IChangeStore>(), accessor.The<ISystemTime>()));
+            accessor.Configure(accessor.The<MessageCacheFactory>().CreateSendCache(persistenceUseType, channel));
+            accessor.Configure(accessor.The<MessageCacheFactory>().CreateReceiveCache(persistenceUseType, channel));
         };
 
         public PersistenceBehaviour(PersistenceUseType persistenceUseType, EndpointAddress channel)

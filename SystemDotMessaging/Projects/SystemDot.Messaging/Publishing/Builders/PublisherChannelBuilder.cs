@@ -51,9 +51,9 @@ namespace SystemDot.Messaging.Publishing.Builders
 
         public void Build(PublisherChannelSchema schema)
         {
-            MessageCache messageCache = this.persistenceFactorySelector
+            SendMessageCache messageCache = this.persistenceFactorySelector
                 .Select(schema)
-                .CreateCache(PersistenceUseType.PublisherSend, schema.FromAddress);
+                .CreateSendCache(PersistenceUseType.PublisherSend, schema.FromAddress);
 
             var publisherEndpoint = new Publisher(schema.FromAddress, this.subscriberChannelBuilder, this.changeStore);
 

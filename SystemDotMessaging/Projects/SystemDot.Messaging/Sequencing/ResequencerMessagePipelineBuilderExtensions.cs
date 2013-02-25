@@ -10,7 +10,7 @@ namespace SystemDot.Messaging.Sequencing
     {
         public static ProcessorBuilder<MessagePayload> ToResequencerIfSequenced(
             this ProcessorBuilder<MessagePayload> builder,
-            MessageCache messageCache,
+            ReceiveMessageCache messageCache,
             ChannelSchema schema)
         {
             IMessageProcessor<MessagePayload, MessagePayload> processor;

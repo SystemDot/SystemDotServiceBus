@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging;
@@ -5,30 +6,34 @@ using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Serialisation;
+using SystemDot.Specifications;
 using SystemDot.Storage.Changes;
 using Machine.Fakes;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.channels.acknowledgement
 {
-    public class when_handling_a_recieved_acknowledgement_with_a_different_persistence_use_type_to_the_persistence_registered : WithSubject<MessageAcknowledgementHandler>
+    public class when_handling_a_recieved_acknowledgement_with_a_different_persistence_use_type_to_the_persistence_registered 
+        : WithSubject<MessageAcknowledgementHandler>
     {
         static MessagePayload acknowledgement;
         static MessagePayload message;
-        static MessageCache differingUseTypeMessageCache;
+        static SendMessageCache differingUseTypeMessageCache;
 
         Establish context = () =>
         {
             var store = new InMemoryChangeStore(new PlatformAgnosticSerialiser());
 
-            differingUseTypeMessageCache = new MessageCache(
+            differingUseTypeMessageCache = new SendMessageCache(
+                new TestSystemTime(DateTime.Now),
                 store,
                 TestEndpointAddressBuilder.Build("GetChannel", "Server"),
                 PersistenceUseType.RequestSend);
 
             Subject.RegisterCache(differingUseTypeMessageCache);
 
-            var persistence = new MessageCache(
+            var persistence = new SendMessageCache(
+                new TestSystemTime(DateTime.Now),
                 store,
                 differingUseTypeMessageCache.Address,
                 PersistenceUseType.SubscriberRequestSend);

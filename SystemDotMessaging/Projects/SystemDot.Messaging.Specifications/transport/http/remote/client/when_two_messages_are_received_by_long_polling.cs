@@ -5,6 +5,7 @@ using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.Http.Configuration;
 using SystemDot.Parallelism;
@@ -57,6 +58,9 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
                     RemoteClientInstance,
                     ProxyInstance,
                     PersistenceUseType.PointToPointSend);
+            messagePayload1.SetSequenceOriginSetOn(DateTime.Today);
+            messagePayload1.SetFirstSequence(1);
+            messagePayload1.SetSequence(1);
 
             messagePayload2 =
                 new MessagePayload().MakeReceiveable(
@@ -66,6 +70,9 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
                     RemoteClientInstance,
                     ProxyInstance,
                     PersistenceUseType.PointToPointSend);
+            messagePayload2.SetSequenceOriginSetOn(DateTime.Today);
+            messagePayload2.SetFirstSequence(1);
+            messagePayload2.SetSequence(1);
 
             handler = new TestMessageHandler<int>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);

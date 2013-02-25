@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.channels.expiry
             message.IncreaseAmountSent();
 
             With<PersistenceBehaviour>();
-            The<MessageCache>().AddMessageAndIncrementSequence(message);
+            The<SendMessageCache>().AddMessageAndIncrementSequence(message);
 
             var expiryTime = new TimeSpan(0, 1, 0);
             
@@ -30,6 +30,8 @@ namespace SystemDot.Messaging.Specifications.channels.expiry
                 new TimeMessageExpiryStrategy(
                     expiryTime, 
                     new TestSystemTime(message.CreatedOn.Add(expiryTime))));
+
+            Subject = new MessageExpirer(The<IMessageExpiryStrategy>(), The<SendMessageCache>());
 
             Subject.MessageProcessed += m => processed = m;
         };
@@ -39,6 +41,6 @@ namespace SystemDot.Messaging.Specifications.channels.expiry
         It should_not_pass_the_message_through = () => processed.ShouldBeNull();
 
         It should_remove_the_message_from_the_cache = () =>
-            The<MessageCache>().GetMessages().ShouldBeEmpty();
+            The<SendMessageCache>().GetMessages().ShouldBeEmpty();
     }
 }

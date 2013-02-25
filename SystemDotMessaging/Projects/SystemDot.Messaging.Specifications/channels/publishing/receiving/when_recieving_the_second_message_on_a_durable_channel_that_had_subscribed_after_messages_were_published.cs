@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Sequencing;
@@ -28,15 +29,17 @@ namespace SystemDot.Messaging.Specifications.channels.publishing.receiving
             handler = new TestMessageHandler<int>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
-            payload = new MessagePayload().MakeReceiveable(1, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
+            payload = new MessagePayload().MakeReceivable(1, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
             payload.SetFirstSequence(2);
+            payload.SetSequenceOriginSetOn(DateTime.Today);
             payload.SetSequence(2);
 
             Server.ReceiveMessage(payload);
 
             message = 2;
-            payload = new MessagePayload().MakeReceiveable(message, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
+            payload = new MessagePayload().MakeReceivable(message, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
             payload.SetFirstSequence(2);
+            payload.SetSequenceOriginSetOn(DateTime.Today);
             payload.SetSequence(3);
         };
 
