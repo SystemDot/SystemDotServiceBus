@@ -78,6 +78,12 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessors(schema.Hooks.ToArray())
                 .ToEndPoint(this.messageHandlerRouter);
 
+            Messenger.Send(new ChannelBuilt
+            {
+                UseType = PersistenceUseType.RequestReceive,
+                Address = senderAddress
+            });
+
             return startPoint;
         }
     }

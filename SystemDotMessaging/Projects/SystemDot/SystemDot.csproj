@@ -61,6 +61,9 @@
     <Compile Include="Logging\ILoggingMechanism.cs" />
     <Compile Include="Logging\Log4NetLoggingMechanism.cs" />
     <Compile Include="Logging\Logger.cs" />
+    <Compile Include="MessageHandlerList.cs" />
+    <Compile Include="Messenger.cs" />
+    <Compile Include="MessengerHandlerRegistry.cs" />
     <Compile Include="ObjectExtensions.cs" />
     <Compile Include="Parallelism\ITaskRepeater.cs" />
     <Compile Include="Parallelism\TaskRepeater.cs" />

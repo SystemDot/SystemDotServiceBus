@@ -4,9 +4,9 @@ using SystemDot.Logging;
 using Machine.Fakes;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.channels
+namespace SystemDot.Messaging.Specifications.channels.configuration
 {
-    [Subject("Configuration")] 
+    [Subject(SpecificationGroup.Description)] 
     public class when_logging_a_message_with_a_logging_mechanism_configured : WithConfigurationSubject
     {
         static Exception exception;

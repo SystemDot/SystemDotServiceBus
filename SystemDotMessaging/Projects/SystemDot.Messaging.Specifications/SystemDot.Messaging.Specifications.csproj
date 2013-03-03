@@ -48,6 +48,7 @@
     <Compile Include="channels\acknowledgement\when_handling_a_recieved_acknowledgement_with_a_different_persistence_channel_to_the_persistence_registered.cs" />
     <Compile Include="channels\acknowledgement\when_handling_a_recieved_acknowledgement_with_a_different_persistence_use_type_to_the_persistence_registered.cs" />
     <Compile Include="channels\acknowledgement\when_handling_a_recieved_acknowledgement_with_no_persistences_registered.cs" />
+    <Compile Include="channels\configuration\SpecificationGroup.cs" />
     <Compile Include="channels\point_to_point\batching\SpecificationGroup.cs" />
     <Compile Include="channels\point_to_point\batching\when_sending_messages_inside_a_batch_without_completing_the_batch.cs" />
     <Compile Include="channels\point_to_point\batching\when_receiving_messages_inside_a_batch.cs" />
@@ -83,6 +84,8 @@
     <Compile Include="channels\point_to_point\sequencing\when_passing_messages_in_the_correct_order_on_a_durable_channel.cs" />
     <Compile Include="channels\point_to_point\sequencing\when_passing_messages_in_the_incorrect_order_on_a_durable_channel.cs" />
     <Compile Include="channels\request_reply\replies\when_receiving_a_reply_from_a_durable_channel_that_has_had_sequencing_reset.cs" />
+    <Compile Include="channels\request_reply\requests\when_receiving_a_reply_from_a_durable_channel_that_has_had_sequencing_reset.cs" />
+    <Compile Include="channels\TestExternalSourcesConfigurer.cs" />
     <Compile Include="channels\unitofwork\when_running_a_unit_of_work.cs" />
     <Compile Include="channels\unitofwork\when_running_a_unit_of_work_and_the_target_processor_throws_an_exception.cs" />
     <Compile Include="channels\FakeAccessorExtensions.cs" />
@@ -93,6 +96,7 @@
     <Compile Include="channels\local\when_sending_a_local_message_without_configuring_a_local_channel.cs" />
     <Compile Include="channels\local\when_sending_a_local_message_with_a_unit_of_work_setup.cs" />
     <Compile Include="channels\local\when_sending_a_message_after_configuring_a_channel_and_then_a_local_channel.cs" />
+    <Compile Include="channels\configuration\when_configuring_messaging.cs" />
     <Compile Include="TestReplyMessageHandler.cs" />
     <Compile Include="transport\http\MessagePayloadExtensions.cs" />
     <Compile Include="transport\http\remote\client\when_sending_a_message_using_a_remote_proxy.cs" />
@@ -197,7 +201,7 @@
     <Compile Include="channels\request_reply\requests\when_sending_a_request_with_the_wrong_name_down_a_channel_with_a_name_pattern_filter.cs" />
     <Compile Include="channels\request_reply\requests\when_sending_a_time_expired_request_down_a_channel.cs" />
     <Compile Include="TestEndpointAddressBuilder.cs" />
-    <Compile Include="channels\when_logging_a_message_with_a_logging_mechanism_configured.cs" />
+    <Compile Include="channels\configuration\when_logging_a_message_with_a_logging_mechanism_configured.cs" />
     <Compile Include="channels\publishing\receiving\when_recieving_on_a_subscriber_channel.cs" />
     <Compile Include="transport\http\when_sending_to_a_receiver_on_a_with_instances_but_no_names_set_for_server_and_proxy.cs" />
     <Compile Include="WithConfigurationSubject.cs" />

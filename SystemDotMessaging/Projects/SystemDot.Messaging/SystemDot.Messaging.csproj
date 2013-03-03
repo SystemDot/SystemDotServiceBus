@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
@@ -50,6 +51,9 @@
     <Compile Include="Caching\PersistenceSourceRecorder.cs" />
     <Compile Include="Caching\ReceiveChannelMessageCacher.cs" />
     <Compile Include="Caching\SendChannelMessageCacher.cs" />
+    <Compile Include="Configuration\ExternalSources\ExternalSourcesConfigurer.cs" />
+    <Compile Include="Configuration\ExternalSources\IExternalConfigurationSource.cs" />
+    <Compile Include="Configuration\ExternalSources\IExternalSourcesConfigurer.cs" />
     <Compile Include="Distribution\ChannelDistributor.cs" />
     <Compile Include="Distribution\IChannelDistrbutionStrategy.cs" />
     <Compile Include="Distribution\Queue.cs" />
@@ -85,6 +89,7 @@
     <Compile Include="Repeating\SimpleRepeatStrategy.cs" />
     <Compile Include="RequestReply\Builders\ReplySendDistributionChannelBuilder.cs" />
     <Compile Include="RequestReply\Builders\ReplySendSubscriptionHandler.cs" />
+    <Compile Include="Builders\ChannelBuilt.cs" />
     <Compile Include="RequestReply\Builders\RequestReceiveDistributionChannelBuilder.cs" />
     <Compile Include="RequestReply\RegisterReplySendChannelChange.cs" />
     <Compile Include="RequestReply\RegisterRequestReceiveChannelChange.cs" />
