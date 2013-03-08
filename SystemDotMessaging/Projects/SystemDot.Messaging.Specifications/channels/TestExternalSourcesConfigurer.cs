@@ -5,9 +5,9 @@ namespace SystemDot.Messaging.Specifications.channels
 {
     public class TestExternalSourcesConfigurer : IExternalSourcesConfigurer
     {
-        public MessagingConfiguration Configuration { get; set; }
-        
-        public void Configure(MessagingConfiguration toConfigureAgainst)
+        public MessageServerConfiguration Configuration { get; set; }
+
+        public void Configure(MessageServerConfiguration toConfigureAgainst)
         {
             this.Configuration = toConfigureAgainst;
         }

@@ -39,18 +39,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\SystemDot.Extensions\*.cs">
-      <Link>%(RecursiveDir)%(FileName)</Link>
-    </Compile>
-    <Compile Include="..\..\SystemDot.Extensions\*\*.cs">
-      <Link>%(RecursiveDir)%(FileName)</Link>
-    </Compile>
-    <Compile Include="..\..\SystemDot.Extensions\*\*\*.cs">
-      <Link>%(RecursiveDir)%(FileName)</Link>
-    </Compile>
-    <Compile Include="..\..\SystemDot.Extensions\*\*\*\*.cs">
-      <Link>%(RecursiveDir)%(FileName)</Link>
-    </Compile>
+    <Compile Include="AssemblyExtensions.cs" />
+    <Compile Include="Composition\CompositionContainer.cs" />
+    <Compile Include="Composition\DirectoryCatalog.cs" />
+    <Compile Include="Composition\ImportManyAttribute.cs" />
+    <Compile Include="Composition\InheritedExportAttribute.cs" />
+    <Compile Include="PutSender.cs" />
+    <Compile Include="TypeExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

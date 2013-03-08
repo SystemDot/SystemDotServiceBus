@@ -59,6 +59,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SystemDot.Extensions.Android\SystemDot.Extensions.Android.csproj">
+      <Project>{34f8b744-4d0b-4151-ae4c-5530479342aa}</Project>
+      <Name>SystemDot.Extensions.Android</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">
       <Project>{00DE20F1-75AD-48F8-B882-66BD2D9F0F8B}</Project>
       <Name>SystemDot %28Android\SystemDot%29</Name>

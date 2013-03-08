@@ -2,6 +2,6 @@ namespace SystemDot.Messaging.Configuration.ExternalSources
 {
     public interface IExternalSourcesConfigurer
     {
-        void Configure(MessagingConfiguration toConfigureAgainst);
+        void Configure(MessageServerConfiguration toConfigureAgainst);
     }
 }

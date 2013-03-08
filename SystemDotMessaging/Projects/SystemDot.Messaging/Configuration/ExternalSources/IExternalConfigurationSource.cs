@@ -5,6 +5,6 @@ namespace SystemDot.Messaging.Configuration.ExternalSources
     [InheritedExport]
     public interface IExternalConfigurationSource
     {
-        void Configure(MessagingConfiguration toConfigureAgainst);
+        void Configure(MessageServerConfiguration toConfigureAgainst);
     }
 }

@@ -37,6 +37,11 @@ namespace SystemDot
             throw new PlatformNotSupportedException("");
         }
 
+        public static Assembly GetAssembly(this Type type)
+        {
+            return type.GetTypeInfo().Assembly;
+        }
+
         public static IEnumerable<Type> FindTypes<TType>(this object type)
         {
             return typeof(TType).GetTypeInfo().Assembly.ExportedTypes.Where(t => !t.GetTypeInfo().IsInterface);
@@ -45,8 +50,6 @@ namespace SystemDot
         public static IEnumerable<MethodInfo> GetMethodsByName(this Type type, Action genMethod)
         {
             return type.GetTypeInfo().DeclaredMethods.Where(m => m.Name == "RegisterInstance");
-
         }
-
     }
 }

@@ -10,7 +10,7 @@ namespace SystemDot.Messaging.Configuration.ExternalSources
         [ImportMany]
         public IEnumerable<IExternalConfigurationSource> Sources { get; set; }
 
-        public void Configure(MessagingConfiguration toConfigureAgainst)
+        public void Configure(MessageServerConfiguration toConfigureAgainst)
         {
             var catalog = new DirectoryCatalog(GetPath(), "*.dll");
             var container = new CompositionContainer(catalog);
@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Configuration.ExternalSources
 
         static string GetPath()
         {
-            return Path.GetDirectoryName(typeof(IExternalConfigurationSource).Assembly.Location);
+            return Path.GetDirectoryName(typeof(IExternalConfigurationSource).GetAssembly().GetLocation());
         }
     }
 }
