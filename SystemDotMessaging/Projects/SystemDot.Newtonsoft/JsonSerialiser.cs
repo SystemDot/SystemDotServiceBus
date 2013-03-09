@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text;
 using SystemDot.Serialisation;
 using Newtonsoft.Json;
 
@@ -6,11 +7,16 @@ namespace SystemDot.Newtonsoft
 {
     public class JsonSerialiser : ISerialiser
     {
-        readonly JsonSerializer inner;
+        readonly JsonSerializer typedSerializer;
 
         public JsonSerialiser()
         {
-            this.inner = new JsonSerializer();
+            this.typedSerializer = new JsonSerializer
+		    {
+			    TypeNameHandling = TypeNameHandling.All,
+			    DefaultValueHandling = DefaultValueHandling.Ignore,
+			    NullValueHandling = NullValueHandling.Ignore
+		    };
         }
 
         public byte[] Serialise(object toSerialise)
@@ -24,24 +30,22 @@ namespace SystemDot.Newtonsoft
 
         public void Serialise(Stream toSerialise, object graph)
         {
-            using (TextWriter streamWriter = new StreamWriter(toSerialise))
-                using(JsonWriter textWriter = new JsonTextWriter(streamWriter))
-                    this.inner.Serialize(textWriter, toSerialise);
+            using (var streamWriter = new StreamWriter(toSerialise, Encoding.UTF8))
+                using (var textWriter = new JsonTextWriter(streamWriter))
+                    this.typedSerializer.Serialize(textWriter, graph);
         }
 
         public object Deserialise(byte[] toDeserialise)
         {
             using (var stream = new MemoryStream(toDeserialise))
-            {
                 return Deserialise(stream);
-            }
         }
 
         public object Deserialise(Stream toDeserialise)
         {
-            using (TextReader streamReader = new StreamReader(toDeserialise))
+            using (var streamReader = new StreamReader(toDeserialise, Encoding.UTF8))
                 using (JsonReader reader = new JsonTextReader(streamReader))
-                    return this.inner.Deserialize(reader);
+                    return this.typedSerializer.Deserialize(reader);
         }
     }
 }

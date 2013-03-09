@@ -15,7 +15,6 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<IExternalSourcesConfigurer, ExternalSourcesConfigurer>();
             container.RegisterInstance<IFileSystem, FileSystem>();
             container.RegisterInstance<IWebRequestor, WebRequestor>();
-            container.RegisterInstance<ISerialiser, PlatformAgnosticSerialiser>();
             container.RegisterInstance<EndpointAddressBuilder, EndpointAddressBuilder>();
             container.RegisterInstance<ISystemTime, SystemTime>();
         }

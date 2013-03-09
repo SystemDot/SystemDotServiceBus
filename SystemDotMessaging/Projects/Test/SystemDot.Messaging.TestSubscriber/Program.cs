@@ -2,7 +2,6 @@
 using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Logging;
-using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Transport.Http.Configuration;

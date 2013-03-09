@@ -5,6 +5,7 @@ using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Transport.Http.Configuration;
+using SystemDot.Newtonsoft;
 
 namespace SystemDot.Messaging.TestRequestReply.Reciever
 {
@@ -14,6 +15,7 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
         {
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false })
+                .UsingJsonSerialisation()
                 .UsingHttpTransport()
                 .AsARemoteServer("MetroProxy")
                 .AsAServer("ReceiverServer")

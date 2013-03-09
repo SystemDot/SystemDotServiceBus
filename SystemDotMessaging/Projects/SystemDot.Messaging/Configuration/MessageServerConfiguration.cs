@@ -5,6 +5,7 @@ using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.ExternalSources;
 using SystemDot.Messaging.Configuration.Local;
+using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Configuration
@@ -21,19 +22,16 @@ namespace SystemDot.Messaging.Configuration
             this.serverPath = serverPath;
             this.buildActions = new List<Action>();
 
-            ConfigureExternalSources();
-        }
+            IIocContainer container = IocContainerLocator.Locate();
 
-        void ConfigureExternalSources()
-        {
-            IocContainerLocator.Locate().Resolve<IExternalSourcesConfigurer>().Configure(this);
+            RegisterInMemoryPersistence(container);
+            RegisterPlatformAgnosticSerialiser(container);
+            ConfigureExternalSources(container);
         }
 
         public ChannelConfiguration OpenChannel(string name)
         {
             Contract.Requires(!string.IsNullOrEmpty(name));
-
-            RegisterInMemoryPersistence(IocContainerLocator.Locate());
 
             return new ChannelConfiguration(
                 new EndpointAddress(name, this.serverPath),
@@ -43,16 +41,24 @@ namespace SystemDot.Messaging.Configuration
 
         public LocalChannelConfiguration OpenLocalChannel()
         {
-            RegisterInMemoryPersistence(IocContainerLocator.Locate());
-            
             return new LocalChannelConfiguration(
                 this.serverPath, 
                 this.buildActions);
         }
 
-        private static void RegisterInMemoryPersistence(IIocContainer container)
+        static void RegisterInMemoryPersistence(IIocContainer container)
         {
             container.RegisterInstance<IChangeStore, InMemoryChangeStore>();
+        }
+
+        static void RegisterPlatformAgnosticSerialiser(IIocContainer container)
+        {
+            container.RegisterInstance<ISerialiser, PlatformAgnosticSerialiser>();
+        }
+
+        void ConfigureExternalSources(IIocContainer container)
+        {
+            container.Resolve<IExternalSourcesConfigurer>().Configure(this);
         }
     }
 }

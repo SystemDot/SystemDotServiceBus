@@ -6,6 +6,7 @@ using SystemDot.Messaging.Acknowledgement.Builders;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.Local;
 using SystemDot.Messaging.Handling;
+using SystemDot.Messaging.Publishing.Builders;
 using SystemDot.Messaging.Transport;
 using SystemDot.Messaging.UnitOfWork;
 using SystemDot.Parallelism;
@@ -28,6 +29,7 @@ namespace SystemDot.Messaging.Configuration
 
         public IBus Initialise()
         {
+            Resolve<SubscriptionHandlerChannelBuilder>().Build();
             Resolve<AcknowledgementSendChannelBuilder>().Build();
             Resolve<AcknowledgementRecieveChannelBuilder>().Build();
 

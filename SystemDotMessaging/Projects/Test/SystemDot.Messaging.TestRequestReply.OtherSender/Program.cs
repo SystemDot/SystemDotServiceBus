@@ -7,6 +7,7 @@ using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Test.Messages;
 using SystemDot.Messaging.Transport.Http.Configuration;
+using SystemDot.Newtonsoft;
 
 namespace SystemDot.Messaging.TestRequestReply.OtherSender
 {
@@ -16,6 +17,7 @@ namespace SystemDot.Messaging.TestRequestReply.OtherSender
         {
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false, ShowDebug = false })
+                .UsingJsonSerialisation()
                 .UsingHttpTransport()
                 .AsAServer("OtherSenderServer")
                 .OpenChannel("OtherTestRequest")

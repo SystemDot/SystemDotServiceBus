@@ -12,7 +12,7 @@ namespace SystemDot.Messaging.Configuration.ExternalSources
 
         public void Configure(MessageServerConfiguration toConfigureAgainst)
         {
-            var catalog = new DirectoryCatalog(GetPath(), "*.dll");
+            var catalog = new DirectoryCatalog(GetPath(), "*.ExternalConfiguration.dll");
             var container = new CompositionContainer(catalog);
 
             container.ComposeParts(this);

@@ -21,7 +21,6 @@ namespace SystemDot.Messaging.Configuration.Publishers
 
         protected override void Build()
         {
-            Resolve<SubscriptionHandlerChannelBuilder>().Build();
             Resolve<PublisherChannelBuilder>().Build(this.schema);
         }
 
