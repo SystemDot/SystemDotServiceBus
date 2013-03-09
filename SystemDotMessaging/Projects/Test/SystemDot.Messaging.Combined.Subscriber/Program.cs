@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Combined.Subscriber
                 .AsAServer("SubscriberServer")
                 .UsingFilePersistence()
                 .OpenChannel("TestSubscriber")
-                    .ForSubscribingTo("TestPublisher@CHRIS-NEW-PC/ReceiverPublisherServer")
+                    .ForSubscribingTo("TestPublisher@/ReceiverPublisherServer")
                 .Initialise();
 
             IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());

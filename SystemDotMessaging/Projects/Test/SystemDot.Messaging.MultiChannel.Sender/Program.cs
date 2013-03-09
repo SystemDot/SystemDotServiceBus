@@ -20,11 +20,11 @@ namespace SystemDot.Messaging.MultiChannel.Sender
                 .AsAServer("Server")
                 .UsingFilePersistence()
                 .OpenChannel("TestSenderA")
-                    .ForRequestReplySendingTo("TestRecieverA@CHRIS-NEW-PC/ServerA")
+                    .ForRequestReplySendingTo("TestRecieverA@/ServerA")
                     .OnlyForMessages(FilteredBy.NamePattern("Channel1"))
                     .WithDurability()
                 .OpenChannel("TestSenderB")
-                    .ForRequestReplySendingTo("TestRecieverB@CHRIS-NEW-PC/ServerB")
+                    .ForRequestReplySendingTo("TestRecieverB@/ServerB")
                     .OnlyForMessages(FilteredBy.NamePattern("Channel2"))
                     .WithDurability()
                 .Initialise();

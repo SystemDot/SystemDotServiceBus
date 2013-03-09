@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
                 .AsAServer("SenderServer")
                 .UsingFilePersistence()
                 .OpenChannel("TestRequest")
-                .ForRequestReplySendingTo("TestReply@CHRIS-NEW-PC/ReceiverServer.CHRIS-NEW-PC/ReceiverServer")
+                .ForRequestReplySendingTo("TestReply@/ReceiverServer")
                 .WithDurability()
                 .Initialise();
 

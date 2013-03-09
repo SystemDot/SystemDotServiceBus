@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.OtherTestSubscriber
                 .AsAServer("OtherSubscriberServer")
                 .UsingFilePersistence()
                 .OpenChannel("TestOtherSubscriber")
-                    .ForSubscribingTo("TestPublisher@CHRIS-NEW-PC/PublisherServer")
+                    .ForSubscribingTo("TestPublisher@/PublisherServer")
                     .WithDurability()
                 .Initialise();
 
