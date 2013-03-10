@@ -7,7 +7,7 @@ namespace SystemDot
     {
         public static string GetLocation(this Assembly assembly)
         {
-            throw new PlatformNotSupportedException(String.Empty);
+            return "C:\\";
         }
     }
 }

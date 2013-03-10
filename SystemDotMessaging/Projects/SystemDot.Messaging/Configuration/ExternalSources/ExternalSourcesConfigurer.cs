@@ -10,6 +10,11 @@ namespace SystemDot.Messaging.Configuration.ExternalSources
         [ImportMany]
         public IEnumerable<IExternalConfigurationSource> Sources { get; set; }
 
+        public ExternalSourcesConfigurer()
+        {
+            Sources = new List<IExternalConfigurationSource>();
+        }
+
         public void Configure(MessageServerConfiguration toConfigureAgainst)
         {
             var catalog = new DirectoryCatalog(GetPath(), "*.ExternalConfiguration.dll");

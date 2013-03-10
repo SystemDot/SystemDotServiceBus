@@ -12,40 +12,44 @@ namespace SystemDot.Newtonsoft
         public JsonSerialiser()
         {
             this.typedSerializer = new JsonSerializer
-		    {
-			    TypeNameHandling = TypeNameHandling.All,
-			    DefaultValueHandling = DefaultValueHandling.Ignore,
-			    NullValueHandling = NullValueHandling.Ignore
-		    };
+            {
+                TypeNameHandling = TypeNameHandling.All,
+                DefaultValueHandling = DefaultValueHandling.Ignore,
+                NullValueHandling = NullValueHandling.Ignore
+            };
         }
 
         public byte[] Serialise(object toSerialise)
         {
-            using (var stream = new MemoryStream())
-            {
-                Serialise(stream, toSerialise);
-                return stream.ToArray();
-            }
+            var stringBuilder = new StringBuilder();
+
+            using (var stringWriter = new StringWriter(stringBuilder))
+                using (var textWriter = new JsonTextWriter(stringWriter))
+                    this.typedSerializer.Serialize(textWriter, toSerialise);
+
+            return stringBuilder.ToString().ToBytes();
         }
 
         public void Serialise(Stream toSerialise, object graph)
         {
-            using (var streamWriter = new StreamWriter(toSerialise, Encoding.UTF8))
-                using (var textWriter = new JsonTextWriter(streamWriter))
-                    this.typedSerializer.Serialize(textWriter, graph);
+            byte[] bytes = Serialise(graph);
+            toSerialise.Write(bytes, 0, bytes.Length);
         }
 
         public object Deserialise(byte[] toDeserialise)
         {
-            using (var stream = new MemoryStream(toDeserialise))
-                return Deserialise(stream);
+            using (var stringReader = new StringReader(toDeserialise.GetString()))
+                using (var reader = new JsonTextReader(stringReader))
+                    return this.typedSerializer.Deserialize(reader);
         }
 
         public object Deserialise(Stream toDeserialise)
         {
-            using (var streamReader = new StreamReader(toDeserialise, Encoding.UTF8))
-                using (JsonReader reader = new JsonTextReader(streamReader))
-                    return this.typedSerializer.Deserialize(reader);
+            using (var ms = new MemoryStream())
+            {
+                toDeserialise.CopyTo(ms);
+                return Deserialise(ms.ToArray());
+            }
         }
     }
 }
