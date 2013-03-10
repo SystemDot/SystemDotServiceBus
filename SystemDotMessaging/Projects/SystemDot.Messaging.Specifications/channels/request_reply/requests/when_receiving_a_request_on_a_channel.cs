@@ -12,8 +12,8 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
     [Subject(SpecificationGroup.Description)]
     public class when_receiving_a_request_on_a_channel : WithMessageConfigurationSubject
     {
-        const string ChannelName = "Test";
-        const string SenderAddress = "TestSenderAddress";
+        const string ReceiverAddress = "ReceiverAddress";
+        const string SenderAddress = "SenderAddress";
         const int Message = 1;
 
         static MessagePayload payload;
@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
         {
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                    .OpenChannel(ChannelName)
+                    .OpenChannel(ReceiverAddress)
                     .ForRequestReplyRecieving()
                 .Initialise();
 
@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
             payload = new MessagePayload().MakeSequencedReceivable(
                 Message, 
                 SenderAddress, 
-                ChannelName, 
+                ReceiverAddress, 
                 PersistenceUseType.RequestSend);
         };
 

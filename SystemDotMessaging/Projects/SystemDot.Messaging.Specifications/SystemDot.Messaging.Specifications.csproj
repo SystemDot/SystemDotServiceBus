@@ -85,6 +85,7 @@
     <Compile Include="channels\point_to_point\sequencing\when_passing_messages_in_the_incorrect_order_on_a_durable_channel.cs" />
     <Compile Include="channels\request_reply\replies\when_receiving_a_reply_from_a_durable_channel_that_has_had_sequencing_reset.cs" />
     <Compile Include="channels\request_reply\requests\when_receiving_a_reply_from_a_durable_channel_that_has_had_sequencing_reset.cs" />
+    <Compile Include="channels\request_reply\requests\when_receiving_a_request_on_a_channel_from_one_sender_and_then_from_another.cs" />
     <Compile Include="channels\TestExternalSourcesConfigurer.cs" />
     <Compile Include="channels\unitofwork\when_running_a_unit_of_work.cs" />
     <Compile Include="channels\unitofwork\when_running_a_unit_of_work_and_the_target_processor_throws_an_exception.cs" />

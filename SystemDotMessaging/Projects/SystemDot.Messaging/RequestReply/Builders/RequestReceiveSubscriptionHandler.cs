@@ -4,11 +4,11 @@ using SystemDot.Messaging.Packaging.Headers;
 
 namespace SystemDot.Messaging.RequestReply.Builders
 {
-    public class RequestRecieveSubscriptionHandler : IMessageInputter<MessagePayload>
+    public class RequestReceiveSubscriptionHandler : IMessageInputter<MessagePayload>
     {
         readonly RequestRecieveChannelDistributor distributor;
 
-        public RequestRecieveSubscriptionHandler(RequestRecieveChannelDistributor distributor)
+        public RequestReceiveSubscriptionHandler(RequestRecieveChannelDistributor distributor)
         {
             Contract.Requires(distributor != null);
             

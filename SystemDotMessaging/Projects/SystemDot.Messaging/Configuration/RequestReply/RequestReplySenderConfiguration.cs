@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
     public class RequestReplySenderConfiguration : Initialiser
     {
         readonly RequestSendChannelSchema sendSchema;
-        readonly ReplyRecieveChannelSchema recieveSchema;
+        readonly ReplyReceiveChannelSchema receiveSchema;
 
         public RequestReplySenderConfiguration(
             EndpointAddress address, 
@@ -31,17 +31,17 @@ namespace SystemDot.Messaging.Configuration.RequestReply
                 RepeatStrategy = EscalatingTimeRepeatStrategy.Default
             };
 
-            this.recieveSchema = new ReplyRecieveChannelSchema
+            this.receiveSchema = new ReplyReceiveChannelSchema
             {
                 Address = address,
-                UnitOfWorkRunner = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>()
+                UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>
             };
         }
 
         protected override void Build()
         {
             Resolve<RequestSendChannelBuilder>().Build(this.sendSchema);
-            Resolve<ReplyRecieveChannelBuilder>().Build(this.recieveSchema);
+            Resolve<ReplyReceiveChannelBuilder>().Build(this.receiveSchema);
         }
 
         protected override ServerPath GetServerPath()
@@ -60,7 +60,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         public RequestReplySenderConfiguration WithDurability()
         {
             this.sendSchema.IsDurable = true;
-            this.recieveSchema.IsDurable = true;
+            this.receiveSchema.IsDurable = true;
             return this;
         }
 
@@ -83,7 +83,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         public RequestReplySenderConfiguration WithUnitOfWork<TUnitOfWorkFactory>() 
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory
         {
-            this.recieveSchema.UnitOfWorkRunner = CreateUnitOfWorkRunner<TUnitOfWorkFactory>();
+            this.receiveSchema.UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<TUnitOfWorkFactory>;
             return this;
         }
 
@@ -91,7 +91,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             Contract.Requires(hook != null);
 
-            this.recieveSchema.Hooks.Add(hook);
+            this.receiveSchema.Hooks.Add(hook);
             return this;
         }
 

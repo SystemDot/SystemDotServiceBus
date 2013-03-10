@@ -35,9 +35,9 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
 
                 Console.WriteLine("Sending messages");
 
-                for (int i = 0; i < 100; i++)
+                for (int i = 0; i < 7; i++)
                 {
-                    bus.Send(new TestMessage("Hello" + i)); 
+                    bus.Send(new TestMessage("Goodbye" + i)); 
                 }
 
             } while (true);

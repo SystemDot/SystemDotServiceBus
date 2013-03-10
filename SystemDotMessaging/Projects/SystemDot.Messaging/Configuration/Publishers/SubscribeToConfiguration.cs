@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
             this.recieveSchema = new SubscriberRecieveChannelSchema
             {
                 Address = subscriberAddress,
-                UnitOfWorkRunner = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>()
+                UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>
             };
         }
 
@@ -56,7 +56,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
         public SubscribeToConfiguration WithUnitOfWork<TUnitOfWorkFactory>()
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory
         {
-            this.recieveSchema.UnitOfWorkRunner = CreateUnitOfWorkRunner<TUnitOfWorkFactory>();
+            this.recieveSchema.UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<TUnitOfWorkFactory>;
             return this;
         }
     }

@@ -10,7 +10,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
         {
             iocContainer.RegisterInstance<RequestRecieveChannelDistributor, RequestRecieveChannelDistributor>();
             iocContainer.RegisterInstance<RequestReceiveDistributionChannelBuilder, RequestReceiveDistributionChannelBuilder>();
-            iocContainer.RegisterInstance<ReplyRecieveChannelBuilder, ReplyRecieveChannelBuilder>();
+            iocContainer.RegisterInstance<ReplyReceiveChannelBuilder, ReplyReceiveChannelBuilder>();
             iocContainer.RegisterInstance<RequestRecieveChannelBuilder, RequestRecieveChannelBuilder>();
             iocContainer.RegisterInstance<ReplyAddressLookup, ReplyAddressLookup>();
             iocContainer.RegisterInstance<ReplySendChannelDistributor, ReplySendChannelDistributor>();

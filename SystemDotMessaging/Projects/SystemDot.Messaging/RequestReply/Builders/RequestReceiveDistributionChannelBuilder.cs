@@ -39,7 +39,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             MessagePipelineBuilder.Build()  
                 .With(this.messageReceiver)
                 .ToProcessor(new BodyMessageFilter(schema.Address))
-                .ToEndPoint(new RequestRecieveSubscriptionHandler(distributor));
+                .ToEndPoint(new RequestReceiveSubscriptionHandler(distributor));
 
             MessagePipelineBuilder.Build()
                 .With(this.messageReceiver)

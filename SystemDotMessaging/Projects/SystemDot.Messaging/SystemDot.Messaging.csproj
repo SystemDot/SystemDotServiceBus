@@ -107,9 +107,9 @@
     <Compile Include="Publishing\Builders\SubscriptionRequestChannelBuilder.cs" />
     <Compile Include="Publishing\ISubscriptionRequestor.cs" />
     <Compile Include="Publishing\SubscriptionRequestFilter.cs" />
-    <Compile Include="RequestReply\Builders\ReplyRecieveChannelSchema.cs" />
+    <Compile Include="RequestReply\Builders\ReplyReceiveChannelSchema.cs" />
     <Compile Include="RequestReply\Builders\ReplySendChannelSchema.cs" />
-    <Compile Include="RequestReply\Builders\RequestRecieveSubscriptionHandler.cs" />
+    <Compile Include="RequestReply\Builders\RequestReceiveSubscriptionHandler.cs" />
     <Compile Include="RequestReply\Builders\RequestSendChannelSchema.cs" />
     <Compile Include="Sequencing\SequenceOriginRecorder.cs" />
     <Compile Include="Sequencing\FirstSequenceHeader.cs" />
@@ -156,7 +156,7 @@
     <Compile Include="Filtering\NamePatternMessageFilterStrategy.cs" />
     <Compile Include="Filtering\NamespaceMessageFilterStrategy.cs" />
     <Compile Include="Filtering\PassThroughMessageFilterStategy.cs" />
-    <Compile Include="RequestReply\Builders\ReplyRecieveChannelBuilder.cs" />
+    <Compile Include="RequestReply\Builders\ReplyReceiveChannelBuilder.cs" />
     <Compile Include="RequestReply\Builders\RequestRecieveChannelBuilder.cs" />
     <Compile Include="RequestReply\Builders\ReplySendChannelBuilder.cs" />
     <Compile Include="RequestReply\Builders\RequestSendChannelBuilder.cs" />

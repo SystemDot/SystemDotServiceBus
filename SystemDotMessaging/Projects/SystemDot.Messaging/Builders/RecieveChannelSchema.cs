@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Messaging.Addressing;
 
 namespace SystemDot.Messaging.Builders
@@ -6,6 +7,6 @@ namespace SystemDot.Messaging.Builders
     {
         public EndpointAddress Address { get; set; }
         public EndpointAddress ToAddress { get; set; }
-        public IMessageProcessor<object, object> UnitOfWorkRunner { get; set; }
+        public Func<IMessageProcessor<object, object>> UnitOfWorkRunnerCreator { get; set; }
     }
 }

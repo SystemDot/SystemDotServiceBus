@@ -17,7 +17,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.RequestReply.Builders
 {
-    public class ReplyRecieveChannelBuilder
+    public class ReplyReceiveChannelBuilder
     {
         readonly ISerialiser serialiser;
         readonly MessageHandlerRouter messageHandlerRouter;
@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
 
-        public ReplyRecieveChannelBuilder(
+        public ReplyReceiveChannelBuilder(
             ISerialiser serialiser, 
             MessageHandlerRouter messageHandlerRouter, 
             IMessageReceiver messageReceiver, 
@@ -53,7 +53,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             this.taskRepeater = taskRepeater;
         }
 
-        public void Build(ReplyRecieveChannelSchema schema)
+        public void Build(ReplyReceiveChannelSchema schema)
         {
             ReceiveMessageCache messageCache = this.persistenceFactorySelector
                 .Select(schema)
@@ -72,7 +72,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .Queue()
                 .ToResequencerIfSequenced(messageCache, schema)
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
-                .ToProcessor(schema.UnitOfWorkRunner)
+                .ToProcessor(schema.UnitOfWorkRunnerCreator())
                 .ToProcessor(new BatchUnpackager())
                 .ToProcessors(schema.Hooks.ToArray())
                 .ToEndPoint(this.messageHandlerRouter);
