@@ -1,10 +1,12 @@
 ﻿using System;
+using SystemDot.Http;
 using SystemDot.Http.Builders;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.Http.Configuration;
+using SystemDot.Serialisation;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.transport.http
@@ -22,6 +24,7 @@ namespace SystemDot.Messaging.Specifications.transport.http
         Establish context = () =>
         {
             ConfigureAndRegister<IHttpServerBuilder>(new TestHttpServerBuilder());
+            ConfigureAndRegister<IWebRequestor>(new TestWebRequestor(Resolve<ISerialiser>(), new FixedPortAddress()));
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()

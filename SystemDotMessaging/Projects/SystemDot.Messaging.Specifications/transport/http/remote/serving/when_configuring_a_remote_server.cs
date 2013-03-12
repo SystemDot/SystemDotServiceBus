@@ -9,7 +9,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
 {
     [Subject(SpecificationGroup.Description)]
-    public class When_configuring_a_remote_server : WithMessageConfigurationSubject
+    public class When_configuring_a_remote_server : WithServerConfigurationSubject
     {
         static TestSystemTime systemTime;
 

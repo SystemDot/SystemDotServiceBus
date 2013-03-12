@@ -1,13 +1,12 @@
 using System;
 using SystemDot.Http.Builders;
-using SystemDot.Messaging.Specifications.channels;
 using SystemDot.Messaging.Transport.Http.Configuration;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.transport.http
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_configuring_a_server : WithMessageConfigurationSubject
+    public class when_configuring_a_server : WithServerConfigurationSubject
     {
         const string ServerInstance = "ServerInstance";
         

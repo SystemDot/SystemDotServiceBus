@@ -2,8 +2,9 @@ using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Batching;
-using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
+using SystemDot.Messaging.Configuration.PointToPoint;
+using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Pipelines;
@@ -52,7 +53,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             this.taskRepeater = taskRepeater;
         }
 
-        public void Build(ChannelSchema schema)
+        public void Build(PointToPointReceiverChannelSchema schema)
         {
             ReceiveMessageCache messageCache = this.messageCacheFactory.CreateReceiveCache(
                 PersistenceUseType.PointToPointSend, 
@@ -61,6 +62,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             MessagePipelineBuilder.Build()
                 .With(this.messageReceiver)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
+                .ToProcessor(new BodyMessageFilter(schema.Address))
                 .ToProcessor(new SequenceOriginApplier(messageCache))
                 .ToSimpleMessageRepeater(messageCache, this.systemTime, this.taskRepeater)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
@@ -69,6 +71,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
                 .Queue()
                 .ToResequencerIfSequenced(messageCache, schema)
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
+                .ToProcessor(schema.UnitOfWorkRunnerCreator())
                 .ToProcessor(new BatchUnpackager())
                 .ToEndPoint(this.messageHandlerRouter);
         }

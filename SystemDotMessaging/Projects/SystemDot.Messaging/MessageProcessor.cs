@@ -7,8 +7,8 @@ namespace SystemDot.Messaging
     {
         protected void OnMessageProcessed(MessagePayload toInput)
         {
-            if(this.MessageProcessed != null)
-                this.MessageProcessed(toInput);
+            if(MessageProcessed != null)
+                MessageProcessed(toInput);
         }
 
         public event Action<MessagePayload> MessageProcessed;

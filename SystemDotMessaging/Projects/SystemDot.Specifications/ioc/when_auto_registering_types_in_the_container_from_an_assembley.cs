@@ -20,11 +20,11 @@ namespace SystemDot.Specifications.ioc
 
         It should_not_auto_register_an_interface_without_concrete_type_implementing_it = () =>
             Catch.Exception(() => Subject.Resolve<ITestInterfaceWithNoConcreteImplementation>())
-            .ShouldBeOfType<KeyNotFoundException>();
+                .ShouldBeOfType<KeyNotFoundException>();
 
         It should_not_auto_register_an_abstract_concrete_type = () =>
             Catch.Exception(() => Subject.Resolve<TestAbstractConcreteType>())
-            .ShouldBeOfType<KeyNotFoundException>();
+                .ShouldBeOfType<KeyNotFoundException>();
 
         It should_auto_register_a_derived_concrete_type_against_its_interface = () =>
             Subject.Resolve<ITestInterfaceOnDerivedConcreteType>().ShouldBeOfType<TestDerivedConcreteType>();

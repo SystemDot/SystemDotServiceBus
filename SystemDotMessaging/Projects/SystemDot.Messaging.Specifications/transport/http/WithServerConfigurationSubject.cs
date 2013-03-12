@@ -11,6 +11,8 @@ namespace SystemDot.Messaging.Specifications.transport.http
     {
         Establish context = () => ConfigureAndRegister<ISerialiser>(new PlatformAgnosticSerialiser());
 
+        Cleanup cleanup = () => TestHttpServer.ClearInstance();
+
         public static IEnumerable<MessagePayload> SendMessagesToServer(params MessagePayload[] toSend)
         {
             return SendObjectsToServer(toSend)

@@ -6,7 +6,12 @@ namespace SystemDot.Messaging.Specifications
     public class TestHttpServer : IHttpServer
     {
         public static TestHttpServer Instance { get; private set; }
-        
+
+        public static void ClearInstance()
+        {
+            Instance = null;
+        }
+
         readonly IHttpHandler handler;
         bool started;
         

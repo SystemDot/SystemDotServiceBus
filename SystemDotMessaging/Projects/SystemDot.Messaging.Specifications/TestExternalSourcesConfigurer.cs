@@ -1,7 +1,7 @@
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Configuration.ExternalSources;
 
-namespace SystemDot.Messaging.Specifications.channels
+namespace SystemDot.Messaging.Specifications
 {
     public class TestExternalSourcesConfigurer : IExternalSourcesConfigurer
     {

@@ -66,6 +66,7 @@
     <Compile Include="channels\expiry\when_processing_a_message_with_a_message_send_time_remover.cs" />
     <Compile Include="channels\expiry\when_processing_a_message_with_a_message_send_time_remover_with_no_processor_listening.cs" />
     <Compile Include="channels\point_to_point\batching\when_sending_messages_inside_a_batch_and_then_again.cs" />
+    <Compile Include="channels\point_to_point\handling\SpecificationGroup.cs" />
     <Compile Include="channels\point_to_point\repeating\when_starting_a_repeater_with_a_simple_repeat_strategy_for_the_second_time.cs" />
     <Compile Include="channels\point_to_point\sequencing\when_receiving_a_message_then_restarting_messaging_then_receiving_a_message_from_a_cache_reset_channel.cs" />
     <Compile Include="channels\point_to_point\sequencing\when_passing_messages_in_the_correct_order_on_a_durable_channel_and_then_restarting_messaging.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="channels\point_to_point\sequencing\when_sending_a_message.cs" />
     <Compile Include="channels\point_to_point\sequencing\when_sending_a_message_on_durable_channel_and_then_restarting_messaging.cs" />
     <Compile Include="channels\point_to_point\sequencing\when_sending_two_messages.cs" />
+    <Compile Include="channels\point_to_point\unitofwork\SpecificationGroup.cs" />
     <Compile Include="channels\request_reply\batching\SpecificationGroup.cs" />
     <Compile Include="channels\request_reply\batching\when_receiving_replies_inside_a_batch.cs" />
     <Compile Include="channels\request_reply\batching\when_receiving_requests_inside_a_batch_and_replying_to_each.cs" />
@@ -86,10 +88,9 @@
     <Compile Include="channels\request_reply\replies\when_receiving_a_reply_from_a_durable_channel_that_has_had_sequencing_reset.cs" />
     <Compile Include="channels\request_reply\requests\when_receiving_a_reply_from_a_durable_channel_that_has_had_sequencing_reset.cs" />
     <Compile Include="channels\request_reply\requests\when_receiving_a_request_on_a_channel_from_one_sender_and_then_from_another.cs" />
-    <Compile Include="channels\TestExternalSourcesConfigurer.cs" />
-    <Compile Include="channels\unitofwork\when_running_a_unit_of_work.cs" />
-    <Compile Include="channels\unitofwork\when_running_a_unit_of_work_and_the_target_processor_throws_an_exception.cs" />
-    <Compile Include="channels\FakeAccessorExtensions.cs" />
+    <Compile Include="TestExternalSourcesConfigurer.cs" />
+    <Compile Include="channels\point_to_point\unitofwork\when_receiving_a_message_with_a_unit_of_work_specified.cs" />
+    <Compile Include="channels\point_to_point\unitofwork\when_receiving_a_message_with_a_unit_of_work_specified_and_the_target_processor_throws_an_exception.cs" />
     <Compile Include="channels\local\SpecificationGroup.cs" />
     <Compile Include="channels\local\when_sending_a_local_message.cs" />
     <Compile Include="channels\local\when_sending_a_local_message_after_configuring_a_channel_and_then_a_local_channel.cs" />
@@ -237,12 +238,11 @@
     <Compile Include="FailingWebRequestor.cs" />
     <Compile Include="TestSerialiser.cs" />
     <Compile Include="transport\http\remote\client\when_sending_a_message_using_a_local_proxy.cs" />
-    <Compile Include="channels\when_handling_a_message_that_does_not_have_with_the_expected_address_with_a_body_message_handler.cs" />
+    <Compile Include="channels\point_to_point\receiving\when_receiving_a_message_that_does_not_have_the_expected_address.cs" />
     <Compile Include="channels\request_reply\when_passing_messages_through_a_reply_channel_selector.cs" />
     <Compile Include="channels\distribution\when_pumping_an_item.cs" />
     <Compile Include="channels\distribution\when_pumping_items_on_a_with_no_pushed_item_listener.cs" />
-    <Compile Include="channels\when_handling_a_message_that_does_not_have_a_body_with_a_body_message_handler.cs" />
-    <Compile Include="channels\when_handling_a_message_with_the_expected_address_with_a_body_message_handler.cs" />
+    <Compile Include="channels\point_to_point\receiving\when_receiving_a_message_that_does_not_have_a_body.cs" />
     <Compile Include="TestTaskStarter.cs" />
     <Compile Include="transport\http\SpecificationGroup.cs" />
     <Compile Include="transport\http\when_sending_a_message.cs" />
@@ -250,8 +250,8 @@
     <Compile Include="transport\http\remote\client\when_two_messages_are_received_by_long_polling.cs" />
     <Compile Include="transport\http\remote\client\when_long_polling_and_messages_only_exist_on_the_server_for_another_client.cs" />
     <Compile Include="TestWebRequestor.cs" />
-    <Compile Include="channels\handling\when_routing_a_message_to_two_handlers_of_differing_messages.cs" />
-    <Compile Include="channels\handling\when_routing_a_message_to_two_handlers.cs" />
+    <Compile Include="channels\point_to_point\handling\when_routing_a_message_to_two_handlers_of_differing_messages.cs" />
+    <Compile Include="channels\point_to_point\handling\when_routing_a_message_to_two_handlers.cs" />
     <Compile Include="TestPublisher.cs" />
     <Compile Include="WithMessageInputterSubject.cs" />
     <Compile Include="transport\http\remote\serving\when_handling_a_request_containing_an_object_other_than_a_message_payload.cs" />
