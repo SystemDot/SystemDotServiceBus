@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
@@ -9,7 +11,7 @@ namespace SystemDot.Messaging.Transport.InProcess.Configuration
         public static MessageServerConfiguration UsingInProcessTransport(this MessagingConfiguration config)
         {
             InProcessTransportComponents.Register(IocContainerLocator.Locate());
-            return new MessageServerConfiguration(ServerPath.None);
+            return new MessageServerConfiguration(new List<Action>(), ServerPath.None);
         }
 
     }

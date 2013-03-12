@@ -15,12 +15,13 @@ namespace SystemDot.Messaging.Configuration
         readonly ServerPath serverPath;
         readonly List<Action> buildActions;
 
-        public MessageServerConfiguration(ServerPath serverPath)
+        public MessageServerConfiguration(List<Action> actions, ServerPath serverPath)
         {
+            Contract.Requires(actions != null);
             Contract.Requires(serverPath != null);
 
             this.serverPath = serverPath;
-            this.buildActions = new List<Action>();
+            this.buildActions = actions;
 
             IIocContainer container = IocContainerLocator.Locate();
 

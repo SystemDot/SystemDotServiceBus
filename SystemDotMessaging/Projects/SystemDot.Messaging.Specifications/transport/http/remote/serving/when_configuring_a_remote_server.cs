@@ -1,5 +1,6 @@
 using System;
 using SystemDot.Http.Builders;
+using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Specifications.channels;
 using SystemDot.Messaging.Transport.Http.Configuration;
 using SystemDot.Specifications;
@@ -21,7 +22,8 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
 
         Because of = () => Configuration.Configure.Messaging()
             .UsingHttpTransport()
-            .AsARemoteServer("RemoteServerInstance");
+            .AsARemoteServer("RemoteServerInstance")
+            .Initialise();
 
         It should_use_the_correct_long_poll_time = () => 
             systemTime.LastTimeSpanRequested.ShouldEqual(TimeSpan.FromSeconds(30));
