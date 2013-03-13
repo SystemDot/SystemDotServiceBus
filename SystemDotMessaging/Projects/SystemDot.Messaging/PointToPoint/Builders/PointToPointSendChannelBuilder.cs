@@ -1,4 +1,5 @@
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Caching;
@@ -22,22 +23,29 @@ namespace SystemDot.Messaging.PointToPoint.Builders
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
         readonly MessageCacheFactory messageCacheFactory;
+        readonly MessageAcknowledgementHandler acknowledgementHandler;
 
         public PointToPointSendChannelBuilder(
             IMessageSender messageSender, 
             ISerialiser serialiser, 
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 
-            MessageCacheFactory messageCacheFactory)
+            MessageCacheFactory messageCacheFactory, 
+            MessageAcknowledgementHandler acknowledgementHandler)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(serialiser != null);
+            Contract.Requires(systemTime != null);
+            Contract.Requires(taskRepeater != null);
+            Contract.Requires(messageCacheFactory != null);
+            Contract.Requires(acknowledgementHandler != null);
 
             this.messageSender = messageSender;
             this.serialiser = serialiser;
             this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
             this.messageCacheFactory = messageCacheFactory;
+            this.acknowledgementHandler = acknowledgementHandler;
         }
 
         public void Build(PointToPointSendChannelSchema schema)
@@ -47,6 +55,8 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             SendMessageCache messageCache = this.messageCacheFactory.CreateSendCache(
                 PersistenceUseType.PointToPointSend, 
                 schema.FromAddress);
+
+            this.acknowledgementHandler.RegisterCache(messageCache);
 
             MessagePipelineBuilder.Build()
                 .WithBusSendTo(new MessageFilter(new PassThroughMessageFilterStategy()))

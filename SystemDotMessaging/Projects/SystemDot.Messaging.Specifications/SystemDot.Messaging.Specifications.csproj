@@ -45,15 +45,15 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="channels\acknowledgement\when_handling_a_recieved_acknowledgement_with_a_different_persistence_channel_to_the_persistence_registered.cs" />
-    <Compile Include="channels\acknowledgement\when_handling_a_recieved_acknowledgement_with_a_different_persistence_use_type_to_the_persistence_registered.cs" />
-    <Compile Include="channels\acknowledgement\when_handling_a_recieved_acknowledgement_with_no_persistences_registered.cs" />
+    <Compile Include="channels\point_to_point\acknowledgement\SpecificationGroup.cs" />
     <Compile Include="channels\configuration\SpecificationGroup.cs" />
+    <Compile Include="channels\point_to_point\acknowledgement\when_repeating_messages_after_receiving_an_acknowledgement_for_a_message_with_no_channels_configured.cs" />
+    <Compile Include="channels\point_to_point\acknowledgement\when_repeating_messages_after_receiving_an_acknowledgement_with_the_incorrect_channel_for_a_message.cs" />
+    <Compile Include="channels\point_to_point\acknowledgement\when_repeating_messages_after_receiving_an_acknowledgement_with_the_incorrect_use_type_for_a_message.cs" />
     <Compile Include="channels\point_to_point\batching\SpecificationGroup.cs" />
     <Compile Include="channels\point_to_point\batching\when_sending_messages_inside_a_batch_without_completing_the_batch.cs" />
     <Compile Include="channels\point_to_point\batching\when_receiving_messages_inside_a_batch.cs" />
     <Compile Include="channels\point_to_point\batching\when_sending_messages_inside_a_batch.cs" />
-    <Compile Include="channels\copying\when_copying_a_message.cs" />
     <Compile Include="channels\distribution\SpecificationGroup.cs" />
     <Compile Include="channels\distribution\when_queueing_an_item.cs" />
     <Compile Include="channels\distribution\when_queueing_an_item_that_fails_when_pushed_then_queueing_another.cs" />
@@ -207,9 +207,8 @@
     <Compile Include="channels\publishing\receiving\when_recieving_on_a_subscriber_channel.cs" />
     <Compile Include="transport\http\when_sending_to_a_receiver_on_a_with_instances_but_no_names_set_for_server_and_proxy.cs" />
     <Compile Include="WithConfigurationSubject.cs" />
-    <Compile Include="channels\acknowledgement\when_acknowledging_a_message.cs" />
-    <Compile Include="channels\acknowledgement\when_handling_a_message_that_is_not_an_acknowledgement.cs" />
-    <Compile Include="channels\acknowledgement\when_handling_a_recieved_acknowledgement.cs" />
+    <Compile Include="channels\point_to_point\acknowledgement\when_acknowledging_a_message.cs" />
+    <Compile Include="channels\point_to_point\acknowledgement\when_repeating_messages_after_receiving_an_acknowledgement_for_a_message.cs" />
     <Compile Include="channels\WithMessageConfigurationSubject.cs" />
     <Compile Include="FailingMessageHandler.cs" />
     <Compile Include="IChangeStoreExtensions.cs" />
@@ -253,7 +252,6 @@
     <Compile Include="channels\point_to_point\handling\when_routing_a_message_to_two_handlers_of_differing_messages.cs" />
     <Compile Include="channels\point_to_point\handling\when_routing_a_message_to_two_handlers.cs" />
     <Compile Include="TestPublisher.cs" />
-    <Compile Include="WithMessageInputterSubject.cs" />
     <Compile Include="transport\http\remote\serving\when_handling_a_request_containing_an_object_other_than_a_message_payload.cs" />
     <Compile Include="transport\http\remote\serving\when_handling_a_long_poll_request_for_with_a_different_address_to_the_queued_message.cs" />
     <Compile Include="StreamExtensions.cs" />

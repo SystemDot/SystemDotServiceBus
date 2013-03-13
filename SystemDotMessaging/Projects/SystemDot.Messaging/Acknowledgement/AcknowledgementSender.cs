@@ -13,7 +13,7 @@ namespace SystemDot.Messaging.Acknowledgement
             acknowledgement.SetAcknowledgementId(toInput.GetSourcePersistenceId());
             acknowledgement.SetToAddress(toInput.GetFromAddress());
 
-            this.MessageProcessed(acknowledgement);
+            MessageProcessed(acknowledgement);
         }
 
         public event Action<MessagePayload> MessageProcessed;

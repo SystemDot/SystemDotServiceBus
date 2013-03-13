@@ -29,13 +29,15 @@ namespace SystemDot.Messaging.Publishing.Builders
             PersistenceFactorySelector persistenceFactorySelector, 
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 
-            MessageAcknowledgementHandler acknowledgementHandler, ISerialiser serialiser)
+            MessageAcknowledgementHandler acknowledgementHandler, 
+            ISerialiser serialiser)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(persistenceFactorySelector != null);
             Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
             Contract.Requires(acknowledgementHandler != null);
+            Contract.Requires(serialiser != null);
 
             this.messageSender = messageSender;
             this.persistenceFactorySelector = persistenceFactorySelector;
