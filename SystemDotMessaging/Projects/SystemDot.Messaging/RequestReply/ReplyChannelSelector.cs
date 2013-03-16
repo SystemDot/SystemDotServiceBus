@@ -5,7 +5,7 @@ using SystemDot.Messaging.Packaging.Headers;
 
 namespace SystemDot.Messaging.RequestReply
 {
-    public class ReplyChannelSelector : IMessageProcessor<MessagePayload, MessagePayload>
+    class ReplyChannelSelector : IMessageProcessor<MessagePayload, MessagePayload>
     {
         readonly ReplyAddressLookup addressLookup;
 
@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.RequestReply
             this.addressLookup.SetCurrentSenderAddress(toInput.GetFromAddress());
             this.addressLookup.SetCurrentRecieverAddress(toInput.GetToAddress());
 
-            this.MessageProcessed(toInput);
+            MessageProcessed(toInput);
         }
 
         public event Action<MessagePayload> MessageProcessed;

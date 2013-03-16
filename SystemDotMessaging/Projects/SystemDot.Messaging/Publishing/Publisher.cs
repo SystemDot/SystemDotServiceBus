@@ -8,7 +8,7 @@ using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Publishing
 {
-    public class Publisher : IPublisher
+    class Publisher : IPublisher
     {
         readonly PersistentSubscriberCollection subscribers;
         

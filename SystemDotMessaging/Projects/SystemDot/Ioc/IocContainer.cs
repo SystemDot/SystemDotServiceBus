@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace SystemDot.Ioc
 {
@@ -49,14 +50,17 @@ namespace SystemDot.Ioc
 
         object CreateObjectInstance(ConcreteInstance concreteType)
         {
-            var constructorInfo = concreteType.ObjectType.GetConstructors().First();
+            var constructorInfo = concreteType.ObjectType
+                .GetAllConstructors()
+                .First();
+
             var parameters = constructorInfo.GetParameters();
 
             var parameterInstances = new object[parameters.Count()];
 
             for (var i = 0; i < parameters.Count(); i++) parameterInstances[i] = Resolve(parameters[i].ParameterType);
 
-            return concreteType.SetObjectInstance(Activator.CreateInstance(concreteType.ObjectType, parameterInstances));
+            return concreteType.SetObjectInstance(constructorInfo.Invoke(parameterInstances));
         }
 
         public void RegisterFromAssemblyOf<TAssemblyOf>()

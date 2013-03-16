@@ -17,7 +17,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Publishing.Builders
 {
-    public class SubscriberRecieveChannelBuilder
+    class SubscriberRecieveChannelBuilder
     {
         readonly ISerialiser serialiser;
         readonly MessageHandlerRouter messageHandlerRouter;
@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly ITaskRepeater taskRepeater;
         readonly IIocContainer iocContainer;
 
-        public SubscriberRecieveChannelBuilder(
+        internal SubscriberRecieveChannelBuilder(
             ISerialiser serialiser, 
             MessageHandlerRouter messageHandlerRouter, 
             IMessageReceiver messageReceiver,

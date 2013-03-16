@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.Specifications
 {
     public static class IChangeStoreExtensions
     {
-        public static IEnumerable<MessagePayload> GetAddedMessages(
+        public static IEnumerable<MessagePayload> GetReceiveMessages(
             this IChangeStore store, 
             PersistenceUseType useType, 
             EndpointAddress address)
@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications
             return rebuilder.GetMessages();
         }
 
-        public static IEnumerable<MessagePayload> GetMessages(
+        public static IEnumerable<MessagePayload> GetSendMessages(
             this IChangeStore store, 
             PersistenceUseType useType, 
             EndpointAddress address)

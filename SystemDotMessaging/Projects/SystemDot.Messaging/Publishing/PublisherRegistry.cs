@@ -4,7 +4,7 @@ using SystemDot.Messaging.Addressing;
 
 namespace SystemDot.Messaging.Publishing
 {
-    public class PublisherRegistry : IPublisherRegistry
+    class PublisherRegistry : IPublisherRegistry
     {
         readonly Dictionary<EndpointAddress, IPublisher> publishers;
 

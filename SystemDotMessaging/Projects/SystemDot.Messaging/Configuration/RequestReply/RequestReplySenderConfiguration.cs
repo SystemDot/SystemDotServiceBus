@@ -6,7 +6,6 @@ using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.RequestReply.Builders;
-using SystemDot.Messaging.Transport;
 using SystemDot.Messaging.UnitOfWork;
 
 namespace SystemDot.Messaging.Configuration.RequestReply
@@ -34,6 +33,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             this.receiveSchema = new ReplyReceiveChannelSchema
             {
                 Address = address,
+                ToAddress = recieverAddress,
                 UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>
             };
         }

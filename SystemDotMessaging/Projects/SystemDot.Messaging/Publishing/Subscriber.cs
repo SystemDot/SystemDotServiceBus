@@ -7,7 +7,7 @@ using SystemDot.Messaging.Repeating;
 
 namespace SystemDot.Messaging.Publishing
 {
-    public class Subscriber
+    class Subscriber
     {
         readonly ISubscriberSendChannelBuilder builder;
         IMessageInputter<MessagePayload> channel;

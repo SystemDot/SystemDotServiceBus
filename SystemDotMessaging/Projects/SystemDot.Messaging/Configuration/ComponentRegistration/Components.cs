@@ -1,9 +1,8 @@
-using System;
 using SystemDot.Ioc;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {
-    public class Components 
+    class Components 
     {
         public static void Register()
         {

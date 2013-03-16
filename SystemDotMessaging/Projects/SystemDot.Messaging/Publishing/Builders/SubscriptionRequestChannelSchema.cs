@@ -3,7 +3,7 @@ using SystemDot.Messaging.Builders;
 
 namespace SystemDot.Messaging.Publishing.Builders
 {
-    public class SubscriptionRequestChannelSchema : ChannelSchema
+    class SubscriptionRequestChannelSchema : ChannelSchema
     {
         public EndpointAddress SubscriberAddress { get; set; }
 

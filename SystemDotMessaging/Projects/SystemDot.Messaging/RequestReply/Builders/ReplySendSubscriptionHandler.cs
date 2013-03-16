@@ -4,7 +4,7 @@ using SystemDot.Messaging.Packaging.Headers;
 
 namespace SystemDot.Messaging.RequestReply.Builders
 {
-    public class ReplySendSubscriptionHandler : IMessageInputter<MessagePayload>
+    class ReplySendSubscriptionHandler : IMessageInputter<MessagePayload>
     {
         readonly ReplySendChannelDistributor distributor;
         

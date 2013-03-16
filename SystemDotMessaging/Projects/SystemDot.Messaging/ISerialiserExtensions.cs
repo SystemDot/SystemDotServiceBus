@@ -3,7 +3,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging
 {
-    public static class ISerialiserExtensions
+    static class ISerialiserExtensions
     {
         public static MessagePayload Copy(this ISerialiser serialiser, MessagePayload toCopy)
         {

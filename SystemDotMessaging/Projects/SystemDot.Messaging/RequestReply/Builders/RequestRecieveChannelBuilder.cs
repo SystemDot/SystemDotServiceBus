@@ -17,7 +17,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.RequestReply.Builders
 {
-    public class RequestRecieveChannelBuilder
+    class RequestRecieveChannelBuilder
     {
         readonly ReplyAddressLookup replyAddressLookup;
         readonly ISerialiser serialiser;
@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
         
-        public RequestRecieveChannelBuilder(
+        internal RequestRecieveChannelBuilder(
             ReplyAddressLookup replyAddressLookup, 
             ISerialiser serialiser, 
             MessageHandlerRouter messageHandlerRouter, 
@@ -81,7 +81,9 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Messenger.Send(new ChannelBuilt
             {
                 UseType = PersistenceUseType.RequestReceive,
-                Address = senderAddress
+                CacheAddress = senderAddress,
+                FromAddress = senderAddress,
+                ToAddress = schema.Address
             });
 
             return startPoint;

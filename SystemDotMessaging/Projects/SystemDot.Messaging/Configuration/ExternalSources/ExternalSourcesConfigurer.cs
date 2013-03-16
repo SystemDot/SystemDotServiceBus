@@ -5,7 +5,7 @@ using System.IO;
 
 namespace SystemDot.Messaging.Configuration.ExternalSources
 {
-    public class ExternalSourcesConfigurer : IExternalSourcesConfigurer
+    class ExternalSourcesConfigurer : IExternalSourcesConfigurer
     {
         [ImportMany]
         public IEnumerable<IExternalConfigurationSource> Sources { get; set; }

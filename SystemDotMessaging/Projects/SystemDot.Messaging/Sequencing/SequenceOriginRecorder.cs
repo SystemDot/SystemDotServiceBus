@@ -4,7 +4,7 @@ using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Sequencing
 {
-    public class SequenceOriginRecorder : MessageProcessor
+    class SequenceOriginRecorder : MessageProcessor
     {
         readonly SendMessageCache messageCache;
 

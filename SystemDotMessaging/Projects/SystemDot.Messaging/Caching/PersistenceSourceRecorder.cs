@@ -3,7 +3,7 @@ using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Caching
 {
-    public class PersistenceSourceRecorder : MessageProcessor
+    class PersistenceSourceRecorder : MessageProcessor
     {
         public override void InputMessage(MessagePayload toInput)
         {

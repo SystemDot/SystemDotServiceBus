@@ -3,7 +3,7 @@ using SystemDot.Messaging.Repeating;
 
 namespace SystemDot.Messaging.Expiry
 {
-    public class MessageSendTimeRemover : MessageProcessor
+    class MessageSendTimeRemover : MessageProcessor
     {
         public override void InputMessage(MessagePayload toInput)
         {

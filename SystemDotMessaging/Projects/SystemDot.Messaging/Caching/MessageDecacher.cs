@@ -4,7 +4,7 @@ using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Caching
 {
-    public class MessageDecacher : MessageProcessor
+    class MessageDecacher : MessageProcessor
     {
         readonly IMessageCache messageCache;
 

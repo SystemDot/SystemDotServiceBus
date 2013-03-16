@@ -5,7 +5,7 @@ using SystemDot.Messaging.Packaging.Headers;
 
 namespace SystemDot.Messaging.Filtering
 {
-    public class BodyMessageFilter : IMessageProcessor<MessagePayload, MessagePayload>
+    class BodyMessageFilter : IMessageProcessor<MessagePayload, MessagePayload>
     {
         readonly EndpointAddress address;
 

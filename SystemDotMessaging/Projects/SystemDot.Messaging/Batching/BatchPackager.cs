@@ -2,7 +2,7 @@ using System;
 
 namespace SystemDot.Messaging.Batching
 {
-    public class BatchPackager : IMessageProcessor<object, object>
+    class BatchPackager : IMessageProcessor<object, object>
     {
         BatchMessage currentPackage;
 

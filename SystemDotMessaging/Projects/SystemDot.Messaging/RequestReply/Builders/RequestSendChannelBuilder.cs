@@ -17,7 +17,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.RequestReply.Builders
 {
-    public class RequestSendChannelBuilder
+    class RequestSendChannelBuilder
     {
         readonly IMessageSender messageSender;
         readonly ISerialiser serialiser;
@@ -72,6 +72,14 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .Queue()
                 .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, messageCache))
                 .ToEndPoint(this.messageSender);
+
+            Messenger.Send(new ChannelBuilt
+            {
+                CacheAddress = schema.FromAddress, 
+                FromAddress = schema.FromAddress, 
+                ToAddress = schema.RecieverAddress, 
+                UseType = PersistenceUseType.RequestSend
+            });
         }
     }
 }

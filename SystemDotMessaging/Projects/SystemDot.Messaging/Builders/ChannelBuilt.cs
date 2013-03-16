@@ -7,6 +7,10 @@ namespace SystemDot.Messaging.Builders
     {
         public PersistenceUseType UseType { get; set; }
 
-        public EndpointAddress Address { get; set; }
+        public EndpointAddress CacheAddress { get; set; }
+
+        public EndpointAddress FromAddress { get; set; }
+
+        public EndpointAddress ToAddress { get; set; }
     }
 }

@@ -11,7 +11,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Transport.Http.Remote.Clients
 {
-    public class LongPoller
+    class LongPoller
     {
         readonly IWebRequestor requestor;
         readonly ISerialiser formatter;

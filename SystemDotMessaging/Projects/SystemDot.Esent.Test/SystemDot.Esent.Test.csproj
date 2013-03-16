@@ -45,7 +45,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SystemDot.Esent\SystemDot.Esent.csproj">
       <Project>{C7DBF177-FCDB-4530-A6CA-3B1EFBAD63EB}</Project>
-      <Name>SystemDot.Esent</Name>
+      <Name>SystemDot.Esent %28Windows\SystemDot.Esent%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">
       <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>

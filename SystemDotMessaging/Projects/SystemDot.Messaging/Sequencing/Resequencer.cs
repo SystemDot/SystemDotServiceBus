@@ -8,7 +8,7 @@ using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Sequencing
 {
-    public class Resequencer : IMessageProcessor<MessagePayload, MessagePayload>
+    class Resequencer : IMessageProcessor<MessagePayload, MessagePayload>
     {
         readonly ConcurrentDictionary<int, MessagePayload> queue;
         readonly ReceiveMessageCache messageCache;

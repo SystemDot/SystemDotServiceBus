@@ -4,7 +4,7 @@ using SystemDot.Messaging.Addressing;
 
 namespace SystemDot.Messaging.RequestReply
 {
-    public class ReplyAddressLookup
+    class ReplyAddressLookup
     {
         readonly ThreadLocal<EndpointAddress> currentSenderAddress;
         readonly ThreadLocal<EndpointAddress> currentRecieverAddress;

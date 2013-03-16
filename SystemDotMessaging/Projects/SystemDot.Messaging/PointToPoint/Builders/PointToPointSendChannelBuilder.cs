@@ -2,7 +2,9 @@ using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Batching;
+using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
+using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Pipelines;
@@ -12,17 +14,16 @@ using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
-using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.PointToPoint.Builders
 {
-    public class PointToPointSendChannelBuilder
+    class PointToPointSendChannelBuilder
     {
         readonly IMessageSender messageSender;
         readonly ISerialiser serialiser;
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
-        readonly MessageCacheFactory messageCacheFactory;
+        readonly PersistenceFactorySelector persistenceFactorySelector;
         readonly MessageAcknowledgementHandler acknowledgementHandler;
 
         public PointToPointSendChannelBuilder(
@@ -30,21 +31,21 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             ISerialiser serialiser, 
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 
-            MessageCacheFactory messageCacheFactory, 
+            PersistenceFactorySelector persistenceFactorySelector, 
             MessageAcknowledgementHandler acknowledgementHandler)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(serialiser != null);
             Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
-            Contract.Requires(messageCacheFactory != null);
+            Contract.Requires(persistenceFactorySelector != null);
             Contract.Requires(acknowledgementHandler != null);
 
             this.messageSender = messageSender;
             this.serialiser = serialiser;
             this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
-            this.messageCacheFactory = messageCacheFactory;
+            this.persistenceFactorySelector = persistenceFactorySelector;
             this.acknowledgementHandler = acknowledgementHandler;
         }
 
@@ -52,24 +53,25 @@ namespace SystemDot.Messaging.PointToPoint.Builders
         {
             Contract.Requires(schema != null);
 
-            SendMessageCache messageCache = this.messageCacheFactory.CreateSendCache(
-                PersistenceUseType.PointToPointSend, 
-                schema.FromAddress);
+            SendMessageCache cache = this.persistenceFactorySelector
+                .Select(schema)
+                .CreateSendCache(PersistenceUseType.PointToPointSend, schema.FromAddress);
 
-            this.acknowledgementHandler.RegisterCache(messageCache);
+            this.acknowledgementHandler.RegisterCache(cache);
 
             MessagePipelineBuilder.Build()
                 .WithBusSendTo(new MessageFilter(new PassThroughMessageFilterStategy()))
                 .ToProcessor(new BatchPackager())
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
-                .ToProcessor(new Sequencer(messageCache))
+                .ToProcessor(new Sequencer(cache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.RecieverAddress))
-                .ToMessageRepeater(messageCache, this.systemTime, this.taskRepeater, schema.RepeatStrategy)
+                .ToMessageRepeater(cache, this.systemTime, this.taskRepeater, schema.RepeatStrategy)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
-                .ToProcessor(new SendChannelMessageCacher(messageCache))
-                .ToProcessor(new SequenceOriginRecorder(messageCache))
+                .ToProcessor(new SendChannelMessageCacher(cache))
+                .ToProcessor(new SequenceOriginRecorder(cache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()
+                .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, cache))
                 .ToEndPoint(this.messageSender);
         }
     }

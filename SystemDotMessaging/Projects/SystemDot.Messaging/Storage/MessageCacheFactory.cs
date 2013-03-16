@@ -4,7 +4,7 @@ using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Storage
 {
-    public class MessageCacheFactory
+    class MessageCacheFactory
     {
         readonly IChangeStore store;
         readonly ISystemTime systemTime;

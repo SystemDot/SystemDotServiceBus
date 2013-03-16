@@ -58,16 +58,15 @@
     <Compile Include="channels\distribution\when_queueing_an_item.cs" />
     <Compile Include="channels\distribution\when_queueing_an_item_that_fails_when_pushed_then_queueing_another.cs" />
     <Compile Include="channels\distribution\when_queueing_items_on_a_with_no_pushed_item_listener.cs" />
-    <Compile Include="channels\expiry\when_passing_a_message_that_is_not_repeat_attempt_expired_through_an_expirer.cs" />
-    <Compile Include="channels\expiry\when_passing_a_message_that_is_repeat_attempt_expired_through_an_expirer.cs" />
-    <Compile Include="channels\expiry\when_passing_a_message_through_a_expirer_with_a_pass_through_strategy.cs" />
-    <Compile Include="channels\expiry\when_passing_a_message_that_is_time_expired_through_an_expirer.cs" />
-    <Compile Include="channels\expiry\when_passing_a_message_that_is_not_time_expired_through_an_expirer.cs" />
-    <Compile Include="channels\expiry\when_processing_a_message_with_a_message_send_time_remover.cs" />
-    <Compile Include="channels\expiry\when_processing_a_message_with_a_message_send_time_remover_with_no_processor_listening.cs" />
+    <Compile Include="channels\point_to_point\expiry\SpecificationGroup.cs" />
+    <Compile Include="channels\point_to_point\expiry\when_repeating_a_message_that_is_not_time_expired.cs" />
+    <Compile Include="channels\point_to_point\expiry\when_repeating_a_message_that_is_repeat_attempt_expired.cs" />
     <Compile Include="channels\point_to_point\batching\when_sending_messages_inside_a_batch_and_then_again.cs" />
+    <Compile Include="channels\point_to_point\expiry\when_repeating_a_message_that_is_not_repeat_attempt_expired.cs" />
+    <Compile Include="channels\point_to_point\expiry\when_repeating_a_message_that_is_time_expired.cs" />
     <Compile Include="channels\point_to_point\handling\SpecificationGroup.cs" />
-    <Compile Include="channels\point_to_point\repeating\when_starting_a_repeater_with_a_simple_repeat_strategy_for_the_second_time.cs" />
+    <Compile Include="channels\point_to_point\receiving\when_receiving_on_a_durable_channel.cs" />
+    <Compile Include="channels\point_to_point\sending\when_sending_on_a_durable_channel.cs" />
     <Compile Include="channels\point_to_point\sequencing\when_receiving_a_message_then_restarting_messaging_then_receiving_a_message_from_a_cache_reset_channel.cs" />
     <Compile Include="channels\point_to_point\sequencing\when_passing_messages_in_the_correct_order_on_a_durable_channel_and_then_restarting_messaging.cs" />
     <Compile Include="channels\point_to_point\sequencing\when_receiving_a_message_from_a_durable_channel_that_has_had_sequencing_reset.cs" />
@@ -85,6 +84,8 @@
     <Compile Include="channels\point_to_point\sequencing\when_passing_a_message_with_a_lower_sequence_than_expected_on_a_durable_channel.cs" />
     <Compile Include="channels\point_to_point\sequencing\when_passing_messages_in_the_correct_order_on_a_durable_channel.cs" />
     <Compile Include="channels\point_to_point\sequencing\when_passing_messages_in_the_incorrect_order_on_a_durable_channel.cs" />
+    <Compile Include="channels\request_reply\SpecificationGroup.cs" />
+    <Compile Include="channels\request_reply\when_configuring_a_request_reply_channel.cs" />
     <Compile Include="channels\request_reply\replies\when_receiving_a_reply_from_a_durable_channel_that_has_had_sequencing_reset.cs" />
     <Compile Include="channels\request_reply\requests\when_receiving_a_reply_from_a_durable_channel_that_has_had_sequencing_reset.cs" />
     <Compile Include="channels\request_reply\requests\when_receiving_a_request_on_a_channel_from_one_sender_and_then_from_another.cs" />
@@ -212,7 +213,6 @@
     <Compile Include="channels\WithMessageConfigurationSubject.cs" />
     <Compile Include="FailingMessageHandler.cs" />
     <Compile Include="IChangeStoreExtensions.cs" />
-    <Compile Include="PersistenceBehaviour.cs" />
     <Compile Include="TestMessageChangeRebuilder.cs" />
     <Compile Include="TestMessageHandler.cs">
       <SubType>Code</SubType>
@@ -238,7 +238,6 @@
     <Compile Include="TestSerialiser.cs" />
     <Compile Include="transport\http\remote\client\when_sending_a_message_using_a_local_proxy.cs" />
     <Compile Include="channels\point_to_point\receiving\when_receiving_a_message_that_does_not_have_the_expected_address.cs" />
-    <Compile Include="channels\request_reply\when_passing_messages_through_a_reply_channel_selector.cs" />
     <Compile Include="channels\distribution\when_pumping_an_item.cs" />
     <Compile Include="channels\distribution\when_pumping_items_on_a_with_no_pushed_item_listener.cs" />
     <Compile Include="channels\point_to_point\receiving\when_receiving_a_message_that_does_not_have_a_body.cs" />
@@ -251,7 +250,6 @@
     <Compile Include="TestWebRequestor.cs" />
     <Compile Include="channels\point_to_point\handling\when_routing_a_message_to_two_handlers_of_differing_messages.cs" />
     <Compile Include="channels\point_to_point\handling\when_routing_a_message_to_two_handlers.cs" />
-    <Compile Include="TestPublisher.cs" />
     <Compile Include="transport\http\remote\serving\when_handling_a_request_containing_an_object_other_than_a_message_payload.cs" />
     <Compile Include="transport\http\remote\serving\when_handling_a_long_poll_request_for_with_a_different_address_to_the_queued_message.cs" />
     <Compile Include="StreamExtensions.cs" />

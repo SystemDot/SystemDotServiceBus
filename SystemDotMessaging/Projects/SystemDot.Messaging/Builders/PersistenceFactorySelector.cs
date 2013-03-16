@@ -4,7 +4,7 @@ using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Builders
 {
-    public class PersistenceFactorySelector 
+    class PersistenceFactorySelector 
     {
         readonly MessageCacheFactory messageCacheFactory;
         readonly InMemoryChangeStore inMemoryStore;

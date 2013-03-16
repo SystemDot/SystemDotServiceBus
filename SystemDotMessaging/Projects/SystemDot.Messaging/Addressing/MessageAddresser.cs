@@ -6,7 +6,7 @@ using SystemDot.Messaging.Packaging.Headers;
 
 namespace SystemDot.Messaging.Addressing
 {
-    public class MessageAddresser : IMessageProcessor<MessagePayload, MessagePayload>
+    class MessageAddresser : IMessageProcessor<MessagePayload, MessagePayload>
     {
         readonly EndpointAddress fromAddress;
         readonly EndpointAddress toAddress;

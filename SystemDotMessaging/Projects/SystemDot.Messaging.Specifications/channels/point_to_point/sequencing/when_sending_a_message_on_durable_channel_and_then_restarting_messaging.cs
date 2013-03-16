@@ -31,6 +31,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.sequencing
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForPointToPointSendingTo(ReceiverName)
+                    .WithDurability()
                 .Initialise();
 
             bus.Send(new object());
@@ -44,6 +45,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.sequencing
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForPointToPointSendingTo(ReceiverName)
+                    .WithDurability()
                 .Initialise();
         };
 

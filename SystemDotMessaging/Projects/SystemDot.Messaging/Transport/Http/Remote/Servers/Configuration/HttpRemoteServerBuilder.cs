@@ -6,7 +6,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Transport.Http.Remote.Servers.Configuration
 {
-    public class HttpRemoteServerBuilder
+    class HttpRemoteServerBuilder
     {
         readonly IHttpServerBuilder httpServerBuilder;
         readonly ISystemTime systemTime;

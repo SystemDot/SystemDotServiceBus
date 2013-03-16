@@ -2,7 +2,7 @@ using System;
 
 namespace SystemDot.Messaging.UnitOfWork
 {
-    internal class NullUnitOfWork : IUnitOfWork
+    class NullUnitOfWork : IUnitOfWork
     {
         public void Begin()
         {

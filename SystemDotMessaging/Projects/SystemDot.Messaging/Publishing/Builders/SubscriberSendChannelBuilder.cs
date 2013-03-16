@@ -15,7 +15,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Publishing.Builders
 {
-    public class SubscriberSendChannelBuilder : ISubscriberSendChannelBuilder
+    class SubscriberSendChannelBuilder : ISubscriberSendChannelBuilder
     {
         readonly IMessageSender messageSender;
         readonly PersistenceFactorySelector persistenceFactorySelector;

@@ -6,7 +6,7 @@ using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Repeating
 {
-    public static class RepeaterMessagePipelineBuilderExtensions
+    static class RepeaterMessagePipelineBuilderExtensions
     {
         public static ProcessorBuilder<MessagePayload> ToSimpleMessageRepeater(
             this ProcessorBuilder<MessagePayload> builder,

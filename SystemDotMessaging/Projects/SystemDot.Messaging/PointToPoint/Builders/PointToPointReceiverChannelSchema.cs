@@ -4,7 +4,7 @@ using SystemDot.Messaging.Builders;
 
 namespace SystemDot.Messaging.PointToPoint.Builders
 {
-    public class PointToPointReceiverChannelSchema : ChannelSchema
+    class PointToPointReceiverChannelSchema : ChannelSchema
     {
         public EndpointAddress Address { get; set; }
 

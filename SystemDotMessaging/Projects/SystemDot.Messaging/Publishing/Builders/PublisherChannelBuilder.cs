@@ -13,7 +13,7 @@ using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Publishing.Builders
 {
-    public class PublisherChannelBuilder
+    class PublisherChannelBuilder
     {
         readonly IPublisherRegistry publisherRegistry;
         readonly ISerialiser serialiser;

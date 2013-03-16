@@ -7,7 +7,7 @@ using SystemDot.Messaging.Transport.Http.Remote.Clients;
 
 namespace SystemDot.Messaging.Transport.Http.Remote.Servers
 {
-    public class LongPollHandler : IMessagingServerHandler
+    class LongPollHandler : IMessagingServerHandler
     {
         readonly MessagePayloadQueue outgoingQueue;
 

@@ -4,7 +4,7 @@ using SystemDot.Messaging.Repeating;
 
 namespace SystemDot.Messaging.Builders
 {
-    public class SendChannelSchema : ChannelSchema
+    class SendChannelSchema : ChannelSchema
     {
         public EndpointAddress FromAddress { get; set; }
 

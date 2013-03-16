@@ -21,7 +21,11 @@ namespace SystemDot.Messaging.Storage
         public PersistenceUseType UseType { get; private set; }
         public DateTime FirstItemCachedOn { get; private set; }
 
-        public SendMessageCache(ISystemTime systemTime, IChangeStore changeStore, EndpointAddress address, PersistenceUseType useType)
+        public SendMessageCache(
+            ISystemTime systemTime, 
+            IChangeStore changeStore, 
+            EndpointAddress address, 
+            PersistenceUseType useType)
             : base(changeStore)
         {
             Contract.Requires(systemTime != null);

@@ -4,7 +4,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Packaging
 {
-    public class MessagePayloadCopier : IMessageProcessor<MessagePayload, MessagePayload>
+    class MessagePayloadCopier : IMessageProcessor<MessagePayload, MessagePayload>
     {
         readonly ISerialiser serialiser;
 

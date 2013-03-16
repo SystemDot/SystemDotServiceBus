@@ -6,7 +6,7 @@ using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.RequestReply
 {
-    public class ReplySendChannelDistributor : ChannelDistributor<object>
+    class ReplySendChannelDistributor : ChannelDistributor<object>
     {
         readonly ReplyAddressLookup replyAddressLookup;
         readonly ReplySendChannelBuilder builder;

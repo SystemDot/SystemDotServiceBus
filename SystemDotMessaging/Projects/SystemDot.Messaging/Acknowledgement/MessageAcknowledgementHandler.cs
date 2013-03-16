@@ -7,7 +7,7 @@ using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Acknowledgement
 {
-    public class MessageAcknowledgementHandler : IMessageInputter<MessagePayload>
+    class MessageAcknowledgementHandler : IMessageInputter<MessagePayload>
     {
         private readonly ConcurrentDictionary<Guid, IMessageCache> caches;
 

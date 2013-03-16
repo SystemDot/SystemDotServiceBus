@@ -10,7 +10,7 @@ using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Storage
 {
-    public class ReceiveMessageCache : ChangeRoot, IMessageCache
+    class ReceiveMessageCache : ChangeRoot, IMessageCache
     {
         int sequence;
         readonly ConcurrentDictionary<Guid, MessagePayload> messages;

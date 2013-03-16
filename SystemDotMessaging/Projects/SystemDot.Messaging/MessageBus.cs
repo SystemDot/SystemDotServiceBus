@@ -1,7 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Batching;
-using SystemDot.Messaging.PointToPoint.Builders;
 
 namespace SystemDot.Messaging
 {

@@ -3,13 +3,13 @@ using System.Diagnostics.Contracts;
 namespace SystemDot.Messaging.Distribution
 {
     [ContractClass(typeof(IMessageExpiryStrategyContract<>))]
-    public interface IChannelDistrbutionStrategy<T>
+    interface IChannelDistrbutionStrategy<T>
     {
         void Distribute(ChannelDistributor<T> distributor, T toDistribute);
     }
 
     [ContractClassFor(typeof(IChannelDistrbutionStrategy<>))]
-    public class IMessageExpiryStrategyContract<T> : IChannelDistrbutionStrategy<T>
+    class IMessageExpiryStrategyContract<T> : IChannelDistrbutionStrategy<T>
     {
         public void Distribute(ChannelDistributor<T> distributor, T toDistribute)
         {

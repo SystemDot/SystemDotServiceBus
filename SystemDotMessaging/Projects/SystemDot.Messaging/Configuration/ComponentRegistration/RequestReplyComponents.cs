@@ -4,7 +4,7 @@ using SystemDot.Messaging.RequestReply.Builders;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {
-    public static class RequestReplyComponents
+    static class RequestReplyComponents
     {
         public static void Register(IIocContainer iocContainer)
         {

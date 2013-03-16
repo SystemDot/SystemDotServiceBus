@@ -3,7 +3,7 @@ using SystemDot.Messaging.Addressing;
 
 namespace SystemDot.Messaging.Transport.Http
 {
-    public static class HttpServerPathExtensions
+    static class HttpServerPathExtensions
     {
         public static FixedPortAddress GetUrl(this ServerPath serverPath)
         {

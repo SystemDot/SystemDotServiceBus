@@ -5,7 +5,7 @@ using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Caching
 {
-    public class ReceiveChannelMessageCacher : MessageProcessor
+    class ReceiveChannelMessageCacher : MessageProcessor
     {
         readonly ReceiveMessageCache messageCache;
 

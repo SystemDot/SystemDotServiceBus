@@ -64,7 +64,7 @@ namespace SystemDot.Messaging.Configuration
 
         protected abstract ServerPath GetServerPath();
 
-        protected static UnitOfWorkRunner<TUnitOfWorkFactory> CreateUnitOfWorkRunner<TUnitOfWorkFactory>() 
+        internal static UnitOfWorkRunner<TUnitOfWorkFactory> CreateUnitOfWorkRunner<TUnitOfWorkFactory>() 
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory
         {
             return new UnitOfWorkRunner<TUnitOfWorkFactory>(Resolve<IIocContainer>());

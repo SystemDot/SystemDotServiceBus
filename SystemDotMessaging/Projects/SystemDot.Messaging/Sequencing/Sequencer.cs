@@ -5,7 +5,7 @@ using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Sequencing
 {
-    public class Sequencer : IMessageProcessor<MessagePayload, MessagePayload>
+    class Sequencer : IMessageProcessor<MessagePayload, MessagePayload>
     {
         readonly SendMessageCache messageCache;
 

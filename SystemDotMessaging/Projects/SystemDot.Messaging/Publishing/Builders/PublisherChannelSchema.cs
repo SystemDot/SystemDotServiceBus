@@ -3,7 +3,7 @@ using SystemDot.Messaging.Filtering;
 
 namespace SystemDot.Messaging.Publishing.Builders
 {
-    public class PublisherChannelSchema : SendChannelSchema
+    class PublisherChannelSchema : SendChannelSchema
     {
         public IMessageFilterStrategy MessageFilterStrategy { get; set; }
     }

@@ -4,13 +4,13 @@ using SystemDot.Messaging.Addressing;
 namespace SystemDot.Messaging.Transport
 {
     [ContractClass(typeof(ITransportBuilderContract))]
-    public interface ITransportBuilder
+    interface ITransportBuilder
     {
         void Build(ServerPath toListenFor);
     }
 
     [ContractClassFor(typeof(ITransportBuilder))]
-    public class ITransportBuilderContract
+    class ITransportBuilderContract
     {
         public void Build(ServerPath toListenFor)
         {

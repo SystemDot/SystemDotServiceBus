@@ -3,7 +3,7 @@ using SystemDot.Messaging.Builders;
 
 namespace SystemDot.Messaging.RequestReply.Builders
 {
-    public class ReplySendChannelSchema : SendChannelSchema
+    class ReplySendChannelSchema : SendChannelSchema
     {
         public List<IMessageProcessor<object, object>> Hooks { get; set; }
 

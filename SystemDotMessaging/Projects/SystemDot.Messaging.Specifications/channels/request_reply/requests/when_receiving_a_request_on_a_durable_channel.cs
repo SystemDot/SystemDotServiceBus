@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
 
         It should_have_persisted_the_message = () =>
             Resolve<IChangeStore>()
-                .GetAddedMessages(PersistenceUseType.RequestReceive, BuildAddress(SenderAddress))               
+                .GetReceiveMessages(PersistenceUseType.RequestReceive, BuildAddress(SenderAddress))               
                 .ShouldContain(payload);
     }
 }

@@ -6,7 +6,7 @@ using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Distribution
 {
-    public abstract class ChannelDistributor<T> : ChangeRoot, IMessageInputter<T>
+    abstract class ChannelDistributor<T> : ChangeRoot, IMessageInputter<T>
     {
         readonly ConcurrentDictionary<EndpointAddress, ChannelContainer> channels;
 

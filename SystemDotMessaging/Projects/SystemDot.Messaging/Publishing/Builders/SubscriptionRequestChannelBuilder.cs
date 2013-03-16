@@ -14,7 +14,7 @@ using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Publishing.Builders
 {
-    public class SubscriptionRequestChannelBuilder
+    class SubscriptionRequestChannelBuilder
     {
         readonly IMessageSender messageSender;
         readonly ISystemTime systemTime;

@@ -2,7 +2,7 @@ using System;
 
 namespace SystemDot.Messaging.Batching
 {
-    public class BatchUnpackager : IMessageProcessor<object, object>
+    class BatchUnpackager : IMessageProcessor<object, object>
     {
         public void InputMessage(object toInput)
         {

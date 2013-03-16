@@ -2,7 +2,7 @@ using SystemDot.Messaging.Packaging;
 
 namespace SystemDot.Messaging.Transport
 {
-    public interface IMessageSender : IMessageInputter<MessagePayload>
+    interface IMessageSender : IMessageInputter<MessagePayload>
     {
     }
 }

@@ -36,6 +36,11 @@ namespace SystemDot
                 .Where(t => !t.IsInterface && !t.IsAbstract && t.IsClass && !t.ContainsGenericParameters);
         }
 
+        public static IEnumerable<ConstructorInfo> GetAllConstructors(this Type type)
+        {
+            return type.GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        }
+
         public static IEnumerable<MethodInfo> GetMethodsByName(this Type type, Action genMethod)
         {
             return type.GetMethods().Where(m => m.Name == genMethod.Method.Name);

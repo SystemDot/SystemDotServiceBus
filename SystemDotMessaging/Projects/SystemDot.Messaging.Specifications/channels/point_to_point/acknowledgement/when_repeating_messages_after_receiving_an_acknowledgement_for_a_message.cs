@@ -14,12 +14,9 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.acknowledge
     [Subject(SpecificationGroup.Description)]
     public class when_repeating_messages_after_receiving_an_acknowledgement_for_a_message : WithMessageConfigurationSubject
     {
-        static MessagePayload acknowledgement;
-        static TestSystemTime systemTime;
-
         Establish context = () =>
         {
-            systemTime = new TestSystemTime(DateTime.Now);
+            var systemTime = new TestSystemTime(DateTime.Now);
             ConfigureAndRegister<ISystemTime>(systemTime);
 
             var bus = Configuration.Configure.Messaging()
@@ -29,7 +26,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.acknowledge
 
             bus.Send(1);
              
-            acknowledgement = new MessagePayload();
+            var acknowledgement = new MessagePayload();
             acknowledgement.SetAcknowledgementId(Server.SentMessages.First().GetPersistenceId());
             acknowledgement.SetToAddress(Server.SentMessages.First().GetFromAddress());
 

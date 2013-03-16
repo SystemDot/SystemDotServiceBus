@@ -3,7 +3,7 @@ using SystemDot.Messaging.Addressing;
 
 namespace SystemDot.Messaging.Transport.Http.Remote.Clients.Configuration
 {
-    public class HttpRemoteClientTransportBuilder : ITransportBuilder
+    class HttpRemoteClientTransportBuilder : ITransportBuilder
     {
         readonly LongPoller longPoller;
 

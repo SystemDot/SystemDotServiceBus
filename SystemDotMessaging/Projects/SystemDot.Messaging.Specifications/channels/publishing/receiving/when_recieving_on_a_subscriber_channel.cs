@@ -47,13 +47,13 @@ namespace SystemDot.Messaging.Specifications.channels.publishing.receiving
 
         It should_mark_the_message_with_the_time_the_message_is_sent = () =>
             Resolve<InMemoryChangeStore>()
-                .GetAddedMessages(PersistenceUseType.SubscriberReceive, BuildAddress(ChannelName))
+                .GetReceiveMessages(PersistenceUseType.SubscriberReceive, BuildAddress(ChannelName))
                 .First()
                 .GetLastTimeSent().ShouldBeGreaterThan(DateTime.MinValue);
 
         It should_mark_the_message_with_the_amount_of_times_the_message_has_been_sent = () =>
            Resolve<InMemoryChangeStore>()
-                .GetAddedMessages(PersistenceUseType.SubscriberReceive, BuildAddress(ChannelName))
+                .GetReceiveMessages(PersistenceUseType.SubscriberReceive, BuildAddress(ChannelName))
                 .First()
                 .GetAmountSent().ShouldEqual(1);
     }

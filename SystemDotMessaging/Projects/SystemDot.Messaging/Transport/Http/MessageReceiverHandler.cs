@@ -4,7 +4,7 @@ using SystemDot.Messaging.Packaging;
 
 namespace SystemDot.Messaging.Transport.Http
 {
-    public class MessageReceiverHandler : IMessagingServerHandler
+    class MessageReceiverHandler : IMessagingServerHandler
     {
         readonly IMessageReceiver messageReceiver;
 

@@ -3,7 +3,7 @@ using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Sequencing
 {
-    public class SequenceOriginApplier : MessageProcessor
+    class SequenceOriginApplier : MessageProcessor
     {
         readonly ReceiveMessageCache messageCache;
 

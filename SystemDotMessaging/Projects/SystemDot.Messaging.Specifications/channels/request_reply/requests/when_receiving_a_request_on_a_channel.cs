@@ -1,8 +1,8 @@
+using System.Collections.Generic;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.RequestReply;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 using SystemDot.Messaging.Storage;
@@ -18,17 +18,18 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
 
         static MessagePayload payload;
         static TestMessageHandler<int> handler;
-        static ChannelBuilt channelBuiltHandler;
+        static List<ChannelBuilt> channelBuiltEvents;
 
         Establish context = () =>
         {
-            Configuration.Configure.Messaging()
+             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                     .OpenChannel(ReceiverAddress)
                     .ForRequestReplyRecieving()
                 .Initialise();
 
-            Messenger.Register<ChannelBuilt>(m => channelBuiltHandler = m);
+            channelBuiltEvents = new List<ChannelBuilt>();
+            Messenger.Register<ChannelBuilt>(m => channelBuiltEvents.Add(m));
 
             handler = new TestMessageHandler<int>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
@@ -44,15 +45,21 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
 
         It should_push_the_message_to_any_registered_handlers = () => handler.LastHandledMessage.ShouldEqual(Message);
 
-        It should_notify_that_the_channel_was_built = () => 
-            channelBuiltHandler.ShouldMatch(m => 
+        It should_notify_that_the_request_receive_channel_was_built = () => channelBuiltEvents
+            .ShouldContain(m => 
                 m.UseType == PersistenceUseType.RequestReceive
-                && m.Address == BuildAddress(SenderAddress));
+                && m.CacheAddress == BuildAddress(SenderAddress)
+                && m.FromAddress == BuildAddress(SenderAddress)
+                && m.ToAddress == BuildAddress(ReceiverAddress));
+
+        It should_notify_that_the_reply_send_channel_was_built = () => channelBuiltEvents
+            .ShouldContain(m =>
+                m.UseType == PersistenceUseType.ReplySend
+                && m.CacheAddress == BuildAddress(SenderAddress)
+                && m.FromAddress == BuildAddress(ReceiverAddress)
+                && m.ToAddress == BuildAddress(SenderAddress));
 
         It should_send_an_acknowledgement_for_the_message = () =>
             Server.SentMessages.ShouldContain(a => a.GetAcknowledgementId() == payload.GetSourcePersistenceId());
-
-        It should_store_the_sender_address_for_the_reply_to_use = () =>
-            Resolve<ReplyAddressLookup>().GetCurrentSenderAddress().ShouldEqual(BuildAddress(SenderAddress));
     }
 }

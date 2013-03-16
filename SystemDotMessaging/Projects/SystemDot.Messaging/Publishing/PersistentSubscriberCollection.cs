@@ -8,7 +8,7 @@ using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Publishing
 {
-    public class PersistentSubscriberCollection : ChangeRoot, IEnumerable<Subscriber>
+    class PersistentSubscriberCollection : ChangeRoot, IEnumerable<Subscriber>
     {
         readonly EndpointAddress address;
         readonly ISubscriberSendChannelBuilder builder;

@@ -5,7 +5,7 @@ using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Expiry
 {
-    public class MessageExpirer : IMessageProcessor<MessagePayload, MessagePayload>
+    class MessageExpirer : IMessageProcessor<MessagePayload, MessagePayload>
     {
         readonly IMessageExpiryStrategy strategy;
         readonly IMessageCache messageCache;

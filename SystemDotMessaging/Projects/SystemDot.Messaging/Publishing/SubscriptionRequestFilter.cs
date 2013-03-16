@@ -3,7 +3,7 @@ using SystemDot.Messaging.Packaging;
 
 namespace SystemDot.Messaging.Publishing
 {
-    public class SubscriptionRequestFilter : IMessageProcessor<MessagePayload, MessagePayload>
+    class SubscriptionRequestFilter : IMessageProcessor<MessagePayload, MessagePayload>
     {
         public void InputMessage(MessagePayload toInput)
         {

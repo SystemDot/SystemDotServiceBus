@@ -1,6 +1,6 @@
 namespace SystemDot.Messaging.Builders
 {
-    public class ChannelSchema
+    class ChannelSchema
     {
         public bool IsDurable { get; set; }
     }

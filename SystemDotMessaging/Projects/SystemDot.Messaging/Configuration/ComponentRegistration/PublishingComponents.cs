@@ -4,7 +4,7 @@ using SystemDot.Messaging.Publishing.Builders;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {
-    public static class PublishingComponents
+    static class PublishingComponents
     {
         public static void Register(IIocContainer iocContainer)
         {

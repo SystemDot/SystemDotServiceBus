@@ -1,6 +1,6 @@
 namespace SystemDot.Messaging.Filtering
 {
-    public class PassThroughMessageFilterStategy : IMessageFilterStrategy
+    class PassThroughMessageFilterStategy : IMessageFilterStrategy
     {
         public bool PassesThrough(object toCheck)
         {

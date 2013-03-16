@@ -22,6 +22,11 @@ namespace SystemDot
             return type.GetTypeInfo().DeclaredConstructors;
         }
 
+        public static IEnumerable<ConstructorInfo> GetAllConstructors(this Type type)
+        {
+            return type.GetTypeInfo().DeclaredConstructors;
+        }
+
         public static Type[] GetInterfaces(this Type type)
         {
             return type.GetTypeInfo().ImplementedInterfaces.ToArray();

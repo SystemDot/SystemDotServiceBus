@@ -4,7 +4,7 @@ using SystemDot.Ioc;
 
 namespace SystemDot.Messaging.UnitOfWork
 {
-    public class UnitOfWorkRunner<TUnitOfWorkFactory> : IMessageProcessor<object, object>
+    class UnitOfWorkRunner<TUnitOfWorkFactory> : IMessageProcessor<object, object>
         where TUnitOfWorkFactory : class, IUnitOfWorkFactory
     {
         readonly IIocContainer iocContainer;

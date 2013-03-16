@@ -6,7 +6,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Acknowledgement.Builders
 {
-    public class AcknowledgementRecieveChannelBuilder
+    class AcknowledgementRecieveChannelBuilder
     {
         readonly IMessageReceiver messageReceiver;
         readonly MessageAcknowledgementHandler handler;

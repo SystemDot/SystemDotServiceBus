@@ -6,7 +6,7 @@ using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.RequestReply.Builders
 {
-    public class RequestReceiveDistributionChannelBuilder 
+    class RequestReceiveDistributionChannelBuilder 
     {
         readonly IMessageReceiver messageReceiver;
         readonly RequestRecieveChannelBuilder builder;
