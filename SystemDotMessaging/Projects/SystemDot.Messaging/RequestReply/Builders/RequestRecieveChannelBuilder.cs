@@ -63,6 +63,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
             MessagePipelineBuilder.Build()
                 .With(startPoint)
+                .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new SequenceOriginApplier(messageCache))
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToSimpleMessageRepeater(messageCache, this.systemTime, this.taskRepeater)

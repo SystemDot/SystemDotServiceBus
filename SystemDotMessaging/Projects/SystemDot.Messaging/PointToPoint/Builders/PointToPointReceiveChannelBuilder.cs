@@ -3,6 +3,7 @@ using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
+using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
@@ -63,6 +64,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new BodyMessageFilter(schema.Address))
                 .ToProcessor(new SequenceOriginApplier(messageCache))
+                .ToProcessor(new MessageSendTimeRemover())
                 .ToSimpleMessageRepeater(messageCache, this.systemTime, this.taskRepeater)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
