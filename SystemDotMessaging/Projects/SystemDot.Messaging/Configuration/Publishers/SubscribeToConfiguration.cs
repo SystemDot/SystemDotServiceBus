@@ -31,6 +31,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
             this.recieveSchema = new SubscriberRecieveChannelSchema
             {
                 Address = subscriberAddress,
+                ToAddress = publisherAddress,
                 UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>
             };
         }

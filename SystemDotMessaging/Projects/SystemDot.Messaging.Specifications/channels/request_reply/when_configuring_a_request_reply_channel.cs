@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-using SystemDot.Messaging.Builders;
-using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.RequestReply.Builders;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
@@ -12,12 +10,13 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply
         const string SenderAddress = "SenderAddress";
         const string ReceiverAddress = "ReceiverAddress";
 
-        static List<ChannelBuilt> channelBuiltEvents;
+        static RequestSendChannelBuilt requestSendChannelBuiltEvent;
+        static ReplyReceiveChannelBuilt replyReceiveChannelBuiltEvent;
 
         Establish context = () =>
         {
-            channelBuiltEvents = new List<ChannelBuilt>();
-            Messenger.Register<ChannelBuilt>(m => channelBuiltEvents.Add(m));
+            Messenger.Register<ReplyReceiveChannelBuilt>(m => replyReceiveChannelBuiltEvent = m);
+            Messenger.Register<RequestSendChannelBuilt>(m => requestSendChannelBuiltEvent = m);
         };
 
         Because of = () => Configuration.Configure.Messaging()
@@ -26,18 +25,16 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply
                 .ForRequestReplySendingTo(ReceiverAddress)
                 .Initialise();
 
-        It should_notify_that_the_reply_receive_channel_was_built = () => 
-            channelBuiltEvents.ShouldContain(m => 
-                m.UseType == PersistenceUseType.ReplyReceive
-                && m.CacheAddress == BuildAddress(SenderAddress)
-                && m.FromAddress == BuildAddress(ReceiverAddress)
-                && m.ToAddress == BuildAddress(SenderAddress));
+        It should_notify_that_the_reply_receive_channel_was_built = () =>
+            replyReceiveChannelBuiltEvent.ShouldMatch(m => 
+                m.CacheAddress == BuildAddress(SenderAddress)
+                && m.ReceiverAddress == BuildAddress(ReceiverAddress)
+                && m.SenderAddress == BuildAddress(SenderAddress));
 
         It should_notify_that_the_request_send_channel_was_built = () =>
-           channelBuiltEvents.ShouldContain(m =>
-               m.UseType == PersistenceUseType.RequestSend
-               && m.CacheAddress == BuildAddress(SenderAddress)
-                && m.FromAddress == BuildAddress(SenderAddress)
-                && m.ToAddress == BuildAddress(ReceiverAddress));
+           requestSendChannelBuiltEvent.ShouldMatch(m =>
+               m.CacheAddress == BuildAddress(SenderAddress)
+               && m.SenderAddress == BuildAddress(SenderAddress)
+               && m.ReceiverAddress == BuildAddress(ReceiverAddress));
     }
 }

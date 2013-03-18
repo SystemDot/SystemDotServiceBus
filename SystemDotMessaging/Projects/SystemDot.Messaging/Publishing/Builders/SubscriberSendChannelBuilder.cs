@@ -69,6 +69,13 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .Queue()
                 .ToEndPoint(this.messageSender);
 
+            Messenger.Send(new SubscriberSendChannelBuilt
+            {
+                CacheAddress = schema.SubscriberAddress,
+                SubscriberAddress = schema.SubscriberAddress,
+                PublisherAddress = schema.FromAddress
+            });
+
             return copier;
         }
     }

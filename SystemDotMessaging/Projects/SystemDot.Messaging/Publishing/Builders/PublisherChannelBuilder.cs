@@ -69,6 +69,8 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .ToEndPoint(new MessageDecacher(messageCache));
 
             this.publisherRegistry.RegisterPublisher(schema.FromAddress, publisherEndpoint);
+
+            Messenger.Send(new PublisherChannelBuilt { Address = schema.FromAddress });
         }
     }
 }

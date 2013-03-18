@@ -78,6 +78,13 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
                 .ToProcessor(schema.UnitOfWorkRunnerCreator())
                 .ToEndPoint(this.messageHandlerRouter);
+
+            Messenger.Send(new SubscriberReceiveChannelBuilt
+            {
+                CacheAddress = schema.Address,
+                SubscriberAddress = schema.Address,
+                PublisherAddress = schema.ToAddress
+            });
         }
     }
 }

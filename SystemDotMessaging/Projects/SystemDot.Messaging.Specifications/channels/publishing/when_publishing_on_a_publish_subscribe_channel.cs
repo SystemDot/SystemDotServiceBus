@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Publishing.Builders;
 using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
@@ -18,7 +19,7 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
         static IBus bus;
         static int message;
         static EndpointAddress subscriberAddress;
-
+        
         Establish context = () =>
         {    
             bus = Configuration.Configure.Messaging()
@@ -62,4 +63,6 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
 
         It should_start_the_task_repeater = () => TaskRepeater.Started.ShouldBeTrue();
     }
+
+    
 }

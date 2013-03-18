@@ -75,12 +75,11 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, messageCache))
                 .ToEndPoint(this.messageSender);
 
-            Messenger.Send(new ChannelBuilt
+            Messenger.Send(new ReplySendChannelBuilt
             {
-                UseType = PersistenceUseType.ReplySend,
                 CacheAddress = senderAddress,
-                FromAddress = schema.FromAddress,
-                ToAddress = senderAddress
+                ReceiverAddress = schema.FromAddress,
+                SenderAddress = senderAddress
             });
 
             return startPoint;

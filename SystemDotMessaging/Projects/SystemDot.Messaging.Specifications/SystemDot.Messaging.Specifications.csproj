@@ -77,6 +77,7 @@
     <Compile Include="channels\point_to_point\sequencing\when_sending_a_message_on_durable_channel_and_then_restarting_messaging.cs" />
     <Compile Include="channels\point_to_point\sequencing\when_sending_two_messages.cs" />
     <Compile Include="channels\point_to_point\unitofwork\SpecificationGroup.cs" />
+    <Compile Include="channels\publishing\when_configuring_a_publisher_channel.cs" />
     <Compile Include="channels\request_reply\batching\SpecificationGroup.cs" />
     <Compile Include="channels\request_reply\batching\when_receiving_replies_inside_a_batch.cs" />
     <Compile Include="channels\request_reply\batching\when_receiving_requests_inside_a_batch_and_replying_to_each.cs" />
@@ -176,8 +177,8 @@
     <Compile Include="channels\request_reply\replies\when_replying_on_a_channel.cs" />
     <Compile Include="channels\request_reply\replies\when_replying_on_a_channel_with_another_setup.cs" />
     <Compile Include="channels\request_reply\replies\when_replying_with_a_time_expired_message_on_a_channel.cs" />
-    <Compile Include="channels\publishing\subscription\when_initialising_a_durable_subscriber_channel.cs" />
-    <Compile Include="channels\publishing\subscription\when_initialising_a_subscriber_channel.cs" />
+    <Compile Include="channels\publishing\subscription\when_configuring_a_durable_subscriber_channel.cs" />
+    <Compile Include="channels\publishing\subscription\when_configuring_a_subscriber_channel.cs" />
     <Compile Include="channels\publishing\when_publishing_on_two_publish_subscribe_channels.cs" />
     <Compile Include="channels\publishing\subscription\when_receiving_a_non_subscription_request_message_on_a_subscription_channel.cs" />
     <Compile Include="channels\publishing\subscription\when_recieving_a_subscription_request_message_on_a_subscription_channel.cs" />

@@ -79,12 +79,11 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessors(schema.Hooks.ToArray())
                 .ToEndPoint(this.messageHandlerRouter);
 
-            Messenger.Send(new ChannelBuilt
+            Messenger.Send(new RequestReceiveChannelBuilt
             {
-                UseType = PersistenceUseType.RequestReceive,
                 CacheAddress = senderAddress,
-                FromAddress = senderAddress,
-                ToAddress = schema.Address
+                SenderAddress = senderAddress,
+                ReceiverAddress = schema.Address
             });
 
             return startPoint;

@@ -76,7 +76,9 @@
     <Compile Include="PointToPoint\Builders\PointToPointSendChannelSchema.cs" />
     <Compile Include="PointToPoint\Builders\PointToPointReceiveChannelBuilder.cs" />
     <Compile Include="Publishing\Builders\ISubscriberSendChannelBuilder.cs" />
+    <Compile Include="Publishing\Builders\PublisherChannelBuilt.cs" />
     <Compile Include="Publishing\Builders\SubscriberRecieveChannelSchema.cs" />
+    <Compile Include="Publishing\Builders\SubscriberSendChannelBuilt.cs" />
     <Compile Include="Publishing\Builders\SubscriptionRequestChannelSchema.cs" />
     <Compile Include="Builders\RecieveChannelSchema.cs" />
     <Compile Include="Publishing\PersistentSubscriberCollection.cs" />
@@ -90,10 +92,14 @@
     <Compile Include="Repeating\MessageRepeater.cs" />
     <Compile Include="Repeating\RepeaterMessagePipelineBuilderExtensions.cs" />
     <Compile Include="Repeating\SimpleRepeatStrategy.cs" />
+    <Compile Include="Publishing\Builders\SubscriberReceiveChannelBuilt.cs" />
+    <Compile Include="RequestReply\Builders\ReplyReceiveChannelBuilt.cs" />
+    <Compile Include="RequestReply\Builders\ReplySendChannelBuilt.cs" />
     <Compile Include="RequestReply\Builders\ReplySendDistributionChannelBuilder.cs" />
     <Compile Include="RequestReply\Builders\ReplySendSubscriptionHandler.cs" />
-    <Compile Include="Builders\ChannelBuilt.cs" />
+    <Compile Include="RequestReply\Builders\RequestReceiveChannelBuilt.cs" />
     <Compile Include="RequestReply\Builders\RequestReceiveDistributionChannelBuilder.cs" />
+    <Compile Include="RequestReply\Builders\RequestSendChannelBuilt.cs" />
     <Compile Include="RequestReply\RegisterReplySendChannelChange.cs" />
     <Compile Include="RequestReply\RegisterRequestReceiveChannelChange.cs" />
     <Compile Include="RequestReply\ReplyChannelMessageFilterStategy.cs" />

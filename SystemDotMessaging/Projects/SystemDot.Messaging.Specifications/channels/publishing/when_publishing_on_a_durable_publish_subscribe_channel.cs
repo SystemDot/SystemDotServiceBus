@@ -1,3 +1,4 @@
+using System.Linq;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using SystemDot.Storage.Changes;
