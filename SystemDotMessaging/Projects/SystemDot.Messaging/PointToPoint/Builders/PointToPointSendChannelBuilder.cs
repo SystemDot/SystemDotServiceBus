@@ -64,7 +64,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
                 .ToProcessor(new BatchPackager())
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
                 .ToProcessor(new Sequencer(cache))
-                .ToProcessor(new MessageAddresser(schema.FromAddress, schema.RecieverAddress))
+                .ToProcessor(new MessageAddresser(schema.FromAddress, schema.ReceiverAddress))
                 .ToMessageRepeater(cache, this.systemTime, this.taskRepeater, schema.RepeatStrategy)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new SendChannelMessageCacher(cache))
@@ -73,6 +73,12 @@ namespace SystemDot.Messaging.PointToPoint.Builders
                 .Queue()
                 .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, cache))
                 .ToEndPoint(this.messageSender);
+
+            Messenger.Send(new PointToPointSendChannelBuilt
+            {
+                SenderAddress = schema.FromAddress,
+                ReceiverAddress = schema.ReceiverAddress
+            });
         }
     }
 }

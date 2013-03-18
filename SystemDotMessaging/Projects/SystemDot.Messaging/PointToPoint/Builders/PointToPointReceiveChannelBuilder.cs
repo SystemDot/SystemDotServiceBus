@@ -75,6 +75,8 @@ namespace SystemDot.Messaging.PointToPoint.Builders
                 .ToProcessor(schema.UnitOfWorkRunnerCreator())
                 .ToProcessor(new BatchUnpackager())
                 .ToEndPoint(this.messageHandlerRouter);
+
+            Messenger.Send(new PointToPointReceiveChannelBuilt { Address = schema.Address });
         }
     }
 }

@@ -69,8 +69,10 @@
     <Compile Include="Local\Builders\LocalChannelSchema.cs" />
     <Compile Include="MessageProcessor.cs" />
     <Compile Include="Builders\PersistenceFactorySelector.cs" />
+    <Compile Include="PointToPoint\Builders\PointToPointReceiveChannelBuilt.cs" />
     <Compile Include="PointToPoint\Builders\PointToPointReceiverChannelSchema.cs" />
     <Compile Include="PointToPoint\Builders\PointToPointSendChannelBuilder.cs" />
+    <Compile Include="PointToPoint\Builders\PointToPointSendChannelBuilt.cs" />
     <Compile Include="PointToPoint\Builders\PointToPointSendChannelSchema.cs" />
     <Compile Include="PointToPoint\Builders\PointToPointReceiveChannelBuilder.cs" />
     <Compile Include="Publishing\Builders\ISubscriberSendChannelBuilder.cs" />

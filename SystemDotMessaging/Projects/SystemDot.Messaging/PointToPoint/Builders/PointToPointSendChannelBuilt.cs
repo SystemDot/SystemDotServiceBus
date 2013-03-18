@@ -1,10 +1,10 @@
 using SystemDot.Messaging.Addressing;
-using SystemDot.Messaging.Builders;
 
 namespace SystemDot.Messaging.PointToPoint.Builders
 {
-    class PointToPointSendChannelSchema : SendChannelSchema
+    public class PointToPointSendChannelBuilt
     {
+        public EndpointAddress SenderAddress { get; set; }
         public EndpointAddress ReceiverAddress { get; set; }
     }
 }

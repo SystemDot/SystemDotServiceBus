@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
             {
                 RepeatStrategy = EscalatingTimeRepeatStrategy.Default,
                 ExpiryStrategy = new PassthroughMessageExpiryStrategy(),
-                RecieverAddress = toAddress,
+                ReceiverAddress = toAddress,
                 FromAddress = fromAddress
             };
         }
