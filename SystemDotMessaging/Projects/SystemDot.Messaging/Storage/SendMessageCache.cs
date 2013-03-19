@@ -57,6 +57,8 @@ namespace SystemDot.Messaging.Storage
                 AddChange(new SetFirstItemCachedOnChange(this.systemTime.GetCurrentDate()));
 
             AddChange(new AddMessageAndIncrementSequenceChange(message, this.sequence + 1));
+
+            Messenger.Send(new MessageAddedToCache { CacheAddress = Address, Message = message });
         }
 
         public void ApplyChange(SetFirstItemCachedOnChange change)
