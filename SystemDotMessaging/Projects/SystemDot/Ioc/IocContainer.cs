@@ -36,6 +36,9 @@ namespace SystemDot.Ioc
 
         object Resolve(Type type)
         {
+            if (!components.ContainsKey(type))
+                throw new TypeNotRegisteredException(string.Format("{0} has not been registered in the container.", type.Name));
+
             var concreteType = components[type];
 
             if (concreteType.ObjectInstance != null)

@@ -18,14 +18,9 @@ namespace SystemDot.Ioc
         {
             foreach (var type in types)
             {
+                RegisterConcreteByConcrete(type);
                 if (type.GetNonBaseInterfaces().Any())
-                {
                     RegisterConcreteByInterface(type);
-                }
-                else
-                {
-                    RegisterConcreteByConcrete(type);
-                }
             }
         }
 

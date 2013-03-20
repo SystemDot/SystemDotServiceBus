@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using SystemDot.Ioc;
+﻿using SystemDot.Ioc;
 using SystemDot.Specifications.ioc.TestTypes;
 using Machine.Fakes;
 using Machine.Specifications;
-using Machine.Specifications.Model;
 
 namespace SystemDot.Specifications.ioc
 {
@@ -18,13 +16,16 @@ namespace SystemDot.Specifications.ioc
         It should_auto_register_a_concrete_type_implementing_an_interface_by_the_interface = () =>
             Subject.Resolve<ITestInterface1>().ShouldBeOfType<TestTypeImplementingAnInterface>();
 
+        It should_auto_register_a_concrete_type_implementing_an_interface_by_the_concrete_type = () =>
+            Subject.Resolve<TestTypeImplementingAnInterface>().ShouldBeOfType<TestTypeImplementingAnInterface>();
+
         It should_not_auto_register_an_interface_without_concrete_type_implementing_it = () =>
             Catch.Exception(() => Subject.Resolve<ITestInterfaceWithNoConcreteImplementation>())
-            .ShouldBeOfType<KeyNotFoundException>();
+            .ShouldBeOfType<TypeNotRegisteredException>();
 
         It should_not_auto_register_an_abstract_concrete_type = () =>
             Catch.Exception(() => Subject.Resolve<TestAbstractConcreteType>())
-            .ShouldBeOfType<KeyNotFoundException>();
+            .ShouldBeOfType<TypeNotRegisteredException>();
 
         It should_auto_register_a_derived_concrete_type_against_its_interface = () =>
             Subject.Resolve<ITestInterfaceOnDerivedConcreteType>().ShouldBeOfType<TestDerivedConcreteType>();
