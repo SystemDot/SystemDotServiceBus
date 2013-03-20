@@ -15,11 +15,11 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
         {
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false })
+                .UsingFilePersistence()
                 .UsingJsonSerialisation()
                 .UsingHttpTransport()
                 .AsARemoteServer("MetroProxy")
                 .AsAServer("ReceiverServer")
-                .UsingFilePersistence()
                 .OpenChannel("TestReply")
                     .ForRequestReplyRecieving()
                     .WithDurability()

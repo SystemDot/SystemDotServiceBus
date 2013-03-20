@@ -92,6 +92,10 @@
     <Compile Include="channels\request_reply\replies\when_receiving_a_reply_from_a_durable_channel_that_has_had_sequencing_reset.cs" />
     <Compile Include="channels\request_reply\requests\when_receiving_a_reply_from_a_durable_channel_that_has_had_sequencing_reset.cs" />
     <Compile Include="channels\request_reply\requests\when_receiving_a_request_on_a_channel_from_one_sender_and_then_from_another.cs" />
+    <Compile Include="sql\SpecificationGroup.cs" />
+    <Compile Include="sql\when_configuring_messaging.cs" />
+    <Compile Include="esent\SpecificationGroup.cs" />
+    <Compile Include="esent\when_configuring_messaging.cs" />
     <Compile Include="TestExternalSourcesConfigurer.cs" />
     <Compile Include="channels\point_to_point\unitofwork\when_receiving_a_message_with_a_unit_of_work_specified.cs" />
     <Compile Include="channels\point_to_point\unitofwork\when_receiving_a_message_with_a_unit_of_work_specified_and_the_target_processor_throws_an_exception.cs" />
@@ -261,6 +265,10 @@
     <Compile Include="WithMessageProcessorSubject.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SystemDot.Esent\SystemDot.Esent.csproj">
+      <Project>{C7DBF177-FCDB-4530-A6CA-3B1EFBAD63EB}</Project>
+      <Name>SystemDot.Esent %28Windows\SystemDot.Esent%29</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SystemDot.Messaging\SystemDot.Messaging.csproj">
       <Project>{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}</Project>
       <Name>SystemDot.Messaging %28Windows\SystemDot.Messaging%29</Name>
@@ -268,6 +276,10 @@
     <ProjectReference Include="..\SystemDot.Specifications\SystemDot.Specifications.csproj">
       <Project>{C35328BB-3E59-4DC8-8397-C0A7BB2F2E5E}</Project>
       <Name>SystemDot.Specifications</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemDot.Sql\SystemDot.Sql.csproj">
+      <Project>{80FFA53E-9C4D-45CE-A7D2-8FE0B6A9FBFB}</Project>
+      <Name>SystemDot.Sql</Name>
     </ProjectReference>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">
       <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>

@@ -17,10 +17,10 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
         {
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism {ShowInfo = false, ShowDebug = false})
+                .UsingFilePersistence()
                 .UsingJsonSerialisation()
                 .UsingHttpTransport()
                 .AsAServer("SenderServer")
-                .UsingFilePersistence()
                 .OpenChannel("TestRequest")
                 .ForRequestReplySendingTo("TestReply@/ReceiverServer")
                 .WithDurability()

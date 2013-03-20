@@ -15,10 +15,10 @@ namespace SystemDot.Messaging.TestPointToPoint.Receiver
         {
             Configure.Messaging()
                .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false })
+               .UsingFilePersistence()
                .UsingJsonSerialisation()
                .UsingHttpTransport()
                .AsAServer("ReceiverServer")
-               .UsingFilePersistence()
                .OpenChannel("TestReceive")
                    .ForPointToPointReceiving()
                    .WithDurability()

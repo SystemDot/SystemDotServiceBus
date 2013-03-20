@@ -35,11 +35,11 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
 
             this.bus = Configure.Messaging()
                .LoggingWith(loggingMechanism)
+               .UsingFilePersistence()
                .UsingJsonSerialisation()
                .UsingHttpTransport()
                .AsARemoteClient("MetroClient")
                .UsingProxy(MessageServer.Local("MetroProxy"))
-               .UsingFilePersistence()
                .OpenChannel("TestMetroRequest")
                     .ForRequestReplySendingTo("TestReply@/ReceiverServer")
                     .WithDurability()

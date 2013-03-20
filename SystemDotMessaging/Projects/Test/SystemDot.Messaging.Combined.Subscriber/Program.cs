@@ -14,9 +14,9 @@ namespace SystemDot.Messaging.Combined.Subscriber
         {
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
+                .UsingFilePersistence()
                 .UsingHttpTransport()
                 .AsAServer("SubscriberServer")
-                .UsingFilePersistence()
                 .OpenChannel("TestSubscriber")
                     .ForSubscribingTo("TestPublisher@/ReceiverPublisherServer")
                 .Initialise();

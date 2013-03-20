@@ -16,9 +16,9 @@ namespace SystemDot.Messaging.OtherTestSubscriber
             Logger.LoggingMechanism = new ConsoleLoggingMechanism { ShowDebug = false };
 
             Configure.Messaging()
+                .UsingFilePersistence()
                 .UsingHttpTransport()
                 .AsAServer("OtherSubscriberServer")
-                .UsingFilePersistence()
                 .OpenChannel("TestOtherSubscriber")
                     .ForSubscribingTo("TestPublisher@/PublisherServer")
                     .WithDurability()

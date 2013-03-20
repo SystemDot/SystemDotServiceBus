@@ -4,12 +4,17 @@ using SystemDot.Storage.Changes;
 
 namespace SystemDot.Sql
 {
-    public static class SqlMessageServerConfigurationExtensions
+    public static class SqlMessagingConfigurationExtensions
     {
-        public static MessageServerConfiguration UsingSqlPersistence(this MessageServerConfiguration configuration, string connectionString)
+        public static MessagingConfiguration UsingSqlPersistence(
+            this MessagingConfiguration configuration, 
+            string connectionString)
         {
-            IocContainerLocator.Locate().RegisterInstance<IChangeStore, SqlChangeStore>();
-            IocContainerLocator.Locate().Resolve<IChangeStore>().Initialise(connectionString);
+            IIocContainer container = IocContainerLocator.Locate();
+
+            container.RegisterInstance<IChangeStore, SqlChangeStore>();
+            configuration.BuildActions.Add(() => container.Resolve<IChangeStore>().Initialise(connectionString));
+
             return configuration;
         }
     }

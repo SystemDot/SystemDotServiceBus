@@ -14,10 +14,10 @@ namespace SystemDot.Messaging.TestPointToPoint.Sender
         {
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false, ShowDebug = false })
+                .UsingFilePersistence()
                 .UsingJsonSerialisation()
                 .UsingHttpTransport()
                 .AsAServer("SenderServer")
-                .UsingFilePersistence()
                 .OpenChannel("TestSend")
                     .ForPointToPointSendingTo("TestReceive@/ReceiverServer")
                     .WithDurability()

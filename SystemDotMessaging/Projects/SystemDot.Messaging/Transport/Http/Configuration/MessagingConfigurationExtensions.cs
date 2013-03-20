@@ -10,7 +10,7 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
         public static HttpTransportConfiguration UsingHttpTransport(this MessagingConfiguration config)
         {
             HttpTransportComponents.Register(IocContainerLocator.Locate());
-            return new HttpTransportConfiguration(new List<Action>());
+            return new HttpTransportConfiguration(config.BuildActions);
         }
     }
 }

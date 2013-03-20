@@ -15,9 +15,9 @@ namespace SystemDot.Messaging.Combined.Client
         {
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
+                .UsingFilePersistence()
                 .UsingHttpTransport()
                 .AsAServer("SenderServer")
-                .UsingFilePersistence()
                 .OpenChannel("TestSender")
                     .ForRequestReplySendingTo("TestReceiver@/ReceiverPublisherServer")
                 .Initialise();

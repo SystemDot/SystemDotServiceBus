@@ -16,9 +16,9 @@ namespace SystemDot.Messaging.MultiChannel.Sender
         {
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
+                .UsingFilePersistence()
                 .UsingHttpTransport()
                 .AsAServer("Server")
-                .UsingFilePersistence()
                 .OpenChannel("TestSenderA")
                     .ForRequestReplySendingTo("TestRecieverA@/ServerA")
                     .OnlyForMessages(FilteredBy.NamePattern("Channel1"))

@@ -13,9 +13,9 @@ namespace SystemDot.Messaging.TestPublisher
         {
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
+                .UsingFilePersistence()
                 .UsingHttpTransport()
                 .AsAServer("PublisherServer")
-                .UsingFilePersistence()
                 .OpenChannel("TestPublisher")
                     .ForPublishing()
                     .WithDurability()
