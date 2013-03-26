@@ -13,16 +13,18 @@ namespace SystemDot.Messaging.Combined.Client
     {
         static void Main(string[] args)
         {
+            IocContainerLocator.Locate().RegisterFromAssemblyOf<Program>();
+
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingHttpTransport()
                 .AsAServer("SenderServer")
                 .UsingFilePersistence()
                 .OpenChannel("TestSender")
-                    .ForRequestReplySendingTo("TestReceiver@CHRIS-NEW-PC/ReceiverPublisherServer.CHRIS-NEW-PC/ReceiverPublisherServer")
+                    .ForRequestReplySendingTo(string.Format("TestReceiver@{0}/ReceiverPublisherServer.{0}/ReceiverPublisherServer", Environment.MachineName))
+                    .RegisterHandlersFromAssemblyOf<Program>()
+                    .BasedOn<IMessageConsumer>()
                 .Initialise();
-
-            IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());
 
             do
             {

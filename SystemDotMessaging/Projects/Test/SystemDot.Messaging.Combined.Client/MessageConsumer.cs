@@ -4,7 +4,7 @@ using SystemDot.Messaging.Test.Messages;
 
 namespace SystemDot.Messaging.Combined.Client
 {
-    public class MessageConsumer
+    public class MessageConsumer : IMessageConsumer
     {
         public void Handle(TestMessage message)
         {

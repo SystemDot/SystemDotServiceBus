@@ -2,7 +2,6 @@
 using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Logging;
-using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Test.Messages;
@@ -14,22 +13,26 @@ namespace SystemDot.Messaging.MultiChannel.Sender
     {
         static void Main(string[] args)
         {
+            IocContainerLocator.Locate().RegisterFromAssemblyOf<Program>();
+
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingHttpTransport()
                 .AsAServer("Server")
                 .UsingFilePersistence()
                 .OpenChannel("TestSenderA")
-                    .ForRequestReplySendingTo("TestRecieverA@CHRIS-NEW-PC/ServerA.CHRIS-NEW-PC/ServerA")
+                    .ForRequestReplySendingTo(string.Format("TestRecieverA@{0}/ServerA.{0}/ServerA", Environment.MachineName))
                     .OnlyForMessages(FilteredBy.NamePattern("Channel1"))
                     .WithDurability()
+                    .RegisterHandlersFromAssemblyOf<Program>()
+                    .BasedOn<IMessageConsumer>()
                 .OpenChannel("TestSenderB")
-                    .ForRequestReplySendingTo("TestRecieverB@CHRIS-NEW-PC/ServerB.CHRIS-NEW-PC/ServerB")
+                    .ForRequestReplySendingTo(string.Format("TestRecieverB@{0}/ServerB.{0}/ServerB", Environment.MachineName))
                     .OnlyForMessages(FilteredBy.NamePattern("Channel2"))
                     .WithDurability()
+                    .RegisterHandlersFromAssemblyOf<Program>()
+                    .BasedOn<IMessageConsumer>()
                 .Initialise();
-
-            IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());
 
             do
             {

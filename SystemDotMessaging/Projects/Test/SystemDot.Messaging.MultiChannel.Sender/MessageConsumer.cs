@@ -4,7 +4,7 @@ using SystemDot.Messaging.Test.Messages;
 
 namespace SystemDot.Messaging.MultiChannel.Sender
 {
-    public class MessageConsumer
+    public class MessageConsumer : IMessageConsumer
     {
         public void Handle(Channel1Reply message)
         {

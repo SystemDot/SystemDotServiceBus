@@ -11,6 +11,8 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
     {
         static void Main(string[] args)
         {
+            IocContainerLocator.Locate().RegisterFromAssemblyOf<Program>();
+
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = true })
                 .UsingHttpTransport()
@@ -19,9 +21,9 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
                 .OpenChannel("TestReply")
                     .ForRequestReplyRecieving()
                     .WithDurability()
+                    .RegisterHandlersFromAssemblyOf<Program>()
+                    .BasedOn<IMessageConsumer>()
                 .Initialise();
-
-            IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer(bus));
 
             Console.WriteLine("I am the reciever. Press enter to exit");
 

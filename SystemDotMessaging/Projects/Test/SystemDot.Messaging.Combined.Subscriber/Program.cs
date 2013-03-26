@@ -12,16 +12,18 @@ namespace SystemDot.Messaging.Combined.Subscriber
     {
         static void Main(string[] args)
         {
+            IocContainerLocator.Locate().RegisterFromAssemblyOf<Program>();
+
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingHttpTransport()
                 .AsAServer("SubscriberServer")
                 .UsingFilePersistence()
                 .OpenChannel("TestSubscriber")
-                    .ForSubscribingTo("TestPublisher@CHRIS-NEW-PC/ReceiverPublisherServer.CHRIS-NEW-PC/ReceiverPublisherServer")
+                    .ForSubscribingTo(string.Format("TestPublisher@{0}/ReceiverPublisherServer.{0}/ReceiverPublisherServer", Environment.MachineName))
+                    .RegisterHandlersFromAssemblyOf<Program>()
+                    .BasedOn<IMessageConsumer>()
                 .Initialise();
-
-            IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());
             
             Console.WriteLine("I am a subscriber, listening for messages..");
 

@@ -2,7 +2,6 @@
 using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Logging;
-using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Transport.Http.Configuration;
@@ -13,18 +12,19 @@ namespace SystemDot.Messaging.OtherTestSubscriber
     {
         static void Main(string[] args)
         {
-            Logger.LoggingMechanism = new ConsoleLoggingMechanism { ShowDebug = false };
+            IocContainerLocator.Locate().RegisterFromAssemblyOf<Program>();
 
+            Logger.LoggingMechanism = new ConsoleLoggingMechanism { ShowDebug = false };
             Configure.Messaging()
                 .UsingHttpTransport()
                 .AsAServer("OtherSubscriberServer")
                 .UsingFilePersistence()
                 .OpenChannel("TestOtherSubscriber")
-                    .ForSubscribingTo("TestPublisher@CHRIS-NEW-PC/PublisherServer.CHRIS-NEW-PC/PublisherServer")
+                    .ForSubscribingTo(string.Format("TestPublisher@{0}/PublisherServer.{0}/PublisherServer", Environment.MachineName))
                     .WithDurability()
+                    .RegisterHandlersFromAssemblyOf<Program>()
+                    .BasedOn<IMessageConsumer>()
                 .Initialise();
-
-            IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());
             
             Console.WriteLine("I am the other subscriber, listening for messages..");
 

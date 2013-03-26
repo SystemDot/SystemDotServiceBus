@@ -4,7 +4,7 @@ using SystemDot.Messaging.Test.Messages;
 
 namespace SystemDot.Messaging.TestRequestReply.Reciever
 {
-    public class MessageConsumer
+    public class MessageConsumer : IMessageConsumer
     {
         readonly IBus bus;
         

@@ -3,7 +3,6 @@ using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Transport.Http.Configuration;
 
 namespace SystemDot.Messaging.MultiChannel.RecieverA
@@ -12,6 +11,8 @@ namespace SystemDot.Messaging.MultiChannel.RecieverA
     {
         static void Main(string[] args)
         {
+            IocContainerLocator.Locate().RegisterFromAssemblyOf<Program>();
+
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingHttpTransport()
@@ -19,9 +20,9 @@ namespace SystemDot.Messaging.MultiChannel.RecieverA
                 .UsingFilePersistence()
                 .OpenChannel("TestRecieverA").ForRequestReplyRecieving()
                     .WithDurability()
+                    .RegisterHandlersFromAssemblyOf<Program>()
+                    .BasedOn<IMessageConsumer>()
                 .Initialise();
-
-            IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer(bus));
 
             Console.WriteLine("I am reciever A");
             Console.ReadLine();                

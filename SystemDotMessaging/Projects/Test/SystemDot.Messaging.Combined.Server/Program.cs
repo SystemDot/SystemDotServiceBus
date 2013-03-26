@@ -12,16 +12,20 @@ namespace SystemDot.Messaging.Combined.Server
     {
         static void Main(string[] args)
         {
+            IocContainerLocator.Locate().RegisterFromAssemblyOf<Program>();
+
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingHttpTransport()
                 .AsAServer("ReceiverPublisherServer")
                 .UsingFilePersistence()
                 .OpenChannel("TestReceiver").ForRequestReplyRecieving()
+                    .RegisterHandlersFromAssemblyOf<Program>()
+                    .BasedOn<IMessageConsumer>()
                 .OpenChannel("TestPublisher").ForPublishing()
+                    .RegisterHandlersFromAssemblyOf<Program>()
+                    .BasedOn<IMessageConsumer>()
                 .Initialise();
-
-            IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer(bus));
 
             Console.WriteLine("I am the server. Press enter to exit");
 
