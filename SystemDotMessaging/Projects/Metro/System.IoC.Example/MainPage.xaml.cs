@@ -3,6 +3,7 @@ using System.IoC.Example.Types;
 using SystemDot;
 using SystemDot.Ioc;
 using Windows.UI.Popups;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -52,7 +53,7 @@ namespace System.IoC.Example
             var dialogContent = string.Empty;
             messages.ForEach(m => dialogContent += m + Environment.NewLine);
             await new MessageDialog(dialogContent).ShowAsync();
-            App.Current.Exit();
+            Application.Current.Exit();
         }
         static void CustomRegistrations(IIocContainer ioc)
         {

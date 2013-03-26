@@ -10,7 +10,10 @@ namespace SystemDot.Ioc
             where TPlugin : class
             where TConcrete : class;
 
-        T Resolve<T>() where T : class;
+        TPlugin Resolve<TPlugin>() where TPlugin : class;
+
+        object Resolve(Type type);
+
         void RegisterFromAssemblyOf<TAssemblyOf>();
     }
 }

@@ -29,15 +29,20 @@ namespace SystemDot.Ioc
             return components.ContainsKey(typeof(TPlugin));
         }
 
-        public T Resolve<T>() where T : class
+        public TPlugin Resolve<TPlugin>() where TPlugin : class
         {
-            return (T)Resolve(typeof(T));
+            return (TPlugin)Resolve(typeof(TPlugin));
         }
 
-        object Resolve(Type type)
+        public object Resolve(Type type)
+        {
+            return ResolveType(type);
+        }
+
+        object ResolveType(Type type)
         {
             if (!components.ContainsKey(type))
-                throw new TypeNotRegisteredException(string.Format("{0} has not been registered in the container.", type.Name));
+                throw new TypeNotRegisteredException(string.Format("Type \"{0}\" has not been registered in the container.", type.Name));
 
             var concreteType = components[type];
 
@@ -64,7 +69,7 @@ namespace SystemDot.Ioc
 
         public void RegisterFromAssemblyOf<TAssemblyOf>()
         {
-            new AutoRegistrar(this).Register(new AssemblyScanner().GetConcreteTypesFromAssemblyOf<TAssemblyOf>());
+            new AutoRegistrar(this).Register(typeof(TAssemblyOf).GetTypesInAssembly().WhereNonAbstract().WhereNonGeneric().WhereConcrete());
         }
     }
 }

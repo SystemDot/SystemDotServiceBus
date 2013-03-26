@@ -29,12 +29,29 @@ namespace SystemDot
             return types;
         }
 
-        public static IEnumerable<Type> FindTypes<TType>(this object type)
+        public static IEnumerable<Type> GetTypesInAssembly(this Type type)
         {
-            return typeof(TType)
-                .Assembly
-                .GetTypes()
-                .Where(t => !t.IsInterface && !t.IsAbstract && t.IsClass && !t.ContainsGenericParameters);
+            return type.Assembly.GetTypes();
+        }
+
+        public static IEnumerable<Type> WhereNonAbstract(this IEnumerable<Type> types)
+        {
+            return types.Where(t => !t.IsAbstract);
+        }
+
+        public static IEnumerable<Type> WhereConcrete(this IEnumerable<Type> types)
+        {
+            return types.Where(t => !t.IsInterface && t.IsClass);
+        }
+
+        public static IEnumerable<Type> WhereNonGeneric(this IEnumerable<Type> types)
+        {
+            return types.Where(t => !t.ContainsGenericParameters);
+        }
+
+        public static IEnumerable<Type> WhereImplements<TImplemented>(this IEnumerable<Type> types)
+        {
+            return types.Where(t => t.GetNonBaseInterfaces().Contains(typeof(TImplemented)) || t.GetBaseInterfaces().Contains(typeof(TImplemented)));
         }
 
         public static IEnumerable<MethodInfo> GetMethodsByName(this Type type, Action genMethod)

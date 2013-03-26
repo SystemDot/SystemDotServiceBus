@@ -67,6 +67,13 @@
     <Compile Include="channels\expiry\when_passing_a_message_that_is_not_time_expired_through_an_expirer.cs" />
     <Compile Include="channels\expiry\when_processing_a_message_with_a_message_send_time_remover.cs" />
     <Compile Include="channels\expiry\when_processing_a_message_with_a_message_send_time_remover_with_no_processor_listening.cs" />
+    <Compile Include="channels\handling\Fakes\FirstHandlerOfMessage1.cs" />
+    <Compile Include="channels\handling\Fakes\FirstHandlerOfMessage2.cs" />
+    <Compile Include="channels\handling\Fakes\IHandleMessage.cs" />
+    <Compile Include="channels\handling\Fakes\Message1.cs" />
+    <Compile Include="channels\handling\Fakes\Message2.cs" />
+    <Compile Include="channels\handling\Fakes\SecondHandlerOfMessage1.cs" />
+    <Compile Include="channels\handling\Fakes\SecondHandlerOfMessage2.cs" />
     <Compile Include="channels\repeating\when_starting_a_repeater_with_a_simple_repeat_strategy_for_the_second_time.cs" />
     <Compile Include="channels\sequencing\when_passing_a_message_without_a_sequence_number_header_through_a_resequencer.cs" />
     <Compile Include="channels\sequencing\when_passing_a_message_with_a_lower_sequence_of_that_of_the_resequencer.cs" />
@@ -93,6 +100,7 @@
     <Compile Include="channels\local\when_sending_a_local_message_without_configuring_a_local_channel.cs" />
     <Compile Include="channels\local\when_sending_a_local_message_with_a_unit_of_work_setup.cs" />
     <Compile Include="channels\local\when_sending_a_message_after_configuring_a_channel_and_then_a_local_channel.cs" />
+    <Compile Include="channels\handling\when_sending_a_message_with_handlers_auto_registered.cs" />
     <Compile Include="transport\http\MessagePayloadExtensions.cs" />
     <Compile Include="transport\http\remote\client\when_sending_a_message_using_a_remote_proxy.cs" />
     <Compile Include="transport\http\remote\client\when_sending_to_a_receiver_on_a_different_machine.cs" />

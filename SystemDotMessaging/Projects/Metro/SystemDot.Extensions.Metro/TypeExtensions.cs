@@ -49,20 +49,34 @@ namespace SystemDot
             return types;
         }
 
-        public static IEnumerable<Type> FindTypes<TType>(this object type)
+        public static IEnumerable<Type> GetTypesInAssembly(this Type type)
         {
-            return typeof(TType)
-                .GetTypeInfo()
-                .Assembly
-                .ExportedTypes
-                .Where(t => !t.GetTypeInfo().IsInterface && !t.GetTypeInfo().IsAbstract && t.GetTypeInfo().IsClass && !t.GetTypeInfo().ContainsGenericParameters);
+            return type.GetTypeInfo().Assembly.ExportedTypes;
+        }
+        
+        public static IEnumerable<Type> WhereNonAbstract(this IEnumerable<Type> types)
+        {
+            return types.Where(t => !t.GetTypeInfo().IsAbstract);
+        }
+
+        public static IEnumerable<Type> WhereConcrete(this IEnumerable<Type> types)
+        {
+            return types.Where(t => !t.GetTypeInfo().IsInterface && t.GetTypeInfo().IsClass);
+        }
+
+        public static IEnumerable<Type> WhereNonGeneric(this IEnumerable<Type> types)
+        {
+            return types.Where(t => !t.GetTypeInfo().ContainsGenericParameters);
+        }
+
+        public static IEnumerable<Type> WhereImplements<TImplemented>(this IEnumerable<Type> types)
+        {
+            return types.Where(t => t.GetNonBaseInterfaces().Contains(typeof(TImplemented)) || t.GetBaseInterfaces().Contains(typeof(TImplemented)));
         }
 
         public static IEnumerable<MethodInfo> GetMethodsByName(this Type type, Action genMethod)
         {
             return type.GetTypeInfo().DeclaredMethods.Where(m => m.Name == "RegisterInstance");
-
         }
-
     }
 }

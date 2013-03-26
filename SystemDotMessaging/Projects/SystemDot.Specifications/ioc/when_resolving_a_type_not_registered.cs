@@ -14,6 +14,6 @@ namespace SystemDot.Specifications.ioc
 
         It should_throw_a_type_not_registered_exception = () => exception.ShouldBeOfType<TypeNotRegisteredException>();
 
-        It should_say_which_type_was_not_registered = () => exception.Message.ShouldEqual("Object has not been registered in the container.");
+        It should_say_which_type_was_not_registered = () => exception.Message.ShouldEqual("Type \"Object\" has not been registered in the container.");
     }
 }
