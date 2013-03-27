@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients
 
         public LongPollRequestHeader(ServerPath serverPath)
         {
-            this.ServerPath = serverPath;
+            ServerPath = serverPath;
         }
 
         public override string ToString()

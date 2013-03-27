@@ -38,6 +38,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.sending
         It should_notify_that_the_message_was_cached = () =>
             messageAddedToCacheEvent.ShouldMatch(m =>
                 m.CacheAddress == BuildAddress(SenderAddress)
+                && m.UseType == PersistenceUseType.PointToPointSend
                 && m.Message == Server.SentMessages.First());
 
         It should_send_a_message_with_the_correct_to_address_channel_name = () =>

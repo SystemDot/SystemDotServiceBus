@@ -58,7 +58,12 @@ namespace SystemDot.Messaging.Storage
 
             AddChange(new AddMessageAndIncrementSequenceChange(message, this.sequence + 1));
 
-            Messenger.Send(new MessageAddedToCache { CacheAddress = Address, Message = message });
+            Messenger.Send(new MessageAddedToCache
+            {
+                CacheAddress = Address,
+                UseType = UseType,
+                Message = message
+            });
         }
 
         public void ApplyChange(SetFirstItemCachedOnChange change)
