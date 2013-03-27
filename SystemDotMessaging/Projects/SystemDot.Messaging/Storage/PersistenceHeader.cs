@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Storage
 
         public override string ToString()
         {
-            return string.Concat(this.GetType() ,": ", PersistenceId.ToString());
+            return string.Concat("PersistenceId: ", PersistenceId.ToString());
         }
     }
 }

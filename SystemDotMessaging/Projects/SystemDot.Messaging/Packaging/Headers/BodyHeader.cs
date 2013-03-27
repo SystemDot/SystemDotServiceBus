@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Packaging.Headers
 
         public override string ToString()
         {
-            return string.Concat(this.GetType() ,": ", this.Body.ToString());
+            return string.Concat("Body: ", Body.ToString());
         }
     }
 }

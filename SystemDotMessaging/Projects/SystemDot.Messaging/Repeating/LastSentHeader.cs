@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.Repeating
 
         public override string ToString()
         {
-            return string.Concat(this.GetType(), ": ", this.Time, " ", this.Amount);
+            return string.Concat("Time: ", Time, " Amount:", Amount);
         }
     }
 }

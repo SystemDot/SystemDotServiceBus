@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Publishing
 
         public override string ToString()
         {
-            return string.Concat(this.GetType(), ": ", this.Schema.ToString());
+            return string.Concat("Schema: ", this.Schema.ToString());
         }
     }
 }

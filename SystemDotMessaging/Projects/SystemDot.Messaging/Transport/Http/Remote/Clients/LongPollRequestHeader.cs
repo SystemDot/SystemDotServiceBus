@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients
 
         public override string ToString()
         {
-            return string.Concat(GetType() ,": ", ServerPath.ToString());
+            return string.Concat("ServerPath: ", ServerPath.ToString());
         }
     }
 }

@@ -8,7 +8,7 @@ namespace SystemDot.Messaging.Sequencing
         
         public override string ToString()
         {
-            return string.Concat(this.GetType() ,": ", this.Sequence.ToString());
+            return string.Concat("Sequence: ", Sequence.ToString());
         }
     }
   

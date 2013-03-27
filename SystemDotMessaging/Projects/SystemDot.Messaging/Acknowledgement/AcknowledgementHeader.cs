@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Acknowledgement
 
         public override string ToString()
         {
-            return string.Concat(this.GetType() ,": ", this.MessageId.ToString());
+            return string.Concat("Message to acknowledge: ", MessageId.ToString());
         }
     }
 }
