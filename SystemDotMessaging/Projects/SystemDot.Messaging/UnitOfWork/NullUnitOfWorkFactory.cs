@@ -1,6 +1,6 @@
 namespace SystemDot.Messaging.UnitOfWork
 {
-    internal class NullUnitOfWorkFactory : IUnitOfWorkFactory
+    class NullUnitOfWorkFactory : IUnitOfWorkFactory
     {
         public IUnitOfWork Create()
         {

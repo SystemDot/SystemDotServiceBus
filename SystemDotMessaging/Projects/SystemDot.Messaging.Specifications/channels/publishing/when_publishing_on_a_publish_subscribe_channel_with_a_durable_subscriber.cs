@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
 
         It should_have_persisted_the_message = () =>
             Resolve<IChangeStore>()
-                .GetAddedMessages(PersistenceUseType.PublisherSend, BuildAddress(ChannelName))
+                .GetReceiveMessages(PersistenceUseType.PublisherSend, BuildAddress(ChannelName))
                 .ShouldNotBeEmpty();
     }
 }

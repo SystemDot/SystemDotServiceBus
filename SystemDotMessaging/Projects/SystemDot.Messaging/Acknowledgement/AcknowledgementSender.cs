@@ -5,7 +5,7 @@ using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Acknowledgement
 {
-    public class AcknowledgementSender : IMessageProcessor<MessagePayload>
+    class AcknowledgementSender : IMessageProcessor<MessagePayload>
     {
         public void SendAcknowledgement(MessagePayload toInput)
         {
@@ -13,7 +13,7 @@ namespace SystemDot.Messaging.Acknowledgement
             acknowledgement.SetAcknowledgementId(toInput.GetSourcePersistenceId());
             acknowledgement.SetToAddress(toInput.GetFromAddress());
 
-            this.MessageProcessed(acknowledgement);
+            MessageProcessed(acknowledgement);
         }
 
         public event Action<MessagePayload> MessageProcessed;

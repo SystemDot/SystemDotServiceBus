@@ -17,11 +17,11 @@ namespace SystemDot.Messaging.Combined.Client
 
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
+                .UsingFilePersistence()
                 .UsingHttpTransport()
                 .AsAServer("SenderServer")
-                .UsingFilePersistence()
                 .OpenChannel("TestSender")
-                    .ForRequestReplySendingTo(string.Format("TestReceiver@{0}/ReceiverPublisherServer.{0}/ReceiverPublisherServer", Environment.MachineName))
+                    .ForRequestReplySendingTo("TestReceiver@/ReceiverPublisherServer")
                     .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
                 .Initialise();

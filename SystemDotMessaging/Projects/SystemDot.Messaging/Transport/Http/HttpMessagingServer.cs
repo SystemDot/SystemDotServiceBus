@@ -7,10 +7,10 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Transport.Http
 {
-    public class HttpMessagingServer : IHttpHandler 
+    class HttpMessagingServer : IHttpHandler 
     {
-        private readonly ISerialiser formatter;
-        private readonly IMessagingServerHandler[] handlers;
+        readonly ISerialiser formatter;
+        readonly IMessagingServerHandler[] handlers;
 
         public HttpMessagingServer(ISerialiser formatter, params IMessagingServerHandler[] handlers)
         {

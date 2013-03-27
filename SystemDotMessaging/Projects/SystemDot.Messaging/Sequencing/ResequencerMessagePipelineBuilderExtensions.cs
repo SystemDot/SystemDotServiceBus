@@ -6,11 +6,11 @@ using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Sequencing
 {
-    public static class ResequencerMessagePipelineBuilderExtensions
+    static class ResequencerMessagePipelineBuilderExtensions
     {
         public static ProcessorBuilder<MessagePayload> ToResequencerIfSequenced(
             this ProcessorBuilder<MessagePayload> builder,
-            MessageCache messageCache,
+            ReceiveMessageCache messageCache,
             ChannelSchema schema)
         {
             IMessageProcessor<MessagePayload, MessagePayload> processor;

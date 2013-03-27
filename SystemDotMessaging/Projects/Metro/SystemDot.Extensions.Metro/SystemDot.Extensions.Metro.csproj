@@ -102,6 +102,11 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyExtensions.cs" />
+    <Compile Include="Composition\CompositionContainer.cs" />
+    <Compile Include="Composition\DirectoryCatalog.cs" />
+    <Compile Include="Composition\ImportManyAttribute.cs" />
+    <Compile Include="Composition\InheritedExportAttribute.cs" />
     <Compile Include="PutSender.cs" />
     <Compile Include="Console.cs" />
     <Compile Include="File.cs" />

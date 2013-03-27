@@ -5,11 +5,11 @@ using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Caching
 {
-    public class ReceiveChannelMessageCacher : MessageProcessor
+    class ReceiveChannelMessageCacher : MessageProcessor
     {
-        readonly MessageCache messageCache;
+        readonly ReceiveMessageCache messageCache;
 
-        public ReceiveChannelMessageCacher(MessageCache messageCache)
+        public ReceiveChannelMessageCacher(ReceiveMessageCache messageCache)
         {
             Contract.Requires(messageCache != null);
             this.messageCache = messageCache;

@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
             handler = new TestMessageHandler<int>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
-            payload = new MessagePayload().MakeReceiveable(
+            payload = new MessagePayload().MakeSequencedReceivable(
                 1, 
                 SenderAddress, 
                 ChannelName, 

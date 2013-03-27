@@ -4,13 +4,13 @@ using SystemDot.Messaging.RequestReply.Builders;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {
-    public static class RequestReplyComponents
+    static class RequestReplyComponents
     {
         public static void Register(IIocContainer iocContainer)
         {
             iocContainer.RegisterInstance<RequestRecieveChannelDistributor, RequestRecieveChannelDistributor>();
             iocContainer.RegisterInstance<RequestReceiveDistributionChannelBuilder, RequestReceiveDistributionChannelBuilder>();
-            iocContainer.RegisterInstance<ReplyRecieveChannelBuilder, ReplyRecieveChannelBuilder>();
+            iocContainer.RegisterInstance<ReplyReceiveChannelBuilder, ReplyReceiveChannelBuilder>();
             iocContainer.RegisterInstance<RequestRecieveChannelBuilder, RequestRecieveChannelBuilder>();
             iocContainer.RegisterInstance<ReplyAddressLookup, ReplyAddressLookup>();
             iocContainer.RegisterInstance<ReplySendChannelDistributor, ReplySendChannelDistributor>();

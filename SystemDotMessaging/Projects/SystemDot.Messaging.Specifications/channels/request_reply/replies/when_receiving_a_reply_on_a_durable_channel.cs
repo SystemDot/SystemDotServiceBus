@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
                     .WithDurability()
                 .Initialise();
 
-            payload = new MessagePayload().MakeReceiveable(
+            payload = new MessagePayload().MakeSequencedReceivable(
                 1, 
                 RecieverAddress, 
                 ChannelName, 
@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
 
         It should_have_persisted_the_message = () => 
             Resolve<IChangeStore>()
-                .GetAddedMessages(PersistenceUseType.ReplyReceive, BuildAddress(ChannelName))
+                .GetReceiveMessages(PersistenceUseType.ReplyReceive, BuildAddress(ChannelName))
                 .ShouldContain(payload);
     }
 }

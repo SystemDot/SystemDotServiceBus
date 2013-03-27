@@ -3,7 +3,7 @@ using SystemDot.Ioc;
 
 namespace SystemDot.Messaging.Transport.Http.Configuration
 {
-    public static class HttpServerComponents
+    static class HttpServerComponents
     {
         public static void Configure(IIocContainer container)
         {

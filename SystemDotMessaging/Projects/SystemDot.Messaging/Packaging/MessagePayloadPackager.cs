@@ -6,9 +6,9 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Packaging
 {
-    public class MessagePayloadPackager : IMessageProcessor<object, MessagePayload>
+    class MessagePayloadPackager : IMessageProcessor<object, MessagePayload>
     {
-        private readonly ISerialiser serialiser;
+        readonly ISerialiser serialiser;
 
         public event Action<MessagePayload> MessageProcessed;
 

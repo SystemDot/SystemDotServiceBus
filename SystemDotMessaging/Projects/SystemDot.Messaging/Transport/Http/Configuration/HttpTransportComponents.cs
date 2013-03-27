@@ -1,10 +1,9 @@
 using SystemDot.Http.Builders;
 using SystemDot.Ioc;
-using SystemDot.Messaging.Transport.Http.Remote;
 
 namespace SystemDot.Messaging.Transport.Http.Configuration
 {
-    public static class HttpTransportComponents
+    static class HttpTransportComponents
     {
         public static void Register(IIocContainer container)
         {

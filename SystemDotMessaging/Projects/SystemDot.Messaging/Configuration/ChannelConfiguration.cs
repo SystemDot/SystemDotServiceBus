@@ -61,7 +61,7 @@ namespace SystemDot.Messaging.Configuration
 
         public PointToPointReceiverConfiguration ForPointToPointReceiving()
         {
-            return new PointToPointReceiverConfiguration(this.serverPath, this.buildActions);
+            return new PointToPointReceiverConfiguration(this.address, this.serverPath, this.buildActions);
         }
     }
 

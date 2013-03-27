@@ -3,7 +3,6 @@ using System.Linq;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Repeating;
-using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Specifications.channels.publishing;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
@@ -14,17 +13,21 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.sending
     [Subject(SpecificationGroup.Description)]
     public class when_sending_on_a_channel : WithMessageConfigurationSubject
     {
-        const string ChannelName = "Test";
-        const string ReceiverName = "TestReceiver";
+        const string SenderAddress = "SenderAddress";
+        const string ReceiverAddress = "ReceiverAddress";
+
+        static MessageAddedToCache messageAddedToCacheEvent;
         
         static IBus bus;
         static int message;
         
         Establish context = () =>
-        {    
+        {
+            Messenger.Register<MessageAddedToCache>(e => messageAddedToCacheEvent = e);
+
             bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel(ChannelName).ForPointToPointSendingTo(ReceiverName)
+                .OpenChannel(SenderAddress).ForPointToPointSendingTo(ReceiverAddress)
                 .Initialise();
 
             message = 1;
@@ -32,19 +35,24 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.sending
 
         Because of = () => bus.Send(message);
 
+        It should_notify_that_the_message_was_cached = () =>
+            messageAddedToCacheEvent.ShouldMatch(m =>
+                m.CacheAddress == BuildAddress(SenderAddress)
+                && m.Message == Server.SentMessages.First());
+
         It should_send_a_message_with_the_correct_to_address_channel_name = () =>
             Server.SentMessages.First().GetToAddress()
-                .Channel.ShouldEqual(ReceiverName);
+                .Channel.ShouldEqual(ReceiverAddress);
 
         It should_send_a_message_with_the_to_address_server_path_not_set = () =>
             Server.SentMessages.First().GetToAddress().ServerPath.ShouldEqual(ServerPath.None);
 
         It should_send_a_message_with_the_correct_from_address = () =>
-            Server.SentMessages.First().GetFromAddress().ShouldEqual(BuildAddress(ChannelName));
+            Server.SentMessages.First().GetFromAddress().ShouldEqual(BuildAddress(SenderAddress));
 
         It should_mark_the_message_with_the_persistence_id = () =>
             Server.SentMessages.ExcludeAcknowledgements().First()
-                .ShouldHaveCorrectPersistenceId(ChannelName, PersistenceUseType.PointToPointSend);
+                .ShouldHaveCorrectPersistenceId(SenderAddress, PersistenceUseType.PointToPointSend);
 
         It should_set_original_persistence_id_to_the_persistence_id_of_the_message_with_the_persistence_id = () =>
            Server.SentMessages.ExcludeAcknowledgements().First().GetSourcePersistenceId()
@@ -59,9 +67,6 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.sending
 
         It should_mark_the_amount_of_times_the_message_has_been_sent = () => 
             Server.SentMessages.ExcludeAcknowledgements().First().GetAmountSent().ShouldEqual(1);
-
-        It should_mark_the_message_with_the_sequence = () =>
-            Server.SentMessages.ExcludeAcknowledgements().First().GetSequence().ShouldEqual(1);
 
         It should_start_the_task_repeater = () => TaskRepeater.Started.ShouldBeTrue();
     }

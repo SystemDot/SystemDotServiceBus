@@ -6,7 +6,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Packaging
 {
-    public class MessagePayloadUnpackager : IMessageProcessor<MessagePayload, object>
+    class MessagePayloadUnpackager : IMessageProcessor<MessagePayload, object>
     {
         private readonly ISerialiser serialiser;
 

@@ -1,12 +1,12 @@
 ﻿using System;
+using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Logging;
-using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Handling;
-using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Test.Messages;
 using SystemDot.Messaging.Transport.Http.Configuration;
+using SystemDot.Newtonsoft;
 
 namespace SystemDot.Messaging.TestRequestReply.Sender
 {
@@ -15,12 +15,14 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
         static void Main(string[] args)
         {
             IBus bus = Configure.Messaging()
-                .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false, ShowDebug = false })
+                .LoggingWith(new ConsoleLoggingMechanism {ShowInfo = false, ShowDebug = false})
+                .UsingFilePersistence()
+                .UsingJsonSerialisation()
                 .UsingHttpTransport()
                 .AsAServer("SenderServer")
                 .OpenChannel("TestRequest")
-                    .ForRequestReplySendingTo(string.Format("TestReply@{0}/ReceiverServer.{0}/ReceiverServer", Environment.MachineName))
-                    .WithDurability()
+                .ForRequestReplySendingTo("TestReply@/ReceiverServer")
+                .WithDurability()
                 .Initialise();
 
             IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());
@@ -29,7 +31,7 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
             {
                 Console.WriteLine("I am the sender. Press enter to send messages..");
                 Console.ReadLine();
-                
+
                 Console.WriteLine("Sending messages");
 
                 bus.Send(new TestMessage("Hello"));

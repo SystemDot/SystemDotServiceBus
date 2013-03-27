@@ -18,13 +18,12 @@ namespace SystemDot
             var types = new List<Type>();
             var baseType = type.BaseType;
 
-            if (baseType == typeof (MemberInfo)) return types;
-
+            if (baseType == typeof(MemberInfo)) return types;
             while (baseType != null)
             {
                 types.AddRange(baseType.GetInterfaces());
                 baseType = baseType.BaseType;
-                if (baseType == typeof (MemberInfo)) return types;
+                if (baseType == typeof(MemberInfo)) return types;
             }
             return types;
         }
@@ -54,9 +53,19 @@ namespace SystemDot
             return types.Where(t => t.GetNonBaseInterfaces().Contains(typeof(TImplemented)) || t.GetBaseInterfaces().Contains(typeof(TImplemented)));
         }
 
+        public static IEnumerable<ConstructorInfo> GetAllConstructors(this Type type)
+        {
+            return type.GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        }
+
         public static IEnumerable<MethodInfo> GetMethodsByName(this Type type, Action genMethod)
         {
             return type.GetMethods().Where(m => m.Name == genMethod.Method.Name);
+        }
+
+        public static Assembly GetAssembly(this Type type)
+        {
+            return type.Assembly;
         }
     }
 }

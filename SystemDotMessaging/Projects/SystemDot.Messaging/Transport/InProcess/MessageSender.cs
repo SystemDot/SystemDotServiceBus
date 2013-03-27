@@ -6,7 +6,7 @@ using SystemDot.Messaging.Transport.Http;
 
 namespace SystemDot.Messaging.Transport.InProcess
 {
-    public class MessageSender : IMessageSender
+    class MessageSender : IMessageSender
     {
         readonly IInProcessMessageServer server;
 

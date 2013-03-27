@@ -3,11 +3,16 @@ using System.IO;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.channels;
 using SystemDot.Serialisation;
+using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.transport.http
 {
     public class WithServerConfigurationSubject : WithMessageConfigurationSubject
     {
+        Establish context = () => ConfigureAndRegister<ISerialiser>(new PlatformAgnosticSerialiser());
+
+        Cleanup cleanup = () => TestHttpServer.ClearInstance();
+
         public static IEnumerable<MessagePayload> SendMessagesToServer(params MessagePayload[] toSend)
         {
             return SendObjectsToServer(toSend)

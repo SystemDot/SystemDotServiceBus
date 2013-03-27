@@ -5,7 +5,7 @@ using SystemDot.Messaging.Packaging;
 
 namespace SystemDot.Messaging.Publishing
 {
-    public class SubscriptionRequestor : ISubscriptionRequestor
+    class SubscriptionRequestor : ISubscriptionRequestor
     {
         readonly EndpointAddress subscriberAddress;
         readonly bool isDurable;

@@ -4,7 +4,7 @@ using SystemDot.Messaging.Pipelines;
 
 namespace SystemDot.Messaging.Local.Builders
 {
-    public class LocalChannelBuilder
+    class LocalChannelBuilder
     {
         readonly MessageHandlerRouter messageHandlerRouter;
         

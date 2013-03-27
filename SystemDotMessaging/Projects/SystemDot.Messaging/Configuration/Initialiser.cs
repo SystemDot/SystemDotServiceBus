@@ -6,6 +6,7 @@ using SystemDot.Messaging.Acknowledgement.Builders;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.Local;
 using SystemDot.Messaging.Handling;
+using SystemDot.Messaging.Publishing.Builders;
 using SystemDot.Messaging.Transport;
 using SystemDot.Messaging.UnitOfWork;
 using SystemDot.Parallelism;
@@ -28,6 +29,7 @@ namespace SystemDot.Messaging.Configuration
 
         public IBus Initialise()
         {
+            Resolve<SubscriptionHandlerChannelBuilder>().Build();
             Resolve<AcknowledgementSendChannelBuilder>().Build();
             Resolve<AcknowledgementRecieveChannelBuilder>().Build();
 
@@ -62,7 +64,7 @@ namespace SystemDot.Messaging.Configuration
 
         protected abstract ServerPath GetServerPath();
 
-        protected static UnitOfWorkRunner<TUnitOfWorkFactory> CreateUnitOfWorkRunner<TUnitOfWorkFactory>() 
+        internal static UnitOfWorkRunner<TUnitOfWorkFactory> CreateUnitOfWorkRunner<TUnitOfWorkFactory>() 
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory
         {
             return new UnitOfWorkRunner<TUnitOfWorkFactory>(Resolve<IIocContainer>());

@@ -18,7 +18,8 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsARemoteServer("RemoteServerInstance");
+                .AsARemoteServer("RemoteServerInstance")
+                .Initialise();
         };
 
         Because of = () => exception = Catch.Exception(() => SendObjectsToServer(new object()));

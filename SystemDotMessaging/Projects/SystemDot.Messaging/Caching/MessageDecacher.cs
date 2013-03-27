@@ -4,11 +4,11 @@ using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Caching
 {
-    public class MessageDecacher : MessageProcessor
+    class MessageDecacher : MessageProcessor
     {
-        readonly MessageCache messageCache;
+        readonly IMessageCache messageCache;
 
-        public MessageDecacher(MessageCache messageCache)
+        public MessageDecacher(IMessageCache messageCache)
         {
             Contract.Requires(messageCache != null);
             this.messageCache = messageCache;

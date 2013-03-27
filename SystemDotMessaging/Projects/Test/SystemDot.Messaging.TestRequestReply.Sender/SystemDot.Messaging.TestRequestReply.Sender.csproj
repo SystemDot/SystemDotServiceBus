@@ -38,11 +38,20 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IMessageConsumer.cs" />
     <Compile Include="MessageConsumer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\SystemDot.Esent\SystemDot.Esent.csproj">
+      <Project>{C7DBF177-FCDB-4530-A6CA-3B1EFBAD63EB}</Project>
+      <Name>SystemDot.Esent %28Windows\SystemDot.Esent%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SystemDot.Newtonsoft\SystemDot.Newtonsoft.csproj">
+      <Project>{377B573E-9BBD-40D3-9244-40D5B4F0B207}</Project>
+      <Name>SystemDot.Newtonsoft %28Windows\SystemDot.Newtonsoft%29</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SystemDot\SystemDot.csproj">
       <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>
       <Name>SystemDot %28Windows\SystemDot%29</Name>
@@ -55,9 +64,6 @@
       <Project>{EAABD53D-7507-4F76-A538-0264D7294422}</Project>
       <Name>SystemDot.Messaging.Test.Messages %28Windows\Examples\SystemDot.Messaging.Test.Messages%29</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

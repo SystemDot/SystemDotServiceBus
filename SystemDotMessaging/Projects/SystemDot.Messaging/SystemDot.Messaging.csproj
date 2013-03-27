@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
@@ -42,12 +43,19 @@
     <Compile Include="Addressing\EndpointAddressBuilder.cs" />
     <Compile Include="Addressing\MessageAddresser.cs" />
     <Compile Include="Addressing\ServerPath.cs" />
+    <Compile Include="Batching\Batch.cs" />
+    <Compile Include="Batching\BatchMessage.cs" />
+    <Compile Include="Batching\BatchPackager.cs" />
+    <Compile Include="Batching\BatchUnpackager.cs" />
     <Compile Include="Builders\ChannelSchema.cs" />
     <Compile Include="Caching\PersistenceSourceRecorder.cs" />
     <Compile Include="Caching\ReceiveChannelMessageCacher.cs" />
     <Compile Include="Caching\SendChannelMessageCacher.cs" />
     <Compile Include="Configuration\HandlerConfiguration.cs" />
     <Compile Include="Configuration\MessagingConfigurationExtensions.cs" />
+    <Compile Include="Configuration\ExternalSources\ExternalSourcesConfigurer.cs" />
+    <Compile Include="Configuration\ExternalSources\IExternalConfigurationSource.cs" />
+    <Compile Include="Configuration\ExternalSources\IExternalSourcesConfigurer.cs" />
     <Compile Include="Distribution\ChannelDistributor.cs" />
     <Compile Include="Distribution\IChannelDistrbutionStrategy.cs" />
     <Compile Include="Distribution\Queue.cs" />
@@ -63,11 +71,16 @@
     <Compile Include="Local\Builders\LocalChannelSchema.cs" />
     <Compile Include="MessageProcessor.cs" />
     <Compile Include="Builders\PersistenceFactorySelector.cs" />
+    <Compile Include="PointToPoint\Builders\PointToPointReceiveChannelBuilt.cs" />
+    <Compile Include="PointToPoint\Builders\PointToPointReceiverChannelSchema.cs" />
     <Compile Include="PointToPoint\Builders\PointToPointSendChannelBuilder.cs" />
+    <Compile Include="PointToPoint\Builders\PointToPointSendChannelBuilt.cs" />
     <Compile Include="PointToPoint\Builders\PointToPointSendChannelSchema.cs" />
-    <Compile Include="PointToPoint\PointToPointReceiveChannelBuilder.cs" />
+    <Compile Include="PointToPoint\Builders\PointToPointReceiveChannelBuilder.cs" />
     <Compile Include="Publishing\Builders\ISubscriberSendChannelBuilder.cs" />
+    <Compile Include="Publishing\Builders\PublisherChannelBuilt.cs" />
     <Compile Include="Publishing\Builders\SubscriberRecieveChannelSchema.cs" />
+    <Compile Include="Publishing\Builders\SubscriberSendChannelBuilt.cs" />
     <Compile Include="Publishing\Builders\SubscriptionRequestChannelSchema.cs" />
     <Compile Include="Builders\RecieveChannelSchema.cs" />
     <Compile Include="Publishing\PersistentSubscriberCollection.cs" />
@@ -81,9 +94,14 @@
     <Compile Include="Repeating\MessageRepeater.cs" />
     <Compile Include="Repeating\RepeaterMessagePipelineBuilderExtensions.cs" />
     <Compile Include="Repeating\SimpleRepeatStrategy.cs" />
+    <Compile Include="Publishing\Builders\SubscriberReceiveChannelBuilt.cs" />
+    <Compile Include="RequestReply\Builders\ReplyReceiveChannelBuilt.cs" />
+    <Compile Include="RequestReply\Builders\ReplySendChannelBuilt.cs" />
     <Compile Include="RequestReply\Builders\ReplySendDistributionChannelBuilder.cs" />
     <Compile Include="RequestReply\Builders\ReplySendSubscriptionHandler.cs" />
+    <Compile Include="RequestReply\Builders\RequestReceiveChannelBuilt.cs" />
     <Compile Include="RequestReply\Builders\RequestReceiveDistributionChannelBuilder.cs" />
+    <Compile Include="RequestReply\Builders\RequestSendChannelBuilt.cs" />
     <Compile Include="RequestReply\RegisterReplySendChannelChange.cs" />
     <Compile Include="RequestReply\RegisterRequestReceiveChannelChange.cs" />
     <Compile Include="RequestReply\ReplyChannelMessageFilterStategy.cs" />
@@ -100,19 +118,25 @@
     <Compile Include="Publishing\Builders\SubscriptionRequestChannelBuilder.cs" />
     <Compile Include="Publishing\ISubscriptionRequestor.cs" />
     <Compile Include="Publishing\SubscriptionRequestFilter.cs" />
-    <Compile Include="RequestReply\Builders\ReplyRecieveChannelSchema.cs" />
+    <Compile Include="RequestReply\Builders\ReplyReceiveChannelSchema.cs" />
     <Compile Include="RequestReply\Builders\ReplySendChannelSchema.cs" />
-    <Compile Include="RequestReply\Builders\RequestRecieveSubscriptionHandler.cs" />
+    <Compile Include="RequestReply\Builders\RequestReceiveSubscriptionHandler.cs" />
     <Compile Include="RequestReply\Builders\RequestSendChannelSchema.cs" />
-    <Compile Include="Sequencing\FirstMessageSequenceRecorder.cs" />
+    <Compile Include="Sequencing\SequenceOriginRecorder.cs" />
     <Compile Include="Sequencing\FirstSequenceHeader.cs" />
     <Compile Include="Sequencing\MessageFirstSequenceExtensions.cs" />
     <Compile Include="Sequencing\MessageSequenceExtensions.cs" />
     <Compile Include="Sequencing\Resequencer.cs" />
     <Compile Include="Sequencing\ResequencerMessagePipelineBuilderExtensions.cs" />
+    <Compile Include="Sequencing\SequenceOriginSetHeader.cs" />
+    <Compile Include="Sequencing\SequenceOriginSetOnExtensions.cs" />
     <Compile Include="Sequencing\Sequencer.cs" />
     <Compile Include="Sequencing\SequenceHeader.cs" />
-    <Compile Include="Sequencing\StartSequenceApplier.cs" />
+    <Compile Include="Sequencing\SequenceOriginApplier.cs" />
+    <Compile Include="Storage\Changes\SetFirstItemCachedOnChange.cs" />
+    <Compile Include="Storage\IMessageCache.cs" />
+    <Compile Include="Storage\MessageAddedToCache.cs" />
+    <Compile Include="Storage\SendMessageCache.cs" />
     <Compile Include="Transport\Http\Configuration\HttpServerComponents.cs" />
     <Compile Include="Transport\Http\Configuration\HttpServerTransportBuilder.cs" />
     <Compile Include="Transport\Http\MessageReceiverHandler.cs" />
@@ -144,7 +168,7 @@
     <Compile Include="Filtering\NamePatternMessageFilterStrategy.cs" />
     <Compile Include="Filtering\NamespaceMessageFilterStrategy.cs" />
     <Compile Include="Filtering\PassThroughMessageFilterStategy.cs" />
-    <Compile Include="RequestReply\Builders\ReplyRecieveChannelBuilder.cs" />
+    <Compile Include="RequestReply\Builders\ReplyReceiveChannelBuilder.cs" />
     <Compile Include="RequestReply\Builders\RequestRecieveChannelBuilder.cs" />
     <Compile Include="RequestReply\Builders\ReplySendChannelBuilder.cs" />
     <Compile Include="RequestReply\Builders\RequestSendChannelBuilder.cs" />
@@ -193,7 +217,7 @@
     <Compile Include="Storage\Changes\DeleteMessageAndSetSequenceChange.cs" />
     <Compile Include="Storage\Changes\DeleteMessageChange.cs" />
     <Compile Include="Storage\Changes\SetSequenceChange.cs" />
-    <Compile Include="Storage\MessageCache.cs" />
+    <Compile Include="Storage\ReceiveMessageCache.cs" />
     <Compile Include="Storage\MessageCacheFactory.cs" />
     <Compile Include="Acknowledgement\MessageAcknowledgementHandler.cs" />
     <Compile Include="Storage\SourcePersistenceHeader.cs" />
@@ -237,7 +261,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SystemDot.Extensions\SystemDot.Extensions.csproj">
       <Project>{c68777be-fc18-47e1-abae-7cd6d5d0f7bc}</Project>
-      <Name>SystemDot.Extensions %28Windows\SystemDot.Extensions%29</Name>
+      <Name>SystemDot.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">
       <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>

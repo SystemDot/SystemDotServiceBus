@@ -1,6 +1,7 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Expiry;
@@ -16,7 +17,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.RequestReply.Builders
 {
-    public class RequestSendChannelBuilder
+    class RequestSendChannelBuilder
     {
         readonly IMessageSender messageSender;
         readonly ISerialiser serialiser;
@@ -50,25 +51,34 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
         public void Build(RequestSendChannelSchema schema)
         {
-            MessageCache messageCache = this.persistenceFactory
+            SendMessageCache messageCache = this.persistenceFactory
                 .Select(schema)
-                .CreateCache(PersistenceUseType.RequestSend, schema.FromAddress);
+                .CreateSendCache(PersistenceUseType.RequestSend, schema.FromAddress);
 
             this.acknowledgementHandler.RegisterCache(messageCache);
 
             MessagePipelineBuilder.Build()
                 .WithBusSendTo(new MessageFilter(schema.FilteringStrategy))
                 .ToProcessors(schema.Hooks.ToArray())
+                .ToProcessor(new BatchPackager())
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
                 .ToProcessor(new Sequencer(messageCache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.RecieverAddress))
                 .ToMessageRepeater(messageCache, this.systemTime, this.taskRepeater, schema.RepeatStrategy)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new SendChannelMessageCacher(messageCache))
+                .ToProcessor(new SequenceOriginRecorder(messageCache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()
                 .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, messageCache))
                 .ToEndPoint(this.messageSender);
+
+            Messenger.Send(new RequestSendChannelBuilt
+            {
+                CacheAddress = schema.FromAddress, 
+                SenderAddress = schema.FromAddress, 
+                ReceiverAddress = schema.RecieverAddress
+            });
         }
     }
 }

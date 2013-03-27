@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Configuration.ExternalSources;
 using SystemDot.Messaging.Configuration.Local;
+using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Configuration
@@ -11,38 +13,53 @@ namespace SystemDot.Messaging.Configuration
     public class MessageServerConfiguration : Configurer
     {
         readonly ServerPath serverPath;
+        readonly List<Action> buildActions;
 
-        public MessageServerConfiguration(ServerPath serverPath)
+        public MessageServerConfiguration(List<Action> actions, ServerPath serverPath)
         {
+            Contract.Requires(actions != null);
             Contract.Requires(serverPath != null);
 
             this.serverPath = serverPath;
+            this.buildActions = actions;
+
+            IIocContainer container = IocContainerLocator.Locate();
+
+            RegisterInMemoryPersistence(container);
+            RegisterPlatformAgnosticSerialiser(container);
+            ConfigureExternalSources(container);
         }
 
         public ChannelConfiguration OpenChannel(string name)
         {
             Contract.Requires(!string.IsNullOrEmpty(name));
 
-            RegisterInMemoryPersistence(IocContainerLocator.Locate());
-
             return new ChannelConfiguration(
                 new EndpointAddress(name, this.serverPath),
                 this.serverPath,
-                new List<Action>());
+                this.buildActions);
         }
 
         public LocalChannelConfiguration OpenLocalChannel()
         {
-            RegisterInMemoryPersistence(IocContainerLocator.Locate());
-            
             return new LocalChannelConfiguration(
                 this.serverPath, 
-                new List<Action>());
+                this.buildActions);
         }
 
-        private static void RegisterInMemoryPersistence(IIocContainer container)
+        static void RegisterInMemoryPersistence(IIocContainer container)
         {
             container.RegisterInstance<IChangeStore, InMemoryChangeStore>();
+        }
+
+        static void RegisterPlatformAgnosticSerialiser(IIocContainer container)
+        {
+            container.RegisterInstance<ISerialiser, PlatformAgnosticSerialiser>();
+        }
+
+        void ConfigureExternalSources(IIocContainer container)
+        {
+            container.Resolve<IExternalSourcesConfigurer>().Configure(this);
         }
     }
 }

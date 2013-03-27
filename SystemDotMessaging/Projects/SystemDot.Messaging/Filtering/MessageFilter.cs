@@ -2,7 +2,7 @@ using System;
 
 namespace SystemDot.Messaging.Filtering
 {
-    public class MessageFilter : IMessageProcessor<object, object>
+    class MessageFilter : IMessageProcessor<object, object>
     {
         readonly IMessageFilterStrategy filterStrategy;
 

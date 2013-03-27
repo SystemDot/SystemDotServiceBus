@@ -1,8 +1,8 @@
+using System;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
-using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Serialisation;
@@ -12,7 +12,7 @@ namespace SystemDot.Messaging.Specifications.channels
 {
     public static class MessagePayloadExtensions
     {
-        public static MessagePayload MakeReceiveable(
+        public static MessagePayload MakeReceivable(
             this MessagePayload payload,
             object message,
             string fromAddress,
@@ -24,8 +24,7 @@ namespace SystemDot.Messaging.Specifications.channels
             payload.SetToAddress(BuildAddress(toAddress));
             payload.SetPersistenceId(BuildAddress(fromAddress), useType);
             payload.SetSourcePersistenceId(payload.GetPersistenceId());
-            payload.IncreaseAmountSent();
-
+            
             return payload;
         }
 
@@ -36,7 +35,9 @@ namespace SystemDot.Messaging.Specifications.channels
             string toAddress,
             PersistenceUseType useType)
         {
-            payload.MakeReceiveable(message, fromAddress, toAddress, useType);
+            payload.MakeReceivable(message, fromAddress, toAddress, useType);
+            payload.SetSequenceOriginSetOn(DateTime.Today);
+            payload.SetFirstSequence(1);
             payload.SetSequence(1);
             return payload;
         } 

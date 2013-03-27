@@ -25,7 +25,8 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsARemoteServer("RemoteServerInstance");
+                .AsARemoteServer("RemoteServerInstance")
+                .Initialise();
 
             sentMessageInQueue = new MessagePayload();
             sentMessageInQueue.SetToAddress(TestEndpointAddressBuilder.Build("Address1", "TestServer"));
@@ -37,7 +38,6 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
 
         Because of = () => returnedMessages = SendMessagesToServer(longPollRequest);
 
-        It should_not_output_the_message_in_the_response = () => returnedMessages.ShouldBeEmpty();        
-        
+        It should_not_output_the_message_in_the_response = () => returnedMessages.ShouldBeEmpty();
     }
 }

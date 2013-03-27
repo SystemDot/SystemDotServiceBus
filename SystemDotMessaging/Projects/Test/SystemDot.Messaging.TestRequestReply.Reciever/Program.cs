@@ -1,9 +1,10 @@
 ﻿using System;
+using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Transport.Http.Configuration;
+using SystemDot.Newtonsoft;
 
 namespace SystemDot.Messaging.TestRequestReply.Reciever
 {
@@ -14,7 +15,9 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
             IocContainerLocator.Locate().RegisterFromAssemblyOf<Program>();
 
             IBus bus = Configure.Messaging()
-                .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = true })
+                .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false })
+                .UsingFilePersistence()
+                .UsingJsonSerialisation()
                 .UsingHttpTransport()
                 .AsARemoteServer("MetroProxy")
                 .AsAServer("ReceiverServer")

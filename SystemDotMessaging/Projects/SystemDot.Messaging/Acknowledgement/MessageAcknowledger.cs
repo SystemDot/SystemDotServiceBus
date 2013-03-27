@@ -4,7 +4,7 @@ using SystemDot.Messaging.Packaging;
 
 namespace SystemDot.Messaging.Acknowledgement
 {
-    public class MessageAcknowledger : IMessageProcessor<MessagePayload, MessagePayload>
+    class MessageAcknowledger : IMessageProcessor<MessagePayload, MessagePayload>
     {
         readonly AcknowledgementSender sender;
 

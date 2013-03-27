@@ -48,7 +48,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
             messagePayload =
                  new MessagePayload()
-                    .MakeReceiveable(1, SenderName, ReceiverName, PersistenceUseType.PointToPointSend);
+                    .MakeReceivable(1, SenderName, ReceiverName, PersistenceUseType.PointToPointSend);
         };
 
         Because of = () =>

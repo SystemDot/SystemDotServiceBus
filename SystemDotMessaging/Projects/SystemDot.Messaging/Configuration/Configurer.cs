@@ -8,7 +8,7 @@ namespace SystemDot.Messaging.Configuration
     {
         protected static T Resolve<T>() where T : class
         {
-            return IocContainerLocator.Locate().Resolve<T>();
+            return GetContainer().Resolve<T>();
         }
 
         protected static object Resolve(Type type)
@@ -18,7 +18,12 @@ namespace SystemDot.Messaging.Configuration
 
         protected EndpointAddress BuildEndpointAddress(string address, ServerPath serverPath)
         {
-            return IocContainerLocator.Locate().Resolve<EndpointAddressBuilder>().Build(address, serverPath);
+            return GetContainer().Resolve<EndpointAddressBuilder>().Build(address, serverPath);
+        }
+
+        protected static IIocContainer GetContainer()
+        {
+            return IocContainerLocator.Locate();
         }
     }
 }

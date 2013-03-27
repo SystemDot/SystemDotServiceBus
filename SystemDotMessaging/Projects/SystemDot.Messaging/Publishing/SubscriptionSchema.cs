@@ -10,7 +10,7 @@ namespace SystemDot.Messaging.Publishing
 
         public override string ToString()
         {
-            return this.SubscriberAddress.ToString();
+            return SubscriberAddress.ToString();
         }
     }
 }

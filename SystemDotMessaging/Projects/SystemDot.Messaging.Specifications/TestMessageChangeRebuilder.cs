@@ -31,12 +31,16 @@ namespace SystemDot.Messaging.Specifications
             this.messages.Add(change.Message);
         }
 
+        public void ApplyChange(SetFirstItemCachedOnChange change)
+        {
+        }
+
         public void ApplyChange(AddMessageChange change)
         {
             this.messages.Add(change.Message);
         }
 
-        public void ApplyChange(SetSequenceChange change)
+        public void ApplyChange(ResetCacheChange change)
         {
         }
 

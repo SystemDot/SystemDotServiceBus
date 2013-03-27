@@ -8,7 +8,7 @@ using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Transport.Http.Remote.Servers
 {
-    public class MessagePayloadQueue
+    class MessagePayloadQueue
     {
         readonly TimeSpan blockingTimeout;
         readonly Dictionary<ServerPath, BlockingQueue<MessagePayload>> queues;

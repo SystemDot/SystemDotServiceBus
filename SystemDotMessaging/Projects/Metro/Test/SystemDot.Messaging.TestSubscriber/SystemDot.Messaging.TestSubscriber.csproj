@@ -105,6 +105,10 @@
       <Project>{096A9E92-D753-4A6C-BB61-31E0EAB4425C}</Project>
       <Name>SystemDot.Esent %28Metro\SystemDot.Esent%29</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SystemDot.Newtonsoft\SystemDot.Newtonsoft.csproj">
+      <Project>{2EC4FF91-0838-438E-BDF1-E5EB5F4BAB38}</Project>
+      <Name>SystemDot.Newtonsoft %28Metro\SystemDot.Newtonsoft%29</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SystemDot.Messaging.Test.Messages\SystemDot.Messaging.Test.Messages.csproj">
       <Project>{0D0FA9C5-9BDD-4192-978D-BE82EE49AA81}</Project>
       <Name>SystemDot.Messaging.Test.Messages %28Metro\Examples\SystemDot.Messaging.Test.Messages%29</Name>

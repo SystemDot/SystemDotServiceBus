@@ -5,13 +5,12 @@ using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Local.Builders;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Messaging.UnitOfWork;
 using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {
-    public static class ChannelComponents
+    static class ChannelComponents
     {
         public static void Register(IIocContainer container)
         {

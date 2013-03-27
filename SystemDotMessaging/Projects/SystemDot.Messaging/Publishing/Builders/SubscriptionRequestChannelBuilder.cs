@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
@@ -13,7 +14,7 @@ using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Publishing.Builders
 {
-    public class SubscriptionRequestChannelBuilder
+    class SubscriptionRequestChannelBuilder
     {
         readonly IMessageSender messageSender;
         readonly ISystemTime systemTime;
@@ -49,8 +50,8 @@ namespace SystemDot.Messaging.Publishing.Builders
         {
             var requestor = new SubscriptionRequestor(schema.SubscriberAddress, schema.IsDurable);
             
-            MessageCache messageCache = new MessageCacheFactory(this.changeStore)
-                .CreateCache(
+            SendMessageCache messageCache = new MessageCacheFactory(this.changeStore, this.systemTime)
+                .CreateSendCache(
                     PersistenceUseType.SubscriberRequestSend, 
                     schema.PublisherAddress);
 

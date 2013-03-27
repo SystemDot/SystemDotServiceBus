@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Repeating
 
         public void Repeat(
             MessageRepeater repeater, 
-            MessageCache messageCache, 
+            IMessageCache messageCache, 
             ISystemTime systemTime)
         {
             IEnumerable<MessagePayload> messages = messageCache.GetMessages();

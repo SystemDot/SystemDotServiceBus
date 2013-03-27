@@ -6,6 +6,7 @@ using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Test.Messages;
 using SystemDot.Messaging.Transport.Http.Configuration;
+using SystemDot.Newtonsoft;
 using Windows.UI.Core;
 using SystemDot.Messaging.TestSubscriber.Handlers;
 
@@ -34,12 +35,13 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
 
             this.bus = Configure.Messaging()
                .LoggingWith(loggingMechanism)
+               .UsingFilePersistence()
+               .UsingJsonSerialisation()
                .UsingHttpTransport()
                .AsARemoteClient("MetroClient")
                .UsingProxy(MessageServer.Local("MetroProxy"))
-               .UsingFilePersistence()
                .OpenChannel("TestMetroRequest")
-                    .ForRequestReplySendingTo("TestReply@CHRIS-NEW-PC/ReceiverServer.CHRIS-NEW-PC/ReceiverServer")
+                    .ForRequestReplySendingTo("TestReply@/ReceiverServer")
                     .WithDurability()
                .WithReceiveHook(new MessageMarshallingHook(CoreWindow.GetForCurrentThread().Dispatcher))
                .Initialise();

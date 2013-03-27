@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Sequencing;
@@ -31,7 +32,10 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             message = 1;
-            payload = new MessagePayload().MakeReceiveable(message, RecieverAddress, ChannelName, PersistenceUseType.RequestSend);
+            payload = new MessagePayload()
+                .MakeReceivable(message, RecieverAddress, ChannelName, PersistenceUseType.RequestSend);
+            payload.SetFirstSequence(1);
+            payload.SetSequenceOriginSetOn(DateTime.Now);
             payload.SetSequence(2);
         };
 

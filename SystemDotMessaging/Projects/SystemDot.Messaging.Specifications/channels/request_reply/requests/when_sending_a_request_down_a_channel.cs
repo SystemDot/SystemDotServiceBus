@@ -3,6 +3,7 @@ using System.Linq;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.Sequencing;
+using SystemDot.Messaging.Specifications.channels.publishing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
@@ -55,6 +56,9 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
 
         It should_mark_the_message_with_the_sequence = () =>
             Server.SentMessages.First().GetSequence().ShouldEqual(1);
+
+        It should_mark_the_message_with_first_sequence = () =>
+            Server.SentMessages.ExcludeAcknowledgements().First().GetFirstSequence().ShouldEqual(1);
 
         It should_start_the_task_repeater = () => TaskRepeater.Started.ShouldBeTrue();
     }

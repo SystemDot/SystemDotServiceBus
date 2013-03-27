@@ -4,12 +4,12 @@ using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Acknowledgement.Builders
 {
-    public class AcknowledgementSendChannelBuilder
+    class AcknowledgementSendChannelBuilder
     {
         readonly AcknowledgementSender acknowledgementSender;
         readonly IMessageSender sender;
 
-        public AcknowledgementSendChannelBuilder(AcknowledgementSender acknowledgementSender, IMessageSender sender)
+        internal AcknowledgementSendChannelBuilder(AcknowledgementSender acknowledgementSender, IMessageSender sender)
         {
             Contract.Requires(acknowledgementSender != null);
             Contract.Requires(sender != null);

@@ -6,7 +6,7 @@ using SystemDot.Messaging.Packaging.Headers;
 
 namespace SystemDot.Messaging.Publishing
 {
-    public class SubscriptionRequestHandler : IMessageInputter<MessagePayload>
+    class SubscriptionRequestHandler : IMessageInputter<MessagePayload>
     {
         readonly IPublisherRegistry publisherRegistry;
         

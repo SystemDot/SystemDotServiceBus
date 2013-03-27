@@ -7,14 +7,14 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Publishing.Builders
 {
-    public class SubscriptionHandlerChannelBuilder
+    class SubscriptionHandlerChannelBuilder
     {
         readonly IMessageReceiver messageReceiver;
         readonly AcknowledgementSender acknowledgementSender;
         readonly IPublisherRegistry publisherRegistry;
         readonly ISerialiser serialiser;
 
-        public SubscriptionHandlerChannelBuilder(
+        internal SubscriptionHandlerChannelBuilder(
             IMessageReceiver messageReceiver, 
             AcknowledgementSender acknowledgementSender, 
             IPublisherRegistry publisherRegistry, 

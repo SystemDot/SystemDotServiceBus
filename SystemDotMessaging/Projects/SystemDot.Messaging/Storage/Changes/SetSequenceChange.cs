@@ -1,16 +1,21 @@
+using System;
+
 namespace SystemDot.Messaging.Storage.Changes
 {
-    public class SetSequenceChange : AddMessageChange
+    public class ResetCacheChange : AddMessageChange
     {
         public int Sequence { get; set; }
 
-        public SetSequenceChange()
+        public DateTime SetOn { get; set; }
+
+        public ResetCacheChange()
         {
         }
 
-        public SetSequenceChange(int sequence)
+        public ResetCacheChange(int sequence, DateTime setOn)
         {
             Sequence = sequence;
+            SetOn = setOn;
         }
     }
 }

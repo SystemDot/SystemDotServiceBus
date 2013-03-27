@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
                 .WithReplyHook(hook)
                 .Initialise();
 
-            Server.ReceiveMessage(new MessagePayload().MakeReceiveable(
+            Server.ReceiveMessage(new MessagePayload().MakeSequencedReceivable(
                 1,
                 SenderChannelName,
                 ChannelName,

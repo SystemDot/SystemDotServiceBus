@@ -3,7 +3,7 @@ using SystemDot.Messaging.Filtering;
 
 namespace SystemDot.Messaging.RequestReply
 {
-    public class ReplyChannelMessageFilterStategy : IMessageFilterStrategy
+    class ReplyChannelMessageFilterStategy : IMessageFilterStrategy
     {
         readonly EndpointAddress recieverAddress;
         readonly ReplyAddressLookup replyAddressLookup;

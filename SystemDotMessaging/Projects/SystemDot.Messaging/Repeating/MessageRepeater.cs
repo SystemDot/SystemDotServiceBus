@@ -8,9 +8,9 @@ namespace SystemDot.Messaging.Repeating
     {
         readonly IRepeatStrategy repeatStrategy;
         readonly ISystemTime systemTime;
-        readonly MessageCache messageCache;
+        readonly IMessageCache messageCache;
 
-        public MessageRepeater(IRepeatStrategy repeatStrategy, ISystemTime systemTime, MessageCache messageCache)
+        public MessageRepeater(IRepeatStrategy repeatStrategy, ISystemTime systemTime, IMessageCache messageCache)
         {
             Contract.Requires(repeatStrategy != null);
             Contract.Requires(systemTime != null);

@@ -1,6 +1,7 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Distribution;
@@ -16,7 +17,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.RequestReply.Builders
 {
-    public class ReplySendChannelBuilder
+    class ReplySendChannelBuilder
     {
         readonly IMessageSender messageSender;
         readonly ISerialiser serialiser;
@@ -50,9 +51,9 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
         public IMessageInputter<object> Build(ReplySendChannelSchema schema, EndpointAddress senderAddress)
         {
-            MessageCache messageCache = this.persistenceFactorySelector
+            SendMessageCache messageCache = this.persistenceFactorySelector
                 .Select(schema)
-                .CreateCache(PersistenceUseType.ReplySend, senderAddress);
+                .CreateSendCache(PersistenceUseType.ReplySend, senderAddress);
             
             this.acknowledgementHandler.RegisterCache(messageCache);
 
@@ -61,16 +62,25 @@ namespace SystemDot.Messaging.RequestReply.Builders
             MessagePipelineBuilder.Build()
                 .With(startPoint)
                 .ToProcessors(schema.Hooks.ToArray())
+                .ToProcessor(new BatchPackager())
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
                 .ToProcessor(new Sequencer(messageCache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, senderAddress))
                 .ToMessageRepeater(messageCache, this.systemTime, this.taskRepeater, schema.RepeatStrategy)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new SendChannelMessageCacher(messageCache))
+                .ToProcessor(new SequenceOriginRecorder(messageCache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()
                 .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, messageCache))
                 .ToEndPoint(this.messageSender);
+
+            Messenger.Send(new ReplySendChannelBuilt
+            {
+                CacheAddress = senderAddress,
+                ReceiverAddress = schema.FromAddress,
+                SenderAddress = senderAddress
+            });
 
             return startPoint;
         }

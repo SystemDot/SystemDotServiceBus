@@ -17,7 +17,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Publishing.Builders
 {
-    public class SubscriberRecieveChannelBuilder
+    class SubscriberRecieveChannelBuilder
     {
         readonly ISerialiser serialiser;
         readonly MessageHandlerRouter messageHandlerRouter;
@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly ITaskRepeater taskRepeater;
         readonly IIocContainer iocContainer;
 
-        public SubscriberRecieveChannelBuilder(
+        internal SubscriberRecieveChannelBuilder(
             ISerialiser serialiser, 
             MessageHandlerRouter messageHandlerRouter, 
             IMessageReceiver messageReceiver,
@@ -59,16 +59,16 @@ namespace SystemDot.Messaging.Publishing.Builders
 
         public void Build(SubscriberRecieveChannelSchema schema)
         {
-            MessageCache messageCache = this.persistenceFactory
+            ReceiveMessageCache messageCache = this.persistenceFactory
                 .Select(schema)
-                .CreateCache(PersistenceUseType.SubscriberReceive, schema.Address);
+                .CreateReceiveCache(PersistenceUseType.SubscriberReceive, schema.Address);
 
             MessagePipelineBuilder.Build()
                 .With(this.messageReceiver)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new BodyMessageFilter(schema.Address))
                 .ToProcessor(new MessageSendTimeRemover())
-                .ToProcessor(new StartSequenceApplier(messageCache))
+                .ToProcessor(new SequenceOriginApplier(messageCache))
                 .ToSimpleMessageRepeater(messageCache, this.systemTime, this.taskRepeater)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
@@ -76,8 +76,15 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .Queue()
                 .ToResequencerIfSequenced(messageCache, schema)
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
-                .ToProcessor(schema.UnitOfWorkRunner)
+                .ToProcessor(schema.UnitOfWorkRunnerCreator())
                 .ToEndPoint(this.messageHandlerRouter);
+
+            Messenger.Send(new SubscriberReceiveChannelBuilt
+            {
+                CacheAddress = schema.Address,
+                SubscriberAddress = schema.Address,
+                PublisherAddress = schema.ToAddress
+            });
         }
     }
 }

@@ -2,6 +2,7 @@
 using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Logging;
+using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Transport.Http.Configuration;
@@ -16,11 +17,11 @@ namespace SystemDot.Messaging.TestSubscriber
 
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = true })
+                .UsingFilePersistence()
                 .UsingHttpTransport()
                 .AsAServer("SubscriberServer")
-                .UsingFilePersistence()
                 .OpenChannel("TestSubscriber")
-                    .ForSubscribingTo(string.Format("TestPublisher@{0}/PublisherServer.{0}/PublisherServer", Environment.MachineName))
+                    .ForSubscribingTo("TestPublisher@/PublisherServer")
                     .WithDurability()
                     .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()

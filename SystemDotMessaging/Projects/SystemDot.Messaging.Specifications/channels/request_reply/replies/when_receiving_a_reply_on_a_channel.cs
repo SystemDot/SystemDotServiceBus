@@ -10,29 +10,30 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
     [Subject(SpecificationGroup.Description)]
     public class when_receiving_a_reply_on_a_channel : WithMessageConfigurationSubject
     {
-        const string ChannelName = "Test";
-        const string RecieverAddress = "TestRecieverAddress";
+        const string SenderAddress = "SenderAddress";
+        const string ReceiverAddress = "ReceiverAddress";
 
         static int message;
         static MessagePayload payload;
         static TestMessageHandler<int> handler;
-
+        
         Establish context = () =>
         {
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel(ChannelName)
-                    .ForRequestReplySendingTo(RecieverAddress)
+                .OpenChannel(SenderAddress)
+                    .ForRequestReplySendingTo(ReceiverAddress)
                 .Initialise();
 
+            
             handler = new TestMessageHandler<int>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             message = 1;
-            payload = new MessagePayload().MakeReceiveable(
+            payload = new MessagePayload().MakeSequencedReceivable(
                 message, 
-                RecieverAddress, 
-                ChannelName, 
+                ReceiverAddress, 
+                SenderAddress, 
                 PersistenceUseType.ReplySend);
         };
 

@@ -6,7 +6,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Transport.Http.Configuration
 {
-    public class HttpServerTransportBuilder : ITransportBuilder
+    class HttpServerTransportBuilder : ITransportBuilder
     {
         readonly IHttpServerBuilder httpServerBuilder;
         readonly ISerialiser serialiser;

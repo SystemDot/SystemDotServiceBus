@@ -28,14 +28,14 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             this.requestSchema = new RequestRecieveChannelSchema
             {
                 Address = address,
-                UnitOfWorkRunner = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>()
+                UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>
             };
         }
 
         protected override void Build()
         {
-            Resolve<RequestReceiveDistributionChannelBuilder>().Build(this.requestSchema);
             Resolve<ReplySendDistributionChannelBuilder>().Build(this.replySchema);
+            Resolve<RequestReceiveDistributionChannelBuilder>().Build(this.requestSchema);
         }
 
         protected override ServerPath GetServerPath()
@@ -69,7 +69,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         public RequestReplyRecieverConfiguration WithUnitOfWork<TUnitOfWorkFactory>()
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory
         {
-            this.requestSchema.UnitOfWorkRunner = CreateUnitOfWorkRunner<TUnitOfWorkFactory>();
+            this.requestSchema.UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<TUnitOfWorkFactory>;
             return this;
         }
 

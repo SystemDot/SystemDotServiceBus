@@ -16,11 +16,11 @@ namespace SystemDot.Messaging.OtherTestSubscriber
 
             Logger.LoggingMechanism = new ConsoleLoggingMechanism { ShowDebug = false };
             Configure.Messaging()
+                .UsingFilePersistence()
                 .UsingHttpTransport()
                 .AsAServer("OtherSubscriberServer")
-                .UsingFilePersistence()
                 .OpenChannel("TestOtherSubscriber")
-                    .ForSubscribingTo(string.Format("TestPublisher@{0}/PublisherServer.{0}/PublisherServer", Environment.MachineName))
+                    .ForSubscribingTo("TestPublisher@/PublisherServer")
                     .WithDurability()
                     .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()

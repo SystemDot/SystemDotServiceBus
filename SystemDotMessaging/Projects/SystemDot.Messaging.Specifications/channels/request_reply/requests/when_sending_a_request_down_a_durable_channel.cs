@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
 
         It should_persist_the_message = () =>
             Resolve<IChangeStore>()
-                .GetMessages(PersistenceUseType.RequestSend, BuildAddress(ChannelName))
+                .GetSendMessages(PersistenceUseType.RequestSend, BuildAddress(ChannelName))
                 .ShouldNotBeEmpty();
     }
 }

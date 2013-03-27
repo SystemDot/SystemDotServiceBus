@@ -4,7 +4,6 @@ using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Repeating;
-using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using SystemDot.Storage.Changes;
 using Machine.Specifications;
@@ -34,10 +33,8 @@ namespace SystemDot.Messaging.Specifications.channels.publishing.receiving
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             message = 1;
-            payload = new MessagePayload().MakeReceiveable(message, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
+            payload = new MessagePayload().MakeSequencedReceivable(message, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
             originalPersistenceId = payload.GetPersistenceId();
-            payload.SetSequence(1); 
-            payload.SetFirstSequence(1);
         };
 
         Because of = () => Server.ReceiveMessage(payload);
@@ -49,13 +46,13 @@ namespace SystemDot.Messaging.Specifications.channels.publishing.receiving
 
         It should_mark_the_message_with_the_time_the_message_is_sent = () =>
             Resolve<InMemoryChangeStore>()
-                .GetAddedMessages(PersistenceUseType.SubscriberReceive, BuildAddress(ChannelName))
+                .GetReceiveMessages(PersistenceUseType.SubscriberReceive, BuildAddress(ChannelName))
                 .First()
                 .GetLastTimeSent().ShouldBeGreaterThan(DateTime.MinValue);
 
         It should_mark_the_message_with_the_amount_of_times_the_message_has_been_sent = () =>
            Resolve<InMemoryChangeStore>()
-                .GetAddedMessages(PersistenceUseType.SubscriberReceive, BuildAddress(ChannelName))
+                .GetReceiveMessages(PersistenceUseType.SubscriberReceive, BuildAddress(ChannelName))
                 .First()
                 .GetAmountSent().ShouldEqual(1);
     }

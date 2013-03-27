@@ -2,7 +2,7 @@ using SystemDot.Ioc;
 
 namespace SystemDot.Messaging.Transport.InProcess.Configuration
 {
-    public static class InProcessTransportComponents
+    static class InProcessTransportComponents
     {
         public static void Register(IIocContainer iocContainer)
         {

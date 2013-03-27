@@ -13,9 +13,9 @@ namespace SystemDot.Messaging.TestPublisher
         {
             IBus bus = Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
+                .UsingFilePersistence()
                 .UsingHttpTransport()
                 .AsAServer("PublisherServer")
-                .UsingFilePersistence()
                 .OpenChannel("TestPublisher")
                     .ForPublishing()
                     .WithDurability()
@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.TestPublisher
                 Console.ReadLine();
                 Console.WriteLine("Sending message");
 
-                for (int i = 0; i < 7300; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     Console.WriteLine("Hello" + i);
 

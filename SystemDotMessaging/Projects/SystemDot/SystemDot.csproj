@@ -38,6 +38,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ByteArrayExtensions.cs" />
     <Compile Include="CurrentDateProvider.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="Files\FileSystem.cs" />
@@ -61,6 +62,9 @@
     <Compile Include="Logging\ILoggingMechanism.cs" />
     <Compile Include="Logging\Log4NetLoggingMechanism.cs" />
     <Compile Include="Logging\Logger.cs" />
+    <Compile Include="MessageHandlerList.cs" />
+    <Compile Include="Messenger.cs" />
+    <Compile Include="MessengerHandlerRegistry.cs" />
     <Compile Include="ObjectExtensions.cs" />
     <Compile Include="Parallelism\ITaskRepeater.cs" />
     <Compile Include="Parallelism\TaskRepeater.cs" />
@@ -80,11 +84,12 @@
     <Compile Include="Storage\Changes\CheckPointChange.cs" />
     <Compile Include="Storage\Changes\IChangeStore.cs" />
     <Compile Include="Storage\Changes\InMemoryChangeStore.cs" />
+    <Compile Include="StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SystemDot.Extensions\SystemDot.Extensions.csproj">
       <Project>{c68777be-fc18-47e1-abae-7cd6d5d0f7bc}</Project>
-      <Name>SystemDot.Extensions %28Windows\SystemDot.Extensions%29</Name>
+      <Name>SystemDot.Extensions</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

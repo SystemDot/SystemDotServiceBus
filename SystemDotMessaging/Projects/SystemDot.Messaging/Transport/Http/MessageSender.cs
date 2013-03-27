@@ -8,7 +8,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Transport.Http
 {
-    public class MessageSender : IMessageSender
+    class MessageSender : IMessageSender
     {
         readonly ISerialiser formatter;
         readonly IWebRequestor requestor;

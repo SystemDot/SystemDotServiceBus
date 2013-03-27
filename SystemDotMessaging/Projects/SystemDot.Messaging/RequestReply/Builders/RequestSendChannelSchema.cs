@@ -5,7 +5,7 @@ using SystemDot.Messaging.Filtering;
 
 namespace SystemDot.Messaging.RequestReply.Builders
 {
-    public class RequestSendChannelSchema : SendChannelSchema
+    class RequestSendChannelSchema : SendChannelSchema
     {
         public IMessageFilterStrategy FilteringStrategy { get; set; }
 

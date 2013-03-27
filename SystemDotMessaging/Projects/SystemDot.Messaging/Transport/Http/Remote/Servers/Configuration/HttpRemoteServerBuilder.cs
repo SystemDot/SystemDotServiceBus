@@ -6,18 +6,21 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Transport.Http.Remote.Servers.Configuration
 {
-    public class HttpRemoteServerBuilder
+    class HttpRemoteServerBuilder
     {
         readonly IHttpServerBuilder httpServerBuilder;
         readonly ISystemTime systemTime;
+        readonly ISerialiser serialiser;
 
-        public HttpRemoteServerBuilder(IHttpServerBuilder httpServerBuilder, ISystemTime systemTime)
+        public HttpRemoteServerBuilder(IHttpServerBuilder httpServerBuilder, ISystemTime systemTime, ISerialiser serialiser)
         {
             Contract.Requires(httpServerBuilder != null);
             Contract.Requires(systemTime != null);
+            Contract.Requires(serialiser != null);
 
             this.httpServerBuilder = httpServerBuilder;
             this.systemTime = systemTime;
+            this.serialiser = serialiser;
         }
 
         public void Build(string instance)
@@ -32,7 +35,7 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Servers.Configuration
             var messagePayloadQueue = new MessagePayloadQueue(this.systemTime.SpanFromSeconds(30));
 
             return new HttpMessagingServer(
-                new PlatformAgnosticSerialiser(),
+                this.serialiser,
                 new SentMessageHandler(messagePayloadQueue),
                 new LongPollHandler(messagePayloadQueue));
         }

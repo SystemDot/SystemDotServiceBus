@@ -5,13 +5,13 @@ using SystemDot.Messaging.Packaging;
 namespace SystemDot.Messaging.Publishing
 {
     [ContractClass(typeof(PublisherContract))]
-    public interface IPublisher : IMessageProcessor<MessagePayload, MessagePayload>
+    interface IPublisher : IMessageProcessor<MessagePayload, MessagePayload>
     {
         void Subscribe(SubscriptionSchema scheam);
     }
 
     [ContractClassFor(typeof(IPublisher))]
-    public class PublisherContract : IPublisher 
+    class PublisherContract : IPublisher 
     {
         public void InputMessage(MessagePayload toInput)
         {

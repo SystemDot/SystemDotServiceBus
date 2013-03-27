@@ -2,6 +2,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Expiry;
@@ -16,7 +17,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.RequestReply.Builders
 {
-    public class RequestRecieveChannelBuilder
+    class RequestRecieveChannelBuilder
     {
         readonly ReplyAddressLookup replyAddressLookup;
         readonly ISerialiser serialiser;
@@ -26,7 +27,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
         
-        public RequestRecieveChannelBuilder(
+        internal RequestRecieveChannelBuilder(
             ReplyAddressLookup replyAddressLookup, 
             ISerialiser serialiser, 
             MessageHandlerRouter messageHandlerRouter, 
@@ -54,14 +55,16 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
         public IMessageInputter<MessagePayload> Build(RequestRecieveChannelSchema schema, EndpointAddress senderAddress)
         {
-            MessageCache messageCache = this.persistenceFactorySelector
+            ReceiveMessageCache messageCache = this.persistenceFactorySelector
                 .Select(schema)
-                .CreateCache(PersistenceUseType.RequestReceive, senderAddress);
+                .CreateReceiveCache(PersistenceUseType.RequestReceive, senderAddress);
 
             var startPoint = new MessagePayloadCopier(this.serialiser);
 
             MessagePipelineBuilder.Build()
                 .With(startPoint)
+                .ToProcessor(new MessagePayloadCopier(this.serialiser))
+                .ToProcessor(new SequenceOriginApplier(messageCache))
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToSimpleMessageRepeater(messageCache, this.systemTime, this.taskRepeater)
                 .ToProcessor(new MessagePayloadCopier(this.serialiser))
@@ -71,9 +74,17 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToResequencerIfSequenced(messageCache, schema)
                 .ToProcessor(new ReplyChannelSelector(this.replyAddressLookup))
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
-                .ToProcessor(schema.UnitOfWorkRunner)
+                .ToProcessor(schema.UnitOfWorkRunnerCreator())
+                .ToProcessor(new BatchUnpackager())
                 .ToProcessors(schema.Hooks.ToArray())
                 .ToEndPoint(this.messageHandlerRouter);
+
+            Messenger.Send(new RequestReceiveChannelBuilt
+            {
+                CacheAddress = senderAddress,
+                SenderAddress = senderAddress,
+                ReceiverAddress = schema.Address
+            });
 
             return startPoint;
         }

@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
             webRequestor = new TestWebRequestor(
                 new PlatformAgnosticSerialiser(),
-                new FixedPortAddress(Environment.MachineName, ProxyInstance));
+                new FixedPortAddress(ReceiverServerName, ReceiverServerInstance));
 
             ConfigureAndRegister<IWebRequestor>(webRequestor);
 
@@ -58,10 +58,10 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
         It should_send_a_message_with_the_to_address_remote_proxy_name_set_to_the_local_machine = () =>
             webRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetToAddress().ServerPath.Proxy.Name.ShouldEqual(Environment.MachineName);
+                .GetToAddress().ServerPath.Proxy.Name.ShouldEqual(ReceiverServerName);
 
         It should_send_a_message_with_the_to_address_remote_proxy_instance_set_correctly = () =>
             webRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetToAddress().ServerPath.Proxy.Instance.ShouldEqual(ProxyInstance);
+                .GetToAddress().ServerPath.Proxy.Instance.ShouldEqual(ReceiverServerInstance);
     }
 }

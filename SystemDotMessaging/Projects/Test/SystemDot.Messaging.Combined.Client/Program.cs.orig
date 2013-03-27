@@ -1,0 +1,52 @@
+﻿using System;
+using SystemDot.Esent;
+using SystemDot.Ioc;
+using SystemDot.Logging;
+using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Handling;
+using SystemDot.Messaging.Test.Messages;
+using SystemDot.Messaging.Transport.Http.Configuration;
+
+namespace SystemDot.Messaging.Combined.Client
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            IocContainerLocator.Locate().RegisterFromAssemblyOf<Program>();
+
+            IBus bus = Configure.Messaging()
+                .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
+                .UsingFilePersistence()
+                .UsingHttpTransport()
+                .AsAServer("SenderServer")
+                .OpenChannel("TestSender")
+<<<<<<< HEAD
+                    .ForRequestReplySendingTo(string.Format("TestReceiver@{0}/ReceiverPublisherServer.{0}/ReceiverPublisherServer", Environment.MachineName))
+                    .RegisterHandlersFromAssemblyOf<Program>()
+                    .BasedOn<IMessageConsumer>()
+=======
+                    .ForRequestReplySendingTo("TestReceiver@/ReceiverPublisherServer")
+>>>>>>> master
+                .Initialise();
+
+            do
+            {
+                Console.WriteLine("I am the client. Press enter to send messages..");
+                Console.ReadLine();
+                
+                Console.WriteLine("Sending messages");
+
+                bus.Send(new TestMessage("Hello"));
+                bus.Send(new TestMessage("Hello1"));
+                bus.Send(new TestMessage("Hello2"));
+                bus.Send(new TestMessage("Hello3"));
+                bus.Send(new TestMessage("Hello4"));
+                bus.Send(new TestMessage("Hello5"));
+                bus.Send(new TestMessage("Hello6"));
+                bus.Send(new TestMessage("Hello7"));
+            }
+            while (true);
+        }
+    }
+}

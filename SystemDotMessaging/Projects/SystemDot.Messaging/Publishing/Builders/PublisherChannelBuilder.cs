@@ -13,7 +13,7 @@ using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Publishing.Builders
 {
-    public class PublisherChannelBuilder
+    class PublisherChannelBuilder
     {
         readonly IPublisherRegistry publisherRegistry;
         readonly ISerialiser serialiser;
@@ -51,9 +51,9 @@ namespace SystemDot.Messaging.Publishing.Builders
 
         public void Build(PublisherChannelSchema schema)
         {
-            MessageCache messageCache = this.persistenceFactorySelector
+            SendMessageCache messageCache = this.persistenceFactorySelector
                 .Select(schema)
-                .CreateCache(PersistenceUseType.PublisherSend, schema.FromAddress);
+                .CreateSendCache(PersistenceUseType.PublisherSend, schema.FromAddress);
 
             var publisherEndpoint = new Publisher(schema.FromAddress, this.subscriberChannelBuilder, this.changeStore);
 
@@ -69,6 +69,8 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .ToEndPoint(new MessageDecacher(messageCache));
 
             this.publisherRegistry.RegisterPublisher(schema.FromAddress, publisherEndpoint);
+
+            Messenger.Send(new PublisherChannelBuilt { Address = schema.FromAddress });
         }
     }
 }

@@ -8,7 +8,7 @@ using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.RequestReply
 {
-    public class RequestRecieveChannelDistributor : ChannelDistributor<MessagePayload>
+    class RequestRecieveChannelDistributor : ChannelDistributor<MessagePayload>
     {
         readonly RequestRecieveChannelBuilder builder;
         readonly RequestRecieveChannelSchema schema;

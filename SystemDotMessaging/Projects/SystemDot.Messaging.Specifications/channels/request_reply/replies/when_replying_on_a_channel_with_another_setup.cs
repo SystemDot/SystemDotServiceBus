@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
                 .OpenChannel("Test2").ForRequestReplyRecieving()
                 .Initialise();
 
-            Server.ReceiveMessage(new MessagePayload().MakeReceiveable(
+            Server.ReceiveMessage(new MessagePayload().MakeSequencedReceivable(
                 1, 
                 "TestSender", 
                 ChannelName, 

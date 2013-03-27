@@ -1,0 +1,39 @@
+﻿using System;
+using SystemDot.Esent;
+using SystemDot.Ioc;
+using SystemDot.Logging;
+using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Handling;
+using SystemDot.Messaging.Transport.Http.Configuration;
+
+namespace SystemDot.Messaging.Combined.Subscriber
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            IocContainerLocator.Locate().RegisterFromAssemblyOf<Program>();
+
+            Configure.Messaging()
+                .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
+                .UsingFilePersistence()
+                .UsingHttpTransport()
+                .AsAServer("SubscriberServer")
+                .OpenChannel("TestSubscriber")
+<<<<<<< HEAD
+                    .ForSubscribingTo(string.Format("TestPublisher@{0}/ReceiverPublisherServer.{0}/ReceiverPublisherServer", Environment.MachineName))
+                    .RegisterHandlersFromAssemblyOf<Program>()
+                    .BasedOn<IMessageConsumer>()
+=======
+                    .ForSubscribingTo("TestPublisher@/ReceiverPublisherServer")
+>>>>>>> master
+                .Initialise();
+            
+            Console.WriteLine("I am a subscriber, listening for messages..");
+
+            Console.ReadLine();
+        }
+    }
+
+   
+}

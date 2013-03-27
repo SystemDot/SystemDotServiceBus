@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Batching;
 
 namespace SystemDot.Messaging
 {
@@ -40,6 +41,11 @@ namespace SystemDot.Messaging
 
             if (MessagePublished == null) return;
             MessagePublished(message);
+        }
+
+        public Batch BatchSend()
+        {
+            return new Batch();
         }
     }
 }

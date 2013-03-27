@@ -5,13 +5,13 @@ using SystemDot.Messaging.Packaging;
 namespace SystemDot.Messaging.Transport.Http
 {
     [ContractClass(typeof(IMessagingServerHandlerContract))]
-    public interface IMessagingServerHandler
+    interface IMessagingServerHandler
     {
         void HandleMessage(MessagePayload toHandle, List<MessagePayload> outgoingMessages);
     }
 
     [ContractClassFor(typeof(IMessagingServerHandler))]
-    public class IMessagingServerHandlerContract : IMessagingServerHandler
+    class IMessagingServerHandlerContract : IMessagingServerHandler
     {
         public void HandleMessage(MessagePayload toHandle, List<MessagePayload> outgoingMessages)
         { 

@@ -6,7 +6,7 @@ using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.RequestReply.Builders
 {
-    public class RequestReceiveDistributionChannelBuilder 
+    class RequestReceiveDistributionChannelBuilder 
     {
         readonly IMessageReceiver messageReceiver;
         readonly RequestRecieveChannelBuilder builder;
@@ -39,7 +39,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             MessagePipelineBuilder.Build()  
                 .With(this.messageReceiver)
                 .ToProcessor(new BodyMessageFilter(schema.Address))
-                .ToEndPoint(new RequestRecieveSubscriptionHandler(distributor));
+                .ToEndPoint(new RequestReceiveSubscriptionHandler(distributor));
 
             MessagePipelineBuilder.Build()
                 .With(this.messageReceiver)
