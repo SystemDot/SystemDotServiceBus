@@ -1,6 +1,7 @@
 using System;
 using SystemDot.Ioc;
 using SystemDot.Logging;
+using SystemDot.Messaging.Ioc;
 using Machine.Fakes;
 using Machine.Specifications;
 

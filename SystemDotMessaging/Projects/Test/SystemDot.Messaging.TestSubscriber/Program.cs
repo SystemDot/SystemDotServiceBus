@@ -2,9 +2,7 @@
 using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Logging;
-using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Transport.Http.Configuration;
 
 namespace SystemDot.Messaging.TestSubscriber
@@ -13,9 +11,10 @@ namespace SystemDot.Messaging.TestSubscriber
     {
         static void Main(string[] args)
         {
-            IocContainerLocator.Locate().RegisterFromAssemblyOf<Program>();
+            var container = new IocContainer();
+            container.RegisterFromAssemblyOf<Program>();
 
-            IBus bus = Configure.Messaging()
+            Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = true })
                 .UsingFilePersistence()
                 .UsingHttpTransport()
@@ -25,6 +24,7 @@ namespace SystemDot.Messaging.TestSubscriber
                     .WithDurability()
                     .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
+                    .ResolveBy(container.Resolve)
                 .Initialise();
             
             Console.WriteLine("I am a subscriber, listening for messages..");

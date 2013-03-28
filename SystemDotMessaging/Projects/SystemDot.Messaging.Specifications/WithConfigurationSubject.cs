@@ -1,5 +1,6 @@
 using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Pipelines;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -36,7 +37,12 @@ namespace SystemDot.Messaging.Specifications
 
         protected static void Register<T>(T concrete) where T : class
         {
-            IocContainerLocator.Locate().RegisterInstance(() => concrete);
+            Register<T>(IocContainerLocator.Locate(), concrete);
+        }
+        
+        protected static void Register<T>(IIocContainer container, T concrete) where T : class
+        {
+            container.RegisterInstance(() => concrete);
         }
 
         protected static T Resolve<T>() where T : class

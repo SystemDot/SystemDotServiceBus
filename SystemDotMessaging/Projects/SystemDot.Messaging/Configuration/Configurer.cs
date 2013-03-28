@@ -1,6 +1,7 @@
 using System;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Ioc;
 
 namespace SystemDot.Messaging.Configuration
 {

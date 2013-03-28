@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.TestPublisher
     {
         static void Main(string[] args)
         {
-            IBus bus = Configure.Messaging()
+            Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingFilePersistence()
                 .UsingHttpTransport()
@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.TestPublisher
                 {
                     Console.WriteLine("Hello" + i);
 
-                    bus.Publish(new TestMessage("Hello" + i));                    
+                    Bus.Publish(new TestMessage("Hello" + i));                    
                 }
             }
             while (true);

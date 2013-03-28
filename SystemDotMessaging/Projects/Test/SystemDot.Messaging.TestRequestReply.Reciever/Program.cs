@@ -12,9 +12,10 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
     {
         static void Main(string[] args)
         {
-            IocContainerLocator.Locate().RegisterFromAssemblyOf<Program>();
+            var container = new IocContainer();
+            container.RegisterFromAssemblyOf<Program>();
 
-            IBus bus = Configure.Messaging()
+            Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false })
                 .UsingFilePersistence()
                 .UsingJsonSerialisation()
@@ -26,6 +27,7 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
                     .WithDurability()
                     .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
+                    .ResolveBy(container.Resolve)
                 .Initialise();
 
             Console.WriteLine("I am the reciever. Press enter to exit");

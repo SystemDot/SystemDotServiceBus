@@ -1,4 +1,5 @@
 using SystemDot.Ioc;
+using SystemDot.Messaging.Ioc;
 
 namespace SystemDot.Messaging.Pipelines
 {

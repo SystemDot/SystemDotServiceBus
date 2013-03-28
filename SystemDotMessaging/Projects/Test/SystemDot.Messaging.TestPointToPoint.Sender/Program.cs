@@ -12,7 +12,7 @@ namespace SystemDot.Messaging.TestPointToPoint.Sender
     {
         static void Main(string[] args)
         {
-            IBus bus = Configure.Messaging()
+            Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false, ShowDebug = false })
                 .UsingFilePersistence()
                 .UsingJsonSerialisation()
@@ -35,7 +35,7 @@ namespace SystemDot.Messaging.TestPointToPoint.Sender
                     string message = "Hello" + i;
                     
                     Console.WriteLine("Sending message {0}", message);
-                    bus.Send(new TestMessage(message));
+                    Bus.Send(new TestMessage(message));
                 }
 
             } while (true);

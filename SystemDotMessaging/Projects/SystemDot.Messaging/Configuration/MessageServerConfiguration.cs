@@ -5,6 +5,7 @@ using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.ExternalSources;
 using SystemDot.Messaging.Configuration.Local;
+using SystemDot.Messaging.Ioc;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
 

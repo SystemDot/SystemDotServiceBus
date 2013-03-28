@@ -56,7 +56,6 @@
     <Compile Include="Ioc\ConcreteInstance.cs" />
     <Compile Include="Ioc\IIocContainer.cs" />
     <Compile Include="Ioc\IocContainer.cs" />
-    <Compile Include="Ioc\IocContainerLocator.cs" />
     <Compile Include="Ioc\TypeNotRegisteredException.cs" />
     <Compile Include="Logging\ConsoleLoggingMechanism.cs" />
     <Compile Include="Logging\ILoggingMechanism.cs" />

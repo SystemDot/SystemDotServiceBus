@@ -4,6 +4,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Transport.Http.Remote.Clients.Configuration;
 using SystemDot.Messaging.Transport.Http.Remote.Servers.Configuration;
 

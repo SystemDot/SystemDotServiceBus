@@ -3,7 +3,6 @@ using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Transport.Http.Configuration;
 
 namespace SystemDot.Messaging.Combined.Server
@@ -12,9 +11,10 @@ namespace SystemDot.Messaging.Combined.Server
     {
         static void Main(string[] args)
         {
-            IocContainerLocator.Locate().RegisterFromAssemblyOf<Program>();
+            var container = new IocContainer();
+            container.RegisterFromAssemblyOf<Program>();
 
-            IBus bus = Configure.Messaging()
+            Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingFilePersistence()
                 .UsingHttpTransport()
@@ -22,9 +22,11 @@ namespace SystemDot.Messaging.Combined.Server
                 .OpenChannel("TestReceiver").ForRequestReplyRecieving()
                     .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
+                    .ResolveBy(container.Resolve)
                 .OpenChannel("TestPublisher").ForPublishing()
                     .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
+                    .ResolveBy(container.Resolve)
                 .Initialise();
 
             Console.WriteLine("I am the server. Press enter to exit");

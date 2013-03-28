@@ -13,9 +13,10 @@ namespace SystemDot.Messaging.MultiChannel.Sender
     {
         static void Main(string[] args)
         {
-            IocContainerLocator.Locate().RegisterFromAssemblyOf<Program>();
+            var container = new IocContainer();
+            container.RegisterFromAssemblyOf<Program>();
 
-            IBus bus = Configure.Messaging()
+            Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingFilePersistence()
                 .UsingHttpTransport()
@@ -26,12 +27,14 @@ namespace SystemDot.Messaging.MultiChannel.Sender
                     .WithDurability()
                     .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
+                    .ResolveBy(container.Resolve)
                 .OpenChannel("TestSenderB")
                     .ForRequestReplySendingTo("TestRecieverB@/ServerB")
                     .OnlyForMessages(FilteredBy.NamePattern("Channel2"))
                     .WithDurability()
                     .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
+                    .ResolveBy(container.Resolve)
                 .Initialise();
 
             do
@@ -43,28 +46,28 @@ namespace SystemDot.Messaging.MultiChannel.Sender
                 {
                     Console.WriteLine("Sending messages to GetChannel A");
 
-                    bus.Send(new Channel1Request("GetChannel A Hello"));
-                    bus.Send(new Channel1Request("GetChannel A Hello1"));
-                    bus.Send(new Channel1Request("GetChannel A Hello2"));
-                    bus.Send(new Channel1Request("GetChannel A Hello3"));
-                    bus.Send(new Channel1Request("GetChannel A Hello4"));
-                    bus.Send(new Channel1Request("GetChannel A Hello5"));
-                    bus.Send(new Channel1Request("GetChannel A Hello6"));
-                    bus.Send(new Channel1Request("GetChannel A Hello7"));
+                    Bus.Send(new Channel1Request("GetChannel A Hello"));
+                    Bus.Send(new Channel1Request("GetChannel A Hello1"));
+                    Bus.Send(new Channel1Request("GetChannel A Hello2"));
+                    Bus.Send(new Channel1Request("GetChannel A Hello3"));
+                    Bus.Send(new Channel1Request("GetChannel A Hello4"));
+                    Bus.Send(new Channel1Request("GetChannel A Hello5"));
+                    Bus.Send(new Channel1Request("GetChannel A Hello6"));
+                    Bus.Send(new Channel1Request("GetChannel A Hello7"));
                 }
 
                 if (key.Key == ConsoleKey.B)
                 {
                     Console.WriteLine("Sending messages to GetChannel B");
 
-                    bus.Send(new Channel2Request("GetChannel B Hello"));
-                    bus.Send(new Channel2Request("GetChannel B Hello1"));
-                    bus.Send(new Channel2Request("GetChannel B Hello2"));
-                    bus.Send(new Channel2Request("GetChannel B Hello3"));
-                    bus.Send(new Channel2Request("GetChannel B Hello4"));
-                    bus.Send(new Channel2Request("GetChannel B Hello5"));
-                    bus.Send(new Channel2Request("GetChannel B Hello6"));
-                    bus.Send(new Channel2Request("GetChannel B Hello7"));
+                    Bus.Send(new Channel2Request("GetChannel B Hello"));
+                    Bus.Send(new Channel2Request("GetChannel B Hello1"));
+                    Bus.Send(new Channel2Request("GetChannel B Hello2"));
+                    Bus.Send(new Channel2Request("GetChannel B Hello3"));
+                    Bus.Send(new Channel2Request("GetChannel B Hello4"));
+                    Bus.Send(new Channel2Request("GetChannel B Hello5"));
+                    Bus.Send(new Channel2Request("GetChannel B Hello6"));
+                    Bus.Send(new Channel2Request("GetChannel B Hello7"));
                 }
             }
             while (true);

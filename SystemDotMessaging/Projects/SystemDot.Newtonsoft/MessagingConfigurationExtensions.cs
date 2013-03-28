@@ -8,7 +8,7 @@ namespace SystemDot.Newtonsoft
     {
         public static MessagingConfiguration UsingJsonSerialisation(this MessagingConfiguration config)
         {
-            IocContainerLocator.Locate().RegisterInstance<ISerialiser, JsonSerialiser>();
+            config.GetIocContainer().RegisterInstance<ISerialiser, JsonSerialiser>();
             return config;
         } 
     }

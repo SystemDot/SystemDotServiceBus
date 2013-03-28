@@ -3,7 +3,6 @@ using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Transport.Http.Configuration;
 
 namespace SystemDot.Messaging.OtherTestSubscriber
@@ -12,9 +11,11 @@ namespace SystemDot.Messaging.OtherTestSubscriber
     {
         static void Main(string[] args)
         {
-            IocContainerLocator.Locate().RegisterFromAssemblyOf<Program>();
+            var container = new IocContainer();
+            container.RegisterFromAssemblyOf<Program>();
 
             Logger.LoggingMechanism = new ConsoleLoggingMechanism { ShowDebug = false };
+
             Configure.Messaging()
                 .UsingFilePersistence()
                 .UsingHttpTransport()
@@ -24,6 +25,7 @@ namespace SystemDot.Messaging.OtherTestSubscriber
                     .WithDurability()
                     .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
+                    .ResolveBy(container.Resolve)
                 .Initialise();
             
             Console.WriteLine("I am the other subscriber, listening for messages..");

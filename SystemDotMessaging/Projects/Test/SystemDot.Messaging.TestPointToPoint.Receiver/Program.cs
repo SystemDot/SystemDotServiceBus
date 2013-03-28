@@ -13,6 +13,9 @@ namespace SystemDot.Messaging.TestPointToPoint.Receiver
     {
         static void Main(string[] args)
         {
+            var container = new IocContainer();
+            container.RegisterFromAssemblyOf<Program>();
+
             Configure.Messaging()
                .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false })
                .UsingFilePersistence()
@@ -22,9 +25,10 @@ namespace SystemDot.Messaging.TestPointToPoint.Receiver
                .OpenChannel("TestReceive")
                    .ForPointToPointReceiving()
                    .WithDurability()
+                   .RegisterHandlersFromAssemblyOf<Program>()
+                   .BasedOn<IMessageConsumer>()
+                   .ResolveBy(container.Resolve)
                .Initialise();
-
-            IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());
 
             Console.WriteLine("I am the reciever. Press enter to exit");
 

@@ -6,13 +6,6 @@ namespace SystemDot.Messaging.Combined.Server
 {
     public class MessageConsumer : IMessageConsumer
     {
-        readonly IBus bus;
-
-        public MessageConsumer(IBus bus)
-        {
-            this.bus = bus;
-        }
-
         public void Handle(TestMessage message)
         {
             Console.WriteLine(
@@ -20,8 +13,8 @@ namespace SystemDot.Messaging.Combined.Server
                 message.Text, 
                 Thread.CurrentThread.ManagedThreadId);
 
-            this.bus.Reply(new TestMessage("reply to " + message.Text));
-            this.bus.Publish(new TestMessage("publish to " + message.Text));
+            Bus.Reply(new TestMessage("reply to " + message.Text));
+            Bus.Publish(new TestMessage("publish to " + message.Text));
         }
     }
 }

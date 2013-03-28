@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Expiry;
+using SystemDot.Messaging.Ioc;
 
 namespace SystemDot.Messaging.Configuration
 {

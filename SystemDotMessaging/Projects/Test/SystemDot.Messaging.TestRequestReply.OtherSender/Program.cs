@@ -3,7 +3,6 @@ using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Test.Messages;
 using SystemDot.Messaging.Transport.Http.Configuration;
 using SystemDot.Newtonsoft;
@@ -14,7 +13,10 @@ namespace SystemDot.Messaging.TestRequestReply.OtherSender
     {
         static void Main(string[] args)
         {
-            IBus bus = Configure.Messaging()
+            var container = new IocContainer();
+            container.RegisterFromAssemblyOf<Program>();
+
+            Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false, ShowDebug = false })
                 .UsingJsonSerialisation()
                 .UsingHttpTransport()
@@ -22,9 +24,10 @@ namespace SystemDot.Messaging.TestRequestReply.OtherSender
                 .OpenChannel("OtherTestRequest")
                     .ForRequestReplySendingTo("TestReply@/ReceiverServer")
                     .WithDurability()
+                    .RegisterHandlersFromAssemblyOf<Program>()
+                    .BasedOn<IMessageConsumer>()
+                    .ResolveBy(container.Resolve)
                 .Initialise();
-
-            IocContainerLocator.Locate().Resolve<MessageHandlerRouter>().RegisterHandler(new MessageConsumer());
 
             do
             {
@@ -33,16 +36,16 @@ namespace SystemDot.Messaging.TestRequestReply.OtherSender
 
                 Console.WriteLine("Sending messages");
 
-                using (Batch batch = bus.BatchSend())
+                using (Batch batch = Bus.BatchSend())
                 {
-                    bus.Send(new TestMessage("Hello"));
-                    bus.Send(new TestMessage("Hello1"));
-                    bus.Send(new TestMessage("Hello2"));
-                    bus.Send(new TestMessage("Hello3"));
-                    bus.Send(new TestMessage("Hello4"));
-                    bus.Send(new TestMessage("Hello5"));
-                    bus.Send(new TestMessage("Hello6"));
-                    bus.Send(new TestMessage("Hello7"));
+                    Bus.Send(new TestMessage("Hello"));
+                    Bus.Send(new TestMessage("Hello1"));
+                    Bus.Send(new TestMessage("Hello2"));
+                    Bus.Send(new TestMessage("Hello3"));
+                    Bus.Send(new TestMessage("Hello4"));
+                    Bus.Send(new TestMessage("Hello5"));
+                    Bus.Send(new TestMessage("Hello6"));
+                    Bus.Send(new TestMessage("Hello7"));
 
                     batch.Complete();
                 }

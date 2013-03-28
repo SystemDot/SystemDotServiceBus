@@ -48,10 +48,12 @@
     <Compile Include="Batching\BatchPackager.cs" />
     <Compile Include="Batching\BatchUnpackager.cs" />
     <Compile Include="Builders\ChannelSchema.cs" />
+    <Compile Include="Bus.cs" />
     <Compile Include="Caching\PersistenceSourceRecorder.cs" />
     <Compile Include="Caching\ReceiveChannelMessageCacher.cs" />
     <Compile Include="Caching\SendChannelMessageCacher.cs" />
-    <Compile Include="Configuration\HandlerConfiguration.cs" />
+    <Compile Include="Configuration\HandlerBasedOnConfiguration.cs" />
+    <Compile Include="Configuration\HandlerResolutionConfiguration.cs" />
     <Compile Include="Configuration\MessagingConfigurationExtensions.cs" />
     <Compile Include="Configuration\ExternalSources\ExternalSourcesConfigurer.cs" />
     <Compile Include="Configuration\ExternalSources\IExternalConfigurationSource.cs" />
@@ -66,6 +68,7 @@
     <Compile Include="Expiry\MessageSendTimeRemover.cs" />
     <Compile Include="Expiry\TimeMessageExpiryStrategy.cs" />
     <Compile Include="Caching\MessageDecacher.cs" />
+    <Compile Include="Ioc\IocContainerLocator.cs" />
     <Compile Include="ISerialiserExtensions.cs" />
     <Compile Include="Local\Builders\LocalChannelBuilder.cs" />
     <Compile Include="Local\Builders\LocalChannelSchema.cs" />

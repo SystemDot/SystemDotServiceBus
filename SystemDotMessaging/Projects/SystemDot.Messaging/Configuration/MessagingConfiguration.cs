@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using SystemDot.Ioc;
 using SystemDot.Logging;
+using SystemDot.Messaging.Ioc;
 
 namespace SystemDot.Messaging.Configuration
 {
@@ -17,6 +19,11 @@ namespace SystemDot.Messaging.Configuration
         {
             Logger.LoggingMechanism = toLogWith;
             return this;
+        }
+
+        public IIocContainer GetIocContainer()
+        {
+            return IocContainerLocator.Locate();
         }
     }
 }

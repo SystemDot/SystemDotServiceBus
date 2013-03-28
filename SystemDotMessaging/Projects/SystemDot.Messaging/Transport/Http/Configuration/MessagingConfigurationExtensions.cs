@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Ioc;
 
 namespace SystemDot.Messaging.Transport.Http.Configuration
 {

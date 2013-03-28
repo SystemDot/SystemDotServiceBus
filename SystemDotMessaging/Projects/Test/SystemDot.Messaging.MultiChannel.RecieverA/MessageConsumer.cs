@@ -6,13 +6,6 @@ namespace SystemDot.Messaging.MultiChannel.RecieverA
 {
     public class MessageConsumer : IMessageConsumer
     {
-        readonly IBus bus;
-
-        public MessageConsumer(IBus bus)
-        {
-            this.bus = bus;
-        }
-
         public void Handle(Channel1Request message)
         {
             Console.WriteLine(
@@ -20,7 +13,7 @@ namespace SystemDot.Messaging.MultiChannel.RecieverA
                 message.Text, 
                 Thread.CurrentThread.ManagedThreadId);
 
-            bus.Reply(new Channel1Reply("Reply to " + message.Text));
+            Bus.Reply(new Channel1Reply("Reply to " + message.Text));
         }
     }
 }

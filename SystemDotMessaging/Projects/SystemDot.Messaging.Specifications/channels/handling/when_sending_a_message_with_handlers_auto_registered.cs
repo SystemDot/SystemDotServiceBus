@@ -1,3 +1,4 @@
+using SystemDot.Ioc;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Specifications.channels.handling.Fakes;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
@@ -8,7 +9,6 @@ namespace SystemDot.Messaging.Specifications.channels.handling
     [Subject("Configuration")]
     public class when_sending_a_message_with_handlers_auto_registered : WithConfigurationSubject
     {
-        static IBus bus;
         static Message1 message1;
         static Message2 message2;
         static FirstHandlerOfMessage1 firstHandlerOfMessage1;
@@ -18,30 +18,36 @@ namespace SystemDot.Messaging.Specifications.channels.handling
 
         Establish context = () =>
         {
+            var container = new IocContainer();
+
             firstHandlerOfMessage1 = new FirstHandlerOfMessage1();
-            Register(firstHandlerOfMessage1);
+            Register(container, firstHandlerOfMessage1);
+
             secondHandlerOfMessage1 = new SecondHandlerOfMessage1();
-            Register(secondHandlerOfMessage1);
+            Register(container, secondHandlerOfMessage1);
+
             firstHandlerOfMessage2 = new FirstHandlerOfMessage2();
-            Register(firstHandlerOfMessage2);
+            Register(container, firstHandlerOfMessage2);
+
             secondHandlerOfMessage2 = new SecondHandlerOfMessage2();
-            Register(secondHandlerOfMessage2);
+            Register(container, secondHandlerOfMessage2);
 
             message1 = new Message1();
             message2 = new Message2();
 
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenLocalChannel()
                 .RegisterHandlersFromAssemblyOf<when_sending_a_message_with_handlers_auto_registered>()
                 .BasedOn<IHandleMessage>()
+                .ResolveBy(container.Resolve)
                 .Initialise();
         };
 
         Because of = () =>
         {
-            bus.SendLocal(message1);
-            bus.SendLocal(message2);
+            Bus.SendLocal(message1);
+            Bus.SendLocal(message2);
         };
 
         It should_send_the_first_message_to_its_first_handler =

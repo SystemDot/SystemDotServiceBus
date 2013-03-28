@@ -1,4 +1,6 @@
-namespace SystemDot.Ioc
+using SystemDot.Ioc;
+
+namespace SystemDot.Messaging.Ioc
 {
     public class IocContainerLocator
     {
