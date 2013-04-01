@@ -33,6 +33,9 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
             Messages = new ObservableCollection<string>();
             Replies = new ObservableCollection<string>();
 
+            var container = new IocContainer();
+            container.RegisterFromAssemblyOf<ResponseHandler>();
+
             this.bus = Configure.Messaging()
                .LoggingWith(loggingMechanism)
                .UsingFilePersistence()
@@ -43,12 +46,11 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
                .OpenChannel("TestMetroRequest")
                     .ForRequestReplySendingTo("TestReply@/ReceiverServer")
                     .WithDurability()
-               .WithReceiveHook(new MessageMarshallingHook(CoreWindow.GetForCurrentThread().Dispatcher))
+                    .WithReceiveHook(new MessageMarshallingHook(CoreWindow.GetForCurrentThread().Dispatcher))
+                    .RegisterHandlersFromAssemblyOf<ResponseHandler>()
+                    .BasedOn<IMessageConsumer>()
+                    .ResolveBy(container.Resolve)
                .Initialise();
-
-            IocContainerLocator.Locate()
-                .Resolve<MessageHandlerRouter>()
-                .RegisterHandler(new ResponseHandler(this));
         }
 
         public void SendMessage(int i)

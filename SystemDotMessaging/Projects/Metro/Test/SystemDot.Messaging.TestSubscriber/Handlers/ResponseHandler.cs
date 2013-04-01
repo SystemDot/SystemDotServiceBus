@@ -3,7 +3,7 @@ using SystemDot.Messaging.TestSubscriber.ViewModels;
 
 namespace SystemDot.Messaging.TestSubscriber.Handlers
 {
-    public class ResponseHandler
+    public class ResponseHandler : IMessageConsumer
     {
         readonly MainPageViewModel viewModel;
 
