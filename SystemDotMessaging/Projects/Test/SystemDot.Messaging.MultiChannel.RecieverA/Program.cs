@@ -16,14 +16,14 @@ namespace SystemDot.Messaging.MultiChannel.RecieverA
 
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
+                .RegisterHandlersFromAssemblyOf<Program>()
+                .BasedOn<IMessageConsumer>()
+                .ResolveBy(container.Resolve)
                 .UsingFilePersistence()
                 .UsingHttpTransport()
                 .AsAServer("ServerA")
                 .OpenChannel("TestRecieverA").ForRequestReplyRecieving()
                     .WithDurability()
-                    .RegisterHandlersFromAssemblyOf<Program>()
-                    .BasedOn<IMessageConsumer>()
-                    .ResolveBy(container.Resolve)
                 .Initialise();
 
             Console.WriteLine("I am reciever A");

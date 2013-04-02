@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using SystemDot.Messaging.Handling;
 
 namespace SystemDot.Messaging.Configuration
 {
-    public class HandlerResolutionConfiguration
+    public class HandlerResolutionConfiguration : Configurer
     {
-        readonly Initialiser initialiser;
-        readonly IEnumerable<Type> derivedTypes;
+        readonly MessagingConfiguration configuration;
+        readonly IEnumerable<Type> messageHandlerTypes;
 
-        public HandlerResolutionConfiguration(Initialiser initialiser, IEnumerable<Type> derivedTypes)
+        public HandlerResolutionConfiguration(MessagingConfiguration configuration, IEnumerable<Type> messageHandlerTypes)
         {
-            this.initialiser = initialiser;
-            this.derivedTypes = derivedTypes;
+            this.configuration = configuration;
+            this.messageHandlerTypes = messageHandlerTypes;
         }
 
-        public Initialiser ResolveBy(Func<Type, object> resolvingAction)
-        {
-            this.derivedTypes.ForEach(t => this.initialiser.RegisterHandlers(router => router.RegisterHandler(resolvingAction(t))));
-            return this.initialiser;
+        public MessagingConfiguration ResolveBy(Func<Type, object> resolvingAction)
+        {            
+            var router = Resolve<MessageHandlerRouter>();
+            this.messageHandlerTypes.ForEach(type => this.configuration.BuildActions.Add(() => router.RegisterHandler(type, resolvingAction)));
+            return this.configuration;
         }
     }
 }

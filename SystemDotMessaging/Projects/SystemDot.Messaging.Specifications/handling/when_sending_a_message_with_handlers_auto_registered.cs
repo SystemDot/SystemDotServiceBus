@@ -1,12 +1,11 @@
 using SystemDot.Ioc;
-using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Specifications.channels.handling.Fakes;
+using SystemDot.Messaging.Specifications.handling.Fakes;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.channels.handling
+namespace SystemDot.Messaging.Specifications.handling
 {
-    [Subject("Configuration")]
+    [Subject("Handling")]
     public class when_sending_a_message_with_handlers_auto_registered : WithConfigurationSubject
     {
         static Message1 message1;
@@ -36,11 +35,11 @@ namespace SystemDot.Messaging.Specifications.channels.handling
             message2 = new Message2();
 
             Configuration.Configure.Messaging()
-                .UsingInProcessTransport()
-                .OpenLocalChannel()
                 .RegisterHandlersFromAssemblyOf<when_sending_a_message_with_handlers_auto_registered>()
                 .BasedOn<IHandleMessage>()
                 .ResolveBy(container.Resolve)
+                .UsingInProcessTransport()
+                .OpenLocalChannel()
                 .Initialise();
         };
 

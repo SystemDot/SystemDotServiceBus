@@ -21,6 +21,13 @@ namespace SystemDot.Messaging.Configuration
             return this;
         }
 
+        public HandlerBasedOnConfiguration RegisterHandlersFromAssemblyOf<TAssemblyOf>()
+        {
+            return new HandlerBasedOnConfiguration(
+                this,
+                typeof(TAssemblyOf).GetTypesInAssembly().WhereNonAbstract().WhereNonGeneric().WhereConcrete());
+        }
+
         public IIocContainer GetIocContainer()
         {
             return IocContainerLocator.Locate();

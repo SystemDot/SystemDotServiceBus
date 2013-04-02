@@ -17,14 +17,14 @@ namespace SystemDot.Messaging.Combined.Client
 
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
+                .RegisterHandlersFromAssemblyOf<Program>()
+                .BasedOn<IMessageConsumer>()
+                .ResolveBy(container.Resolve)
                 .UsingFilePersistence()
                 .UsingHttpTransport()
                 .AsAServer("SenderServer")
                 .OpenChannel("TestSender")
                     .ForRequestReplySendingTo("TestReceiver@/ReceiverPublisherServer")
-                    .RegisterHandlersFromAssemblyOf<Program>()
-                    .BasedOn<IMessageConsumer>()
-                    .ResolveBy(container.Resolve)
                 .Initialise();
 
             do

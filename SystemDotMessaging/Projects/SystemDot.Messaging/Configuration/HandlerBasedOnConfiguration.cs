@@ -5,19 +5,23 @@ namespace SystemDot.Messaging.Configuration
 {
     public class HandlerBasedOnConfiguration : Configurer
     {
-        readonly Initialiser initialiser;
-        readonly IEnumerable<Type> types;
+        readonly MessagingConfiguration configuration;
+        readonly IEnumerable<Type> typesFromAssembly;
 
-        public HandlerBasedOnConfiguration(Initialiser initialiser, IEnumerable<Type> types)
+        public HandlerBasedOnConfiguration(MessagingConfiguration configuration, IEnumerable<Type> typesFromAssembly)
         {
-            this.initialiser = initialiser;
-            this.types = types;
+            this.configuration = configuration;
+            this.typesFromAssembly = typesFromAssembly;
         }
 
-        public HandlerResolutionConfiguration BasedOn<THandler>()
+        public HandlerResolutionConfiguration BasedOn<TMessageHandler>()
         {
-            var derivedTypes = this.types.WhereImplements<THandler>();
-            return new HandlerResolutionConfiguration(this.initialiser, derivedTypes);
+            return new HandlerResolutionConfiguration(this.configuration, GetMessageHandlerTypes<TMessageHandler>());
+        }
+
+        IEnumerable<Type> GetMessageHandlerTypes<TMessageHandler>()
+        {
+            return this.typesFromAssembly.WhereImplements<TMessageHandler>();
         }
     }
 }

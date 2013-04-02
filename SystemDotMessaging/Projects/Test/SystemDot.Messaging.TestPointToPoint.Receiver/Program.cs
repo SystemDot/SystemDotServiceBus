@@ -17,18 +17,18 @@ namespace SystemDot.Messaging.TestPointToPoint.Receiver
             container.RegisterFromAssemblyOf<Program>();
 
             Configure.Messaging()
-               .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false })
-               .UsingFilePersistence()
-               .UsingJsonSerialisation()
-               .UsingHttpTransport()
-               .AsAServer("ReceiverServer")
-               .OpenChannel("TestReceive")
-                   .ForPointToPointReceiving()
-                   .WithDurability()
-                   .RegisterHandlersFromAssemblyOf<Program>()
-                   .BasedOn<IMessageConsumer>()
-                   .ResolveBy(container.Resolve)
-               .Initialise();
+                .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false })
+                .RegisterHandlersFromAssemblyOf<Program>()
+                .BasedOn<IMessageConsumer>()
+                .ResolveBy(container.Resolve)
+                .UsingFilePersistence()
+                .UsingJsonSerialisation()
+                .UsingHttpTransport()
+                .AsAServer("ReceiverServer")
+                .OpenChannel("TestReceive")
+                    .ForPointToPointReceiving()
+                    .WithDurability()
+                .Initialise();
 
             Console.WriteLine("I am the reciever. Press enter to exit");
 

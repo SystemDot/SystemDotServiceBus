@@ -1,4 +1,4 @@
-namespace SystemDot.Messaging.Specifications.channels.handling.Fakes
+namespace SystemDot.Messaging.Specifications.handling.Fakes
 {
     class SecondHandlerOfMessage1 : IHandleMessage
     {

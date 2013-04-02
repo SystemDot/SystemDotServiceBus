@@ -18,14 +18,14 @@ namespace SystemDot.Messaging.OtherTestSubscriber
 
             Configure.Messaging()
                 .UsingFilePersistence()
+                .RegisterHandlersFromAssemblyOf<Program>()
+                .BasedOn<IMessageConsumer>()
+                .ResolveBy(container.Resolve)
                 .UsingHttpTransport()
                 .AsAServer("OtherSubscriberServer")
                 .OpenChannel("TestOtherSubscriber")
                     .ForSubscribingTo("TestPublisher@/PublisherServer")
                     .WithDurability()
-                    .RegisterHandlersFromAssemblyOf<Program>()
-                    .BasedOn<IMessageConsumer>()
-                    .ResolveBy(container.Resolve)
                 .Initialise();
             
             Console.WriteLine("I am the other subscriber, listening for messages..");

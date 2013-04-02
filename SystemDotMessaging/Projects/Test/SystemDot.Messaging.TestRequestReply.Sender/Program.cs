@@ -18,16 +18,16 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
 
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism {ShowInfo = false, ShowDebug = false})
+                .RegisterHandlersFromAssemblyOf<Program>()
+                .BasedOn<IMessageConsumer>()
+                .ResolveBy(container.Resolve)
                 .UsingFilePersistence()
                 .UsingJsonSerialisation()
                 .UsingHttpTransport()
                 .AsAServer("SenderServer")
                 .OpenChannel("TestRequest")
-                .ForRequestReplySendingTo("TestReply@/ReceiverServer")
-                .WithDurability()
-                .RegisterHandlersFromAssemblyOf<Program>()
-                .BasedOn<IMessageConsumer>()
-                .ResolveBy(container.Resolve)
+                    .ForRequestReplySendingTo("TestReply@/ReceiverServer")
+                    .WithDurability()
                 .Initialise();
 
             do

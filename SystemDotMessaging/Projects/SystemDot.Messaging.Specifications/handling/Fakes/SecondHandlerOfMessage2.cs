@@ -1,6 +1,6 @@
-namespace SystemDot.Messaging.Specifications.channels.handling.Fakes
+namespace SystemDot.Messaging.Specifications.handling.Fakes
 {
-    class FirstHandlerOfMessage2 : IHandleMessage
+    class SecondHandlerOfMessage2 : IHandleMessage
     {
         public Message2 LastHandledMessage { get; private set; }
 

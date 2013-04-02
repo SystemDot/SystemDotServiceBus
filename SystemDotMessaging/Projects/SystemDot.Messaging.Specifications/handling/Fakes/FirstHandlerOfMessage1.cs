@@ -1,4 +1,4 @@
-namespace SystemDot.Messaging.Specifications.channels.handling.Fakes
+namespace SystemDot.Messaging.Specifications.handling.Fakes
 {
     class FirstHandlerOfMessage1 : IHandleMessage
     {
@@ -6,7 +6,7 @@ namespace SystemDot.Messaging.Specifications.channels.handling.Fakes
 
         public void Handle(Message1 message)
         {
-            LastHandledMessage = message;
+            this.LastHandledMessage = message;
         }
     }
 }

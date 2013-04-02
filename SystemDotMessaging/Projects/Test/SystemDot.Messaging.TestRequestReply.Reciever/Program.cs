@@ -17,6 +17,9 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
 
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false })
+                .RegisterHandlersFromAssemblyOf<Program>()
+                .BasedOn<IMessageConsumer>()
+                .ResolveBy(container.Resolve)
                 .UsingFilePersistence()
                 .UsingJsonSerialisation()
                 .UsingHttpTransport()
@@ -25,9 +28,6 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
                 .OpenChannel("TestReply")
                     .ForRequestReplyRecieving()
                     .WithDurability()
-                    .RegisterHandlersFromAssemblyOf<Program>()
-                    .BasedOn<IMessageConsumer>()
-                    .ResolveBy(container.Resolve)
                 .Initialise();
 
             Console.WriteLine("I am the reciever. Press enter to exit");

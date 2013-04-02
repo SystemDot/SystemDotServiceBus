@@ -18,15 +18,15 @@ namespace SystemDot.Messaging.TestRequestReply.OtherSender
 
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false, ShowDebug = false })
+                .RegisterHandlersFromAssemblyOf<Program>()
+                .BasedOn<IMessageConsumer>()
+                .ResolveBy(container.Resolve)
                 .UsingJsonSerialisation()
                 .UsingHttpTransport()
                 .AsAServer("OtherSenderServer")
                 .OpenChannel("OtherTestRequest")
                     .ForRequestReplySendingTo("TestReply@/ReceiverServer")
                     .WithDurability()
-                    .RegisterHandlersFromAssemblyOf<Program>()
-                    .BasedOn<IMessageConsumer>()
-                    .ResolveBy(container.Resolve)
                 .Initialise();
 
             do

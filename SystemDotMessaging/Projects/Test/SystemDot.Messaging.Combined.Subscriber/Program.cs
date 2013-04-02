@@ -16,14 +16,14 @@ namespace SystemDot.Messaging.Combined.Subscriber
 
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
+                .RegisterHandlersFromAssemblyOf<Program>()
+                .BasedOn<IMessageConsumer>()
+                .ResolveBy(container.Resolve)
                 .UsingFilePersistence()
                 .UsingHttpTransport()
                 .AsAServer("SubscriberServer")
                 .OpenChannel("TestSubscriber")
                     .ForSubscribingTo("TestPublisher@/ReceiverPublisherServer")
-                    .RegisterHandlersFromAssemblyOf<Program>()
-                    .BasedOn<IMessageConsumer>()
-                    .ResolveBy(container.Resolve)
                 .Initialise();
             
             Console.WriteLine("I am a subscriber, listening for messages..");

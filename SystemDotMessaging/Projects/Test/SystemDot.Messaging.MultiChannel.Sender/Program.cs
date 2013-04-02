@@ -18,6 +18,9 @@ namespace SystemDot.Messaging.MultiChannel.Sender
 
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
+                .RegisterHandlersFromAssemblyOf<Program>()
+                .BasedOn<IMessageConsumer>()
+                .ResolveBy(container.Resolve)
                 .UsingFilePersistence()
                 .UsingHttpTransport()
                 .AsAServer("Server")
@@ -25,16 +28,10 @@ namespace SystemDot.Messaging.MultiChannel.Sender
                     .ForRequestReplySendingTo("TestRecieverA@/ServerA")
                     .OnlyForMessages(FilteredBy.NamePattern("Channel1"))
                     .WithDurability()
-                    .RegisterHandlersFromAssemblyOf<Program>()
-                    .BasedOn<IMessageConsumer>()
-                    .ResolveBy(container.Resolve)
                 .OpenChannel("TestSenderB")
                     .ForRequestReplySendingTo("TestRecieverB@/ServerB")
                     .OnlyForMessages(FilteredBy.NamePattern("Channel2"))
                     .WithDurability()
-                    .RegisterHandlersFromAssemblyOf<Program>()
-                    .BasedOn<IMessageConsumer>()
-                    .ResolveBy(container.Resolve)
                 .Initialise();
 
             do

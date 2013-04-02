@@ -37,20 +37,20 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
             container.RegisterFromAssemblyOf<ResponseHandler>();
 
             this.bus = Configure.Messaging()
-               .LoggingWith(loggingMechanism)
-               .UsingFilePersistence()
-               .UsingJsonSerialisation()
-               .UsingHttpTransport()
-               .AsARemoteClient("MetroClient")
-               .UsingProxy(MessageServer.Local("MetroProxy"))
-               .OpenChannel("TestMetroRequest")
+                .LoggingWith(loggingMechanism)
+                .RegisterHandlersFromAssemblyOf<ResponseHandler>()
+                .BasedOn<IMessageConsumer>()
+                .ResolveBy(container.Resolve)
+                .UsingFilePersistence()
+                .UsingJsonSerialisation()
+                .UsingHttpTransport()
+                .AsARemoteClient("MetroClient")
+                .UsingProxy(MessageServer.Local("MetroProxy"))
+                .OpenChannel("TestMetroRequest")
                     .ForRequestReplySendingTo("TestReply@/ReceiverServer")
                     .WithDurability()
                     .WithReceiveHook(new MessageMarshallingHook(CoreWindow.GetForCurrentThread().Dispatcher))
-                    .RegisterHandlersFromAssemblyOf<ResponseHandler>()
-                    .BasedOn<IMessageConsumer>()
-                    .ResolveBy(container.Resolve)
-               .Initialise();
+                .Initialise();
         }
 
         public void SendMessage(int i)
