@@ -4,9 +4,12 @@ namespace SystemDot.Messaging.Specifications.handling.Fakes
     {
         public Message1 LastHandledMessage { get; private set; }
 
+        public int NumberOfTimeHandleCalled { get; private set; }
+
         public void Handle(Message1 message)
         {
-            this.LastHandledMessage = message;
+            LastHandledMessage = message;
+            NumberOfTimeHandleCalled++;
         }
     }
 }

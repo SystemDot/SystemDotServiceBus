@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using System.Reflection;
 using SystemDot.Ioc;
 
@@ -35,7 +36,9 @@ namespace SystemDot.Messaging.Handling
 
         void RouterToRegisteredTypes(object message)
         {
-            this.handlerTypes.ForEach(type => Invoke(type.ResolveAction(type.Type), message));
+            this.handlerTypes
+                .Where(handler => HandlesMessageType(handler.Type, message))
+                .ForEach(type => Invoke(type.ResolveAction(type.Type), message));
         }
 
         void Invoke(object handler, object message)
@@ -46,9 +49,14 @@ namespace SystemDot.Messaging.Handling
             method.Invoke(handler, new[] { message });
         }
 
-        MethodInfo GetHandlerMethodInfo(object consumer, object message)
+        MethodInfo GetHandlerMethodInfo(object handler, object message)
         {
-            return consumer.GetType().GetMethod("Handle", new[] { message.GetType() });
+            return handler.GetType().GetMethod("Handle", new[] { message.GetType() });
+        }
+
+        bool HandlesMessageType(Type type, object message)
+        {
+            return type.GetMethod("Handle", new[] { message.GetType() }) != null;
         }
 
         public void RegisterHandler(object handlerInstance)
@@ -59,6 +67,8 @@ namespace SystemDot.Messaging.Handling
 
         public void RegisterHandler(Type handlerType, Func<Type, object> handlerResolvingAction)
         {
+            if (this.handlerTypes.Any(handler => handler.Type == handlerType)) return;
+
             this.handlerTypes.Add(new HandlerType(handlerType, handlerResolvingAction));
         }
 

@@ -65,6 +65,7 @@
     <Compile Include="channels\point_to_point\batching\when_sending_messages_inside_a_batch_and_then_again.cs" />
     <Compile Include="channels\point_to_point\expiry\when_repeating_a_message_that_is_not_repeat_attempt_expired.cs" />
     <Compile Include="channels\point_to_point\expiry\when_repeating_a_message_that_is_time_expired.cs" />
+    <Compile Include="handling\when_sending_a_message_with_handlers_in_an_assembly_auto_registered_twice.cs" />
     <Compile Include="handling\when_initialising_with_handlers_auto_registered.cs" />
     <Compile Include="handling\Fakes\FirstHandlerOfMessage1.cs" />
     <Compile Include="handling\Fakes\FirstHandlerOfMessage2.cs" />
