@@ -9,7 +9,7 @@ namespace SystemDot.Http
 
         public string Url
         {
-            get { return String.Concat("http://", this.machineName, "/", this.instance, ":8090/"); }
+            get { return String.Concat("http://", this.machineName, ":8090/", this.instance, "/"); }
         }
 
         public FixedPortAddress() {}

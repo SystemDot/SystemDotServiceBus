@@ -20,6 +20,6 @@ namespace SystemDot.Messaging.Specifications.transport.http
 
         It should_listen_on_the_correct_url = () =>
             TestHttpServer.Instance.Url
-                .ShouldEqual(String.Concat("http://", Environment.MachineName, "/", ServerInstance, ":8090/"));
+                .ShouldEqual(String.Concat("http://", Environment.MachineName, ":8090/", ServerInstance, "/"));
     }
 }

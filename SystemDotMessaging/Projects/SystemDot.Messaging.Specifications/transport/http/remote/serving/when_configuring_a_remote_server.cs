@@ -29,7 +29,10 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
             systemTime.LastTimeSpanRequested.ShouldEqual(TimeSpan.FromSeconds(30));
 
         It should_listen_on_the_correct_url = () =>
-            TestHttpServer.Instance.Url
-                .ShouldEqual(String.Concat("http://", Environment.MachineName, "/", "RemoteServerInstance", ":8090/"));
+            TestHttpServer.Instance.Url.ShouldEqual(String.Concat(
+                "http://", 
+                Environment.MachineName, 
+                ":8090/", 
+                "RemoteServerInstance/"));
     }
 }

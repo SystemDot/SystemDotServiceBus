@@ -12,7 +12,7 @@ namespace SystemDot.Specifications.http
          
         Because of = () => address = new FixedPortAddress(Server, Instance);
 
-        It should_provide_a_url_with_the_correct_address = () => 
-            address.Url.ShouldEqual("http://" + Server + "/" + Instance + ":8090/");
+        It should_provide_a_url_with_the_correct_address = () =>
+            address.Url.ShouldEqual("http://" + Server + ":8090/" + Instance + "/");
     }
 }
