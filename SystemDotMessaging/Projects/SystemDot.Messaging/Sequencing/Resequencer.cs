@@ -50,7 +50,7 @@ namespace SystemDot.Messaging.Sequencing
             {
                 Logger.Info("Releasing message from resequencer with sequence {0}", startSequence);
 
-                MessagePayload message = this.messageCache.GetMessages().Single(m => m.GetSequence() == startSequence);
+                MessagePayload message = this.messageCache.GetMessages().Last(m => m.GetSequence() == startSequence);
                 
                 MessageProcessed(message);
 

@@ -86,6 +86,13 @@ namespace SystemDot.Messaging.Storage
         public void Delete(Guid id)
         {
             AddChange(new DeleteMessageChange(id));
+
+            Messenger.Send(new MessageRemovedFromCache
+            {
+                MessageId = id,
+                Address = Address,
+                UseType = UseType
+            });
         }
 
         public void ApplyChange(DeleteMessageChange change)

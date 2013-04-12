@@ -66,7 +66,6 @@ namespace SystemDot.Messaging.PointToPoint.Builders
                 .ToProcessor(new Sequencer(cache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.ReceiverAddress))
                 .ToMessageRepeater(cache, this.systemTime, this.taskRepeater, schema.RepeatStrategy)
-                .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new SendChannelMessageCacher(cache))
                 .ToProcessor(new SequenceOriginRecorder(cache))
                 .ToProcessor(new PersistenceSourceRecorder())

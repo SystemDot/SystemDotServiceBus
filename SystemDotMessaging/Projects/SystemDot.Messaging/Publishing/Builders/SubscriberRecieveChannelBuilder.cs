@@ -65,12 +65,10 @@ namespace SystemDot.Messaging.Publishing.Builders
 
             MessagePipelineBuilder.Build()
                 .With(this.messageReceiver)
-                .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new BodyMessageFilter(schema.Address))
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToProcessor(new SequenceOriginApplier(messageCache))
                 .ToSimpleMessageRepeater(messageCache, this.systemTime, this.taskRepeater)
-                .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
                 .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))
                 .Queue()

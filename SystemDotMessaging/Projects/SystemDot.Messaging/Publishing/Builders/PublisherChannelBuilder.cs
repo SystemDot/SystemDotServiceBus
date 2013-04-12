@@ -62,7 +62,6 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
                 .ToProcessor(new Sequencer(messageCache))
                 .ToMessageRepeater(messageCache, this.systemTime, this.taskRepeater, EscalatingTimeRepeatStrategy.Default)
-                .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new SendChannelMessageCacher(messageCache))
                 .Queue()
                 .ToProcessor(publisherEndpoint)

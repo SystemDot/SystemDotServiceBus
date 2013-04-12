@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
             Server.SentMessages
                 .ExcludeAcknowledgements()
                 .First()
-                .Headers.OfType<AddressHeader>()
+                .Headers.Values.OfType<AddressHeader>()
                 .Count()
                 .ShouldEqual(2);
     }

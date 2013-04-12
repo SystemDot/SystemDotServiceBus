@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="channels\point_to_point\acknowledgement\SpecificationGroup.cs" />
     <Compile Include="channels\configuration\SpecificationGroup.cs" />
+    <Compile Include="channels\point_to_point\acknowledgement\when_receiving_an_acknowledgement_for_a_message.cs" />
     <Compile Include="channels\point_to_point\acknowledgement\when_repeating_messages_after_receiving_an_acknowledgement_for_a_message_with_no_channels_configured.cs" />
     <Compile Include="channels\point_to_point\acknowledgement\when_repeating_messages_after_receiving_an_acknowledgement_with_the_incorrect_channel_for_a_message.cs" />
     <Compile Include="channels\point_to_point\acknowledgement\when_repeating_messages_after_receiving_an_acknowledgement_with_the_incorrect_use_type_for_a_message.cs" />

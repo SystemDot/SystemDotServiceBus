@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Transport.Http
 
         public void InputMessage(MessagePayload toInput)
         {
-            Logger.Info("Sending message to {0}", toInput.GetToAddress().ServerPath.GetUrl());
+            LogMessage(toInput);
 
             try
             {
@@ -33,6 +33,14 @@ namespace SystemDot.Messaging.Transport.Http
             catch (Exception)
             {
             }
+        }
+
+        static void LogMessage(MessagePayload toInput)
+        {
+            Logger.Info(
+                "Sending message to {0} at {1}",
+                toInput.GetToAddress().Channel,
+                toInput.GetToAddress().ServerPath.Server);
         }
     }
 }

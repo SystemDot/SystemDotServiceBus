@@ -50,6 +50,6 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.acknowledge
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_not_have_repeated_the_message = () => Server.SentMessages.ShouldNotBeEmpty();
+        It should_have_repeated_the_message = () => Server.SentMessages.ShouldNotBeEmpty();
     }
 }
