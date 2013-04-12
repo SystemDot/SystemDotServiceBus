@@ -7,7 +7,7 @@ namespace SystemDot.Messaging.Packaging
 {
     public class MessagePayload
     {
-        public ConcurrentDictionary<IMessageHeader, IMessageHeader> Headers { get; set; }
+        public ConcurrentDictionary<string, IMessageHeader> Headers { get; set; }
 
         public Guid Id { get; set; }
 
@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.Packaging
 
         public MessagePayload()
         {
-            Headers = new ConcurrentDictionary<IMessageHeader, IMessageHeader>();
+            Headers = new ConcurrentDictionary<string, IMessageHeader>();
             Id = Guid.NewGuid();
             CreatedOn = DateTime.Now;
         }
@@ -24,16 +24,13 @@ namespace SystemDot.Messaging.Packaging
         {
             Contract.Requires(toAdd != null);
 
-            this.Headers.TryAdd(toAdd, toAdd);
+            this.Headers.TryAdd(toAdd.GetType().Name, toAdd);
         }
 
         public void RemoveHeader(Type toRemove)
         {
-            var header = Headers.Values.SingleOrDefault(h => h.GetType() == toRemove);
-            if (header == null) return;
-
             IMessageHeader temp;
-            Headers.TryRemove(header, out temp);
+            Headers.TryRemove(toRemove.Name, out temp);
         }
 
         public T GetHeader<T>()

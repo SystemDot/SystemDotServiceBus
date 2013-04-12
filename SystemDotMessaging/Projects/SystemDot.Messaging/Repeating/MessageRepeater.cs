@@ -12,6 +12,7 @@ namespace SystemDot.Messaging.Repeating
         readonly IRepeatStrategy repeatStrategy;
         readonly ISystemTime systemTime;
         readonly IMessageCache messageCache;
+        bool isStarted;
 
         public MessageRepeater(IRepeatStrategy repeatStrategy, ISystemTime systemTime, IMessageCache messageCache)
         {
@@ -45,7 +46,7 @@ namespace SystemDot.Messaging.Repeating
             toInput.IncreaseAmountSent();
         }
                 
-        public void Start()
+        public void Repeat()
         {
             this.repeatStrategy.Repeat(this, this.messageCache, this.systemTime);
         }

@@ -1,14 +1,19 @@
 using System;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
+using SystemDot.Http.Builders;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Specifications.channels;
+using SystemDot.Messaging.Specifications.channels.point_to_point.repeating.escalating;
+using SystemDot.Messaging.Transport;
+using SystemDot.Messaging.Transport.InProcess;
 using SystemDot.Parallelism;
 using SystemDot.Specifications;
 using Machine.Specifications;
+using SystemDot.Messaging.Transport.Http.Configuration;
 
-namespace SystemDot.Messaging.Specifications.channels.point_to_point.repeating
+namespace SystemDot.Messaging.Specifications.transport.http
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_repeating_a_message_for_the_third_time_and_sixteen_seconds_have_not_passed
-        : WithMessageConfigurationSubject
+    public class when_repeating_a_message_and_four_seconds_have_passed : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
         const string SenderChannelName = "TestSender";
@@ -19,11 +24,13 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.repeating
 
         Establish context = () =>
         {
+            ConfigureAndRegister<IHttpServerBuilder>(new TestHttpServerBuilder());
+            
             systemTime = new TestSystemTime(DateTime.Now);
             ConfigureAndRegister<ISystemTime>(systemTime);
 
             bus = Configuration.Configure.Messaging()
-                .UsingInProcessTransport()
+                .UsingHttpTransport().AsAServer("ServerInstance")
                 .OpenChannel(ChannelName)
                 .ForPointToPointSendingTo(SenderChannelName)
                 .Initialise();
@@ -33,16 +40,10 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.repeating
             bus.Send(message);
 
             systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
-            The<ITaskRepeater>().Start();
-
-            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(8));
-            The<ITaskRepeater>().Start();
-
-            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(16).Subtract(TimeSpan.FromTicks(1)));
         };
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_not_repeat_the_message = () => Server.SentMessages.Count.ShouldEqual(3);
+        It should_repeat_the_message = () => Server.SentMessages.Count.ShouldEqual(2);
     }
 }

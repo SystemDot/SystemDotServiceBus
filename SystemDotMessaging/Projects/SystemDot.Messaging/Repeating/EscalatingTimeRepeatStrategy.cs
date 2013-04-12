@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.Sending;
 
 namespace SystemDot.Messaging.Repeating
 {
@@ -17,12 +18,14 @@ namespace SystemDot.Messaging.Repeating
         readonly int start;
         readonly int multiplier;
         readonly int maximum;
+        bool isFirstRepeat;
 
         public EscalatingTimeRepeatStrategy(int start, int multiplier, int maximum)
         {
             this.start = start;
             this.multiplier = multiplier;
             this.maximum = maximum;
+            this.isFirstRepeat = true;
         }
 
         public void Repeat(
@@ -34,9 +37,12 @@ namespace SystemDot.Messaging.Repeating
 
             messages.ForEach(m =>
             {
-                if (m.GetLastTimeSent().Ticks <= systemTime.GetCurrentDate().AddSeconds(-GetDelay(m)).Ticks)
+                if ((m.IsMarkedAsSent() || this.isFirstRepeat)  
+                    && m.GetLastTimeSent().Ticks <= systemTime.GetCurrentDate().AddSeconds(-GetDelay(m)).Ticks)
                     repeater.InputMessage(m);
             });
+
+            this.isFirstRepeat = false;
         }
 
         int GetDelay(MessagePayload toGetDelayFor)

@@ -8,5 +8,10 @@ namespace SystemDot.Messaging.Sending
         {
             payload.AddHeader(new MessageSentHeader());
         }
+        
+        public static bool IsMarkedAsSent(this MessagePayload payload)
+        {
+            return payload.HasHeader<MessageSentHeader>();
+        }
     }
 }

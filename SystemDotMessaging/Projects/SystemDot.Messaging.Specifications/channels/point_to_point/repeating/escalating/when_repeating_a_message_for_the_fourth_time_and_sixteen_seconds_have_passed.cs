@@ -4,7 +4,7 @@ using SystemDot.Parallelism;
 using SystemDot.Specifications;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.channels.point_to_point.repeating
+namespace SystemDot.Messaging.Specifications.channels.point_to_point.repeating.escalating
 {
     [Subject(SpecificationGroup.Description)]
     public class when_repeating_a_message_for_the_fourth_time_and_sixteen_seconds_have_passed

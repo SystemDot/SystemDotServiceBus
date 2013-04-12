@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Repeating
             IRepeatStrategy strategy)
         {
             var repeater = new MessageRepeater(strategy, systemTime, messageCache);
-            taskRepeater.Register(TimeSpan.FromSeconds(1), repeater.Start);
+            taskRepeater.Register(TimeSpan.FromSeconds(1), repeater.Repeat);
 
             return builder.ToProcessor(repeater);
         }

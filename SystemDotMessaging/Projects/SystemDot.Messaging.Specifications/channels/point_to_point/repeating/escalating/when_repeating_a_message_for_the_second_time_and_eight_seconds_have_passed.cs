@@ -4,16 +4,17 @@ using SystemDot.Parallelism;
 using SystemDot.Specifications;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.channels.point_to_point.repeating
+namespace SystemDot.Messaging.Specifications.channels.point_to_point.repeating.escalating
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_repeating_two_messages_and_four_seconds_have_passed
+    public class when_repeating_a_message_for_the_second_time_and_eight_seconds_have_passed
         : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
         const string SenderChannelName = "TestSender";
 
         static IBus bus;
+        static int message;
         static TestSystemTime systemTime;
 
         Establish context = () =>
@@ -27,14 +28,19 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.repeating
                 .ForPointToPointSendingTo(SenderChannelName)
                 .Initialise();
 
-            bus.Send(1);
-            bus.Send(2);
+            message = 1;
+
+            bus.Send(message);
 
             systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
+
+            The<ITaskRepeater>().Start();
+
+            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(8));
         };
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_repeat_the_messages = () => Server.SentMessages.Count.ShouldEqual(4);
+        It should_repeat_the_message = () => Server.SentMessages.Count.ShouldEqual(3);
     }
 }
