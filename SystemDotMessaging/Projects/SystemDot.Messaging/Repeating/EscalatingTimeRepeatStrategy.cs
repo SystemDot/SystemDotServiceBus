@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Repeating
         readonly int maximum;
         bool isFirstRepeat;
 
-        public EscalatingTimeRepeatStrategy(int start, int multiplier, int maximum)
+        EscalatingTimeRepeatStrategy(int start, int multiplier, int maximum)
         {
             this.start = start;
             this.multiplier = multiplier;

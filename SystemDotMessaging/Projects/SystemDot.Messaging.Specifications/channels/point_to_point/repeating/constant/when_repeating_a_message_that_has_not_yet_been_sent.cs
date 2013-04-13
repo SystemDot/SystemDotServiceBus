@@ -1,11 +1,12 @@
 using System;
+using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Transport;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using SystemDot.Parallelism;
 using SystemDot.Specifications;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.channels.point_to_point.repeating.escalating
+namespace SystemDot.Messaging.Specifications.channels.point_to_point.repeating.constant
 {
     [Subject(SpecificationGroup.Description)]
     public class when_repeating_a_message_that_has_not_yet_been_sent : WithMessageConfigurationSubject
@@ -28,13 +29,14 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.repeating.e
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForPointToPointSendingTo(SenderChannelName)
+                    .WithMessageRepeating(RepeatMessages.Every(TimeSpan.FromSeconds(10)))
                 .Initialise();
 
             message = 1;
 
             bus.Send(message);
 
-            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
+            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(11));
         };
 
         Because of = () => The<ITaskRepeater>().Start();
