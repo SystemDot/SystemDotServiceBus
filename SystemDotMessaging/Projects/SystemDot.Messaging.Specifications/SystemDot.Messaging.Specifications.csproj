@@ -56,9 +56,6 @@
     <Compile Include="channels\point_to_point\batching\when_receiving_messages_inside_a_batch.cs" />
     <Compile Include="channels\point_to_point\batching\when_sending_messages_inside_a_batch.cs" />
     <Compile Include="channels\distribution\SpecificationGroup.cs" />
-    <Compile Include="channels\distribution\when_queueing_an_item.cs" />
-    <Compile Include="channels\distribution\when_queueing_an_item_that_fails_when_pushed_then_queueing_another.cs" />
-    <Compile Include="channels\distribution\when_queueing_items_on_a_with_no_pushed_item_listener.cs" />
     <Compile Include="channels\point_to_point\receiving\when_configuring_a_channel.cs" />
     <Compile Include="channels\point_to_point\expiry\SpecificationGroup.cs" />
     <Compile Include="channels\point_to_point\expiry\when_repeating_a_message_that_is_not_time_expired.cs" />
@@ -69,6 +66,8 @@
     <Compile Include="channels\point_to_point\handling\SpecificationGroup.cs" />
     <Compile Include="channels\point_to_point\receiving\when_receiving_on_a_durable_channel.cs" />
     <Compile Include="channels\point_to_point\repeating\constant\SpecificationGroup.cs" />
+    <Compile Include="channels\point_to_point\repeating\escalating\http\SpecificationGroup.cs" />
+    <Compile Include="channels\point_to_point\repeating\escalating\http\when_repeating_a_message_and_four_seconds_have_passed.cs" />
     <Compile Include="channels\point_to_point\repeating\escalating\when_repeating_a_message_that_has_not_yet_been_sent.cs" />
     <Compile Include="channels\point_to_point\sending\when_configuring_a_channel.cs" />
     <Compile Include="channels\point_to_point\sending\when_sending_on_a_durable_channel.cs" />
@@ -118,7 +117,6 @@
     <Compile Include="transport\http\remote\serving\When_sending_a_message_with_a_remote_server_and_a_client_configured.cs" />
     <Compile Include="transport\http\when_configuring_a_server.cs" />
     <Compile Include="transport\http\when_receiving_a_message.cs" />
-    <Compile Include="transport\http\when_repeating_a_message_and_four_seconds_have_passed.cs" />
     <Compile Include="transport\http\when_sending_to_a_receiver_on_a_different_machine_and_remote_proxy.cs" />
     <Compile Include="channels\publishing\subscription\repeating\SpecificationGroup.cs" />
     <Compile Include="channels\publishing\subscription\repeating\when_repeating_a_request_for_the_third_time_and_sixteen_seconds_have_not_passed.cs" />
