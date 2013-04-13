@@ -1,9 +1,11 @@
+using System.Collections.Concurrent;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Expiry;
+using SystemDot.Messaging.LoadBalancing;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Repeating;
@@ -23,6 +25,7 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly ITaskRepeater taskRepeater;
         readonly MessageAcknowledgementHandler acknowledgementHandler;
         readonly ISerialiser serialiser;
+        readonly ITaskScheduler taskScheduler;
 
         public SubscriberSendChannelBuilder(
             IMessageSender messageSender, 
@@ -30,7 +33,8 @@ namespace SystemDot.Messaging.Publishing.Builders
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 
             MessageAcknowledgementHandler acknowledgementHandler, 
-            ISerialiser serialiser)
+            ISerialiser serialiser, 
+            ITaskScheduler taskScheduler)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(persistenceFactorySelector != null);
@@ -38,6 +42,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             Contract.Requires(taskRepeater != null);
             Contract.Requires(acknowledgementHandler != null);
             Contract.Requires(serialiser != null);
+            Contract.Requires(taskScheduler != null);
 
             this.messageSender = messageSender;
             this.persistenceFactorySelector = persistenceFactorySelector;
@@ -45,15 +50,16 @@ namespace SystemDot.Messaging.Publishing.Builders
             this.taskRepeater = taskRepeater;
             this.acknowledgementHandler = acknowledgementHandler;
             this.serialiser = serialiser;
+            this.taskScheduler = taskScheduler;
         }
 
         public IMessageInputter<MessagePayload> BuildChannel(SubscriberSendChannelSchema schema)
         {
-            SendMessageCache messageCache = this.persistenceFactorySelector
+            SendMessageCache cache = this.persistenceFactorySelector
                 .Select(schema)
                 .CreateSendCache(PersistenceUseType.SubscriberSend, schema.SubscriberAddress);
 
-            this.acknowledgementHandler.RegisterCache(messageCache);
+            this.acknowledgementHandler.RegisterCache(cache);
 
             var copier = new MessagePayloadCopier(this.serialiser);
 
@@ -61,11 +67,12 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .With(copier)
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.SubscriberAddress))
-                .ToMessageRepeater(messageCache, this.systemTime, this.taskRepeater, schema.RepeatStrategy)
-                .ToProcessor(new SendChannelMessageCacher(messageCache))
-                .ToProcessor(new SequenceOriginRecorder(messageCache))
+                .ToMessageRepeater(cache, this.systemTime, this.taskRepeater, schema.RepeatStrategy)
+                .ToProcessor(new SendChannelMessageCacher(cache))
+                .ToProcessor(new SequenceOriginRecorder(cache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()
+                .ToProcessor(new LoadBalancer(cache, this.taskScheduler))
                 .ToEndPoint(this.messageSender);
 
             Messenger.Send(new SubscriberSendChannelBuilt

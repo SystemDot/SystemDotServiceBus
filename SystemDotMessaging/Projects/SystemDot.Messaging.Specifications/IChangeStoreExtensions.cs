@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.Specifications
             var persistence = new SendMessageCache(new TestSystemTime(DateTime.Now), store, address, useType);
             persistence.Initialise();
 
-            return persistence.GetMessages();
+            return persistence.GetOrderedMessages();
         }
     }
 }

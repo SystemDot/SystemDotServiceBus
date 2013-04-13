@@ -18,14 +18,12 @@ namespace SystemDot.Messaging.Storage
         int sequence;
 
         public EndpointAddress Address { get; private set; }
+        
         public PersistenceUseType UseType { get; private set; }
+        
         public DateTime FirstItemCachedOn { get; private set; }
 
-        public SendMessageCache(
-            ISystemTime systemTime, 
-            IChangeStore changeStore, 
-            EndpointAddress address, 
-            PersistenceUseType useType)
+        public SendMessageCache(ISystemTime systemTime, IChangeStore changeStore, EndpointAddress address, PersistenceUseType useType)
             : base(changeStore)
         {
             Contract.Requires(systemTime != null);
@@ -41,9 +39,14 @@ namespace SystemDot.Messaging.Storage
             this.sequence = 1;
         }
 
+        public IEnumerable<MessagePayload> GetOrderedMessages()
+        {
+            return GetMessages().OrderBy(GetMessageSequence);
+        }
+
         public IEnumerable<MessagePayload> GetMessages()
         {
-            return this.messages.Values.OrderBy(GetMessageSequence);
+            return this.messages.Values;
         }
 
         static int GetMessageSequence(MessagePayload message)
@@ -115,7 +118,7 @@ namespace SystemDot.Messaging.Storage
         public int GetFirstSequenceInCache()
         {
             return GetMessages().Any()
-                ? GetMessages().First().GetSequence()
+                ? GetMessages().Min(m => m.GetSequence())
                 : 0;
         }
     }

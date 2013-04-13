@@ -65,6 +65,7 @@
     <Compile Include="Expiry\TimeMessageExpiryStrategy.cs" />
     <Compile Include="Caching\MessageDecacher.cs" />
     <Compile Include="ISerialiserExtensions.cs" />
+    <Compile Include="LoadBalancing\LoadBalancer.cs" />
     <Compile Include="Local\Builders\LocalChannelBuilder.cs" />
     <Compile Include="Local\Builders\LocalChannelSchema.cs" />
     <Compile Include="MessageProcessor.cs" />

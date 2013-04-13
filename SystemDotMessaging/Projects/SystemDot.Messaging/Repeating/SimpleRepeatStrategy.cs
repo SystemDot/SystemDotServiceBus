@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.Repeating
             if(this.isStarted) return;
 
             this.isStarted = true;
-            messageCache.GetMessages().ForEach(repeater.InputMessage);
+            messageCache.GetOrderedMessages().ForEach(repeater.InputMessage);
         }
     }
 }

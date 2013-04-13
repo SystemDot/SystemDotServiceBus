@@ -4,6 +4,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using SystemDot.Logging;
 using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Sequencing
@@ -23,10 +24,13 @@ namespace SystemDot.Messaging.Sequencing
 
         public void InputMessage(MessagePayload toInput)
         {
-            Logger.Info("Resequencing message");
-            
             int startSequence = this.messageCache.GetSequence();
 
+            Logger.Info("Resequencing message on {0}, sequence: {1}, expected sequence: {2}",
+                toInput.GetToAddress().Channel,
+                toInput.GetSequence(),
+                startSequence);
+            
             if(!toInput.HasSequence()) return;
             if (!CheckMessageCanPass(toInput, startSequence)) return;
 

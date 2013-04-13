@@ -24,10 +24,7 @@ namespace SystemDot.Messaging.Caching
         void PersistMessage(MessagePayload toInput)
         {
             toInput.SetPersistenceId(this.messageCache.Address, this.messageCache.UseType);
-            if (toInput.GetAmountSent() == 1)
-                this.messageCache.AddMessage(toInput);
-            else
-                this.messageCache.UpdateMessage(toInput);
+            this.messageCache.AddMessage(toInput);
         }
     }
 }

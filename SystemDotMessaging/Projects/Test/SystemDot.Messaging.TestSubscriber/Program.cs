@@ -12,8 +12,8 @@ namespace SystemDot.Messaging.TestSubscriber
     {
         static void Main(string[] args)
         {
-            IBus bus = Configure.Messaging()
-                .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = true })
+            Configure.Messaging()
+                .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingFilePersistence()
                 .UsingHttpTransport()
                 .AsAServer("SubscriberServer")

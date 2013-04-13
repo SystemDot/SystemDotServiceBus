@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Repeating
 
         public void Repeat(MessageRepeater repeater, IMessageCache messageCache, ISystemTime systemTime)
         {
-            IEnumerable<MessagePayload> messages = messageCache.GetMessages();
+            IEnumerable<MessagePayload> messages = messageCache.GetOrderedMessages();
 
             messages.ForEach(m =>
             {

@@ -33,7 +33,7 @@ namespace SystemDot.Messaging.Repeating
             IMessageCache messageCache, 
             ISystemTime systemTime)
         {
-            IEnumerable<MessagePayload> messages = messageCache.GetMessages();
+            IEnumerable<MessagePayload> messages = messageCache.GetOrderedMessages();
 
             messages.ForEach(m =>
             {
