@@ -58,7 +58,10 @@
     <Compile Include="channels\distribution\SpecificationGroup.cs" />
     <Compile Include="channels\point_to_point\filtering\SpecificationGroup.cs" />
     <Compile Include="channels\point_to_point\filtering\when_sending_a_request_with_the_wrong_name_down_a_channel_with_a_name_pattern_filter.cs" />
+    <Compile Include="channels\point_to_point\load_balancing\when_sending_nineteen_messages_that_are_not_yet_acknowledged_and_four_seconds_have_passed.cs" />
+    <Compile Include="channels\point_to_point\load_balancing\when_sending_twenty_messages_that_are_not_yet_acknowledged_and_four_seconds_have_passed.cs" />
     <Compile Include="channels\point_to_point\load_balancing\SpecificationGroup.cs" />
+    <Compile Include="channels\point_to_point\load_balancing\TestTaskScheduler.cs" />
     <Compile Include="channels\point_to_point\load_balancing\when_receiving_an_acknowledgement_for_one_of_twenty_one_sent_messages.cs" />
     <Compile Include="channels\point_to_point\load_balancing\when_receiving_an_acknowledgement_for_one_of_twenty_one_sent_messages_but_on_a_different_address.cs" />
     <Compile Include="channels\point_to_point\load_balancing\when_receiving_an_acknowledgement_for_one_of_twenty_one_sent_messages_but_on_a_different_channel_use_type.cs" />

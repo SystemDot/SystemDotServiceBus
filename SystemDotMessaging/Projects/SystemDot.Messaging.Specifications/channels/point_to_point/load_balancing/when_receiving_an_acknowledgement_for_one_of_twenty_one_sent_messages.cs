@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using SystemDot.Messaging.Acknowledgement;
-using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Storage;

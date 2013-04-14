@@ -22,6 +22,7 @@ namespace SystemDot.Messaging.LoadBalancing
             this.sentMessages = new ConcurrentDictionary<Guid, MessagePayload>();
 
             Messenger.Register<MessageRemovedFromCache>(m => FreeUpSlot(m.MessageId, m.Address, m.UseType));
+
             SendFeelerMessages();
         }
 
@@ -38,7 +39,6 @@ namespace SystemDot.Messaging.LoadBalancing
         public override void InputMessage(MessagePayload toInput)
         {
             this.unsentMessages.Enqueue(toInput);
-            
             SendMessages();
         }
 
@@ -47,7 +47,6 @@ namespace SystemDot.Messaging.LoadBalancing
             MessagePayload message;
             
             if (this.sentMessages.Count >= 20)  return;
-
             if(!this.unsentMessages.TryDequeue(out message)) return;
 
             this.sentMessages.TryAdd(message.Id, message);
@@ -57,10 +56,10 @@ namespace SystemDot.Messaging.LoadBalancing
 
         void SendFeelerMessages()
         {
-            if (this.sentMessages.Count >= 20)
+            if (this.sentMessages.Count >= 20) 
                 this.sentMessages.Values.ForEach(OnMessageProcessed);
             
-            this.taskScheduler.ScheduleTask(TimeSpan.FromSeconds(1), SendFeelerMessages);
+            this.taskScheduler.ScheduleTask(TimeSpan.FromSeconds(4), SendFeelerMessages);
         }
     }
 }
