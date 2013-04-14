@@ -69,6 +69,7 @@
     <Compile Include="Caching\MessageDecacher.cs" />
     <Compile Include="Ioc\IocContainerLocator.cs" />
     <Compile Include="ISerialiserExtensions.cs" />
+    <Compile Include="LoadBalancing\LoadBalancer.cs" />
     <Compile Include="Local\Builders\LocalChannelBuilder.cs" />
     <Compile Include="Local\Builders\LocalChannelSchema.cs" />
     <Compile Include="MessageProcessor.cs" />
@@ -124,6 +125,8 @@
     <Compile Include="RequestReply\Builders\ReplySendChannelSchema.cs" />
     <Compile Include="RequestReply\Builders\RequestReceiveSubscriptionHandler.cs" />
     <Compile Include="RequestReply\Builders\RequestSendChannelSchema.cs" />
+    <Compile Include="Sending\MessagePayloadToAddressExtensions.cs" />
+    <Compile Include="Sending\MessageSentHeader.cs" />
     <Compile Include="Sequencing\SequenceOriginRecorder.cs" />
     <Compile Include="Sequencing\FirstSequenceHeader.cs" />
     <Compile Include="Sequencing\MessageFirstSequenceExtensions.cs" />
@@ -138,6 +141,7 @@
     <Compile Include="Storage\Changes\SetFirstItemCachedOnChange.cs" />
     <Compile Include="Storage\IMessageCache.cs" />
     <Compile Include="Storage\MessageAddedToCache.cs" />
+    <Compile Include="Storage\MessageRemovedFromCache.cs" />
     <Compile Include="Storage\SendMessageCache.cs" />
     <Compile Include="Transport\Http\Configuration\HttpServerComponents.cs" />
     <Compile Include="Transport\Http\Configuration\HttpServerTransportBuilder.cs" />

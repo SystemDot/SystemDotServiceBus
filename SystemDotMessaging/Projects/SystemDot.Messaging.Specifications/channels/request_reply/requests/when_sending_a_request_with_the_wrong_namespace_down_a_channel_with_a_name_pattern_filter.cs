@@ -5,7 +5,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_a_request_with_the_wrong_namespace_down_a_channel_with_a_name_pattern_filter 
+    public class when_sending_a_request_with_the_wrong_namespace_down_a_channel_with_a_namespace_pattern_filter 
         : WithMessageConfigurationSubject
     {
         static IBus bus;

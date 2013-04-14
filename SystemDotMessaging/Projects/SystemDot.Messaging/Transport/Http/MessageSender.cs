@@ -5,6 +5,7 @@ using SystemDot.Logging;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Serialisation;
+using SystemDot.Messaging.Sending;
 
 namespace SystemDot.Messaging.Transport.Http
 {
@@ -24,7 +25,7 @@ namespace SystemDot.Messaging.Transport.Http
 
         public void InputMessage(MessagePayload toInput)
         {
-            Logger.Info("Sending message to {0}", toInput.GetToAddress().ServerPath.GetUrl());
+            LogMessage(toInput);
 
             try
             {
@@ -33,6 +34,16 @@ namespace SystemDot.Messaging.Transport.Http
             catch (Exception)
             {
             }
+
+            toInput.MarkAsSent();
+        }
+
+        static void LogMessage(MessagePayload toInput)
+        {
+            Logger.Info(
+                "Sending message to {0} at {1}",
+                toInput.GetToAddress().Channel,
+                toInput.GetToAddress().ServerPath.Server);
         }
     }
 }

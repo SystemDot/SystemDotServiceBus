@@ -6,70 +6,31 @@ namespace SystemDot.Messaging.Distribution
 {
     public class Queue<T> : IMessageProcessor<T, T>
     {
-        readonly ConcurrentQueue<T> queue;
-        readonly ITaskStarter taskStarter;
-        readonly object locker;
-        bool isDequeueing;
+        readonly BlockingCollection<T> producedMessages = new BlockingCollection<T>();
 
         public Queue(ITaskStarter taskStarter)
         {
-            this.taskStarter = taskStarter;
-            this.queue = new ConcurrentQueue<T>();
-            this.locker = new object();
-        }
-
-        public void InputMessage(T message)
-        {
-            this.queue.Enqueue(message);
-
-            ScheduleDequeuing();
-        }
-
-        void ScheduleDequeuing()
-        {
-            lock (this.locker)
-            {
-                if (!this.isDequeueing)
-                {
-                    this.isDequeueing = true;
-                    this.taskStarter.StartTask(Dequeue);
-                }
-            }
-        }
-
-        void Dequeue()
-        {
-            T message;
-
-            lock (this.locker)
-            {
-                this.isDequeueing = this.queue.TryDequeue(out message);
-            }
-
-            if (!this.isDequeueing) return;
-
-            try
-            {
-                OnItemPushed(message);
-            }
-            catch (Exception)
-            {
-                lock (this.locker)
-                {
-                    this.isDequeueing = false;
-                }
-                throw;
-            }
-                
-            Dequeue();
-        }
-
-        void OnItemPushed(T message)
-        {
-            if (this.MessageProcessed != null)
-                this.MessageProcessed(message);
+            taskStarter.StartTask(ConsumeMessages);    
         }
 
         public event Action<T> MessageProcessed;
+
+        void OnItemPushed(T message)
+        {
+            if (MessageProcessed != null) MessageProcessed(message);
+        }
+
+        public void InputMessage(T toInput)
+        {
+            this.producedMessages.Add(toInput);
+        }
+
+        void ConsumeMessages()
+        {
+            foreach (var message in this.producedMessages.GetConsumingEnumerable())
+            {
+                OnItemPushed(message);
+            }
+        }
     }
 }

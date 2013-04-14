@@ -9,7 +9,8 @@ namespace SystemDot.Messaging.Storage
     {
         EndpointAddress Address { get; }
         PersistenceUseType UseType { get; }
-        IEnumerable<MessagePayload> GetMessages();
+        IEnumerable<MessagePayload> GetOrderedMessages();
         void Delete(Guid id);
+        IEnumerable<MessagePayload> GetMessages();
     }
 }

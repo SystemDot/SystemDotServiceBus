@@ -59,17 +59,16 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .Select(schema)
                 .CreateReceiveCache(PersistenceUseType.RequestReceive, senderAddress);
 
-            var startPoint = new MessagePayloadCopier(this.serialiser);
+            var startPoint = new SequenceOriginApplier(messageCache);
 
             MessagePipelineBuilder.Build()
                 .With(startPoint)
-                .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new SequenceOriginApplier(messageCache))
                 .ToProcessor(new MessageSendTimeRemover())
-                .ToSimpleMessageRepeater(messageCache, this.systemTime, this.taskRepeater)
-                .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
                 .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))
+                .ToSimpleMessageRepeater(messageCache, this.systemTime, this.taskRepeater)
+                .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
                 .Queue()
                 .ToResequencerIfSequenced(messageCache, schema)
                 .ToProcessor(new ReplyChannelSelector(this.replyAddressLookup))

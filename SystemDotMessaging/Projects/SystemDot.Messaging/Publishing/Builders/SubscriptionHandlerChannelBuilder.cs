@@ -35,7 +35,6 @@ namespace SystemDot.Messaging.Publishing.Builders
         {
             MessagePipelineBuilder.Build()
                 .With(this.messageReceiver)
-                .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .Pump()
                 .ToProcessor(new SubscriptionRequestFilter())
                 .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))

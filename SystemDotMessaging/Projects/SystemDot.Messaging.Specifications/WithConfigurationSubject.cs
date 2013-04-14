@@ -45,6 +45,13 @@ namespace SystemDot.Messaging.Specifications
             container.RegisterInstance(() => concrete);
         }
 
+        protected static void Register<TInterface, TConcrete>() 
+            where TInterface : class
+            where TConcrete : class
+        {
+            IocContainerLocator.Locate().RegisterInstance<TInterface, TConcrete>();
+        }
+
         protected static T Resolve<T>() where T : class
         {
             return IocContainerLocator.Locate().Resolve<T>();

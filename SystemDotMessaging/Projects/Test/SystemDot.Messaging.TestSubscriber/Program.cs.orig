@@ -4,7 +4,6 @@ using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Transport.Http.Configuration;
 
 namespace SystemDot.Messaging.TestSubscriber
@@ -13,18 +12,20 @@ namespace SystemDot.Messaging.TestSubscriber
     {
         static void Main(string[] args)
         {
-            IocContainerLocator.Locate().RegisterFromAssemblyOf<Program>();
+            var container = new IocContainer();
+            container.RegisterFromAssemblyOf<Program>();
 
-            IBus bus = Configure.Messaging()
+            Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = true })
+                .RegisterHandlersFromAssemblyOf<Program>()
+                .BasedOn<IMessageConsumer>()
+                .ResolveBy(container.Resolve)
+                .UsingFilePersistence()
                 .UsingHttpTransport()
                 .AsAServer("SubscriberServer")
-                .UsingFilePersistence()
                 .OpenChannel("TestSubscriber")
-                    .ForSubscribingTo(string.Format("TestPublisher@{0}/PublisherServer.{0}/PublisherServer", Environment.MachineName))
+                    .ForSubscribingTo("TestPublisher@/PublisherServer")
                     .WithDurability()
-                    .RegisterHandlersFromAssemblyOf<Program>()
-                    .BasedOn<IMessageConsumer>()
                 .Initialise();
             
             Console.WriteLine("I am a subscriber, listening for messages..");
@@ -50,8 +51,8 @@ namespace SystemDot.Messaging.TestSubscriber
     {
         static void Main(string[] args)
         {
-            IBus bus = Configure.Messaging()
-                .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = true })
+            Configure.Messaging()
+                .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .UsingFilePersistence()
                 .UsingHttpTransport()
                 .AsAServer("SubscriberServer")

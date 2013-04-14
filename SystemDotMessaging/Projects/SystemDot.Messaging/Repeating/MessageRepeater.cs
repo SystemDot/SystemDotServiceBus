@@ -1,5 +1,8 @@
 using System.Diagnostics.Contracts;
+using SystemDot.Logging;
 using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Packaging.Headers;
+using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Repeating
@@ -9,6 +12,7 @@ namespace SystemDot.Messaging.Repeating
         readonly IRepeatStrategy repeatStrategy;
         readonly ISystemTime systemTime;
         readonly IMessageCache messageCache;
+        bool isStarted;
 
         public MessageRepeater(IRepeatStrategy repeatStrategy, ISystemTime systemTime, IMessageCache messageCache)
         {
@@ -23,8 +27,17 @@ namespace SystemDot.Messaging.Repeating
 
         public override void InputMessage(MessagePayload toInput)
         {
+            LogMessage(toInput);
             SetTimeOnMessage(toInput);
             OnMessageProcessed(toInput);
+        }
+
+        static void LogMessage(MessagePayload toInput)
+        {
+            Logger.Info(
+                "Repeating message on {0} with sequence {1}",
+                toInput.HasHeader<AddressHeader>() ? toInput.GetFromAddress().Channel : "n/a",
+                toInput.HasSequence() ? toInput.GetSequence().ToString() : "n/a");
         }
 
         void SetTimeOnMessage(MessagePayload toInput)
@@ -33,7 +46,7 @@ namespace SystemDot.Messaging.Repeating
             toInput.IncreaseAmountSent();
         }
                 
-        public void Start()
+        public void Repeat()
         {
             this.repeatStrategy.Repeat(this, this.messageCache, this.systemTime);
         }

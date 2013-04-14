@@ -30,7 +30,6 @@ namespace SystemDot.Messaging.Acknowledgement.Builders
         {
             MessagePipelineBuilder.Build()
                 .With(this.messageReceiver)
-                .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .Pump()
                 .ToEndPoint(this.handler);
         }

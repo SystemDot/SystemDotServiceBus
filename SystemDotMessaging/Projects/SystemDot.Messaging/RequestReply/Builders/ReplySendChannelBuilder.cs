@@ -6,6 +6,7 @@ using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Distribution;
 using SystemDot.Messaging.Expiry;
+using SystemDot.Messaging.LoadBalancing;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Repeating;
@@ -25,6 +26,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly ITaskRepeater taskRepeater;
         readonly PersistenceFactorySelector persistenceFactorySelector;
         readonly MessageAcknowledgementHandler acknowledgementHandler;
+        readonly ITaskScheduler taskScheduler;
 
         public ReplySendChannelBuilder(
             IMessageSender messageSender, 
@@ -32,7 +34,8 @@ namespace SystemDot.Messaging.RequestReply.Builders
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 
             PersistenceFactorySelector persistenceFactorySelector, 
-            MessageAcknowledgementHandler acknowledgementHandler)
+            MessageAcknowledgementHandler acknowledgementHandler, 
+            ITaskScheduler taskScheduler)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(serialiser != null);
@@ -40,6 +43,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(taskRepeater != null);
             Contract.Requires(persistenceFactorySelector != null);
             Contract.Requires(acknowledgementHandler != null);
+            Contract.Requires(taskScheduler != null);
             
             this.messageSender = messageSender;
             this.serialiser = serialiser;
@@ -47,15 +51,16 @@ namespace SystemDot.Messaging.RequestReply.Builders
             this.taskRepeater = taskRepeater;
             this.persistenceFactorySelector = persistenceFactorySelector;
             this.acknowledgementHandler = acknowledgementHandler;
+            this.taskScheduler = taskScheduler;
         }
 
         public IMessageInputter<object> Build(ReplySendChannelSchema schema, EndpointAddress senderAddress)
         {
-            SendMessageCache messageCache = this.persistenceFactorySelector
+            SendMessageCache cache = this.persistenceFactorySelector
                 .Select(schema)
                 .CreateSendCache(PersistenceUseType.ReplySend, senderAddress);
             
-            this.acknowledgementHandler.RegisterCache(messageCache);
+            this.acknowledgementHandler.RegisterCache(cache);
 
             var startPoint = new Pipe<object>();
 
@@ -64,15 +69,15 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessors(schema.Hooks.ToArray())
                 .ToProcessor(new BatchPackager())
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
-                .ToProcessor(new Sequencer(messageCache))
+                .ToProcessor(new Sequencer(cache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, senderAddress))
-                .ToMessageRepeater(messageCache, this.systemTime, this.taskRepeater, schema.RepeatStrategy)
-                .ToProcessor(new MessagePayloadCopier(this.serialiser))
-                .ToProcessor(new SendChannelMessageCacher(messageCache))
-                .ToProcessor(new SequenceOriginRecorder(messageCache))
+                .ToMessageRepeater(cache, this.systemTime, this.taskRepeater, schema.RepeatStrategy)
+                .ToProcessor(new SendChannelMessageCacher(cache))
+                .ToProcessor(new SequenceOriginRecorder(cache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()
-                .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, messageCache))
+                .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, cache))
+                .ToProcessor(new LoadBalancer(cache, this.taskScheduler))
                 .ToEndPoint(this.messageSender);
 
             Messenger.Send(new ReplySendChannelBuilt

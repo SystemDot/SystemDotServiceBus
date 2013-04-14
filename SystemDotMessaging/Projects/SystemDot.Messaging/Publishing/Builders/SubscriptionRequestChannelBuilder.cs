@@ -61,7 +61,6 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .With(requestor)
                 .ToProcessor(new MessageAddresser(schema.SubscriberAddress, schema.PublisherAddress))
                 .ToMessageRepeater(messageCache, this.systemTime, this.taskRepeater, EscalatingTimeRepeatStrategy.Default)
-                .ToProcessor(new MessagePayloadCopier(this.serialiser))
                 .ToProcessor(new SendChannelMessageCacher(messageCache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Pump()

@@ -30,9 +30,14 @@ namespace SystemDot.Messaging.Storage
             this.sequence = 1;           
         }
 
+        public IEnumerable<MessagePayload> GetOrderedMessages()
+        {
+            return GetMessages().OrderBy(GetMessageSequence);
+        }
+
         public IEnumerable<MessagePayload> GetMessages()
         {
-            return this.messages.Values.OrderBy(GetMessageSequence);
+            return this.messages.Values;
         }
 
         static int GetMessageSequence(MessagePayload message)
@@ -47,13 +52,10 @@ namespace SystemDot.Messaging.Storage
 
         public void ApplyChange(AddMessageChange change)
         {
-            this.messages.TryAdd(change.Message.Id, change.Message);
-        }
-
-        public void UpdateMessage(MessagePayload message)
-        {
-            MessagePayload temp;
-            if (this.messages.TryGetValue(message.Id, out temp)) this.messages[message.Id] = message;
+            if (!this.messages.TryAdd(change.Message.Id, change.Message))
+            {
+                this.messages[change.Message.Id] = change.Message;
+            }
         }
 
         public int GetSequence()

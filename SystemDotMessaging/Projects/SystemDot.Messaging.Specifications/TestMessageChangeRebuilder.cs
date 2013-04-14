@@ -37,6 +37,9 @@ namespace SystemDot.Messaging.Specifications
 
         public void ApplyChange(AddMessageChange change)
         {
+            if (this.messages.Contains(change.Message))
+                this.messages.Remove(change.Message);
+
             this.messages.Add(change.Message);
         }
 
