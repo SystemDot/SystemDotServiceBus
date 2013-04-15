@@ -1,5 +1,6 @@
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using SystemDot.Storage.Changes;
@@ -16,9 +17,12 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.receiving
         static int message;
         static MessagePayload payload;
         static TestMessageHandler<int> handler;
+        static MessageRemovedFromCache @event;
 
         Establish context = () =>
         {
+            Messenger.Register<MessageRemovedFromCache>(e => @event = e);
+
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ReceiverAddress)
@@ -30,6 +34,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.receiving
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             message = 1;
+
             payload = new MessagePayload().MakeSequencedReceivable(
                 message,
                 SenderAddress,
@@ -43,5 +48,10 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.receiving
             Resolve<IChangeStore>()
                 .GetReceiveMessages(PersistenceUseType.PointToPointReceive, BuildAddress(ReceiverAddress))
                 .ShouldNotBeEmpty();
+
+        It should_notify_that_the_message_was_removed_from_the_cache = () =>
+            @event.ShouldMatch(e => e.MessageId == payload.Id
+                && e.Address == payload.GetToAddress()
+                && e.UseType == PersistenceUseType.PointToPointReceive);
     }
 }

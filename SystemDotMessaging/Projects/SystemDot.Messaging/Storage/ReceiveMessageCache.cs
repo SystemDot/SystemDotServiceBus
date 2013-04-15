@@ -48,6 +48,13 @@ namespace SystemDot.Messaging.Storage
         public void AddMessage(MessagePayload message)
         {
             AddChange(new AddMessageChange(message));
+
+            Messenger.Send(new MessageAddedToCache
+            {
+                Message = message,
+                CacheAddress = Address,
+                UseType = UseType
+            });
         }
 
         public void ApplyChange(AddMessageChange change)
@@ -78,6 +85,13 @@ namespace SystemDot.Messaging.Storage
         public void Delete(Guid id)
         {
             AddChange(new DeleteMessageChange(id));
+
+            Messenger.Send(new MessageRemovedFromCache
+            {
+                MessageId = id,
+                Address = Address,
+                UseType = UseType
+            });
         }
 
         public void ApplyChange(DeleteMessageChange change)
@@ -88,6 +102,13 @@ namespace SystemDot.Messaging.Storage
         public void DeleteAndSetSequence(Guid id, int toSet)
         {
             AddChange(new DeleteMessageAndSetSequenceChange(id, toSet));
+
+            Messenger.Send(new MessageRemovedFromCache
+            {
+                MessageId = id,
+                Address = Address,
+                UseType = UseType
+            });
         }
 
         public void ApplyChange(DeleteMessageAndSetSequenceChange change)

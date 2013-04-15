@@ -18,7 +18,6 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.sending
         const string ReceiverAddress = "ReceiverAddress";
 
         static MessageAddedToCache messageAddedToCacheEvent;
-        
         static IBus bus;
         static int message;
         

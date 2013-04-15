@@ -17,6 +17,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.acknowledge
         Establish context = () =>
         {
             Messenger.Register<MessageRemovedFromCache>(e => @event = e);
+            
             var bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("SenderAddress").ForPointToPointSendingTo("ReceiverAddress")
@@ -33,7 +34,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.acknowledge
 
         Because of = () => Server.ReceiveMessage(acknowledgement);
 
-        It should_remove_the_message_from_the_cache = () => 
+        It should_notify_that_the_message_was_removed_from_the_cache = () => 
             @event.ShouldMatch(e => e.MessageId == acknowledgement.GetAcknowledgementId().MessageId
                 && e.Address == acknowledgement.GetAcknowledgementId().Address
                 && e.UseType == acknowledgement.GetAcknowledgementId().UseType);
