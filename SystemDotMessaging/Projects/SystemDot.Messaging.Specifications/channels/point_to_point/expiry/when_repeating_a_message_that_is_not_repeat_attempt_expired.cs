@@ -1,6 +1,5 @@
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
-using SystemDot.Specifications;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.channels.point_to_point.expiry

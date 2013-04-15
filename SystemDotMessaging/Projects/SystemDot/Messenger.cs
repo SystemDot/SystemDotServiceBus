@@ -12,7 +12,7 @@ namespace SystemDot
             Contract.Requires(!message.Equals(default(T)));
 
             if (Registry.ContainsHandler<T>())
-                Registry.GetHandlers<T>().ForEach(h => h.As<Action<T>>().Invoke(message));
+                Registry.GetHandlers<T>().ForEach(h => h.Value.As<Action<T>>().Invoke(message));
         }
 
         public static void Register<T>(Action<T> toRegister)

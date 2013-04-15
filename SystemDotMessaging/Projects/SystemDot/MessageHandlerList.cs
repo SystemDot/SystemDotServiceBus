@@ -1,9 +1,8 @@
-using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace SystemDot
 {
-    public class MessageHandlerList : List<object>
+    public class MessageHandlerList : ConcurrentDictionary<object, object>
     {
     }
 }
