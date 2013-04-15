@@ -1,16 +1,16 @@
 using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Diagnostics.Contracts;
 
 namespace SystemDot
 {
     public class MessengerHandlerRegistry
     {
-        readonly Dictionary<Type, MessageHandlerList> handlers;
+        readonly ConcurrentDictionary<Type, MessageHandlerList> handlers;
 
         public MessengerHandlerRegistry()
         {
-            this.handlers = new Dictionary<Type, MessageHandlerList>();
+            this.handlers = new ConcurrentDictionary<Type, MessageHandlerList>();
         }
 
         public MessageHandlerList GetHandlers<T>()
@@ -28,9 +28,9 @@ namespace SystemDot
             Contract.Requires(toRegister != null);
 
             if(!ContainsHandler<T>())
-                this.handlers.Add(typeof(T), new MessageHandlerList());
+                this.handlers.TryAdd(typeof(T), new MessageHandlerList());
 
-            this.handlers[typeof(T)].Add(toRegister);
+            this.handlers[typeof(T)].TryAdd(toRegister, toRegister);
         }
 
         public void Clear()
