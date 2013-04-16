@@ -93,6 +93,7 @@
     <Compile Include="Repeating\EscalatingTimeRepeatStrategy.cs" />
     <Compile Include="Repeating\IRepeatStrategy.cs" />
     <Compile Include="Repeating\LastSentHeader.cs" />
+    <Compile Include="Repeating\LoggingRepeatStrategy.cs" />
     <Compile Include="Repeating\MessagePayloadRepeatExtensions.cs" />
     <Compile Include="Repeating\MessageRepeater.cs" />
     <Compile Include="Repeating\RepeaterMessagePipelineBuilderExtensions.cs" />
