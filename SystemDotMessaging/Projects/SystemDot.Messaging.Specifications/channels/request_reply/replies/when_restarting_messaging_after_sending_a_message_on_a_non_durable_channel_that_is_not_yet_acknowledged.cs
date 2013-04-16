@@ -1,4 +1,6 @@
 using System;
+using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
@@ -6,15 +8,16 @@ using SystemDot.Specifications;
 using SystemDot.Storage.Changes;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
+namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_an_unacknowledged_request_on_a_non_durable_channel_and_messaging_is_restarted
+    public class when_restarting_messaging_after_sending_a_message_on_a_non_durable_channel_that_is_not_yet_acknowledged
         : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
-        const string ReceiverAddress = "TestReceiverAddress";
+        const string SenderAddress = "TestSenderAddress";
         const int Request = 1;
+        const int Reply = 2;
 
         static IChangeStore changeStore;
 
@@ -28,10 +31,17 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
             IBus bus = Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                .ForRequestReplySendingTo(ReceiverAddress)
+                .ForRequestReplyRecieving()
                 .Initialise();
 
-            bus.Send(Request);
+            Server.ReceiveMessage(
+                new MessagePayload().MakeSequencedReceivable(
+                    Request,
+                    SenderAddress,
+                    ChannelName,
+                    PersistenceUseType.RequestSend));
+
+            bus.Reply(Reply);
 
             ResetIoc();
             Initialise();
@@ -45,10 +55,10 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                .ForRequestReplySendingTo(ReceiverAddress)
+                .ForRequestReplyRecieving()
                 .Initialise();
 
-        It should_not_send_the_message_again = () =>
-            Server.SentMessages.ShouldNotContain(m => m.DeserialiseTo<int>() == Request);
+        It should_not_send_the_message_again = () => 
+            Server.SentMessages.ShouldNotContain(m => m.DeserialiseTo<int>() == Reply);
     }
 }

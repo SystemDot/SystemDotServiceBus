@@ -13,7 +13,7 @@ namespace SystemDot.Storage.Changes
 
         protected string Id { get; set; }
 
-        public void Initialise()
+        public virtual void Initialise()
         {
             this.changeStore.GetChanges(this.Id).ForEach(ReplayChange);
         }

@@ -8,7 +8,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_handling_a_request_on_a_non_durable_channel_that_fails_and_messaging_is_restarted 
+    public class when_restarting_messaging_after_handling_a_request_on_a_durable_channel_that_fails 
         : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
@@ -27,6 +27,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForRequestReplyRecieving()
+                .WithDurability()
                 .RegisterHandlers(r => r.RegisterHandler(new FailingMessageHandler<int>()))
                 .Initialise();
 
@@ -49,9 +50,10 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForRequestReplyRecieving()
+                .WithDurability()
                 .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
 
-        It should_not_repeat_the_message_when_restarted = () => handler.LastHandledMessage.ShouldNotEqual(Message);
+        It should_repeat_the_message_when_restarted = () => handler.LastHandledMessage.ShouldEqual(Message);
     }
 }

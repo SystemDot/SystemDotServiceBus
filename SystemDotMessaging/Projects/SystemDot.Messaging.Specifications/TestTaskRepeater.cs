@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications
 
         public void Start()
         {
-            this.Started = true;
+            Started = true;
             this.toRun.ForEach(r => r());
         }
     }

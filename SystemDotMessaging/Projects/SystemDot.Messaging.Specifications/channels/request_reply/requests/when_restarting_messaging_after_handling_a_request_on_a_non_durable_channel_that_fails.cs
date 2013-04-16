@@ -5,14 +5,14 @@ using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
+namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_handling_a_reply_on_a_durable_channel_that_fails_and_messaging_is_restarted 
+    public class when_restarting_messaging_after_handling_a_request_on_a_non_durable_channel_that_fails 
         : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
-        const string ReceiverAddress = "TestReceiveAddress";
+        const string SenderAddress = "TestSenderAddress";
         const int Message = 1;
         
         static TestMessageHandler<int> handler;
@@ -26,17 +26,16 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                .ForRequestReplySendingTo(ReceiverAddress)
-                .WithDurability()
+                .ForRequestReplyRecieving()
                 .RegisterHandlers(r => r.RegisterHandler(new FailingMessageHandler<int>()))
                 .Initialise();
 
             Catch.Exception(() => Server.ReceiveMessage(
                 new MessagePayload().MakeSequencedReceivable(
-                    Message,
-                    ReceiverAddress, 
+                    Message, 
+                    SenderAddress, 
                     ChannelName, 
-                    PersistenceUseType.ReplyReceive)));
+                    PersistenceUseType.RequestSend)));
            
             ResetIoc();
             Initialise();
@@ -49,11 +48,10 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                .ForRequestReplySendingTo(ReceiverAddress)
-                .WithDurability()
+                .ForRequestReplyRecieving()
                 .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
 
-        It should_repeat_the_message_when_restarted = () => handler.LastHandledMessage.ShouldEqual(Message);
+        It should_not_repeat_the_message_when_restarted = () => handler.LastHandledMessage.ShouldNotEqual(Message);
     }
 }

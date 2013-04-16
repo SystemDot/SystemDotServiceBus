@@ -61,11 +61,19 @@ namespace SystemDot.Messaging.Packaging
             return Id.GetHashCode();
         }
 
-        public override string ToString()
+        public static bool operator ==(MessagePayload left, MessagePayload right)
         {
-            return String.Concat("Message payload ", Id);
+            return Equals(left, right);
         }
 
+        public static bool operator !=(MessagePayload left, MessagePayload right)
+        {
+            return !Equals(left, right);
+        }
 
+        public override string ToString()
+        {
+            return String.Concat("Message payload ", this.Id);
+        }
     }
 }

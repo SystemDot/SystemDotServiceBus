@@ -30,6 +30,19 @@ namespace SystemDot.Messaging.Storage
             this.sequence = 1;           
         }
 
+        public override void Initialise()
+        {
+            base.Initialise();
+
+            GetMessages().ForEach(m =>
+                Messenger.Send(new MessageLoadedToCache
+                {
+                    CacheAddress = Address,
+                    UseType = UseType,
+                    Message = m
+                }));
+        }
+
         public IEnumerable<MessagePayload> GetOrderedMessages()
         {
             return GetMessages().OrderBy(GetMessageSequence);

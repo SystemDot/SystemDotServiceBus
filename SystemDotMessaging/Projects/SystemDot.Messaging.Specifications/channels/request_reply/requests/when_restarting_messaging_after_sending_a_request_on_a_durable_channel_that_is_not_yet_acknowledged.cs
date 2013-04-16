@@ -9,7 +9,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_restarting_messaging_on_a_durable_channel_after_sending_a_request_without_receiving_its_acknowledgement 
+    public class when_restarting_messaging_after_sending_a_request_on_a_durable_channel_that_is_not_yet_acknowledged 
         : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";

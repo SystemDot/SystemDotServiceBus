@@ -142,6 +142,7 @@
     <Compile Include="Storage\IMessageCache.cs" />
     <Compile Include="Storage\MessageAddedToCache.cs" />
     <Compile Include="Storage\MessageRemovedFromCache.cs" />
+    <Compile Include="Storage\MessageLoadedToCache.cs" />
     <Compile Include="Storage\SendMessageCache.cs" />
     <Compile Include="Transport\Http\Configuration\HttpServerComponents.cs" />
     <Compile Include="Transport\Http\Configuration\HttpServerTransportBuilder.cs" />

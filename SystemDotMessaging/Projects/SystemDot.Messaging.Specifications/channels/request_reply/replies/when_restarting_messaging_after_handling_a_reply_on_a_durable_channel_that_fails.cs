@@ -1,66 +1,59 @@
-using System;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
-using SystemDot.Parallelism;
 using SystemDot.Serialisation;
-using SystemDot.Specifications;
 using SystemDot.Storage.Changes;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_restarting_messaging_on_a_durable_channel_after_sending_a_reply_without_receiving_its_acknowledgement
+    public class when_restarting_messaging_after_handling_a_reply_on_a_durable_channel_that_fails 
         : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
-        const string SenderAddress = "TestSenderAddress";
-        const int Request = 1;
-        const int Reply = 2;
-
+        const string ReceiverAddress = "TestReceiveAddress";
+        const int Message = 1;
+        
+        static TestMessageHandler<int> handler;
         static IChangeStore changeStore;
-
+            
         Establish context = () =>
         {
             changeStore = new InMemoryChangeStore(new PlatformAgnosticSerialiser());
-
             ConfigureAndRegister<IChangeStore>(changeStore);
-            ConfigureAndRegister<ITaskRepeater>(new TestTaskRepeater());
-
-            IBus bus = Configuration.Configure.Messaging()
+            
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                .ForRequestReplyRecieving()
+                .ForRequestReplySendingTo(ReceiverAddress)
                 .WithDurability()
+                .RegisterHandlers(r => r.RegisterHandler(new FailingMessageHandler<int>()))
                 .Initialise();
 
-            Server.ReceiveMessage(
+            Catch.Exception(() => Server.ReceiveMessage(
                 new MessagePayload().MakeSequencedReceivable(
-                    Request,
-                    SenderAddress,
-                    ChannelName,
-                    PersistenceUseType.RequestSend));
-
-            bus.Reply(Reply);
-
+                    Message,
+                    ReceiverAddress, 
+                    ChannelName, 
+                    PersistenceUseType.ReplyReceive)));
+           
             ResetIoc();
             Initialise();
 
             ConfigureAndRegister<IChangeStore>(changeStore);
-            ConfigureAndRegister<ITaskRepeater>(new TestTaskRepeater());
-            ConfigureAndRegister<ISystemTime>(new TestSystemTime(DateTime.Now.AddDays(1)));
+            handler = new TestMessageHandler<int>();
         };
 
-        Because of = () =>
+        Because of = () => 
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                .ForRequestReplyRecieving()
+                .ForRequestReplySendingTo(ReceiverAddress)
                 .WithDurability()
+                .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
 
-        It should_send_the_message_again = () => 
-            Server.SentMessages.ShouldContain(m => m.DeserialiseTo<int>() == Reply);
+        It should_repeat_the_message_when_restarted = () => handler.LastHandledMessage.ShouldEqual(Message);
     }
 }
