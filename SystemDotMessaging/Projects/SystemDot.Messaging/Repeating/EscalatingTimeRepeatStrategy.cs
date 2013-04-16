@@ -5,7 +5,7 @@ using SystemDot.Messaging.Sending;
 
 namespace SystemDot.Messaging.Repeating
 {
-    public class EscalatingTimeRepeatStrategy : IRepeatStrategy
+    public class EscalatingTimeRepeatStrategy : LoggingRepeatStrategy, IRepeatStrategy
     {
         public static EscalatingTimeRepeatStrategy Default
         {
@@ -37,9 +37,12 @@ namespace SystemDot.Messaging.Repeating
 
             messages.ForEach(m =>
             {
-                if ((m.IsMarkedAsSent() || this.isFirstRepeat)  
+                if ((m.IsMarkedAsSent() || this.isFirstRepeat)
                     && m.GetLastTimeSent().Ticks <= systemTime.GetCurrentDate().AddSeconds(-GetDelay(m)).Ticks)
+                {
+                    LogMessage(m);
                     repeater.InputMessage(m);
+                }
             });
 
             this.isFirstRepeat = false;

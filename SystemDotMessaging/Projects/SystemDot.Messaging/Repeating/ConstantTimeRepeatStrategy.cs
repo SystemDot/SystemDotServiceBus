@@ -6,7 +6,7 @@ using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Repeating
 {
-    public class ConstantTimeRepeatStrategy : IRepeatStrategy
+    public class ConstantTimeRepeatStrategy : LoggingRepeatStrategy, IRepeatStrategy
     {
         readonly TimeSpan toRepeatEvery;
         bool isFirstRepeat;
@@ -23,9 +23,12 @@ namespace SystemDot.Messaging.Repeating
 
             messages.ForEach(m =>
             {
-                if ((m.IsMarkedAsSent() || this.isFirstRepeat) 
+                if ((m.IsMarkedAsSent() || this.isFirstRepeat)
                     && m.GetLastTimeSent() <= systemTime.GetCurrentDate().Add(-this.toRepeatEvery))
+                {
+                    LogMessage(m);
                     repeater.InputMessage(m);
+                }
             });
 
             this.isFirstRepeat = false;

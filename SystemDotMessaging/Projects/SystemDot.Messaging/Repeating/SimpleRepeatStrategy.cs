@@ -2,7 +2,7 @@ using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Repeating
 {
-    public class SimpleRepeatStrategy : IRepeatStrategy
+    public class SimpleRepeatStrategy : LoggingRepeatStrategy, IRepeatStrategy
     {
         bool isStarted;
 
@@ -11,7 +11,11 @@ namespace SystemDot.Messaging.Repeating
             if(this.isStarted) return;
 
             this.isStarted = true;
-            messageCache.GetOrderedMessages().ForEach(repeater.InputMessage);
+            messageCache.GetOrderedMessages().ForEach(m => 
+            {
+                LogMessage(m);
+                repeater.InputMessage(m);
+            });
         }
     }
 }
