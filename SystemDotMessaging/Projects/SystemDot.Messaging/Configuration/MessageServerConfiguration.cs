@@ -14,15 +14,15 @@ namespace SystemDot.Messaging.Configuration
     public class MessageServerConfiguration : Configurer
     {
         readonly ServerPath serverPath;
-        readonly List<Action> buildActions;
+        readonly MessagingConfiguration messagingConfiguration;
 
-        public MessageServerConfiguration(List<Action> actions, ServerPath serverPath)
+        public MessageServerConfiguration(MessagingConfiguration messagingConfiguration, ServerPath serverPath)
         {
-            Contract.Requires(actions != null);
+            Contract.Requires(messagingConfiguration != null);
             Contract.Requires(serverPath != null);
 
             this.serverPath = serverPath;
-            this.buildActions = actions;
+            this.messagingConfiguration = messagingConfiguration;
 
             IIocContainer container = IocContainerLocator.Locate();
 
@@ -38,14 +38,14 @@ namespace SystemDot.Messaging.Configuration
             return new ChannelConfiguration(
                 new EndpointAddress(name, this.serverPath),
                 this.serverPath,
-                this.buildActions);
+                this.messagingConfiguration.BuildActions);
         }
 
         public LocalChannelConfiguration OpenLocalChannel()
         {
             return new LocalChannelConfiguration(
-                this.serverPath, 
-                this.buildActions);
+                this.serverPath,
+                this.messagingConfiguration.BuildActions);
         }
 
         static void RegisterInMemoryPersistence(IIocContainer container)
@@ -60,7 +60,7 @@ namespace SystemDot.Messaging.Configuration
 
         void ConfigureExternalSources(IIocContainer container)
         {
-            container.Resolve<IExternalSourcesConfigurer>().Configure(this);
+            container.Resolve<IExternalSourcesConfigurer>().Configure(this.messagingConfiguration, this);
         }
     }
 }

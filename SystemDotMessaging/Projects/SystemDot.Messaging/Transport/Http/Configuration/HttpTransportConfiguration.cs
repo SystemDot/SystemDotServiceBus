@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Ioc;
@@ -12,13 +10,13 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
 {
     public class HttpTransportConfiguration : Configurer
     {
-        readonly List<Action> buildActions;
+        readonly MessagingConfiguration messagingConfiguration;
 
-        public HttpTransportConfiguration(List<Action> buildActions)
+        public HttpTransportConfiguration(MessagingConfiguration messagingConfiguration)
         {
-            Contract.Requires(buildActions != null);
+            Contract.Requires(messagingConfiguration != null);
 
-            this.buildActions = buildActions;
+            this.messagingConfiguration = messagingConfiguration;
         }
 
         public HttpTransportConfiguration AsARemoteServer(string instance)
@@ -26,14 +24,14 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
             Contract.Requires(!String.IsNullOrEmpty(instance));
             
             HttpRemoteServerComponents.Configure(IocContainerLocator.Locate());
-            buildActions.Add(() => Resolve<HttpRemoteServerBuilder>().Build(instance));
+            this.messagingConfiguration.BuildActions.Add(() => Resolve<HttpRemoteServerBuilder>().Build(instance));
 
             return this;
         }
 
         public void Initialise()
         {
-            this.buildActions.ForEach(a => a());
+            this.messagingConfiguration.BuildActions.ForEach(a => a());
         }
 
         public RemoteClientConfiguration AsARemoteClient(string instance)
@@ -41,7 +39,7 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
             Contract.Requires(!String.IsNullOrEmpty(instance)); 
             
             HttpRemoteClientComponents.Configure(IocContainerLocator.Locate());
-            return new RemoteClientConfiguration(this.buildActions, MessageServer.Local(instance));
+            return new RemoteClientConfiguration(this.messagingConfiguration, MessageServer.Local(instance));
         }
 
         public MessageServerConfiguration AsAServer(string instance)
@@ -51,7 +49,7 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
             HttpServerComponents.Configure(IocContainerLocator.Locate());
 
             return new MessageServerConfiguration(
-                this.buildActions,
+                this.messagingConfiguration,
                 new ServerPath(
                     MessageServer.Local(instance), 
                     MessageServer.Local(instance)));

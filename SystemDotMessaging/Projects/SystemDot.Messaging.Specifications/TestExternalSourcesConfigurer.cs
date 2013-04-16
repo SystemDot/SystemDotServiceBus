@@ -5,11 +5,13 @@ namespace SystemDot.Messaging.Specifications
 {
     public class TestExternalSourcesConfigurer : IExternalSourcesConfigurer
     {
-        public MessageServerConfiguration Configuration { get; set; }
+        public MessagingConfiguration Configuration { get; set; }
+        public MessageServerConfiguration ServerConfiguration { get; set; }
 
-        public void Configure(MessageServerConfiguration toConfigureAgainst)
+        public void Configure(MessagingConfiguration toConfigureAgainst, MessageServerConfiguration serverToConfigureAgainst)
         {
-            this.Configuration = toConfigureAgainst;
+            Configuration = toConfigureAgainst;
+            ServerConfiguration = serverToConfigureAgainst;
         }
     }
 }

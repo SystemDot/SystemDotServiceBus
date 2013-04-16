@@ -9,7 +9,8 @@ namespace SystemDot.Messaging.Specifications.channels.configuration
     public class when_configuring_messaging : WithConfigurationSubject
     {
         static TestExternalSourcesConfigurer externalSourcesConfigurer;
-        static MessageServerConfiguration config;
+        static MessagingConfiguration config;
+        static MessageServerConfiguration serverConfig;
 
         Establish context = () =>
         {
@@ -17,8 +18,16 @@ namespace SystemDot.Messaging.Specifications.channels.configuration
             ConfigureAndRegister<IExternalSourcesConfigurer>(externalSourcesConfigurer);
         };
 
-        Because of = () => config = Configuration.Configure.Messaging().UsingInProcessTransport();
+        Because of = () =>
+        {
+            config = Configuration.Configure.Messaging();
+            serverConfig = config.UsingInProcessTransport();
+        };
 
-        It should_run_any_external_configurations = () => externalSourcesConfigurer.Configuration.ShouldBeTheSameAs(config);   
+        It should_run_any_external_configurations_with_the_correct_configuration = () =>
+            externalSourcesConfigurer.Configuration.ShouldBeTheSameAs(config);
+        
+        It should_run_any_external_configurations_with_the_correct_server_configuration = () =>
+            externalSourcesConfigurer.ServerConfiguration.ShouldBeTheSameAs(serverConfig);   
     }
 }

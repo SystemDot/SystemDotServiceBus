@@ -12,7 +12,7 @@ namespace SystemDot.Messaging.Transport.InProcess.Configuration
         public static MessageServerConfiguration UsingInProcessTransport(this MessagingConfiguration config)
         {
             InProcessTransportComponents.Register(IocContainerLocator.Locate());
-            return new MessageServerConfiguration(config.BuildActions, ServerPath.None);
+            return new MessageServerConfiguration(config, ServerPath.None);
         }
 
     }

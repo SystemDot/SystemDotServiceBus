@@ -15,13 +15,13 @@ namespace SystemDot.Messaging.Configuration.ExternalSources
             Sources = new List<IExternalConfigurationSource>();
         }
 
-        public void Configure(MessageServerConfiguration toConfigureAgainst)
+        public void Configure(MessagingConfiguration toConfigureAgainst, MessageServerConfiguration serverToConfigureAgainst)
         {
             var catalog = new DirectoryCatalog(GetPath(), "*.ExternalConfiguration.dll");
             var container = new CompositionContainer(catalog);
 
             container.ComposeParts(this);
-            this.Sources.ForEach(s => s.Configure(toConfigureAgainst));
+            this.Sources.ForEach(s => s.Configure(toConfigureAgainst, serverToConfigureAgainst));
         }
 
         static string GetPath()
