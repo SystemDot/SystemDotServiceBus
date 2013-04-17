@@ -90,7 +90,7 @@ namespace SystemDot.Sql
                         CREATE TABLE ChangeStore(
                             ChangeRootId nvarchar(1000) NOT NULL,
                             Sequence int IDENTITY(1, 1) NOT NULL,
-                            Change varbinary(8000) NULL)",
+                            Change varbinary(max) NULL)",
                     command => { });
             }
         }
