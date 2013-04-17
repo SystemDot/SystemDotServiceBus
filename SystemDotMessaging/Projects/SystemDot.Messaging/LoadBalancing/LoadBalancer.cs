@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using SystemDot.Logging;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
@@ -46,7 +47,12 @@ namespace SystemDot.Messaging.LoadBalancing
         {
             MessagePayload message;
             
-            if (this.sentMessages.Count >= 20)  return;
+            if (this.sentMessages.Count >= 20)
+            {
+                Logger.Info("Load balancer retaining messages");
+                return;
+            }
+
             if(!this.unsentMessages.TryDequeue(out message)) return;
 
             this.sentMessages.TryAdd(message.Id, message);
