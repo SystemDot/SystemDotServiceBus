@@ -53,8 +53,14 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients
                     requestStream => this.formatter.Serialise(requestStream, CreateLongPollPayload(toListenFor)),
                     response =>
                     {
-                        RecieveResponse(response);
-                        StartNextPoll(toListenFor);
+                        try
+                        {
+                            RecieveResponse(response);
+                        }
+                        finally
+                        {
+                            StartNextPoll(toListenFor);
+                        }
                     });
             }
             catch (Exception)
