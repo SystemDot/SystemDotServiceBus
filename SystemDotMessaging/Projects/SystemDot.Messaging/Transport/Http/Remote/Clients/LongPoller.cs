@@ -57,10 +57,8 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients
                         {
                             RecieveResponse(response);
                         }
-                        finally
-                        {
-                            StartNextPoll(toListenFor);
-                        }
+                        catch{}
+                        StartNextPoll(toListenFor);
                     });
             }
             catch (Exception)
