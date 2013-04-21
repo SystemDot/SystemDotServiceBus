@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.sequencing
         const string ChannelName = "Test";
         const string ReceiverName = "TestReceiver";
 
-        static IBus bus;
+        
         static DateTime originDate;
         static IChangeStore changeStore;
         
@@ -28,13 +28,13 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.sequencing
             originDate = DateTime.Now.AddHours(-1);
             ConfigureAndRegister<ISystemTime>(new TestSystemTime(originDate));
 
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForPointToPointSendingTo(ReceiverName)
                     .WithDurability()
                 .Initialise();
 
-            bus.Send(new object());
+            Bus.Send(new object());
 
             ResetIoc();
             Initialise();
@@ -42,14 +42,14 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.sequencing
             ConfigureAndRegister<IChangeStore>(changeStore);
             ConfigureAndRegister<ISystemTime>(new TestSystemTime(DateTime.Now));
 
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForPointToPointSendingTo(ReceiverName)
                     .WithDurability()
                 .Initialise();
         };
 
-        Because of = () => bus.Send(new object());
+        Because of = () => Bus.Send(new object());
 
         It should_mark_the_message_with_the_initial_sequence_origin_date = () =>
             Server.SentMessages.ExcludeAcknowledgements().First().GetSequenceOriginSetOn().ShouldEqual(originDate);

@@ -6,7 +6,6 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
     [Subject(replies.SpecificationGroup.Description)]
     public class when_sending_a_request_on_a_channel_with_a_hook : WithMessageConfigurationSubject
     {
-        static IBus bus;
         static int message;
         static TestMessageProcessorHook hook;
 
@@ -14,7 +13,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
         {
             hook = new TestMessageProcessorHook();
 
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("ChannelName").ForRequestReplySendingTo("RecieverAddress")
                 .WithSendHook(hook)
@@ -23,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
             message = 1;
         };
 
-        Because of = () => bus.Send(message);
+        Because of = () => Bus.Send(message);
 
         It should_run_the_message_through_the_hook = () => hook.Message.ShouldEqual(message);
     }

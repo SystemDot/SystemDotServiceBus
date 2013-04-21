@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Specifications.transport.http
         const string RemoteProxyInstance = "RemoteProxyInstance";
         static string receiverName;
 
-        static IBus bus;
+        
         static TestWebRequestor webRequestor;
         static int message;
 
@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Specifications.transport.http
 
             ConfigureAndRegister<IWebRequestor>(webRequestor);
 
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsAServer("ServerInstance")
                 .OpenChannel(ChannelName).ForPointToPointSendingTo(receiverName)
@@ -45,7 +45,7 @@ namespace SystemDot.Messaging.Specifications.transport.http
             message = 1;
         };
 
-        Because of = () => bus.Send(message);
+        Because of = () => Bus.Send(message);
 
         It should_send_a_message_with_the_to_address_server_name_set_to_the_local_machine = () =>
             webRequestor.DeserialiseSingleRequest<MessagePayload>()

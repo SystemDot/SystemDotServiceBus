@@ -12,9 +12,9 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
             this.dispatcher = dispatcher;
         }
 
-        public void InputMessage(object toInput)
+        public async void InputMessage(object toInput)
         {
-            dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => MessageProcessed(toInput));
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => MessageProcessed(toInput));
         }
 
         public event Action<object> MessageProcessed;

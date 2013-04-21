@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
         const string ChannelName = "Test";
         const string SenderChannelName = "TestSender";
 
-        static IBus bus;
+        
         static int message;
         static TestMessageProcessorHook hook;
 
@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
         {
             hook = new TestMessageProcessorHook();
 
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForRequestReplyRecieving()
@@ -35,7 +35,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
             message = 1;
         };
 
-        Because of = () => bus.Reply(message);
+        Because of = () => Bus.Reply(message);
 
         It should_run_the_message_through_the_hook = () => hook.Message.ShouldEqual(message);
     }

@@ -9,12 +9,12 @@ namespace SystemDot.Messaging.Specifications.channels.local
         : WithMessageConfigurationSubject
     {
         static int message;
-        static IBus bus;
+        
         static TestMessageHandler<int> handler;
 
         Establish context = () =>
         {
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("Channel").ForRequestReplyRecieving()
                 .OpenLocalChannel()
@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Specifications.channels.local
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
         };
 
-        Because of = () => bus.SendLocal(message);
+        Because of = () => Bus.SendLocal(message);
 
         It should_send_the_message_to_any_handlers_registered_for_that_message = () => 
             handler.LastHandledMessage.ShouldEqual(message);

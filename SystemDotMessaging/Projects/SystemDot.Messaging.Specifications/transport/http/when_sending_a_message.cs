@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Specifications.transport.http
     {
         const string ServerInstance = "ServerInstance";
 
-        static IBus bus;
+        
         static TestWebRequestor webRequestor;
         static int message;
        
@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.transport.http
 
             ConfigureAndRegister<IWebRequestor>(webRequestor);
 
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsAServer(ServerInstance)
                 .OpenChannel("TestSender")
@@ -40,7 +40,7 @@ namespace SystemDot.Messaging.Specifications.transport.http
             message = 1;
         };
 
-        Because of = () => bus.Send(message);
+        Because of = () => Bus.Send(message);
 
         It should_serialise_the_message_and_send_it_as_a_put_request_to_the_message_server = () =>
             webRequestor.DeserialiseSingleRequest<MessagePayload>()

@@ -12,12 +12,12 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
     public class when_sending_a_message_and_the_web_requestor_throws_an_exception : WithConfigurationSubject
     {
         static Exception exception;
-        static IBus bus;
+        
 
         Establish context = () =>
         {
             ConfigureAndRegister<IWebRequestor>(new FailingWebRequestor());
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsARemoteClient("RemoteClientInstance")
                 .UsingProxy(MessageServer.Local("RemoteProxyInstance"))
@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
                 .Initialise();
         };
 
-        Because of = () => exception = Catch.Exception(() => bus.Send(1));
+        Because of = () => exception = Catch.Exception(() => Bus.Send(1));
 
         It should_not_fail = () => exception.ShouldBeNull();
     }

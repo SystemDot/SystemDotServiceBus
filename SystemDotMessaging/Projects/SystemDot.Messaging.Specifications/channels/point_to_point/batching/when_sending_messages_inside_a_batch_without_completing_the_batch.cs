@@ -10,21 +10,16 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.batching
     {
         const int Message = 1;
         
-        static IBus bus;
-
-        Establish context = () =>
-        {
-            bus = Configuration.Configure.Messaging()
-                .UsingInProcessTransport()
-                .OpenChannel("SenderAddress").ForPointToPointSendingTo("ReceiverAddress")
-                .Initialise();
-        };
+        Establish context = () => Configuration.Configure.Messaging()
+            .UsingInProcessTransport()
+            .OpenChannel("SenderAddress").ForPointToPointSendingTo("ReceiverAddress")
+            .Initialise();
 
         Because of = () =>
         {
-            using (bus.BatchSend())
+            using (Bus.BatchSend())
             {
-                bus.Send(Message);
+                Bus.Send(Message);
             }
         };
 

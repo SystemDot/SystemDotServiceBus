@@ -11,22 +11,17 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.batching
         const int Message1 = 1;
         const int Message2 = 2;
         
-        static IBus bus;
-
-        Establish context = () =>
-        {
-            bus = Configuration.Configure.Messaging()
-                .UsingInProcessTransport()
-                .OpenChannel("SenderAddress").ForRequestReplySendingTo("ReceiverAddress")
-                .Initialise();
-        };
+        Establish context = () => Configuration.Configure.Messaging()
+            .UsingInProcessTransport()
+            .OpenChannel("SenderAddress").ForRequestReplySendingTo("ReceiverAddress")
+            .Initialise();
 
         Because of = () =>
         {
-            using (Batch batch = bus.BatchSend())
+            using (Batch batch = Bus.BatchSend())
             {
-                bus.Send(Message1);
-                bus.Send(Message2);
+                Bus.Send(Message1);
+                Bus.Send(Message2);
 
                 batch.Complete();
             }

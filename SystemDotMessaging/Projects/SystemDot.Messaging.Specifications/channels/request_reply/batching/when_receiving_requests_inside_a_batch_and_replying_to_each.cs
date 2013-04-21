@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.batching
         
         Establish context = () =>
         {
-            IBus bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ReceiverAddress).ForRequestReplyRecieving()
                 .Initialise();
@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.batching
             messagePayload = new MessagePayload()
                 .MakeSequencedReceivable(aggregateMessage, SenderAddress, ReceiverAddress, PersistenceUseType.RequestReceive);
 
-            handler = new TestReplyMessageHandler<int>(bus);
+            handler = new TestReplyMessageHandler<int>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
         };
 

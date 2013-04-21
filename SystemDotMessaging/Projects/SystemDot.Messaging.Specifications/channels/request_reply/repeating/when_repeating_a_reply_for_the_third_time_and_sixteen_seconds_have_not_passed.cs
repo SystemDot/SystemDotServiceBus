@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.repeating
         const int Request = 1;
         const int Reply = 2;
 
-        static IBus bus;
+        
         static TestSystemTime systemTime;
 
         Establish context = () =>
@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.repeating
             systemTime = new TestSystemTime(DateTime.Now);
             ConfigureAndRegister<ISystemTime>(systemTime);
 
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                  .UsingInProcessTransport()
                  .OpenChannel(ChannelName)
                  .ForRequestReplyRecieving()
@@ -39,7 +39,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.repeating
                     ChannelName,
                     PersistenceUseType.RequestSend));
 
-            bus.Reply(Reply);
+            Bus.Reply(Reply);
 
 
             systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));

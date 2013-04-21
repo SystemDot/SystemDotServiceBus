@@ -18,12 +18,12 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.acknowledge
         {
             Messenger.Register<MessageRemovedFromCache>(e => @event = e);
             
-            var bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("SenderAddress").ForPointToPointSendingTo("ReceiverAddress")
                 .Initialise();
 
-            bus.Send(1);
+            Bus.Send(1);
              
             acknowledgement = new MessagePayload();
             acknowledgement.SetAcknowledgementId(Server.SentMessages.First().GetPersistenceId());

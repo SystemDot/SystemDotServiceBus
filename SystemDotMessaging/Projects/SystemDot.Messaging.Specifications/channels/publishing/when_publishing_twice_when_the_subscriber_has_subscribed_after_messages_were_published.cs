@@ -11,27 +11,27 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
         const string ChannelName = "Test";
         const string SubscriberName = "TestSubscriber";
 
-        static IBus bus;
+        
         static int message;
 
         Establish context = () =>
         {
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForPublishing()
                 .Initialise();
 
             message = 1;
 
-            bus.Publish(message);
+            Bus.Publish(message);
 
             Subscribe(BuildAddress(SubscriberName), BuildAddress(ChannelName));
         };
 
         Because of = () =>
         {
-            bus.Publish(message);
-            bus.Publish(message);
+            Bus.Publish(message);
+            Bus.Publish(message);
         };
 
         It should_mark_the_first_sequence_number_as_the_sequence_of_the_first_mesage_through_the_channel = () =>

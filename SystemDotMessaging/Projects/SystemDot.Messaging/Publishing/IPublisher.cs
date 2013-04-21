@@ -10,8 +10,8 @@ namespace SystemDot.Messaging.Publishing
         void Subscribe(SubscriptionSchema scheam);
     }
 
-    [ContractClassFor(typeof(IPublisher))]
-    class PublisherContract : IPublisher 
+    [ContractClassFor(typeof (IPublisher))]
+    class PublisherContract : IPublisher
     {
         public void InputMessage(MessagePayload toInput)
         {
@@ -19,11 +19,10 @@ namespace SystemDot.Messaging.Publishing
         }
 
         public void Subscribe(SubscriptionSchema schema)
-        {        
+        {
             Contract.Requires(schema != null);
         }
 
         public event Action<MessagePayload> MessageProcessed;
-
     }
 }

@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.repeating
         const string ChannelName = "Test";
         const string SenderChannelName = "TestSender";
 
-        static IBus bus;
+        
         static int message;
         static TestSystemTime systemTime;
 
@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.repeating
             systemTime = new TestSystemTime(DateTime.Now);
             ConfigureAndRegister<ISystemTime>(systemTime);
 
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForRequestReplySendingTo(SenderChannelName)
@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.repeating
 
             message = 1;
 
-            bus.Send(message);
+            Bus.Send(message);
 
             systemTime.AddToCurrentDate(TimeSpan.FromSeconds(10).Subtract(TimeSpan.FromTicks(1)));
         };

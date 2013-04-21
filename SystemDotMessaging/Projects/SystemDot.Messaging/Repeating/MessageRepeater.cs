@@ -12,7 +12,6 @@ namespace SystemDot.Messaging.Repeating
         readonly IRepeatStrategy repeatStrategy;
         readonly ISystemTime systemTime;
         readonly IMessageCache messageCache;
-        bool isStarted;
 
         public MessageRepeater(IRepeatStrategy repeatStrategy, ISystemTime systemTime, IMessageCache messageCache)
         {

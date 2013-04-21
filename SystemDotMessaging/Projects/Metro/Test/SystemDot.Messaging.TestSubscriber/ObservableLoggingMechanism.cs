@@ -35,9 +35,9 @@ namespace SystemDot.Messaging.TestSubscriber
             SendMessageToUiCollection(exception.Message);
         }
 
-        private void SendMessageToUiCollection(string message)
+        private async void SendMessageToUiCollection(string message)
         {
-            this.dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => this.Messages.Add(message));
+            await this.dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => this.Messages.Add(message));
         }
     }
 }

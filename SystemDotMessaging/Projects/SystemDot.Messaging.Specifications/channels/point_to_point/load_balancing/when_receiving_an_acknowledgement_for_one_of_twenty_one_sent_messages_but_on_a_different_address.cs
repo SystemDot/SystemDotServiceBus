@@ -19,12 +19,12 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.load_balanc
         const string OtherRecieverAddress = "OtherReceiverAddress";
 
         static List<int> messages;
-        static IBus bus;
+        
         static MessagePayload acknowledgement;
 
         Establish context = () =>
         {
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(SenderAddress)
                     .ForPointToPointSendingTo(RecieverAddress)
@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.load_balanc
                 .Initialise();
 
             messages = Enumerable.Range(1, 21).ToList();
-            messages.ForEach(m => bus.Send(m));
+            messages.ForEach(m => Bus.Send(m));
 
             acknowledgement = new MessagePayload();
 

@@ -13,12 +13,12 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
         const string Channel2Name = "Test2";
         const string Subscriber2Name = "TestSubscriber2";
         
-        static IBus bus;
+        
         static int message;
         
         Establish context = () =>
         {
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(Channel1Name).ForPublishing()
                 .OpenChannel(Channel2Name).ForPublishing()
@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
             Subscribe(BuildAddress(Subscriber2Name), BuildAddress(Channel2Name));
         };
 
-        Because of = () => bus.Publish(message);
+        Because of = () => Bus.Publish(message);
 
         It should_publish_a_message_with_the_correct_content_through_both_channels = () =>
             Server.SentMessages.ExcludeAcknowledgements()

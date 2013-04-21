@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.sequencing
         const string ChannelName = "Test";
         const string ReceiverName = "TestReceiver";
         
-        static IBus bus;
+        
         static int message;
         static DateTime originDate;
 
@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.sequencing
 
             ConfigureAndRegister<ISystemTime>(new TestSystemTime(originDate));
 
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForPointToPointSendingTo(ReceiverName)
                 .Initialise();
@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.sequencing
             message = 1;
         };
 
-        Because of = () => bus.Send(message);
+        Because of = () => Bus.Send(message);
 
         It should_mark_the_message_with_the_sequence = () =>
             Server.SentMessages.ExcludeAcknowledgements().First().GetSequence().ShouldEqual(1);

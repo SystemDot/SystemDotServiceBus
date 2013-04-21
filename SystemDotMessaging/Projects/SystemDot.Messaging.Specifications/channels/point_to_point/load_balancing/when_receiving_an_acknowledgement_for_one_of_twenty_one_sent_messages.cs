@@ -13,12 +13,12 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.load_balanc
     public class when_receiving_an_acknowledgement_for_one_of_twenty_one_sent_messages : WithMessageConfigurationSubject
     {
         static List<int> messages;
-        static IBus bus;
+        
         static MessagePayload acknowledgement;
 
         Establish context = () =>
         {
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("SenderAddress")
                 .ForPointToPointSendingTo("ReceiverAddress")
@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.load_balanc
 
             messages = Enumerable.Range(1, 21).ToList();
 
-            messages.ForEach(m => bus.Send(m));
+            messages.ForEach(m => Bus.Send(m));
 
             acknowledgement = new MessagePayload();
             acknowledgement.SetAcknowledgementId(Server.SentMessages.First().GetPersistenceId());

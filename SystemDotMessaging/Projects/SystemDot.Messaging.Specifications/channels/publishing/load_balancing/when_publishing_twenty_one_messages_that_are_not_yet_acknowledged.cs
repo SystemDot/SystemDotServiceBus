@@ -10,11 +10,11 @@ namespace SystemDot.Messaging.Specifications.channels.publishing.load_balancing
     {
         const string PublisherAddress = "PublisherAddress";
         static List<int> messages;
-        static IBus bus;
+        
 
         Establish context = () =>
         {
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(PublisherAddress)
                 .ForPublishing()
@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Specifications.channels.publishing.load_balancing
             messages = Enumerable.Range(1, 21).ToList();
         };
 
-        Because of = () => messages.ForEach(m => bus.Publish(m));
+        Because of = () => messages.ForEach(m => Bus.Publish(m));
 
         It should_not_send_the_twenty_first_message = () => Server.SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(20);
     }

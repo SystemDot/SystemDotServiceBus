@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
         const string ChannelAddress = "TestSender";
         const string RecieverAddress = "TestReceiver";
 
-        static IBus bus;
+        
         static TestWebRequestor webRequestor;
         static int message;
 
@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
             ConfigureAndRegister<IWebRequestor>(webRequestor);
 
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsARemoteClient(ClientInstance)
                 .UsingProxy(MessageServer.Local(ProxyInstance))
@@ -45,7 +45,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
             message = 1;
         };
 
-        Because of = () => bus.Send(message);
+        Because of = () => Bus.Send(message);
 
         It should_serialise_the_message_and_send_it_as_a_put_request_to_the_message_server = () =>
             webRequestor.DeserialiseSingleRequest<MessagePayload>()

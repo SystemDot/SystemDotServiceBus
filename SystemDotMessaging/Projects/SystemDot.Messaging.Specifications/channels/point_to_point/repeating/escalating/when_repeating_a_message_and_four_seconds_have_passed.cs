@@ -13,7 +13,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.repeating.e
         const string ChannelName = "Test";
         const string SenderChannelName = "TestSender";
 
-        static IBus bus;
+        
         static int message;
         static TestSystemTime systemTime;
 
@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.repeating.e
             systemTime = new TestSystemTime(DateTime.Now);
             ConfigureAndRegister<ISystemTime>(systemTime);
 
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForPointToPointSendingTo(SenderChannelName)
@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.repeating.e
 
             message = 1;
 
-            bus.Send(message);
+            Bus.Send(message);
 
             systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
         };

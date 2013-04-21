@@ -31,13 +31,13 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.repeating.e
             var systemTime = new TestSystemTime(DateTime.Now);
             ConfigureAndRegister<ISystemTime>(systemTime);
 
-            IBus bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingHttpTransport().AsAServer(ServerInstance)
                 .OpenChannel(ChannelName)
                 .ForPointToPointSendingTo(SenderChannelName)
                 .Initialise();
 
-            bus.Send(1);
+            Bus.Send(1);
 
             systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
         };

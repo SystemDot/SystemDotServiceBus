@@ -16,12 +16,12 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
         const string ChannelName = "Test";
         const string RecieverAddress = "TestRecieverAddress";
         
-        static IBus bus;
+        
         static int message;
         
         Establish context = () =>
         {
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForRequestReplySendingTo(RecieverAddress)
                 .Initialise();
@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
             message = 1;
         };
 
-        Because of = () => bus.Send(message);
+        Because of = () => Bus.Send(message);
 
         It should_send_a_message_with_the_correct_to_address = () =>
             Server.SentMessages.First().GetToAddress().ShouldEqual(BuildAddress(RecieverAddress));

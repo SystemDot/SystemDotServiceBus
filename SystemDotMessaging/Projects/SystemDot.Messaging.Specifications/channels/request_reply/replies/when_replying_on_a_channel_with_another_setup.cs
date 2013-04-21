@@ -11,11 +11,11 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
     {
         const string ChannelName = "Test1";
         
-        static IBus bus;
+        
 
         Establish context = () =>
         {
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForRequestReplyRecieving()
                 .OpenChannel("Test2").ForRequestReplyRecieving()
@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
                 PersistenceUseType.RequestSend));
         };
 
-        Because of = () => bus.Reply(1);
+        Because of = () => Bus.Reply(1);
 
         It should_only_send_the_message_to_the_correct_channel = () =>
             Server.SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(1);

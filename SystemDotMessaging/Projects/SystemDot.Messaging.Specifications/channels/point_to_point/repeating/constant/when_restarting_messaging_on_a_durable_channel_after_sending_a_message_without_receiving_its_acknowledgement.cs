@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.repeating.c
             ConfigureAndRegister<IChangeStore>(changeStore);
             ConfigureAndRegister<ITaskRepeater>(new TestTaskRepeater());
 
-            IBus bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForPointToPointSendingTo(ReceiverAddress)
@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.repeating.c
                 .WithMessageRepeating(RepeatMessages.Every(TimeSpan.FromSeconds(10)))
                 .Initialise();
 
-            bus.Send(Message);
+            Bus.Send(Message);
 
             ResetIoc();
             Initialise();

@@ -11,18 +11,18 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.sending
         const string SenderAddress = "SenderAddress";
         const string ReceiverAddress = "ReceiverAddress";
         
-        static IBus bus;
+        
 
         Establish context = () =>
         {    
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(SenderAddress).ForPointToPointSendingTo(ReceiverAddress)
                 .WithDurability()
                 .Initialise();
         };
 
-        Because of = () => bus.Send(1);
+        Because of = () => Bus.Send(1);
 
         It should_persist_the_message = () =>
             Resolve<IChangeStore>()

@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.load_balanc
             scheduler = new TestTaskScheduler();
             ConfigureAndRegister<ITaskScheduler>(scheduler);
 
-            IBus bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("SenderAddress")
                 .ForPointToPointSendingTo("ReceiverAddress")
@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.load_balanc
 
             var messages = Enumerable.Range(1, 20).ToList();
 
-            messages.ForEach(m => bus.Send(m));
+            messages.ForEach(m => Bus.Send(m));
         };
 
         Because of = () => scheduler.PassTime(TimeSpan.FromSeconds(4));

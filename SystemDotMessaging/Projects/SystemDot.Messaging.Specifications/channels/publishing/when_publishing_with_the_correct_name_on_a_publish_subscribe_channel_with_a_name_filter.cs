@@ -10,11 +10,11 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
     {
         const string ChannelName = "Test";
         const string SubscriberName = "TestSubscriber";
-        static IBus bus;
+        
         
         Establish context = () =>
         {
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForPublishing()
                 .OnlyForMessages(FilteredBy.NamePattern("Name"))
@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
             Subscribe(BuildAddress(SubscriberName), BuildAddress(ChannelName));
         };
 
-        Because of = () => bus.Publish(new TestNamePatternMessage());
+        Because of = () => Bus.Publish(new TestNamePatternMessage());
 
         It should_pass_the_message_through = () => Server.SentMessages.ExcludeAcknowledgements().ShouldNotBeEmpty();
     }

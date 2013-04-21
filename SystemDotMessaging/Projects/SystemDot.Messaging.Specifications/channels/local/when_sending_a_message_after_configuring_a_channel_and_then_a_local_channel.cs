@@ -9,11 +9,11 @@ namespace SystemDot.Messaging.Specifications.channels.local
         : WithMessageConfigurationSubject
     {
         static int message;
-        static IBus bus;
+        
         
         Establish context = () =>
         {
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("Channel").ForRequestReplySendingTo("Reciever")
                 .OpenLocalChannel()
@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.channels.local
             message = 1;
         };
 
-        Because of = () => bus.Send(message);
+        Because of = () => Bus.Send(message);
 
         It should_send_the_message_down_the_channel = () => 
             Server.SentMessages.First().DeserialiseTo<int>().ShouldEqual(message);

@@ -8,18 +8,18 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
     public class when_replying_to_a_request_without_configuring_a_request_reply_channel 
         : WithMessageConfigurationSubject
     {
-        static IBus bus;
+        
         static Exception exception;
 
         Establish context = () =>
         {
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenLocalChannel()
                 .Initialise();
         };
 
-        Because of = () => exception = Catch.Exception(() => bus.Reply(new object()));
+        Because of = () => exception = Catch.Exception(() => Bus.Reply(new object()));
 
         It should_not_fail = () => exception.ShouldBeNull();
     }

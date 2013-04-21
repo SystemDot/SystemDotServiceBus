@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Configuration
 
         protected abstract void Build();
 
-        public IBus Initialise()
+        public void Initialise()
         {
             Resolve<SubscriptionHandlerChannelBuilder>().Build();
             Resolve<AcknowledgementSendChannelBuilder>().Build();
@@ -37,8 +37,6 @@ namespace SystemDot.Messaging.Configuration
 
             Resolve<ITransportBuilder>().Build(GetServerPath());
             Resolve<ITaskRepeater>().Start();
-
-            return Resolve<IBus>();
         }
 
         public ChannelConfiguration OpenChannel(string name)

@@ -10,21 +10,21 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.expiry
     [Subject(SpecificationGroup.Description)]
     public class when_repeating_a_message_that_is_time_expired : WithMessageConfigurationSubject
     {
-        static IBus bus;
+        
 
         Establish context = () =>
         {
             var systemTime = new TestSystemTime(DateTime.Now);
             ConfigureAndRegister<ISystemTime>(systemTime);
 
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("ReceiverAddress")
                 .ForPointToPointSendingTo("SenderAddress")
                 .WithMessageExpiry(MessageExpiry.ByTime(TimeSpan.FromSeconds(3)))
                 .Initialise();
 
-            bus.Send(1);
+            Bus.Send(1);
 
             systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
             Server.SentMessages.Clear();

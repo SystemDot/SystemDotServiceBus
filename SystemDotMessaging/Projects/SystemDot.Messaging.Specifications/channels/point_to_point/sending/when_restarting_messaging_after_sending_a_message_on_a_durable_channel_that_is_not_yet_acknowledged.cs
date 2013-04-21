@@ -33,14 +33,14 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.sending
             ConfigureAndRegister<IChangeStore>(changeStore);
             ConfigureAndRegister<ITaskRepeater>(new TestTaskRepeater());
 
-            IBus bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(SenderAddress)
                 .ForPointToPointSendingTo(ReceiverAddress).WithDurability()
                 .Initialise();
 
-            bus.Send(Message1);
-            bus.Send(Message2);
+            Bus.Send(Message1);
+            Bus.Send(Message2);
 
             ResetIoc();
             Initialise();

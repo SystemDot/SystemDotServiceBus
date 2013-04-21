@@ -13,12 +13,12 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
         const string SubscriberName1 = "TestSubscriber1";
         const string SubscriberName2 = "TestSubscriber2";
 
-        static IBus bus;
+        
         static int message;
 
         Establish context = () =>
         {
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForPublishing()
                 .Initialise();
@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
             Subscribe(BuildAddress(SubscriberName2), BuildAddress(ChannelName));
         };
 
-        Because of = () => bus.Publish(message);
+        Because of = () => Bus.Publish(message);
 
         It should_use_a_different_copy_of_the_message_payload_on_each_subscriber = () => 
             Server.SentMessages

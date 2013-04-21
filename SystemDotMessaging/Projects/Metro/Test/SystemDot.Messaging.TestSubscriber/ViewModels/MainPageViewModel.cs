@@ -14,8 +14,6 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
 {
     public class MainPageViewModel
     {
-        private readonly IBus bus;
-
         public ObservableCollection<string> Messages { get; private set; }
 
         public ObservableCollection<string> Replies { get; private set; }
@@ -36,7 +34,7 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
             var container = new IocContainer();
             container.RegisterFromAssemblyOf<ResponseHandler>();
 
-            this.bus = Configure.Messaging()
+            Configure.Messaging()
                 .LoggingWith(loggingMechanism)
                 .RegisterHandlersFromAssemblyOf<ResponseHandler>()
                 .BasedOn<IMessageConsumer>()
@@ -57,7 +55,7 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
         {
             var query = new TestMessage {Text = "Hello" + i};
             Messages.Add(query.Text);
-            bus.Send(query);
+            Bus.Send(query);
         }
 
         public void Clear()

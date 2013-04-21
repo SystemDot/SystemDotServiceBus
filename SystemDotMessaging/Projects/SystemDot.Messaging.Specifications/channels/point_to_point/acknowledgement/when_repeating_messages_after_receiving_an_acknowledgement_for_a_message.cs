@@ -19,12 +19,12 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.acknowledge
             var systemTime = new TestSystemTime(DateTime.Now);
             ConfigureAndRegister<ISystemTime>(systemTime);
 
-            var bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("SenderAddress").ForPointToPointSendingTo("ReceiverAddress")
                 .Initialise();
 
-            bus.Send(1);
+            Bus.Send(1);
              
             var acknowledgement = new MessagePayload();
             acknowledgement.SetAcknowledgementId(Server.SentMessages.First().GetPersistenceId());

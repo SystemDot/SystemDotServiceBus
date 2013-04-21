@@ -16,13 +16,13 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
         const string ChannelName = "Test";
         const string SubscriberName = "TestSubscriber";
         
-        static IBus bus;
+        
         static int message;
         static EndpointAddress subscriberAddress;
         
         Establish context = () =>
         {    
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForPublishing()
                 .Initialise();
@@ -33,7 +33,7 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
             Subscribe(subscriberAddress, BuildAddress(ChannelName));
         };
 
-        Because of = () => bus.Publish(message);
+        Because of = () => Bus.Publish(message);
 
         It should_mark_the_message_with_the_persistence_id = () =>
             Server.SentMessages.ExcludeAcknowledgements().First().GetPersistenceId()

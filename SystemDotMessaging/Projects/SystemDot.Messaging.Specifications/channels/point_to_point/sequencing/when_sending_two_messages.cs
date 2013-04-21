@@ -12,13 +12,13 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.sequencing
         const string ChannelName = "Test";
         const string ReceiverName = "TestReceiver";
         
-        static IBus bus;
+        
         const int Message1 = 1;
         const int Message2 = 2;
         
         Establish context = () =>
         {    
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForPointToPointSendingTo(ReceiverName)
                 .Initialise();
@@ -26,8 +26,8 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.sequencing
 
         Because of = () =>
         {
-            bus.Send(Message1);
-            bus.Send(Message2);
+            Bus.Send(Message1);
+            Bus.Send(Message2);
         };
 
         It should_mark_the_last_message_with_a_first_sequence_of_the_lowest_sequence_in_the_cache = () =>

@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
             ConfigureAndRegister<IChangeStore>(changeStore);
             ConfigureAndRegister<ITaskRepeater>(new TestTaskRepeater());
 
-            IBus bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForRequestReplyRecieving()
@@ -42,7 +42,7 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.replies
                     ChannelName,
                     PersistenceUseType.RequestSend));
 
-            bus.Reply(Reply);
+            Bus.Reply(Reply);
 
             ResetIoc();
             Initialise();

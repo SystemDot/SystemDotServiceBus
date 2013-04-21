@@ -25,14 +25,14 @@ namespace SystemDot.Messaging.Specifications.channels.request_reply.requests
             ConfigureAndRegister<IChangeStore>(changeStore);
             ConfigureAndRegister<ITaskRepeater>(new TestTaskRepeater());
 
-            IBus bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForRequestReplySendingTo(ReceiverAddress)
                 .WithDurability()
                 .Initialise();
 
-            bus.Send(Request);
+            Bus.Send(Request);
 
             ResetIoc();
             Initialise();

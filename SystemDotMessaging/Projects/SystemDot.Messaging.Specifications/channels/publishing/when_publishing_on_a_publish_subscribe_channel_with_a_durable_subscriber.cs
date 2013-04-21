@@ -12,12 +12,12 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
         const string ChannelName = "Test";
         const string SubscriberName = "TestSubscriber";
 
-        static IBus bus;
+        
         static int message;
         
         Establish context = () =>
         {
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForPublishing()
                 .WithDurability()
@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.channels.publishing
             SubscribeDurable(BuildAddress(SubscriberName), BuildAddress(ChannelName));
         };
 
-        Because of = () => bus.Publish(message);
+        Because of = () => Bus.Publish(message);
 
         It should_have_persisted_the_message = () =>
             Resolve<IChangeStore>()

@@ -17,14 +17,14 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.sending
         const string ReceiverAddress = "ReceiverAddress";
 
         static MessageAddedToCache messageAddedToCacheEvent;
-        static IBus bus;
+        
         static int message;
         
         Establish context = () =>
         {
             Messenger.Register<MessageAddedToCache>(e => messageAddedToCacheEvent = e);
 
-            bus = Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(SenderAddress).ForPointToPointSendingTo(ReceiverAddress)
                 .Initialise();
@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Specifications.channels.point_to_point.sending
             message = 1;
         };
 
-        Because of = () => bus.Send(message);
+        Because of = () => Bus.Send(message);
 
         It should_notify_that_the_message_was_cached = () =>
             messageAddedToCacheEvent.ShouldMatch(m =>
