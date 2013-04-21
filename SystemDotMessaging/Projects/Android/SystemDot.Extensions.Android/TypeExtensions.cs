@@ -36,6 +36,31 @@ namespace SystemDot
                 .Where(t => !t.IsInterface && !t.IsAbstract && t.IsClass && !t.ContainsGenericParameters);
         }
 
+        public static IEnumerable<Type> GetTypesInAssembly(this Type type)
+        {
+            return type.Assembly.GetTypes();
+        }
+
+        public static IEnumerable<Type> WhereNonAbstract(this IEnumerable<Type> types)
+        {
+            return types.Where(t => !t.IsAbstract);
+        }
+
+        public static IEnumerable<Type> WhereConcrete(this IEnumerable<Type> types)
+        {
+            return types.Where(t => !t.IsInterface && t.IsClass);
+        }
+
+        public static IEnumerable<Type> WhereNonGeneric(this IEnumerable<Type> types)
+        {
+            return types.Where(t => !t.ContainsGenericParameters);
+        }
+
+        public static IEnumerable<Type> WhereImplements<TImplemented>(this IEnumerable<Type> types)
+        {
+            return types.Where(t => t.GetNonBaseInterfaces().Contains(typeof(TImplemented)) || t.GetBaseInterfaces().Contains(typeof(TImplemented)));
+        }
+
         public static IEnumerable<ConstructorInfo> GetAllConstructors(this Type type)
         {
             return type.GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
