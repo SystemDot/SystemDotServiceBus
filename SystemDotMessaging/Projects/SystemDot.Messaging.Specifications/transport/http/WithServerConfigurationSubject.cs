@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
 using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.Specifications.channels;
 using SystemDot.Serialisation;
 using Machine.Specifications;
 

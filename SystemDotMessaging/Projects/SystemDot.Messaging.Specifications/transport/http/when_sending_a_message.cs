@@ -4,7 +4,6 @@ using SystemDot.Http;
 using SystemDot.Http.Builders;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
-using SystemDot.Messaging.Specifications.channels;
 using SystemDot.Serialisation;
 using Machine.Specifications;
 using SystemDot.Messaging.Transport.Http.Configuration;

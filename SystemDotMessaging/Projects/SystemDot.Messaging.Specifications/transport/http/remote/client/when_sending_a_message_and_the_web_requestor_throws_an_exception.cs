@@ -2,7 +2,6 @@
 using SystemDot.Http;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Specifications.channels;
 using SystemDot.Messaging.Transport.Http.Configuration;
 using Machine.Specifications;
 

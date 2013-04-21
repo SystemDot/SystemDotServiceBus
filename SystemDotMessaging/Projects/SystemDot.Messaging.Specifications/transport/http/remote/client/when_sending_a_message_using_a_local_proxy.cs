@@ -4,7 +4,6 @@ using SystemDot.Http;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
-using SystemDot.Messaging.Specifications.channels;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 using Machine.Specifications;

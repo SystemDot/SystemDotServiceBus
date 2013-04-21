@@ -5,7 +5,7 @@ using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.handling
 {
-    [Subject("Handling")]
+    [Subject(SpecificationGroup.Description)]
     public class when_sending_a_message_with_handlers_in_an_assembly_auto_registered_twice : WithConfigurationSubject
     {
         static FirstHandlerOfMessage1 messageHandler;

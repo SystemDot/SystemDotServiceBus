@@ -3,7 +3,6 @@ using System.Linq;
 using SystemDot.Http;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.Specifications.channels;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.Http.Configuration;
 using SystemDot.Messaging.Transport.Http.Remote.Clients;
