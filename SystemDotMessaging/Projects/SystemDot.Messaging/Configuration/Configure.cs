@@ -2,7 +2,7 @@ using SystemDot.Messaging.Configuration.ComponentRegistration;
 
 namespace SystemDot.Messaging.Configuration
 {
-    public class Configure : Configurer
+    public class Configure : ConfigurationBase
     {
         public static MessagingConfiguration Messaging()
         {

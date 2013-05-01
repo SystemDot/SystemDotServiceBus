@@ -9,7 +9,7 @@ using SystemDot.Messaging.Repeating;
 
 namespace SystemDot.Messaging.Configuration.PointToPoint
 {
-    public class PointToPointSenderConfiguration : Initialiser
+    public class PointToPointSenderConfiguration : Configurer
     {
         readonly PointToPointSendChannelSchema sendSchema;
         

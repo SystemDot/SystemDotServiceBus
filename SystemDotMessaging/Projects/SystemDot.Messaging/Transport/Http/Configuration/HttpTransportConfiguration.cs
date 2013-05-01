@@ -8,7 +8,7 @@ using SystemDot.Messaging.Transport.Http.Remote.Servers.Configuration;
 
 namespace SystemDot.Messaging.Transport.Http.Configuration
 {
-    public class HttpTransportConfiguration : Configurer
+    public class HttpTransportConfiguration : ConfigurationBase
     {
         readonly MessagingConfiguration messagingConfiguration;
 

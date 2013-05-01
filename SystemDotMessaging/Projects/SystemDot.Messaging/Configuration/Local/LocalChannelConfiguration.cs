@@ -6,7 +6,7 @@ using SystemDot.Messaging.UnitOfWork;
 
 namespace SystemDot.Messaging.Configuration.Local
 {
-    public class LocalChannelConfiguration : Initialiser
+    public class LocalChannelConfiguration : Configurer
     {
         readonly ServerPath serverPath;
         readonly LocalChannelSchema schema;

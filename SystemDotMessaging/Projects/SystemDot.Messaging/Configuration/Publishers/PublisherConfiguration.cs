@@ -6,7 +6,7 @@ using SystemDot.Messaging.Publishing.Builders;
 
 namespace SystemDot.Messaging.Configuration.Publishers
 {
-    public class PublisherConfiguration : Initialiser
+    public class PublisherConfiguration : Configurer
     {
         readonly PublisherChannelSchema schema;
 

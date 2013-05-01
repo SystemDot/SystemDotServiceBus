@@ -8,7 +8,7 @@ using SystemDot.Messaging.Configuration.RequestReply;
 
 namespace SystemDot.Messaging.Configuration
 {
-    public class ChannelConfiguration : Configurer
+    public class ChannelConfiguration : ConfigurationBase
     {
         readonly EndpointAddress address;
         readonly ServerPath serverPath;

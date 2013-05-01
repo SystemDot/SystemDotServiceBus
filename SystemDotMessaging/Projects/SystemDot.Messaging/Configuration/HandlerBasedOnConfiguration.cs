@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SystemDot.Messaging.Configuration
 {
-    public class HandlerBasedOnConfiguration : Configurer
+    public class HandlerBasedOnConfiguration : ConfigurationBase
     {
         readonly MessagingConfiguration configuration;
         readonly IEnumerable<Type> typesFromAssembly;

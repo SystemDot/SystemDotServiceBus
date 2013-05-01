@@ -7,7 +7,7 @@ using SystemDot.Messaging.UnitOfWork;
 
 namespace SystemDot.Messaging.Configuration.PointToPoint
 {
-    public class PointToPointReceiverConfiguration : Initialiser
+    public class PointToPointReceiverConfiguration : Configurer
     {
         readonly ServerPath serverPath;
         readonly PointToPointReceiverChannelSchema schema;

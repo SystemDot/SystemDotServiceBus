@@ -4,7 +4,7 @@ using SystemDot.Messaging.Handling;
 
 namespace SystemDot.Messaging.Configuration
 {
-    public class HandlerResolutionConfiguration : Configurer
+    public class HandlerResolutionConfiguration : ConfigurationBase
     {
         readonly MessagingConfiguration configuration;
         readonly IEnumerable<Type> messageHandlerTypes;

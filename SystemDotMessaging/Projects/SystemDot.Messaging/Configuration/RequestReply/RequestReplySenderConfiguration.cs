@@ -10,7 +10,7 @@ using SystemDot.Messaging.UnitOfWork;
 
 namespace SystemDot.Messaging.Configuration.RequestReply
 {
-    public class RequestReplySenderConfiguration : Initialiser
+    public class RequestReplySenderConfiguration : Configurer
     {
         readonly RequestSendChannelSchema sendSchema;
         readonly ReplyReceiveChannelSchema receiveSchema;

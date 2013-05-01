@@ -11,7 +11,7 @@ using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Configuration
 {
-    public class MessageServerConfiguration : Configurer
+    public class MessageServerConfiguration : ConfigurationBase
     {
         readonly ServerPath serverPath;
         readonly MessagingConfiguration messagingConfiguration;

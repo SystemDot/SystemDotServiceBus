@@ -7,7 +7,7 @@ using SystemDot.Messaging.UnitOfWork;
 
 namespace SystemDot.Messaging.Configuration.Publishers
 {
-    public class SubscribeToConfiguration : Initialiser
+    public class SubscribeToConfiguration : Configurer
     {
         readonly SubscriptionRequestChannelSchema requestSchema;
         readonly SubscriberRecieveChannelSchema recieveSchema;

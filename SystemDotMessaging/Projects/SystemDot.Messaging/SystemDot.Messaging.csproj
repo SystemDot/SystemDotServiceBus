@@ -188,12 +188,12 @@
     <Compile Include="Configuration\ComponentRegistration\RequestReplyComponents.cs" />
     <Compile Include="Configuration\ComponentRegistration\ThreadingComponents.cs" />
     <Compile Include="Publishing\SubscriptionRequestor.cs" />
-    <Compile Include="Configuration\Configurer.cs" />
+    <Compile Include="Configuration\ConfigurationBase.cs" />
     <Compile Include="Configuration\Local\LocalChannelConfiguration.cs" />
     <Compile Include="Configuration\MessageExpiry.cs" />
     <Compile Include="Addressing\MessageServer.cs" />
     <Compile Include="Configuration\MessageServerConfiguration.cs" />
-    <Compile Include="Configuration\Initialiser.cs" />
+    <Compile Include="Configuration\Configurer.cs" />
     <Compile Include="Configuration\MessagingConfiguration.cs" />
     <Compile Include="Configuration\PointToPoint\PointToPointReceiverConfiguration.cs" />
     <Compile Include="Configuration\PointToPoint\PointToPointSenderConfiguration.cs" />

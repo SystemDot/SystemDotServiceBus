@@ -1,30 +1,71 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
+using SystemDot.Messaging.Acknowledgement.Builders;
 using SystemDot.Messaging.Addressing;
-using SystemDot.Messaging.Ioc;
+using SystemDot.Messaging.Configuration.Local;
+using SystemDot.Messaging.Handling;
+using SystemDot.Messaging.Publishing.Builders;
+using SystemDot.Messaging.Transport;
+using SystemDot.Messaging.UnitOfWork;
+using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Configuration
 {
-    public abstract class Configurer 
+    public abstract class Configurer : ConfigurationBase
     {
-        protected static T Resolve<T>() where T : class
+        readonly List<Action> buildActions;
+
+        protected Configurer(List<Action> buildActions)
         {
-            return GetContainer().Resolve<T>();
+            Contract.Requires(buildActions != null);
+
+            this.buildActions = buildActions;
+            this.buildActions.Add(Build);
         }
 
-        protected static object Resolve(Type type)
+        protected abstract void Build();
+
+        public void Initialise()
         {
-            return IocContainerLocator.Locate().Resolve(type);
+            Resolve<SubscriptionHandlerChannelBuilder>().Build();
+            Resolve<AcknowledgementSendChannelBuilder>().Build();
+            Resolve<AcknowledgementRecieveChannelBuilder>().Build();
+
+            this.buildActions.ForEach(a => a());
+
+            Resolve<ITransportBuilder>().Build(GetServerPath());
+            Resolve<ITaskRepeater>().Start();
         }
 
-        protected EndpointAddress BuildEndpointAddress(string address, ServerPath serverPath)
+        public ChannelConfiguration OpenChannel(string name)
         {
-            return GetContainer().Resolve<EndpointAddressBuilder>().Build(address, serverPath);
+            Contract.Requires(!string.IsNullOrEmpty(name));
+
+            return new ChannelConfiguration(
+                new EndpointAddress(name, GetServerPath()),
+                GetServerPath(),
+                this.buildActions);
         }
 
-        protected static IIocContainer GetContainer()
+        public Configurer RegisterHandlers(Action<MessageHandlerRouter> registrationAction)
         {
-            return IocContainerLocator.Locate();
+            registrationAction(Resolve<MessageHandlerRouter>());
+            return this;
+        }
+
+        public LocalChannelConfiguration OpenLocalChannel()
+        {
+            return new LocalChannelConfiguration(GetServerPath(), this.buildActions);
+        }
+
+        protected abstract ServerPath GetServerPath();
+
+        internal static UnitOfWorkRunner<TUnitOfWorkFactory> CreateUnitOfWorkRunner<TUnitOfWorkFactory>() 
+            where TUnitOfWorkFactory : class, IUnitOfWorkFactory
+        {
+            return new UnitOfWorkRunner<TUnitOfWorkFactory>(Resolve<IIocContainer>());
         }
     }
 }

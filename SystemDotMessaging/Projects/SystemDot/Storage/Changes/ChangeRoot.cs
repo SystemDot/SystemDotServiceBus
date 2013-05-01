@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+
 namespace SystemDot.Storage.Changes
 {
     public abstract class ChangeRoot
@@ -15,7 +18,10 @@ namespace SystemDot.Storage.Changes
 
         public virtual void Initialise()
         {
-            this.changeStore.GetChanges(this.Id).ForEach(ReplayChange);
+            List<Change> changes = this.changeStore.GetChanges(Id).ToList();
+            this.changeCount = changes.Count;
+
+            changes.ForEach(ReplayChange);
         }
 
         protected void AddChange(Change change)
