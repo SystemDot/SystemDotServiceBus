@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.TestPublisher
                 Console.ReadLine();
                 Console.WriteLine("Sending message");
 
-                for (int i = 0; i < 5000; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     Console.WriteLine("Hello" + i);
 

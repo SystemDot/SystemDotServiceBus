@@ -43,17 +43,5 @@ namespace SystemDot.Messaging.Specifications.publishing.receiving
 
         It should_send_an_acknowledgement_for_the_message = () =>
             Server.SentMessages.ExcludeSubscriptionRequests().ShouldContain(a => a.GetAcknowledgementId() == originalPersistenceId);
-
-        It should_mark_the_message_with_the_time_the_message_is_sent = () =>
-            Resolve<InMemoryChangeStore>()
-                .GetReceiveMessages(PersistenceUseType.SubscriberReceive, BuildAddress(ChannelName))
-                .First()
-                .GetLastTimeSent().ShouldBeGreaterThan(DateTime.MinValue);
-
-        It should_mark_the_message_with_the_amount_of_times_the_message_has_been_sent = () =>
-           Resolve<InMemoryChangeStore>()
-                .GetReceiveMessages(PersistenceUseType.SubscriberReceive, BuildAddress(ChannelName))
-                .First()
-                .GetAmountSent().ShouldEqual(1);
     }
 }

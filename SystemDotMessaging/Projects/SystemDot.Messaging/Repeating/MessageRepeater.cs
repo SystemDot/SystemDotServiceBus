@@ -22,20 +22,20 @@ namespace SystemDot.Messaging.Repeating
             this.repeatStrategy = repeatStrategy;
             this.systemTime = systemTime;
             this.messageCache = messageCache;
+
+            Messenger.Register<MessagingInitialising>(_ => FirstRepeat());
+        }
+
+        void FirstRepeat()
+        {
+            this.messageCache.GetOrderedMessages().ForEach(InputMessage);
         }
 
         public override void InputMessage(MessagePayload toInput)
         {
-            SetTimeOnMessage(toInput);
             OnMessageProcessed(toInput);
         }
 
-        void SetTimeOnMessage(MessagePayload toInput)
-        {
-            toInput.SetLastTimeSent(this.systemTime.GetCurrentDate());
-            toInput.IncreaseAmountSent();
-        }
-                
         public void Repeat()
         {
             this.repeatStrategy.Repeat(this, this.messageCache, this.systemTime);

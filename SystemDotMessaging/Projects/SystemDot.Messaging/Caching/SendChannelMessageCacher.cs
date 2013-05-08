@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Caching
         {
             toInput.SetPersistenceId(this.messageCache.Address, this.messageCache.UseType);
             
-            if(toInput.GetAmountSent() == 1)
+            if(toInput.GetAmountSent() == 0)
                 this.messageCache.AddMessageAndIncrementSequence(toInput);
             else    
                 this.messageCache.UpdateMessage(toInput);

@@ -3,7 +3,7 @@ using SystemDot.Messaging.Packaging;
 
 namespace SystemDot.Messaging.Repeating
 {
-    public static class MessagePayloadRepeatExtensions
+    public static class LastSentExtensions
     {
         public static void SetLastTimeSent(this MessagePayload payload, DateTime toSet)
         {
@@ -24,6 +24,7 @@ namespace SystemDot.Messaging.Repeating
 
         public static int GetAmountSent(this MessagePayload payload)
         {
+            AddHeaderIfNonExistant(payload);
             return payload.GetHeader<LastSentHeader>().Amount;
         }
 

@@ -76,6 +76,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .Queue()
                 .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, cache))
                 .ToProcessor(new LoadBalancer(cache, this.taskScheduler))
+                .ToProcessor(new LastSentRecorder(this.systemTime))
                 .ToEndPoint(this.messageSender);
 
             Messenger.Send(new RequestSendChannelBuilt

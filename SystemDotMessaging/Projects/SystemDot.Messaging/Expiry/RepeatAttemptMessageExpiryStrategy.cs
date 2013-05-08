@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Expiry
 
         public bool HasExpired(MessagePayload toCheck)
         {
-            return toCheck.GetAmountSent() > this.attempts;
+            return toCheck.GetAmountSent() == this.attempts;
         }
     }
 }

@@ -5,7 +5,7 @@ using SystemDot.Messaging.Packaging;
 
 namespace SystemDot.Messaging.Publishing
 {
-    class SubscriptionRequestor : ISubscriptionRequestor
+    class SubscriptionRequestor : IMessageProcessor<MessagePayload>
     {
         readonly EndpointAddress subscriberAddress;
         readonly bool isDurable;
@@ -16,9 +16,10 @@ namespace SystemDot.Messaging.Publishing
         {
             this.subscriberAddress = subscriberAddress;
             this.isDurable = isDurable;
+            Messenger.Register<MessagingInitialised>(_ => Start());
         }
 
-        public void Start()
+        void Start()
         {
             Logger.Info("Sending subscription request");
 

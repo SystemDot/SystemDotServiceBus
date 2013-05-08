@@ -36,7 +36,12 @@ namespace SystemDot.Messaging.Configuration
             this.buildActions.ForEach(a => a());
 
             Resolve<ITransportBuilder>().Build(GetServerPath());
+            
+            Messenger.Send(new MessagingInitialising());
+
             Resolve<ITaskRepeater>().Start();
+
+            Messenger.Send(new MessagingInitialised());
         }
 
         public ChannelConfiguration OpenChannel(string name)

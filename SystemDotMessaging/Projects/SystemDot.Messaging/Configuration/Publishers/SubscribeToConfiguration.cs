@@ -39,7 +39,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
         protected override void Build()
         {
             Resolve<SubscriberRecieveChannelBuilder>().Build(this.recieveSchema);
-            Resolve<SubscriptionRequestChannelBuilder>().Build(this.requestSchema).Start();
+            Resolve<SubscriptionRequestChannelBuilder>().Build(this.requestSchema);
         }
 
         protected override ServerPath GetServerPath()

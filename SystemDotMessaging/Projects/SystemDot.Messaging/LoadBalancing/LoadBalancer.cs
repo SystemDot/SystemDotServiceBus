@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.LoadBalancing
             this.taskScheduler = taskScheduler;
             this.unsentMessages = new ConcurrentQueue<MessagePayload>();
             this.sentMessages = new ConcurrentDictionary<Guid, MessagePayload>();
-
+            
             Messenger.Register<MessageRemovedFromCache>(m => FreeUpSlot(m.MessageId, m.Address, m.UseType));
 
             SendFeelerMessages();

@@ -46,10 +46,8 @@ namespace SystemDot.Messaging.Publishing.Builders
             this.serialiser = serialiser;
         }
 
-        public ISubscriptionRequestor Build(SubscriptionRequestChannelSchema schema)
+        public void Build(SubscriptionRequestChannelSchema schema)
         {
-            var requestor = new SubscriptionRequestor(schema.SubscriberAddress, schema.IsDurable);
-            
             SendMessageCache messageCache = new MessageCacheFactory(this.changeStore, this.systemTime)
                 .CreateSendCache(
                     PersistenceUseType.SubscriberRequestSend, 
@@ -58,15 +56,14 @@ namespace SystemDot.Messaging.Publishing.Builders
             this.acknowledgementHandler.RegisterCache(messageCache);
 
             MessagePipelineBuilder.Build()
-                .With(requestor)
+                .With(new SubscriptionRequestor(schema.SubscriberAddress, schema.IsDurable))
                 .ToProcessor(new MessageAddresser(schema.SubscriberAddress, schema.PublisherAddress))
                 .ToMessageRepeater(messageCache, this.systemTime, this.taskRepeater, EscalatingTimeRepeatStrategy.Default)
                 .ToProcessor(new SendChannelMessageCacher(messageCache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Pump()
+                .ToProcessor(new LastSentRecorder(this.systemTime))
                 .ToEndPoint(this.messageSender);
-
-            return requestor;
         }
     }
 }

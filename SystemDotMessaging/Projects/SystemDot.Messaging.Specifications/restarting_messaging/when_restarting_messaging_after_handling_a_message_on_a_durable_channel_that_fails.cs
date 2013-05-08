@@ -24,8 +24,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
         Establish context = () =>
         {
             messagesLoadedToCacheEvents = new List<MessageLoadedToCache>();
-            Messenger.Register<MessageLoadedToCache>(e => messagesLoadedToCacheEvents.Add(e));
-
+            
             changeStore = new InMemoryChangeStore(new PlatformAgnosticSerialiser());
             ConfigureAndRegister<IChangeStore>(changeStore);
 
@@ -60,8 +59,9 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
 
             Catch.Exception(() => Server.ReceiveMessage(payload2));
 
-            ResetIoc();
+            Reset();
             Initialise();
+            Messenger.Register<MessageLoadedToCache>(e => messagesLoadedToCacheEvents.Add(e));
 
             ConfigureAndRegister<IChangeStore>(changeStore);
             handler = new TestMessageHandler<int>();

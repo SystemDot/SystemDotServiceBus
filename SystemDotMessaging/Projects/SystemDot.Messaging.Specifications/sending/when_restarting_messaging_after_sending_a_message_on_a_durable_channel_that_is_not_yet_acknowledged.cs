@@ -26,8 +26,7 @@ namespace SystemDot.Messaging.Specifications.sending
         Establish context = () =>
         {
             messagesLoadedToCacheEvents = new List<MessageLoadedToCache>();
-            Messenger.Register<MessageLoadedToCache>(e => messagesLoadedToCacheEvents.Add(e));
-
+            
             changeStore = new InMemoryChangeStore(new PlatformAgnosticSerialiser());
 
             ConfigureAndRegister<IChangeStore>(changeStore);
@@ -42,12 +41,14 @@ namespace SystemDot.Messaging.Specifications.sending
             Bus.Send(Message1);
             Bus.Send(Message2);
 
-            ResetIoc();
+            Reset();
             Initialise();
 
             ConfigureAndRegister<IChangeStore>(changeStore);
             ConfigureAndRegister<ITaskRepeater>(new TestTaskRepeater());
             ConfigureAndRegister<ISystemTime>(new TestSystemTime(DateTime.Now.AddDays(1)));
+
+            Messenger.Register<MessageLoadedToCache>(e => messagesLoadedToCacheEvents.Add(e));
         };
 
         Because of = () =>

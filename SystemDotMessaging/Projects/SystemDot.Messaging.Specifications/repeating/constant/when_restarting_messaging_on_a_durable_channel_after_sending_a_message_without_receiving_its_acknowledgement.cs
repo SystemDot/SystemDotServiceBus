@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Specifications.repeating.constant
 
             Bus.Send(Message);
 
-            ResetIoc();
+            Reset();
             Initialise();
 
             ConfigureAndRegister<IChangeStore>(changeStore);

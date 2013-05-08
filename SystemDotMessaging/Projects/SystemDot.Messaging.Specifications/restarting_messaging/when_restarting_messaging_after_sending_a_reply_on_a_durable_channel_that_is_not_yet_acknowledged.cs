@@ -44,7 +44,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
 
             Bus.Reply(Reply);
 
-            ResetIoc();
+            Reset();
             Initialise();
 
             ConfigureAndRegister<IChangeStore>(changeStore);

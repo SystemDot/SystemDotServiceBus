@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
 
             Bus.Send(new object());
 
-            ResetIoc();
+            Reset();
             Initialise();
 
             ConfigureAndRegister<IChangeStore>(changeStore);

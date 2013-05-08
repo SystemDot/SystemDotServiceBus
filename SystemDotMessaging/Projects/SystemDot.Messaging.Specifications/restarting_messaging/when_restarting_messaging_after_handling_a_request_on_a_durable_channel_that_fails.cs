@@ -38,7 +38,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
                     ChannelName, 
                     PersistenceUseType.RequestSend)));
            
-            ResetIoc();
+            Reset();
             Initialise();
 
             ConfigureAndRegister<IChangeStore>(changeStore);

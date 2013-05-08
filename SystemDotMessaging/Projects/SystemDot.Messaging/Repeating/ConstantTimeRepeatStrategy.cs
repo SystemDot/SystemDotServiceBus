@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.Sending;
 using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Repeating
@@ -9,12 +8,10 @@ namespace SystemDot.Messaging.Repeating
     public class ConstantTimeRepeatStrategy : LoggingRepeatStrategy, IRepeatStrategy
     {
         readonly TimeSpan toRepeatEvery;
-        bool isFirstRepeat;
-
+        
         public ConstantTimeRepeatStrategy(TimeSpan toRepeatEvery)
         {
             this.toRepeatEvery = toRepeatEvery;
-            this.isFirstRepeat = true;
         }
 
         public void Repeat(MessageRepeater repeater, IMessageCache messageCache, ISystemTime systemTime)
@@ -23,16 +20,13 @@ namespace SystemDot.Messaging.Repeating
 
             messages.ForEach(m =>
             {
-                if ((m.IsMarkedAsSent() || this.isFirstRepeat)
+                if (m.GetAmountSent() > 0
                     && m.GetLastTimeSent() <= systemTime.GetCurrentDate().Add(-this.toRepeatEvery))
                 {
                     LogMessage(m);
                     repeater.InputMessage(m);
                 }
             });
-
-            this.isFirstRepeat = false;
         }
-
     }
 }

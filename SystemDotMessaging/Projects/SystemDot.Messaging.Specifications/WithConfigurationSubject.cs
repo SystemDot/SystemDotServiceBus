@@ -11,12 +11,13 @@ namespace SystemDot.Messaging.Specifications
     {
         Establish context = () =>
         {
-            ResetIoc();
+            Reset();
             MessagePipelineBuilder.BuildSynchronousPipelines = true;
         };
 
-        protected static void ResetIoc()
+        protected static void Reset()
         {
+            Messenger.Reset();
             IocContainerLocator.SetContainer(new IocContainer());
         }
 

@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Repeating
             ISystemTime systemTime,
             ITaskRepeater taskRepeater)
         {
-            return builder.ToMessageRepeater(messageCache, systemTime, taskRepeater, new SimpleRepeatStrategy());
+            return builder.ToMessageRepeater(messageCache, systemTime, taskRepeater, new NullRepeatStrategy());
         }
 
         public static ProcessorBuilder<MessagePayload> ToMessageRepeater(

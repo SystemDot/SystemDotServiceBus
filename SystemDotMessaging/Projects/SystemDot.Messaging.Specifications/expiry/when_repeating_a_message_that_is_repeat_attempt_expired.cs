@@ -10,13 +10,8 @@ namespace SystemDot.Messaging.Specifications.expiry
     [Subject(SpecificationGroup.Description)]
     public class when_repeating_a_message_that_is_repeat_attempt_expired : WithMessageConfigurationSubject
     {
-        
-
         Establish context = () =>
         {
-            var systemTime = new TestSystemTime(DateTime.Now);
-            ConfigureAndRegister<ISystemTime>(systemTime);
-
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("ReceiverAddress")
@@ -26,7 +21,6 @@ namespace SystemDot.Messaging.Specifications.expiry
 
             Bus.Send(1);
 
-            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
             Server.SentMessages.Clear();
         };
 

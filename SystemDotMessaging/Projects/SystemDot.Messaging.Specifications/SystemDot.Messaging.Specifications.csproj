@@ -99,11 +99,9 @@
     <Compile Include="handling\Fakes\SecondHandlerOfMessage2.cs" />
     <Compile Include="receiving\when_receiving_on_a_durable_channel.cs" />
     <Compile Include="repeating\constant\SpecificationGroup.cs" />
-    <Compile Include="repeating\constant\when_repeating_a_message_that_has_not_yet_been_sent.cs" />
     <Compile Include="repeating\constant\when_restarting_messaging_on_a_durable_channel_after_sending_a_message_without_receiving_its_acknowledgement.cs" />
     <Compile Include="repeating\escalating\http\SpecificationGroup.cs" />
     <Compile Include="repeating\escalating\http\when_repeating_a_message_and_four_seconds_have_passed.cs" />
-    <Compile Include="repeating\escalating\when_repeating_a_message_that_has_not_yet_been_sent.cs" />
     <Compile Include="repeating\escalating\when_restarting_messaging_on_a_durable_channel_after_sending_a_message_without_receiving_its_acknowledgement.cs" />
     <Compile Include="sending\when_configuring_a_channel.cs" />
     <Compile Include="sending\when_sending_on_a_durable_channel.cs" />

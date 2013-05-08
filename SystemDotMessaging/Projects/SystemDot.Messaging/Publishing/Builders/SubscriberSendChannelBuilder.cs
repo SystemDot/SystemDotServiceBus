@@ -73,6 +73,7 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()
                 .ToProcessor(new LoadBalancer(cache, this.taskScheduler))
+                .ToProcessor(new LastSentRecorder(this.systemTime))
                 .ToEndPoint(this.messageSender);
 
             Messenger.Send(new SubscriberSendChannelBuilt
