@@ -9,7 +9,7 @@ namespace SystemDot.Sql
     public class SqlChangeStore : Disposable, IChangeStore
     {
         readonly ISerialiser serialiser;
-        readonly static object CreateDbLock = new object();
+        readonly static object createDbLock = new object();
 
         public SqlChangeStore(ISerialiser serialiser)
         {
@@ -18,14 +18,14 @@ namespace SystemDot.Sql
 
         public void StoreChange(string changeRootId, Change change)
         {
-            using (var connection = new PooledConnection())
+            using (var connection = ConnectionHelper.GetConnection())
             {
                 CheckPointIfPossible(connection, changeRootId, change);
                 StoreChange(connection, changeRootId, change);
             }
         }
 
-        void CheckPointIfPossible(PooledConnection connection, string changeRootId, Change change)
+        void CheckPointIfPossible(SqlConnection connection, string changeRootId, Change change)
         {
             if (change is CheckPointChange)
             {
@@ -33,14 +33,14 @@ namespace SystemDot.Sql
             }
         }
 
-        void DeleteChanges(PooledConnection connection, string changeRootId)
+        void DeleteChanges(SqlConnection connection, string changeRootId)
         {
             connection.Execute(
                 "delete from ChangeStore where changeRootId = @changeRootId",
                 command => command.Parameters.AddWithValue("@changeRootId", changeRootId));
         }
 
-        void StoreChange(PooledConnection connection, string changeRootId, Change change)
+        void StoreChange(SqlConnection connection, string changeRootId, Change change)
         {
             connection.Execute(
                 "insert into ChangeStore(changeRootId, change) values(@changeRootId, @change)",
@@ -55,7 +55,7 @@ namespace SystemDot.Sql
         {
             var messages = new List<Change>();
 
-            using (var connection = new PooledConnection())
+            using (var connection = ConnectionHelper.GetConnection())
             {
                 connection.ExecuteReader(
                     "select change from ChangeStore where changeRootId = '" + changeRootId + "' order by sequence ASC",
@@ -72,18 +72,16 @@ namespace SystemDot.Sql
 
         public void Initialise(string location)
         {
-            lock (CreateDbLock)
+            lock (createDbLock)
             {
-                ConnectionPool.Clear();
                 ConnectionHelper.ConnectionString = location;
-
                 CreateInitialDatabaseObjects();
             }
         }
 
         void CreateInitialDatabaseObjects()
         {
-            using (var connection = new PooledConnection())
+            using (var connection = ConnectionHelper.GetConnection())
             {
                 connection.Execute(
                     @"IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'ChangeStore') AND type in (N'U'))
