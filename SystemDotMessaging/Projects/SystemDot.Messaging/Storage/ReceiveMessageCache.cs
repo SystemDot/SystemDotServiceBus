@@ -72,7 +72,6 @@ namespace SystemDot.Messaging.Storage
 
         public void ApplyChange(AddMessageChange change)
         {
-            var seq = change.Message.GetSequence();
             if (!this.messages.TryAdd(change.Message.Id, change.Message))
             {
                 this.messages[change.Message.Id] = change.Message;

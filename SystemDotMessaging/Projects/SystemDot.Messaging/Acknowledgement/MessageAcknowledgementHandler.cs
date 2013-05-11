@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using SystemDot.Logging;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 
@@ -23,7 +24,7 @@ namespace SystemDot.Messaging.Acknowledgement
             IMessageCache cache = GetCache(toInput.GetAcknowledgementId());
 
             var messageId = toInput.GetAcknowledgementId().MessageId;
-                
+
             if (cache != null)
                 cache.Delete(messageId);
         }

@@ -1,8 +1,5 @@
 using System.Diagnostics.Contracts;
-using SystemDot.Logging;
 using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.Packaging.Headers;
-using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Repeating

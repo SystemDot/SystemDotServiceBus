@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AD858522-EE68-42D3-AC97-239016E54A63}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{24379F85-FA6D-4E6E-98F3-75F3A9520FE6}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SystemDot.Messaging.LargeData.TestSubscriber</RootNamespace>
-    <AssemblyName>SystemDot.Messaging.LargeData.TestSubscriber</AssemblyName>
+    <RootNamespace>SystemDot.Log4Net</RootNamespace>
+    <AssemblyName>SystemDot.Log4Net</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,8 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\..\Dependencies\Log4Net\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,42 +42,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IMessageConsumer.cs" />
-    <Compile Include="MessageConsumer.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Log4NetLoggingMechanism.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\SystemDot.Esent\SystemDot.Esent.csproj">
-      <Project>{C7DBF177-FCDB-4530-A6CA-3B1EFBAD63EB}</Project>
-      <Name>SystemDot.Esent %28Windows\SystemDot.Esent%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SystemDot.Log4Net\SystemDot.Log4Net.csproj">
-      <Project>{24379F85-FA6D-4E6E-98F3-75F3A9520FE6}</Project>
-      <Name>SystemDot.Log4Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SystemDot.Messaging\SystemDot.Messaging.csproj">
-      <Project>{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}</Project>
-      <Name>SystemDot.Messaging %28Windows\SystemDot.Messaging%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SystemDot.Newtonsoft\SystemDot.Newtonsoft.csproj">
-      <Project>{377B573E-9BBD-40D3-9244-40D5B4F0B207}</Project>
-      <Name>SystemDot.Newtonsoft %28Windows\SystemDot.Newtonsoft%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SystemDot.Sql\SystemDot.Sql.csproj">
-      <Project>{80FFA53E-9C4D-45CE-A7D2-8FE0B6A9FBFB}</Project>
-      <Name>SystemDot.Sql</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SystemDot\SystemDot.csproj">
+    <ProjectReference Include="..\SystemDot\SystemDot.csproj">
       <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>
       <Name>SystemDot %28Windows\SystemDot%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SystemDot.Messaging.LargeData.Messages\SystemDot.Messaging.LargeData.Messages.csproj">
-      <Project>{e958f571-696c-482c-a6e9-713c9bcee4f8}</Project>
-      <Name>SystemDot.Messaging.LargeData.Messages</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

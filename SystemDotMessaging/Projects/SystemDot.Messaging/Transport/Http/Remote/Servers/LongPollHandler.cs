@@ -23,10 +23,7 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Servers
                 return;
 
             ServerPath serverPath = toHandle.GetLongPollRequestServerPath();
-
-            Logger.Debug("Handling long pole request for {0}", serverPath);
             outgoingMessages.AddRange(this.outgoingQueue.DequeueAll(serverPath));
-            Logger.Debug("Handled long pole request for {0}", serverPath);
         }
     }
 }

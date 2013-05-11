@@ -4,11 +4,11 @@ using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Caching
 {
-    class SendChannelMessageCacher : MessageProcessor
+    class SendChannelMessageCacheUpdater : MessageProcessor
     {
         readonly SendMessageCache messageCache;
 
-        public SendChannelMessageCacher(SendMessageCache messageCache)
+        public SendChannelMessageCacheUpdater(SendMessageCache messageCache)
         {
             Contract.Requires(messageCache != null);
             this.messageCache = messageCache;
@@ -22,8 +22,7 @@ namespace SystemDot.Messaging.Caching
 
         void PersistMessage(MessagePayload toInput)
         {
-            toInput.SetPersistenceId(this.messageCache.Address, this.messageCache.UseType);
-            this.messageCache.AddMessageAndIncrementSequence(toInput);
+            this.messageCache.UpdateMessage(toInput);
         }
     }
 }

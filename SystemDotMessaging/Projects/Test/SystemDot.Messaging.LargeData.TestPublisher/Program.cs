@@ -1,10 +1,12 @@
 ﻿using System;
-using SystemDot.Esent;
+using System.Configuration;
+using SystemDot.Log4Net;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.LargeData.Messages;
 using SystemDot.Messaging.Transport.Http.Configuration;
 using SystemDot.Newtonsoft;
+using SystemDot.Sql;
 
 namespace SystemDot.Messaging.LargeData.TestPublisher
 {
@@ -13,9 +15,9 @@ namespace SystemDot.Messaging.LargeData.TestPublisher
         static void Main(string[] args)
         {
             Configure.Messaging()
-                .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
+                .LoggingWith(new Log4NetLoggingMechanism { ShowInfo = true })
                 .UsingJsonSerialisation()
-                .UsingFilePersistence()
+                .UsingSqlPersistence(GetDatabaseConnectionString())
                 .UsingHttpTransport()
                 .AsAServer("PublisherServer")
                 .OpenChannel("TestPublisherChannel1")
@@ -28,23 +30,22 @@ namespace SystemDot.Messaging.LargeData.TestPublisher
                     .WithDurability()
                 .Initialise();
 
-            Console.WriteLine("Sending 15000 messages on TestPublisherChannel1");
+            Console.WriteLine("Press enter to send messages to channels");
+            Console.ReadLine();
             
             for (int i = 0; i < 15000; i++)
             {
                 Bus.Publish(new Channel1Message(i));
+                Bus.Publish(new Channel2Message(i));
             }
 
-            Console.WriteLine("TestPublisherChannel1 published");
+            Console.WriteLine("Sent");
+            Console.ReadLine();
+        }
 
-            //Console.WriteLine("Sending 15000 messages on TestPublisherChannel2");
-            
-            //for (int i = 0; i < 15000; i++)
-            //{
-            //    Bus.Publish(new Channel2Message(i));
-            //}
-
-            //Console.WriteLine("TestPublisherChannel2 published"); 
+        static string GetDatabaseConnectionString()
+        {
+            return ConfigurationManager.ConnectionStrings["MessageStoreConnectionString"].ConnectionString;
         }
     }
 }

@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -52,6 +53,10 @@
       <Project>{C7DBF177-FCDB-4530-A6CA-3B1EFBAD63EB}</Project>
       <Name>SystemDot.Esent %28Windows\SystemDot.Esent%29</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SystemDot.Log4Net\SystemDot.Log4Net.csproj">
+      <Project>{24379F85-FA6D-4E6E-98F3-75F3A9520FE6}</Project>
+      <Name>SystemDot.Log4Net</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SystemDot.Messaging\SystemDot.Messaging.csproj">
       <Project>{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}</Project>
       <Name>SystemDot.Messaging %28Windows\SystemDot.Messaging%29</Name>
@@ -59,6 +64,10 @@
     <ProjectReference Include="..\..\SystemDot.Newtonsoft\SystemDot.Newtonsoft.csproj">
       <Project>{377B573E-9BBD-40D3-9244-40D5B4F0B207}</Project>
       <Name>SystemDot.Newtonsoft %28Windows\SystemDot.Newtonsoft%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SystemDot.Sql\SystemDot.Sql.csproj">
+      <Project>{80FFA53E-9C4D-45CE-A7D2-8FE0B6A9FBFB}</Project>
+      <Name>SystemDot.Sql</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\SystemDot\SystemDot.csproj">
       <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>

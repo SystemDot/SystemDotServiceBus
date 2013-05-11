@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using SystemDot.Logging;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Sequencing;
@@ -107,7 +108,7 @@ namespace SystemDot.Messaging.Storage
         public void Delete(Guid id)
         {
             AddChange(new DeleteMessageChange(id));
-
+            
             Messenger.Send(new MessageRemovedFromCache
             {
                 MessageId = id,
@@ -116,7 +117,7 @@ namespace SystemDot.Messaging.Storage
             });
         }
 
-        public void ApplyChange(DeleteMessageChange change)
+        public void ApplyChange(DeleteMessageChange change) 
         {
             MessagePayload temp;
             this.messages.TryRemove(change.Id, out temp);

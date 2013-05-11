@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Net;
 using System.Threading.Tasks;
-using SystemDot.Logging;
 
 namespace SystemDot.Http
 {
@@ -43,8 +42,6 @@ namespace SystemDot.Http
 
         private void HandleRequest(HttpListenerContext context)
         {
-            Logger.Debug("HTTP Server Recieved request");
-
             try
             {
                 this.handler.HandleRequest(context.Request.InputStream, context.Response.OutputStream);

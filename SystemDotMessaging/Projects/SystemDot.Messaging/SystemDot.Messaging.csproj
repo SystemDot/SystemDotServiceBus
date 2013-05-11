@@ -52,6 +52,7 @@
     <Compile Include="Caching\PersistenceSourceRecorder.cs" />
     <Compile Include="Caching\ReceiveChannelMessageCacher.cs" />
     <Compile Include="Caching\SendChannelMessageCacher.cs" />
+    <Compile Include="Caching\SendChannelMessageCacheUpdater.cs" />
     <Compile Include="Configuration\HandlerBasedOnConfiguration.cs" />
     <Compile Include="Configuration\HandlerResolutionConfiguration.cs" />
     <Compile Include="Configuration\ExternalSources\ExternalSourcesConfigurer.cs" />

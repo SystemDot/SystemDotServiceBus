@@ -11,7 +11,8 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.load_balancing
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_an_acknowledgement_for_one_of_twenty_one_sent_messages_but_on_a_different_address : WithMessageConfigurationSubject
+    public class when_receiving_an_acknowledgement_for_one_of_twenty_one_sent_messages_but_on_a_different_address 
+        : WithMessageConfigurationSubject
     {
         const string SenderAddress = "SenderAddress";
         const string RecieverAddress = "ReceiverAddress";

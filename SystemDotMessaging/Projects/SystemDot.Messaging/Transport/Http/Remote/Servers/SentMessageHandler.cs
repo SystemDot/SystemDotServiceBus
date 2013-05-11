@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Servers
             if (toHandle.IsLongPollRequest()) 
                 return;
             
-            Logger.Debug("Handling sent message for {0}", toHandle.GetToAddress());
+            Logger.Info("Handling sent message for {0}", toHandle.GetToAddress());
             this.outgoingQueue.Enqueue(toHandle);
         }
     }

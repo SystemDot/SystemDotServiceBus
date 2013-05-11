@@ -48,18 +48,19 @@ namespace SystemDot.Messaging.Publishing.Builders
 
         public void Build(SubscriptionRequestChannelSchema schema)
         {
-            SendMessageCache messageCache = new MessageCacheFactory(this.changeStore, this.systemTime)
+            SendMessageCache cache = new MessageCacheFactory(this.changeStore, this.systemTime)
                 .CreateSendCache(
                     PersistenceUseType.SubscriberRequestSend, 
                     schema.PublisherAddress);
 
-            this.acknowledgementHandler.RegisterCache(messageCache);
+            this.acknowledgementHandler.RegisterCache(cache);
 
             MessagePipelineBuilder.Build()
                 .With(new SubscriptionRequestor(schema.SubscriberAddress, schema.IsDurable))
                 .ToProcessor(new MessageAddresser(schema.SubscriberAddress, schema.PublisherAddress))
-                .ToMessageRepeater(messageCache, this.systemTime, this.taskRepeater, EscalatingTimeRepeatStrategy.Default)
-                .ToProcessor(new SendChannelMessageCacher(messageCache))
+                .ToProcessor(new SendChannelMessageCacher(cache))
+                .ToMessageRepeater(cache, this.systemTime, this.taskRepeater, EscalatingTimeRepeatStrategy.Default)
+                .ToProcessor(new SendChannelMessageCacheUpdater(cache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Pump()
                 .ToProcessor(new LastSentRecorder(this.systemTime))

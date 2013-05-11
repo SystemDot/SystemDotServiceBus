@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
+using SystemDot.Logging;
 using SystemDot.Serialisation;
 using SystemDot.Sql.Connections;
 using SystemDot.Storage.Changes;
@@ -42,6 +43,8 @@ namespace SystemDot.Sql
 
         void StoreChange(SqlConnection connection, string changeRootId, Change change)
         {
+            Logger.Debug("Storing change in sql");
+            
             connection.Execute(
                 "insert into ChangeStore(changeRootId, change) values(@changeRootId, @change)",
                 command =>
