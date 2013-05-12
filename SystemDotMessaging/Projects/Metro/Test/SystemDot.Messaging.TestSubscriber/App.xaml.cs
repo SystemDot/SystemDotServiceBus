@@ -103,16 +103,4 @@ namespace SystemDot.Messaging.TestSubscriber
             deferral.Complete();
         }
     }
-
-    class ViewModelLocator
-    {
-        static IocContainer container;
-
-        public static void SetContainer(IocContainer toSet)
-        {
-            container = toSet;
-        }
-
-        public MainPageViewModel MainPage { get { return container.Resolve<MainPageViewModel>(); } }
-    }
 }
