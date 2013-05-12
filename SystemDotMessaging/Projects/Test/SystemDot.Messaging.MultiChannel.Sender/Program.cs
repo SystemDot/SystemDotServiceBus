@@ -3,7 +3,6 @@ using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Test.Messages;
 using SystemDot.Messaging.Transport.Http.Configuration;
 
@@ -19,11 +18,11 @@ namespace SystemDot.Messaging.MultiChannel.Sender
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
                 .RegisterHandlersFromAssemblyOf<Program>()
-                .BasedOn<IMessageConsumer>()
-                .ResolveBy(container.Resolve)
+                    .BasedOn<IMessageConsumer>()
+                    .ResolveBy(container.Resolve)
                 .UsingFilePersistence()
                 .UsingHttpTransport()
-                .AsAServer("Server")
+                    .AsAServer("Server")
                 .OpenChannel("TestSenderA")
                     .ForRequestReplySendingTo("TestRecieverA@/ServerA")
                     .OnlyForMessages(FilteredBy.NamePattern("Channel1"))

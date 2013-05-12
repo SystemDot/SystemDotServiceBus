@@ -1,7 +1,7 @@
 using System;
 using Windows.UI.Core;
 
-namespace SystemDot.Messaging.TestSubscriber.ViewModels
+namespace SystemDot.Messaging.TestSender.ViewModels
 {
     public class MessageMarshallingHook : IMessageProcessor<object, object>
     {
@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
 
         public async void InputMessage(object toInput)
         {
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => MessageProcessed(toInput));
+            await this.dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => this.MessageProcessed(toInput));
         }
 
         public event Action<object> MessageProcessed;

@@ -1,7 +1,7 @@
 ﻿using SystemDot.Ioc;
-using SystemDot.Messaging.TestSubscriber.ViewModels;
+using SystemDot.Messaging.TestSender.ViewModels;
 
-namespace SystemDot.Messaging.TestSubscriber
+namespace SystemDot.Messaging.TestSender
 {
     public class ViewModelLocator
     {

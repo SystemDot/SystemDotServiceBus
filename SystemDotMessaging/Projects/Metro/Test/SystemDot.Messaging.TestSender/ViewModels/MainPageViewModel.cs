@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using SystemDot.Messaging.Test.Messages;
 
-namespace SystemDot.Messaging.TestSubscriber.ViewModels
+namespace SystemDot.Messaging.TestSender.ViewModels
 {
     public class MainPageViewModel
     {
@@ -13,23 +13,23 @@ namespace SystemDot.Messaging.TestSubscriber.ViewModels
 
         public MainPageViewModel(ObservableLoggingMechanism logging)
         {
-            Logging = logging.Messages;
-            Messages = new ObservableCollection<string>();
-            Replies = new ObservableCollection<string>();
+            this.Logging = logging.Messages;
+            this.Messages = new ObservableCollection<string>();
+            this.Replies = new ObservableCollection<string>();
         }
 
         public void SendMessage(int i)
         {
             var query = new TestMessage {Text = "Hello" + i};
-            Messages.Add(query.Text);
+            this.Messages.Add(query.Text);
             Bus.Send(query);
         }
 
         public void Clear()
         {
-            Messages.Clear();
-            Replies.Clear();
-            Logging.Clear();
+            this.Messages.Clear();
+            this.Replies.Clear();
+            this.Logging.Clear();
         }
     }
 }

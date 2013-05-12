@@ -1,7 +1,7 @@
 ﻿using SystemDot.Messaging.Test.Messages;
-using SystemDot.Messaging.TestSubscriber.ViewModels;
+using SystemDot.Messaging.TestSender.ViewModels;
 
-namespace SystemDot.Messaging.TestSubscriber.Handlers
+namespace SystemDot.Messaging.TestSender.Handlers
 {
     public class ResponseHandler : IMessageConsumer
     {
@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.TestSubscriber.Handlers
 
         public void Handle(TestMessage message)
         {
-            viewModel.Replies.Add(message.Text);
+            this.viewModel.Replies.Add(message.Text);
         }
     }
 }

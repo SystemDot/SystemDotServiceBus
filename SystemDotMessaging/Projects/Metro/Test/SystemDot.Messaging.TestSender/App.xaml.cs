@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.TestSubscriber.Handlers;
-using SystemDot.Messaging.TestSubscriber.ViewModels;
+using SystemDot.Messaging.TestSender.Handlers;
+using SystemDot.Messaging.TestSender.ViewModels;
 using SystemDot.Messaging.Transport.Http.Configuration;
 using SystemDot.Newtonsoft;
 using Windows.ApplicationModel;
@@ -16,7 +15,7 @@ using Windows.UI.Xaml.Controls;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
 
-namespace SystemDot.Messaging.TestSubscriber
+namespace SystemDot.Messaging.TestSender
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
@@ -49,13 +48,13 @@ namespace SystemDot.Messaging.TestSubscriber
             Configure.Messaging()
                 .LoggingWith(container.Resolve<ObservableLoggingMechanism>())
                 .RegisterHandlersFromAssemblyOf<ResponseHandler>()
-                .BasedOn<IMessageConsumer>()
-                .ResolveBy(container.Resolve)
+                    .BasedOn<IMessageConsumer>()
+                    .ResolveBy(container.Resolve)
                 .UsingFilePersistence()
                 .UsingJsonSerialisation()
                 .UsingHttpTransport()
-                .AsARemoteClient("MetroClient")
-                .UsingProxy(MessageServer.Local("MetroProxy"))
+                    .AsARemoteClient("MetroClient")
+                    .UsingProxy(MessageServer.Local("MetroProxy"))
                 .OpenChannel("TestMetroRequest")
                     .ForRequestReplySendingTo("TestReply@/ReceiverServer")
                     .WithDurability()

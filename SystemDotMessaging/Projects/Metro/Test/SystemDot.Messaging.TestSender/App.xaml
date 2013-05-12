@@ -1,8 +1,7 @@
 ﻿<Application
-    x:Class="SystemDot.Messaging.TestSubscriber.App"
+    x:Class="SystemDot.Messaging.TestSender.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:SystemDot.Messaging.TestSubscriber">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:SystemDot.Messaging.TestSender">
 
     <Application.Resources>
         <ResourceDictionary>

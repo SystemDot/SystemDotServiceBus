@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.TestPublisher
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = true })
                 .UsingFilePersistence()
                 .UsingHttpTransport()
-                .AsAServer("PublisherServer")
+                    .AsAServer("PublisherServer")
                 .OpenChannel("TestPublisher")
                     .ForPublishing()
                     .WithDurability()

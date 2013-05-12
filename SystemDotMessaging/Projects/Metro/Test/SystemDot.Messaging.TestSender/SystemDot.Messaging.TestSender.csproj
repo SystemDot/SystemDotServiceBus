@@ -7,8 +7,8 @@
     <ProjectGuid>{E6C4ACD0-A177-45C9-9743-664B27109936}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SystemDot.Messaging.TestSubscriber</RootNamespace>
-    <AssemblyName>SystemDot.Messaging.TestSubscriber</AssemblyName>
+    <RootNamespace>SystemDot.Messaging.TestSender</RootNamespace>
+    <AssemblyName>SystemDot.Messaging.TestSender</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

@@ -17,6 +17,7 @@ namespace System.IoC.Example
             Console.WriteLine(ioc.Resolve<IInterfaceForBaseType>().Say());
             Console.WriteLine(ioc.Resolve<IInterfaceForDerivedType>().Say());
             Console.WriteLine(ioc.Resolve<ICustomInterface>().Say());
+
             try
             {
                 ioc.Resolve<Object>();

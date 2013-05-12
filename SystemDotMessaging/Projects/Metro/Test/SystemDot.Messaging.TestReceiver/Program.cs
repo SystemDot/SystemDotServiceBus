@@ -4,8 +4,9 @@ using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Transport.Http.Configuration;
+using SystemDot.Newtonsoft;
 
-namespace SystemDot.Messaging.MultiChannel.RecieverA
+namespace SystemDot.Messaging.TestReceiver
 {
     class Program
     {
@@ -15,19 +16,25 @@ namespace SystemDot.Messaging.MultiChannel.RecieverA
             container.RegisterFromAssemblyOf<Program>();
 
             Configure.Messaging()
-                .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
+                .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false })
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
                     .ResolveBy(container.Resolve)
                 .UsingFilePersistence()
+                .UsingJsonSerialisation()
                 .UsingHttpTransport()
-                    .AsAServer("ServerA")
-                .OpenChannel("TestRecieverA").ForRequestReplyRecieving()
+                    .AsARemoteServer("MetroProxy")
+                    .AsAServer("ReceiverServer")
+                .OpenChannel("TestReply")
+                    .ForRequestReplyRecieving()
                     .WithDurability()
                 .Initialise();
 
-            Console.WriteLine("I am reciever A");
-            Console.ReadLine();                
+            Console.WriteLine("I am the reciever. Press enter to exit");
+
+            Console.ReadLine();
         }
     }
+
+    
 }

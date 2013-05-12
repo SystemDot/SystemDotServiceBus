@@ -3,7 +3,6 @@ using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Transport.Http.Configuration;
 using SystemDot.Newtonsoft;
 
@@ -19,12 +18,12 @@ namespace SystemDot.Messaging.TestPointToPoint.Receiver
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false })
                 .RegisterHandlersFromAssemblyOf<Program>()
-                .BasedOn<IMessageConsumer>()
-                .ResolveBy(container.Resolve)
+                    .BasedOn<IMessageConsumer>()
+                    .ResolveBy(container.Resolve)
                 .UsingFilePersistence()
                 .UsingJsonSerialisation()
                 .UsingHttpTransport()
-                .AsAServer("ReceiverServer")
+                    .AsAServer("ReceiverServer")
                 .OpenChannel("TestReceive")
                     .ForPointToPointReceiving()
                     .WithDurability()

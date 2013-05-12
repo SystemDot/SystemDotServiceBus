@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using SystemDot.Logging;
 using Windows.UI.Core;
 
-namespace SystemDot.Messaging.TestSubscriber
+namespace SystemDot.Messaging.TestSender
 {
     public class ObservableLoggingMechanism : ILoggingMechanism
     {
