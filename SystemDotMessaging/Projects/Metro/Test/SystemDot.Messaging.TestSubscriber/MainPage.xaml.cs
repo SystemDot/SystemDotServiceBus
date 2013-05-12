@@ -1,4 +1,5 @@
 ﻿using SystemDot.Messaging.Configuration;
+using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Test.Messages;
 using SystemDot.Messaging.TestSubscriber.ViewModels;
 using Windows.UI.Xaml.Controls;
@@ -16,7 +17,6 @@ namespace SystemDot.Messaging.TestSubscriber
         public MainPage()
         {
             this.InitializeComponent();
-            this.DataContext = new MainPageViewModel();
         }
 
         /// <summary>

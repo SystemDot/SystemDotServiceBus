@@ -11,7 +11,6 @@ namespace SystemDot.Esent
     public class EsentChangeStore : Disposable, IChangeStore
     {
         const string DatabaseName = "Messaging";
-        const string InstanceName = "Instance";
         
         readonly IFileSystem fileSystem;
         readonly ISerialiser serialiser;
@@ -29,7 +28,7 @@ namespace SystemDot.Esent
 
         public void Initialise(string connection)
         {
-            this.instance = new Instance(InstanceName);
+            this.instance = new Instance(connection);
             this.instance.Parameters.MaxVerPages = 1024;
             this.instance.Init();
 

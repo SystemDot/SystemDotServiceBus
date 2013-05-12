@@ -14,7 +14,7 @@
                  -->
                 <ResourceDictionary Source="Common/StandardStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
+            <local:ViewModelLocator x:Key="Locator"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
