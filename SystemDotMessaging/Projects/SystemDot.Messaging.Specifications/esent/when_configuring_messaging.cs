@@ -1,7 +1,7 @@
 using SystemDot.Esent;
+using SystemDot.Messaging.Configuration;
 using SystemDot.Storage.Changes;
 using Machine.Specifications;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 
 namespace SystemDot.Messaging.Specifications.esent
 {

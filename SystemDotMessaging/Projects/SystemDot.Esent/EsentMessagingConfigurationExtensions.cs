@@ -1,8 +1,8 @@
+using SystemDot.Esent;
 using SystemDot.Ioc;
-using SystemDot.Messaging.Configuration;
 using SystemDot.Storage.Changes;
 
-namespace SystemDot.Esent
+namespace SystemDot.Messaging.Configuration
 {
     public static class EsentMessagingConfigurationExtensions
     {

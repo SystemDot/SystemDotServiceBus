@@ -157,11 +157,9 @@
     <Compile Include="Transport\Http\Remote\Servers\Configuration\HttpRemoteServerComponents.cs" />
     <Compile Include="Transport\Http\Configuration\HttpTransportComponents.cs" />
     <Compile Include="Transport\Http\Configuration\HttpTransportConfiguration.cs" />
-    <Compile Include="Transport\Http\Configuration\MessagingConfigurationExtensions.cs" />
     <Compile Include="Transport\InProcess\Configuration\InProcessTransportBuilder.cs" />
     <Compile Include="Transport\ITransportBuilder.cs" />
     <Compile Include="Transport\InProcess\Configuration\InProcessTransportComponents.cs" />
-    <Compile Include="Transport\InProcess\Configuration\MessagingConfigurationExtensions.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="UnitOfWork\IUnitOfWorkFactory.cs" />
     <Compile Include="UnitOfWork\NullUnitOfWork.cs" />

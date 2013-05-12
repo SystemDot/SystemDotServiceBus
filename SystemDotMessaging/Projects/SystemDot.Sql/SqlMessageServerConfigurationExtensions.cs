@@ -1,8 +1,8 @@
 using SystemDot.Ioc;
-using SystemDot.Messaging.Configuration;
+using SystemDot.Sql;
 using SystemDot.Storage.Changes;
 
-namespace SystemDot.Sql
+namespace SystemDot.Messaging.Configuration
 {
     public static class SqlMessagingConfigurationExtensions
     {

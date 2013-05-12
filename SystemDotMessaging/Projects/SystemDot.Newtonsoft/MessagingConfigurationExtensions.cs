@@ -1,8 +1,7 @@
-using SystemDot.Ioc;
-using SystemDot.Messaging.Configuration;
+using SystemDot.Newtonsoft;
 using SystemDot.Serialisation;
 
-namespace SystemDot.Newtonsoft
+namespace SystemDot.Messaging.Configuration
 {
     public static class MessagingConfigurationExtensions
     {

@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.TestPointToPoint.Sender
                 .UsingFilePersistence()
                 .UsingJsonSerialisation()
                 .UsingHttpTransport()
-                .AsAServer("SenderServer")
+                    .AsAServer("SenderServer")
                 .OpenChannel("TestSend")
                     .ForPointToPointSendingTo("TestReceive@/ReceiverServer")
                     .WithDurability()
