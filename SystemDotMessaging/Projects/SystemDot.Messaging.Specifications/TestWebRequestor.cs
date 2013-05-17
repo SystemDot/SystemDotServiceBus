@@ -43,7 +43,12 @@ namespace SystemDot.Messaging.Specifications
             RequestsMade.Add(request);
         }
 
-        public void SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest, Action<Stream> toPerformOnResponse)
+        public void SendPut(
+            FixedPortAddress address, 
+            Action<Stream> toPerformOnRequest, 
+            Action<Stream> toPerformOnResponse, 
+            Action toPerformOnError, 
+            Action toPerformOnCompletion)
         {
             if (this.toCheck.Url != address.Url)
                 return;
@@ -69,6 +74,8 @@ namespace SystemDot.Messaging.Specifications
             matching.ForEach(m => this.messages.Remove(m));
 
             toPerformOnResponse(response);
+
+            toPerformOnCompletion();
         }
 
         public void AddMessages(params MessagePayload[] messagePayloads)

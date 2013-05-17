@@ -1,6 +1,5 @@
 using System;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using SystemDot.Parallelism;
 using SystemDot.Specifications;
 using Machine.Specifications;
@@ -10,8 +9,6 @@ namespace SystemDot.Messaging.Specifications.expiry
     [Subject(SpecificationGroup.Description)]
     public class when_repeating_a_message_that_is_time_expired : WithMessageConfigurationSubject
     {
-        
-
         Establish context = () =>
         {
             var systemTime = new TestSystemTime(DateTime.Now);

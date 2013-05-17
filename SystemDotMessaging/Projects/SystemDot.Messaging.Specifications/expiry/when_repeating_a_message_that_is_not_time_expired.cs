@@ -8,17 +8,12 @@ namespace SystemDot.Messaging.Specifications.expiry
     [Subject(SpecificationGroup.Description)]
     public class when_repeating_a_message_that_is_not_time_expired : WithMessageConfigurationSubject
     {
-        
-
-        Establish context = () =>
-        {
-            Configuration.Configure.Messaging()
-                .UsingInProcessTransport()
-                .OpenChannel("ReceiverAddress")
-                .ForPointToPointSendingTo("SenderAddress")
-                .WithMessageExpiry(MessageExpiry.ByTime(TimeSpan.FromSeconds(4)))
-                .Initialise();
-        };
+        Establish context = () => Configuration.Configure.Messaging()
+            .UsingInProcessTransport()
+            .OpenChannel("ReceiverAddress")
+            .ForPointToPointSendingTo("SenderAddress")
+            .WithMessageExpiry(MessageExpiry.ByTime(TimeSpan.FromSeconds(4)))
+            .Initialise();
 
         Because of = () => Bus.Send(1);
 

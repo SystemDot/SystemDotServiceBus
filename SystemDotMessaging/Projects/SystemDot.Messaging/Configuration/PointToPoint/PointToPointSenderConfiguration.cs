@@ -23,6 +23,7 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
             {
                 RepeatStrategy = EscalatingTimeRepeatStrategy.Default,
                 ExpiryStrategy = new PassthroughMessageExpiryStrategy(),
+                ExpiryAction = () => { },
                 FilteringStrategy = new PassThroughMessageFilterStategy(),
                 ReceiverAddress = toAddress,
                 FromAddress = fromAddress
@@ -48,6 +49,14 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
         public PointToPointSenderConfiguration WithMessageExpiry(IMessageExpiryStrategy strategy)
         {
             this.sendSchema.ExpiryStrategy = strategy;
+            return this;
+        }
+
+        public PointToPointSenderConfiguration WithMessageExpiry(IMessageExpiryStrategy strategy, Action toRunOnExpiry)
+        {
+            this.sendSchema.ExpiryStrategy = strategy;
+            this.sendSchema.ExpiryAction = toRunOnExpiry;
+
             return this;
         }
 

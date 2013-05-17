@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Configuration;
 using SystemDot.Log4Net;
-using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.LargeData.Messages;
-using SystemDot.Messaging.Transport.Http.Configuration;
-using SystemDot.Newtonsoft;
-using SystemDot.Sql;
 
 namespace SystemDot.Messaging.LargeData.TestPublisher
 {
@@ -17,7 +13,8 @@ namespace SystemDot.Messaging.LargeData.TestPublisher
             Configure.Messaging()
                 .LoggingWith(new Log4NetLoggingMechanism { ShowInfo = true })
                 .UsingJsonSerialisation()
-                .UsingSqlPersistence(GetDatabaseConnectionString())
+                .UsingFilePersistence()
+                //.UsingSqlPersistence(GetDatabaseConnectionString())
                 .UsingHttpTransport()
                 .AsAServer("PublisherServer")
                 .OpenChannel("TestPublisherChannel1")

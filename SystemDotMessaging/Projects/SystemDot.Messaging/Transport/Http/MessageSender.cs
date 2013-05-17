@@ -26,13 +26,7 @@ namespace SystemDot.Messaging.Transport.Http
         {
             LogMessage(toInput);
 
-            try
-            {
-                this.requestor.SendPut(toInput.GetToAddress().ServerPath.GetUrl(), s => this.formatter.Serialise(s, toInput));
-            }
-            catch (Exception)
-            {
-            }
+            this.requestor.SendPut(toInput.GetToAddress().ServerPath.GetUrl(), s => this.formatter.Serialise(s, toInput));
         }
 
         static void LogMessage(MessagePayload toInput)

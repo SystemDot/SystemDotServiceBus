@@ -15,24 +15,28 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients
     {
         readonly IWebRequestor requestor;
         readonly ISerialiser formatter;
-        readonly ITaskStarter starter;
+        readonly ITaskScheduler scheduler;
         readonly IMessageReceiver receiver;
+        ITaskStarter starter;
 
         public LongPoller(
             IWebRequestor requestor, 
             ISerialiser formatter, 
-            ITaskStarter starter, 
-            IMessageReceiver receiver)
+            ITaskScheduler scheduler, 
+            IMessageReceiver receiver, 
+            ITaskStarter starter)
         {
             Contract.Requires(requestor != null);
             Contract.Requires(formatter != null);
-            Contract.Requires(starter != null);
+            Contract.Requires(scheduler != null);
             Contract.Requires(receiver != null);
+            Contract.Requires(starter != null);
 
             this.requestor = requestor;
             this.formatter = formatter;
-            this.starter = starter;
+            this.scheduler = scheduler;
             this.receiver = receiver;
+            this.starter = starter;
         }
 
         public void ListenTo(ServerPath toListenFor)
@@ -46,30 +50,22 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients
         {
             Logger.Info("Long polling for messages for {0}", toListenFor);
 
-            try
-            {
-                this.requestor.SendPut(
-                    toListenFor.GetUrl(),
-                    requestStream => this.formatter.Serialise(requestStream, CreateLongPollPayload(toListenFor)),
-                    response =>
-                    {
-                        try
-                        {
-                            RecieveResponse(response);
-                        }
-                        catch{}
-                        StartNextPoll(toListenFor);
-                    });
-            }
-            catch (Exception)
-            {
-                StartNextPoll(toListenFor);
-            }
+            this.requestor.SendPut(
+                toListenFor.GetUrl(),
+                requestStream => this.formatter.Serialise(requestStream, CreateLongPollPayload(toListenFor)),
+                RecieveResponse,
+                () => StartNextPoll(toListenFor, TimeSpan.FromSeconds(4)),
+                () => StartNextPoll(toListenFor));
         }
 
         void StartNextPoll(ServerPath toListenFor)
         {
             this.starter.StartTask(() => Poll(toListenFor));
+        }
+
+        void StartNextPoll(ServerPath toListenFor, TimeSpan after)
+        {
+            this.scheduler.ScheduleTask(after,() => Poll(toListenFor));
         }
 
         MessagePayload CreateLongPollPayload(ServerPath toListenFor)

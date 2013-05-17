@@ -3,9 +3,6 @@ using System.Configuration;
 using SystemDot.Ioc;
 using SystemDot.Log4Net;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Transport.Http.Configuration;
-using SystemDot.Newtonsoft;
-using SystemDot.Sql;
 
 namespace SystemDot.Messaging.LargeData.TestSubscriber
 {
@@ -22,7 +19,8 @@ namespace SystemDot.Messaging.LargeData.TestSubscriber
                 .RegisterHandlersFromAssemblyOf<Program>()
                 .BasedOn<IMessageConsumer>()
                 .ResolveBy(container.Resolve)
-                .UsingSqlPersistence(GetDatabaseConnectionString())
+                .UsingFilePersistence()
+                //.UsingSqlPersistence(GetDatabaseConnectionString())
                 .UsingHttpTransport()
                 .AsAServer("SubscriberServer")
                 .OpenChannel("Channel1Subscriber")
