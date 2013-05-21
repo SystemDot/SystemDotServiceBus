@@ -18,9 +18,15 @@ namespace SystemDot.Messaging.LargeData.TestSubscriber
                 .UsingIocContainer(container)
                 .UsingJsonSerialisation()
                 .RegisterHandlersFromAssemblyOf<Program>()
+<<<<<<< HEAD
                     .BasedOn<IMessageConsumer>()
+                .UsingSqlPersistence(GetDatabaseConnectionString())
+=======
+                .BasedOn<IMessageConsumer>()
+                .ResolveBy(container.Resolve)
                 .UsingFilePersistence()
                 //.UsingSqlPersistence(GetDatabaseConnectionString())
+>>>>>>> origin/Development
                 .UsingHttpTransport()
                     .AsAServer("SubscriberServer")
                 .OpenChannel("Channel1Subscriber")

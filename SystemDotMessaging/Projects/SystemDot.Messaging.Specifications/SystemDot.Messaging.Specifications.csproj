@@ -58,6 +58,9 @@
     <Compile Include="batching\when_sending_messages_inside_a_batch.cs" />
     <Compile Include="distribution\SpecificationGroup.cs" />
     <Compile Include="expiry\request_reply\SpecificationGroup.cs" />
+    <Compile Include="expiry\request_reply\when_replying_with_a_time_expired_message_on_a_channel_with_an_action_to_execute_on_expiry_set.cs" />
+    <Compile Include="expiry\request_reply\when_sending_a_time_expired_request_down_a_channel_with_an_action_to_execute_on_expiry_set.cs" />
+    <Compile Include="expiry\when_repeating_a_message_that_is_time_expired_with_an_action_to_execute_on_expiry_set.cs" />
     <Compile Include="filtering\publishing\SpecificationGroup.cs" />
     <Compile Include="filtering\request_reply\SpecificationGroup.cs" />
     <Compile Include="filtering\SpecificationGroup.cs" />
@@ -283,10 +286,7 @@
     <Compile Include="transport\http\remote\serving\When_configuring_a_remote_server.cs" />
     <Compile Include="transport\http\remote\serving\when_handling_request_that_fails_deserialisation.cs" />
     <Compile Include="transport\http\WithServerConfigurationSubject.cs" />
-    <Compile Include="transport\http\remote\client\when_configuring_a_remote_client_and_the_long_poll_request_fails.cs" />
     <Compile Include="FailingSerialiser.cs" />
-    <Compile Include="transport\http\remote\client\when_sending_a_message_and_the_web_requestor_throws_an_exception.cs" />
-    <Compile Include="FailingWebRequestor.cs" />
     <Compile Include="TestSerialiser.cs" />
     <Compile Include="transport\http\remote\client\when_sending_a_message_using_a_local_proxy.cs" />
     <Compile Include="receiving\when_receiving_a_message_that_does_not_have_the_expected_address.cs" />

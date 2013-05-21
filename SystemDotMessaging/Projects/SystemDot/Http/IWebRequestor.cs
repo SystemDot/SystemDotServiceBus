@@ -6,7 +6,13 @@ namespace SystemDot.Http
     public interface IWebRequestor
     {
         void SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest);
-        void SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest, Action<Stream> toPerformOnResponse);
+        
+        void SendPut(
+            FixedPortAddress address, 
+            Action<Stream> toPerformOnRequest, 
+            Action<Stream> toPerformOnResponse, 
+            Action toPerformOnError,
+            Action toPerformOnCompletion);
         
     }
 }

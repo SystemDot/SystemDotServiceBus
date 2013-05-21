@@ -7,9 +7,25 @@ namespace SystemDot
 {
     public class PutSender
     {
-        public static async void Send(Action<Stream> toPerformOnRequest, Action<Stream> toPerformOnResponse, string url)
+        public static async void Send(
+            Action<Stream> toPerformOnRequest, 
+            Action<Stream> toPerformOnResponse, 
+            Action toPerformOnError,
+            Action toPerformOnCompletion,
+            string url)
         {
-              ProcessResponse(toPerformOnResponse, await SendRequest(toPerformOnRequest, url));
+            try
+            {
+                HttpResponseMessage httpResponseMessage = await SendRequest(toPerformOnRequest, url);
+                await ProcessResponse(toPerformOnResponse, httpResponseMessage);
+            }
+            catch(Exception)
+            {
+                toPerformOnError();
+                return;
+            }
+
+            toPerformOnCompletion();
         }
 
         static async Task<HttpResponseMessage> SendRequest(Action<Stream> toPerformOnRequest, string url)
@@ -30,7 +46,7 @@ namespace SystemDot
             return response;
         }
 
-        static async void ProcessResponse(Action<Stream> toPerformOnResponse, HttpResponseMessage response)
+        static async Task ProcessResponse(Action<Stream> toPerformOnResponse, HttpResponseMessage response)
         {
             var responseStream = await response.Content.ReadAsStreamAsync();
             responseStream.Position = 0;

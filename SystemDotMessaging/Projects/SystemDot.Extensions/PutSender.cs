@@ -5,12 +5,26 @@ namespace System
 {
     public static class PutSender
     {
-        public static void Send(Action<Stream> toPerformOnRequest, Action<Stream> toPerformOnResponse, string url)
+        public static void Send(
+            Action<Stream> toPerformOnRequest, 
+            Action<Stream> toPerformOnResponse, 
+            Action toPerformOnError, 
+            Action toPerformOnCompletion, 
+            string url)
         {
-            var request = CreateRequest(url);
+            try
+            {
+                var request = CreateRequest(url);
+                SendRequest(toPerformOnRequest, request);
+                RecieveResponse(toPerformOnResponse, request);
+            }
+            catch(Exception)
+            {
+                toPerformOnError();
+                return;
+            }
 
-            SendRequest(toPerformOnRequest, request);
-            RecieveResponse(toPerformOnResponse, request);
+            toPerformOnCompletion();
         }
 
         static HttpWebRequest CreateRequest(string url)

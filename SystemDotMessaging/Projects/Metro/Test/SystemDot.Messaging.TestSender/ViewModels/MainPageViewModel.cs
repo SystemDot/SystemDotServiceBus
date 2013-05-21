@@ -13,9 +13,9 @@ namespace SystemDot.Messaging.TestSender.ViewModels
 
         public MainPageViewModel(ObservableLoggingMechanism logging)
         {
-            this.Logging = logging.Messages;
-            this.Messages = new ObservableCollection<string>();
-            this.Replies = new ObservableCollection<string>();
+            Logging = logging.Messages;
+            Messages = new ObservableCollection<string>();
+            Replies = new ObservableCollection<string>();
         }
 
         public void SendMessage(int i)
