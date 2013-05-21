@@ -1,25 +1,21 @@
 using System;
 using System.Diagnostics.Contracts;
-using SystemDot.Ioc;
 
 namespace SystemDot.Messaging.UnitOfWork
 {
-    class UnitOfWorkRunner<TUnitOfWorkFactory> : IMessageProcessor<object, object>
-        where TUnitOfWorkFactory : class, IUnitOfWorkFactory
+    class UnitOfWorkRunner : IMessageProcessor<object, object>
     {
-        readonly IIocContainer container;
+        readonly IUnitOfWorkFactory unitOfWorkFactory;
 
-        public UnitOfWorkRunner(IIocContainer container)
+        public UnitOfWorkRunner(IUnitOfWorkFactory unitOfWorkFactory)
         {
-            Contract.Requires(container != null);
-            this.container = container;
+            Contract.Requires(unitOfWorkFactory != null);
+            this.unitOfWorkFactory = unitOfWorkFactory;
         }
 
         public void InputMessage(object toInput)
         {
-            var unitOfWork = this.container.Resolve<TUnitOfWorkFactory>()
-                .As<TUnitOfWorkFactory>()
-                .Create();
+            var unitOfWork = this.unitOfWorkFactory.Create();
 
             unitOfWork.Begin();
 

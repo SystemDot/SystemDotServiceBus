@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Specifications.handling.external_ioc_resolution
             Register(container, new SecondHandlerOfMessage1() );
 
             Configuration.Configure.Messaging()
-                .UsingIocContainer(container)
+                .ResolveReferencesWith(container)
                 .RegisterHandlersFromAssemblyOf<when_sending_a_message_with_handlers_in_an_assembly_auto_registered_twice>()
                     .BasedOn<IHandleMessage>()
                 .UsingInProcessTransport()

@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.TestPointToPoint.Receiver
 
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false })
-                .UsingIocContainer(container)
+                .ResolveReferencesWith(container)
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
                 .UsingFilePersistence()

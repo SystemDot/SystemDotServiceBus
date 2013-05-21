@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.TestRequestReply.OtherSender
 
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false, ShowDebug = false })
-                .UsingIocContainer(container)
+                .ResolveReferencesWith(container)
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
                 .UsingJsonSerialisation()

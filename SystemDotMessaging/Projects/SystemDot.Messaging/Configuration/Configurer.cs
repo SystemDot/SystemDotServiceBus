@@ -67,10 +67,18 @@ namespace SystemDot.Messaging.Configuration
 
         protected abstract ServerPath GetServerPath();
 
-        internal UnitOfWorkRunner<TUnitOfWorkFactory> CreateUnitOfWorkRunner<TUnitOfWorkFactory>() 
+        internal UnitOfWorkRunner CreateUnitOfWorkRunner<TUnitOfWorkFactory>() 
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory
         {
-            return new UnitOfWorkRunner<TUnitOfWorkFactory>(this.messagingConfiguration.ExternalContainer);
+            return new UnitOfWorkRunner(GetUnitOfWorkFactory<TUnitOfWorkFactory>());
+        }
+
+        IUnitOfWorkFactory GetUnitOfWorkFactory<TUnitOfWorkFactory>()
+            where TUnitOfWorkFactory : class, IUnitOfWorkFactory
+        {
+            return this.messagingConfiguration.ExternalResolver.ComponentExists<TUnitOfWorkFactory>()
+                ? this.messagingConfiguration.ExternalResolver.Resolve<TUnitOfWorkFactory>().As<IUnitOfWorkFactory>()
+                : new NullUnitOfWorkFactory();
         }
     }
 }

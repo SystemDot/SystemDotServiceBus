@@ -7,25 +7,19 @@ using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Transport.Http.Configuration;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
-using SystemDot.Messaging.UnitOfWork;
 
 namespace SystemDot.Messaging.Configuration
 {
     public class MessagingConfiguration
     {
         public List<Action> BuildActions { get; private set; }
-        internal IIocContainer ExternalContainer { get; private set; }
+
+        internal IIocResolver ExternalResolver { get; private set; }
 
         public MessagingConfiguration()
         {
             BuildActions = new List<Action>();
-            SetExternalContainer(IocContainerLocator.Locate());
-        }
-
-        void SetExternalContainer(IIocContainer container)
-        {
-            this.ExternalContainer = container;
-            this.ExternalContainer.RegisterInstance<NullUnitOfWorkFactory, NullUnitOfWorkFactory>();
+            ExternalResolver = GetInternalIocContainer();
         }
 
         public MessagingConfiguration LoggingWith(ILoggingMechanism toLogWith)
@@ -36,11 +30,11 @@ namespace SystemDot.Messaging.Configuration
             return this;
         }
 
-        public MessagingConfiguration UsingIocContainer(IIocContainer container)
+        public MessagingConfiguration ResolveReferencesWith(IIocResolver container)
         {
             Contract.Requires(container != null);
 
-            SetExternalContainer(container);
+            this.ExternalResolver = container;
             return this;
         }
 

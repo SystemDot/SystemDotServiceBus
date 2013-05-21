@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace SystemDot.Ioc
 {
@@ -25,7 +24,7 @@ namespace SystemDot.Ioc
             components[typeof(TPlugin)] = new ConcreteInstance(typeof(TConcrete));
         }
 
-        bool ComponentExists<TPlugin>() 
+        public bool ComponentExists<TPlugin>() 
         {
             return components.ContainsKey(typeof(TPlugin));
         }

@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.TestSubscriber
 
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = true })
-                .UsingIocContainer(container)
+                .ResolveReferencesWith(container)
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
                 .UsingFilePersistence()

@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.LargeData.TestSubscriber
 
             Configure.Messaging()
                 .LoggingWith(new Log4NetLoggingMechanism { ShowInfo = true })
-                .UsingIocContainer(container)
+                .ResolveReferencesWith(container)
                 .UsingJsonSerialisation()
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()

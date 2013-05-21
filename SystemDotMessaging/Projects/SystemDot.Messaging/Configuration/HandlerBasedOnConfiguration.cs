@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Configuration
         {
             GetMessageHandlerTypes<TMessageHandler>()
                 .ForEach(type => this.configuration.BuildActions.Add(
-                    () => Resolve<MessageHandlerRouter>().RegisterHandler(type, this.configuration.ExternalContainer)));
+                    () => Resolve<MessageHandlerRouter>().RegisterHandler(type, this.configuration.ExternalResolver)));
 
             return this.configuration;
         }
