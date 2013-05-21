@@ -1,4 +1,4 @@
-using SystemDot.Messaging.Transport.InProcess.Configuration;
+using SystemDot.Messaging.Addressing;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.hooks

@@ -62,6 +62,7 @@ namespace SystemDot.Messaging.Publishing.Builders
 
             MessagePipelineBuilder.Build()
                 .WithBusPublishTo(new MessageFilter(schema.MessageFilterStrategy))
+                .ToProcessors(schema.Hooks.ToArray())
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
                 .ToProcessor(new Sequencer(cache))
                 .ToProcessor(new SendChannelMessageCacher(cache))

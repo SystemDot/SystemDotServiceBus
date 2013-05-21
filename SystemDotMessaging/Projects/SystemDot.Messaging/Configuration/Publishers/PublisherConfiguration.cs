@@ -1,3 +1,4 @@
+using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Publishing.Builders;
@@ -37,6 +38,14 @@ namespace SystemDot.Messaging.Configuration.Publishers
         public PublisherConfiguration WithDurability()
         {
             this.schema.IsDurable = true;
+            return this;
+        }
+
+        public PublisherConfiguration WithHook(IMessageProcessor<object, object> hook)
+        {
+            Contract.Requires(hook != null);
+
+            this.schema.Hooks.Add(hook);
             return this;
         }
     }

@@ -1,11 +1,8 @@
 ﻿using System;
-using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Test.Messages;
-using SystemDot.Messaging.Transport.Http.Configuration;
-using SystemDot.Newtonsoft;
 
 namespace SystemDot.Messaging.TestRequestReply.Sender
 {
