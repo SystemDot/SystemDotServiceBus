@@ -12,12 +12,12 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
         readonly ServerPath serverPath;
         readonly PointToPointReceiverChannelSchema schema;
 
-        public PointToPointReceiverConfiguration(EndpointAddress address, ServerPath serverPath, List<Action> buildActions) 
-            : base(buildActions)
+        public PointToPointReceiverConfiguration(EndpointAddress address, ServerPath serverPath, MessagingConfiguration messagingConfiguration)
+            : base(messagingConfiguration)
         {
             Contract.Requires(address != null);
             Contract.Requires(serverPath != null);
-            Contract.Requires(buildActions != null);
+            Contract.Requires(messagingConfiguration != null);
 
             this.serverPath = serverPath;
 

@@ -16,12 +16,12 @@ namespace SystemDot.Messaging.Combined.Subscriber
 
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
+                .UsingIocContainer(container)
                 .RegisterHandlersFromAssemblyOf<Program>()
-                .BasedOn<IMessageConsumer>()
-                .ResolveBy(container.Resolve)
+                    .BasedOn<IMessageConsumer>()
                 .UsingFilePersistence()
                 .UsingHttpTransport()
-                .AsAServer("SubscriberServer")
+                    .AsAServer("SubscriberServer")
                 .OpenChannel("TestSubscriber")
                     .ForSubscribingTo("TestPublisher@/ReceiverPublisherServer")
                 .Initialise();

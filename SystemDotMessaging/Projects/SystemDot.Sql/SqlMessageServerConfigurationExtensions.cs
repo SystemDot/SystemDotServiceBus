@@ -10,7 +10,7 @@ namespace SystemDot.Messaging.Configuration
             this MessagingConfiguration configuration, 
             string connectionString)
         {
-            IIocContainer container = configuration.GetIocContainer();
+            IIocContainer container = configuration.GetInternalIocContainer();
 
             container.RegisterInstance<IChangeStore, SqlChangeStore>();
             configuration.BuildActions.Add(() => container.Resolve<IChangeStore>().Initialise(connectionString));

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Expiry;
@@ -15,9 +13,9 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
         
         public PointToPointSenderConfiguration(
             EndpointAddress fromAddress, 
-            EndpointAddress toAddress, 
-            List<Action> buildActions)
-            : base(buildActions)
+            EndpointAddress toAddress,
+            MessagingConfiguration messagingConfiguration)
+            : base(messagingConfiguration)
         {
             this.sendSchema = new PointToPointSendChannelSchema
             {

@@ -7,7 +7,7 @@ namespace SystemDot.Messaging.Configuration
     {
         public static MessagingConfiguration UsingJsonSerialisation(this MessagingConfiguration config)
         {
-            config.GetIocContainer().RegisterInstance<ISerialiser, JsonSerialiser>();
+            config.GetInternalIocContainer().RegisterInstance<ISerialiser, JsonSerialiser>();
             return config;
         } 
     }

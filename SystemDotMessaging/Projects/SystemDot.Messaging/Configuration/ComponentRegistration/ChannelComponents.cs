@@ -5,7 +5,6 @@ using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Local.Builders;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.UnitOfWork;
 using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration
@@ -24,7 +23,6 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<MessageCacheFactory, MessageCacheFactory>();
             container.RegisterInstance<InMemoryChangeStore, InMemoryChangeStore>();
             container.RegisterInstance<PersistenceFactorySelector, PersistenceFactorySelector>();
-            container.RegisterInstance<NullUnitOfWorkFactory, NullUnitOfWorkFactory>();
         }
     }
 }

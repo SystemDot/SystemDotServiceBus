@@ -4,8 +4,6 @@ using SystemDot.Logging;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Test.Messages;
-using SystemDot.Messaging.Transport.Http.Configuration;
-using SystemDot.Newtonsoft;
 
 namespace SystemDot.Messaging.TestRequestReply.OtherSender
 {
@@ -18,9 +16,9 @@ namespace SystemDot.Messaging.TestRequestReply.OtherSender
 
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false, ShowDebug = false })
+                .UsingIocContainer(container)
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
-                    .ResolveBy(container.Resolve)
                 .UsingJsonSerialisation()
                 .UsingHttpTransport()
                     .AsAServer("OtherSenderServer")

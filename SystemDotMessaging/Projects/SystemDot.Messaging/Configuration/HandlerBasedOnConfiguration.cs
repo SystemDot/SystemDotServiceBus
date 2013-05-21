@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SystemDot.Messaging.Handling;
 
 namespace SystemDot.Messaging.Configuration
 {
@@ -14,9 +15,13 @@ namespace SystemDot.Messaging.Configuration
             this.typesFromAssembly = typesFromAssembly;
         }
 
-        public HandlerResolutionConfiguration BasedOn<TMessageHandler>()
+        public MessagingConfiguration BasedOn<TMessageHandler>()
         {
-            return new HandlerResolutionConfiguration(this.configuration, GetMessageHandlerTypes<TMessageHandler>());
+            GetMessageHandlerTypes<TMessageHandler>()
+                .ForEach(type => this.configuration.BuildActions.Add(
+                    () => Resolve<MessageHandlerRouter>().RegisterHandler(type, this.configuration.ExternalContainer)));
+
+            return this.configuration;
         }
 
         IEnumerable<Type> GetMessageHandlerTypes<TMessageHandler>()

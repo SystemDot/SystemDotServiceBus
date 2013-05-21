@@ -29,12 +29,12 @@ namespace System.IoC.Example
             Console.ReadLine();
         }
 
-        static void CustomRegistrations(IIocContainer ioc)
+        static void CustomRegistrations(IocContainer ioc)
         {
             ioc.RegisterInstance<ICustomInterface, CustomType>();
         }
 
-        static void AutoRegistrations(IIocContainer ioc)
+        static void AutoRegistrations(IocContainer ioc)
         {
             ioc.RegisterFromAssemblyOf<Program>();
         }

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Publishing.Builders;
@@ -10,7 +8,8 @@ namespace SystemDot.Messaging.Configuration.Publishers
     {
         readonly PublisherChannelSchema schema;
 
-        public PublisherConfiguration(EndpointAddress address, List<Action> buildActions) : base(buildActions)
+        public PublisherConfiguration(EndpointAddress address, MessagingConfiguration messagingConfiguration)
+            : base(messagingConfiguration)
         {
             this.schema = new PublisherChannelSchema
             {

@@ -61,9 +61,9 @@
     <Compile Include="ioc\TestTypes\ITestInterfaceWithNoConcreteImplementation.cs" />
     <Compile Include="ioc\TestTypes\TestAbstractConcreteType.cs" />
     <Compile Include="ioc\TestTypes\TestStruct.cs" />
-    <Compile Include="ioc\when_auto_registering_types_in_the_container_from_an_assembley_containing_an_open_generic_type.cs" />
-    <Compile Include="ioc\when_auto_registering_types_in_the_container_from_an_assembley_containing_a_struct.cs" />
-    <Compile Include="ioc\when_auto_registering_types_in_the_container_from_an_assembley_the_second_time.cs" />
+    <Compile Include="ioc\when_auto_registering_types_in_the_container_from_an_assembly_containing_an_open_generic_type.cs" />
+    <Compile Include="ioc\when_auto_registering_types_in_the_container_from_an_assembly_containing_a.cs" />
+    <Compile Include="ioc\when_auto_registering_types_in_the_container_from_an_assembly_the_second_time.cs" />
     <Compile Include="ioc\TestTypes\IAnotherTestComponent.cs" />
     <Compile Include="ioc\TestTypes\ITestComponent.cs" />
     <Compile Include="ioc\TestTypes\ITestComponentWithParameters.cs" />
@@ -79,7 +79,7 @@
     <Compile Include="ioc\when_registering_an_instance_in_the_container.cs" />
     <Compile Include="ioc\when_registering_an_instance_in_the_container_for_the_second_time.cs" />
     <Compile Include="ioc\when_registering_an_instance_with_parameters_in_the_container.cs" />
-    <Compile Include="ioc\when_auto_registering_types_in_the_container_from_an_assembley.cs" />
+    <Compile Include="ioc\when_auto_registering_types_in_the_container_from_an_assembly.cs" />
     <Compile Include="ioc\when_resolving_an_instance_in_the_container_for_the_second_time.cs" />
     <Compile Include="messenger\SpecificationGroup.cs" />
     <Compile Include="messenger\when_resetting_the_messenger_after_registering_a_handler_and_then_sending_a_message.cs" />

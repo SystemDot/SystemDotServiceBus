@@ -1,8 +1,5 @@
-using System;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using SystemDot.Parallelism;
-using SystemDot.Specifications;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.expiry

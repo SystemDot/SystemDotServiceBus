@@ -38,7 +38,7 @@ namespace SystemDot.Messaging.Handling
         {
             this.handlerTypes
                 .Where(handler => HandlesMessageType(handler.Type, message))
-                .ForEach(type => Invoke(type.ResolveAction(type.Type), message));
+                .ForEach(type => Invoke(type.Container.Resolve(type.Type), message));
         }
 
         void Invoke(object handler, object message)
@@ -65,23 +65,23 @@ namespace SystemDot.Messaging.Handling
             this.handlerInstances.Add(handlerInstance);
         }
 
-        public void RegisterHandler(Type handlerType, Func<Type, object> handlerResolvingAction)
+        public void RegisterHandler(Type handlerType, IIocContainer container)
         {
             if (this.handlerTypes.Any(handler => handler.Type == handlerType)) return;
 
-            this.handlerTypes.Add(new HandlerType(handlerType, handlerResolvingAction));
+            this.handlerTypes.Add(new HandlerType(handlerType, container));
         }
 
         class HandlerType
         {
             public Type Type { get; private set; }
 
-            public Func<Type, object> ResolveAction { get; private set; }
+            public IIocContainer Container { get; set; }
 
-            public HandlerType(Type handlerType, Func<Type, object> handlerResolvingAction)
+            public HandlerType(Type handlerType, IIocContainer container)
             {
                 Type = handlerType;
-                ResolveAction = handlerResolvingAction;
+                Container = container;
             }
         }
     }

@@ -16,9 +16,9 @@ namespace SystemDot.Messaging.TestSubscriber
 
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = true })
-                    .RegisterHandlersFromAssemblyOf<Program>()
+                .UsingIocContainer(container)
+                .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
-                .ResolveBy(container.Resolve)
                 .UsingFilePersistence()
                 .UsingHttpTransport()
                     .AsAServer("SubscriberServer")

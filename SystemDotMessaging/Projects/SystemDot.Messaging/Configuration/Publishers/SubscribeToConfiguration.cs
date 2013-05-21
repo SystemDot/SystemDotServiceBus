@@ -15,12 +15,12 @@ namespace SystemDot.Messaging.Configuration.Publishers
         public SubscribeToConfiguration(
             EndpointAddress subscriberAddress, 
             EndpointAddress publisherAddress, 
-            List<Action> buildActions)
-            : base(buildActions)
+            MessagingConfiguration messagingConfiguration)
+            : base(messagingConfiguration)
         {
             Contract.Requires(subscriberAddress != EndpointAddress.Empty);
             Contract.Requires(publisherAddress != EndpointAddress.Empty);
-            Contract.Requires(buildActions != null);
+            Contract.Requires(messagingConfiguration != null);
 
             this.requestSchema = new SubscriptionRequestChannelSchema
             {

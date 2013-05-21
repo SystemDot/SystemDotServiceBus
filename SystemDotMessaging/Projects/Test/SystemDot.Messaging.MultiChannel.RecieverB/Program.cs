@@ -1,9 +1,7 @@
 ﻿using System;
-using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Transport.Http.Configuration;
 
 namespace SystemDot.Messaging.MultiChannel.RecieverB
 {
@@ -16,9 +14,9 @@ namespace SystemDot.Messaging.MultiChannel.RecieverB
 
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false })
+                .UsingIocContainer(container)
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
-                    .ResolveBy(container.Resolve)
                 .UsingFilePersistence()
                 .UsingHttpTransport()
                     .AsAServer("ServerB")

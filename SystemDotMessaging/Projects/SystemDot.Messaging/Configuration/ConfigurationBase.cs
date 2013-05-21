@@ -12,11 +12,6 @@ namespace SystemDot.Messaging.Configuration
             return GetContainer().Resolve<T>();
         }
 
-        protected static object Resolve(Type type)
-        {
-            return IocContainerLocator.Locate().Resolve(type);
-        }
-
         protected EndpointAddress BuildEndpointAddress(string address, ServerPath serverPath)
         {
             return GetContainer().Resolve<EndpointAddressBuilder>().Build(address, serverPath);

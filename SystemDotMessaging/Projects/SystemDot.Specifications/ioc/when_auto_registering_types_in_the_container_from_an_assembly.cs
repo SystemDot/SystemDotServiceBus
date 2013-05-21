@@ -6,9 +6,9 @@ using Machine.Specifications;
 namespace SystemDot.Specifications.ioc
 {
     [Subject("Ioc")]
-    public class when_auto_registering_types_in_the_container_from_an_assembley : WithSubject<IocContainer>
+    public class when_auto_registering_types_in_the_container_from_an_assembly : WithSubject<IocContainer>
     {
-        Because of = () => Subject.RegisterFromAssemblyOf<when_auto_registering_types_in_the_container_from_an_assembley>();
+        Because of = () => Subject.RegisterFromAssemblyOf<when_auto_registering_types_in_the_container_from_an_assembly>();
 
         It should_auto_register_a_concrete_type_by_the_concrete_type = () =>
             Subject.Resolve<TestTypeNotImplementingAnInterface>().ShouldBeOfType<TestTypeNotImplementingAnInterface>();

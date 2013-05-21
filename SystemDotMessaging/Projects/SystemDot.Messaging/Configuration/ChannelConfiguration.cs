@@ -12,22 +12,22 @@ namespace SystemDot.Messaging.Configuration
     {
         readonly EndpointAddress address;
         readonly ServerPath serverPath;
-        readonly List<Action> buildActions;
+        readonly MessagingConfiguration messagingConfiguration;
 
-        public ChannelConfiguration(EndpointAddress address, ServerPath serverPath, List<Action> buildActions)
+        public ChannelConfiguration(EndpointAddress address, ServerPath serverPath, MessagingConfiguration messagingConfiguration)
         {
             Contract.Requires(address != EndpointAddress.Empty);
             Contract.Requires(serverPath != null);
-            Contract.Requires(buildActions != null);
+            Contract.Requires(messagingConfiguration != null);
 
             this.address = address;
             this.serverPath = serverPath;
-            this.buildActions = buildActions;
+            this.messagingConfiguration = messagingConfiguration;
         }
 
         public RequestReplyRecieverConfiguration ForRequestReplyRecieving()
         {
-            return new RequestReplyRecieverConfiguration(address, this.buildActions);
+            return new RequestReplyRecieverConfiguration(address, this.messagingConfiguration);
         }
 
         public RequestReplySenderConfiguration ForRequestReplySendingTo(string recieverAddress)
@@ -35,12 +35,12 @@ namespace SystemDot.Messaging.Configuration
             return new RequestReplySenderConfiguration(
                 this.address,
                 BuildEndpointAddress(recieverAddress, this.serverPath),
-                this.buildActions);
+                this.messagingConfiguration);
         }
 
         public PublisherConfiguration ForPublishing()
         {
-            return new PublisherConfiguration(address, this.buildActions);
+            return new PublisherConfiguration(address, this.messagingConfiguration);
         }
 
         public SubscribeToConfiguration ForSubscribingTo(string publisherAddress)
@@ -48,20 +48,20 @@ namespace SystemDot.Messaging.Configuration
             return new SubscribeToConfiguration(
                 this.address, 
                 BuildEndpointAddress(publisherAddress, this.serverPath),
-                this.buildActions);
+                this.messagingConfiguration);
         }
 
         public PointToPointSenderConfiguration ForPointToPointSendingTo(string recieverAddress)
         {
             return new PointToPointSenderConfiguration(
                 this.address,
-                BuildEndpointAddress(recieverAddress, this.serverPath), 
-                this.buildActions);
+                BuildEndpointAddress(recieverAddress, this.serverPath),
+                this.messagingConfiguration);
         }
 
         public PointToPointReceiverConfiguration ForPointToPointReceiving()
         {
-            return new PointToPointReceiverConfiguration(this.address, this.serverPath, this.buildActions);
+            return new PointToPointReceiverConfiguration(this.address, this.serverPath, this.messagingConfiguration);
         }
     }
 

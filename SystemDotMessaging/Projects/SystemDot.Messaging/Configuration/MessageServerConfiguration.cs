@@ -38,14 +38,14 @@ namespace SystemDot.Messaging.Configuration
             return new ChannelConfiguration(
                 new EndpointAddress(name, this.serverPath),
                 this.serverPath,
-                this.messagingConfiguration.BuildActions);
+                this.messagingConfiguration);
         }
 
         public LocalChannelConfiguration OpenLocalChannel()
         {
             return new LocalChannelConfiguration(
                 this.serverPath,
-                this.messagingConfiguration.BuildActions);
+                this.messagingConfiguration);
         }
 
         static void RegisterInMemoryPersistence(IIocContainer container)

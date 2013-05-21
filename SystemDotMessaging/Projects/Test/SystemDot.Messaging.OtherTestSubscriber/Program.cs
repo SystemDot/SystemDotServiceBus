@@ -17,10 +17,10 @@ namespace SystemDot.Messaging.OtherTestSubscriber
             Logger.LoggingMechanism = new ConsoleLoggingMechanism { ShowDebug = false };
 
             Configure.Messaging()
+                .UsingIocContainer(container)
                 .UsingFilePersistence()
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
-                    .ResolveBy(container.Resolve)
                 .UsingHttpTransport()
                     .AsAServer("OtherSubscriberServer")
                 .OpenChannel("TestOtherSubscriber")

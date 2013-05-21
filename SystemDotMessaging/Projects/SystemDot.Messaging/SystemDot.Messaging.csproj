@@ -54,7 +54,6 @@
     <Compile Include="Caching\SendChannelMessageCacher.cs" />
     <Compile Include="Caching\SendChannelMessageCacheUpdater.cs" />
     <Compile Include="Configuration\HandlerBasedOnConfiguration.cs" />
-    <Compile Include="Configuration\HandlerResolutionConfiguration.cs" />
     <Compile Include="Configuration\ExternalSources\ExternalSourcesConfigurer.cs" />
     <Compile Include="Configuration\ExternalSources\IExternalConfigurationSource.cs" />
     <Compile Include="Configuration\ExternalSources\IExternalSourcesConfigurer.cs" />

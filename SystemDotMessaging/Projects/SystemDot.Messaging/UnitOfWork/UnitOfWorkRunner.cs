@@ -7,18 +7,18 @@ namespace SystemDot.Messaging.UnitOfWork
     class UnitOfWorkRunner<TUnitOfWorkFactory> : IMessageProcessor<object, object>
         where TUnitOfWorkFactory : class, IUnitOfWorkFactory
     {
-        readonly IIocContainer iocContainer;
+        readonly IIocContainer container;
 
-        public UnitOfWorkRunner(IIocContainer iocContainer)
+        public UnitOfWorkRunner(IIocContainer container)
         {
-            Contract.Requires(iocContainer != null);
-            this.iocContainer = iocContainer;
+            Contract.Requires(container != null);
+            this.container = container;
         }
 
         public void InputMessage(object toInput)
         {
-            var unitOfWork = this.iocContainer
-                .Resolve<TUnitOfWorkFactory>()
+            var unitOfWork = this.container.Resolve<TUnitOfWorkFactory>()
+                .As<TUnitOfWorkFactory>()
                 .Create();
 
             unitOfWork.Begin();

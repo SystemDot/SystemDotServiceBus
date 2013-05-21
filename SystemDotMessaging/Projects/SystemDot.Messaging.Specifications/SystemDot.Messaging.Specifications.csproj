@@ -62,6 +62,8 @@
     <Compile Include="filtering\request_reply\SpecificationGroup.cs" />
     <Compile Include="filtering\SpecificationGroup.cs" />
     <Compile Include="filtering\when_sending_a_request_with_the_wrong_name_down_a_channel_with_a_name_pattern_filter.cs" />
+    <Compile Include="handling\external_ioc_resolution\SpecificationGroup.cs" />
+    <Compile Include="handling\external_ioc_resolution\when_sending_a_message_with_handlers_in_an_assembly_auto_registered_twice.cs" />
     <Compile Include="handling\SpecificationGroup.cs" />
     <Compile Include="hooks\SpecificationGroup.cs" />
     <Compile Include="load_balancing\when_sending_nineteen_messages_that_are_not_yet_acknowledged_and_four_seconds_have_passed.cs" />
@@ -89,7 +91,7 @@
     <Compile Include="restarting_messaging\when_restarting_messaging_after_sending_a_reply_on_a_durable_channel_that_is_not_yet_acknowledged.cs" />
     <Compile Include="sending\when_restarting_messaging_after_sending_a_message_on_a_durable_channel_that_is_not_yet_acknowledged.cs" />
     <Compile Include="handling\when_sending_a_message_with_handlers_in_an_assembly_auto_registered_twice.cs" />
-    <Compile Include="handling\when_initialising_with_handlers_auto_registered.cs" />
+    <Compile Include="handling\external_ioc_resolution\when_initialising_with_handlers_auto_registered.cs" />
     <Compile Include="handling\Fakes\FirstHandlerOfMessage1.cs" />
     <Compile Include="handling\Fakes\FirstHandlerOfMessage2.cs" />
     <Compile Include="handling\Fakes\IHandleMessage.cs" />
@@ -113,6 +115,8 @@
     <Compile Include="sequencing\when_sending_a_message.cs" />
     <Compile Include="sequencing\when_sending_a_message_on_durable_channel_and_then_restarting_messaging.cs" />
     <Compile Include="sequencing\when_sending_two_messages.cs" />
+    <Compile Include="unitofwork\external_ioc_resolution\SpecificationGroup.cs" />
+    <Compile Include="unitofwork\external_ioc_resolution\when_receiving_a_message_with_a_unit_of_work_specified.cs" />
     <Compile Include="unitofwork\publishing\receiving\SpecificationGroup.cs" />
     <Compile Include="unitofwork\publishing\receiving\when_publishing_with_a_unit_of_work_setup.cs" />
     <Compile Include="unitofwork\request_reply\SpecificationGroup.cs" />

@@ -8,7 +8,7 @@ namespace SystemDot.Messaging.Configuration
     {
         public static MessagingConfiguration UsingFilePersistence(this MessagingConfiguration configuration)
         {
-            IIocContainer container = configuration.GetIocContainer();
+            IIocContainer container = configuration.GetInternalIocContainer();
 
             container.RegisterInstance<IChangeStore, EsentChangeStore>();
             configuration.BuildActions.Add(() => container.Resolve<IChangeStore>().Initialise(string.Empty));

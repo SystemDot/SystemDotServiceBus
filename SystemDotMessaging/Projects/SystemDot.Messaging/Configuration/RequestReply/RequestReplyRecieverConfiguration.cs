@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.RequestReply.Builders;
-using SystemDot.Messaging.Transport;
 using SystemDot.Messaging.UnitOfWork;
 
 namespace SystemDot.Messaging.Configuration.RequestReply
@@ -15,8 +12,8 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         readonly ReplySendChannelSchema replySchema;
         readonly RequestRecieveChannelSchema requestSchema;
 
-        public RequestReplyRecieverConfiguration(EndpointAddress address, List<Action> buildActions) 
-            : base(buildActions)
+        public RequestReplyRecieverConfiguration(EndpointAddress address, MessagingConfiguration messagingConfiguration) 
+            : base(messagingConfiguration)
         {
             this.replySchema = new ReplySendChannelSchema
             {

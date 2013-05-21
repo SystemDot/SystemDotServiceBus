@@ -1,34 +1,36 @@
+using SystemDot.Ioc;
 using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Specifications.handling.Fakes;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.handling
+namespace SystemDot.Messaging.Specifications.handling.external_ioc_resolution
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_a_message_with_handlers_in_an_assembly_auto_registered_twice : WithConfigurationSubject
+    public class when_sending_a_message_with_handlers_in_an_assembly : WithConfigurationSubject
     {
         static FirstHandlerOfMessage1 messageHandler;
+        static Message1 message;
 
         Establish context = () =>
         {
-            var container = IocContainerLocator.Locate();
+            var container = new IocContainer();
 
             messageHandler = new FirstHandlerOfMessage1();
             Register(container, messageHandler);
             Register(container, new SecondHandlerOfMessage1() );
 
             Configuration.Configure.Messaging()
-                .RegisterHandlersFromAssemblyOf<when_sending_a_message_with_handlers_in_an_assembly_auto_registered_twice>()
-                    .BasedOn<IHandleMessage>()
+                .UsingIocContainer(container)
                 .RegisterHandlersFromAssemblyOf<when_sending_a_message_with_handlers_in_an_assembly_auto_registered_twice>()
                     .BasedOn<IHandleMessage>()
                 .UsingInProcessTransport()
                 .OpenLocalChannel()
                 .Initialise();
+            message = new Message1();
         };
 
-        Because of = () => Bus.SendLocal(new Message1());
+        Because of = () => Bus.SendLocal(message);
 
-        It should_only_send_the_message_to_its_handler_once = () => messageHandler.NumberOfTimeHandleCalled.ShouldEqual(1);
+        It should_send_the_message_to_its_handler = () => messageHandler.LastHandledMessage.ShouldBeTheSameAs(message);
     }
 }

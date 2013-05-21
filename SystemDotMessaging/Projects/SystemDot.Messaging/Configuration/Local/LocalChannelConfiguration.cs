@@ -11,8 +11,8 @@ namespace SystemDot.Messaging.Configuration.Local
         readonly ServerPath serverPath;
         readonly LocalChannelSchema schema;
 
-        public LocalChannelConfiguration(ServerPath serverPath, List<Action> buildActions)
-            : base(buildActions)
+        public LocalChannelConfiguration(ServerPath serverPath, MessagingConfiguration messagingConfiguration)
+            : base(messagingConfiguration)
         {
             this.serverPath = serverPath;
             this.schema = new LocalChannelSchema

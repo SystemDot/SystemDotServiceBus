@@ -17,9 +17,9 @@ namespace SystemDot.Messaging.Configuration.RequestReply
 
         public RequestReplySenderConfiguration(
             EndpointAddress address, 
-            EndpointAddress recieverAddress, 
-            List<Action> buildActions)
-            : base(buildActions)
+            EndpointAddress recieverAddress,
+            MessagingConfiguration messagingConfiguration)
+            : base(messagingConfiguration)
         {
             this.sendSchema = new RequestSendChannelSchema
             {

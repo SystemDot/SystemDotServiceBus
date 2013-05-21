@@ -15,14 +15,14 @@ namespace SystemDot.Messaging.Configuration
 {
     public abstract class Configurer : ConfigurationBase
     {
-        readonly List<Action> buildActions;
+        readonly MessagingConfiguration messagingConfiguration;
 
-        protected Configurer(List<Action> buildActions)
+        protected Configurer(MessagingConfiguration messagingConfiguration)
         {
-            Contract.Requires(buildActions != null);
+            Contract.Requires(messagingConfiguration != null);
 
-            this.buildActions = buildActions;
-            this.buildActions.Add(Build);
+            this.messagingConfiguration = messagingConfiguration;
+            this.messagingConfiguration.BuildActions.Add(Build);
         }
 
         protected abstract void Build();
@@ -33,7 +33,7 @@ namespace SystemDot.Messaging.Configuration
             Resolve<AcknowledgementSendChannelBuilder>().Build();
             Resolve<AcknowledgementRecieveChannelBuilder>().Build();
 
-            this.buildActions.ForEach(a => a());
+            this.messagingConfiguration.BuildActions.ForEach(a => a());
 
             Resolve<ITransportBuilder>().Build(GetServerPath());
             
@@ -51,7 +51,7 @@ namespace SystemDot.Messaging.Configuration
             return new ChannelConfiguration(
                 new EndpointAddress(name, GetServerPath()),
                 GetServerPath(),
-                this.buildActions);
+                this.messagingConfiguration);
         }
 
         public Configurer RegisterHandlers(Action<MessageHandlerRouter> registrationAction)
@@ -62,15 +62,15 @@ namespace SystemDot.Messaging.Configuration
 
         public LocalChannelConfiguration OpenLocalChannel()
         {
-            return new LocalChannelConfiguration(GetServerPath(), this.buildActions);
+            return new LocalChannelConfiguration(GetServerPath(), this.messagingConfiguration);
         }
 
         protected abstract ServerPath GetServerPath();
 
-        internal static UnitOfWorkRunner<TUnitOfWorkFactory> CreateUnitOfWorkRunner<TUnitOfWorkFactory>() 
+        internal UnitOfWorkRunner<TUnitOfWorkFactory> CreateUnitOfWorkRunner<TUnitOfWorkFactory>() 
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory
         {
-            return new UnitOfWorkRunner<TUnitOfWorkFactory>(Resolve<IIocContainer>());
+            return new UnitOfWorkRunner<TUnitOfWorkFactory>(this.messagingConfiguration.ExternalContainer);
         }
     }
 }

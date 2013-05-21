@@ -1,6 +1,6 @@
 using SystemDot.Ioc;
+using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Specifications.handling.Fakes;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.handling
@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Specifications.handling
 
         Establish context = () =>
         {
-            var container = new IocContainer();
+            var container = IocContainerLocator.Locate();
 
             firstHandlerOfMessage1 = new FirstHandlerOfMessage1();
             Register(container, firstHandlerOfMessage1);
@@ -36,8 +36,7 @@ namespace SystemDot.Messaging.Specifications.handling
 
             Configuration.Configure.Messaging()
                 .RegisterHandlersFromAssemblyOf<when_sending_a_message_with_handlers_auto_registered>()
-                .BasedOn<IHandleMessage>()
-                .ResolveBy(container.Resolve)
+                    .BasedOn<IHandleMessage>()
                 .UsingInProcessTransport()
                 .OpenLocalChannel()
                 .Initialise();
