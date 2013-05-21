@@ -76,7 +76,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
                 .ToProcessor(new SequenceOriginRecorder(cache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()
-                .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, schema.ExpiryAction, cache))
+                .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, cache))
                 .ToProcessor(new LoadBalancer(cache, this.taskScheduler))
                 .ToProcessor(new LastSentRecorder(this.systemTime))
                 .ToEndPoint(this.messageSender);
