@@ -56,7 +56,6 @@ namespace SystemDot.Messaging.TestSender
                     .ForRequestReplySendingTo("TestReply@/ReceiverServer")
                     .WithDurability()
                     .WithReceiveHook(new MessageMarshallingHook(CoreWindow.GetForCurrentThread().Dispatcher))
-                    .WithReceiveHook(new MessageMarshallingHook2(CoreWindow.GetForCurrentThread().Dispatcher))
                 .Initialise();
 
             ViewModelLocator.SetContainer(container);
