@@ -11,6 +11,8 @@ namespace SystemDot.Messaging.Builders
 
         public IMessageExpiryStrategy ExpiryStrategy { get; set; }
 
+        public Action ExpiryAction { get; set; }
+
         public IRepeatStrategy RepeatStrategy { get; set; }
     }
 }

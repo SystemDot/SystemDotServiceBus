@@ -20,6 +20,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             {
                 FromAddress = address,
                 ExpiryStrategy = new PassthroughMessageExpiryStrategy(),
+                ExpiryAction = () => { },
                 RepeatStrategy = EscalatingTimeRepeatStrategy.Default
             };
 
@@ -58,7 +59,11 @@ namespace SystemDot.Messaging.Configuration.RequestReply
 
         public RequestReplyRecieverConfiguration WithMessageExpiry(IMessageExpiryStrategy strategy, Action expiryAction)
         {
+            Contract.Requires(strategy != null);
+            Contract.Requires(expiryAction != null);
+
             this.replySchema.ExpiryStrategy = strategy;
+            this.replySchema.ExpiryAction = expiryAction;
 
             return this;
         }

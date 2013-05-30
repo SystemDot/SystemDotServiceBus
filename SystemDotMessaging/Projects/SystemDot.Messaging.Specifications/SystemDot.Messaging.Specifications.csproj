@@ -58,6 +58,9 @@
     <Compile Include="batching\when_sending_messages_inside_a_batch.cs" />
     <Compile Include="distribution\SpecificationGroup.cs" />
     <Compile Include="expiry\request_reply\SpecificationGroup.cs" />
+    <Compile Include="expiry\request_reply\when_sending_a_time_expired_request_down_a_channel_with_an_action_to_execute_on_expiry_set.cs" />
+    <Compile Include="expiry\when_repeating_a_message_that_is_not_time_expired_with_an_action_to_execute_on_expiry_set.cs" />
+    <Compile Include="expiry\when_repeating_a_message_that_is_time_expired_with_an_action_to_execute_on_expiry_set.cs" />
     <Compile Include="filtering\publishing\SpecificationGroup.cs" />
     <Compile Include="filtering\request_reply\SpecificationGroup.cs" />
     <Compile Include="filtering\SpecificationGroup.cs" />
