@@ -60,7 +60,7 @@ namespace System.IoC.Example
             ioc.RegisterInstance<ICustomInterface, CustomType>();
         }
 
-        static void AutoRegistrations(IIocContainer ioc)
+        static void AutoRegistrations(IocContainer ioc)
         {
             ioc.RegisterFromAssemblyOf<App>();
         }

@@ -17,9 +17,9 @@ namespace SystemDot.Messaging.TestReceiver
 
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false })
+                .ResolveReferencesWith(container)
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
-                    .ResolveBy(container.Resolve)
                 .UsingFilePersistence()
                 .UsingJsonSerialisation()
                 .UsingHttpTransport()

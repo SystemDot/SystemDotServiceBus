@@ -44,9 +44,9 @@ namespace SystemDot.Messaging.TestSender
             
             Configure.Messaging()
                 .LoggingWith(container.Resolve<ObservableLoggingMechanism>())
+                .ResolveReferencesWith(container)
                 .RegisterHandlersFromAssemblyOf<ResponseHandler>()
                     .BasedOn<IMessageConsumer>()
-                    .ResolveBy(container.Resolve)
                 .UsingFilePersistence()
                 .UsingJsonSerialisation()
                 .UsingHttpTransport()
@@ -56,6 +56,7 @@ namespace SystemDot.Messaging.TestSender
                     .ForRequestReplySendingTo("TestReply@/ReceiverServer")
                     .WithDurability()
                     .WithReceiveHook(new MessageMarshallingHook(CoreWindow.GetForCurrentThread().Dispatcher))
+                    .WithReceiveHook(new MessageMarshallingHook2(CoreWindow.GetForCurrentThread().Dispatcher))
                 .Initialise();
 
             ViewModelLocator.SetContainer(container);
