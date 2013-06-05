@@ -18,8 +18,6 @@ namespace SystemDot.Messaging.Transport.InProcess
 
         public void InputMessage(MessagePayload toInput)
         {
-            Logger.Info("Sending message to {0}", toInput.GetToAddress().ServerPath.GetUrl());
-
             this.server.InputMessage(toInput);
         }
     }

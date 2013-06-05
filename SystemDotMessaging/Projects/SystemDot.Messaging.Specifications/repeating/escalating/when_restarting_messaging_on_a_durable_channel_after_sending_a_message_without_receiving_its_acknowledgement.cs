@@ -35,7 +35,7 @@ namespace SystemDot.Messaging.Specifications.repeating.escalating
             Bus.Send(Message);
 
             Reset();
-            Initialise();
+            ReInitialise();
 
             ConfigureAndRegister<IChangeStore>(changeStore);
             ConfigureAndRegister<ITaskRepeater>(new TestTaskRepeater());

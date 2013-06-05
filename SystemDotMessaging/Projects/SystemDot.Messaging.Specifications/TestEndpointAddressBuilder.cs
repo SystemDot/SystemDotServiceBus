@@ -4,22 +4,22 @@ namespace SystemDot.Messaging.Specifications
 {
     public class TestEndpointAddressBuilder
     {
-        public static EndpointAddress Build(string channel, string serverInstance)
+        public static EndpointAddress Build(string channel, string server)
         {
             return new EndpointAddressBuilder().Build(
                 channel, 
                 new ServerPath(
-                    MessageServer.Local(serverInstance),
+                    MessageServer.Named(server),
                     MessageServer.None));
         }
 
-        public static EndpointAddress Build(string channel, string serverInstance, string proxyInstance)
+        public static EndpointAddress Build(string channel, string server, string proxyInstance)
         {
             return new EndpointAddressBuilder().Build(
                 channel,
                 new ServerPath(
-                    MessageServer.Local(serverInstance),
-                    MessageServer.Local(proxyInstance)));
+                    MessageServer.Named(server),
+                    MessageServer.Named(proxyInstance)));
         }
     }
 }

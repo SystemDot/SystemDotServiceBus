@@ -45,7 +45,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
             Bus.Reply(Reply);
 
             Reset();
-            Initialise();
+            ReInitialise();
 
             ConfigureAndRegister<IChangeStore>(changeStore);
             ConfigureAndRegister<ITaskRepeater>(new TestTaskRepeater());

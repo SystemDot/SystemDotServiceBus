@@ -37,7 +37,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
             Bus.Send(new object());
 
             Reset();
-            Initialise();
+            ReInitialise();
 
             ConfigureAndRegister<IChangeStore>(changeStore);
             ConfigureAndRegister<ISystemTime>(new TestSystemTime(DateTime.Now));

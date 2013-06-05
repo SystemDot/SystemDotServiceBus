@@ -42,7 +42,7 @@ namespace SystemDot.Messaging.Specifications.sending
             Bus.Send(Message2);
 
             Reset();
-            Initialise();
+            ReInitialise();
 
             ConfigureAndRegister<IChangeStore>(changeStore);
             ConfigureAndRegister<ITaskRepeater>(new TestTaskRepeater());

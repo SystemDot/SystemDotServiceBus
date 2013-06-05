@@ -45,7 +45,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
             Server.ReceiveMessage(messagePayload);
 
             Reset();
-            Initialise();
+            ReInitialise();
 
             ConfigureAndRegister<IChangeStore>(changeStore);
 

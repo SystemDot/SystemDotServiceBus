@@ -51,7 +51,7 @@ namespace SystemDot.Messaging.TestSender
                 .UsingJsonSerialisation()
                 .UsingHttpTransport()
                     .AsARemoteClient("MetroClient")
-                    .UsingProxy(MessageServer.Local("MetroProxy"))
+                    .UsingProxy("MetroProxy")
                 .OpenChannel("TestMetroRequest")
                     .ForRequestReplySendingTo("TestReply@/ReceiverServer")
                     .WithDurability()

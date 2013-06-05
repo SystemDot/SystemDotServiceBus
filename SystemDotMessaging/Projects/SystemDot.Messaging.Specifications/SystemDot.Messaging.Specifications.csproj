@@ -43,6 +43,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="acknowledgement\SpecificationGroup.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="handling\SpecificationGroup.cs" />
     <Compile Include="hooks\SpecificationGroup.cs" />
     <Compile Include="hooks\when_publishing_on_a_publish_channel_with_a_hook.cs" />
+    <Compile Include="IChangeStoreExtensions.cs" />
     <Compile Include="load_balancing\when_sending_nineteen_messages_that_are_not_yet_acknowledged_and_four_seconds_have_passed.cs" />
     <Compile Include="load_balancing\when_sending_twenty_messages_that_are_not_yet_acknowledged_and_four_seconds_have_passed.cs" />
     <Compile Include="load_balancing\SpecificationGroup.cs" />
@@ -119,6 +121,8 @@
     <Compile Include="sequencing\when_sending_a_message.cs" />
     <Compile Include="sequencing\when_sending_a_message_on_durable_channel_and_then_restarting_messaging.cs" />
     <Compile Include="sequencing\when_sending_two_messages.cs" />
+    <Compile Include="TestConfigurationReader.cs" />
+    <Compile Include="transport\http\when_configuring_a_server_with_an_address_registered.cs" />
     <Compile Include="unitofwork\external_ioc_resolution\SpecificationGroup.cs" />
     <Compile Include="unitofwork\external_ioc_resolution\when_receiving_a_message_with_a_unit_of_work_specified.cs" />
     <Compile Include="unitofwork\publishing\receiving\SpecificationGroup.cs" />
@@ -145,7 +149,6 @@
     <Compile Include="sequencing\request_reply\when_receiving_a_reply_from_a_durable_channel_that_has_had_sequencing_reset.cs" />
     <Compile Include="sequencing\request_reply\when_receiving_a_request_from_a_durable_channel_that_has_had_sequencing_reset.cs" />
     <Compile Include="receiving\request_reply\when_receiving_a_request_on_a_channel_from_one_sender_and_then_from_another.cs" />
-    <Compile Include="NonSentMarkingMessageSender.cs" />
     <Compile Include="sql\SpecificationGroup.cs" />
     <Compile Include="sql\when_configuring_messaging.cs" />
     <Compile Include="esent\SpecificationGroup.cs" />
@@ -166,8 +169,8 @@
     <Compile Include="transport\http\MessagePayloadExtensions.cs" />
     <Compile Include="transport\http\remote\client\when_sending_a_message_using_a_remote_proxy.cs" />
     <Compile Include="transport\http\remote\client\when_sending_to_a_receiver_on_a_different_machine.cs" />
-    <Compile Include="transport\http\remote\serving\When_sending_a_message_with_a_remote_server_and_a_client_configured.cs" />
-    <Compile Include="transport\http\when_configuring_a_server.cs" />
+    <Compile Include="transport\http\remote\serving\when_sending_a_message_with_a_remote_server_and_a_client_configured.cs" />
+    <Compile Include="transport\http\when_configuring_a_server_without_an_address_registered.cs" />
     <Compile Include="transport\http\when_receiving_a_message.cs" />
     <Compile Include="transport\http\when_sending_to_a_receiver_on_a_different_machine_and_remote_proxy.cs" />
     <Compile Include="repeating\publishing\subscription\SpecificationGroup.cs" />
@@ -220,6 +223,7 @@
     <Compile Include="publishing\when_publishing_when_the_subscriber_has_subscribed_after_messages_were_published.cs" />
     <Compile Include="filtering\publishing\when_publishing_with_the_correct_name_on_a_publish_subscribe_channel_with_a_name_filter.cs" />
     <Compile Include="filtering\publishing\when_publishing_with_the_wrong_name_on_a_publish_subscribe_channel_with_a_name_filter.cs" />
+    <Compile Include="WithHttpConfigurationSubject.cs" />
     <Compile Include="WithPublisherSubject.cs" />
     <Compile Include="restarting_messaging\when_restarting_messaging_after_handling_a_request_on_a_non_durable_channel_that_fails.cs" />
     <Compile Include="restarting_messaging\when_restarting_messaging_after_handling_a_request_on_a_durable_channel_that_fails.cs" />
@@ -262,13 +266,12 @@
     <Compile Include="TestEndpointAddressBuilder.cs" />
     <Compile Include="configuration\when_logging_a_message_with_a_logging_mechanism_configured.cs" />
     <Compile Include="publishing\receiving\when_recieving_on_a_subscriber_channel.cs" />
-    <Compile Include="transport\http\when_sending_to_a_receiver_on_a_with_instances_but_no_names_set_for_server_and_proxy.cs" />
+    <Compile Include="transport\http\when_sending_to_a_receiver_with_named_server_and_proxy_but_with_no_addresses_set.cs" />
     <Compile Include="WithConfigurationSubject.cs" />
     <Compile Include="acknowledgement\when_acknowledging_a_message.cs" />
     <Compile Include="acknowledgement\when_repeating_messages_after_receiving_an_acknowledgement_for_a_message.cs" />
     <Compile Include="WithMessageConfigurationSubject.cs" />
     <Compile Include="FailingMessageHandler.cs" />
-    <Compile Include="IChangeStoreExtensions.cs" />
     <Compile Include="TestMessageChangeRebuilder.cs" />
     <Compile Include="TestMessageHandler.cs">
       <SubType>Code</SubType>
@@ -284,10 +287,10 @@
     <Compile Include="transport\http\remote\client\SpecificationGroup.cs" />
     <Compile Include="transport\http\remote\client\StreamEnumerableExtensions.cs" />
     <Compile Include="transport\http\remote\serving\SpecificationGroup.cs" />
-    <Compile Include="transport\http\remote\serving\When_configuring_a_remote_server.cs" />
+    <Compile Include="transport\http\remote\serving\when_configuring_a_remote_server.cs" />
     <Compile Include="transport\http\remote\serving\when_handling_request_that_fails_deserialisation.cs" />
     <Compile Include="transport\http\WithServerConfigurationSubject.cs" />
-    <Compile Include="FailingSerialiser.cs" />
+    <Compile Include="transport\http\remote\serving\FailingSerialiser.cs" />
     <Compile Include="TestSerialiser.cs" />
     <Compile Include="transport\http\remote\client\when_sending_a_message_using_a_local_proxy.cs" />
     <Compile Include="receiving\when_receiving_a_message_that_does_not_have_the_expected_address.cs" />
@@ -308,12 +311,15 @@
     <Compile Include="StreamExtensions.cs" />
     <Compile Include="transport\http\remote\serving\when_handling_a_long_poll_request_for_messages_with_two_messages_in_the_queue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WithMessageProcessorSubject.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SystemDot.Esent\SystemDot.Esent.csproj">
       <Project>{C7DBF177-FCDB-4530-A6CA-3B1EFBAD63EB}</Project>
       <Name>SystemDot.Esent %28Windows\SystemDot.Esent%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemDot.Extensions\SystemDot.Extensions.csproj">
+      <Project>{C68777BE-FC18-47E1-ABAE-7CD6D5D0F7BC}</Project>
+      <Name>SystemDot.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\SystemDot.Messaging\SystemDot.Messaging.csproj">
       <Project>{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}</Project>

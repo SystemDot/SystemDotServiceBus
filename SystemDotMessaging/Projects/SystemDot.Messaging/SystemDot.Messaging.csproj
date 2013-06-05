@@ -41,6 +41,9 @@
     <Compile Include="Acknowledgement\Builders\AcknowledgementSendChannelBuilder.cs" />
     <Compile Include="Addressing\EndpointAddress.cs" />
     <Compile Include="Addressing\EndpointAddressBuilder.cs" />
+    <Compile Include="Addressing\IServerAddressesReader.cs" />
+    <Compile Include="Addressing\ServerAddressesReader.cs" />
+    <Compile Include="Addressing\ServerAddressRegistry.cs" />
     <Compile Include="Addressing\MessageAddresser.cs" />
     <Compile Include="Addressing\ServerPath.cs" />
     <Compile Include="Batching\Batch.cs" />
@@ -232,7 +235,6 @@
     <Compile Include="Storage\MessagePersistenceId.cs" />
     <Compile Include="Storage\PersistenceHeader.cs" />
     <Compile Include="Storage\PersistenceUseType.cs" />
-    <Compile Include="Transport\Http\HttpServerPathExtensions.cs" />
     <Compile Include="Transport\Http\Remote\Servers\Configuration\HttpRemoteServerBuilder.cs" />
     <Compile Include="Transport\IMessageSender.cs" />
     <Compile Include="Transport\IMessageReceiver.cs" />

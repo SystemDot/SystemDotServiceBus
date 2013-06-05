@@ -34,25 +34,25 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
             this.messagingConfiguration.BuildActions.ForEach(a => a());
         }
 
-        public RemoteClientConfiguration AsARemoteClient(string instance)
+        public RemoteClientConfiguration AsARemoteClient(string named)
         {
-            Contract.Requires(!String.IsNullOrEmpty(instance)); 
+            Contract.Requires(!String.IsNullOrEmpty(named)); 
             
             HttpRemoteClientComponents.Configure(IocContainerLocator.Locate());
-            return new RemoteClientConfiguration(this.messagingConfiguration, MessageServer.Local(instance));
+            return new RemoteClientConfiguration(this.messagingConfiguration, MessageServer.Named(named));
         }
 
-        public MessageServerConfiguration AsAServer(string instance)
+        public MessageServerConfiguration AsAServer(string name)
         {
-            Contract.Requires(!String.IsNullOrEmpty(instance));
+            Contract.Requires(!String.IsNullOrEmpty(name));
 
             HttpServerComponents.Configure(IocContainerLocator.Locate());
 
             return new MessageServerConfiguration(
                 this.messagingConfiguration,
                 new ServerPath(
-                    MessageServer.Local(instance), 
-                    MessageServer.Local(instance)));
+                    MessageServer.Named(name),
+                    MessageServer.Named(name)));
         }
     }
 }

@@ -1,25 +1,23 @@
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Transport.InProcess;
-using SystemDot.Parallelism;
-using SystemDot.Serialisation;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications
 {
     public class WithMessageConfigurationSubject : WithConfigurationSubject
     {
-        protected static TestTaskRepeater TaskRepeater;
         protected static TestMessageServer Server;
 
-        Establish context = () => Initialise();
+        Establish context = () => RegisterComponents();
         
-        protected static void Initialise()
+        protected new static void ReInitialise()
         {
-            ConfigureAndRegister<ISerialiser>(new PlatformAgnosticSerialiser());
+            WithConfigurationSubject.ReInitialise();
+            RegisterComponents();
+        }
 
-            TaskRepeater = new TestTaskRepeater();
-            ConfigureAndRegister<ITaskRepeater>(TaskRepeater);
-
+        static void RegisterComponents()
+        {
             Server = new TestMessageServer();
             ConfigureAndRegister<IInProcessMessageServer>(Server);
 

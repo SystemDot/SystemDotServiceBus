@@ -1,6 +1,4 @@
 using System;
-using SystemDot.Http.Builders;
-using SystemDot.Messaging.Transport.Http.Configuration;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
@@ -11,15 +9,10 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
     {
         static Exception exception;
 
-        Establish context = () =>
-        {
-            ConfigureAndRegister<IHttpServerBuilder>(new TestHttpServerBuilder());
-            
-            Configuration.Configure.Messaging()
-                .UsingHttpTransport()
-                .AsARemoteServer("RemoteServerInstance")
-                .Initialise();
-        };
+        Establish context = () => Configuration.Configure.Messaging()
+            .UsingHttpTransport()
+            .AsARemoteServer("RemoteServerName")
+            .Initialise();
 
         Because of = () => exception = Catch.Exception(() => SendObjectsToServer(new object()));
 

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
@@ -20,10 +18,13 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
             this.remoteClient = remoteClient;
         }
 
-        public MessageServerConfiguration UsingProxy(MessageServer proxy)
+        public MessageServerConfiguration UsingProxy(string proxyName)
         {
-            Contract.Requires(proxy != null);
-            return new MessageServerConfiguration(this.messagingConfiguration, new ServerPath(this.remoteClient, proxy));
+            Contract.Requires(!string.IsNullOrEmpty(proxyName));
+
+            return new MessageServerConfiguration(
+                this.messagingConfiguration, 
+                new ServerPath(this.remoteClient, MessageServer.Named(proxyName)));
         }
     }
 }

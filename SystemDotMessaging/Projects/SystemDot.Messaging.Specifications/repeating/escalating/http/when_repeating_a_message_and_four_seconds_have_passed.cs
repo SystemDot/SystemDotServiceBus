@@ -5,28 +5,19 @@ using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 using SystemDot.Specifications;
 using Machine.Specifications;
-using SystemDot.Messaging.Transport.Http.Configuration;
 
 namespace SystemDot.Messaging.Specifications.repeating.escalating.http
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_repeating_a_message_and_four_seconds_have_passed : WithMessageConfigurationSubject
+    public class when_repeating_a_message_and_four_seconds_have_passed : WithHttpConfigurationSubject
     {
         const string ChannelName = "Test";
         const string SenderChannelName = "TestSender";
         const string ServerInstance = "ServerInstance";
-
-        static TestWebRequestor webRequestor;
         
         Establish context = () =>
         {
-            ConfigureAndRegister<IHttpServerBuilder>(new TestHttpServerBuilder());
-
-            webRequestor = new TestWebRequestor(
-                new PlatformAgnosticSerialiser(),
-                new FixedPortAddress(Environment.MachineName, ServerInstance));
-
-            ConfigureAndRegister<IWebRequestor>(webRequestor);
+            WebRequestor.ExpectAddress(ServerInstance, Environment.MachineName);
 
             var systemTime = new TestSystemTime(DateTime.Now);
             ConfigureAndRegister<ISystemTime>(systemTime);
@@ -44,6 +35,6 @@ namespace SystemDot.Messaging.Specifications.repeating.escalating.http
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_repeat_the_message = () => webRequestor.RequestsMade.Count.ShouldEqual(2);
+        It should_repeat_the_message = () => WebRequestor.RequestsMade.Count.ShouldEqual(2);
     }
 }

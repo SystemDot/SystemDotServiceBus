@@ -17,26 +17,30 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients
         readonly ISerialiser formatter;
         readonly ITaskScheduler scheduler;
         readonly IMessageReceiver receiver;
-        ITaskStarter starter;
+        readonly ITaskStarter starter;
+        readonly ServerAddressRegistry serverAddressRegistry;
 
         public LongPoller(
             IWebRequestor requestor, 
             ISerialiser formatter, 
             ITaskScheduler scheduler, 
             IMessageReceiver receiver, 
-            ITaskStarter starter)
+            ITaskStarter starter, 
+            ServerAddressRegistry serverAddressRegistry)
         {
             Contract.Requires(requestor != null);
             Contract.Requires(formatter != null);
             Contract.Requires(scheduler != null);
             Contract.Requires(receiver != null);
             Contract.Requires(starter != null);
+            Contract.Requires(serverAddressRegistry != null);
 
             this.requestor = requestor;
             this.formatter = formatter;
             this.scheduler = scheduler;
             this.receiver = receiver;
             this.starter = starter;
+            this.serverAddressRegistry = serverAddressRegistry;
         }
 
         public void ListenTo(ServerPath toListenFor)
@@ -51,7 +55,7 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients
             Logger.Info("Long polling for messages for {0}", toListenFor);
 
             this.requestor.SendPut(
-                toListenFor.GetUrl(),
+                this.serverAddressRegistry.Lookup(toListenFor),
                 requestStream => this.formatter.Serialise(requestStream, CreateLongPollPayload(toListenFor)),
                 RecieveResponse,
                 () => StartNextPoll(toListenFor, TimeSpan.FromSeconds(4)),

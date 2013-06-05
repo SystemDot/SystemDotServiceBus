@@ -1,12 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using SystemDot.Http.Builders;
-using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Transport.Http.Remote.Clients;
 using Machine.Specifications;
-using SystemDot.Messaging.Transport.Http.Configuration;
 
 namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
 {
@@ -21,11 +19,9 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
 
         Establish context = () =>
         {
-            ConfigureAndRegister<IHttpServerBuilder>(new TestHttpServerBuilder());
-            
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsARemoteServer("RemoteServerInstance")
+                .AsARemoteServer("RemoteServerName")
                 .Initialise();
             
             sentMessageInQueue1 = new MessagePayload();

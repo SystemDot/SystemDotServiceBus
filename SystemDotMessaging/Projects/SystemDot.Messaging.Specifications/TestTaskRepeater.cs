@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Specifications
         public void Register(TimeSpan delay, Action toLoop)
         {
             this.toRun.Add(toLoop);
-            if (this.Started) this.toRun.ForEach(r => r());
+            if (Started) this.toRun.ForEach(r => r());
         }
 
         public void Start()

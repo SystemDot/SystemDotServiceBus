@@ -5,7 +5,6 @@ using System.Linq;
 using SystemDot.Http;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
-using SystemDot.Messaging.Transport.Http.Remote;
 using SystemDot.Messaging.Transport.Http.Remote.Clients;
 using SystemDot.Serialisation;
 
@@ -15,16 +14,22 @@ namespace SystemDot.Messaging.Specifications
     {
         readonly List<MessagePayload> messages;
         readonly ISerialiser formatter;
-        readonly FixedPortAddress toCheck;
+        FixedPortAddress addressToCheck;
 
         public List<Stream> RequestsMade { get; private set; }
-
-        public TestWebRequestor(ISerialiser formatter, FixedPortAddress toCheck)
+        
+        public TestWebRequestor(ISerialiser formatter)
         {
             this.formatter = formatter;
-            this.toCheck = toCheck;
             this.messages = new List<MessagePayload>();
+            this.addressToCheck = new FixedPortAddress();
+
             RequestsMade = new List<Stream>();
+        }
+
+        public void ExpectAddress(string instance, string address)
+        {
+            this.addressToCheck = new FixedPortAddress(address, instance);
         }
 
         public T DeserialiseSingleRequest<T>()
@@ -34,7 +39,7 @@ namespace SystemDot.Messaging.Specifications
 
         public void SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest)
         {
-            if (this.toCheck.Url != address.Url)
+            if (this.addressToCheck.Url != address.Url)
                 return;
 
             var request = new MemoryStream();
@@ -50,7 +55,7 @@ namespace SystemDot.Messaging.Specifications
             Action toPerformOnError, 
             Action toPerformOnCompletion)
         {
-            if (this.toCheck.Url != address.Url)
+            if (this.addressToCheck.Url != address.Url)
                 return;
 
             var request = new MemoryStream();

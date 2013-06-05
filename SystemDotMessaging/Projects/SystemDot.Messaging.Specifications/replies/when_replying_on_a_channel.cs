@@ -6,7 +6,6 @@ using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Specifications.publishing;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.replies
@@ -17,7 +16,6 @@ namespace SystemDot.Messaging.Specifications.replies
         const string ChannelName = "Test";
         const string SenderChannelName = "TestSender";
 
-        
         static int message;
 
         Establish context = () =>

@@ -1,12 +1,8 @@
 ﻿using System;
-using SystemDot.Http;
-using SystemDot.Http.Builders;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Transport.Http.Configuration;
-using SystemDot.Serialisation;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.transport.http
@@ -15,7 +11,7 @@ namespace SystemDot.Messaging.Specifications.transport.http
     public class when_receiving_a_message : WithServerConfigurationSubject
     {
         const int Message = 1;
-        const string ServerInstance = "ServerInstance";
+        const string ServerName = "ServerName";
         const string ReceiverAddress = "ReceiverAddress";
 
         static TestMessageHandler<int> handler;
@@ -23,12 +19,9 @@ namespace SystemDot.Messaging.Specifications.transport.http
 
         Establish context = () =>
         {
-            ConfigureAndRegister<IHttpServerBuilder>(new TestHttpServerBuilder());
-            ConfigureAndRegister<IWebRequestor>(new TestWebRequestor(Resolve<ISerialiser>(), new FixedPortAddress()));
-
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsAServer(ServerInstance)
+                .AsAServer(ServerName)
                 .OpenChannel(ReceiverAddress).ForPointToPointReceiving()
                 .Initialise();
 
@@ -37,8 +30,8 @@ namespace SystemDot.Messaging.Specifications.transport.http
                     Message,
                     "SenderAddress",
                     ReceiverAddress,
-                    ServerInstance,
-                    ServerInstance,
+                    ServerName,
+                    ServerName,
                     PersistenceUseType.PointToPointSend);
 
             messagePayload.SetSequenceOriginSetOn(DateTime.Today);

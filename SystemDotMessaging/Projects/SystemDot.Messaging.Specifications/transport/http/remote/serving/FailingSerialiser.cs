@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using SystemDot.Serialisation;
 
-namespace SystemDot.Messaging.Specifications
+namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
 {
     public class FailingSerialiser : ISerialiser
     {

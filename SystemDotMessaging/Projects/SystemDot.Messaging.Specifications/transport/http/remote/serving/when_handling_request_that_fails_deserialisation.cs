@@ -1,6 +1,4 @@
 using System;
-using SystemDot.Http.Builders;
-using SystemDot.Messaging.Transport.Http.Configuration;
 using SystemDot.Serialisation;
 using Machine.Specifications;
 
@@ -14,11 +12,10 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
         Establish context = () =>
         {
             ConfigureAndRegister<ISerialiser>(new FailingSerialiser());
-            ConfigureAndRegister<IHttpServerBuilder>(new TestHttpServerBuilder());
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsARemoteServer("RemoteServerInstance")
+                .AsARemoteServer("RemoteServerName")
                 .Initialise();
         };
 

@@ -107,6 +107,7 @@
     <Compile Include="Composition\DirectoryCatalog.cs" />
     <Compile Include="Composition\ImportManyAttribute.cs" />
     <Compile Include="Composition\InheritedExportAttribute.cs" />
+    <Compile Include="Configuration\ConfigurationReader.cs" />
     <Compile Include="PutSender.cs" />
     <Compile Include="Console.cs" />
     <Compile Include="File.cs" />

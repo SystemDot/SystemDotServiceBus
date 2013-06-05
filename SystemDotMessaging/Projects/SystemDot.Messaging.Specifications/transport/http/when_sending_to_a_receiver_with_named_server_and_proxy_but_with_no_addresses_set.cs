@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using Machine.Specifications;
@@ -5,40 +6,35 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.transport.http
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_to_a_receiver_on_a_different_machine_and_remote_proxy : WithHttpConfigurationSubject
+    public class when_sending_to_a_receiver_with_named_server_and_proxy_but_with_no_addresses_set : WithHttpConfigurationSubject
     {
         const string ChannelName = "ChannelName";
         const string ReceiverChannelName = "ReceiverChannelName";
         const string ReceiverServerName = "ReceiverServerName";
         const string RemoteProxyName = "RemoteProxyName";
-        const string RemoteProxyAddress = "RemoteProxyAddress";
-        const string ReceiverName = ReceiverChannelName + "@" + ReceiverServerName + "." + RemoteProxyName;
+
+        static string receiverName;
 
         Establish context = () =>
         {
-            ServerAddresses.AddAddress(RemoteProxyName, RemoteProxyAddress);
-            ServerAddresses.AddAddress("OtherName", "OtherAddress");
+            receiverName = ReceiverChannelName + "@" + ReceiverServerName + "." + RemoteProxyName;
 
-            WebRequestor.ExpectAddress(RemoteProxyName, RemoteProxyAddress);
+            WebRequestor.ExpectAddress(RemoteProxyName, Environment.MachineName);
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsAServer("ServerName")
-                .OpenChannel(ChannelName).ForPointToPointSendingTo(ReceiverName)
+                .OpenChannel(ChannelName).ForPointToPointSendingTo(receiverName)
                 .Initialise();
         };
 
         Because of = () => Bus.Send(1);
 
-        It should_send_a_message_with_the_correct_to_address_channel_name = () =>
-            WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetToAddress().Channel.ShouldEqual(ReceiverChannelName);
-
-        It should_send_a_message_with_the_correct_to_address_server_name = () =>
+        It should_send_a_message_with_the_expected_to_address_server_name_set = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
                 .GetToAddress().ServerPath.Server.Name.ShouldEqual(ReceiverServerName);
 
-        It should_send_a_message_with_the_correct_to_address_remote_proxy_name = () =>
+        It should_send_a_message_with_the_expected_to_address_remote_proxy_name_set = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
                 .GetToAddress().ServerPath.Proxy.Name.ShouldEqual(RemoteProxyName);
     }

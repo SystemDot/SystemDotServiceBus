@@ -1,56 +1,36 @@
 ﻿using System;
-using System.Linq;
-using SystemDot.Http;
-using SystemDot.Http.Builders;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
-using SystemDot.Serialisation;
 using Machine.Specifications;
-using SystemDot.Messaging.Transport.Http.Configuration;
 
 namespace SystemDot.Messaging.Specifications.transport.http
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_a_message : WithConfigurationSubject
+    public class when_sending_a_message : WithHttpConfigurationSubject
     {
-        const string ServerInstance = "ServerInstance";
-
-        
-        static TestWebRequestor webRequestor;
-        static int message;
+        const string ServerName = "ServerName";
+        const int Message = 1;
        
         Establish context = () =>
         {
-            ConfigureAndRegister<IHttpServerBuilder>(new TestHttpServerBuilder());
-
-            webRequestor = new TestWebRequestor(
-                new PlatformAgnosticSerialiser(), 
-                new FixedPortAddress(Environment.MachineName, ServerInstance));
-
-            ConfigureAndRegister<IWebRequestor>(webRequestor);
+            WebRequestor.ExpectAddress(ServerName, Environment.MachineName);
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsAServer(ServerInstance)
+                .AsAServer(ServerName)
                 .OpenChannel("TestSender")
                 .ForPointToPointSendingTo("TestReceiver")
                 .Initialise();
-
-            message = 1;
         };
 
-        Because of = () => Bus.Send(message);
+        Because of = () => Bus.Send(Message);
 
         It should_serialise_the_message_and_send_it_as_a_put_request_to_the_message_server = () =>
-            webRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .DeserialiseTo<int>().ShouldEqual(message);
+            WebRequestor.DeserialiseSingleRequest<MessagePayload>()
+                .DeserialiseTo<int>().ShouldEqual(Message);
 
         It should_send_a_message_with_the_correct_to_address_server_name = () =>
-            webRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetToAddress().ServerPath.Server.Name.ShouldEqual(Environment.MachineName);
-
-        It should_send_a_message_with_the_correct_to_address_server_instance = () =>
-            webRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetToAddress().ServerPath.Server.Instance.ShouldEqual(ServerInstance);
+            WebRequestor.DeserialiseSingleRequest<MessagePayload>()
+                .GetToAddress().ServerPath.Server.Name.ShouldEqual(ServerName);
     }
 }

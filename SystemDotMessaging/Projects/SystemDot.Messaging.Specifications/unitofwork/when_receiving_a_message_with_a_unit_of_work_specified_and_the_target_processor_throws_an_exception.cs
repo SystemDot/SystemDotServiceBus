@@ -1,6 +1,7 @@
 using System;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Specifications.transport.http.remote.serving;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;

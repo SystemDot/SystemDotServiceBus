@@ -1,4 +1,5 @@
 using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Specifications.transport.http.remote.serving;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using SystemDot.Serialisation;
@@ -39,7 +40,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
                     PersistenceUseType.ReplyReceive)));
            
             Reset();
-            Initialise();
+            ReInitialise();
 
             ConfigureAndRegister<IChangeStore>(changeStore);
             handler = new TestMessageHandler<int>();

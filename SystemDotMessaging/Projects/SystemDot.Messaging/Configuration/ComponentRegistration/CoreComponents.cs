@@ -1,3 +1,4 @@
+using SystemDot.Configuration;
 using SystemDot.Files;
 using SystemDot.Http;
 using SystemDot.Ioc;
@@ -16,6 +17,9 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<IWebRequestor, WebRequestor>();
             container.RegisterInstance<EndpointAddressBuilder, EndpointAddressBuilder>();
             container.RegisterInstance<ISystemTime, SystemTime>();
+            container.RegisterInstance<ConfigurationReader, ConfigurationReader>();
+            container.RegisterInstance<ServerAddressRegistry, ServerAddressRegistry>();
+            container.RegisterInstance<IServerAddressesReader, ServerAddressesReader>();
         }
     }
 }

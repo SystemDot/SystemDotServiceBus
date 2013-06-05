@@ -37,7 +37,7 @@ namespace SystemDot.Messaging.Specifications.repeating.constant
             Bus.Send(Message);
 
             Reset();
-            Initialise();
+            ReInitialise();
 
             ConfigureAndRegister<IChangeStore>(changeStore);
             ConfigureAndRegister<ITaskRepeater>(new TestTaskRepeater());

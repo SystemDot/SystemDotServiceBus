@@ -27,38 +27,23 @@ namespace SystemDot.Messaging.Addressing
                 return defaultServerPath;
 
             string serverPath = ParseChannel(address)[1];
-
             string[] pathParts = ParseServerPath(serverPath);
 
-            if(pathParts.Length == 1)
-                return new ServerPath(GetMessageServer(serverPath), GetMessageServer(serverPath));
-
-            return new ServerPath(GetMessageServer(pathParts[0]), GetMessageServer(pathParts[1]));
+            if (pathParts.Length == 1)
+                return new ServerPath(MessageServer.Named(serverPath), MessageServer.Named(serverPath));
+            
+            return new ServerPath(MessageServer.Named(pathParts[0]), MessageServer.Named(pathParts[1]));
         }
 
-        static string[] ParseServerPath(string serverPath)
-        {
-            return serverPath.Split('.');
-        }
 
         static string[] ParseChannel(string address)
         {
             return address.Split('@');
         }
 
-        MessageServer GetMessageServer(string server)
+        static string[] ParseServerPath(string serverPath)
         {
-            string[] messageServerParts = ParseMessageServer(server);
-
-            if(messageServerParts[0].Length == 0)
-                return MessageServer.Named(Environment.MachineName, (messageServerParts[1]));
-
-            return MessageServer.Named(messageServerParts[0], (messageServerParts[1]));
+            return serverPath.Split('.');
         }
-
-        static string[] ParseMessageServer(string server)
-        {
-            return server.Split('/');
-        }
-    }   
+    }
 }

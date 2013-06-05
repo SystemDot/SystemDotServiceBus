@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 using System.IO;
+using SystemDot.Http.Builders;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Serialisation;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.transport.http
 {
-    public class WithServerConfigurationSubject : WithMessageConfigurationSubject
+    public class WithServerConfigurationSubject : WithHttpConfigurationSubject
     {
-        Establish context = () => ConfigureAndRegister<ISerialiser>(new PlatformAgnosticSerialiser());
+        Establish context = () => ConfigureAndRegister<IHttpServerBuilder>(new TestHttpServerBuilder());
 
         Cleanup cleanup = () => TestHttpServer.ClearInstance();
 

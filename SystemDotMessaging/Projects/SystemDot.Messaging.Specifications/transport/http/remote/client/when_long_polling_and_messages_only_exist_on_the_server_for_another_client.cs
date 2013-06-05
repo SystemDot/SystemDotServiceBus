@@ -1,35 +1,28 @@
-using SystemDot.Http;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Transport.Http.Configuration;
 using SystemDot.Parallelism;
-using SystemDot.Serialisation;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_long_polling_and_messages_only_exist_on_the_server_for_another_client : WithConfigurationSubject
+    public class when_long_polling_and_messages_only_exist_on_the_server_for_another_client : WithHttpConfigurationSubject
     {
         const string ReceiverName = "ReceiverName";
         const string SenderName = "SenderName";
         const string RemoteClientInstance = "RemoteClientInstance";
+        const string RemoteProxy = "RemoteProxy";
         const string RemoteProxyInstance = "RemoteProxyInstance";
 
         static TestTaskStarter taskStarter; 
         static MessagePayload messagePayload;
-        static TestWebRequestor requestor;
         static TestMessageHandler<int> handler;
 
         Establish context = () =>
         {
-            requestor = new TestWebRequestor(
-                new PlatformAgnosticSerialiser(), 
-                new FixedPortAddress(null, "DifferentServer"));
-
-            ConfigureAndRegister<IWebRequestor>(requestor);
+            WebRequestor.ExpectAddress("DifferentServer", null);
 
             taskStarter = new TestTaskStarter(1);
             taskStarter.Pause(); 
@@ -38,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsARemoteClient(RemoteClientInstance)
-                .UsingProxy(MessageServer.Local(RemoteProxyInstance))
+                .UsingProxy(RemoteProxy)
                 .OpenChannel(ReceiverName)
                 .ForPointToPointReceiving()
                 .Initialise();
@@ -58,7 +51,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
         Because of = () =>
         {
-            requestor.AddMessages(messagePayload);
+            WebRequestor.AddMessages(messagePayload);
             taskStarter.UnPause();
         };
 

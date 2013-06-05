@@ -1,7 +1,12 @@
+using System.Xml;
+using SystemDot.Configuration;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Pipelines;
+using SystemDot.Parallelism;
+using SystemDot.Serialisation;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -9,11 +14,33 @@ namespace SystemDot.Messaging.Specifications
 {
     public class WithConfigurationSubject : WithSubject<object>
     {
+        protected static TestTaskRepeater TaskRepeater;
+        protected static TestServerAddressesReader ServerAddresses;
+
         Establish context = () =>
         {
             Reset();
             MessagePipelineBuilder.BuildSynchronousPipelines = true;
+            ReInitialise();
         };
+
+        protected static void ReInitialise()
+        {
+            RegisterComponents();
+        }
+
+        static void RegisterComponents()
+        {
+            ConfigureAndRegister<ISerialiser>(new PlatformAgnosticSerialiser());
+
+            TaskRepeater = new TestTaskRepeater();
+            ConfigureAndRegister<ITaskRepeater>(TaskRepeater);
+
+            ConfigureAndRegister<MessageHandlerRouter>(new MessageHandlerRouter());
+
+            ServerAddresses = new TestServerAddressesReader();
+            ConfigureAndRegister<IServerAddressesReader>(ServerAddresses);
+        }
 
         protected static void Reset()
         {
