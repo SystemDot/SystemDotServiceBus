@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
             this.messagingConfiguration = messagingConfiguration;
         }
 
-        public HttpTransportConfiguration AsARemoteServer(string instance)
+        public HttpTransportConfiguration AsAProxy(string instance)
         {
             Contract.Requires(!String.IsNullOrEmpty(instance));
             
@@ -34,12 +34,16 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
             this.messagingConfiguration.BuildActions.ForEach(a => a());
         }
 
-        public RemoteClientConfiguration AsARemoteClient(string named)
+        public MessageServerConfiguration AsAServerUsingAProxy(string server, string proxy)
         {
-            Contract.Requires(!String.IsNullOrEmpty(named)); 
+            Contract.Requires(!String.IsNullOrEmpty(server));
+            Contract.Requires(!String.IsNullOrEmpty(proxy)); 
             
             HttpRemoteClientComponents.Configure(IocContainerLocator.Locate());
-            return new RemoteClientConfiguration(this.messagingConfiguration, MessageServer.Named(named));
+
+            return new MessageServerConfiguration(
+                this.messagingConfiguration,
+                new ServerPath(MessageServer.Named(server), MessageServer.Named(proxy)));
         }
 
         public MessageServerConfiguration AsAServer(string name)

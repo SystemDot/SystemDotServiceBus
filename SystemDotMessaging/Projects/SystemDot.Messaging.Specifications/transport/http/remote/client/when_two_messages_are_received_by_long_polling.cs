@@ -16,8 +16,8 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
         const string SenderName = "SenderName";
         const int Message1 = 1;
         const int Message2 = 2;
-        const string RemoteClientName = "RemoteClientName";
-        const string ProxyName = "ProxyName";
+        const string Server = "Server";
+        const string Proxy = "Proxy";
 
         static TestTaskStarter taskStarter;
         static MessagePayload messagePayload1;
@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
         Establish context = () =>
         {
-            WebRequestor.ExpectAddress(ProxyName, Environment.MachineName);
+            WebRequestor.ExpectAddress(Proxy, Environment.MachineName);
 
             taskStarter = new TestTaskStarter(1);
             taskStarter.Pause(); 
@@ -34,8 +34,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsARemoteClient(RemoteClientName)
-                .UsingProxy(ProxyName)
+                .AsAServerUsingProxy(Server, Proxy)
                 .OpenChannel(ReceiverName)
                 .ForPointToPointReceiving()
                 .Initialise();
@@ -44,8 +43,8 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
                 Message1,
                 SenderName,
                 ReceiverName,
-                RemoteClientName,
-                ProxyName,
+                Server,
+                Proxy,
                 PersistenceUseType.PointToPointSend);
 
             messagePayload1.SetSequenceOriginSetOn(DateTime.Today);
@@ -56,8 +55,8 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
                 Message2,
                 SenderName,
                 ReceiverName,
-                RemoteClientName,
-                ProxyName,
+                Server,
+                Proxy,
                 PersistenceUseType.PointToPointSend);
 
             messagePayload2.SetSequenceOriginSetOn(DateTime.Today);

@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
 
         Establish context = () => Configuration.Configure.Messaging()
             .UsingHttpTransport()
-            .AsARemoteServer("RemoteServerName")
+            .AsAProxy("RemoteServerName")
             .Initialise();
 
         Because of = () => exception = Catch.Exception(() => SendObjectsToServer(new object()));

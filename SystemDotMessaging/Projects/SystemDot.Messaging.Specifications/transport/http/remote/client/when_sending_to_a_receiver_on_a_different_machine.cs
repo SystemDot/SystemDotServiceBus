@@ -9,7 +9,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
     [Subject(SpecificationGroup.Description)]
     public class when_sending_to_a_receiver_on_a_different_machine : WithHttpConfigurationSubject
     {
-        const string ProxyName = "ProxyName";
+        const string Proxy = "Proxy";
         const string SenderAddress = "SenderAddress";
         const string ReceiverChannelName = "ReceiverChannelName";
         const string ReceiverServerName = "ReceiverServerName";
@@ -25,8 +25,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
             
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsARemoteClient("RemoteClientName")
-                .UsingProxy(ProxyName)
+                .AsAServerUsingProxy("Server", Proxy)
                 .OpenChannel(SenderAddress).ForPointToPointSendingTo(ReceiverAddress)
                 .Initialise();
         };

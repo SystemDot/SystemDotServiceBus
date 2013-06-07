@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.TestSender
         /// will be used when the application is launched to open a specific file, to display
         /// search results, and so forth.
         /// </summary>
-        /// <param name="args">Details about the launch request and process.</param>
+        /// <param server="args">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             var container = new IocContainer();
@@ -50,10 +50,9 @@ namespace SystemDot.Messaging.TestSender
                 .UsingFilePersistence()
                 .UsingJsonSerialisation()
                 .UsingHttpTransport()
-                    .AsARemoteClient("MetroClient")
-                    .UsingProxy("MetroProxy")
+                    .AsAServerUsingAProxy("MetroServer", "MetroProxy")
                 .OpenChannel("TestMetroRequest")
-                    .ForRequestReplySendingTo("TestReply@/ReceiverServer")
+                    .ForRequestReplySendingTo("TestReply@ReceiverServer")
                     .WithDurability()
                     .WithReceiveHook(new MessageMarshallingHook(CoreWindow.GetForCurrentThread().Dispatcher))
                 .Initialise();
@@ -90,8 +89,8 @@ namespace SystemDot.Messaging.TestSender
         /// without knowing whether the application will be terminated or resumed with the contents
         /// of memory still intact.
         /// </summary>
-        /// <param name="sender">The source of the suspend request.</param>
-        /// <param name="e">Details about the suspend request.</param>
+        /// <param server="sender">The source of the suspend request.</param>
+        /// <param server="e">Details about the suspend request.</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();

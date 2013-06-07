@@ -34,12 +34,12 @@ namespace SystemDot.Configuration
                 return;
             }
 
-            this.document = XmlDocument.LoadFromFileAsync(file).GetAwaiter().GetResult();
+            this.document = await XmlDocument.LoadFromFileAsync(file).AsTask().ConfigureAwait(false);
         }
 
-        static IAsyncOperation<StorageFile> GetFile(string fileName)
+        static async Task<StorageFile> GetFile(string fileName)
         {
-            return Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync(fileName);
+            return await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync(fileName);
         }
 
         public Dictionary<string, string> GetSettingsInSection(string section)

@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
 
         Because of = () => Configuration.Configure.Messaging()
             .UsingHttpTransport()
-            .AsARemoteServer(RemoteServerName)
+            .AsAProxy(RemoteServerName)
             .Initialise();
 
         It should_use_the_correct_long_poll_time = () => 

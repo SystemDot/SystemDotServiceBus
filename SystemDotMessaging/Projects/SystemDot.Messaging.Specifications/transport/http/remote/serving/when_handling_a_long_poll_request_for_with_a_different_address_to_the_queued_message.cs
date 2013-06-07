@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsARemoteServer("RemoteServerName")
+                .AsAProxy("RemoteServerName")
                 .Initialise();
 
             sentMessageInQueue = new MessagePayload();

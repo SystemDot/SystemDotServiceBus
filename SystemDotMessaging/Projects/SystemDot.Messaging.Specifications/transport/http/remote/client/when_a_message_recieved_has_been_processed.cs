@@ -12,7 +12,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
     [Subject(SpecificationGroup.Description)]
     public class when_a_message_recieved_has_been_processed : WithHttpConfigurationSubject
     {
-        const string ProxyName = "ProxyName";
+        const string Proxy = "Proxy";
         const string ReceiverName = "ReceiverName";
         const string SenderName = "SenderName";
 
@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
         Establish context = () =>
         {
-            WebRequestor.ExpectAddress(ProxyName, Environment.MachineName);
+            WebRequestor.ExpectAddress(Proxy, Environment.MachineName);
 
             taskStarter = new TestTaskStarter(2);
             taskStarter.Pause();
@@ -30,8 +30,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                    .AsARemoteClient("RemoteClient")
-                    .UsingProxy(ProxyName)
+                    .AsAServerUsingProxy("Server", Proxy)
                 .OpenChannel(ReceiverName).ForPointToPointReceiving()
                 .Initialise();
 

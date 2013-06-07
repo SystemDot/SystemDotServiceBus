@@ -12,8 +12,8 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
     {
         const string ReceiverName = "ReceiverName";
         const string SenderName = "SenderName";
-        const string RemoteClientInstance = "RemoteClientInstance";
-        const string RemoteProxy = "RemoteProxy";
+        const string Server = "Server";
+        const string Proxy = "Proxy";
         const string RemoteProxyInstance = "RemoteProxyInstance";
 
         static TestTaskStarter taskStarter; 
@@ -30,8 +30,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsARemoteClient(RemoteClientInstance)
-                .UsingProxy(RemoteProxy)
+                .AsAServerUsingProxy(Server, Proxy)
                 .OpenChannel(ReceiverName)
                 .ForPointToPointReceiving()
                 .Initialise();
@@ -41,7 +40,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
                  1, 
                  SenderName, 
                  "DifferentReceiver", 
-                 RemoteClientInstance,
+                 Server,
                  RemoteProxyInstance,
                  PersistenceUseType.PointToPointSend);
 

@@ -12,7 +12,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
     [Subject(SpecificationGroup.Description)]
     public class when_sending_a_message_with_a_remote_server_and_a_client_configured : WithHttpConfigurationSubject
     {
-        const string ProxyName = "ProxyName";
+        const string Proxy = "Proxy";
         const string ProxyAddress = "ProxyAddress";
 
         static TestTaskStarter taskStarter;
@@ -20,9 +20,9 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
 
         Establish context = () =>
         {
-            ServerAddresses.AddAddress(ProxyName, ProxyAddress);
+            ServerAddresses.AddAddress(Proxy, ProxyAddress);
 
-            WebRequestor.ExpectAddress(ProxyName, ProxyAddress);
+            WebRequestor.ExpectAddress(Proxy, ProxyAddress);
             
             taskStarter = new TestTaskStarter(1);
             ConfigureAndRegister<ITaskStarter>(taskStarter);
@@ -30,9 +30,8 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                    .AsARemoteServer("RemoteServerName")
-                    .AsARemoteClient("RemoteClientName")
-                    .UsingProxy(ProxyName)
+                    .AsAProxy("OtherProxy")
+                    .AsAServerUsingProxy("Server", Proxy)
                 .OpenChannel("ReceiverAddress").ForPointToPointReceiving()
                 .Initialise();
 

@@ -1,10 +1,7 @@
 ﻿using System;
-using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Transport.Http.Configuration;
-using SystemDot.Newtonsoft;
 
 namespace SystemDot.Messaging.TestReceiver
 {
@@ -23,7 +20,7 @@ namespace SystemDot.Messaging.TestReceiver
                 .UsingFilePersistence()
                 .UsingJsonSerialisation()
                 .UsingHttpTransport()
-                    .AsARemoteServer("MetroProxy")
+                    .AsAProxy("MetroProxy")
                     .AsAServer("ReceiverServer")
                 .OpenChannel("TestReply")
                     .ForRequestReplyRecieving()

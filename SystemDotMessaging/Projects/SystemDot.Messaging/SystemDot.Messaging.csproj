@@ -151,7 +151,6 @@
     <Compile Include="Transport\Http\Configuration\HttpServerComponents.cs" />
     <Compile Include="Transport\Http\Configuration\HttpServerTransportBuilder.cs" />
     <Compile Include="Transport\Http\MessageReceiverHandler.cs" />
-    <Compile Include="Transport\Http\Configuration\RemoteClientConfiguration.cs" />
     <Compile Include="Transport\InProcess\IInProcessMessageServer.cs" />
     <Compile Include="Transport\MessageReceiver.cs" />
     <Compile Include="Transport\Http\Remote\Clients\Configuration\HttpRemoteClientComponents.cs" />
