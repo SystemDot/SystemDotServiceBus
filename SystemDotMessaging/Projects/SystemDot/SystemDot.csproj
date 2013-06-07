@@ -57,6 +57,7 @@
     <Compile Include="Ioc\IIocContainer.cs" />
     <Compile Include="Ioc\IIocResolver.cs" />
     <Compile Include="Ioc\IocContainer.cs" />
+    <Compile Include="Ioc\IocContainerResources.cs" />
     <Compile Include="Ioc\TypeNotRegisteredException.cs" />
     <Compile Include="Logging\ConsoleLoggingMechanism.cs" />
     <Compile Include="Logging\ILoggingMechanism.cs" />

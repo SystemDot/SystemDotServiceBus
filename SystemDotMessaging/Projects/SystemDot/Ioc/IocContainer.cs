@@ -42,7 +42,9 @@ namespace SystemDot.Ioc
         object ResolveType(Type type)
         {
             if (!components.ContainsKey(type))
-                throw new TypeNotRegisteredException(string.Format("Type \"{0}\" has not been registered in the container.", type.Name));
+                throw new TypeNotRegisteredException(string.Format(
+                    IocContainerResources.TypeHasNotBeenRegisteredMessage, 
+                    type.Name));
 
             var concreteType = components[type];
 
@@ -72,7 +74,9 @@ namespace SystemDot.Ioc
 
         public void RegisterFromAssemblyOf<TAssemblyOf>()
         {
-            new AutoRegistrar(this).Register(typeof(TAssemblyOf).GetTypesInAssembly().WhereNonAbstract().WhereNonGeneric().WhereConcrete());
+            new AutoRegistrar(this)
+                .Register(typeof(TAssemblyOf)
+                    .GetTypesInAssembly().WhereNonAbstract().WhereNonGeneric().WhereConcrete());
         }
     }
 }
