@@ -5,11 +5,6 @@ namespace SystemDot.Messaging.RequestReply.Builders
 {
     class ReplyReceiveChannelSchema : RecieveChannelSchema
     {
-        public List<IMessageProcessor<object, object>> Hooks { get; set; }
-
-        public ReplyReceiveChannelSchema()
-        {
-            Hooks = new List<IMessageProcessor<object, object>>();
-        }
+        
     }
 }

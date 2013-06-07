@@ -3,7 +3,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.hooks
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_publishing_on_a_publish_channel_with_a_hook : WithPublisherSubject
+    public class when_publishing_an_event_on_a_publish_channel_with_a_hook : WithPublisherSubject
     {
         const string ChannelName = "Test";
         const int Message = 1;

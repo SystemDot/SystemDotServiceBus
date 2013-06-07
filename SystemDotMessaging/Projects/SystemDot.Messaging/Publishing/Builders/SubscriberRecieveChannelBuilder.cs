@@ -76,6 +76,7 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .ToResequencerIfSequenced(messageCache, schema)
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
                 .ToProcessor(schema.UnitOfWorkRunnerCreator())
+                .ToProcessors(schema.Hooks.ToArray())
                 .ToEndPoint(this.messageHandlerRouter);
 
             Messenger.Send(new SubscriberReceiveChannelBuilt

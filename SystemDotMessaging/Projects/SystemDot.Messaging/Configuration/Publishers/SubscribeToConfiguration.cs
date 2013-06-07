@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Publishing.Builders;
@@ -10,7 +8,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
     public class SubscribeToConfiguration : Configurer
     {
         readonly SubscriptionRequestChannelSchema requestSchema;
-        readonly SubscriberRecieveChannelSchema recieveSchema;
+        readonly SubscriberRecieveChannelSchema receiveSchema;
 
         public SubscribeToConfiguration(
             EndpointAddress subscriberAddress, 
@@ -28,7 +26,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
                 SubscriberAddress = subscriberAddress
             };
 
-            this.recieveSchema = new SubscriberRecieveChannelSchema
+            this.receiveSchema = new SubscriberRecieveChannelSchema
             {
                 Address = subscriberAddress,
                 ToAddress = publisherAddress,
@@ -38,7 +36,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
 
         protected override void Build()
         {
-            Resolve<SubscriberRecieveChannelBuilder>().Build(this.recieveSchema);
+            Resolve<SubscriberRecieveChannelBuilder>().Build(this.receiveSchema);
             Resolve<SubscriptionRequestChannelBuilder>().Build(this.requestSchema);
         }
 
@@ -50,14 +48,22 @@ namespace SystemDot.Messaging.Configuration.Publishers
         public SubscribeToConfiguration WithDurability()
         {
             this.requestSchema.IsDurable = true;
-            this.recieveSchema.IsDurable = true;
+            this.receiveSchema.IsDurable = true;
             return this;
         }
 
         public SubscribeToConfiguration WithUnitOfWork<TUnitOfWorkFactory>()
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory
         {
-            this.recieveSchema.UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<TUnitOfWorkFactory>;
+            this.receiveSchema.UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<TUnitOfWorkFactory>;
+            return this;
+        }
+
+        public SubscribeToConfiguration WithHook(IMessageProcessor<object, object> hook)
+        {
+            Contract.Requires(hook != null);
+
+            this.receiveSchema.Hooks.Add(hook);
             return this;
         }
     }
