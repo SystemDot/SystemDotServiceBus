@@ -4,7 +4,7 @@ using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.transport.http.acknowledgement
+namespace SystemDot.Messaging.Specifications.transport.http.server_addressing
 {
     [Subject(SpecificationGroup.Description)]
     public class when_receiving_a_request_on_a_request_reply_channel : WithServerConfigurationSubject

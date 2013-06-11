@@ -1,7 +1,5 @@
-﻿using System;
-using SystemDot.Messaging.Handling;
+﻿using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 

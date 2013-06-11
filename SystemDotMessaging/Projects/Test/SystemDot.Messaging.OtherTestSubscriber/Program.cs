@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.OtherTestSubscriber
                 .UsingHttpTransport()
                     .AsAServer("OtherSubscriberServer")
                 .OpenChannel("TestOtherSubscriber")
-                    .ForSubscribingTo("TestPublisher@/PublisherServer")
+                    .ForSubscribingTo("TestPublisher@PublisherServer")
                     .WithDurability()
                 .Initialise();
             

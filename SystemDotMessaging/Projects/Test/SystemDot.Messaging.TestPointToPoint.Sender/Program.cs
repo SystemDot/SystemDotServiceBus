@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.TestPointToPoint.Sender
                 .UsingHttpTransport()
                     .AsAServer("SenderServer")
                 .OpenChannel("TestSend")
-                    .ForPointToPointSendingTo("TestReceive@/ReceiverServer")
+                    .ForPointToPointSendingTo("TestReceive@ReceiverServer")
                     .WithDurability()
                 .Initialise();
 

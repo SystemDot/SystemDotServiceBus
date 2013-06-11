@@ -24,10 +24,10 @@ namespace SystemDot.Messaging.LargeData.TestSubscriber
                 .UsingHttpTransport()
                     .AsAServer("SubscriberServer")
                 .OpenChannel("Channel1Subscriber")
-                    .ForSubscribingTo("TestPublisherChannel1@/PublisherServer")
+                    .ForSubscribingTo("TestPublisherChannel1@PublisherServer")
                     .WithDurability()
                 .OpenChannel("Channel2Subscriber")
-                    .ForSubscribingTo("TestPublisherChannel2@/PublisherServer")
+                    .ForSubscribingTo("TestPublisherChannel2@PublisherServer")
                     .WithDurability()
                 .Initialise();
 

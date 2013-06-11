@@ -18,12 +18,11 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
                 .ResolveReferencesWith(container)
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
-                .UsingFilePersistence()
                 .UsingJsonSerialisation()
                 .UsingHttpTransport()
                     .AsAServer("SenderServer")
                 .OpenChannel("TestRequest")
-                    .ForRequestReplySendingTo("TestReply@/ReceiverServer")
+                    .ForRequestReplySendingTo("TestReply@ReceiverServer")
                     .WithDurability()
                 .Initialise();
 

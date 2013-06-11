@@ -3,7 +3,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.transport.http.acknowledgement
+namespace SystemDot.Messaging.Specifications.transport.http.server_addressing
 {
     [Subject(SpecificationGroup.Description)]
     public class when_receiving_a_subscription_request_message_on_a_subscription_channel : WithServerConfigurationSubject

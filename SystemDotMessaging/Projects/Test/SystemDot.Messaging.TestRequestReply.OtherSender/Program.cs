@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.TestRequestReply.OtherSender
                 .UsingHttpTransport()
                     .AsAServer("OtherSenderServer")
                 .OpenChannel("OtherTestRequest")
-                    .ForRequestReplySendingTo("TestReply@/ReceiverServer")
+                    .ForRequestReplySendingTo("TestReply@ReceiverServer")
                     .WithDurability()
                 .Initialise();
 

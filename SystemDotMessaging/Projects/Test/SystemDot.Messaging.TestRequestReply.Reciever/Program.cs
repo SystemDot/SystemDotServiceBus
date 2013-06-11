@@ -1,10 +1,7 @@
 ﻿using System;
-using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Transport.Http.Configuration;
-using SystemDot.Newtonsoft;
 
 namespace SystemDot.Messaging.TestRequestReply.Reciever
 {
@@ -20,7 +17,6 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
                 .ResolveReferencesWith(container)
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
-                .UsingFilePersistence()
                 .UsingJsonSerialisation()
                 .UsingHttpTransport()
                     .AsAServer("ReceiverServer")

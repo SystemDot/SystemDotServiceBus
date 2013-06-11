@@ -24,11 +24,11 @@ namespace SystemDot.Messaging.MultiChannel.Sender
                 .UsingHttpTransport()
                     .AsAServer("Server")
                 .OpenChannel("TestSenderA")
-                    .ForRequestReplySendingTo("TestRecieverA@/ServerA")
+                    .ForRequestReplySendingTo("TestRecieverA@ServerA")
                     .OnlyForMessages(FilteredBy.NamePattern("Channel1"))
                     .WithDurability()
                 .OpenChannel("TestSenderB")
-                    .ForRequestReplySendingTo("TestRecieverB@/ServerB")
+                    .ForRequestReplySendingTo("TestRecieverB@ServerB")
                     .OnlyForMessages(FilteredBy.NamePattern("Channel2"))
                     .WithDurability()
                 .Initialise();

@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Combined.Subscriber
                 .UsingHttpTransport()
                     .AsAServer("SubscriberServer")
                 .OpenChannel("TestSubscriber")
-                    .ForSubscribingTo("TestPublisher@/ReceiverPublisherServer")
+                    .ForSubscribingTo("TestPublisher@ReceiverPublisherServer")
                 .Initialise();
             
             Console.WriteLine("I am a subscriber, listening for messages..");

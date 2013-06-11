@@ -46,9 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="transport\http\acknowledgement\SpecificationGroup.cs" />
-    <Compile Include="transport\http\acknowledgement\when_receiving_a_message_on_a_point_to_point_channel.cs" />
-    <Compile Include="transport\http\acknowledgement\when_receiving_a_request_on_a_request_reply_channel.cs" />
+    <Compile Include="transport\http\server_addressing\SpecificationGroup.cs" />
+    <Compile Include="transport\http\server_addressing\when_receiving_a_message_on_a_point_to_point_channel.cs" />
+    <Compile Include="transport\http\server_addressing\when_receiving_a_request_on_a_request_reply_channel.cs" />
     <Compile Include="acknowledgement\SpecificationGroup.cs" />
     <Compile Include="configuration\request_reply\SpecificationGroup.cs" />
     <Compile Include="configuration\SpecificationGroup.cs" />
@@ -117,7 +117,7 @@
     <Compile Include="repeating\escalating\http\when_repeating_a_message_and_four_seconds_have_passed.cs" />
     <Compile Include="repeating\escalating\when_restarting_messaging_on_a_durable_channel_after_sending_a_message_without_receiving_its_acknowledgement.cs" />
     <Compile Include="sending\when_configuring_a_channel.cs" />
-    <Compile Include="transport\http\acknowledgement\when_receiving_a_subscription_request_message_on_a_subscription_channel.cs" />
+    <Compile Include="transport\http\server_addressing\when_receiving_a_subscription_request_message_on_a_subscription_channel.cs" />
     <Compile Include="transport\http\receiving\SpecificationGroup.cs" />
     <Compile Include="transport\http\sending\SpecificationGroup.cs" />
     <Compile Include="transport\http\sending\when_sending_a_message_with_a_local_server_address_registered.cs" />

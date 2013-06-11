@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Combined.Client
                 .UsingHttpTransport()
                     .AsAServer("SenderServer")
                 .OpenChannel("TestSender")
-                    .ForRequestReplySendingTo("TestReceiver@/ReceiverPublisherServer")
+                    .ForRequestReplySendingTo("TestReceiver@ReceiverPublisherServer")
                 .Initialise();
 
             do

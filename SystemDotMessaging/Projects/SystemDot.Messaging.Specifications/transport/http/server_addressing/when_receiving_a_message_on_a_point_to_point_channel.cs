@@ -1,10 +1,11 @@
+using System;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.transport.http.acknowledgement
+namespace SystemDot.Messaging.Specifications.transport.http.server_addressing
 {
     [Subject(SpecificationGroup.Description)]
     public class when_receiving_a_message_on_a_point_to_point_channel : WithServerConfigurationSubject
