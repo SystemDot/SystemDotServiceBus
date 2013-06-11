@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                    .AsAServerUsingProxy(Server, Proxy)
+                    .AsAServerUsingAProxy(Server, Proxy)
                 .OpenChannel(ChannelAddress)
                     .ForPointToPointSendingTo(RecieverAddress)
                 .Initialise();

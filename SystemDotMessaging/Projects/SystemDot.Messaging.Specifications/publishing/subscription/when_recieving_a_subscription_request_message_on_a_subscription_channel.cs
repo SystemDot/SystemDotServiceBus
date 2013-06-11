@@ -1,7 +1,6 @@
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Publishing.Builders;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 using SystemDot.Messaging.Storage;
 
@@ -26,7 +25,7 @@ namespace SystemDot.Messaging.Specifications.publishing.subscription
                 .OpenChannel(PublisherAddress).ForPublishing()
                 .Initialise();
 
-            request = BuildSubscriptionRequest(BuildAddress(SubscriberAddress), BuildAddress(PublisherAddress));
+            request = new MessagePayload().BuildSubscriptionRequest(BuildAddress(SubscriberAddress), BuildAddress(PublisherAddress));
         };
 
         Because of = () => Server.ReceiveMessage(request);

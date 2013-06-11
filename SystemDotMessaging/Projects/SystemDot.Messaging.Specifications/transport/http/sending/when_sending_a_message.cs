@@ -3,7 +3,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.transport.http
+namespace SystemDot.Messaging.Specifications.transport.http.sending
 {
     [Subject(SpecificationGroup.Description)]
     public class when_sending_a_message : WithHttpConfigurationSubject

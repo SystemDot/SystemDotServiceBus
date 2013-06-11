@@ -1,11 +1,10 @@
 using SystemDot.Messaging.Packaging.Headers;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.sending
+namespace SystemDot.Messaging.Specifications.sending.request_reply
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_a_request_down_two_channels : WithMessageConfigurationSubject
+    public class when_sending_a_request_on_two_channels : WithMessageConfigurationSubject
     {
         const string Channel1Name = "Test1";
         const string Reciever1Address = "TestRecieverAddress1";

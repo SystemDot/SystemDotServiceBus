@@ -25,15 +25,15 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
                 .Initialise();
             
             sentMessageInQueue1 = new MessagePayload();
-            sentMessageInQueue1.SetToAddress(GetEndpointAddress("Address2", "TestServer"));
+            sentMessageInQueue1.SetToAddress(BuildAddress("Address2", "TestServer"));
 
             sentMessageInQueue2 = new MessagePayload();
-            sentMessageInQueue2.SetToAddress(GetEndpointAddress("Address2", "TestServer"));
+            sentMessageInQueue2.SetToAddress(BuildAddress("Address2", "TestServer"));
 
             SendMessagesToServer(sentMessageInQueue1, sentMessageInQueue2);
 
             longPollRequest = new MessagePayload();
-            longPollRequest.SetLongPollRequest(GetEndpointAddress("Address2", "TestServer").ServerPath);
+            longPollRequest.SetLongPollRequest(BuildAddress("Address2", "TestServer").ServerPath);
         };
 
         Because of = () => returnedMessages = SendMessagesToServer(longPollRequest);

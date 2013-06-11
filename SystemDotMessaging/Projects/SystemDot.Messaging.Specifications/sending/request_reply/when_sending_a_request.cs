@@ -5,17 +5,15 @@ using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Specifications.publishing;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.sending
+namespace SystemDot.Messaging.Specifications.sending.request_reply
 {
-    [Subject(replies.SpecificationGroup.Description)]
-    public class when_sending_a_request_down_a_channel : WithMessageConfigurationSubject
+    [Subject(SpecificationGroup.Description)]
+    public class when_sending_a_request : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
         const string RecieverAddress = "TestRecieverAddress";
-        
         
         static int message;
         

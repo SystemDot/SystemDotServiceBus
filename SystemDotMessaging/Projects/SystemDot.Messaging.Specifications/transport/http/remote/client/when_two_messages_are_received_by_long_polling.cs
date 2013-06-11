@@ -34,12 +34,12 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsAServerUsingProxy(Server, Proxy)
+                .AsAServerUsingAProxy(Server, Proxy)
                 .OpenChannel(ReceiverName)
                 .ForPointToPointReceiving()
                 .Initialise();
 
-            messagePayload1 = new MessagePayload().MakeReceiveable(
+            messagePayload1 = new MessagePayload().MakeSequencedReceivable(
                 Message1,
                 SenderName,
                 ReceiverName,
@@ -47,21 +47,13 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
                 Proxy,
                 PersistenceUseType.PointToPointSend);
 
-            messagePayload1.SetSequenceOriginSetOn(DateTime.Today);
-            messagePayload1.SetFirstSequence(1);
-            messagePayload1.SetSequence(1);
-
-            messagePayload2 = new MessagePayload().MakeReceiveable(
+            messagePayload2 = new MessagePayload().MakeSequencedReceivable(
                 Message2,
                 SenderName,
                 ReceiverName,
                 Server,
                 Proxy,
                 PersistenceUseType.PointToPointSend);
-
-            messagePayload2.SetSequenceOriginSetOn(DateTime.Today);
-            messagePayload2.SetFirstSequence(1);
-            messagePayload2.SetSequence(1);
 
             handler = new TestMessageHandler<int>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);

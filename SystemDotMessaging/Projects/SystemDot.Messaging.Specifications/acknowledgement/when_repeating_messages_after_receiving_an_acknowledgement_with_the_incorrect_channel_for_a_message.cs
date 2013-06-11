@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
             acknowledgement.SetAcknowledgementId(
                 new MessagePersistenceId(
                     message.Id,
-                    GetEndpointAddress("Test", "Test"),
+                    BuildAddress("Test", "Test"),
                     message.GetPersistenceId().UseType));
 
             acknowledgement.SetToAddress(message.GetFromAddress());

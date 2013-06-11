@@ -2,7 +2,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.transport.http
+namespace SystemDot.Messaging.Specifications.transport.http.sending
 {
     [Subject(SpecificationGroup.Description)]
     public class when_sending_to_a_receiver_on_a_different_machine_and_remote_proxy : WithHttpConfigurationSubject

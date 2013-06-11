@@ -1,12 +1,11 @@
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using SystemDot.Storage.Changes;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.sending
+namespace SystemDot.Messaging.Specifications.sending.request_reply
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_a_request_down_a_durable_channel : WithMessageConfigurationSubject
+    public class when_sending_a_request_on_a_durable_channel : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
         const string RecieverAddress = "TestRecieverAddress";

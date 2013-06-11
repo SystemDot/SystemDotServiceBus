@@ -4,14 +4,13 @@ using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.Specifications.publishing;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Specifications.sending
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_on_a_channel : WithMessageConfigurationSubject
+    public class when_sending_a_message : WithMessageConfigurationSubject
     {
         const string SenderAddress = "SenderAddress";
         const string ReceiverAddress = "ReceiverAddress";

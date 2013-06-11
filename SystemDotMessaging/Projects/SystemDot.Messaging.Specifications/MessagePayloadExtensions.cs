@@ -3,6 +3,7 @@ using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
+using SystemDot.Messaging.Publishing;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Serialisation;
@@ -40,8 +41,22 @@ namespace SystemDot.Messaging.Specifications
             payload.SetFirstSequence(1);
             payload.SetSequence(1);
             return payload;
-        } 
-        
+        }
+
+
+        public static MessagePayload BuildSubscriptionRequest(
+            this MessagePayload request,
+            EndpointAddress subscriberAddress,
+            EndpointAddress publisherAddress)
+        {
+            request.SetFromAddress(subscriberAddress);
+            request.SetToAddress(publisherAddress);
+            request.SetSubscriptionRequest(new SubscriptionSchema { SubscriberAddress = subscriberAddress });
+            request.SetPersistenceId(subscriberAddress, PersistenceUseType.SubscriberRequestSend);
+            request.SetSourcePersistenceId(request.GetPersistenceId());
+
+            return request;
+        }
         public static T DeserialiseTo<T>(this MessagePayload payload)
         {
             return Resolve<ISerialiser>()

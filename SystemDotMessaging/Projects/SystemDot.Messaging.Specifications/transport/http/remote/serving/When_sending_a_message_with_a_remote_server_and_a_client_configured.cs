@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                     .AsAProxy("OtherProxy")
-                    .AsAServerUsingProxy("Server", Proxy)
+                    .AsAServerUsingAProxy("Server", Proxy)
                 .OpenChannel("ReceiverAddress").ForPointToPointReceiving()
                 .Initialise();
 

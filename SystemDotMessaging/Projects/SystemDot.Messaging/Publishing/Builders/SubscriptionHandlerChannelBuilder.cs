@@ -1,6 +1,6 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
-using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Transport;
 using SystemDot.Serialisation;
@@ -12,23 +12,23 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly IMessageReceiver messageReceiver;
         readonly AcknowledgementSender acknowledgementSender;
         readonly IPublisherRegistry publisherRegistry;
-        readonly ISerialiser serialiser;
+        readonly ServerAddressRegistry serverAddressRegistry;
 
         internal SubscriptionHandlerChannelBuilder(
             IMessageReceiver messageReceiver, 
             AcknowledgementSender acknowledgementSender, 
             IPublisherRegistry publisherRegistry, 
-            ISerialiser serialiser)
+            ServerAddressRegistry serverAddressRegistry)
         {
             Contract.Requires(messageReceiver != null);
             Contract.Requires(acknowledgementSender != null);
             Contract.Requires(publisherRegistry != null);
-            Contract.Requires(serialiser != null);
+            Contract.Requires(serverAddressRegistry != null);
             
             this.messageReceiver = messageReceiver;
             this.acknowledgementSender = acknowledgementSender;
             this.publisherRegistry = publisherRegistry;
-            this.serialiser = serialiser;
+            this.serverAddressRegistry = serverAddressRegistry;
         }
 
         public void Build()
@@ -37,6 +37,7 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .With(this.messageReceiver)
                 .Pump()
                 .ToProcessor(new SubscriptionRequestFilter())
+                .ToProcessor(new MessageOriginServerAddressRegistrar(this.serverAddressRegistry))
                 .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))
                 .ToEndPoint(new SubscriptionRequestHandler(this.publisherRegistry));
         }

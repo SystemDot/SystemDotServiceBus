@@ -5,7 +5,7 @@ using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.transport.http
+namespace SystemDot.Messaging.Specifications.transport.http.receiving
 {
     [Subject(SpecificationGroup.Description)]
     public class when_receiving_a_message : WithServerConfigurationSubject
@@ -26,17 +26,13 @@ namespace SystemDot.Messaging.Specifications.transport.http
                 .Initialise();
 
             messagePayload =
-                new MessagePayload().MakeReceiveable(
+                new MessagePayload().MakeSequencedReceivable(
                     Message,
                     "SenderAddress",
                     ReceiverAddress,
                     ServerName,
                     ServerName,
                     PersistenceUseType.PointToPointSend);
-
-            messagePayload.SetSequenceOriginSetOn(DateTime.Today);
-            messagePayload.SetFirstSequence(1);
-            messagePayload.SetSequence(1);
 
             handler = new TestMessageHandler<int>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);

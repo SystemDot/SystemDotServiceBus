@@ -30,13 +30,13 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsAServerUsingProxy(Server, Proxy)
+                .AsAServerUsingAProxy(Server, Proxy)
                 .OpenChannel(ReceiverName)
                 .ForPointToPointReceiving()
                 .Initialise();
 
             messagePayload =
-                 new MessagePayload().MakeReceiveable(
+                 new MessagePayload().MakeSequencedReceivable(
                  1, 
                  SenderName, 
                  "DifferentReceiver", 

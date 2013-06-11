@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
                 .OpenLocalChannel()
                 .Initialise();
 
-            var address = GetEndpointAddress("Test", "Test");
+            var address = BuildAddress("Test", "Test");
 
             acknowledgement = new MessagePayload();
             

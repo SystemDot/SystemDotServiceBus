@@ -20,6 +20,11 @@ namespace SystemDot.Messaging.Addressing
             Proxy = proxy;
         }
 
+        public bool HasServer()
+        {
+            return Server != MessageServer.None;
+        }
+
         public static bool operator ==(ServerPath left, ServerPath right)
         {
             return left.Equals(right);

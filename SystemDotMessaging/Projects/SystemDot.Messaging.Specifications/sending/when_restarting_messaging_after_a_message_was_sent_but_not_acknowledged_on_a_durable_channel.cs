@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 using SystemDot.Specifications;
@@ -12,7 +11,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.sending
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_restarting_messaging_after_sending_a_message_on_a_durable_channel_that_is_not_yet_acknowledged
+    public class when_restarting_messaging_after_a_message_was_sent_but_not_acknowledged_on_a_durable_channel
         : WithMessageConfigurationSubject
     {
         const string SenderAddress = "SenderAddress";

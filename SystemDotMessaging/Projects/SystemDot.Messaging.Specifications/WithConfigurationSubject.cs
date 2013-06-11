@@ -90,9 +90,14 @@ namespace SystemDot.Messaging.Specifications
             return new EndpointAddress(toBuild, ServerPath.None);
         }
 
-        protected static EndpointAddress GetEndpointAddress(string channelName, string serverName)
+        protected static EndpointAddress BuildAddress(string channelName, string serverName)
         {
             return TestEndpointAddressBuilder.Build(channelName, serverName);
+        }
+
+        protected static EndpointAddress BuildAddress(string channelName, string serverName, string proxyName)
+        {
+            return TestEndpointAddressBuilder.Build(channelName, serverName, proxyName);
         }
     }
 }
