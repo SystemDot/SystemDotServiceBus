@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Specifications.load_balancing.request_reply.replie
 
         Establish context = () =>
         {
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("ReceiverAddress")
                 .ForRequestReplyRecieving()

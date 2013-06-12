@@ -8,7 +8,7 @@ namespace SystemDot.Messaging.Specifications.sending
     {
         static Exception exception;
 
-        Establish context = () => Configuration.Configure.Messaging()
+        Establish context = () => Messaging.Configuration.Configure.Messaging()
             .UsingInProcessTransport()
             .OpenLocalChannel()
             .Initialise();

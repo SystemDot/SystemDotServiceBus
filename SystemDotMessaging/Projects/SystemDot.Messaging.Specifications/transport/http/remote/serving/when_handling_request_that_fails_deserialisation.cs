@@ -13,7 +13,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
         {
             ConfigureAndRegister<ISerialiser>(new FailingSerialiser());
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsAProxy("RemoteServerName")
                 .Initialise();

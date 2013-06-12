@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
             var systemTime = new TestSystemTime(DateTime.Now);
             ConfigureAndRegister<ISystemTime>(systemTime);
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("SenderAddress").ForPointToPointSendingTo("ReceiverAddress")
                 .Initialise();

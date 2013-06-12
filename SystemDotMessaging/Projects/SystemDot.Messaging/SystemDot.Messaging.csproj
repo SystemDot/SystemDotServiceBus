@@ -34,6 +34,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Acknowledgement\AcknowledgementSender.cs" />
@@ -41,9 +42,8 @@
     <Compile Include="Acknowledgement\Builders\AcknowledgementSendChannelBuilder.cs" />
     <Compile Include="Addressing\EndpointAddress.cs" />
     <Compile Include="Addressing\EndpointAddressBuilder.cs" />
-    <Compile Include="Addressing\IServerAddressesReader.cs" />
     <Compile Include="Addressing\MessageOriginServerAddressRegistrar.cs" />
-    <Compile Include="Addressing\ServerAddressesReader.cs" />
+    <Compile Include="Addressing\ServerAddressLoader.cs" />
     <Compile Include="Addressing\ServerAddressRegistry.cs" />
     <Compile Include="Addressing\MessageAddresser.cs" />
     <Compile Include="Addressing\ServerPath.cs" />

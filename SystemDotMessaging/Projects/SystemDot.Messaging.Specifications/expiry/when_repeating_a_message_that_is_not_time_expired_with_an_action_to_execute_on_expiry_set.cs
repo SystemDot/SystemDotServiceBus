@@ -10,7 +10,7 @@ namespace SystemDot.Messaging.Specifications.expiry
     {
         static bool expiryActionExecuted;
 
-        Establish context = () => Configuration.Configure.Messaging()
+        Establish context = () => Messaging.Configuration.Configure.Messaging()
             .UsingInProcessTransport()
             .OpenChannel("ReceiverAddress")
             .ForPointToPointSendingTo("SenderAddress")

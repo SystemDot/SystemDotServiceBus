@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Specifications.sequencing.request_reply
 
         Establish context = () =>
         {
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                     .ForRequestReplyRecieving()

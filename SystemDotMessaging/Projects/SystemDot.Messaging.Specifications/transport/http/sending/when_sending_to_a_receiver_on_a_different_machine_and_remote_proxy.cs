@@ -16,8 +16,8 @@ namespace SystemDot.Messaging.Specifications.transport.http.sending
 
         Establish context = () =>
         {
-            ServerAddresses.AddAddress(RemoteProxyName, RemoteProxyAddress);
-            ServerAddresses.AddAddress("OtherName", "OtherAddress");
+            ServerAddressConfiguration.AddAddress(RemoteProxyName, RemoteProxyAddress);
+            ServerAddressConfiguration.AddAddress("OtherName", "OtherAddress");
 
             WebRequestor.ExpectAddress(RemoteProxyName, RemoteProxyAddress);
 

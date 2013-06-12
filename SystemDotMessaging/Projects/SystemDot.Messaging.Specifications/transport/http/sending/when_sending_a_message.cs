@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.sending
         {
             WebRequestor.ExpectAddress(ServerName, Environment.MachineName);
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsAServer(ServerName)
                 .OpenChannel("TestSender")

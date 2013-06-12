@@ -79,6 +79,7 @@
     <Compile Include="Parallelism\ITaskStarter.cs" />
     <Compile Include="Parallelism\TaskStarter.cs" />
     <Compile Include="Serialisation\PlatformAgnosticSerialiser.cs" />
+    <Compile Include="ServerAddress.cs" />
     <Compile Include="Storage\Changes\Change.cs" />
     <Compile Include="Storage\Changes\ChangeContainer.cs" />
     <Compile Include="Storage\Changes\ChangeRoot.cs" />

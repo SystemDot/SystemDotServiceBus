@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Addressing
         {
             this.serverAddressRegistry.Register(
                 toInput.GetFromAddress().ServerPath.Server.Name,
-                toInput.GetFromServerAddress().Address);
+                toInput.GetFromServerAddress().ServerAddress);
         }
     }
 }

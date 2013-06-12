@@ -1,6 +1,5 @@
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.Packaging.Headers;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.transport.http.server_addressing

@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Specifications.repeating.constant
             ConfigureAndRegister<IChangeStore>(changeStore);
             ConfigureAndRegister<ITaskRepeater>(new TestTaskRepeater());
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForPointToPointSendingTo(ReceiverAddress)
@@ -45,7 +45,7 @@ namespace SystemDot.Messaging.Specifications.repeating.constant
         };
 
         Because of = () =>
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForPointToPointSendingTo(ReceiverAddress)

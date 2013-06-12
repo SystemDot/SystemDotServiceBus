@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
 
             ConfigureAndRegister<ISystemTime>(new TestSystemTime(originDate));
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForPointToPointSendingTo(ReceiverName)
                 .Initialise();

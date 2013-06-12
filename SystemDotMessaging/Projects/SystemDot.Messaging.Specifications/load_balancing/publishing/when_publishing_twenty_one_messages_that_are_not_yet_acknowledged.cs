@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.Specifications.load_balancing.publishing
 
         Establish context = () =>
         {
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(PublisherAddress)
                 .ForPublishing()

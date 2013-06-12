@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
             ConfigureAndRegister<ISystemTime>(systemTime);
         };
 
-        Because of = () => Configuration.Configure.Messaging()
+        Because of = () => Messaging.Configuration.Configure.Messaging()
             .UsingHttpTransport()
             .AsAProxy(RemoteServerName)
             .Initialise();

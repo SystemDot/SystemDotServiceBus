@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Specifications.receiving.request_reply
 
         Establish context = () =>
         {
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 
                 .OpenChannel(ChannelName).ForRequestReplySendingTo(RecieverAddress)

@@ -9,7 +9,7 @@ namespace SystemDot.Messaging.Specifications.publishing
     {
         static Exception exception;
         
-        Establish context = () => Configuration.Configure.Messaging()
+        Establish context = () => Messaging.Configuration.Configure.Messaging()
             .UsingInProcessTransport()
             .OpenLocalChannel()
             .Initialise();

@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
             changeStore = new InMemoryChangeStore(new PlatformAgnosticSerialiser());
             ConfigureAndRegister<IChangeStore>(changeStore);
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ReceiverName)
                 .ForPointToPointReceiving()
@@ -69,7 +69,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
         };
 
         Because of = () =>
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ReceiverName)
                 .ForPointToPointReceiving()

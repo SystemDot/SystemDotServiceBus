@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
 
         Establish context = () =>
         {
-            ServerAddresses.AddAddress(Proxy, ProxyAddress);
+            ServerAddressConfiguration.AddAddress(Proxy, ProxyAddress);
 
             WebRequestor.ExpectAddress(Proxy, ProxyAddress);
             
@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
             ConfigureAndRegister<ITaskStarter>(taskStarter);
             taskStarter.Pause();
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                     .AsAProxy("OtherProxy")
                     .AsAServerUsingAProxy("Server", Proxy)

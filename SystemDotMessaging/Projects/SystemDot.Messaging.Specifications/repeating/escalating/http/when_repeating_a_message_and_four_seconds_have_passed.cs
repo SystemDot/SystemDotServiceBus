@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.repeating.escalating.http
             var systemTime = new TestSystemTime(DateTime.Now);
             ConfigureAndRegister<ISystemTime>(systemTime);
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingHttpTransport().AsAServer(ServerInstance)
                 .OpenChannel(ChannelName)
                 .ForPointToPointSendingTo(SenderChannelName)

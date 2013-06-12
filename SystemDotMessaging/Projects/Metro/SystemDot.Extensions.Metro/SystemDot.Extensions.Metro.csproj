@@ -108,6 +108,9 @@
     <Compile Include="Composition\ImportManyAttribute.cs" />
     <Compile Include="Composition\InheritedExportAttribute.cs" />
     <Compile Include="Configuration\ConfigurationReader.cs" />
+    <Compile Include="Configuration\IConfigurationReader.cs" />
+    <Compile Include="Configuration\XmlAttribute.cs" />
+    <Compile Include="Configuration\XmlNode.cs" />
     <Compile Include="PutSender.cs" />
     <Compile Include="Console.cs" />
     <Compile Include="File.cs" />

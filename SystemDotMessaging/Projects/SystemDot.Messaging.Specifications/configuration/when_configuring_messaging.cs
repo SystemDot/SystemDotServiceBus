@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Specifications.configuration
 
         Because of = () =>
         {
-            config = Configuration.Configure.Messaging();
+            config = Messaging.Configuration.Configure.Messaging();
             serverConfig = config.UsingInProcessTransport();
         };
 

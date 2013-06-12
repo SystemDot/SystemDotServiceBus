@@ -10,7 +10,7 @@ namespace SystemDot.Messaging.Specifications.publishing.subscription
         const string ChannelName = "TestChannel";
         const string PublisherName = "TestPublisher";
 
-        Because of = () => Configuration.Configure.Messaging()
+        Because of = () => Messaging.Configuration.Configure.Messaging()
             .UsingInProcessTransport()
             .OpenChannel(ChannelName).ForSubscribingTo(PublisherName).WithDurability()
             .Initialise();

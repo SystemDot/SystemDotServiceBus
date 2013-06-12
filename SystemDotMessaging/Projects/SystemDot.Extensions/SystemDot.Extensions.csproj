@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="AssemblyExtensions.cs" />
     <Compile Include="Configuration\ConfigurationReader.cs" />
+    <Compile Include="Configuration\IConfigurationReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PutSender.cs" />
     <Compile Include="TypeExtensions.cs" />

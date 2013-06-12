@@ -9,7 +9,7 @@ namespace SystemDot.Messaging.Specifications.local
     {
         static Exception exception;
 
-        Establish context = () => Configuration.Configure.Messaging()
+        Establish context = () => Messaging.Configuration.Configure.Messaging()
             .UsingInProcessTransport()
             .OpenChannel("Channel").ForRequestReplyRecieving()
             .Initialise();

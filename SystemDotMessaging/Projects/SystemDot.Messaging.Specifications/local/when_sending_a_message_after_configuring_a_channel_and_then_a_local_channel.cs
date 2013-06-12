@@ -13,7 +13,7 @@ namespace SystemDot.Messaging.Specifications.local
         
         Establish context = () =>
         {
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("Channel").ForRequestReplySendingTo("Reciever")
                 .OpenLocalChannel()

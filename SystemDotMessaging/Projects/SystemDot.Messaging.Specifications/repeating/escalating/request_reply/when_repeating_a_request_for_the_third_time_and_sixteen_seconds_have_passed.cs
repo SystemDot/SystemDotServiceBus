@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.repeating.escalating.request_reply
             systemTime = new TestSystemTime(DateTime.Now);
             ConfigureAndRegister<ISystemTime>(systemTime);
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForRequestReplySendingTo(SenderChannelName)

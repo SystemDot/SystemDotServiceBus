@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Servers.Configuration
         public void Build(string instance)
         {
             this.httpServerBuilder
-                .Build(new FixedPortAddress(Environment.MachineName, instance), BuildMessagingServerHandler())
+                .Build(new FixedPortAddress(ServerAddress.Local, instance), BuildMessagingServerHandler())
                 .Start();
         }
 

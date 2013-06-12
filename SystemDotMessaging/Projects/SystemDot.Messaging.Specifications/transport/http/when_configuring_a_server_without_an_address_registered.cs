@@ -8,7 +8,7 @@ namespace SystemDot.Messaging.Specifications.transport.http
     {
         const string ServerName = "ServerName";
         
-        Because of = () => Configuration.Configure.Messaging()
+        Because of = () => Messaging.Configuration.Configure.Messaging()
             .UsingHttpTransport()
             .AsAServer(ServerName)
             .OpenChannel("SenderAddress").ForPointToPointSendingTo("ReceiverAddress")

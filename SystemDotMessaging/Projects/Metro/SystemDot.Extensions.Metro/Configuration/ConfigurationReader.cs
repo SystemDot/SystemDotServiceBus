@@ -5,12 +5,11 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
-using Windows.Foundation;
 using Windows.Storage;
 
 namespace SystemDot.Configuration
 {
-    public class ConfigurationReader
+    public class ConfigurationReader : IConfigurationReader
     {
         XmlDocument document;
 
@@ -42,21 +41,13 @@ namespace SystemDot.Configuration
             return await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync(fileName);
         }
 
-        public Dictionary<string, string> GetSettingsInSection(string section)
+        public IEnumerable<XmlNode> GetSettingsInSection(string section)
         {
             Contract.Assert(!string.IsNullOrEmpty(section));
 
-            return GetSettingNodesInSection(section)
-                .Where(node => node.NodeType == NodeType.ElementNode)
-                .ToDictionary(node => node.NodeName, node => node.InnerText);
-        }
-
-        IEnumerable<IXmlNode> GetSettingNodesInSection(string section)
-        {
-            if (this.document == null) 
-                return new List<IXmlNode>();
+            if (this.document == null) return new List<XmlNode>();
                 
-            return this.document.SelectSingleNode(section).ChildNodes;
+            return this.document.SelectSingleNode(section).ChildNodes.Select(n => new XmlNode(n));
         }
     }
 }

@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Specifications
 
         public void ExpectAddress(string instance, string address)
         {
-            this.addressToCheck = new FixedPortAddress(address, instance);
+            this.addressToCheck = new FixedPortAddress(new ServerAddress(address, false), instance);
         }
 
         public T DeserialiseSingleRequest<T>()

@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.Specifications.sending
 
         Establish context = () =>
         {    
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(SenderAddress).ForPointToPointSendingTo(ReceiverAddress)
                 .WithDurability()

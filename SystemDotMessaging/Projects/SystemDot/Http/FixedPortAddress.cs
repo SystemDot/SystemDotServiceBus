@@ -4,17 +4,22 @@ namespace SystemDot.Http
 {
     public class FixedPortAddress
     {
-        readonly string address;
+        readonly ServerAddress address;
         readonly string instance;
 
         public string Url
         {
-            get { return String.Concat("http://", this.address, ":8090/", this.instance, "/"); }
+            get { return String.Concat(GetProtocol(), this.address.Address, ":8090/", this.instance, "/"); }
+        }
+
+        string GetProtocol()
+        {
+            return this.address.IsSecure ? "https://" : "http://";
         }
 
         public FixedPortAddress() {}
 
-        public FixedPortAddress(string address, string instance)
+        public FixedPortAddress(ServerAddress address, string instance)
         {
             this.address = address;
             this.instance = instance;

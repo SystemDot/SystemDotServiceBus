@@ -20,10 +20,10 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
         {
             ConfigureAndRegister<ITaskStarter>();
 
-            ServerAddresses.AddAddress(ReceiverServerName, ReceiverServerAddress);
+            ServerAddressConfiguration.AddAddress(ReceiverServerName, ReceiverServerAddress);
             WebRequestor.ExpectAddress(ReceiverServerName, ReceiverServerAddress);
             
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsAServerUsingAProxy("Server", Proxy)
                 .OpenChannel(SenderAddress).ForPointToPointSendingTo(ReceiverAddress)

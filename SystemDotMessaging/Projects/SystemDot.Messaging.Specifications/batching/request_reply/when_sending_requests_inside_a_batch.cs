@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.Specifications.batching.request_reply
         const int Message1 = 1;
         const int Message2 = 2;
         
-        Establish context = () => Configuration.Configure.Messaging()
+        Establish context = () => Messaging.Configuration.Configure.Messaging()
             .UsingInProcessTransport()
             .OpenChannel("SenderAddress").ForRequestReplySendingTo("ReceiverAddress")
             .Initialise();

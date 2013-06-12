@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Specifications.local
             unitOfWork = new TestUnitOfWork();
             ConfigureAndRegister<TestUnitOfWorkFactory>(new TestUnitOfWorkFactory(unitOfWork));
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenLocalChannel()
                 .WithUnitOfWork<TestUnitOfWorkFactory>()

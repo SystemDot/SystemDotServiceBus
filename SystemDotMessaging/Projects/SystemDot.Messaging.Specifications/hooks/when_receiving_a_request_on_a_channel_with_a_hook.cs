@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Specifications.hooks
         {
             hook = new TestMessageProcessorHook();
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForRequestReplyRecieving()

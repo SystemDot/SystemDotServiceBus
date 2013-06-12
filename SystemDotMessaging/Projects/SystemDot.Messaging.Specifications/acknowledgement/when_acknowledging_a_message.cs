@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
 
         Establish context = () =>
         {
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ReceiverAddress).ForPointToPointReceiving()
                 .Initialise();

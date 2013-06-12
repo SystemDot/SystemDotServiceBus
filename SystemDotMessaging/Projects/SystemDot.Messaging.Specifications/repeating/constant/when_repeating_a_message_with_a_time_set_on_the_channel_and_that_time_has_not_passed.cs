@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.repeating.constant
             systemTime = new TestSystemTime(DateTime.Now);
             ConfigureAndRegister<ISystemTime>(systemTime);
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForPointToPointSendingTo(ReceiverName)

@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.load_balancing
 
         Establish context = () =>
         {
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("SenderAddress")
                 .ForPointToPointSendingTo("ReceiverAddress")

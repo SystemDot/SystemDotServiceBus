@@ -2,20 +2,20 @@ namespace SystemDot.Messaging.Packaging.Headers
 {
     public class FromServerAddressHeader : IMessageHeader 
     {
-        public string Address { get; set; }
+        public ServerAddress ServerAddress { get; set; }
 
         public FromServerAddressHeader()
         {
         }
 
-        public FromServerAddressHeader(string address)
+        public FromServerAddressHeader(ServerAddress address)
         {
-            Address = address;
+            this.ServerAddress = address;
         }
 
         public override string ToString()
         {
-            return string.Concat("Address:", Address);
+            return string.Concat("Address: ", this.ServerAddress);
         }
     }
 }

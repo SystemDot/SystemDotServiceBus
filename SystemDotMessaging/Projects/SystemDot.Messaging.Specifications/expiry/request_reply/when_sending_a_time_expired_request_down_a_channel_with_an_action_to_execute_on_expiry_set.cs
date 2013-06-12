@@ -13,7 +13,7 @@ namespace SystemDot.Messaging.Specifications.expiry.request_reply
 
         static bool expiryActionExecuted;
 
-        Establish context = () => Configuration.Configure.Messaging()
+        Establish context = () => Messaging.Configuration.Configure.Messaging()
             .UsingInProcessTransport()
             .OpenChannel(ChannelName)
             .ForRequestReplySendingTo(RecieverAddress)

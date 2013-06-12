@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.sending
 
         Establish context = () =>
         {
-            ServerAddresses.AddAddress(ServerName, ServerAddress);
+            ServerAddressConfiguration.AddAddress(ServerName, ServerAddress);
 
             WebRequestor.ExpectAddress(ServerName, ServerAddress);
 
@@ -29,6 +29,6 @@ namespace SystemDot.Messaging.Specifications.transport.http.sending
 
         It should_send_a_message_with_a_from_server_address_set_to_the_address_registered_for_the_server = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetFromServerAddress().Address.ShouldEqual(ServerAddress);
+                .GetFromServerAddress().ServerAddress.Address.ShouldEqual(ServerAddress);
     }
 }

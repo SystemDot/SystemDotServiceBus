@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Specifications.load_balancing
             scheduler = new TestTaskScheduler();
             ConfigureAndRegister<ITaskScheduler>(scheduler);
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("SenderAddress")
                 .ForPointToPointSendingTo("ReceiverAddress")

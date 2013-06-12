@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace SystemDot.Configuration
 {
-    public class ConfigurationReader
+    public class ConfigurationReader : IConfigurationReader
     {
         XmlDocument document;
 
@@ -20,16 +20,10 @@ namespace SystemDot.Configuration
                 this.document.Load(reader);
         }
 
-        public Dictionary<string, string> GetSettingsInSection(string section)
+        public IEnumerable<XmlNode> GetSettingsInSection(string section)
         {
             Contract.Assert(!string.IsNullOrEmpty(section));
 
-            return GetSettingNodesInSection(section)
-                .ToDictionary(node => node.Name, node => node.InnerText);
-        }
-
-        IEnumerable<XmlNode> GetSettingNodesInSection(string section)
-        {
             return this.document == null 
                 ? new List<XmlNode>() 
                 : this.document.SelectSingleNode(section).ChildNodes.Cast<XmlNode>();

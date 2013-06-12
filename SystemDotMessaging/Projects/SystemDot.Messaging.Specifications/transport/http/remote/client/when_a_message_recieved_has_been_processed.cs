@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
             ConfigureAndRegister<ITaskStarter>(taskStarter); 
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                     .AsAServerUsingAProxy("Server", Proxy)
                 .OpenChannel(ReceiverName).ForPointToPointReceiving()

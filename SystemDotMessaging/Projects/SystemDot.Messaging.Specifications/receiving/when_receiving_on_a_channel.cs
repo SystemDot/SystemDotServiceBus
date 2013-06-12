@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Specifications.receiving
             Messenger.Register<MessageAddedToCache>(e => messageAddedToCacheEvent = e);
             Messenger.Register<MessageRemovedFromCache>(e => messageRemovedFromCacheEvent = e);
             
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                     .OpenChannel(ChannelName)
                     .ForPointToPointReceiving()

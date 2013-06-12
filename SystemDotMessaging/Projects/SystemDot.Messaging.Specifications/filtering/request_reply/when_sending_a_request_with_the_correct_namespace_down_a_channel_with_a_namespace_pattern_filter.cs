@@ -10,7 +10,7 @@ namespace SystemDot.Messaging.Specifications.filtering.request_reply
         : WithMessageConfigurationSubject
     {
         Establish context = () =>
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("Test")
                 .ForRequestReplySendingTo("TestRecieverAddress")

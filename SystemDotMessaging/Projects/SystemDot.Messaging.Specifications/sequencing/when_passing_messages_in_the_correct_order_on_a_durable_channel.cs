@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
         
         Establish context = () =>
         {
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ReceiverAddress).ForPointToPointReceiving().WithDurability()
                 .Initialise();

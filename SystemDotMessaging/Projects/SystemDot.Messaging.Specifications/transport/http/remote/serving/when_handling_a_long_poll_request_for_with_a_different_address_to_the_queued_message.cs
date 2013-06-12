@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
         {
             ConfigureAndRegister<ISystemTime>(new TestSystemTime(DateTime.Now, TimeSpan.FromSeconds(0)));
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsAProxy("RemoteServerName")
                 .Initialise();

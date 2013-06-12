@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
             changeStore = new InMemoryChangeStore(new PlatformAgnosticSerialiser());
             ConfigureAndRegister<IChangeStore>(changeStore);
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ReceiverAddress).ForPointToPointReceiving().WithDurability()
                 .Initialise();
@@ -45,7 +45,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
         };
 
-        Because of = () => Configuration.Configure.Messaging()
+        Because of = () => Messaging.Configuration.Configure.Messaging()
             .UsingInProcessTransport()
             .OpenChannel(ReceiverAddress).ForPointToPointReceiving().WithDurability()
             .Initialise();

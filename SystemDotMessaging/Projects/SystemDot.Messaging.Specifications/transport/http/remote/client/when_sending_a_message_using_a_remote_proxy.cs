@@ -1,5 +1,4 @@
-﻿using SystemDot.Messaging.Addressing;
-using SystemDot.Messaging.Packaging;
+﻿using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Parallelism;
 using Machine.Specifications;
@@ -19,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
         {
             ConfigureAndRegister<ITaskStarter>();
             
-            ServerAddresses.AddAddress(Proxy, ProxyAddress);
+            ServerAddressConfiguration.AddAddress(Proxy, ProxyAddress);
             WebRequestor.ExpectAddress(Proxy, ProxyAddress);
 
             Configuration.Configure.Messaging()

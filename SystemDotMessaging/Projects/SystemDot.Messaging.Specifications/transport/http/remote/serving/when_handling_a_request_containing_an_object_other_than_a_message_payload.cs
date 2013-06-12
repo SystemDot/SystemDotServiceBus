@@ -9,7 +9,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
     {
         static Exception exception;
 
-        Establish context = () => Configuration.Configure.Messaging()
+        Establish context = () => Messaging.Configuration.Configure.Messaging()
             .UsingHttpTransport()
             .AsAProxy("RemoteServerName")
             .Initialise();

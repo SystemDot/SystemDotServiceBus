@@ -8,7 +8,7 @@ namespace SystemDot.Messaging.Specifications.batching
     {
         const int Message = 1;
         
-        Establish context = () => Configuration.Configure.Messaging()
+        Establish context = () => Messaging.Configuration.Configure.Messaging()
             .UsingInProcessTransport()
             .OpenChannel("SenderAddress").ForPointToPointSendingTo("ReceiverAddress")
             .Initialise();

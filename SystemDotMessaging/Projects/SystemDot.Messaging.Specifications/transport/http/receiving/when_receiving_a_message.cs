@@ -1,4 +1,5 @@
-﻿using SystemDot.Messaging.Handling;
+﻿using System;
+using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
@@ -17,6 +18,8 @@ namespace SystemDot.Messaging.Specifications.transport.http.receiving
 
         Establish context = () =>
         {
+            WebRequestor.ExpectAddress(ServerName, Environment.MachineName);
+
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsAServer(ServerName)

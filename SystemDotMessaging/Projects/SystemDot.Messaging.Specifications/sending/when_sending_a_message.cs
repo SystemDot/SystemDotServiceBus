@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.sending
         {
             Messenger.Register<MessageAddedToCache>(e => messageAddedToCacheEvent = e);
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(SenderAddress).ForPointToPointSendingTo(ReceiverAddress)
                 .Initialise();

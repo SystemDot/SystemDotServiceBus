@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.unitofwork.external_ioc_resolution
             unitOfWork = new TestUnitOfWork();
             container.RegisterInstance<TestUnitOfWorkFactory>(() => new TestUnitOfWorkFactory(unitOfWork));
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .ResolveReferencesWith(container)
                 .UsingInProcessTransport()
                 .OpenChannel(ReceiverAddress)

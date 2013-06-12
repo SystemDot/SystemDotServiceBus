@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Specifications.expiry
             var systemTime = new TestSystemTime(DateTime.Now);
             ConfigureAndRegister<ISystemTime>(systemTime);
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("ReceiverAddress")
                 .ForPointToPointSendingTo("SenderAddress")

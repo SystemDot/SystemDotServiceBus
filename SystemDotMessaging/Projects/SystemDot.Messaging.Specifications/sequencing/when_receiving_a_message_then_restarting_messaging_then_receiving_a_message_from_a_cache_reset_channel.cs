@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
             changeStore = new InMemoryChangeStore(new PlatformAgnosticSerialiser());
             ConfigureAndRegister<IChangeStore>(changeStore);
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ReceiverAddress).ForPointToPointReceiving().WithDurability()
                 .Initialise();
@@ -52,7 +52,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
             handler.HandledMessages.Clear();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
             .UsingInProcessTransport()
             .OpenChannel(ReceiverAddress).ForPointToPointReceiving().WithDurability()
             .Initialise();

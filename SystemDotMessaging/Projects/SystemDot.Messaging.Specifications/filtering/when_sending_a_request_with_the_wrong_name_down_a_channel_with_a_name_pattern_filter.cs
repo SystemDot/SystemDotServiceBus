@@ -9,7 +9,7 @@ namespace SystemDot.Messaging.Specifications.filtering
         : WithMessageConfigurationSubject
     {
         Establish context = () =>
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("Test")
                     .ForPointToPointSendingTo("TestRecieverAddress")

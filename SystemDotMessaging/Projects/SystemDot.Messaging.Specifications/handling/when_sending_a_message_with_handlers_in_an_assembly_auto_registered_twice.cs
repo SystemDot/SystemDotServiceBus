@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Specifications.handling
             Register(container, messageHandler);
             Register(container, new SecondHandlerOfMessage1() );
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .RegisterHandlersFromAssemblyOf<when_sending_a_message_with_handlers_in_an_assembly_auto_registered_twice>()
                     .BasedOn<IHandleMessage>()
                 .RegisterHandlersFromAssemblyOf<when_sending_a_message_with_handlers_in_an_assembly_auto_registered_twice>()

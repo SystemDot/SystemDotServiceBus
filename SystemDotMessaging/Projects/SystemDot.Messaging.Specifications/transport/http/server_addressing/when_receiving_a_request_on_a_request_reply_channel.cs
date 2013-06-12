@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.server_addressing
         {
             WebRequestor.ExpectAddress(SenderServerName, SenderServerAddress);
             
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingHttpTransport().AsAServer(ReceiverServerName)
                 .OpenChannel(ReceiverAddress).ForRequestReplyRecieving()
                 .Initialise();

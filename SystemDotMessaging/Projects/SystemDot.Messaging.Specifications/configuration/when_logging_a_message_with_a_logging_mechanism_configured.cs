@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.configuration
             exception = new Exception();
             IocContainerLocator.SetContainer(new IocContainer());
             toLogWith = An<ILoggingMechanism>();
-            Configuration.Configure.Messaging().LoggingWith(toLogWith);
+            Messaging.Configuration.Configure.Messaging().LoggingWith(toLogWith);
         };
 
         Because of = () => Logger.Error(exception);

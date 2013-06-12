@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.Specifications
     public class WithConfigurationSubject : WithSubject<object>
     {
         protected static TestTaskRepeater TaskRepeater;
-        protected static TestServerAddressesReader ServerAddresses;
+        protected static TestServerAddressConfigurationReader ServerAddressConfiguration;
 
         Establish context = () =>
         {
@@ -38,8 +38,8 @@ namespace SystemDot.Messaging.Specifications
 
             ConfigureAndRegister<MessageHandlerRouter>(new MessageHandlerRouter());
 
-            ServerAddresses = new TestServerAddressesReader();
-            ConfigureAndRegister<IServerAddressesReader>(ServerAddresses);
+            ServerAddressConfiguration = new TestServerAddressConfigurationReader();
+            ConfigureAndRegister<IConfigurationReader>(ServerAddressConfiguration);
         }
 
         protected static void Reset()

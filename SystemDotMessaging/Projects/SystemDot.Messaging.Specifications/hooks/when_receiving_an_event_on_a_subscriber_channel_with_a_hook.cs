@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.hooks
         {
             hook = new TestMessageProcessorHook();
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(SubscriberAddress).ForSubscribingTo(PublisherAddress)
                 .WithHook(hook)

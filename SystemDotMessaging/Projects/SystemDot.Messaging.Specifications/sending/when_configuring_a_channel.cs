@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Specifications.sending
             Messenger.Register<PointToPointSendChannelBuilt>(m => channelBuiltEvents.Add(m));
         };
 
-        Because of = () => Configuration.Configure.Messaging()
+        Because of = () => Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(SenderAddress)
                 .ForPointToPointSendingTo(ReceiverAddress)

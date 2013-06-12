@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
             originDate = DateTime.Now.AddHours(-1);
             ConfigureAndRegister<ISystemTime>(new TestSystemTime(originDate));
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForPointToPointSendingTo(ReceiverName)
                     .WithDurability()
@@ -42,7 +42,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
             ConfigureAndRegister<IChangeStore>(changeStore);
             ConfigureAndRegister<ISystemTime>(new TestSystemTime(DateTime.Now));
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForPointToPointSendingTo(ReceiverName)
                     .WithDurability()

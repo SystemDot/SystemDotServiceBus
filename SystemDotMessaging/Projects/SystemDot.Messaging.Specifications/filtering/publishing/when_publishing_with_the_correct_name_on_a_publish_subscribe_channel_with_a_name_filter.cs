@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.Specifications.filtering.publishing
         
         Establish context = () =>
         {
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForPublishing()
                 .OnlyForMessages(FilteredBy.NamePattern("Name"))

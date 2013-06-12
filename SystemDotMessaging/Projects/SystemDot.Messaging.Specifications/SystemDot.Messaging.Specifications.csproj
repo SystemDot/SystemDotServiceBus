@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="transport\http\server_addressing\MessagePayloadExtensions.cs" />
     <Compile Include="transport\http\server_addressing\SpecificationGroup.cs" />
     <Compile Include="transport\http\server_addressing\when_receiving_a_message_on_a_point_to_point_channel.cs" />
     <Compile Include="transport\http\server_addressing\when_receiving_a_request_on_a_request_reply_channel.cs" />
@@ -131,8 +132,9 @@
     <Compile Include="sequencing\when_sending_a_message.cs" />
     <Compile Include="sequencing\when_sending_a_message_on_durable_channel_and_then_restarting_messaging.cs" />
     <Compile Include="sequencing\when_sending_two_messages.cs" />
-    <Compile Include="TestConfigurationReader.cs" />
+    <Compile Include="TestServerAddressConfigurationReader.cs" />
     <Compile Include="transport\http\when_configuring_a_server_with_an_address_registered.cs" />
+    <Compile Include="transport\http\when_configuring_a_server_with_a_secure_address_registered.cs" />
     <Compile Include="unitofwork\external_ioc_resolution\SpecificationGroup.cs" />
     <Compile Include="unitofwork\external_ioc_resolution\when_receiving_a_message_with_a_unit_of_work_specified.cs" />
     <Compile Include="unitofwork\publishing\receiving\SpecificationGroup.cs" />

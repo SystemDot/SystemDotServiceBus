@@ -8,7 +8,7 @@ namespace SystemDot.Messaging.Specifications.esent
     [Subject(SpecificationGroup.Description)]
     public class when_configuring_messaging_with_file_persistence : WithConfigurationSubject
     {
-        Because of = () => Configuration.Configure.Messaging()
+        Because of = () => Messaging.Configuration.Configure.Messaging()
             .UsingFilePersistence()
             .UsingInProcessTransport();
 

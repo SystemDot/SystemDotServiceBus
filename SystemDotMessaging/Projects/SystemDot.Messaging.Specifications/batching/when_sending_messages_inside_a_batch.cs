@@ -13,7 +13,7 @@ namespace SystemDot.Messaging.Specifications.batching
         
         
 
-        Establish context = () => Configuration.Configure.Messaging()
+        Establish context = () => Messaging.Configuration.Configure.Messaging()
             .UsingInProcessTransport()
             .OpenChannel("SenderAddress").ForPointToPointSendingTo("ReceiverAddress")
             .Initialise();

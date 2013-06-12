@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Specifications.publishing
 
         Establish context = () =>
         {
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForPublishing()
                 .Initialise();

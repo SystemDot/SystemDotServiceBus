@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
             WebRequestor.ExpectAddress(Proxy, Environment.MachineName);
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsAServerUsingAProxy(Server, Proxy)
                 .OpenChannel(ChannelAddress)

@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Specifications.handling
             message1 = new Message1();
             message2 = new Message2();
 
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .RegisterHandlersFromAssemblyOf<when_sending_a_message_with_handlers_auto_registered>()
                     .BasedOn<IHandleMessage>()
                 .UsingInProcessTransport()

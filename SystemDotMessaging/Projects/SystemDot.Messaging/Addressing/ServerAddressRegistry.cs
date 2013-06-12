@@ -7,27 +7,30 @@ namespace SystemDot.Messaging.Addressing
 {
     public class ServerAddressRegistry
     {
-        readonly ConcurrentDictionary<string, string> addresses;
+        readonly ConcurrentDictionary<string, ServerAddress> addresses;
 
-        public ServerAddressRegistry(IServerAddressesReader serverAddressesReader)
+        public ServerAddressRegistry(ServerAddressLoader loader)
         {
-            Contract.Requires(serverAddressesReader != null);
+            Contract.Requires(loader != null);
 
-            this.addresses = new ConcurrentDictionary<string, string>(serverAddressesReader.LoadAddresses());
+            this.addresses = loader.Load();
         }
 
-        public void Register(string name, string address)
+        public void Register(string name, ServerAddress address)
         {
+            Contract.Requires(!String.IsNullOrEmpty(name));
+            Contract.Requires(address != null);
+
             this.addresses.TryAdd(name, address);
         }
 
-        public string Lookup(string toLookup)
+        public ServerAddress Lookup(string toLookup)
         {
             Contract.Requires(!String.IsNullOrEmpty(toLookup));
 
             return this.addresses.ContainsKey(toLookup)
                 ? this.addresses[toLookup]
-                : Environment.MachineName;
+                : ServerAddress.Local;
         }
 
         public FixedPortAddress Lookup(ServerPath toLookup)

@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Specifications.publishing.subscription
         {
             Messenger.Register<SubscriberSendChannelBuilt>(e => channelBuiltEvent = e);
             
-            Configuration.Configure.Messaging()
+            Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(PublisherAddress).ForPublishing()
                 .Initialise();
