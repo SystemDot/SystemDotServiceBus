@@ -9,11 +9,11 @@ namespace SystemDot.Messaging.Specifications.transport.http.receiving
     [Subject(SpecificationGroup.Description)]
     public class when_receiving_a_message : WithServerConfigurationSubject
     {
-        const int Message = 1;
+        const Int64 Message = 1;
         const string ServerName = "ServerName";
         const string ReceiverAddress = "ReceiverAddress";
 
-        static TestMessageHandler<int> handler;
+        static TestMessageHandler<Int64> handler;
         static MessagePayload messagePayload;
 
         Establish context = () =>
@@ -35,7 +35,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.receiving
                     ServerName,
                     PersistenceUseType.PointToPointSend);
 
-            handler = new TestMessageHandler<int>();
+            handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
         };
 

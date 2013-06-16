@@ -11,17 +11,17 @@ namespace SystemDot.Messaging.Specifications.sequencing
     [Subject(SpecificationGroup.Description)]
     public class when_receiving_a_message_from_a_durable_channel_that_has_had_sequencing_reset : WithMessageConfigurationSubject
     {
-        const int Message1 = 1;
-        const int Message2 = 2;
+        const Int64 Message1 = 1;
+        const Int64 Message2 = 2;
         const string ReceiverAddress = "ReceiverAddress";
         const string SenderAddress = "SenderAddress";
 
-        static TestMessageHandler<int> handler;
+        static TestMessageHandler<Int64> handler;
         static MessagePayload messagePayload;
 
         Establish context = () =>
         {
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ReceiverAddress).ForPointToPointReceiving().WithDurability()
                 .Initialise();
@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
             messagePayload = new MessagePayload()
                 .MakeSequencedReceivable(Message1, SenderAddress, ReceiverAddress, PersistenceUseType.PointToPointSend);
 
-            handler = new TestMessageHandler<int>();
+            handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             Server.ReceiveMessage(messagePayload);

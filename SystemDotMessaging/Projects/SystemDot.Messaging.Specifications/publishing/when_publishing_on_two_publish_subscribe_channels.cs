@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
@@ -13,8 +14,7 @@ namespace SystemDot.Messaging.Specifications.publishing
         const string Channel2Name = "Test2";
         const string Subscriber2Name = "TestSubscriber2";
         
-        
-        static int message;
+        static Int64 message;
         
         Establish context = () =>
         {
@@ -34,6 +34,6 @@ namespace SystemDot.Messaging.Specifications.publishing
 
         It should_publish_a_message_with_the_correct_content_through_both_channels = () =>
             Server.SentMessages.ExcludeAcknowledgements()
-                .Count(m => m.DeserialiseTo<int>() == message).ShouldEqual(2);
+                .Count(m => m.DeserialiseTo<Int64>() == message).ShouldEqual(2);
     }
 }

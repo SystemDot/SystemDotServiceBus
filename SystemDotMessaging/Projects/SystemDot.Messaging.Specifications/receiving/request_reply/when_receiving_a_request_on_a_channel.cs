@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
@@ -13,10 +14,10 @@ namespace SystemDot.Messaging.Specifications.receiving.request_reply
     {
         const string ReceiverAddress = "ReceiverAddress";
         const string SenderAddress = "SenderAddress";
-        const int Message = 1;
+        const Int64 Message = 1;
 
         static MessagePayload payload;
-        static TestMessageHandler<int> handler;
+        static TestMessageHandler<Int64> handler;
         
         static RequestReceiveChannelBuilt requestReceiveChannelBuiltEvent;
         static ReplySendChannelBuilt replySendChannelBuiltEvent;
@@ -32,7 +33,7 @@ namespace SystemDot.Messaging.Specifications.receiving.request_reply
             Messenger.Register<ReplySendChannelBuilt>(m => replySendChannelBuiltEvent = m);
             Messenger.Register<RequestReceiveChannelBuilt>(m => requestReceiveChannelBuiltEvent = m);
 
-            handler = new TestMessageHandler<int>();
+            handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             payload = new MessagePayload().MakeSequencedReceivable(

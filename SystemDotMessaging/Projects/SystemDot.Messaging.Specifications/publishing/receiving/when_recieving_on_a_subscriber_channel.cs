@@ -16,9 +16,9 @@ namespace SystemDot.Messaging.Specifications.publishing.receiving
     {
         const string ChannelName = "TestChannel";
         const string PublisherName = "TestPublisher";
-        static int message;
+        static Int64 message;
         static MessagePayload payload;
-        static TestMessageHandler<int> handler;
+        static TestMessageHandler<Int64> handler;
         static MessagePersistenceId originalPersistenceId;
 
         Establish context = () =>
@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Specifications.publishing.receiving
                     .ForSubscribingTo(PublisherName)
                 .Initialise();
 
-            handler = new TestMessageHandler<int>();
+            handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             message = 1;

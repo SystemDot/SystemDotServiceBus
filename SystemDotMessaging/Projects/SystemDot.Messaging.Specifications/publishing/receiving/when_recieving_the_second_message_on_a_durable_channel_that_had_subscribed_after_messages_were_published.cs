@@ -14,19 +14,19 @@ namespace SystemDot.Messaging.Specifications.publishing.receiving
         const string ChannelName = "TestChannel";
         const string PublisherName = "TestPublisher";
         static MessagePayload payload;
-        static TestMessageHandler<int> handler;
-        static int message;
+        static TestMessageHandler<Int64> handler;
+        static Int64 message;
 
         Establish context = () =>
         {
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForSubscribingTo(PublisherName)
                 .WithDurability()
                 .Initialise();
 
-            handler = new TestMessageHandler<int>();
+            handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             payload = new MessagePayload().MakeReceivable(1, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);

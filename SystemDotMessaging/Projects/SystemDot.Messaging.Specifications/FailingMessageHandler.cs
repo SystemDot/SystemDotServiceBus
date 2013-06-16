@@ -4,7 +4,7 @@ namespace SystemDot.Messaging.Specifications
 {
     public class FailingMessageHandler<T>
     {
-        public void Handle(int message)
+        public void Handle(T message)
         {
             throw new Exception();
         }

@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
@@ -13,7 +14,7 @@ namespace SystemDot.Messaging.Specifications.unitofwork
         const string ReceiverAddress = "ReceiverAddress";
 
         static MessagePayload payload;
-        static TestMessageHandler<int> handler;
+        static TestMessageHandler<Int64> handler;
         static TestUnitOfWork unitOfWork;
 
         Establish context = () =>
@@ -28,7 +29,7 @@ namespace SystemDot.Messaging.Specifications.unitofwork
                         .WithUnitOfWork<TestUnitOfWorkFactory>()
                 .Initialise();
 
-            handler = new TestMessageHandler<int>();
+            handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             payload = new MessagePayload().MakeSequencedReceivable(

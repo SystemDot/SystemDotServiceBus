@@ -10,12 +10,12 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
     {
         public static IEnumerable<MessagePayload> DeserialiseToPayloads(this IEnumerable<Stream> streams)
         {
-            return streams.Select(s => StreamExtensions.Deserialise<MessagePayload>(s, GetSerialiser()));
+            return streams.Select(s => s.Deserialise<MessagePayload>(GetSerialiser()));
         }
 
         static ISerialiser GetSerialiser()
         {
-            return new PlatformAgnosticSerialiser();
+            return new JsonSerialiser();
         }
     }
 }

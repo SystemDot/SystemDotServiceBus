@@ -14,9 +14,8 @@ namespace SystemDot.Messaging.Specifications.publishing
     {
         const string ChannelName = "Test";
         const string SubscriberName = "TestSubscriber";
-        
-        
-        static int message;
+
+        static Int64 message;
         static EndpointAddress subscriberAddress;
         
         Establish context = () =>
@@ -45,8 +44,8 @@ namespace SystemDot.Messaging.Specifications.publishing
            Server.SentMessages.ExcludeAcknowledgements().First().GetSourcePersistenceId()
                .ShouldEqual(Server.SentMessages.ExcludeAcknowledgements().First().GetPersistenceId());
 
-        It should_send_a_message_with_the_correct_content = () => 
-            Server.SentMessages.ExcludeAcknowledgements().First().DeserialiseTo<int>().ShouldEqual(message);
+        It should_send_a_message_with_the_correct_content = () =>
+            Server.SentMessages.ExcludeAcknowledgements().First().DeserialiseTo<Int64>().ShouldEqual(message);
 
         It should_mark_the_time_the_message_is_sent = () => 
             Server.SentMessages.ExcludeAcknowledgements().First().GetLastTimeSent().ShouldBeGreaterThan(DateTime.MinValue);

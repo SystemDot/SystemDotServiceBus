@@ -14,15 +14,15 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
     {
         const string ReceiverName = "ReceiverName";
         const string SenderName = "SenderName";
-        const int Message1 = 1;
-        const int Message2 = 2;
+        const Int64 Message1 = 1;
+        const Int64 Message2 = 2;
         const string Server = "Server";
         const string Proxy = "Proxy";
 
         static TestTaskStarter taskStarter;
         static MessagePayload messagePayload1;
         static MessagePayload messagePayload2;
-        static TestMessageHandler<int> handler;
+        static TestMessageHandler<Int64> handler;
 
         Establish context = () =>
         {
@@ -55,7 +55,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
                 Proxy,
                 PersistenceUseType.PointToPointSend);
 
-            handler = new TestMessageHandler<int>();
+            handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
         };
 

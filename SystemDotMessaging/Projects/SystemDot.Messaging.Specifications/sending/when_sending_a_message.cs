@@ -16,8 +16,8 @@ namespace SystemDot.Messaging.Specifications.sending
         const string ReceiverAddress = "ReceiverAddress";
 
         static MessageAddedToCache messageAddedToCacheEvent;
-        
-        static int message;
+
+        static Int64 message;
         
         Establish context = () =>
         {
@@ -57,8 +57,8 @@ namespace SystemDot.Messaging.Specifications.sending
            Server.SentMessages.ExcludeAcknowledgements().First().GetSourcePersistenceId()
                .ShouldEqual(Server.SentMessages.ExcludeAcknowledgements().First().GetPersistenceId());
 
-        It should_send_a_message_with_the_correct_content = () => 
-            Server.SentMessages.ExcludeAcknowledgements().First().DeserialiseTo<int>().ShouldEqual(message);
+        It should_send_a_message_with_the_correct_content = () =>
+            Server.SentMessages.ExcludeAcknowledgements().First().DeserialiseTo<Int64>().ShouldEqual(message);
 
         It should_mark_the_time_the_message_is_sent = () => 
             Server.SentMessages.ExcludeAcknowledgements().First()

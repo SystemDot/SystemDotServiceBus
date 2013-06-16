@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Specifications.replies
         const string ChannelName = "Test";
         const string SenderChannelName = "TestSender";
 
-        static int message;
+        static Int64 message;
 
         Establish context = () =>
         {
@@ -46,7 +46,7 @@ namespace SystemDot.Messaging.Specifications.replies
                 .ShouldEqual(BuildAddress(ChannelName));
 
         It should_send_a_message_with_the_correct_content = () =>
-            Server.SentMessages.ExcludeAcknowledgements().First().DeserialiseTo<int>()
+            Server.SentMessages.ExcludeAcknowledgements().First().DeserialiseTo<Int64>()
                 .ShouldEqual(message);
 
         It should_mark_the_message_with_the_persistence_id = () =>

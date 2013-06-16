@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
         
         Establish context = () =>
         {
-            changeStore = new InMemoryChangeStore(new PlatformAgnosticSerialiser());
+            changeStore = new InMemoryChangeStore(new JsonSerialiser());
             ConfigureAndRegister<IChangeStore>(changeStore);
             
             originDate = DateTime.Now.AddHours(-1);

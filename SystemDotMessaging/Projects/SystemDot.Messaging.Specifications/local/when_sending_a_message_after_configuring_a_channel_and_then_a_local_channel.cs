@@ -1,5 +1,5 @@
+using System;
 using System.Linq;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.local
@@ -8,12 +8,11 @@ namespace SystemDot.Messaging.Specifications.local
     public class when_sending_a_message_after_configuring_a_channel_and_then_a_local_channel 
         : WithMessageConfigurationSubject
     {
-        static int message;
-        
+        static Int64 message;
         
         Establish context = () =>
         {
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("Channel").ForRequestReplySendingTo("Reciever")
                 .OpenLocalChannel()
@@ -24,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.local
 
         Because of = () => Bus.Send(message);
 
-        It should_send_the_message_down_the_channel = () => 
-            Server.SentMessages.First().DeserialiseTo<int>().ShouldEqual(message);
+        It should_send_the_message_down_the_channel = () =>
+            Server.SentMessages.First().DeserialiseTo<Int64>().ShouldEqual(message);
     }
 }

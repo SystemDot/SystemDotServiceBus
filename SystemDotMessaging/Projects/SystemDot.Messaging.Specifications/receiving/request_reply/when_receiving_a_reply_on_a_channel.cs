@@ -1,7 +1,7 @@
+using System;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 using SystemDot.Messaging.Storage;
 
@@ -13,20 +13,19 @@ namespace SystemDot.Messaging.Specifications.receiving.request_reply
         const string SenderAddress = "SenderAddress";
         const string ReceiverAddress = "ReceiverAddress";
 
-        static int message;
+        static Int64 message;
         static MessagePayload payload;
-        static TestMessageHandler<int> handler;
+        static TestMessageHandler<Int64> handler;
         
         Establish context = () =>
         {
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(SenderAddress)
                     .ForRequestReplySendingTo(ReceiverAddress)
                 .Initialise();
 
-            
-            handler = new TestMessageHandler<int>();
+            handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             message = 1;

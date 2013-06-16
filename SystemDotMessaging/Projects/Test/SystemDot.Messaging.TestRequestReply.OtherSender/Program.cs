@@ -19,7 +19,6 @@ namespace SystemDot.Messaging.TestRequestReply.OtherSender
                 .ResolveReferencesWith(container)
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
-                .UsingJsonSerialisation()
                 .UsingHttpTransport()
                     .AsAServer("OtherSenderServer")
                 .OpenChannel("OtherTestRequest")

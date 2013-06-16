@@ -18,7 +18,6 @@ namespace SystemDot.Messaging.TestRequestReply.Sender
                 .ResolveReferencesWith(container)
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
-                .UsingJsonSerialisation()
                 .UsingHttpTransport()
                     .AsAServer("SenderServer")
                 .OpenChannel("TestRequest")

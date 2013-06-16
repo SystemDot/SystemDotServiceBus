@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
@@ -8,10 +9,10 @@ namespace SystemDot.Messaging.Specifications.batching.request_reply
     [Subject(SpecificationGroup.Description)]
     public class when_sending_requests_inside_a_batch : WithMessageConfigurationSubject
     {
-        const int Message1 = 1;
-        const int Message2 = 2;
+        const Int64 Message1 = 1;
+        const Int64 Message2 = 2;
         
-        Establish context = () => Messaging.Configuration.Configure.Messaging()
+        Establish context = () => Configuration.Configure.Messaging()
             .UsingInProcessTransport()
             .OpenChannel("SenderAddress").ForRequestReplySendingTo("ReceiverAddress")
             .Initialise();

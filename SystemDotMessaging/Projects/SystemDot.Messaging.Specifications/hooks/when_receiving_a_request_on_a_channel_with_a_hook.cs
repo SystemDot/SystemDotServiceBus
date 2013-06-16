@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
@@ -12,7 +13,7 @@ namespace SystemDot.Messaging.Specifications.hooks
         const string ChannelName = "Test";
         const string SenderAddress = "TestSenderAddress";
 
-        static int message;
+        static Int64 message;
         static MessagePayload payload;
         static TestMessageProcessorHook hook;
 

@@ -31,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Serialization">
-      <HintPath>..\..\Dependencies\Serialization.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\Dependencies\Json.Net\Net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -78,7 +78,7 @@
     <Compile Include="Parallelism\ITaskScheduler.cs" />
     <Compile Include="Parallelism\ITaskStarter.cs" />
     <Compile Include="Parallelism\TaskStarter.cs" />
-    <Compile Include="Serialisation\PlatformAgnosticSerialiser.cs" />
+    <Compile Include="Serialisation\JsonSerialiser.cs" />
     <Compile Include="ServerAddress.cs" />
     <Compile Include="Storage\Changes\Change.cs" />
     <Compile Include="Storage\Changes\ChangeContainer.cs" />

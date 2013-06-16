@@ -11,12 +11,12 @@ namespace SystemDot.Messaging.Specifications.sequencing
     [Subject(SpecificationGroup.Description)]
     public class when_passing_messages_in_the_correct_order_on_a_durable_channel : WithMessageConfigurationSubject
     {
-        const int Message1 = 1;
-        const int Message2 = 2;
+        const Int64 Message1 = 1;
+        const Int64 Message2 = 2;
         const string ReceiverAddress = "ReceiverAddress";
         const string SenderAddress = "SenderAddress";
 
-        static TestMessageHandler<int> handler;
+        static TestMessageHandler<Int64> handler;
         static MessagePayload messagePayload1;
         static MessagePayload messagePayload2;
         
@@ -39,7 +39,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
             messagePayload2.SetFirstSequence(2);
             messagePayload2.SetSequenceOriginSetOn(DateTime.Today);
 
-            handler = new TestMessageHandler<int>();
+            handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
         };
 

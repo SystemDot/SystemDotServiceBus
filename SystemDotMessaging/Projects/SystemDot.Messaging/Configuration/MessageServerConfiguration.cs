@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
@@ -27,7 +25,7 @@ namespace SystemDot.Messaging.Configuration
             IIocContainer container = IocContainerLocator.Locate();
 
             RegisterInMemoryPersistence(container);
-            RegisterPlatformAgnosticSerialiser(container);
+            RegisterJsonSerialiser(container);
             ConfigureExternalSources(container);
         }
 
@@ -53,9 +51,9 @@ namespace SystemDot.Messaging.Configuration
             container.RegisterInstance<IChangeStore, InMemoryChangeStore>();
         }
 
-        static void RegisterPlatformAgnosticSerialiser(IIocContainer container)
+        static void RegisterJsonSerialiser(IIocContainer container)
         {
-            container.RegisterInstance<ISerialiser, PlatformAgnosticSerialiser>();
+            container.RegisterInstance<ISerialiser, JsonSerialiser>();
         }
 
         void ConfigureExternalSources(IIocContainer container)

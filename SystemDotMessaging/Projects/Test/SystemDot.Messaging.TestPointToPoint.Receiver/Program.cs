@@ -18,7 +18,6 @@ namespace SystemDot.Messaging.TestPointToPoint.Receiver
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
                 .UsingFilePersistence()
-                .UsingJsonSerialisation()
                 .UsingHttpTransport()
                     .AsAServer("ReceiverServer")
                 .OpenChannel("TestReceive")

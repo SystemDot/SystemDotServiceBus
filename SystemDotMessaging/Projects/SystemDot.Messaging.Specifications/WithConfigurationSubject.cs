@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications
 
         static void RegisterComponents()
         {
-            ConfigureAndRegister<ISerialiser>(new PlatformAgnosticSerialiser());
+            ConfigureAndRegister<ISerialiser>(new JsonSerialiser());
 
             TaskRepeater = new TestTaskRepeater();
             ConfigureAndRegister<ITaskRepeater>(TaskRepeater);

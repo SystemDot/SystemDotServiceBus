@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.transport.http.remote.serving;
 using SystemDot.Messaging.Storage;
@@ -14,14 +15,14 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
     {
         const string ChannelName = "Test";
         const string ReceiverAddress = "TestReceiveAddress";
-        const int Message = 1;
-        
-        static TestMessageHandler<int> handler;
+        const Int64 Message = 1;
+
+        static TestMessageHandler<Int64> handler;
         static IChangeStore changeStore;
             
         Establish context = () =>
         {
-            changeStore = new InMemoryChangeStore(new PlatformAgnosticSerialiser());
+            changeStore = new InMemoryChangeStore(new JsonSerialiser());
             ConfigureAndRegister<IChangeStore>(changeStore);
             
             Messaging.Configuration.Configure.Messaging()
@@ -29,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
                 .OpenChannel(ChannelName)
                 .ForRequestReplySendingTo(ReceiverAddress)
                 .WithDurability()
-                .RegisterHandlers(r => r.RegisterHandler(new FailingMessageHandler<int>()))
+                .RegisterHandlers(r => r.RegisterHandler(new FailingMessageHandler<Int64>()))
                 .Initialise();
 
             Catch.Exception(() => Server.ReceiveMessage(
@@ -43,7 +44,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
             ReInitialise();
 
             ConfigureAndRegister<IChangeStore>(changeStore);
-            handler = new TestMessageHandler<int>();
+            handler = new TestMessageHandler<Int64>();
         };
 
         Because of = () => 

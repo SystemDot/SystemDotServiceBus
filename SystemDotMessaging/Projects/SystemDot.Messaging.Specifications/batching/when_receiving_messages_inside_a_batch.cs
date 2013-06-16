@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
@@ -14,7 +15,7 @@ namespace SystemDot.Messaging.Specifications.batching
         const int Message2 = 2;
         const string ReceiverAddress = "ReceiverAddress";
 
-        static TestMessageHandler<int> handler;
+        static TestMessageHandler<Int64> handler;
         static MessagePayload messagePayload;
         
         Establish context = () =>
@@ -33,8 +34,8 @@ namespace SystemDot.Messaging.Specifications.batching
                 "SenderAddress", 
                 ReceiverAddress, 
                 PersistenceUseType.PointToPointSend);
-            
-            handler = new TestMessageHandler<int>();
+
+            handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
         };
 

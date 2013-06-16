@@ -14,13 +14,13 @@ namespace SystemDot.Messaging.Specifications.repeating.escalating
     {
         const string ChannelName = "Test";
         const string ReceiverAddress = "TestReceiverAddress";
-        const int Message = 1;
+        const Int64 Message = 1;
 
         static IChangeStore changeStore;
 
         Establish context = () =>
         {
-            changeStore = new InMemoryChangeStore(new PlatformAgnosticSerialiser());
+            changeStore = new InMemoryChangeStore(new JsonSerialiser());
 
             ConfigureAndRegister<IChangeStore>(changeStore);
             ConfigureAndRegister<ITaskRepeater>(new TestTaskRepeater());
@@ -51,6 +51,6 @@ namespace SystemDot.Messaging.Specifications.repeating.escalating
                 .Initialise();
 
         It should_send_the_message_again = () =>
-            Server.SentMessages.ShouldContain(m => m.DeserialiseTo<int>() == Message);
+            Server.SentMessages.ShouldContain(m => m.DeserialiseTo<Int64>() == Message);
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Runtime.Serialization.Formatters.Binary;
-using SystemDot.Serialisation;
+﻿using SystemDot.Serialisation;
 using Machine.Specifications;
 
 namespace SystemDot.Specifications.serialisation
@@ -7,14 +6,14 @@ namespace SystemDot.Specifications.serialisation
     [Subject("Serialisation")]
     public class when_serialising_an_object_to_json
     {
-        static PlatformAgnosticSerialiser serialiser;
+        static JsonSerialiser serialiser;
         static string item;
         static byte[] serialisedItem;
         
         Establish context = () =>
         {
             item = "Test";
-            serialiser = new PlatformAgnosticSerialiser();
+            serialiser = new JsonSerialiser();
         };
 
         Because of = () => serialisedItem = serialiser.Serialise(item);

@@ -45,10 +45,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SystemDot.Newtonsoft\SystemDot.Newtonsoft.csproj">
-      <Project>{377B573E-9BBD-40D3-9244-40D5B4F0B207}</Project>
-      <Name>SystemDot.Newtonsoft %28Windows\SystemDot.Newtonsoft%29</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\SystemDot\SystemDot.csproj">
       <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>
       <Name>SystemDot %28Windows\SystemDot%29</Name>

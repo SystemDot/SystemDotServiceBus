@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
@@ -14,9 +15,9 @@ namespace SystemDot.Messaging.Specifications.receiving
         const string ChannelName = "Test";
         const string SenderAddress = "TestSenderAddress";
 
-        static int message;
+        static Int64 message;
         static MessagePayload payload;
-        static TestMessageHandler<int> handler;
+        static TestMessageHandler<Int64> handler;
         static MessageAddedToCache messageAddedToCacheEvent;
         static MessageRemovedFromCache messageRemovedFromCacheEvent;
 
@@ -25,13 +26,13 @@ namespace SystemDot.Messaging.Specifications.receiving
             Messenger.Register<MessageAddedToCache>(e => messageAddedToCacheEvent = e);
             Messenger.Register<MessageRemovedFromCache>(e => messageRemovedFromCacheEvent = e);
             
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                     .OpenChannel(ChannelName)
                     .ForPointToPointReceiving()
                 .Initialise();
 
-            handler = new TestMessageHandler<int>();
+            handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             message = 1;

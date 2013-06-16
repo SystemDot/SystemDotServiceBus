@@ -11,12 +11,12 @@ namespace SystemDot.Messaging.Specifications.sequencing.request_reply
     [Subject(SpecificationGroup.Description)]
     public class when_receiving_a_reply_from_a_durable_channel_that_has_had_sequencing_reset : WithMessageConfigurationSubject
     {
-        const int Message1 = 1;
-        const int Message2 = 2;
+        const Int64 Message1 = 1;
+        const Int64 Message2 = 2;
         const string ReceiverAddress = "ReceiverAddress";
         const string SenderAddress = "SenderAddress";
 
-        static TestMessageHandler<int> handler;
+        static TestMessageHandler<Int64> handler;
         static MessagePayload messagePayload;
 
         Establish context = () =>
@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.sequencing.request_reply
             messagePayload = new MessagePayload()
                 .MakeSequencedReceivable(Message1, ReceiverAddress, SenderAddress, PersistenceUseType.ReplySend);
 
-            handler = new TestMessageHandler<int>();
+            handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             Server.ReceiveMessage(messagePayload);

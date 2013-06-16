@@ -9,7 +9,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.sending
     public class when_sending_a_message : WithHttpConfigurationSubject
     {
         const string ServerName = "ServerName";
-        const int Message = 1;
+        const Int64 Message = 1;
        
         Establish context = () =>
         {
@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.sending
 
         It should_serialise_the_message_and_send_it_as_a_put_request_to_the_message_server = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .DeserialiseTo<int>().ShouldEqual(Message);
+                .DeserialiseTo<Int64>().ShouldEqual(Message);
 
         It should_send_a_message_with_the_correct_to_address_server_name = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()

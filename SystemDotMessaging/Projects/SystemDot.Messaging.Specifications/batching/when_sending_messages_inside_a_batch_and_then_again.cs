@@ -1,6 +1,6 @@
+using System;
 using System.Linq;
 using SystemDot.Messaging.Batching;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.batching
@@ -8,12 +8,12 @@ namespace SystemDot.Messaging.Specifications.batching
     [Subject(SpecificationGroup.Description)]
     public class when_sending_messages_inside_a_batch_and_then_again : WithMessageConfigurationSubject
     {
-        const int Message1 = 1;
-        const int Message2 = 2;
+        const Int64 Message1 = 1;
+        const Int64 Message2 = 2;
 
         Establish context = () =>
         {
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("SenderAddress").ForPointToPointSendingTo("ReceiverAddress")
                 .Initialise();

@@ -16,15 +16,15 @@ namespace SystemDot.Messaging.Specifications.sequencing
     {
         const string ReceiverAddress = "ReceiverAddress";
         const string SenderAddress = "SenderAddress";
-        const int Message = 1;
+        const Int64 Message = 1;
 
         static IChangeStore changeStore;
-        static TestMessageHandler<int> handler;
+        static TestMessageHandler<Int64> handler;
         static MessagePayload messagePayload;
 
         Establish context = () =>
         {
-            changeStore = new InMemoryChangeStore(new PlatformAgnosticSerialiser());
+            changeStore = new InMemoryChangeStore(new JsonSerialiser());
             ConfigureAndRegister<IChangeStore>(changeStore);
 
             Messaging.Configuration.Configure.Messaging()
@@ -39,7 +39,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
             messagePayload.SetFirstSequence(1);
             messagePayload.SetSequenceOriginSetOn(DateTime.Now.AddHours(-1));
 
-            handler = new TestMessageHandler<int>();
+            handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             Server.ReceiveMessage(messagePayload);

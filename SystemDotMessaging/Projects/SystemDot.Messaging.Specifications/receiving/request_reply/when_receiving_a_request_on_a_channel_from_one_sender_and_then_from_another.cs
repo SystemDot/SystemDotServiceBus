@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
@@ -13,11 +14,11 @@ namespace SystemDot.Messaging.Specifications.receiving.request_reply
         const string ReceiverAddress = "ReceiverAddress";
         const string Sender1Address = "Sender1Address";
         const string Sender2Address = "Sender2Address";
-        const int Message = 1;
+        const Int64 Message = 1;
 
         static MessagePayload payload1;
         static MessagePayload payload2;
-        static TestMessageHandler<int> handler;
+        static TestMessageHandler<Int64> handler;
 
         Establish context = () =>
         {
@@ -26,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.receiving.request_reply
                 .OpenChannel(ReceiverAddress).ForRequestReplyRecieving()
                 .Initialise();
 
-            handler = new TestMessageHandler<int>();
+            handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
             payload1 = new MessagePayload().MakeSequencedReceivable(

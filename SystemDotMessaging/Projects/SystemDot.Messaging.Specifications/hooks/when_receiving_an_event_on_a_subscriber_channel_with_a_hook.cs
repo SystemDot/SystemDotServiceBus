@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
@@ -9,7 +10,7 @@ namespace SystemDot.Messaging.Specifications.hooks
     {
         const string SubscriberAddress = "SubscriberAddress";
         const string PublisherAddress = "PublisherAddress";
-        const int Message = 1;
+        const Int64 Message = 1;
         
         static MessagePayload payload;
         static TestMessageProcessorHook hook;

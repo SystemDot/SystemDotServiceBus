@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.load_balancing
@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.load_balancing
 
         Establish context = () =>
         {
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("SenderAddress")
                 .ForPointToPointSendingTo("ReceiverAddress")
@@ -35,6 +35,7 @@ namespace SystemDot.Messaging.Specifications.load_balancing
 
         Because of = () => Server.ReceiveMessage(acknowledgement);
 
-        It should_send_the_twenty_first_message = () => Server.SentMessages.ElementAt(20).DeserialiseTo<int>().ShouldEqual(21);
+        It should_send_the_twenty_first_message = () => 
+            Server.SentMessages.ElementAt(20).DeserialiseTo<Int64>().ShouldEqual(21);
     }
 }

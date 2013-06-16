@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Handling;
@@ -12,17 +13,17 @@ namespace SystemDot.Messaging.Specifications.batching.request_reply
     [Subject(SpecificationGroup.Description)]
     public class when_receiving_requests_inside_a_batch_and_replying_to_each : WithMessageConfigurationSubject
     {
-        const int Message1 = 1;
-        const int Message2 = 2;
+        const Int64 Message1 = 1;
+        const Int64 Message2 = 2;
         const string SenderAddress = "SenderAddress";
         const string ReceiverAddress = "ReceiverAddress";
 
-        static TestReplyMessageHandler<int> handler;
+        static TestReplyMessageHandler<Int64> handler;
         static MessagePayload messagePayload;
         
         Establish context = () =>
         {
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ReceiverAddress).ForRequestReplyRecieving()
                 .Initialise();
@@ -34,7 +35,7 @@ namespace SystemDot.Messaging.Specifications.batching.request_reply
             messagePayload = new MessagePayload()
                 .MakeSequencedReceivable(aggregateMessage, SenderAddress, ReceiverAddress, PersistenceUseType.RequestReceive);
 
-            handler = new TestReplyMessageHandler<int>();
+            handler = new TestReplyMessageHandler<Int64>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
         };
 

@@ -48,7 +48,6 @@ namespace SystemDot.Messaging.TestSender
                 .RegisterHandlersFromAssemblyOf<ResponseHandler>()
                     .BasedOn<IMessageConsumer>()
                 .UsingFilePersistence()
-                .UsingJsonSerialisation()
                 .UsingHttpTransport()
                     .AsAServerUsingAProxy("MetroServer", "MetroProxy")
                 .OpenChannel("TestMetroRequest")

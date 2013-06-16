@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
         const string ChannelAddress = "TestSender";
         const string RecieverAddress = "TestReceiver";
 
-        static int message;
+        static Int64 message;
 
         Establish context = () =>
         {
@@ -37,7 +37,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
         It should_serialise_the_message_and_send_it_as_a_put_request_to_the_message_server = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .DeserialiseTo<int>().ShouldEqual(message);
+                .DeserialiseTo<Int64>().ShouldEqual(message);
 
         It should_send_a_message_with_the_to_address_channel_name_set_correctly = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()

@@ -14,8 +14,8 @@ namespace SystemDot.Messaging.Specifications.sending.request_reply
     {
         const string ChannelName = "Test";
         const string RecieverAddress = "TestRecieverAddress";
-        
-        static int message;
+
+        static Int64 message;
         
         Establish context = () =>
         {
@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Specifications.sending.request_reply
             Server.SentMessages.First().GetFromAddress().ShouldEqual(BuildAddress(ChannelName));
 
         It should_send_a_message_with_the_correct_content = () =>
-            Server.SentMessages.First().DeserialiseTo<int>().ShouldEqual(message);
+            Server.SentMessages.First().DeserialiseTo<Int64>().ShouldEqual(message);
 
         It should_mark_the_message_with_the_persistence_id = () =>
             Server.SentMessages.First()

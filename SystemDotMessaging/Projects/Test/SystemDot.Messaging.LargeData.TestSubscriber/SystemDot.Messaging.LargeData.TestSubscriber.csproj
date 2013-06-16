@@ -63,10 +63,6 @@
       <Project>{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}</Project>
       <Name>SystemDot.Messaging %28Windows\SystemDot.Messaging%29</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\SystemDot.Newtonsoft\SystemDot.Newtonsoft.csproj">
-      <Project>{377B573E-9BBD-40D3-9244-40D5B4F0B207}</Project>
-      <Name>SystemDot.Newtonsoft %28Windows\SystemDot.Newtonsoft%29</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\SystemDot.Sql\SystemDot.Sql.csproj">
       <Project>{80FFA53E-9C4D-45CE-A7D2-8FE0B6A9FBFB}</Project>
       <Name>SystemDot.Sql</Name>

@@ -1,10 +1,7 @@
 ﻿using System;
-using SystemDot.Esent;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Test.Messages;
-using SystemDot.Messaging.Transport.Http.Configuration;
-using SystemDot.Newtonsoft;
 
 namespace SystemDot.Messaging.TestPointToPoint.Sender
 {
@@ -15,7 +12,6 @@ namespace SystemDot.Messaging.TestPointToPoint.Sender
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false, ShowDebug = false })
                 .UsingFilePersistence()
-                .UsingJsonSerialisation()
                 .UsingHttpTransport()
                     .AsAServer("SenderServer")
                 .OpenChannel("TestSend")

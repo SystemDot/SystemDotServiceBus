@@ -18,7 +18,6 @@ namespace SystemDot.Messaging.TestReceiver
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
                 .UsingFilePersistence()
-                .UsingJsonSerialisation()
                 .UsingHttpTransport()
                     .AsAProxy("MetroProxy")
                     .AsAServer("ReceiverServer")

@@ -1,3 +1,4 @@
+using System;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
@@ -15,12 +16,12 @@ namespace SystemDot.Messaging.Specifications.batching.request_reply
         const string SenderAddress = "SenderAddress";
         const string ReceiverAddress = "ReceiverAddress";
 
-        static TestMessageHandler<int> handler;
+        static TestMessageHandler<Int64> handler;
         static MessagePayload messagePayload1;
         
         Establish context = () =>
         {
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(SenderAddress).ForRequestReplySendingTo(ReceiverAddress)
                 .Initialise();
@@ -31,8 +32,8 @@ namespace SystemDot.Messaging.Specifications.batching.request_reply
 
             messagePayload1 = new MessagePayload()
                 .MakeSequencedReceivable(aggregateMessage, ReceiverAddress, SenderAddress, PersistenceUseType.ReplyReceive);
-            
-            handler = new TestMessageHandler<int>();
+
+            handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
         };
 

@@ -1,9 +1,8 @@
 ﻿using System.IO;
 using System.Text;
-using SystemDot.Serialisation;
 using Newtonsoft.Json;
 
-namespace SystemDot.Newtonsoft
+namespace SystemDot.Serialisation
 {
     public class JsonSerialiser : ISerialiser
     {

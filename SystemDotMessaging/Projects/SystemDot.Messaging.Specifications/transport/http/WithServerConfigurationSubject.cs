@@ -16,13 +16,13 @@ namespace SystemDot.Messaging.Specifications.transport.http
         public static IEnumerable<MessagePayload> SendMessagesToServer(params MessagePayload[] toSend)
         {
             return SendObjectsToServer(toSend)
-                .Deserialise<IEnumerable<MessagePayload>>(new PlatformAgnosticSerialiser());
+                .Deserialise<IEnumerable<MessagePayload>>(new JsonSerialiser());
         }
 
         public static Stream SendObjectsToServer(params object[] toSend)
         {
             Stream request = new MemoryStream();
-            var serialiser = new PlatformAgnosticSerialiser();
+            var serialiser = new JsonSerialiser();
 
             toSend.ForEach(m => request.Serialise(m, serialiser));
 

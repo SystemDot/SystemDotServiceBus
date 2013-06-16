@@ -12,7 +12,6 @@ namespace SystemDot.Messaging.LargeData.TestPublisher
         {
             Configure.Messaging()
                 .LoggingWith(new Log4NetLoggingMechanism { ShowInfo = true })
-                .UsingJsonSerialisation()
                 .UsingFilePersistence()
                 //.UsingSqlPersistence(GetDatabaseConnectionString())
                 .UsingHttpTransport()

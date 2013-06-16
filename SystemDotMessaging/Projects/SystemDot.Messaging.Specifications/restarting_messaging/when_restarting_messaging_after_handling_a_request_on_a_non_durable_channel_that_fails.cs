@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
             
         Establish context = () =>
         {
-            changeStore = new InMemoryChangeStore(new PlatformAgnosticSerialiser());
+            changeStore = new InMemoryChangeStore(new JsonSerialiser());
             ConfigureAndRegister<IChangeStore>(changeStore);
             
             Messaging.Configuration.Configure.Messaging()
