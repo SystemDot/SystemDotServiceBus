@@ -6,7 +6,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.transport.http.sending
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_a_message_without_a_local_server_address_registered : WithHttpConfigurationSubject
+    public class when_sending_a_message_with_an_empty_local_server_address_registered : WithHttpConfigurationSubject
     {
         const string SenderAddress = "SenderAddress";
         const string ReceiverAddress = "ReceiverAddress";
@@ -15,6 +15,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.sending
         Establish context = () =>
         {
             WebRequestor.ExpectAddress(ServerName, Environment.MachineName);
+            ServerAddressConfiguration.AddAddress(ServerName, string.Empty);
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport().AsAServer(ServerName)

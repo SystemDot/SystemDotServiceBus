@@ -21,24 +21,15 @@ namespace SystemDot.Configuration
         public async Task LoadAsync(string fileName)
         {
             Contract.Assert(!string.IsNullOrEmpty(fileName));
-            
-            StorageFile file;
 
             try
             {
-                file = await GetFile(fileName);
+                StorageFile file = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync(fileName).AsTask().ConfigureAwait(false);
+                this.document = await XmlDocument.LoadFromFileAsync(file).AsTask().ConfigureAwait(false);
             }
             catch (FileNotFoundException)
             {
-                return;
             }
-
-            this.document = await XmlDocument.LoadFromFileAsync(file).AsTask().ConfigureAwait(false);
-        }
-
-        static async Task<StorageFile> GetFile(string fileName)
-        {
-            return await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync(fileName);
         }
 
         public IEnumerable<XmlNode> GetSettingsInSection(string section)
@@ -46,8 +37,10 @@ namespace SystemDot.Configuration
             Contract.Assert(!string.IsNullOrEmpty(section));
 
             if (this.document == null) return new List<XmlNode>();
-                
-            return this.document.SelectSingleNode(section).ChildNodes.Select(n => new XmlNode(n));
+
+            return this.document.SelectSingleNode(section).ChildNodes
+                .Where(n => n.NodeType == NodeType.ElementNode)
+                .Select(n => new XmlNode(n));
         }
     }
 }

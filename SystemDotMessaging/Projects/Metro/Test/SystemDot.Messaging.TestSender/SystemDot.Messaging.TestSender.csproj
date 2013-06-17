@@ -137,9 +137,6 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <Content Include="SystemDot.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="SystemDot.Messaging.TestSubscriber_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

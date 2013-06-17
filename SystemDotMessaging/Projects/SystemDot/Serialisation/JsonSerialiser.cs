@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using Newtonsoft.Json;
 
@@ -37,9 +38,16 @@ namespace SystemDot.Serialisation
 
         public object Deserialise(byte[] toDeserialise)
         {
-            using (var stringReader = new StringReader(toDeserialise.GetString()))
+            try
+            {
+                using (var stringReader = new StringReader(toDeserialise.GetString()))
                 using (var reader = new JsonTextReader(stringReader))
                     return this.typedSerializer.Deserialize(reader);
+            }
+            catch (Exception e)
+            {
+                throw new CannotDeserialiseException(e);
+            }
         }
 
         public object Deserialise(Stream toDeserialise)
