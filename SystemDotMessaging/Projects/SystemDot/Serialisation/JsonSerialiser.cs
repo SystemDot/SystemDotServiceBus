@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using SystemDot.Logging;
 using Newtonsoft.Json;
 
 namespace SystemDot.Serialisation

@@ -46,9 +46,9 @@ namespace System.IoC.Example
             {
                 ioc.Resolve<Object>();
             }
-            catch (TypeNotRegisteredException ex)
+            catch (TypeNotRegisteredException e)
             {
-                messages.Add(ex.Message);
+                messages.Add(e.Message);
             }
             var dialogContent = string.Empty;
             messages.ForEach(m => dialogContent += m + Environment.NewLine);

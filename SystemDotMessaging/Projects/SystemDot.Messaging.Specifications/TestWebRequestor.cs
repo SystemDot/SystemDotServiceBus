@@ -52,7 +52,7 @@ namespace SystemDot.Messaging.Specifications
             FixedPortAddress address, 
             Action<Stream> toPerformOnRequest, 
             Action<Stream> toPerformOnResponse, 
-            Action toPerformOnError, 
+            Action<Exception> toPerformOnError, 
             Action toPerformOnCompletion)
         {
             if (this.addressToCheck.Url != address.Url)

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
 using SystemDot.Http;
+using SystemDot.Logging;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Serialisation;
 
@@ -42,8 +43,9 @@ namespace SystemDot.Messaging.Transport.Http
             {
                 return this.formatter.Deserialise(inputStream);
             }
-            catch (CannotDeserialiseException)
+            catch (CannotDeserialiseException e)
             {
+                Logger.Info("Http server cannot deserialise message: {0}", e.Message);
                 return null;
             }
         }

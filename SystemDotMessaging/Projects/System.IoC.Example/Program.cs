@@ -22,9 +22,9 @@ namespace System.IoC.Example
             {
                 ioc.Resolve<Object>();
             }
-            catch (TypeNotRegisteredException ex)
+            catch (TypeNotRegisteredException e)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(e.Message);
             }
             Console.ReadLine();
         }

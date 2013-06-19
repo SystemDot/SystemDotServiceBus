@@ -58,7 +58,11 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients
                 this.serverAddressRegistry.Lookup(toListenFor),
                 requestStream => this.formatter.Serialise(requestStream, CreateLongPollPayload(toListenFor)),
                 RecieveResponse,
-                () => StartNextPoll(toListenFor, TimeSpan.FromSeconds(4)),
+                e =>
+                {
+                    Logger.Info("Cannot long poll server: {0}", e.Message);
+                    StartNextPoll(toListenFor, TimeSpan.FromSeconds(4));
+                },
                 () => StartNextPoll(toListenFor));
         }
 

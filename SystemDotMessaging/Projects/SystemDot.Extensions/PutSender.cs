@@ -8,7 +8,7 @@ namespace System
         public static void Send(
             Action<Stream> toPerformOnRequest, 
             Action<Stream> toPerformOnResponse, 
-            Action toPerformOnError, 
+            Action<Exception> toPerformOnError, 
             Action toPerformOnCompletion, 
             string url)
         {
@@ -18,9 +18,9 @@ namespace System
                 SendRequest(toPerformOnRequest, request);
                 RecieveResponse(toPerformOnResponse, request);
             }
-            catch(Exception)
+            catch(Exception e)
             {
-                toPerformOnError();
+                toPerformOnError(e);
                 return;
             }
 

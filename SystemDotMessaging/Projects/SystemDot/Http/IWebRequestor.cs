@@ -11,7 +11,7 @@ namespace SystemDot.Http
             FixedPortAddress address, 
             Action<Stream> toPerformOnRequest, 
             Action<Stream> toPerformOnResponse, 
-            Action toPerformOnError,
+            Action<Exception> toPerformOnError,
             Action toPerformOnCompletion);
         
     }

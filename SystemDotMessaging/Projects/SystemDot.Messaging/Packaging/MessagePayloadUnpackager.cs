@@ -38,8 +38,9 @@ namespace SystemDot.Messaging.Packaging
             {
                 return this.serialiser.Deserialise(toDeserialise);
             }
-            catch (CannotDeserialiseException)
+            catch (CannotDeserialiseException e)
             {
+                Logger.Info("Cannot deserialise message: {0}", e.Message);
                 return null;
             }
         }

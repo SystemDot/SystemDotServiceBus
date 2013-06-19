@@ -10,7 +10,7 @@ namespace SystemDot
         public static async void Send(
             Action<Stream> toPerformOnRequest, 
             Action<Stream> toPerformOnResponse, 
-            Action toPerformOnError,
+            Action<Exception> toPerformOnError,
             Action toPerformOnCompletion,
             string url)
         {
@@ -19,9 +19,9 @@ namespace SystemDot
                 HttpResponseMessage httpResponseMessage = await SendRequest(toPerformOnRequest, url);
                 await ProcessResponse(toPerformOnResponse, httpResponseMessage);
             }
-            catch(Exception)
+            catch(Exception e)
             {
-                toPerformOnError();
+                toPerformOnError(e);
                 return;
             }
 

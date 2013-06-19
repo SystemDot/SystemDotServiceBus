@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Net;
 using System.Threading.Tasks;
+using SystemDot.Logging;
 
 namespace SystemDot.Http
 {
@@ -47,8 +48,9 @@ namespace SystemDot.Http
                 this.handler.HandleRequest(context.Request.InputStream, context.Response.OutputStream);
                 context.Response.StatusCode = (int)HttpStatusCode.OK;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Logger.Info("Http server: Bad request: {0}", e.Message);
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             }
             finally
