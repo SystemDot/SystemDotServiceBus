@@ -1,4 +1,4 @@
-using System;
+using System.Diagnostics.Contracts;
 
 namespace SystemDot.Messaging.Addressing
 {
@@ -6,20 +6,26 @@ namespace SystemDot.Messaging.Addressing
     {
         public static MessageServer None { get { return new MessageServer(); } }
 
-        public static MessageServer Named(string name)
+        public static MessageServer Named(string name, ServerAddress address)
         {
-            return new MessageServer(name);
+            Contract.Requires(!string.IsNullOrEmpty(name));
+            Contract.Requires(address != null);
+
+            return new MessageServer(name, address);
         }
 
         public string Name { get; set; }
-        
+
+        public ServerAddress Address { get; set; }
+
         public MessageServer()
         {
         }
 
-        private MessageServer(string name)
+        MessageServer(string name, ServerAddress address)
         {
             Name = name;
+            Address = address;
         }
 
         protected bool Equals(MessageServer other)
@@ -31,13 +37,14 @@ namespace SystemDot.Messaging.Addressing
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((MessageServer) obj);
+            return obj.GetType() == GetType() && Equals((MessageServer) obj);
         }
 
         public override string ToString()
         {
-            return Name ?? "{NoServer}";
+            return Name == null 
+                ? "{NoServer}" 
+                : string.Concat(Name, " (", Address, ")");
         }
 
         public override int GetHashCode()

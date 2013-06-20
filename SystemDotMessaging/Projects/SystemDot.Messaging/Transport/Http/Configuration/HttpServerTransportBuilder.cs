@@ -11,13 +11,11 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
         readonly IHttpServerBuilder httpServerBuilder;
         readonly ISerialiser serialiser;
         readonly IMessageReceiver messageReceiver;
-        readonly ServerAddressRegistry serverAddressRegistry;
 
         public HttpServerTransportBuilder(
             IHttpServerBuilder httpServerBuilder, 
             ISerialiser serialiser, 
-            IMessageReceiver messageReceiver, 
-            ServerAddressRegistry serverAddressRegistry)
+            IMessageReceiver messageReceiver)
         {
             Contract.Requires(httpServerBuilder != null);
             Contract.Requires(serialiser != null);
@@ -26,13 +24,12 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
             this.httpServerBuilder = httpServerBuilder;
             this.serialiser = serialiser;
             this.messageReceiver = messageReceiver;
-            this.serverAddressRegistry = serverAddressRegistry;
         }
 
         public void Build(ServerPath toListenFor)
         {
             this.httpServerBuilder
-                .Build(this.serverAddressRegistry.Lookup(toListenFor), BuildMessagingServerHandler())
+                .Build(toListenFor.GetUrl(), BuildMessagingServerHandler())
                 .Start();
         }
 

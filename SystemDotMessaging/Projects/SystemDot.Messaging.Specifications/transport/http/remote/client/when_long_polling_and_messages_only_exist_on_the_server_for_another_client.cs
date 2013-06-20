@@ -1,4 +1,3 @@
-using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
@@ -10,11 +9,10 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
     [Subject(SpecificationGroup.Description)]
     public class when_long_polling_and_messages_only_exist_on_the_server_for_another_client : WithHttpConfigurationSubject
     {
-        const string ReceiverName = "ReceiverName";
-        const string SenderName = "SenderName";
-        const string Server = "Server";
-        const string Proxy = "Proxy";
-        const string RemoteProxyInstance = "RemoteProxyInstance";
+        const string ReceiverChannel = "ReceiverChannel";
+        const string SenderChannel = "SenderChannel";
+        const string ServerName = "ServerName";
+        const string ProxyName = "ProxyName";
 
         static TestTaskStarter taskStarter; 
         static MessagePayload messagePayload;
@@ -22,26 +20,24 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
         Establish context = () =>
         {
-            WebRequestor.ExpectAddress("DifferentServer", null);
+            WebRequestor.ExpectAddress("DifferentServerName", null);
 
             taskStarter = new TestTaskStarter(1);
             taskStarter.Pause(); 
             ConfigureAndRegister<ITaskStarter>(taskStarter);
 
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsAServerUsingAProxy(Server, Proxy)
-                .OpenChannel(ReceiverName)
+                .AsAServerUsingAProxy(ServerName, ProxyName)
+                .OpenChannel(ReceiverChannel)
                 .ForPointToPointReceiving()
                 .Initialise();
 
             messagePayload =
                  new MessagePayload().MakeSequencedReceivable(
-                 1, 
-                 SenderName, 
-                 "DifferentReceiver", 
-                 Server,
-                 RemoteProxyInstance,
+                 1,
+                 BuildAddressWithProxy(SenderChannel, ServerName, ProxyName),
+                 BuildAddressWithProxy("DifferentReceiverChannel", ServerName, ProxyName),
                  PersistenceUseType.PointToPointSend);
 
             handler = new TestMessageHandler<int>();

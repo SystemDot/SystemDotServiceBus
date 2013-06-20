@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.Contracts;
 
 namespace SystemDot
 {
@@ -16,6 +17,8 @@ namespace SystemDot
 
         public ServerAddress(string address, bool isSecure)
         {
+            Contract.Requires(!String.IsNullOrEmpty(address));
+
             Address = address;
             IsSecure = isSecure;
         }

@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Parallelism;
 using Machine.Specifications;
@@ -16,8 +15,8 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
         const string SenderName = "SenderName";
         const Int64 Message1 = 1;
         const Int64 Message2 = 2;
-        const string Server = "Server";
-        const string Proxy = "Proxy";
+        const string ServerName = "ServerName";
+        const string ProxyName = "ProxyName";
 
         static TestTaskStarter taskStarter;
         static MessagePayload messagePayload1;
@@ -26,33 +25,29 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
         Establish context = () =>
         {
-            WebRequestor.ExpectAddress(Proxy, Environment.MachineName);
+            WebRequestor.ExpectAddress(ProxyName, Environment.MachineName);
 
             taskStarter = new TestTaskStarter(1);
             taskStarter.Pause(); 
             ConfigureAndRegister<ITaskStarter>(taskStarter);
 
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsAServerUsingAProxy(Server, Proxy)
+                .AsAServerUsingAProxy(ServerName, ProxyName)
                 .OpenChannel(ReceiverName)
                 .ForPointToPointReceiving()
                 .Initialise();
 
             messagePayload1 = new MessagePayload().MakeSequencedReceivable(
                 Message1,
-                SenderName,
-                ReceiverName,
-                Server,
-                Proxy,
+                BuildAddressWithProxy(SenderName, ServerName, ProxyName),
+                BuildAddressWithProxy(ReceiverName, ServerName, ProxyName),
                 PersistenceUseType.PointToPointSend);
 
             messagePayload2 = new MessagePayload().MakeSequencedReceivable(
                 Message2,
-                SenderName,
-                ReceiverName,
-                Server,
-                Proxy,
+                BuildAddressWithProxy(SenderName, ServerName, ProxyName),
+                BuildAddressWithProxy(ReceiverName, ServerName, ProxyName),
                 PersistenceUseType.PointToPointSend);
 
             handler = new TestMessageHandler<Int64>();

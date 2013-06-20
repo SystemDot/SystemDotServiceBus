@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="transport\http\remote\serving\when_configuring_a_remote_server_with_an_address_registered.cs" />
     <Compile Include="transport\http\sending\when_sending_a_message_with_an_empty_local_server_address_registered.cs" />
-    <Compile Include="transport\http\server_addressing\MessagePayloadExtensions.cs" />
     <Compile Include="transport\http\server_addressing\SpecificationGroup.cs" />
     <Compile Include="transport\http\server_addressing\when_receiving_a_message_on_a_point_to_point_channel.cs" />
     <Compile Include="transport\http\server_addressing\when_receiving_a_request_on_a_request_reply_channel.cs" />

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using SystemDot.Configuration;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Acknowledgement.Builders;
 using SystemDot.Messaging.Addressing;

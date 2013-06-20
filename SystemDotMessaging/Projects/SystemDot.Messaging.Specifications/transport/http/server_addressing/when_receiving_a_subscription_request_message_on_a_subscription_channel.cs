@@ -8,8 +8,8 @@ namespace SystemDot.Messaging.Specifications.transport.http.server_addressing
     public class when_receiving_a_subscription_request_message_on_a_subscription_channel : WithServerConfigurationSubject
     {
         const string PublisherServer = "PublisherServer";
-        const string PublisherAddress = "PublisherAddress";
-        const string SubscriberAddress = "SubscriberAddress";
+        const string PublisherChannel = "PublisherChannel";
+        const string SubscriberChannel = "SubscriberChannel";
         const string SubscriberServer = "SubscriberServer";
         const string SubscriberServerAddress = "SubscriberServerAddress";
         
@@ -18,18 +18,16 @@ namespace SystemDot.Messaging.Specifications.transport.http.server_addressing
         Establish context = () =>
         {
             WebRequestor.ExpectAddress(SubscriberServer, SubscriberServerAddress);
-
+            
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsAServer(PublisherServer)
-                .OpenChannel(PublisherAddress).ForPublishing()
+                .OpenChannel(PublisherChannel).ForPublishing()
                 .Initialise();
 
             request = new MessagePayload().BuildSubscriptionRequest(
-                BuildAddress(SubscriberAddress, SubscriberServer, SubscriberServer), 
-                BuildAddress(PublisherAddress, PublisherServer, PublisherServer));
-            
-            request.SetFromServerAddress(SubscriberServerAddress);
+                BuildAddress(SubscriberChannel, SubscriberServer, SubscriberServerAddress),
+                BuildAddressWithProxy(PublisherChannel, PublisherServer, PublisherServer));
         };
 
         Because of = () => SendMessagesToServer(request);

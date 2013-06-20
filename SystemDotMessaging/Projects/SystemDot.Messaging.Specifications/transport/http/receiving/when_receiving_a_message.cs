@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.receiving
     {
         const Int64 Message = 1;
         const string ServerName = "ServerName";
-        const string ReceiverAddress = "ReceiverAddress";
+        const string ReceiverChannel = "ReceiverChannel";
 
         static TestMessageHandler<Int64> handler;
         static MessagePayload messagePayload;
@@ -23,16 +23,14 @@ namespace SystemDot.Messaging.Specifications.transport.http.receiving
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsAServer(ServerName)
-                .OpenChannel(ReceiverAddress).ForPointToPointReceiving()
+                .OpenChannel(ReceiverChannel).ForPointToPointReceiving()
                 .Initialise();
 
             messagePayload =
                 new MessagePayload().MakeSequencedReceivable(
                     Message,
-                    "SenderAddress",
-                    ReceiverAddress,
-                    ServerName,
-                    ServerName,
+                    BuildAddressWithProxy("SenderChannel", ServerName, ServerName),
+                    BuildAddressWithProxy("ReceiverChannel", ServerName, ServerName),
                     PersistenceUseType.PointToPointSend);
 
             handler = new TestMessageHandler<Int64>();

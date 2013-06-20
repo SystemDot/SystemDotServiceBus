@@ -3,7 +3,6 @@ using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.sequencing
@@ -19,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
         
         Establish context = () =>
         {
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                  .UsingInProcessTransport()
                  .OpenChannel(ReceiverAddress).ForPointToPointReceiving().WithDurability()
                  .Initialise();

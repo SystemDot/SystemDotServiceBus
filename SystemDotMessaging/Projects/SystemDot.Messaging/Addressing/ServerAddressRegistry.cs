@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.Contracts;
-using SystemDot.Http;
 
 namespace SystemDot.Messaging.Addressing
 {
@@ -31,13 +30,6 @@ namespace SystemDot.Messaging.Addressing
             return this.addresses.ContainsKey(toLookup) && this.addresses[toLookup].Address != string.Empty
                 ? this.addresses[toLookup]
                 : ServerAddress.Local;
-        }
-
-        public FixedPortAddress Lookup(ServerPath toLookup)
-        {
-            Contract.Requires(toLookup != null);
-
-            return new FixedPortAddress(Lookup(toLookup.Proxy.Name), toLookup.Proxy.Name);
         }
     }
 }

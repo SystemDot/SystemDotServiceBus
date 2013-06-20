@@ -14,16 +14,14 @@ namespace SystemDot.Messaging.Specifications.transport.http
         public static MessagePayload MakeSequencedReceivable(
             this MessagePayload payload,
             object message,
-            string fromAddress,
-            string toAddress,
-            string serverInstance,
-            string proxyInstance,
+            EndpointAddress from,
+            EndpointAddress to,
             PersistenceUseType useType)
         {
             payload.SetBody(Resolve<ISerialiser>().Serialise(message));
-            payload.SetFromAddress(BuildAddress(fromAddress, serverInstance, proxyInstance));
-            payload.SetToAddress(BuildAddress(toAddress, serverInstance, proxyInstance));
-            payload.SetPersistenceId(BuildAddress(fromAddress, serverInstance, proxyInstance), useType);
+            payload.SetFromAddress(from);
+            payload.SetToAddress(to);
+            payload.SetPersistenceId(from, useType);
             payload.SetSourcePersistenceId(payload.GetPersistenceId());
             payload.SetSequenceOriginSetOn(DateTime.Today);
             payload.SetFirstSequence(1);
@@ -32,37 +30,9 @@ namespace SystemDot.Messaging.Specifications.transport.http
             return payload;
         }
 
-        public static MessagePayload MakeSequencedReceivable(
-            this MessagePayload payload,
-            object message,
-            string fromAddress,
-            string fromServerName,
-            string fromProxyName, 
-            string toAddress,
-            string toServerName,
-            string toProxyName,
-            PersistenceUseType useType)
-        {
-            payload.SetBody(Resolve<ISerialiser>().Serialise(message));
-            payload.SetFromAddress(BuildAddress(fromAddress, fromServerName, fromProxyName));
-            payload.SetToAddress(BuildAddress(toAddress, toServerName, toProxyName));
-            payload.SetPersistenceId(BuildAddress(fromAddress, fromServerName, fromProxyName), useType);
-            payload.SetSourcePersistenceId(payload.GetPersistenceId());
-            payload.SetSequenceOriginSetOn(DateTime.Today);
-            payload.SetFirstSequence(1);
-            payload.SetSequence(1);
-
-            return payload;
-        }
-
         static T Resolve<T>() where T : class
         {
             return IocContainerLocator.Locate().Resolve<T>();
-        }
-
-        static EndpointAddress BuildAddress(string fromAddress, string serverInstance, string remoteProxyInstance)
-        {
-            return TestEndpointAddressBuilder.Build(fromAddress, serverInstance, remoteProxyInstance);
         }
     }
 }

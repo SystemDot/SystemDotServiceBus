@@ -42,11 +42,11 @@
     <Compile Include="Acknowledgement\Builders\AcknowledgementSendChannelBuilder.cs" />
     <Compile Include="Addressing\EndpointAddress.cs" />
     <Compile Include="Addressing\EndpointAddressBuilder.cs" />
-    <Compile Include="Addressing\MessageOriginServerAddressRegistrar.cs" />
     <Compile Include="Addressing\ServerAddressLoader.cs" />
     <Compile Include="Addressing\ServerAddressRegistry.cs" />
     <Compile Include="Addressing\MessageAddresser.cs" />
     <Compile Include="Addressing\ServerPath.cs" />
+    <Compile Include="Addressing\ServerPathBuilder.cs" />
     <Compile Include="Batching\Batch.cs" />
     <Compile Include="Batching\BatchMessage.cs" />
     <Compile Include="Batching\BatchPackager.cs" />
@@ -80,7 +80,6 @@
     <Compile Include="MessageProcessor.cs" />
     <Compile Include="Builders\PersistenceFactorySelector.cs" />
     <Compile Include="MessagingInitialising.cs" />
-    <Compile Include="Packaging\Headers\FromServerAddressHeader.cs" />
     <Compile Include="PointToPoint\Builders\PointToPointReceiveChannelBuilt.cs" />
     <Compile Include="PointToPoint\Builders\PointToPointReceiverChannelSchema.cs" />
     <Compile Include="PointToPoint\Builders\PointToPointSendChannelBuilder.cs" />
@@ -153,6 +152,7 @@
     <Compile Include="Transport\Http\Configuration\HttpServerComponents.cs" />
     <Compile Include="Transport\Http\Configuration\HttpServerTransportBuilder.cs" />
     <Compile Include="Transport\Http\MessageReceiverHandler.cs" />
+    <Compile Include="Transport\Http\ServerPathExtensions.cs" />
     <Compile Include="Transport\InProcess\IInProcessMessageServer.cs" />
     <Compile Include="Transport\MessageReceiver.cs" />
     <Compile Include="Transport\Http\Remote\Clients\Configuration\HttpRemoteClientComponents.cs" />

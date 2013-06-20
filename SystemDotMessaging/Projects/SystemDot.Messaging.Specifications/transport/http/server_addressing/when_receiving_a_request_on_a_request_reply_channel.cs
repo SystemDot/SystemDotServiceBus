@@ -1,6 +1,5 @@
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 
@@ -9,33 +8,27 @@ namespace SystemDot.Messaging.Specifications.transport.http.server_addressing
     [Subject(SpecificationGroup.Description)]
     public class when_receiving_a_request_on_a_request_reply_channel : WithServerConfigurationSubject
     {
-        const string ReceiverAddress = "ReceiverAddress";
-        const string SenderServerAddress = "SenderServerAddress";
         const string SenderServerName = "SenderServer";
+        const string SenderServerAddress = "SenderServerAddress";
         const string ReceiverServerName = "ReceiverServerName";
-
+        const string ReceiverChannel = "ReceiverChannel";
+        
         static MessagePayload messagePayload;
 
         Establish context = () =>
         {
             WebRequestor.ExpectAddress(SenderServerName, SenderServerAddress);
             
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingHttpTransport().AsAServer(ReceiverServerName)
-                .OpenChannel(ReceiverAddress).ForRequestReplyRecieving()
+                .OpenChannel(ReceiverChannel).ForRequestReplyRecieving()
                 .Initialise();
 
             messagePayload = new MessagePayload().MakeSequencedReceivable(
                 1,
-                "SenderAddress",
-                SenderServerName, 
-                SenderServerName,
-                ReceiverAddress,
-                ReceiverServerName,
-                ReceiverServerName,
+                BuildAddress("SenderChannel", SenderServerName, SenderServerAddress),
+                BuildAddress(ReceiverChannel, ReceiverServerName, "ReceiverServerAddress"),
                 PersistenceUseType.PointToPointSend);
-
-            messagePayload.SetFromServerAddress(SenderServerAddress);
         };
 
         Because of = () => SendMessagesToServer(messagePayload);

@@ -27,7 +27,6 @@ namespace SystemDot.Messaging.PointToPoint.Builders
         readonly PersistenceFactorySelector persistenceFactorySelector;
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
-        readonly ServerAddressRegistry serverAddressRegistry;
 
         internal PointToPointReceiveChannelBuilder(
             IMessageReceiver messageReceiver, 
@@ -36,8 +35,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             MessageHandlerRouter messageHandlerRouter,
             PersistenceFactorySelector persistenceFactorySelector, 
             ISystemTime systemTime, 
-            ITaskRepeater taskRepeater, 
-            ServerAddressRegistry serverAddressRegistry)
+            ITaskRepeater taskRepeater)
         {
             Contract.Requires(messageReceiver != null);
             Contract.Requires(serialiser != null);
@@ -54,7 +52,6 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             this.persistenceFactorySelector = persistenceFactorySelector;
             this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
-            this.serverAddressRegistry = serverAddressRegistry;
         }
 
         public void Build(PointToPointReceiverChannelSchema schema)
@@ -68,7 +65,6 @@ namespace SystemDot.Messaging.PointToPoint.Builders
                 .ToProcessor(new BodyMessageFilter(schema.Address))
                 .ToProcessor(new SequenceOriginApplier(messageCache))
                 .ToProcessor(new MessageSendTimeRemover())
-                .ToProcessor(new MessageOriginServerAddressRegistrar(this.serverAddressRegistry))
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
                 .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))
                 .ToSimpleMessageRepeater(messageCache, this.systemTime, this.taskRepeater)

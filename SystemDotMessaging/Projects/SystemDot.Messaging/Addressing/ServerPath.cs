@@ -8,6 +8,7 @@ namespace SystemDot.Messaging.Addressing
         }
 
         public MessageServer Server { get; set; }
+
         public MessageServer Proxy { get; set; }
         
         public ServerPath()

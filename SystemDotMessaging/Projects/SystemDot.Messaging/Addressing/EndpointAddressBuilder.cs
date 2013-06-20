@@ -1,10 +1,18 @@
-using System;
 using System.Diagnostics.Contracts;
 
 namespace SystemDot.Messaging.Addressing
 {
     public class EndpointAddressBuilder
     {
+        readonly ServerPathBuilder serverPathBuilder;
+
+        public EndpointAddressBuilder(ServerPathBuilder serverPathBuilder)
+        {
+            Contract.Requires(serverPathBuilder != null);
+
+            this.serverPathBuilder = serverPathBuilder;
+        }
+
         public EndpointAddress Build(string address, ServerPath defaultServerPath)
         {
             Contract.Requires(!string.IsNullOrEmpty(address));
@@ -29,12 +37,10 @@ namespace SystemDot.Messaging.Addressing
             string serverPath = ParseChannel(address)[1];
             string[] pathParts = ParseServerPath(serverPath);
 
-            if (pathParts.Length == 1)
-                return new ServerPath(MessageServer.Named(serverPath), MessageServer.Named(serverPath));
-            
-            return new ServerPath(MessageServer.Named(pathParts[0]), MessageServer.Named(pathParts[1]));
+            return pathParts.Length == 1 
+                ? this.serverPathBuilder.Build(serverPath, serverPath) 
+                : this.serverPathBuilder.Build(pathParts[0], pathParts[1]);
         }
-
 
         static string[] ParseChannel(string address)
         {

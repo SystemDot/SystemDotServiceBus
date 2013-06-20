@@ -21,8 +21,6 @@ namespace SystemDot.Messaging.Addressing
 
         public ConcurrentDictionary<string, ServerAddress> Load()
         {
-            this.configurationReader.Load("SystemDot.config");
-
             return new ConcurrentDictionary<string, ServerAddress>(
                 GetAddressSettingsSection()
                     .ToDictionary(GetNameValue, GetServerAddress));

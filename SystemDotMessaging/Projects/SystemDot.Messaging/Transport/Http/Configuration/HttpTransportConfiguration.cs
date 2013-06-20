@@ -43,7 +43,7 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
 
             return new MessageServerConfiguration(
                 this.messagingConfiguration,
-                new ServerPath(MessageServer.Named(server), MessageServer.Named(proxy)));
+                Resolve<ServerPathBuilder>().Build(server, proxy));
         }
 
         public MessageServerConfiguration AsAServer(string name)
@@ -54,9 +54,7 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
 
             return new MessageServerConfiguration(
                 this.messagingConfiguration,
-                new ServerPath(
-                    MessageServer.Named(name),
-                    MessageServer.Named(name)));
+                Resolve<ServerPathBuilder>().Build(name, name));
         }
     }
 }

@@ -8,33 +8,27 @@ namespace SystemDot.Messaging.Specifications.transport.http.server_addressing
     [Subject(SpecificationGroup.Description)]
     public class when_receiving_a_message_on_a_point_to_point_channel : WithServerConfigurationSubject
     {
-        const string ReceiverAddress = "ReceiverAddress";
-        const string SenderServerAddress = "SenderServerAddress";
-        const string SenderServerName = "SenderServer";
         const string ReceiverServerName = "ReceiverServerName";
-
+        const string ReceiverChannel = "ReceiverChannel";
+        const string SenderServerName = "SenderServer";
+        const string SenderServerAddress = "SenderServerAddress";
+        
         static MessagePayload messagePayload;
 
         Establish context = () =>
         {
             WebRequestor.ExpectAddress(SenderServerName, SenderServerAddress);
-
+            
             Configuration.Configure.Messaging()
                 .UsingHttpTransport().AsAServer(ReceiverServerName)
-                .OpenChannel(ReceiverAddress).ForPointToPointReceiving()
+                .OpenChannel(ReceiverChannel).ForPointToPointReceiving()
                 .Initialise();
 
             messagePayload = new MessagePayload().MakeSequencedReceivable(
                 1,
-                "SenderAddress",
-                SenderServerName,
-                SenderServerName,
-                ReceiverAddress,
-                ReceiverServerName,
-                ReceiverServerName,
+                BuildAddress("SenderChannel", SenderServerName, SenderServerAddress),
+                BuildAddress(ReceiverChannel, ReceiverServerName, "ReceiverServerAddress"),
                 PersistenceUseType.RequestSend);
-
-            messagePayload.SetFromServerAddress(SenderServerAddress);
         };
 
         Because of = () => SendMessagesToServer(messagePayload);

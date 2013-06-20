@@ -15,6 +15,11 @@ namespace SystemDot.Messaging.Packaging.Headers
         {
             return payload.GetHeader<FromAddressHeader>().Address;
         }
+        
+        public static bool HasFromAddress(this MessagePayload payload)
+        {
+            return payload.HasHeader<FromAddressHeader>();
+        }
 
         public static void SetToAddress(this MessagePayload payload, EndpointAddress address)
         {
@@ -26,22 +31,5 @@ namespace SystemDot.Messaging.Packaging.Headers
         {
             return payload.GetHeader<ToAddressHeader>().Address;
         }
-
-        public static FromServerAddressHeader GetFromServerAddress(this MessagePayload payload)
-        {
-            return payload.GetHeader<FromServerAddressHeader>();
-        }
-
-        public static bool HasFromServerAddress(this MessagePayload payload)
-        {
-            return payload.HasHeader<FromServerAddressHeader>();
-        }
-
-        public static void SetFromServerAddress(this MessagePayload payload, ServerAddress address)
-        {
-            Contract.Requires(address != null);
-            payload.AddHeader(new FromServerAddressHeader(address));
-        }
-
     }
 }

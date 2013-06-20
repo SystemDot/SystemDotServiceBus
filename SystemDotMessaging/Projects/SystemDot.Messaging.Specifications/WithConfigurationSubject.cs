@@ -95,9 +95,14 @@ namespace SystemDot.Messaging.Specifications
             return TestEndpointAddressBuilder.Build(channelName, serverName);
         }
 
-        protected static EndpointAddress BuildAddress(string channelName, string serverName, string proxyName)
+        protected static EndpointAddress BuildAddress(string channelName, string serverName, string serverAddress)
         {
-            return TestEndpointAddressBuilder.Build(channelName, serverName, proxyName);
+            return TestEndpointAddressBuilder.Build(channelName, serverName, serverAddress);
+        }
+
+        protected static EndpointAddress BuildAddressWithProxy(string channelName, string serverName, string proxyName)
+        {
+            return TestEndpointAddressBuilder.BuildWithProxy(channelName, serverName, proxyName);
         }
     }
 }

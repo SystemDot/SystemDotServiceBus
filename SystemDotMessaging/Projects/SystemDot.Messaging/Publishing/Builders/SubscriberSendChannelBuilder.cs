@@ -26,7 +26,6 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly MessageAcknowledgementHandler acknowledgementHandler;
         readonly ISerialiser serialiser;
         readonly ITaskScheduler taskScheduler;
-        readonly ServerAddressRegistry serverAddressRegistry;
 
         public SubscriberSendChannelBuilder(
             IMessageSender messageSender, 
@@ -35,8 +34,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             ITaskRepeater taskRepeater, 
             MessageAcknowledgementHandler acknowledgementHandler, 
             ISerialiser serialiser, 
-            ITaskScheduler taskScheduler, 
-            ServerAddressRegistry serverAddressRegistry)
+            ITaskScheduler taskScheduler)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(persistenceFactorySelector != null);
@@ -45,7 +43,6 @@ namespace SystemDot.Messaging.Publishing.Builders
             Contract.Requires(acknowledgementHandler != null);
             Contract.Requires(serialiser != null);
             Contract.Requires(taskScheduler != null);
-            Contract.Requires(serverAddressRegistry != null);
 
             this.messageSender = messageSender;
             this.persistenceFactorySelector = persistenceFactorySelector;
@@ -54,7 +51,6 @@ namespace SystemDot.Messaging.Publishing.Builders
             this.acknowledgementHandler = acknowledgementHandler;
             this.serialiser = serialiser;
             this.taskScheduler = taskScheduler;
-            this.serverAddressRegistry = serverAddressRegistry;
         }
 
         public IMessageInputter<MessagePayload> BuildChannel(SubscriberSendChannelSchema schema)
@@ -70,7 +66,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             MessagePipelineBuilder.Build()
                 .With(copier)
                 .ToProcessor(new MessageSendTimeRemover())
-                .ToProcessor(new MessageAddresser(schema.FromAddress, schema.SubscriberAddress, this.serverAddressRegistry))
+                .ToProcessor(new MessageAddresser(schema.FromAddress, schema.SubscriberAddress))
                 .ToProcessor(new SendChannelMessageCacher(cache))
                 .ToMessageRepeater(cache, this.systemTime, this.taskRepeater, schema.RepeatStrategy)
                 .ToProcessor(new SendChannelMessageCacheUpdater(cache))

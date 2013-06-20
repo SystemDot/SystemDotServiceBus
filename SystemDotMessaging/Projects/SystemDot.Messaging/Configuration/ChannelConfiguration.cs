@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.PointToPoint;
@@ -14,7 +12,10 @@ namespace SystemDot.Messaging.Configuration
         readonly ServerPath serverPath;
         readonly MessagingConfiguration messagingConfiguration;
 
-        public ChannelConfiguration(EndpointAddress address, ServerPath serverPath, MessagingConfiguration messagingConfiguration)
+        public ChannelConfiguration(
+            EndpointAddress address, 
+            ServerPath serverPath, 
+            MessagingConfiguration messagingConfiguration)
         {
             Contract.Requires(address != EndpointAddress.Empty);
             Contract.Requires(serverPath != null);
