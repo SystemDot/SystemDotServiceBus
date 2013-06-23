@@ -22,8 +22,8 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Servers
             if (!toHandle.IsLongPollRequest())
                 return;
 
-            ServerPath serverPath = toHandle.GetLongPollRequestServerPath();
-            outgoingMessages.AddRange(this.outgoingQueue.DequeueAll(serverPath));
+            ServerRoute serverRoute = toHandle.GetLongPollRequestServerPath();
+            outgoingMessages.AddRange(this.outgoingQueue.DequeueAll(serverRoute));
         }
     }
 }

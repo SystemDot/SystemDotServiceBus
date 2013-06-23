@@ -39,14 +39,14 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients
             this.starter = starter;
         }
 
-        public void ListenTo(ServerPath toListenFor)
+        public void ListenTo(ServerRoute toListenFor)
         {
             Contract.Requires(toListenFor != null);
 
             StartNextPoll(toListenFor);
         }
 
-        void Poll(ServerPath toListenFor)
+        void Poll(ServerRoute toListenFor)
         {
             Logger.Info("Long polling for messages for {0}", toListenFor);
 
@@ -62,17 +62,17 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients
                 () => StartNextPoll(toListenFor));
         }
 
-        void StartNextPoll(ServerPath toListenFor)
+        void StartNextPoll(ServerRoute toListenFor)
         {
             this.starter.StartTask(() => Poll(toListenFor));
         }
 
-        void StartNextPoll(ServerPath toListenFor, TimeSpan after)
+        void StartNextPoll(ServerRoute toListenFor, TimeSpan after)
         {
             this.scheduler.ScheduleTask(after,() => Poll(toListenFor));
         }
 
-        MessagePayload CreateLongPollPayload(ServerPath toListenFor)
+        MessagePayload CreateLongPollPayload(ServerRoute toListenFor)
         {
             var payload = new MessagePayload();
             payload.SetLongPollRequest(toListenFor);

@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.external_sources_for_request_reply
             Messenger.Register<RequestSendChannelBuilt>(m => requestSendChannelBuiltEvent = m);
         };
 
-        Because of = () => Messaging.Configuration.Configure.Messaging()
+        Because of = () => Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(SenderAddress)
                 .ForRequestReplySendingTo(ReceiverAddress)

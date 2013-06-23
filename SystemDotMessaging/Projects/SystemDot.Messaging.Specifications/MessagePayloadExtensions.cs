@@ -83,7 +83,7 @@ namespace SystemDot.Messaging.Specifications
 
         static EndpointAddress BuildAddress(string fromAddress)
         {
-            return new EndpointAddress(fromAddress, ServerPath.None);
+            return new EndpointAddress(fromAddress, ServerRoute.None);
         }
     }
 }

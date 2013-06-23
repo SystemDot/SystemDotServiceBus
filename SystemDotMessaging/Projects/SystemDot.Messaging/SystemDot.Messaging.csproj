@@ -45,7 +45,7 @@
     <Compile Include="Addressing\ServerAddressLoader.cs" />
     <Compile Include="Addressing\ServerAddressRegistry.cs" />
     <Compile Include="Addressing\MessageAddresser.cs" />
-    <Compile Include="Addressing\ServerPath.cs" />
+    <Compile Include="Addressing\ServerRoute.cs" />
     <Compile Include="Addressing\ServerPathBuilder.cs" />
     <Compile Include="Batching\Batch.cs" />
     <Compile Include="Batching\BatchMessage.cs" />

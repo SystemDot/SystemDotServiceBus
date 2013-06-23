@@ -12,13 +12,12 @@ namespace SystemDot.Messaging.Specifications.expiry_for_request_reply
     {
         const string ChannelName = "Test";
         const string SenderChannelName = "TestSender";
-
         
         static int message;
 
         Establish context = () =>
         {
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                     .ForRequestReplyRecieving()

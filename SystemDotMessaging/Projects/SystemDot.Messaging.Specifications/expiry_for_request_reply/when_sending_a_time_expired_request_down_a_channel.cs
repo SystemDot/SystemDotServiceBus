@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Specifications.expiry_for_request_reply
 
         Establish context = () =>
         {
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                     .ForRequestReplySendingTo(RecieverAddress)

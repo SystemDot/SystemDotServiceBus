@@ -4,7 +4,7 @@ namespace SystemDot.Messaging.Transport.InProcess.Configuration
 {
     class InProcessTransportBuilder : ITransportBuilder
     {
-        public void Build(ServerPath toListenFor)
+        public void Build(ServerRoute toListenFor)
         {
         }
     }

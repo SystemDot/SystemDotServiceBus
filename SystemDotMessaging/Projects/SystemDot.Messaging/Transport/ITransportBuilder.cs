@@ -6,13 +6,13 @@ namespace SystemDot.Messaging.Transport
     [ContractClass(typeof(ITransportBuilderContract))]
     interface ITransportBuilder
     {
-        void Build(ServerPath toListenFor);
+        void Build(ServerRoute toListenFor);
     }
 
     [ContractClassFor(typeof(ITransportBuilder))]
     class ITransportBuilderContract
     {
-        public void Build(ServerPath toListenFor)
+        public void Build(ServerRoute toListenFor)
         {
             Contract.Requires(toListenFor != null);
         }

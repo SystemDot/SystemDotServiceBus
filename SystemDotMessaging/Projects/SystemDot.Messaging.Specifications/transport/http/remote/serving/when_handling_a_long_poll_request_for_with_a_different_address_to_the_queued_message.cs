@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
             SendMessagesToServer(sentMessageInQueue);
 
             longPollRequest = new MessagePayload();
-            longPollRequest.SetLongPollRequest(TestEndpointAddressBuilder.Build("Address1", "TestServer1").ServerPath);
+            longPollRequest.SetLongPollRequest(TestEndpointAddressBuilder.Build("Address1", "TestServer1").Route);
         };
 
         Because of = () => returnedMessages = SendMessagesToServer(longPollRequest);

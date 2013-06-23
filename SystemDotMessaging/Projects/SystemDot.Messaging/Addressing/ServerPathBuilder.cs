@@ -12,9 +12,9 @@ namespace SystemDot.Messaging.Addressing
             this.serverAddressRegistry = serverAddressRegistry;
         }
 
-        public ServerPath Build(string server, string proxy)
+        public ServerRoute Build(string server, string proxy)
         {
-            return new ServerPath(GetMessageServer(server), GetMessageServer(proxy));
+            return new ServerRoute(GetMessageServer(server), GetMessageServer(proxy));
         }
 
         MessageServer GetMessageServer(string name)

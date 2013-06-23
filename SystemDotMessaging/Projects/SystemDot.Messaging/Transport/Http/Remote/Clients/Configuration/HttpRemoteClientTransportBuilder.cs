@@ -13,7 +13,7 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients.Configuration
             this.longPoller = longPoller;
         }
 
-        public void Build(ServerPath toListenFor)
+        public void Build(ServerRoute toListenFor)
         {
             this.longPoller.ListenTo(toListenFor);
         }

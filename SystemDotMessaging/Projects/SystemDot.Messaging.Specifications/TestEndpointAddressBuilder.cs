@@ -8,14 +8,14 @@ namespace SystemDot.Messaging.Specifications
         {
             return new EndpointAddress(
                 channel, 
-                new ServerPath(MessageServer.Named(serverName, ServerAddress.Local), MessageServer.None));
+                new ServerRoute(MessageServer.Named(serverName, ServerAddress.Local), MessageServer.None));
         }
 
         public static EndpointAddress Build(string channel, string serverName, string serverAddress)
         {
             return new EndpointAddress(
                 channel,
-                new ServerPath(
+                new ServerRoute(
                     MessageServer.Named(serverName, new ServerAddress(serverAddress, false)),
                     MessageServer.Named(serverName, new ServerAddress(serverAddress, false))));
         }
@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Specifications
         {
             return new EndpointAddress(
                 channel,
-                new ServerPath(
+                new ServerRoute(
                     MessageServer.Named(serverName, ServerAddress.Local),
                     MessageServer.Named(proxyName, ServerAddress.Local)));
         }

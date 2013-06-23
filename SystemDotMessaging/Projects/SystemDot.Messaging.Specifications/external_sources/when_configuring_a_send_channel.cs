@@ -6,7 +6,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.sending
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_configuring_a_channel : WithMessageConfigurationSubject
+    public class when_configuring_a_send_channel : WithMessageConfigurationSubject
     {
         const string SenderAddress = "SenderAddress";
         const string ReceiverAddress = "ReceiverAddress";

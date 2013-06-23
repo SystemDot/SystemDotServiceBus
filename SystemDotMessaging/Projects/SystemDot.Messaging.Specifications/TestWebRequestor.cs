@@ -72,7 +72,7 @@ namespace SystemDot.Messaging.Specifications
 
             List<MessagePayload> matching = 
                 this.messages
-                    .Where(m => m.GetToAddress().ServerPath == requestMessagePayload.GetLongPollRequestServerPath()).ToList();
+                    .Where(m => m.GetToAddress().Route == requestMessagePayload.GetLongPollRequestServerPath()).ToList();
 
             response.Serialise(matching, this.formatter);
 

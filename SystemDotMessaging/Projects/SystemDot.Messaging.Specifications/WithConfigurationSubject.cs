@@ -87,7 +87,7 @@ namespace SystemDot.Messaging.Specifications
 
         protected static EndpointAddress BuildAddress(string toBuild)
         {
-            return new EndpointAddress(toBuild, ServerPath.None);
+            return new EndpointAddress(toBuild, ServerRoute.None);
         }
 
         protected static EndpointAddress BuildAddress(string channelName, string serverName)

@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Transport.Http
             LogMessage(toInput);
 
             this.requestor.SendPut(
-                toInput.GetToAddress().ServerPath.GetUrl(),
+                toInput.GetToAddress().Route.GetUrl(),
                 s => this.formatter.Serialise(s, toInput));
         }
 

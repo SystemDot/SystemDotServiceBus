@@ -66,7 +66,7 @@ namespace SystemDot.Messaging.Configuration
             return new LocalChannelConfiguration(GetServerPath(), this.messagingConfiguration);
         }
 
-        protected abstract ServerPath GetServerPath();
+        protected abstract ServerRoute GetServerPath();
 
         internal UnitOfWorkRunner CreateUnitOfWorkRunner<TUnitOfWorkFactory>() 
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory

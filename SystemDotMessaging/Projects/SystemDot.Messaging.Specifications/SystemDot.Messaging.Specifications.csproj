@@ -90,7 +90,7 @@
     <Compile Include="load_balancing\when_receiving_an_acknowledgement_for_one_of_twenty_one_sent_messages_but_on_a_different_channel_use_type.cs" />
     <Compile Include="load_balancing\when_sending_twenty_one_messages_that_are_not_yet_acknowledged.cs" />
     <Compile Include="receiving\request_reply\SpecificationGroup.cs" />
-    <Compile Include="external_sources\when_configuring_a_channel.cs" />
+    <Compile Include="external_sources\when_configuring_a_receive_channel.cs" />
     <Compile Include="expiry\SpecificationGroup.cs" />
     <Compile Include="expiry\when_repeating_a_message_that_is_not_time_expired.cs" />
     <Compile Include="expiry\when_repeating_a_message_that_is_repeat_attempt_expired.cs" />
@@ -121,7 +121,7 @@
     <Compile Include="repeating_escalating_over_http\SpecificationGroup.cs" />
     <Compile Include="repeating_escalating_over_http\when_repeating_a_message_and_four_seconds_have_passed.cs" />
     <Compile Include="repeating_escalating\when_restarting_messaging_on_a_durable_channel_after_sending_a_message_without_receiving_its_acknowledgement.cs" />
-    <Compile Include="sending\when_configuring_a_channel.cs" />
+    <Compile Include="external_sources\when_configuring_a_send_channel.cs" />
     <Compile Include="transport\http\server_addressing\when_receiving_a_subscription_request_message_on_a_subscription_channel.cs" />
     <Compile Include="transport\http\receiving\SpecificationGroup.cs" />
     <Compile Include="transport\http\sending\SpecificationGroup.cs" />
@@ -172,13 +172,11 @@
     <Compile Include="external_sources\TestExternalSourcesConfigurer.cs" />
     <Compile Include="unitofwork\when_receiving_a_message_with_a_unit_of_work_specified.cs" />
     <Compile Include="unitofwork\when_receiving_a_message_with_a_unit_of_work_specified_and_the_target_processor_throws_an_exception.cs" />
-    <Compile Include="local\SpecificationGroup.cs" />
-    <Compile Include="local\when_sending_a_local_message.cs" />
-    <Compile Include="local\when_sending_a_local_message_after_configuring_a_channel_and_then_a_local_channel.cs" />
-    <Compile Include="local\when_sending_a_local_message_after_configuring_a_local_channel_and_then_another.cs" />
-    <Compile Include="local\when_sending_a_local_message_without_configuring_a_local_channel.cs" />
+    <Compile Include="local_channels\SpecificationGroup.cs" />
+    <Compile Include="local_channels\when_sending_a_local_message.cs" />
+    <Compile Include="local_channels\when_sending_a_local_message_after_configuring_a_channel_and_then_a_local_channel.cs" />
     <Compile Include="unitofwork_for_local_channels\when_sending_a_local_message_with_a_unit_of_work_setup.cs" />
-    <Compile Include="local\when_sending_a_message_after_configuring_a_channel_and_then_a_local_channel.cs" />
+    <Compile Include="local_channels\when_sending_a_message_after_configuring_a_channel_and_then_a_local_channel.cs" />
     <Compile Include="handling\when_sending_a_message_with_handlers_auto_registered.cs" />
     <Compile Include="external_sources\when_configuring_messaging.cs" />
     <Compile Include="batching_for_request_reply\TestReplyMessageHandler.cs" />

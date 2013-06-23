@@ -34,9 +34,9 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
             Resolve<PointToPointSendChannelBuilder>().Build(this.sendSchema);
         }
 
-        protected override ServerPath GetServerPath()
+        protected override ServerRoute GetServerPath()
         {
-            return this.sendSchema.FromAddress.ServerPath;
+            return this.sendSchema.FromAddress.Route;
         }
 
         public PointToPointSenderConfiguration WithMessageRepeating(IRepeatStrategy strategy)

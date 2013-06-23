@@ -11,36 +11,36 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Servers
     class MessagePayloadQueue
     {
         readonly TimeSpan blockingTimeout;
-        readonly Dictionary<ServerPath, BlockingQueue<MessagePayload>> queues;
+        readonly Dictionary<ServerRoute, BlockingQueue<MessagePayload>> queues;
         
         public MessagePayloadQueue(TimeSpan blockingTimeout)
         {
             this.blockingTimeout = blockingTimeout;
-            this.queues = new Dictionary<ServerPath, BlockingQueue<MessagePayload>>();
+            this.queues = new Dictionary<ServerRoute, BlockingQueue<MessagePayload>>();
         }
 
         public void Enqueue(MessagePayload toEnqueue)
         {
             Contract.Requires(toEnqueue != null);
 
-            CreateQueueIfNonExistant(toEnqueue.GetToAddress().ServerPath);
+            CreateQueueIfNonExistant(toEnqueue.GetToAddress().Route);
 
-            this.queues[toEnqueue.GetToAddress().ServerPath].Enqueue(toEnqueue);
+            this.queues[toEnqueue.GetToAddress().Route].Enqueue(toEnqueue);
         }
 
-        public IEnumerable<MessagePayload> DequeueAll(ServerPath serverPath)
+        public IEnumerable<MessagePayload> DequeueAll(ServerRoute serverRoute)
         {
-            Contract.Requires(serverPath != null);
+            Contract.Requires(serverRoute != null);
             
-            CreateQueueIfNonExistant(serverPath);
+            CreateQueueIfNonExistant(serverRoute);
             
-            return this.queues[serverPath].DequeueAll();
+            return this.queues[serverRoute].DequeueAll();
         }
 
-        void CreateQueueIfNonExistant(ServerPath serverPath)
+        void CreateQueueIfNonExistant(ServerRoute serverRoute)
         {
-            if (!this.queues.ContainsKey(serverPath))
-                this.queues[serverPath] = new BlockingQueue<MessagePayload>(this.blockingTimeout);
+            if (!this.queues.ContainsKey(serverRoute))
+                this.queues[serverRoute] = new BlockingQueue<MessagePayload>(this.blockingTimeout);
         }
     }
 }

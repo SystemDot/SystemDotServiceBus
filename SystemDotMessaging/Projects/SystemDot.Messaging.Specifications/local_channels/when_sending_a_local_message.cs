@@ -1,8 +1,7 @@
 using SystemDot.Messaging.Handling;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.local
+namespace SystemDot.Messaging.Specifications.local_channels
 {
     [Subject(SpecificationGroup.Description)]
     public class when_sending_a_local_message : WithMessageConfigurationSubject

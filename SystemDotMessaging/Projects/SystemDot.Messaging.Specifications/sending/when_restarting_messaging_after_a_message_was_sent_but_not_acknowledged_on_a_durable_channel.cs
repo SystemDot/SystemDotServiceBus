@@ -51,7 +51,7 @@ namespace SystemDot.Messaging.Specifications.sending
         };
 
         Because of = () =>
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(SenderAddress)
                 .ForPointToPointSendingTo(ReceiverAddress).WithDurability()

@@ -13,15 +13,15 @@ namespace SystemDot.Messaging.Addressing
             this.serverPathBuilder = serverPathBuilder;
         }
 
-        public EndpointAddress Build(string address, ServerPath defaultServerPath)
+        public EndpointAddress Build(string address, ServerRoute defaultServerRoute)
         {
             Contract.Requires(!string.IsNullOrEmpty(address));
-            Contract.Requires(defaultServerPath != null);
+            Contract.Requires(defaultServerRoute != null);
 
             string channel = GetChannelName(address);
-            ServerPath path = GetServerPath(address, defaultServerPath);
+            ServerRoute route = GetServerPath(address, defaultServerRoute);
 
-            return new EndpointAddress(channel, path);
+            return new EndpointAddress(channel, route);
         }
 
         string GetChannelName(string address)
@@ -29,10 +29,10 @@ namespace SystemDot.Messaging.Addressing
             return ParseChannel(address)[0];
         }
 
-        ServerPath GetServerPath(string address, ServerPath defaultServerPath)
+        ServerRoute GetServerPath(string address, ServerRoute defaultServerRoute)
         {
             if (ParseChannel(address).Length == 1)
-                return defaultServerPath;
+                return defaultServerRoute;
 
             string serverPath = ParseChannel(address)[1];
             string[] pathParts = ParseServerPath(serverPath);

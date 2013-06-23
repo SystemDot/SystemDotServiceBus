@@ -49,7 +49,7 @@ namespace SystemDot.Messaging.Configuration
         public MessageServerConfiguration UsingInProcessTransport()
         {
             InProcessTransportComponents.Register(IocContainerLocator.Locate());
-            return new MessageServerConfiguration(this, ServerPath.None);
+            return new MessageServerConfiguration(this, ServerRoute.None);
         }
 
         public HttpTransportConfiguration UsingHttpTransport()

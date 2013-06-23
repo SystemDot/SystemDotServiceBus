@@ -38,10 +38,10 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
         It should_send_a_message_with_the_correct_to_address_server_name = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetToAddress().ServerPath.Server.Name.ShouldEqual(ReceiverServerName);
+                .GetToAddress().Route.Server.Name.ShouldEqual(ReceiverServerName);
 
         It should_send_a_message_with_the_to_address_remote_proxy_name_set_to_the_local_machine = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetToAddress().ServerPath.Proxy.Name.ShouldEqual(ReceiverServerName);
+                .GetToAddress().Route.Proxy.Name.ShouldEqual(ReceiverServerName);
     }
 }

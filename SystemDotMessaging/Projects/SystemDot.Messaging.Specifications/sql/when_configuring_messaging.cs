@@ -8,7 +8,7 @@ namespace SystemDot.Messaging.Specifications.sql
     [Subject(SpecificationGroup.Description)]
     public class when_configuring_messaging_with_file_persistence : WithConfigurationSubject
     {
-        Because of = () => Messaging.Configuration.Configure.Messaging()
+        Because of = () => Configuration.Configure.Messaging()
             .UsingSqlPersistence("connection")
             .UsingInProcessTransport();
 

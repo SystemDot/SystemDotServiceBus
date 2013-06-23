@@ -1,15 +1,17 @@
-using System;
 using System.Diagnostics.Contracts;
 
 namespace SystemDot.Messaging.Addressing
 {
     public class MessageServer
     {
+        const string NoServerDescription = "{NoServer}";
+        const string SecureDescription = "Secure";
+        const string NonSecureDescription = "Non Secure";
+
         public static MessageServer None { get { return new MessageServer(); } }
 
         public static MessageServer Named(string name, ServerAddress address)
         {
-        
             Contract.Requires(!string.IsNullOrEmpty(name));
             Contract.Requires(address != null);
 
@@ -47,16 +49,31 @@ namespace SystemDot.Messaging.Addressing
 
         public override string ToString()
         {
-            return Name == null 
-                ? "{NoServer}"
-                : string.Concat(Name, " (", Address, ", ", IsSecure ? "Secure" : "Non Secure", ")");
+            return !IsNone() 
+                ? GetServerDescription()
+                : NoServerDescription;
+        }
+
+        bool IsNone()
+        {
+            return Name == null;
+        }
+
+        string GetServerDescription()
+        {
+            return string.Concat(Name, " (", Address, ", ", GetIsSecureDescription(), ")");
+        }
+
+        string GetIsSecureDescription()
+        {
+            return IsSecure ? SecureDescription : NonSecureDescription;
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return Name != null ? Name.GetHashCode() : 0;
+                return !IsNone() ? Name.GetHashCode() : 0;
             }
         }
 

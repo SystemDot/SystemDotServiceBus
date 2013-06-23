@@ -5,8 +5,8 @@ using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.external_sources
 {
-    [Subject(receiving.SpecificationGroup.Description)]
-    public class when_configuring_a_channel : WithMessageConfigurationSubject
+    [Subject(SpecificationGroup.Description)]
+    public class when_configuring_a_receive_channel : WithMessageConfigurationSubject
     {
         const string ReceiverAddress = "ReceiverAddress";
 

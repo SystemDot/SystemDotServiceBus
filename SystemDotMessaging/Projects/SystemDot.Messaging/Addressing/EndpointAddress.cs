@@ -5,40 +5,34 @@ namespace SystemDot.Messaging.Addressing
 {
     public class EndpointAddress
     {
-        public static EndpointAddress Empty
-        {
-            get
-            {
-                return new EndpointAddress();
-            }
-        }
+        public static EndpointAddress Empty { get { return new EndpointAddress(); } }
 
         public string Channel { get; set; }
 
-        public ServerPath ServerPath { get; set; }
+        public ServerRoute Route { get; set; }
 
         public EndpointAddress() {}
 
-        public EndpointAddress(string channel, ServerPath serverPath) 
+        public EndpointAddress(string channel, ServerRoute serverRoute) 
         {
             Contract.Requires(!string.IsNullOrEmpty(channel));
-            Contract.Requires(serverPath != null);
+            Contract.Requires(serverRoute != null);
 
             this.Channel = channel;
-            this.ServerPath = serverPath;
+            this.Route = serverRoute;
         }
 
         protected bool Equals(EndpointAddress other)
         {
             return string.Equals(Channel, other.Channel) 
-                && string.Equals(ServerPath, other.ServerPath);
+                && string.Equals(Route, other.Route);
         }
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((EndpointAddress) obj);
         }
 
@@ -46,7 +40,7 @@ namespace SystemDot.Messaging.Addressing
         {
             unchecked
             {
-                return (Channel.GetHashCode()*397) ^ ServerPath.GetHashCode();
+                return (Channel.GetHashCode()*397) ^ this.Route.GetHashCode();
             }
         }
 
@@ -62,7 +56,7 @@ namespace SystemDot.Messaging.Addressing
 
         public override string ToString()
         {
-            return String.Concat(Channel, "@", ServerPath);
+            return String.Concat(Channel, "@", this.Route);
         }
     }
 }

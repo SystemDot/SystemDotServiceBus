@@ -9,17 +9,17 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
 {
     public class PointToPointReceiverConfiguration : Configurer
     {
-        readonly ServerPath serverPath;
+        readonly ServerRoute serverRoute;
         readonly PointToPointReceiverChannelSchema schema;
 
-        public PointToPointReceiverConfiguration(EndpointAddress address, ServerPath serverPath, MessagingConfiguration messagingConfiguration)
+        public PointToPointReceiverConfiguration(EndpointAddress address, ServerRoute serverRoute, MessagingConfiguration messagingConfiguration)
             : base(messagingConfiguration)
         {
             Contract.Requires(address != null);
-            Contract.Requires(serverPath != null);
+            Contract.Requires(serverRoute != null);
             Contract.Requires(messagingConfiguration != null);
 
-            this.serverPath = serverPath;
+            this.serverRoute = serverRoute;
 
             this.schema = new PointToPointReceiverChannelSchema
             {
@@ -33,9 +33,9 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
             Resolve<PointToPointReceiveChannelBuilder>().Build(this.schema);
         }
 
-        protected override ServerPath GetServerPath()
+        protected override ServerRoute GetServerPath()
         {
-            return this.serverPath;
+            return this.serverRoute;
         }
 
         public PointToPointReceiverConfiguration WithDurability()

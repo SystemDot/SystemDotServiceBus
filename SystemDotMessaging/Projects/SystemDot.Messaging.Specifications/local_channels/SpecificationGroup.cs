@@ -1,4 +1,4 @@
-namespace SystemDot.Messaging.Specifications.local
+namespace SystemDot.Messaging.Specifications.local_channels
 {
     public static class SpecificationGroup
     {

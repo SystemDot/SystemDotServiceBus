@@ -11,9 +11,9 @@ namespace SystemDot.Messaging.Configuration
             return GetContainer().Resolve<T>();
         }
 
-        protected EndpointAddress BuildEndpointAddress(string address, ServerPath serverPath)
+        protected EndpointAddress BuildEndpointAddress(string address, ServerRoute serverRoute)
         {
-            return GetContainer().Resolve<EndpointAddressBuilder>().Build(address, serverPath);
+            return GetContainer().Resolve<EndpointAddressBuilder>().Build(address, serverRoute);
         }
 
         protected static IIocContainer GetContainer()

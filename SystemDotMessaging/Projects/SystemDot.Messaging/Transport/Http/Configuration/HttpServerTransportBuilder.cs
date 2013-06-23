@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
             this.messageReceiver = messageReceiver;
         }
 
-        public void Build(ServerPath toListenFor)
+        public void Build(ServerRoute toListenFor)
         {
             this.httpServerBuilder
                 .Build(toListenFor.GetUrl(), BuildMessagingServerHandler())

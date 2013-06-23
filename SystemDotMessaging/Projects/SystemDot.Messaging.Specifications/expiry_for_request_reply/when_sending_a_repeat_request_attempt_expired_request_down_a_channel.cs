@@ -12,16 +12,16 @@ namespace SystemDot.Messaging.Specifications.expiry_for_request_reply
         static int message;
 
         Establish context = () =>
-            {
-                Messaging.Configuration.Configure.Messaging()
-                    .UsingInProcessTransport()
-                    .OpenChannel(ChannelName)
-                    .ForRequestReplySendingTo(RecieverAddress)
-                    .WithMessageExpiry(MessageExpiry.ByRepeatAttempt(0))
-                    .Initialise();
+        {
+            Configuration.Configure.Messaging()
+                .UsingInProcessTransport()
+                .OpenChannel(ChannelName)
+                .ForRequestReplySendingTo(RecieverAddress)
+                .WithMessageExpiry(MessageExpiry.ByRepeatAttempt(0))
+                .Initialise();
 
-                message = 1;
-            };
+            message = 1;
+        };
 
         Because of = () => Bus.Send(message);
 

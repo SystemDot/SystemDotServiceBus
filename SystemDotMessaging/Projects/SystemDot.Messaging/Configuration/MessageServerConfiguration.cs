@@ -11,15 +11,15 @@ namespace SystemDot.Messaging.Configuration
 {
     public class MessageServerConfiguration : ConfigurationBase
     {
-        readonly ServerPath serverPath;
+        readonly ServerRoute serverRoute;
         readonly MessagingConfiguration messagingConfiguration;
 
-        public MessageServerConfiguration(MessagingConfiguration messagingConfiguration, ServerPath serverPath)
+        public MessageServerConfiguration(MessagingConfiguration messagingConfiguration, ServerRoute serverRoute)
         {
             Contract.Requires(messagingConfiguration != null);
-            Contract.Requires(serverPath != null);
+            Contract.Requires(serverRoute != null);
 
-            this.serverPath = serverPath;
+            this.serverRoute = serverRoute;
             this.messagingConfiguration = messagingConfiguration;
 
             IIocContainer container = IocContainerLocator.Locate();
@@ -34,15 +34,15 @@ namespace SystemDot.Messaging.Configuration
             Contract.Requires(!string.IsNullOrEmpty(name));
 
             return new ChannelConfiguration(
-                new EndpointAddress(name, this.serverPath),
-                this.serverPath,
+                new EndpointAddress(name, this.serverRoute),
+                this.serverRoute,
                 this.messagingConfiguration);
         }
 
         public LocalChannelConfiguration OpenLocalChannel()
         {
             return new LocalChannelConfiguration(
-                this.serverPath,
+                this.serverRoute,
                 this.messagingConfiguration);
         }
 

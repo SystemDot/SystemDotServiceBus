@@ -5,9 +5,9 @@ namespace SystemDot.Messaging.Transport.Http
 {
     public static class ServerPathExtensions
     {
-        public static FixedPortAddress GetUrl(this ServerPath path)
+        public static FixedPortAddress GetUrl(this ServerRoute route)
         {
-            return new FixedPortAddress(path.Proxy.Address, path.Proxy.IsSecure, path.Proxy.Name);
+            return new FixedPortAddress(route.Proxy.Address, route.Proxy.IsSecure, route.Proxy.Name);
         }
     }
 }

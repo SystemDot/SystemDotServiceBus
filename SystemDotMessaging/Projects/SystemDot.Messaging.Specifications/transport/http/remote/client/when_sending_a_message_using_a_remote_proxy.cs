@@ -33,10 +33,10 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
         
         It should_send_a_message_with_the_to_address_proxy_set_to_the_specified_remote = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetToAddress().ServerPath.Proxy.Name.ShouldEqual(Proxy);
+                .GetToAddress().Route.Proxy.Name.ShouldEqual(Proxy);
 
         It should_send_a_message_with_the_from_address_proxy_set_to_the_specified_remote = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetFromAddress().ServerPath.Proxy.Name.ShouldEqual(Proxy);
+                .GetFromAddress().Route.Proxy.Name.ShouldEqual(Proxy);
     }
 }

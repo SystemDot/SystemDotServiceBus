@@ -45,11 +45,11 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
         It should_send_a_message_with_the_to_address_server_set_to_the_remote_client = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetToAddress().ServerPath.Server.Name.ShouldEqual(Server);
+                .GetToAddress().Route.Server.Name.ShouldEqual(Server);
 
         It should_send_a_message_with_the_to_address_proxy_set_to_the_proxy = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetToAddress().ServerPath.Proxy.Name.ShouldEqual(Proxy);
+                .GetToAddress().Route.Proxy.Name.ShouldEqual(Proxy);
 
         It should_send_a_message_with_the_from_address_channel_name_set_correctly = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
@@ -57,10 +57,10 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
         It should_send_a_message_with_the_from_address_server_set_to_the_remote_client = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetFromAddress().ServerPath.Server.Name.ShouldEqual(Server);
+                .GetFromAddress().Route.Server.Name.ShouldEqual(Server);
 
         It should_send_a_message_with_the_from_address_proxy_set_to_the_proxy = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetFromAddress().ServerPath.Proxy.Name.ShouldEqual(Proxy);
+                .GetFromAddress().Route.Proxy.Name.ShouldEqual(Proxy);
     }
 }

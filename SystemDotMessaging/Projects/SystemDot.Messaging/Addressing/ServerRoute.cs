@@ -1,21 +1,21 @@
 namespace SystemDot.Messaging.Addressing
 {
-    public class ServerPath
+    public class ServerRoute
     {
-        public static ServerPath None
+        public static ServerRoute None
         {
-            get { return new ServerPath(MessageServer.None, MessageServer.None ); }
+            get { return new ServerRoute(MessageServer.None, MessageServer.None ); }
         }
 
         public MessageServer Server { get; set; }
 
         public MessageServer Proxy { get; set; }
         
-        public ServerPath()
+        public ServerRoute()
         {
         }
 
-        public ServerPath(MessageServer server, MessageServer proxy)
+        public ServerRoute(MessageServer server, MessageServer proxy)
         {
             Server = server;
             Proxy = proxy;
@@ -26,17 +26,17 @@ namespace SystemDot.Messaging.Addressing
             return Server != MessageServer.None;
         }
 
-        public static bool operator ==(ServerPath left, ServerPath right)
+        public static bool operator ==(ServerRoute left, ServerRoute right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(ServerPath left, ServerPath right)
+        public static bool operator !=(ServerRoute left, ServerRoute right)
         {
             return !left.Equals(right);
         }
 
-        protected bool Equals(ServerPath other)
+        protected bool Equals(ServerRoute other)
         {
             return string.Equals(Server, other.Server) && string.Equals(this.Proxy, other.Proxy);
         }
@@ -46,7 +46,7 @@ namespace SystemDot.Messaging.Addressing
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((ServerPath) obj);
+            return Equals((ServerRoute) obj);
         }
 
         public override int GetHashCode()
