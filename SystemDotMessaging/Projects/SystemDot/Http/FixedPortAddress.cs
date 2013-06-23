@@ -1,27 +1,37 @@
 using System;
+using System.Diagnostics.Contracts;
 
 namespace SystemDot.Http
 {
     public class FixedPortAddress
     {
-        readonly ServerAddress address;
+        readonly string address;
+        readonly bool isSecure;
         readonly string instance;
 
         public string Url
         {
-            get { return String.Concat(GetProtocol(), this.address.Address, ":8090/", this.instance, "/"); }
+            get { return String.Concat(GetProtocol(), this.address, ":8090/", this.instance, "/"); }
         }
 
         string GetProtocol()
         {
-            return this.address.IsSecure ? "https://" : "http://";
+            return this.isSecure ? "https://" : "http://";
         }
 
         public FixedPortAddress() {}
 
-        public FixedPortAddress(ServerAddress address, string instance)
+        public FixedPortAddress(ServerAddress address, string instance) : this(address.Address, address.IsSecure, instance)
         {
+        }
+
+        public FixedPortAddress(string address, bool isSecure, string instance)
+        {
+            Contract.Requires(!string.IsNullOrEmpty(address));
+            Contract.Requires(!string.IsNullOrEmpty(instance));
+            
             this.address = address;
+            this.isSecure = isSecure;
             this.instance = instance;
         }
 

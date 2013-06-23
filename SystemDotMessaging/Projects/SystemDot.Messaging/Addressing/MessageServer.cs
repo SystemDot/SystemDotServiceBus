@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.Contracts;
 
 namespace SystemDot.Messaging.Addressing
@@ -8,24 +9,28 @@ namespace SystemDot.Messaging.Addressing
 
         public static MessageServer Named(string name, ServerAddress address)
         {
+        
             Contract.Requires(!string.IsNullOrEmpty(name));
             Contract.Requires(address != null);
 
-            return new MessageServer(name, address);
+            return new MessageServer(name, address.Address, address.IsSecure);
         }
 
         public string Name { get; set; }
 
-        public ServerAddress Address { get; set; }
+        public string Address { get; set; }
+
+        public bool IsSecure { get; set; }
 
         public MessageServer()
         {
         }
 
-        MessageServer(string name, ServerAddress address)
+        MessageServer(string name, string address, bool isSecure)
         {
             Name = name;
             Address = address;
+            IsSecure = isSecure;
         }
 
         protected bool Equals(MessageServer other)
@@ -43,8 +48,8 @@ namespace SystemDot.Messaging.Addressing
         public override string ToString()
         {
             return Name == null 
-                ? "{NoServer}" 
-                : string.Concat(Name, " (", Address, ")");
+                ? "{NoServer}"
+                : string.Concat(Name, " (", Address, ", ", IsSecure ? "Secure" : "Non Secure", ")");
         }
 
         public override int GetHashCode()

@@ -1,5 +1,4 @@
 using SystemDot.Messaging.Addressing;
-using SystemDot.Messaging.Ioc;
 
 namespace SystemDot.Messaging.Specifications
 {

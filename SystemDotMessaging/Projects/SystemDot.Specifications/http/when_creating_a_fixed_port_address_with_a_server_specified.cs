@@ -10,7 +10,7 @@ namespace SystemDot.Specifications.http
         
         static FixedPortAddress address;
 
-        Because of = () => address = new FixedPortAddress(new ServerAddress(Server, false), Instance);
+        Because of = () => address = new FixedPortAddress(Server, false, Instance);
 
         It should_provide_a_url_with_the_correct_address = () =>
             address.Url.ShouldEqual("http://" + Server + ":8090/" + Instance + "/");

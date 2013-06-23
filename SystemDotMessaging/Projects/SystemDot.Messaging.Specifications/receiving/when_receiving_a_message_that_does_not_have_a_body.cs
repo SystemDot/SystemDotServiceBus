@@ -2,7 +2,6 @@
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.receiving
@@ -18,7 +17,7 @@ namespace SystemDot.Messaging.Specifications.receiving
         
         Establish context = () =>
         {
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ReceiverAddress)
                     .ForPointToPointReceiving()
@@ -38,6 +37,6 @@ namespace SystemDot.Messaging.Specifications.receiving
 
         Because of = () => Server.ReceiveMessage(payload);
 
-        It should_handle_the_message = () => handler.LastHandledMessage.ShouldEqual(0);
+        It should_not_handle_the_message = () => handler.LastHandledMessage.ShouldEqual(0);
     }
 }

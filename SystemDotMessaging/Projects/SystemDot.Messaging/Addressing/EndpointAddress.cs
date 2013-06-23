@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Addressing
         public string Channel { get; set; }
 
         public ServerPath ServerPath { get; set; }
-        
+
         public EndpointAddress() {}
 
         public EndpointAddress(string channel, ServerPath serverPath) 

@@ -7,7 +7,7 @@ namespace SystemDot.Messaging.Transport.Http
     {
         public static FixedPortAddress GetUrl(this ServerPath path)
         {
-            return new FixedPortAddress(path.Proxy.Address, path.Proxy.Name);
+            return new FixedPortAddress(path.Proxy.Address, path.Proxy.IsSecure, path.Proxy.Name);
         }
     }
 }
