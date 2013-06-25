@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Expiry;
+using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.RequestReply.Builders;
 using SystemDot.Messaging.UnitOfWork;
@@ -13,10 +14,10 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         readonly ReplySendChannelSchema replySchema;
         readonly RequestRecieveChannelSchema requestSchema;
 
-        public RequestReplyRecieverConfiguration(EndpointAddress address, MessagingConfiguration messagingConfiguration) 
+        public RequestReplyRecieverConfiguration(EndpointAddress address, MessagingConfiguration messagingConfiguration)
             : base(messagingConfiguration)
         {
-            this.replySchema = new ReplySendChannelSchema
+            replySchema = new ReplySendChannelSchema
             {
                 FromAddress = address,
                 ExpiryStrategy = new PassthroughMessageExpiryStrategy(),
@@ -24,7 +25,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
                 RepeatStrategy = EscalatingTimeRepeatStrategy.Default
             };
 
-            this.requestSchema = new RequestRecieveChannelSchema
+            requestSchema = new RequestRecieveChannelSchema
             {
                 Address = address,
                 UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>
@@ -39,13 +40,14 @@ namespace SystemDot.Messaging.Configuration.RequestReply
 
         protected override ServerRoute GetServerPath()
         {
-            return this.requestSchema.Address.Route;
+            return requestSchema.Address.Route;
         }
 
         public RequestReplyRecieverConfiguration WithDurability()
         {
-            this.replySchema.IsDurable = true;
-            this.requestSchema.IsDurable = true;
+            replySchema.IsDurable = true;
+            requestSchema.IsDurable = true;
+
             return this;
         }
 
@@ -53,7 +55,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             Contract.Requires(strategy != null);
 
-            this.replySchema.ExpiryStrategy = strategy;
+            replySchema.ExpiryStrategy = strategy;
             return this;
         }
 
@@ -62,8 +64,8 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             Contract.Requires(strategy != null);
             Contract.Requires(expiryAction != null);
 
-            this.replySchema.ExpiryStrategy = strategy;
-            this.replySchema.ExpiryAction = expiryAction;
+            replySchema.ExpiryStrategy = strategy;
+            replySchema.ExpiryAction = expiryAction;
 
             return this;
         }
@@ -72,14 +74,14 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             Contract.Requires(strategy != null);
 
-            this.replySchema.RepeatStrategy = strategy;
+            replySchema.RepeatStrategy = strategy;
             return this;
         }
 
         public RequestReplyRecieverConfiguration WithUnitOfWork<TUnitOfWorkFactory>()
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory
         {
-            this.requestSchema.UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<TUnitOfWorkFactory>;
+            requestSchema.UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<TUnitOfWorkFactory>;
             return this;
         }
 
@@ -87,7 +89,15 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             Contract.Requires(hook != null);
 
-            this.requestSchema.Hooks.Add(hook);
+            requestSchema.Hooks.Add(hook);
+            return this;
+        }
+
+        public RequestReplyRecieverConfiguration WithReceiveHook(IMessageProcessor<MessagePayload, MessagePayload> hook)
+        {
+            Contract.Requires(hook != null);
+
+            requestSchema.PreUnpackagingHooks.Add(hook);
             return this;
         }
 
@@ -95,7 +105,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             Contract.Requires(hook != null);
 
-            this.replySchema.Hooks.Add(hook);
+            replySchema.Hooks.Add(hook);
             return this;
         }
     }

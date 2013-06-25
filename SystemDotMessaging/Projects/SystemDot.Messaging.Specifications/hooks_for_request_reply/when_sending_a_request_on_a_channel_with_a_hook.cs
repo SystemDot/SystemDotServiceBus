@@ -1,7 +1,6 @@
-using SystemDot.Messaging.Addressing;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.hooks
+namespace SystemDot.Messaging.Specifications.hooks_for_request_reply
 {
     [Subject(SpecificationGroup.Description)]
     public class when_sending_a_request_on_a_channel_with_a_hook : WithMessageConfigurationSubject
@@ -13,10 +12,11 @@ namespace SystemDot.Messaging.Specifications.hooks
         {
             hook = new TestMessageProcessorHook();
 
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel("ChannelName").ForRequestReplySendingTo("RecieverAddress")
-                .WithSendHook(hook)
+                .OpenChannel("ChannelName")
+                    .ForRequestReplySendingTo("RecieverAddress")
+                    .WithSendHook(hook)
                 .Initialise();
 
             message = 1;

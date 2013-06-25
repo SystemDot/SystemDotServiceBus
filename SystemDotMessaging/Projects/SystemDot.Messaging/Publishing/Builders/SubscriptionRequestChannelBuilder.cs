@@ -41,23 +41,23 @@ namespace SystemDot.Messaging.Publishing.Builders
 
         public void Build(SubscriptionRequestChannelSchema schema)
         {
-            SendMessageCache cache = new MessageCacheFactory(this.changeStore, this.systemTime)
+            SendMessageCache cache = new MessageCacheFactory(changeStore, systemTime)
                 .CreateSendCache(
                     PersistenceUseType.SubscriberRequestSend, 
                     schema.PublisherAddress);
 
-            this.acknowledgementHandler.RegisterCache(cache);
+            acknowledgementHandler.RegisterCache(cache);
 
             MessagePipelineBuilder.Build()
                 .With(new SubscriptionRequestor(schema.SubscriberAddress, schema.IsDurable))
                 .ToProcessor(new MessageAddresser(schema.SubscriberAddress, schema.PublisherAddress))
                 .ToProcessor(new SendChannelMessageCacher(cache))
-                .ToMessageRepeater(cache, this.systemTime, this.taskRepeater, EscalatingTimeRepeatStrategy.Default)
+                .ToMessageRepeater(cache, systemTime, taskRepeater, EscalatingTimeRepeatStrategy.Default)
                 .ToProcessor(new SendChannelMessageCacheUpdater(cache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Pump()
-                .ToProcessor(new LastSentRecorder(this.systemTime))
-                .ToEndPoint(this.messageSender);
+                .ToProcessor(new LastSentRecorder(systemTime))
+                .ToEndPoint(messageSender);
         }
     }
 }

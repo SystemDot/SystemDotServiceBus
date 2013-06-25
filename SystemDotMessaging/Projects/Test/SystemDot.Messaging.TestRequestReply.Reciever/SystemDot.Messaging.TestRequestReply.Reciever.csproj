@@ -65,19 +65,19 @@
   <ItemGroup>
     <ProjectReference Include="..\..\SystemDot.Esent\SystemDot.Esent.csproj">
       <Project>{C7DBF177-FCDB-4530-A6CA-3B1EFBAD63EB}</Project>
-      <Name>SystemDot.Esent %28Windows\SystemDot.Esent%29</Name>
+      <Name>SystemDot.Esent</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\SystemDot\SystemDot.csproj">
       <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>
-      <Name>SystemDot %28Windows\SystemDot%29</Name>
+      <Name>SystemDot</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\SystemDot.Messaging\SystemDot.Messaging.csproj">
       <Project>{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}</Project>
-      <Name>SystemDot.Messaging %28Windows\SystemDot.Messaging%29</Name>
+      <Name>SystemDot.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\SystemDot.Messaging.Test.Messages\SystemDot.Messaging.Test.Messages.csproj">
       <Project>{EAABD53D-7507-4F76-A538-0264D7294422}</Project>
-      <Name>SystemDot.Messaging.Test.Messages %28Windows\Examples\SystemDot.Messaging.Test.Messages%29</Name>
+      <Name>SystemDot.Messaging.Test.Messages</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

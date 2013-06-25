@@ -1,5 +1,4 @@
 using System.Diagnostics.Contracts;
-using SystemDot.Ioc;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
@@ -26,7 +25,6 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly PersistenceFactorySelector persistenceFactory;
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
-        readonly IIocContainer iocContainer;
 
         internal SubscriberRecieveChannelBuilder(
             ISerialiser serialiser, 
@@ -35,8 +33,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             AcknowledgementSender acknowledgementSender,
             PersistenceFactorySelector persistenceFactory, 
             ISystemTime systemTime, 
-            ITaskRepeater taskRepeater, 
-            IIocContainer iocContainer)
+            ITaskRepeater taskRepeater)
         {
             Contract.Requires(serialiser != null);
             Contract.Requires(messageHandlerRouter != null);
@@ -45,7 +42,6 @@ namespace SystemDot.Messaging.Publishing.Builders
             Contract.Requires(persistenceFactory != null);
             Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
-            Contract.Requires(iocContainer != null);
             
             this.serialiser = serialiser;
             this.messageHandlerRouter = messageHandlerRouter;
@@ -54,30 +50,30 @@ namespace SystemDot.Messaging.Publishing.Builders
             this.persistenceFactory = persistenceFactory;
             this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
-            this.iocContainer = iocContainer;
         }
 
         public void Build(SubscriberRecieveChannelSchema schema)
         {
-            ReceiveMessageCache messageCache = this.persistenceFactory
+            ReceiveMessageCache messageCache = persistenceFactory
                 .Select(schema)
-                .CreateReceiveCache(PersistenceUseType.SubscriberReceive, schema.Address);
+                    .CreateReceiveCache(PersistenceUseType.SubscriberReceive, schema.Address);
 
             MessagePipelineBuilder.Build()
-                .With(this.messageReceiver)
+                .With(messageReceiver)
                 .ToProcessor(new BodyMessageFilter(schema.Address))
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToProcessor(new SequenceOriginApplier(messageCache))
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
-                .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))
-                .ToSimpleMessageRepeater(messageCache, this.systemTime, this.taskRepeater)
+                .ToProcessor(new MessageAcknowledger(acknowledgementSender))
+                .ToSimpleMessageRepeater(messageCache, systemTime, taskRepeater)
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
                 .Queue()
                 .ToResequencerIfSequenced(messageCache, schema)
-                .ToConverter(new MessagePayloadUnpackager(this.serialiser))
+                .ToProcessors(schema.PreUnpackagingHooks.ToArray())
+                .ToConverter(new MessagePayloadUnpackager(serialiser))
                 .ToProcessor(schema.UnitOfWorkRunnerCreator())
                 .ToProcessors(schema.Hooks.ToArray())
-                .ToEndPoint(this.messageHandlerRouter);
+                .ToEndPoint(messageHandlerRouter);
 
             Messenger.Send(new SubscriberReceiveChannelBuilt
             {

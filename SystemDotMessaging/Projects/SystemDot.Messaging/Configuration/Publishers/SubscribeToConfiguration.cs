@@ -1,5 +1,6 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Publishing.Builders;
 using SystemDot.Messaging.UnitOfWork;
 
@@ -36,26 +37,26 @@ namespace SystemDot.Messaging.Configuration.Publishers
 
         protected override void Build()
         {
-            Resolve<SubscriberRecieveChannelBuilder>().Build(this.receiveSchema);
-            Resolve<SubscriptionRequestChannelBuilder>().Build(this.requestSchema);
+            Resolve<SubscriberRecieveChannelBuilder>().Build(receiveSchema);
+            Resolve<SubscriptionRequestChannelBuilder>().Build(requestSchema);
         }
 
         protected override ServerRoute GetServerPath()
         {
-            return this.requestSchema.SubscriberAddress.Route;
+            return requestSchema.SubscriberAddress.Route;
         }
 
         public SubscribeToConfiguration WithDurability()
         {
-            this.requestSchema.IsDurable = true;
-            this.receiveSchema.IsDurable = true;
+            requestSchema.IsDurable = true;
+            receiveSchema.IsDurable = true;
             return this;
         }
 
         public SubscribeToConfiguration WithUnitOfWork<TUnitOfWorkFactory>()
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory
         {
-            this.receiveSchema.UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<TUnitOfWorkFactory>;
+            receiveSchema.UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<TUnitOfWorkFactory>;
             return this;
         }
 
@@ -63,7 +64,15 @@ namespace SystemDot.Messaging.Configuration.Publishers
         {
             Contract.Requires(hook != null);
 
-            this.receiveSchema.Hooks.Add(hook);
+            receiveSchema.Hooks.Add(hook);
+            return this;
+        }
+
+        public SubscribeToConfiguration WithHook(IMessageProcessor<MessagePayload, MessagePayload> hook)
+        {
+            Contract.Requires(hook != null);
+
+            receiveSchema.PreUnpackagingHooks.Add(hook);
             return this;
         }
     }

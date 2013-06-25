@@ -1,6 +1,6 @@
 using System;
 
-namespace SystemDot.Messaging.Specifications.hooks
+namespace SystemDot.Messaging.Specifications
 {
     public class TestMessageProcessorHook : IMessageProcessor<object, object>
     {
@@ -10,8 +10,8 @@ namespace SystemDot.Messaging.Specifications.hooks
 
         public void InputMessage(object toInput)
         {
-            this.Message = toInput;
-            this.MessageProcessed(toInput);
+            Message = toInput;
+            MessageProcessed(toInput);
         }
     }
 }

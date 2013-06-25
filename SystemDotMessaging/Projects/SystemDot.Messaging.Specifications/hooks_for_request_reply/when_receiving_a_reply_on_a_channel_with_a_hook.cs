@@ -1,17 +1,16 @@
 using System;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.hooks
+namespace SystemDot.Messaging.Specifications.hooks_for_request_reply
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_a_request_on_a_channel_with_a_hook
+    public class when_receiving_a_reply_on_a_channel_with_a_hook 
         : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
-        const string SenderAddress = "TestSenderAddress";
+        const string RecieverAddress = "TestRecieverAddress";
 
         static Int64 message;
         static MessagePayload payload;
@@ -21,19 +20,20 @@ namespace SystemDot.Messaging.Specifications.hooks
         {
             hook = new TestMessageProcessorHook();
 
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                .ForRequestReplyRecieving()
-                .WithReceiveHook(hook)
+                    .ForRequestReplySendingTo(RecieverAddress)
+                    .WithReceiveHook(hook)
                 .Initialise();
 
             message = 1;
+
             payload = new MessagePayload().MakeSequencedReceivable(
-                message,
-                SenderAddress,
-                ChannelName,
-                PersistenceUseType.RequestSend);
+                message, 
+                RecieverAddress,
+                ChannelName, 
+                PersistenceUseType.ReplySend);
         };
 
         Because of = () => Server.ReceiveMessage(payload);

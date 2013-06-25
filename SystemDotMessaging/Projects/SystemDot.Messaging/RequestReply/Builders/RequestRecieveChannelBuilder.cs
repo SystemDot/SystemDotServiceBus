@@ -66,17 +66,18 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new SequenceOriginApplier(messageCache))
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
-                .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))
-                .ToSimpleMessageRepeater(messageCache, this.systemTime, this.taskRepeater)
+                .ToProcessor(new MessageAcknowledger(acknowledgementSender))
+                .ToSimpleMessageRepeater(messageCache, systemTime, taskRepeater)
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
                 .Queue()
                 .ToResequencerIfSequenced(messageCache, schema)
-                .ToProcessor(new ReplyChannelSelector(this.replyAddressLookup))
-                .ToConverter(new MessagePayloadUnpackager(this.serialiser))
+                .ToProcessor(new ReplyChannelSelector(replyAddressLookup))
+                .ToProcessors(schema.PreUnpackagingHooks.ToArray())
+                .ToConverter(new MessagePayloadUnpackager(serialiser))
                 .ToProcessor(schema.UnitOfWorkRunnerCreator())
                 .ToProcessor(new BatchUnpackager())
                 .ToProcessors(schema.Hooks.ToArray())
-                .ToEndPoint(this.messageHandlerRouter);
+                .ToEndPoint(messageHandlerRouter);
 
             Messenger.Send(new RequestReceiveChannelBuilt
             {

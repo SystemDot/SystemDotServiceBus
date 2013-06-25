@@ -46,6 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="hooks_for_publishing\when_receiving_an_event_on_a_subscriber_channel_with_a_pre_unpackaging_hook.cs" />
+    <Compile Include="hooks_for_publishing\when_publishing_an_event_on_a_publish_channel_with_a_post_packaging_hook.cs" />
+    <Compile Include="TestMessagePayloadProcessorHook.cs" />
+    <Compile Include="hooks_for_request_reply\when_receiving_a_request_on_a_channel_with_a_pre_unpackaging_receive_hook.cs" />
+    <Compile Include="hooks_for_publishing\SpecificationGroup.cs" />
     <Compile Include="unitofwork_for_local_channels\SpecificationGroup.cs" />
     <Compile Include="logging\SpecificationGroup.cs" />
     <Compile Include="logging\when_logging_a_message_with_a_logging_mechanism_configured.cs" />
@@ -77,10 +82,10 @@
     <Compile Include="handling_with_external_ioc_resolution\SpecificationGroup.cs" />
     <Compile Include="handling_with_external_ioc_resolution\when_sending_a_message_with_handlers_in_an_assembly_auto_registered_twice.cs" />
     <Compile Include="handling\SpecificationGroup.cs" />
-    <Compile Include="hooks\SpecificationGroup.cs" />
-    <Compile Include="hooks\when_publishing_an_event_on_a_publish_channel_with_a_hook.cs" />
+    <Compile Include="hooks_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="hooks_for_publishing\when_publishing_an_event_on_a_publish_channel_with_a_hook.cs" />
     <Compile Include="IChangeStoreExtensions.cs" />
-    <Compile Include="hooks\when_receiving_an_event_on_a_subscriber_channel_with_a_hook.cs" />
+    <Compile Include="hooks_for_publishing\when_receiving_an_event_on_a_subscriber_channel_with_a_hook.cs" />
     <Compile Include="load_balancing\when_sending_nineteen_messages_that_are_not_yet_acknowledged_and_four_seconds_have_passed.cs" />
     <Compile Include="load_balancing\when_sending_twenty_messages_that_are_not_yet_acknowledged_and_four_seconds_have_passed.cs" />
     <Compile Include="load_balancing\SpecificationGroup.cs" />
@@ -195,8 +200,8 @@
     <Compile Include="repeating_constant_for_request_reply\when_repeating_a_reply_with_a_constant_time_repeat_on_the_channel_and_that_time_has_passed.cs" />
     <Compile Include="repeating_escalating_for_request_reply\when_repeating_a_reply_for_the_third_time_and_sixteen_seconds_have_not_passed.cs" />
     <Compile Include="repeating_escalating_for_request_reply\when_repeating_a_reply_with_and_four_seconds_have_passed.cs" />
-    <Compile Include="hooks\when_replying_on_a_channel_with_a_hook.cs" />
-    <Compile Include="hooks\when_receiving_a_request_on_a_channel_with_a_hook.cs" />
+    <Compile Include="hooks_for_request_reply\when_replying_on_a_channel_with_a_hook.cs" />
+    <Compile Include="hooks_for_request_reply\when_receiving_a_request_on_a_channel_with_a_receive_hook.cs" />
     <Compile Include="replies\when_replying_to_a_request_without_configuring_a_request_reply_channel.cs" />
     <Compile Include="sending\when_sending_a_message_without_configuring_a_channel.cs" />
     <Compile Include="MessagePayloadExtensions.cs" />
@@ -262,7 +267,7 @@
     <Compile Include="sequencing_for_request_reply\when_receiving_an_out_of_sequence_reply_on_a_durable_channel.cs" />
     <Compile Include="receiving\request_reply\when_receiving_a_reply_on_a_durable_channel.cs" />
     <Compile Include="receiving\request_reply\when_receiving_a_reply_on_a_channel.cs" />
-    <Compile Include="hooks\when_receiving_a_reply_on_a_channel_with_a_hook.cs" />
+    <Compile Include="hooks_for_request_reply\when_receiving_a_reply_on_a_channel_with_a_hook.cs" />
     <Compile Include="receiving\request_reply\when_receiving_a_reply_on_a_channel_with_no_body.cs" />
     <Compile Include="unitofwork_for_request_reply\when_receiving_a_reply_with_a_unit_of_work_setup.cs" />
     <Compile Include="restarting_messaging\when_restarting_messaging_after_sending_a_request_on_a_durable_channel_that_is_not_yet_acknowledged.cs" />
@@ -271,7 +276,7 @@
     <Compile Include="expiry_for_request_reply\when_sending_a_repeat_request_attempt_expired_request_down_a_channel.cs" />
     <Compile Include="sending\request_reply\when_sending_a_request_on_a_durable_channel.cs" />
     <Compile Include="sending\request_reply\when_sending_a_request.cs" />
-    <Compile Include="hooks\when_sending_a_request_on_a_channel_with_a_hook.cs" />
+    <Compile Include="hooks_for_request_reply\when_sending_a_request_on_a_channel_with_a_hook.cs" />
     <Compile Include="filtering_for_request_reply\when_sending_a_request_with_the_correct_namespace_down_a_channel_with_a_namespace_pattern_filter.cs" />
     <Compile Include="filtering_for_request_reply\when_sending_a_request_with_the_correct_name_down_a_channel_with_a_name_pattern_filter.cs" />
     <Compile Include="filtering_for_request_reply\when_sending_a_request_with_the_wrong_namespace_down_a_channel_with_a_name_pattern_filter.cs" />
@@ -289,7 +294,7 @@
     <Compile Include="TestMessageHandler.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="hooks\TestMessageProcessorHook.cs" />
+    <Compile Include="TestMessageProcessorHook.cs" />
     <Compile Include="TestMessageServer.cs" />
     <Compile Include="filtering\TestNamePatternMessage.cs" />
     <Compile Include="TestTaskRepeater.cs" />
@@ -327,7 +332,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SystemDot.Esent\SystemDot.Esent.csproj">
       <Project>{C7DBF177-FCDB-4530-A6CA-3B1EFBAD63EB}</Project>
-      <Name>SystemDot.Esent %28Windows\SystemDot.Esent%29</Name>
+      <Name>SystemDot.Esent</Name>
     </ProjectReference>
     <ProjectReference Include="..\SystemDot.Extensions\SystemDot.Extensions.csproj">
       <Project>{C68777BE-FC18-47E1-ABAE-7CD6D5D0F7BC}</Project>
@@ -335,7 +340,7 @@
     </ProjectReference>
     <ProjectReference Include="..\SystemDot.Messaging\SystemDot.Messaging.csproj">
       <Project>{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}</Project>
-      <Name>SystemDot.Messaging %28Windows\SystemDot.Messaging%29</Name>
+      <Name>SystemDot.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\SystemDot.Specifications\SystemDot.Specifications.csproj">
       <Project>{c35328bb-3e59-4dc8-8397-c0a7bb2f2e5e}</Project>
@@ -347,7 +352,7 @@
     </ProjectReference>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">
       <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>
-      <Name>SystemDot %28Windows\SystemDot%29</Name>
+      <Name>SystemDot</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

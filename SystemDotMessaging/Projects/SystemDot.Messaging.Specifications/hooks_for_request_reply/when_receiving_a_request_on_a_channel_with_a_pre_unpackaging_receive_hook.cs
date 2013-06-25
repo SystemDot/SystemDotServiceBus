@@ -3,41 +3,39 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.hooks
+namespace SystemDot.Messaging.Specifications.hooks_for_request_reply
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_a_reply_on_a_channel_with_a_hook 
+    public class when_receiving_a_request_on_a_channel_with_a_pre_unpackaging_receive_hook 
         : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
-        const string RecieverAddress = "TestRecieverAddress";
+        const string SenderAddress = "TestSenderAddress";
+        const Int64 Message = 1;
 
-        static Int64 message;
         static MessagePayload payload;
-        static TestMessageProcessorHook hook;
+        static TestMessagePayloadProcessorHook hook;
 
         Establish context = () =>
         {
-            hook = new TestMessageProcessorHook();
+            hook = new TestMessagePayloadProcessorHook();
 
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                    .ForRequestReplySendingTo(RecieverAddress)
+                    .ForRequestReplyRecieving()
                     .WithReceiveHook(hook)
                 .Initialise();
 
-            message = 1;
-
             payload = new MessagePayload().MakeSequencedReceivable(
-                message, 
-                RecieverAddress,
-                ChannelName, 
-                PersistenceUseType.ReplySend);
+                Message,
+                SenderAddress,
+                ChannelName,
+                PersistenceUseType.RequestSend);
         };
 
         Because of = () => Server.ReceiveMessage(payload);
 
-        It should_run_the_message_through_the_hook = () => hook.Message.ShouldEqual(message);
+        It should_run_the_message_through_the_hook = () => hook.Message.ShouldBeTheSameAs(payload);
     }
 }

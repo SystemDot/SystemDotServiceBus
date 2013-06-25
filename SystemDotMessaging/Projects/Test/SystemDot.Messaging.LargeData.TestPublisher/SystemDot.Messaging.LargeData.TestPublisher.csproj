@@ -52,7 +52,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\SystemDot.Esent\SystemDot.Esent.csproj">
       <Project>{c7dbf177-fcdb-4530-a6ca-3b1efbad63eb}</Project>
-      <Name>SystemDot.Esent %28Windows\SystemDot.Esent%29</Name>
+      <Name>SystemDot.Esent</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\SystemDot.Log4Net\SystemDot.Log4Net.csproj">
       <Project>{24379F85-FA6D-4E6E-98F3-75F3A9520FE6}</Project>
@@ -60,11 +60,11 @@
     </ProjectReference>
     <ProjectReference Include="..\..\SystemDot.Messaging\SystemDot.Messaging.csproj">
       <Project>{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}</Project>
-      <Name>SystemDot.Messaging %28Windows\SystemDot.Messaging%29</Name>
+      <Name>SystemDot.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\SystemDot\SystemDot.csproj">
       <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>
-      <Name>SystemDot %28Windows\SystemDot%29</Name>
+      <Name>SystemDot</Name>
     </ProjectReference>
     <ProjectReference Include="..\SystemDot.Messaging.LargeData.Messages\SystemDot.Messaging.LargeData.Messages.csproj">
       <Project>{E958F571-696C-482C-A6E9-713C9BCEE4F8}</Project>

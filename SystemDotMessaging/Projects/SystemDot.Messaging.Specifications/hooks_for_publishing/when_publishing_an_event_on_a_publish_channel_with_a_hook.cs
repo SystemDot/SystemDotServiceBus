@@ -1,6 +1,6 @@
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.hooks
+namespace SystemDot.Messaging.Specifications.hooks_for_publishing
 {
     [Subject(SpecificationGroup.Description)]
     public class when_publishing_an_event_on_a_publish_channel_with_a_hook : WithPublisherSubject
@@ -13,10 +13,11 @@ namespace SystemDot.Messaging.Specifications.hooks
         {
             hook = new TestMessageProcessorHook();
 
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel(ChannelName).ForPublishing()
-                .WithHook(hook)
+                .OpenChannel(ChannelName)
+                    .ForPublishing()
+                    .WithHook(hook)
                 .Initialise();
         };
 

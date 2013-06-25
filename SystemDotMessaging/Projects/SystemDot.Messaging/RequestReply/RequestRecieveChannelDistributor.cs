@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.RequestReply
             this.builder = builder;
             this.schema = schema;
 
-            Id = string.Concat(this.GetType().Name, "|", this.schema.Address);
+            Id = string.Concat(GetType().Name, "|", this.schema.Address);
         }
 
         protected override void Distribute(MessagePayload toDistribute)
@@ -36,12 +36,12 @@ namespace SystemDot.Messaging.RequestReply
 
         public void RegisterChannel(EndpointAddress address)
         {
-            AddChange(new RegisterRequestReceiveChannelChange() { Address = address });
+            AddChange(new RegisterRequestReceiveChannelChange { Address = address });
         }
 
         public void ApplyChange(RegisterRequestReceiveChannelChange change)
         {
-            RegisterChannel(change.Address, () => this.builder.Build(this.schema, change.Address));
+            RegisterChannel(change.Address, () => builder.Build(schema, change.Address));
         }
     }
 }

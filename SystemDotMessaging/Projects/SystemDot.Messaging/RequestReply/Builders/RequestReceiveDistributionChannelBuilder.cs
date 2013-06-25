@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         {
             Contract.Requires(schema != null);
 
-            var distributor = new RequestRecieveChannelDistributor(GetChangeStore(schema), this.builder, schema);
+            var distributor = new RequestRecieveChannelDistributor(GetChangeStore(schema), builder, schema);
             
             MessagePipelineBuilder.Build()  
                 .With(this.messageReceiver)

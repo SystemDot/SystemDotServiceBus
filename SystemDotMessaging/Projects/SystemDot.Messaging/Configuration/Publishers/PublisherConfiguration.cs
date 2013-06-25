@@ -1,6 +1,7 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Filtering;
+using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Publishing.Builders;
 
 namespace SystemDot.Messaging.Configuration.Publishers
@@ -12,7 +13,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
         public PublisherConfiguration(EndpointAddress address, MessagingConfiguration messagingConfiguration)
             : base(messagingConfiguration)
         {
-            this.schema = new PublisherChannelSchema
+            schema = new PublisherChannelSchema
             {
                 FromAddress = address,  
                 MessageFilterStrategy = new PassThroughMessageFilterStategy()
@@ -21,23 +22,23 @@ namespace SystemDot.Messaging.Configuration.Publishers
 
         protected override void Build()
         {
-            Resolve<PublisherChannelBuilder>().Build(this.schema);
+            Resolve<PublisherChannelBuilder>().Build(schema);
         }
 
         protected override ServerRoute GetServerPath()
         {
-            return this.schema.FromAddress.Route;
+            return schema.FromAddress.Route;
         }
 
         public PublisherConfiguration OnlyForMessages(IMessageFilterStrategy toFilterWith)
         {
-            this.schema.MessageFilterStrategy = toFilterWith;
+            schema.MessageFilterStrategy = toFilterWith;
             return this;
         }
 
         public PublisherConfiguration WithDurability()
         {
-            this.schema.IsDurable = true;
+            schema.IsDurable = true;
             return this;
         }
 
@@ -45,7 +46,15 @@ namespace SystemDot.Messaging.Configuration.Publishers
         {
             Contract.Requires(hook != null);
 
-            this.schema.Hooks.Add(hook);
+            schema.Hooks.Add(hook);
+            return this;
+        }
+
+        public PublisherConfiguration WithHook(IMessageProcessor<MessagePayload, MessagePayload> hook)
+        {
+            Contract.Requires(hook != null);
+
+            schema.PostPackagingHooks.Add(hook);
             return this;
         }
     }

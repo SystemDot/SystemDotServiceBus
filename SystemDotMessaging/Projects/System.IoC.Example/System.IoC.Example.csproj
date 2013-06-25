@@ -62,7 +62,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">
       <Project>{ded30506-f4ec-4528-b535-8fa9373c5b52}</Project>
-      <Name>SystemDot %28Windows\SystemDot%29</Name>
+      <Name>SystemDot</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

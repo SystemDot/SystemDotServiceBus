@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using SystemDot.Messaging.PointToPoint.Builders;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.sending
+namespace SystemDot.Messaging.Specifications.external_sources
 {
-    [Subject(SpecificationGroup.Description)]
+    [Subject(sending.SpecificationGroup.Description)]
     public class when_configuring_a_send_channel : WithMessageConfigurationSubject
     {
         const string SenderAddress = "SenderAddress";
