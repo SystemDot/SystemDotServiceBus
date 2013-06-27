@@ -1,9 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
+using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.RequestReply.Builders;
 using SystemDot.Messaging.UnitOfWork;
@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             MessagingConfiguration messagingConfiguration)
             : base(messagingConfiguration)
         {
-            this.sendSchema = new RequestSendChannelSchema
+            sendSchema = new RequestSendChannelSchema
             {
                 FilteringStrategy = new PassThroughMessageFilterStategy(),
                 FromAddress = address,
@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
                 RepeatStrategy = EscalatingTimeRepeatStrategy.Default
             };
 
-            this.receiveSchema = new ReplyReceiveChannelSchema
+            receiveSchema = new ReplyReceiveChannelSchema
             {
                 Address = address,
                 ToAddress = recieverAddress,
@@ -41,27 +41,27 @@ namespace SystemDot.Messaging.Configuration.RequestReply
 
         protected override void Build()
         {
-            Resolve<RequestSendChannelBuilder>().Build(this.sendSchema);
-            Resolve<ReplyReceiveChannelBuilder>().Build(this.receiveSchema);
+            Resolve<RequestSendChannelBuilder>().Build(sendSchema);
+            Resolve<ReplyReceiveChannelBuilder>().Build(receiveSchema);
         }
 
         protected override ServerRoute GetServerPath()
         {
-            return this.sendSchema.FromAddress.Route;
+            return sendSchema.FromAddress.Route;
         }
 
         public RequestReplySenderConfiguration OnlyForMessages(IMessageFilterStrategy toFilterMessagesWith)
         {
             Contract.Requires(toFilterMessagesWith != null);
 
-            this.sendSchema.FilteringStrategy = toFilterMessagesWith;
+            sendSchema.FilteringStrategy = toFilterMessagesWith;
             return this;
         }
 
         public RequestReplySenderConfiguration WithDurability()
         {
-            this.sendSchema.IsDurable = true;
-            this.receiveSchema.IsDurable = true;
+            sendSchema.IsDurable = true;
+            receiveSchema.IsDurable = true;
             return this;
         }
 
@@ -69,7 +69,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             Contract.Requires(strategy != null);
 
-            this.sendSchema.ExpiryStrategy = strategy;
+            sendSchema.ExpiryStrategy = strategy;
             return this;
         }
 
@@ -78,8 +78,8 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             Contract.Requires(strategy != null);
             Contract.Requires(expiryAction != null);
 
-            this.sendSchema.ExpiryStrategy = strategy;
-            this.sendSchema.ExpiryAction = expiryAction;
+            sendSchema.ExpiryStrategy = strategy;
+            sendSchema.ExpiryAction = expiryAction;
             return this;
         }
 
@@ -88,14 +88,14 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             Contract.Requires(strategy != null);
 
-            this.sendSchema.RepeatStrategy = strategy;
+            sendSchema.RepeatStrategy = strategy;
             return this;
         }
 
         public RequestReplySenderConfiguration WithUnitOfWork<TUnitOfWorkFactory>() 
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory
         {
-            this.receiveSchema.UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<TUnitOfWorkFactory>;
+            receiveSchema.UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<TUnitOfWorkFactory>;
             return this;
         }
 
@@ -103,7 +103,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             Contract.Requires(hook != null);
 
-            this.receiveSchema.Hooks.Add(hook);
+            receiveSchema.Hooks.Add(hook);
             return this;
         }
 
@@ -111,7 +111,15 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             Contract.Requires(hook != null);
 
-            this.sendSchema.Hooks.Add(hook);
+            sendSchema.Hooks.Add(hook);
+            return this;
+        }
+
+        public RequestReplySenderConfiguration WithSendHook(IMessageProcessor<MessagePayload, MessagePayload> hook)
+        {
+            Contract.Requires(hook != null);
+
+            sendSchema.PostPackagingHooks.Add(hook);
             return this;
         }
     }

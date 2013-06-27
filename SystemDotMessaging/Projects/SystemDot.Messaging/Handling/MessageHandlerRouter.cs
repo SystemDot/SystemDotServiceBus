@@ -4,6 +4,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Reflection;
 using SystemDot.Ioc;
+using SystemDot.Logging;
 
 namespace SystemDot.Messaging.Handling
 {
@@ -14,8 +15,8 @@ namespace SystemDot.Messaging.Handling
 
         public MessageHandlerRouter()
         {
-            this.handlerInstances = new List<object>();
-            this.handlerTypes = new List<HandlerType>();
+            handlerInstances = new List<object>();
+            handlerTypes = new List<HandlerType>();
         }
 
         public void InputMessage(object toInput)
@@ -31,12 +32,12 @@ namespace SystemDot.Messaging.Handling
 
         void RouterToRegisteredInstances(object message)
         {
-            this.handlerInstances.ForEach(handler => Invoke(handler, message));
+            handlerInstances.ForEach(handler => Invoke(handler, message));
         }
 
         void RouterToRegisteredTypes(object message)
         {
-            this.handlerTypes
+            handlerTypes
                 .Where(handler => HandlesMessageType(handler.Type, message))
                 .ForEach(type => Invoke(type.Resolver.Resolve(type.Type), message));
         }
@@ -47,29 +48,37 @@ namespace SystemDot.Messaging.Handling
             if (method == null) return;
 
             method.Invoke(handler, new[] { message });
+
+            LogHandled(message);
+        }
+
+        static void LogHandled(object message)
+        {
+            Logger.Info("Message handled: {0}", message.GetType().Name);
         }
 
         MethodInfo GetHandlerMethodInfo(object handler, object message)
         {
-            return handler.GetType().GetMethod("Handle", new[] { message.GetType() });
+            return handler.GetType().GetHandleMethodForMessage(message);
         }
 
         bool HandlesMessageType(Type type, object message)
         {
-            return type.GetMethod("Handle", new[] { message.GetType() }) != null;
+            return type.GetHandleMethodForMessage(message) != null;
         }
 
         public void RegisterHandler(object handlerInstance)
         {
             Contract.Requires(handlerInstance != null);
-            this.handlerInstances.Add(handlerInstance);
+
+            handlerInstances.Add(handlerInstance);
         }
 
         public void RegisterHandler(Type handlerType, IIocResolver container)
         {
-            if (this.handlerTypes.Any(handler => handler.Type == handlerType)) return;
+            if (handlerTypes.Any(handler => handler.Type == handlerType)) return;
 
-            this.handlerTypes.Add(new HandlerType(handlerType, container));
+            handlerTypes.Add(new HandlerType(handlerType, container));
         }
 
         class HandlerType

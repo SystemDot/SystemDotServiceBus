@@ -56,29 +56,30 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
         public void Build(RequestSendChannelSchema schema)
         {
-            SendMessageCache cache = this.persistenceFactory
+            SendMessageCache cache = persistenceFactory
                 .Select(schema)
                 .CreateSendCache(PersistenceUseType.RequestSend, schema.FromAddress);
 
-            this.acknowledgementHandler.RegisterCache(cache);
+            acknowledgementHandler.RegisterCache(cache);
 
             MessagePipelineBuilder.Build()
                 .WithBusSendTo(new MessageFilter(schema.FilteringStrategy))
                 .ToProcessors(schema.Hooks.ToArray())
                 .ToProcessor(new BatchPackager())
-                .ToConverter(new MessagePayloadPackager(this.serialiser))
+                .ToConverter(new MessagePayloadPackager(serialiser))
+                .ToProcessors(schema.PostPackagingHooks.ToArray())
                 .ToProcessor(new Sequencer(cache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.RecieverAddress))
                 .ToProcessor(new SendChannelMessageCacher(cache))
-                .ToMessageRepeater(cache, this.systemTime, this.taskRepeater, schema.RepeatStrategy)
+                .ToMessageRepeater(cache, systemTime, taskRepeater, schema.RepeatStrategy)
                 .ToProcessor(new SendChannelMessageCacheUpdater(cache))
                 .ToProcessor(new SequenceOriginRecorder(cache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()
                 .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, schema.ExpiryAction, cache))
-                .ToProcessor(new LoadBalancer(cache, this.taskScheduler))
-                .ToProcessor(new LastSentRecorder(this.systemTime))
-                .ToEndPoint(this.messageSender);
+                .ToProcessor(new LoadBalancer(cache, taskScheduler))
+                .ToProcessor(new LastSentRecorder(systemTime))
+                .ToEndPoint(messageSender);
 
             Messenger.Send(new RequestSendChannelBuilt
             {

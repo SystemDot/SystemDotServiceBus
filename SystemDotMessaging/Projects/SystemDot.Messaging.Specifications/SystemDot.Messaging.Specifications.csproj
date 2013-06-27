@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="hooks_for_publishing\when_receiving_an_event_on_a_subscriber_channel_with_a_pre_unpackaging_hook.cs" />
     <Compile Include="hooks_for_publishing\when_publishing_an_event_on_a_publish_channel_with_a_post_packaging_hook.cs" />
+    <Compile Include="hooks_for_request_reply\when_sending_a_request_on_a_channel_with_a_post_packaging_send_hook.cs" />
     <Compile Include="TestMessagePayloadProcessorHook.cs" />
     <Compile Include="hooks_for_request_reply\when_receiving_a_request_on_a_channel_with_a_pre_unpackaging_receive_hook.cs" />
     <Compile Include="hooks_for_publishing\SpecificationGroup.cs" />

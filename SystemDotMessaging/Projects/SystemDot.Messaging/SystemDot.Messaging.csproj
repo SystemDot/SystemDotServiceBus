@@ -71,6 +71,7 @@
     <Compile Include="Expiry\MessageSendTimeRemover.cs" />
     <Compile Include="Expiry\TimeMessageExpiryStrategy.cs" />
     <Compile Include="Caching\MessageDecacher.cs" />
+    <Compile Include="Handling\TypeExtensions.cs" />
     <Compile Include="MessagingInitialised.cs" />
     <Compile Include="Ioc\IocContainerLocator.cs" />
     <Compile Include="ISerialiserExtensions.cs" />
