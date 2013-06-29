@@ -1,3 +1,5 @@
+using SystemDot.Logging;
+
 namespace SystemDot.Messaging.Filtering
 {
     public class NamespaceMessageFilterStrategy : IMessageFilterStrategy
@@ -11,7 +13,12 @@ namespace SystemDot.Messaging.Filtering
 
         public bool PassesThrough(object toCheck)
         {
-            return toCheck.GetType().Namespace == this.@namespace;
+            bool passesThrough = toCheck.GetType().Namespace == @namespace;
+
+            if (passesThrough)
+                Logger.Debug("Passes filter for message namespace: {0}", @namespace);
+
+            return passesThrough;
         }
     }
 }

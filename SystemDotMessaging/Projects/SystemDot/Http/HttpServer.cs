@@ -18,14 +18,16 @@ namespace SystemDot.Http
 
             this.address = address;
             this.handler = handler;
-            this.listener = new HttpListener();
+            listener = new HttpListener();
         }
 
         public void Start()
         {
-            this.listener.Prefixes.Clear();
-            this.listener.Prefixes.Add(this.address.Url);
-            this.listener.Start();
+            Logger.Info("HTTP server listening on: {0}", address.Url);
+
+            listener.Prefixes.Clear();
+            listener.Prefixes.Add(address.Url);
+            listener.Start();
 
             Task.Factory.StartNew(PerformWork);
         }
@@ -33,9 +35,9 @@ namespace SystemDot.Http
         public void PerformWork()
         {    
             Task<HttpListenerContext> context = Task.Factory.FromAsync<HttpListenerContext>(
-                this.listener.BeginGetContext, 
-                this.listener.EndGetContext, 
-                this.listener);
+                listener.BeginGetContext, 
+                listener.EndGetContext, 
+                listener);
 
             context.ContinueWith(_ => PerformWork());
             context.ContinueWith(task => HandleRequest(task.Result));            
@@ -45,7 +47,7 @@ namespace SystemDot.Http
         {
             try
             {
-                this.handler.HandleRequest(context.Request.InputStream, context.Response.OutputStream);
+                handler.HandleRequest(context.Request.InputStream, context.Response.OutputStream);
                 context.Response.StatusCode = (int)HttpStatusCode.OK;
             }
             catch (Exception e)
@@ -61,9 +63,9 @@ namespace SystemDot.Http
 
         public void StopWork()
         {
-            this.listener.Stop();
-            this.listener.Prefixes.Clear();
-            this.listener.Close();
+            listener.Stop();
+            listener.Prefixes.Clear();
+            listener.Close();
         }
     }
 }

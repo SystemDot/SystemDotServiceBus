@@ -12,13 +12,15 @@ namespace SystemDot.Messaging.Specifications.transport.http.server_addressing
         const string ReceiverChannel = "ReceiverChannel";
         const string SenderServerName = "SenderServer";
         const string SenderServerAddress = "SenderServerAddress";
-        
+        const string ReceiverServerAddress = "ReceiverServerAddress";
+
         static MessagePayload messagePayload;
 
         Establish context = () =>
         {
             WebRequestor.ExpectAddress(SenderServerName, SenderServerAddress);
-            
+            ServerAddressConfiguration.AddAddress(ReceiverServerName, ReceiverServerAddress);
+
             Configuration.Configure.Messaging()
                 .UsingHttpTransport().AsAServer(ReceiverServerName)
                 .OpenChannel(ReceiverChannel).ForPointToPointReceiving()
@@ -27,7 +29,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.server_addressing
             messagePayload = new MessagePayload().MakeSequencedReceivable(
                 1,
                 BuildAddress("SenderChannel", SenderServerName, SenderServerAddress),
-                BuildAddress(ReceiverChannel, ReceiverServerName, "ReceiverServerAddress"),
+                BuildAddress(ReceiverChannel, ReceiverServerName, ReceiverServerAddress),
                 PersistenceUseType.RequestSend);
         };
 

@@ -46,6 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="filtering_by_name_and_namespace\SpecificationGroup.cs" />
+    <Compile Include="filtering_by_name_and_namespace\TestNameAndNamespaceMessage.cs" />
+    <Compile Include="filtering_by_name_and_namespace\when_sending_a_request_with_the_correct_name_and_incorrect_namespace_down_a_channel.cs" />
+    <Compile Include="filtering_by_name_and_namespace\when_sending_a_request_with_the_correct_name_and_namespace_down_a_channel.cs" />
+    <Compile Include="filtering_by_namespace\SpecificationGroup.cs" />
+    <Compile Include="filtering_by_namespace\TestNamespaceMessage.cs" />
+    <Compile Include="filtering_by_namespace\when_sending_a_request_with_the_correct_namespace_down_a_channel.cs" />
+    <Compile Include="filtering_by_namespace\when_sending_a_request_with_the_wrong_namespace_down_a_channel.cs" />
+    <Compile Include="filtering_by_name\when_sending_a_request_with_the_correct_name_down_a_channel.cs" />
+    <Compile Include="filtering_by_name_and_namespace\when_sending_a_request_with_the_incorrect_name_and_correct_namespace_down_a_channel.cs" />
     <Compile Include="hooks_for_publishing\when_receiving_an_event_on_a_subscriber_channel_with_a_pre_unpackaging_hook.cs" />
     <Compile Include="hooks_for_publishing\when_publishing_an_event_on_a_publish_channel_with_a_post_packaging_hook.cs" />
     <Compile Include="hooks_for_request_reply\when_sending_a_request_on_a_channel_with_a_post_packaging_send_hook.cs" />
@@ -76,10 +86,10 @@
     <Compile Include="expiry_for_request_reply\when_sending_a_time_expired_request_down_a_channel_with_an_action_to_execute_on_expiry_set.cs" />
     <Compile Include="expiry\when_repeating_a_message_that_is_not_time_expired_with_an_action_to_execute_on_expiry_set.cs" />
     <Compile Include="expiry\when_repeating_a_message_that_is_time_expired_with_an_action_to_execute_on_expiry_set.cs" />
-    <Compile Include="filtering_for_publishing\SpecificationGroup.cs" />
-    <Compile Include="filtering_for_request_reply\SpecificationGroup.cs" />
-    <Compile Include="filtering\SpecificationGroup.cs" />
-    <Compile Include="filtering\when_sending_a_request_with_the_wrong_name_down_a_channel_with_a_name_pattern_filter.cs" />
+    <Compile Include="filtering_by_name_for_publishing\SpecificationGroup.cs" />
+    <Compile Include="filtering_by_name_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="filtering_by_name\SpecificationGroup.cs" />
+    <Compile Include="filtering_by_name\when_sending_a_request_with_the_wrong_name_down_a_channel.cs" />
     <Compile Include="handling_with_external_ioc_resolution\SpecificationGroup.cs" />
     <Compile Include="handling_with_external_ioc_resolution\when_sending_a_message_with_handlers_in_an_assembly_auto_registered_twice.cs" />
     <Compile Include="handling\SpecificationGroup.cs" />
@@ -241,8 +251,7 @@
     <Compile Include="publishing\when_publishing_on_a_publish_subscribe_channel_with_two_subscribers.cs" />
     <Compile Include="publishing\when_publishing_twice_when_the_subscriber_has_subscribed_after_messages_were_published.cs" />
     <Compile Include="publishing\when_publishing_when_the_subscriber_has_subscribed_after_messages_were_published.cs" />
-    <Compile Include="filtering_for_publishing\when_publishing_with_the_correct_name_on_a_publish_subscribe_channel_with_a_name_filter.cs" />
-    <Compile Include="filtering_for_publishing\when_publishing_with_the_wrong_name_on_a_publish_subscribe_channel_with_a_name_filter.cs" />
+    <Compile Include="filtering_by_name_for_publishing\when_publishing_with_the_wrong_name_on_a_publish_subscribe_channel.cs" />
     <Compile Include="WithHttpConfigurationSubject.cs" />
     <Compile Include="WithPublisherSubject.cs" />
     <Compile Include="restarting_messaging\when_restarting_messaging_after_handling_a_request_on_a_non_durable_channel_that_fails.cs" />
@@ -278,10 +287,7 @@
     <Compile Include="sending\request_reply\when_sending_a_request_on_a_durable_channel.cs" />
     <Compile Include="sending\request_reply\when_sending_a_request.cs" />
     <Compile Include="hooks_for_request_reply\when_sending_a_request_on_a_channel_with_a_hook.cs" />
-    <Compile Include="filtering_for_request_reply\when_sending_a_request_with_the_correct_namespace_down_a_channel_with_a_namespace_pattern_filter.cs" />
-    <Compile Include="filtering_for_request_reply\when_sending_a_request_with_the_correct_name_down_a_channel_with_a_name_pattern_filter.cs" />
-    <Compile Include="filtering_for_request_reply\when_sending_a_request_with_the_wrong_namespace_down_a_channel_with_a_name_pattern_filter.cs" />
-    <Compile Include="filtering_for_request_reply\when_sending_a_request_with_the_wrong_name_down_a_channel_with_a_name_pattern_filter.cs" />
+    <Compile Include="filtering_by_name_for_request_reply\when_sending_a_request_with_the_wrong_name_down_a_channel.cs" />
     <Compile Include="expiry_for_request_reply\when_sending_a_time_expired_request_down_a_channel.cs" />
     <Compile Include="TestEndpointAddressBuilder.cs" />
     <Compile Include="publishing_receiving\when_recieving_on_a_subscriber_channel.cs" />
@@ -297,7 +303,7 @@
     </Compile>
     <Compile Include="TestMessageProcessorHook.cs" />
     <Compile Include="TestMessageServer.cs" />
-    <Compile Include="filtering\TestNamePatternMessage.cs" />
+    <Compile Include="filtering_by_name\TestNamePatternMessage.cs" />
     <Compile Include="TestTaskRepeater.cs" />
     <Compile Include="unitofwork\TestUnitOfWork.cs" />
     <Compile Include="unitofwork\TestUnitOfWorkFactory.cs" />

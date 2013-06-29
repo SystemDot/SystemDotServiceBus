@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Logging;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 
@@ -24,14 +25,16 @@ namespace SystemDot.Messaging.Expiry
 
         public void InputMessage(MessagePayload toInput)
         {
-            if (this.strategy.HasExpired(toInput))
+            if (strategy.HasExpired(toInput))
             {
-                this.messageCache.Delete(toInput.Id);
-                this.expiryAction();
+                Logger.Debug("Expiring message payload {0}", toInput.Id);
+
+                messageCache.Delete(toInput.Id);
+                expiryAction();
                 return;
             }
 
-            this.MessageProcessed(toInput);
+            MessageProcessed(toInput);
         }
 
         public event Action<MessagePayload> MessageProcessed;

@@ -1,4 +1,5 @@
 using System.Diagnostics.Contracts;
+using SystemDot.Logging;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 
@@ -22,7 +23,9 @@ namespace SystemDot.Messaging.Caching
 
         void PersistMessage(MessagePayload toInput)
         {
-            this.messageCache.UpdateMessage(toInput);
+            Logger.Debug("Update message payload {0} in cache", toInput.Id);
+
+            messageCache.UpdateMessage(toInput);
         }
     }
 }

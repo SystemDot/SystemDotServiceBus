@@ -1,22 +1,21 @@
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Specifications.filtering;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.filtering_for_request_reply
+namespace SystemDot.Messaging.Specifications.filtering_by_name_and_namespace
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_a_request_with_the_wrong_namespace_down_a_channel_with_a_namespace_pattern_filter 
+    public class when_sending_a_request_with_the_incorrect_name_and_correct_namespace_down_a_channel
         : WithMessageConfigurationSubject
     {
         Establish context = () =>
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("Test")
-                    .ForRequestReplySendingTo("TestRecieverAddress")
-                        .OnlyForMessages(FilteredBy.Namespace("SomethingElse"))
+                .ForPointToPointSendingTo("TestRecieverAddress")
+                .OnlyForMessages(FilteredBy.NamespaceAndNamePattern("filtering_by_name_and_namespace", "other"))
                 .Initialise();
 
-        Because of = () => Bus.Send(new TestNamePatternMessage());
+        Because of = () => Bus.Send(new TestNameAndNamespaceMessage());
 
         It should_not_pass_the_message_through = () => Server.SentMessages.ShouldBeEmpty();
     }

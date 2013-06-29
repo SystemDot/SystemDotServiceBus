@@ -23,20 +23,22 @@ namespace SystemDot.Messaging.Packaging
         {
             if (!toInput.HasBody()) return;
 
-            Logger.Info("Unpackaging message payload");
+            Logger.Debug("Unpackaging message payload");
 
             object message = Deserialise(toInput.GetBody());
             
             if (message == null) return;
 
-            this.MessageProcessed(message);
+            Logger.Debug("Unpackaged message payload");
+
+            MessageProcessed(message);
         }
 
         object Deserialise(byte[] toDeserialise)
         {
             try
             {
-                return this.serialiser.Deserialise(toDeserialise);
+                return serialiser.Deserialise(toDeserialise);
             }
             catch (CannotDeserialiseException e)
             {

@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Logging;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 
@@ -18,8 +19,10 @@ namespace SystemDot.Messaging.Sequencing
 
         public void InputMessage(MessagePayload toInput)
         {
-            toInput.SetSequence(this.messageCache.GetSequence());
-            this.MessageProcessed(toInput);
+            Logger.Debug("Sequencing message payload {0}", toInput.Id);
+
+            toInput.SetSequence(messageCache.GetSequence());
+            MessageProcessed(toInput);
         }
 
         public event Action<MessagePayload> MessageProcessed;

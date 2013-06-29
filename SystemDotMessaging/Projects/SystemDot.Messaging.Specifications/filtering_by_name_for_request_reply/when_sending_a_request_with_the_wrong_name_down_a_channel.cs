@@ -1,19 +1,19 @@
 using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
+using SystemDot.Messaging.Specifications.filtering_by_name;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.filtering
+namespace SystemDot.Messaging.Specifications.filtering_by_name_for_request_reply
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_a_request_with_the_wrong_name_down_a_channel_with_a_name_pattern_filter 
+    public class when_sending_a_request_with_the_wrong_name_down_a_channel
         : WithMessageConfigurationSubject
     {
         Establish context = () =>
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("Test")
-                    .ForPointToPointSendingTo("TestRecieverAddress")
-                        .OnlyForMessages(FilteredBy.NamePattern("SomethingElse"))
+                    .ForRequestReplySendingTo("TestRecieverAddress")
+                    .OnlyForMessages(FilteredBy.NamePattern("SomethingElse"))
                 .Initialise();
 
         Because of = () => Bus.Send(new TestNamePatternMessage());

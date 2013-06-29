@@ -1,3 +1,5 @@
+using SystemDot.Logging;
+
 namespace SystemDot.Messaging.Filtering
 {
     public class NamePatternMessageFilterStrategy : IMessageFilterStrategy
@@ -11,7 +13,12 @@ namespace SystemDot.Messaging.Filtering
 
         public bool PassesThrough(object toCheck)
         {
-            return toCheck.GetType().Name.Contains(this.pattern);
+            bool passesThrough = toCheck.GetType().Name.Contains(pattern);
+
+            if (passesThrough)
+                Logger.Debug("Passes filter for message name: {0}", pattern);
+
+            return passesThrough;
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Diagnostics.Contracts;
+using SystemDot.Logging;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 
@@ -22,8 +23,10 @@ namespace SystemDot.Messaging.Caching
 
         void PersistMessage(MessagePayload toInput)
         {
-            toInput.SetPersistenceId(this.messageCache.Address, this.messageCache.UseType);
-            this.messageCache.AddMessageAndIncrementSequence(toInput);
+            Logger.Debug("Caching message payload {0}", toInput.Id);
+
+            toInput.SetPersistenceId(messageCache.Address, messageCache.UseType);
+            messageCache.AddMessageAndIncrementSequence(toInput);
         }
     }
 }

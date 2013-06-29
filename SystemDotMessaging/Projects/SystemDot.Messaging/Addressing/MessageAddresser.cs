@@ -24,10 +24,10 @@ namespace SystemDot.Messaging.Addressing
         
         public override void InputMessage(MessagePayload toInput)
         {
-            Logger.Info("Addressing message to {0}", this.toAddress);
+            Logger.Info("Addressing message payload {0} to {1}", toInput.Id, toAddress);
 
-            toInput.SetFromAddress(this.fromAddress);
-            toInput.SetToAddress(this.toAddress);
+            toInput.SetFromAddress(fromAddress);
+            toInput.SetToAddress(toAddress);
             OnMessageProcessed(toInput);
         }
     }
