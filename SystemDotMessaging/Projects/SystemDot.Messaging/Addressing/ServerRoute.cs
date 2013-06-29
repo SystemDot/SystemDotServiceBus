@@ -38,7 +38,7 @@ namespace SystemDot.Messaging.Addressing
 
         protected bool Equals(ServerRoute other)
         {
-            return string.Equals(Server, other.Server) && string.Equals(this.Proxy, other.Proxy);
+            return string.Equals(Server, other.Server) && string.Equals(Proxy, other.Proxy);
         }
 
         public override bool Equals(object obj)

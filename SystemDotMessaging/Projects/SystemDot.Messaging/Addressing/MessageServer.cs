@@ -35,18 +35,6 @@ namespace SystemDot.Messaging.Addressing
             IsSecure = isSecure;
         }
 
-        protected bool Equals(MessageServer other)
-        {
-            return string.Equals(Name, other.Name);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((MessageServer) obj);
-        }
-
         public override string ToString()
         {
             return !IsNone() 
@@ -69,11 +57,25 @@ namespace SystemDot.Messaging.Addressing
             return IsSecure ? SecureDescription : NonSecureDescription;
         }
 
+        protected bool Equals(MessageServer other)
+        {
+            return string.Equals(Name, other.Name) && string.Equals(Address, other.Address);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((MessageServer)obj);
+        }
+
         public override int GetHashCode()
         {
             unchecked
             {
-                return !IsNone() ? Name.GetHashCode() : 0;
+                return ((Name != null ? Name.GetHashCode() : 0)*397) 
+                    ^ (Address != null ? Address.GetHashCode() : 0);
             }
         }
 

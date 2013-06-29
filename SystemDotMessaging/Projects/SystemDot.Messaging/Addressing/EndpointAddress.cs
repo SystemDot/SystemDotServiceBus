@@ -18,8 +18,8 @@ namespace SystemDot.Messaging.Addressing
             Contract.Requires(!string.IsNullOrEmpty(channel));
             Contract.Requires(serverRoute != null);
 
-            this.Channel = channel;
-            this.Route = serverRoute;
+            Channel = channel;
+            Route = serverRoute;
         }
 
         protected bool Equals(EndpointAddress other)
@@ -40,7 +40,7 @@ namespace SystemDot.Messaging.Addressing
         {
             unchecked
             {
-                return (Channel.GetHashCode()*397) ^ this.Route.GetHashCode();
+                return (Channel.GetHashCode()*397) ^ Route.GetHashCode();
             }
         }
 
@@ -56,7 +56,7 @@ namespace SystemDot.Messaging.Addressing
 
         public override string ToString()
         {
-            return String.Concat(Channel, "@", this.Route);
+            return String.Concat(Channel, "@", Route);
         }
     }
 }
