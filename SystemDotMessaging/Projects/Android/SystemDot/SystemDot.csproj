@@ -33,6 +33,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\Dependencies\Json.Net\android\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Serialization">
       <HintPath>..\..\..\Dependencies\Serialization.dll</HintPath>
     </Reference>

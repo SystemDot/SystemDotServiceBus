@@ -339,15 +339,15 @@
   <ItemGroup>
     <ProjectReference Include="..\SystemDot.Esent\SystemDot.Esent.csproj">
       <Project>{C7DBF177-FCDB-4530-A6CA-3B1EFBAD63EB}</Project>
-      <Name>SystemDot.Esent</Name>
+      <Name>SystemDot.Esent %28Windows\SystemDot.Esent%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\SystemDot.Extensions\SystemDot.Extensions.csproj">
       <Project>{C68777BE-FC18-47E1-ABAE-7CD6D5D0F7BC}</Project>
-      <Name>SystemDot.Extensions</Name>
+      <Name>SystemDot.Extensions %28Windows\SystemDot.Extensions%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\SystemDot.Messaging\SystemDot.Messaging.csproj">
       <Project>{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}</Project>
-      <Name>SystemDot.Messaging</Name>
+      <Name>SystemDot.Messaging %28Windows\SystemDot.Messaging%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\SystemDot.Specifications\SystemDot.Specifications.csproj">
       <Project>{c35328bb-3e59-4dc8-8397-c0a7bb2f2e5e}</Project>
@@ -359,7 +359,7 @@
     </ProjectReference>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">
       <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>
-      <Name>SystemDot</Name>
+      <Name>SystemDot %28Windows\SystemDot%29</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

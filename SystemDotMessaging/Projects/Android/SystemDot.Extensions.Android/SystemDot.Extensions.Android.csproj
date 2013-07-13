@@ -39,13 +39,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyExtensions.cs" />
+    <Compile Include="..\..\SystemDot.Extensions\AssemblyExtensions.cs">
+      <Link>AssemblyExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\systemdot.extensions\configuration\ConfigurationReader.cs">
+      <Link>Configuration\ConfigurationReader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\systemdot.extensions\configuration\IConfigurationReader.cs">
+      <Link>Configuration\IConfigurationReader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SystemDot.Extensions\PutSender.cs">
+      <Link>PutSender.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SystemDot.Extensions\TypeExtensions.cs">
+      <Link>TypeExtensions.cs</Link>
+    </Compile>
     <Compile Include="Composition\CompositionContainer.cs" />
     <Compile Include="Composition\DirectoryCatalog.cs" />
     <Compile Include="Composition\ImportManyAttribute.cs" />
     <Compile Include="Composition\InheritedExportAttribute.cs" />
-    <Compile Include="PutSender.cs" />
-    <Compile Include="TypeExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
