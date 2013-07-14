@@ -6,6 +6,7 @@ using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Expiry;
+using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Pipelines;
@@ -74,6 +75,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new ReplyChannelSelector(replyAddressLookup))
                 .ToProcessors(schema.PreUnpackagingHooks.ToArray())
                 .ToConverter(new MessagePayloadUnpackager(serialiser))
+                .ToProcessor(new MessageFilter(schema.FilterStrategy))
                 .ToProcessor(schema.UnitOfWorkRunnerCreator())
                 .ToProcessor(new BatchUnpackager())
                 .ToProcessors(schema.Hooks.ToArray())

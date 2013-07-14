@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using SystemDot.Messaging.Builders;
-using SystemDot.Messaging.Packaging;
 
 namespace SystemDot.Messaging.RequestReply.Builders
 {

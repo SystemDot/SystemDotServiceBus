@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="filtering_by_name\when_receiving_a_request_with_the_wrong_name_down_a_channel.cs" />
     <Compile Include="filtering_by_name_and_namespace\SpecificationGroup.cs" />
     <Compile Include="filtering_by_name_and_namespace\TestNameAndNamespaceMessage.cs" />
     <Compile Include="filtering_by_name_and_namespace\when_sending_a_request_with_the_correct_name_and_incorrect_namespace_down_a_channel.cs" />
@@ -56,6 +57,8 @@
     <Compile Include="filtering_by_namespace\when_sending_a_request_with_the_wrong_namespace_down_a_channel.cs" />
     <Compile Include="filtering_by_name\when_sending_a_request_with_the_correct_name_down_a_channel.cs" />
     <Compile Include="filtering_by_name_and_namespace\when_sending_a_request_with_the_incorrect_name_and_correct_namespace_down_a_channel.cs" />
+    <Compile Include="filtering_by_name_for_publishing\when_receiving_a_published_event_with_the_wrong_name_down_a_channel.cs" />
+    <Compile Include="filtering_by_name_for_request_reply\when_receiving_a_request_with_the_wrong_name_down_a_channel.cs" />
     <Compile Include="hooks_for_publishing\when_receiving_an_event_on_a_subscriber_channel_with_a_pre_unpackaging_hook.cs" />
     <Compile Include="hooks_for_publishing\when_publishing_an_event_on_a_publish_channel_with_a_post_packaging_hook.cs" />
     <Compile Include="hooks_for_request_reply\when_sending_a_request_on_a_channel_with_a_post_packaging_send_hook.cs" />

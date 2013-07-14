@@ -13,7 +13,7 @@ namespace Subscriber
             container.RegisterFromAssemblyOf<Program>();
 
             Configure.Messaging()
-                .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = true })
+                .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false, ShowInfo = false})
                 .ResolveReferencesWith(container)
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()

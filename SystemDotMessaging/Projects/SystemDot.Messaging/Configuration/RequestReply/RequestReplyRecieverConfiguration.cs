@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Expiry;
+using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.RequestReply.Builders;
@@ -28,7 +29,8 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             requestSchema = new RequestRecieveChannelSchema
             {
                 Address = address,
-                UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>
+                UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>,
+                FilterStrategy = new PassThroughMessageFilterStategy()
             };
         }
 
@@ -106,6 +108,14 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             Contract.Requires(hook != null);
 
             replySchema.Hooks.Add(hook);
+            return this;
+        }
+
+        public RequestReplyRecieverConfiguration OnlyForMessages(IMessageFilterStrategy toFilterWith)
+        {
+            Contract.Requires(toFilterWith != null);
+
+            requestSchema.FilterStrategy = toFilterWith;
             return this;
         }
     }

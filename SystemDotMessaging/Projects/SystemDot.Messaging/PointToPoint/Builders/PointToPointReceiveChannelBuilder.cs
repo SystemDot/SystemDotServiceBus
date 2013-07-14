@@ -72,6 +72,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
                 .Queue()
                 .ToResequencerIfSequenced(messageCache, schema)
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
+                .ToProcessor(new MessageFilter(schema.FilterStrategy))
                 .ToProcessor(schema.UnitOfWorkRunnerCreator())
                 .ToProcessor(new BatchUnpackager())
                 .ToEndPoint(this.messageHandlerRouter);

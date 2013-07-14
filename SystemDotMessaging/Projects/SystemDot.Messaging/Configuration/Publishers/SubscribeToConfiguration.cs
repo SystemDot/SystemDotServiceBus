@@ -1,5 +1,6 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Publishing.Builders;
 using SystemDot.Messaging.UnitOfWork;
@@ -31,7 +32,8 @@ namespace SystemDot.Messaging.Configuration.Publishers
             {
                 Address = subscriberAddress,
                 ToAddress = publisherAddress,
-                UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>
+                UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>,
+                FilterStrategy = new PassThroughMessageFilterStategy()
             };
         }
 
@@ -73,6 +75,14 @@ namespace SystemDot.Messaging.Configuration.Publishers
             Contract.Requires(hook != null);
 
             receiveSchema.PreUnpackagingHooks.Add(hook);
+            return this;
+        }
+
+        public SubscribeToConfiguration OnlyForMessages(IMessageFilterStrategy toFilterWith)
+        {
+            Contract.Requires(toFilterWith != null);
+
+            receiveSchema.FilterStrategy = toFilterWith;
             return this;
         }
     }

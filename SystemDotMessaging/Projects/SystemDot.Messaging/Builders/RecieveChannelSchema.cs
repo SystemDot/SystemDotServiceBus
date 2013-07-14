@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Packaging;
 
 namespace SystemDot.Messaging.Builders
@@ -16,6 +17,8 @@ namespace SystemDot.Messaging.Builders
         public List<IMessageProcessor<object, object>> Hooks { get; set; }
 
         public List<IMessageProcessor<MessagePayload, MessagePayload>> PreUnpackagingHooks { get; set; }
+
+        public IMessageFilterStrategy FilterStrategy { get; set; }
         
         public RecieveChannelSchema()
         {

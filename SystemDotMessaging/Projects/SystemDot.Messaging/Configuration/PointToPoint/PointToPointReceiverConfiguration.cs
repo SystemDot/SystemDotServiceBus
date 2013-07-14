@@ -1,7 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.PointToPoint.Builders;
 using SystemDot.Messaging.UnitOfWork;
 
@@ -12,7 +11,10 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
         readonly ServerRoute serverRoute;
         readonly PointToPointReceiverChannelSchema schema;
 
-        public PointToPointReceiverConfiguration(EndpointAddress address, ServerRoute serverRoute, MessagingConfiguration messagingConfiguration)
+        public PointToPointReceiverConfiguration(
+            EndpointAddress address, 
+            ServerRoute serverRoute, 
+            MessagingConfiguration messagingConfiguration)
             : base(messagingConfiguration)
         {
             Contract.Requires(address != null);
@@ -24,7 +26,8 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
             this.schema = new PointToPointReceiverChannelSchema
             {
                 UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>,
-                Address = address
+                Address = address,
+                FilterStrategy = new PassThroughMessageFilterStategy()
             };
         }
 
@@ -47,7 +50,15 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
         public PointToPointReceiverConfiguration WithUnitOfWork<TUnitOfWorkFactory>()
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory
         {
-            this.schema.UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<TUnitOfWorkFactory>;
+            schema.UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<TUnitOfWorkFactory>;
+            return this;
+        }
+
+        public PointToPointReceiverConfiguration OnlyForMessages(IMessageFilterStrategy toFilterWith)
+        {
+            Contract.Requires(toFilterWith != null);
+
+            schema.FilterStrategy = toFilterWith;
             return this;
         }
     }

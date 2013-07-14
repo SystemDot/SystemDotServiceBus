@@ -71,6 +71,7 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .ToResequencerIfSequenced(messageCache, schema)
                 .ToProcessors(schema.PreUnpackagingHooks.ToArray())
                 .ToConverter(new MessagePayloadUnpackager(serialiser))
+                .ToProcessor(new MessageFilter(schema.FilterStrategy))
                 .ToProcessor(schema.UnitOfWorkRunnerCreator())
                 .ToProcessors(schema.Hooks.ToArray())
                 .ToEndPoint(messageHandlerRouter);
