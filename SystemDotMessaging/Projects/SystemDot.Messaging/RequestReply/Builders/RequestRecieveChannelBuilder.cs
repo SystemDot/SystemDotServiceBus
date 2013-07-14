@@ -11,6 +11,7 @@ using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Repeating;
+using SystemDot.Messaging.RequestReply.ExceptionHandling;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Parallelism;
@@ -73,6 +74,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .Queue()
                 .ToResequencerIfSequenced(messageCache, schema)
                 .ToProcessor(new ReplyChannelSelector(replyAddressLookup))
+                .ToProcessor(new ExceptionReplier())
                 .ToProcessors(schema.PreUnpackagingHooks.ToArray())
                 .ToConverter(new MessagePayloadUnpackager(serialiser))
                 .ToProcessor(new MessageFilter(schema.FilterStrategy))

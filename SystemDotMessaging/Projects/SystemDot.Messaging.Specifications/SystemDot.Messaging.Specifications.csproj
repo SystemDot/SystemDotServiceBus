@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="exception_replying_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="exception_replying_for_request_reply\when_failing_the_handling_of_a_request.cs" />
     <Compile Include="filtering_by_name\when_receiving_a_request_with_the_wrong_name_down_a_channel.cs" />
     <Compile Include="filtering_by_name_and_namespace\SpecificationGroup.cs" />
     <Compile Include="filtering_by_name_and_namespace\TestNameAndNamespaceMessage.cs" />

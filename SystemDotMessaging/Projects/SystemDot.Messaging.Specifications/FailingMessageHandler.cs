@@ -6,7 +6,7 @@ namespace SystemDot.Messaging.Specifications
     {
         public void Handle(T message)
         {
-            throw new Exception();
+            throw new Exception("I am an exception");
         }
     }
 }

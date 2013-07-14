@@ -7,7 +7,7 @@ namespace SystemDot.Messaging.Specifications.expiry
     [Subject(SpecificationGroup.Description)]
     public class when_repeating_a_message_that_is_not_time_expired : WithMessageConfigurationSubject
     {
-        Establish context = () => Messaging.Configuration.Configure.Messaging()
+        Establish context = () => Configuration.Configure.Messaging()
             .UsingInProcessTransport()
             .OpenChannel("ReceiverAddress")
             .ForPointToPointSendingTo("SenderAddress")

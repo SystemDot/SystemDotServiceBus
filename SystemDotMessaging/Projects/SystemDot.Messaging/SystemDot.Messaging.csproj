@@ -115,6 +115,8 @@
     <Compile Include="RequestReply\Builders\RequestReceiveChannelBuilt.cs" />
     <Compile Include="RequestReply\Builders\RequestReceiveDistributionChannelBuilder.cs" />
     <Compile Include="RequestReply\Builders\RequestSendChannelBuilt.cs" />
+    <Compile Include="RequestReply\ExceptionHandling\ExceptionReplier.cs" />
+    <Compile Include="RequestReply\ExceptionHandling\ExceptionOccured.cs" />
     <Compile Include="RequestReply\RegisterReplySendChannelChange.cs" />
     <Compile Include="RequestReply\RegisterRequestReceiveChannelChange.cs" />
     <Compile Include="RequestReply\ReplyChannelMessageFilterStategy.cs" />

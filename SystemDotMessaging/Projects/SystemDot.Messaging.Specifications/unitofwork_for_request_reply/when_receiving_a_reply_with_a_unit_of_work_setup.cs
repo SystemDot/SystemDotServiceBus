@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.unitofwork_for_request_reply
             unitOfWork = new TestUnitOfWork();
             ConfigureAndRegister<TestUnitOfWorkFactory>(new TestUnitOfWorkFactory(unitOfWork));
 
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                     .ForRequestReplySendingTo(RecieverAddress)
