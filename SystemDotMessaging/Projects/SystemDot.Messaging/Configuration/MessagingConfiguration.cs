@@ -35,7 +35,7 @@ namespace SystemDot.Messaging.Configuration
         {
             Contract.Requires(container != null);
 
-            this.ExternalResolver = container;
+            ExternalResolver = container;
             return this;
         }
 

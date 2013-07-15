@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D984BFAD-646E-44AF-AD68-63191FBCB497}</ProjectGuid>
+    <ProjectGuid>{2291AAC0-F619-44E9-9F13-EBACA29CB929}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Publisher</RootNamespace>
-    <AssemblyName>Publisher</AssemblyName>
+    <RootNamespace>RequestReplyReceiver</RootNamespace>
+    <AssemblyName>RequestReplyReceiver</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -41,11 +41,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IMessageConsumer.cs" />
+    <Compile Include="MessageConsumer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="SystemDot.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\SystemDot.Messaging\SystemDot.Messaging.csproj">
+      <Project>{0cdfed39-1aa2-464b-8f6a-3b8e19ba6842}</Project>
+      <Name>SystemDot.Messaging %28Windows\SystemDot.Messaging%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\SystemDot\SystemDot.csproj">
+      <Project>{ded30506-f4ec-4528-b535-8fa9373c5b52}</Project>
+      <Name>SystemDot %28Windows\SystemDot%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Windows\Messages\Messages.csproj">
+      <Project>{eaabd53d-7507-4f76-a538-0264d7294422}</Project>
+      <Name>Messages %28Windows\Examples\Messages%29</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

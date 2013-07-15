@@ -13,13 +13,12 @@ namespace RequestReplyReceiver
             container.RegisterFromAssemblyOf<Program>();
 
             Configure.Messaging()
-                .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false })
+                .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false, ShowDebug = false })
                 .ResolveReferencesWith(container)
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
-                //.UsingFilePersistence()
                 .UsingHttpTransport()
-                    .AsAProxy("MetroProxy")
+                    .AsAProxy("Proxy")
                     .AsAServer("ReceiverServer")
                 .OpenChannel("TestReply")
                     .ForRequestReplyRecieving()

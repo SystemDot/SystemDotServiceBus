@@ -48,7 +48,7 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients
 
         void Poll(ServerRoute toListenFor)
         {
-            Logger.Info("Long polling for messages for {0}", toListenFor);
+            Logger.Debug("Long polling for messages for {0}", toListenFor);
 
             this.requestor.SendPut(
                 toListenFor.GetUrl(),
