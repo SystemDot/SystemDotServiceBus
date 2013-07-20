@@ -33,8 +33,10 @@ namespace SystemDot.Messaging.Transport.Http
         static void LogMessage(MessagePayload toInput)
         {
             Logger.Info(
-                "Sending message to {0}",
-                toInput.GetToAddress().ToString());
+                "Sending message {0} to {1} on {2}",
+                toInput.Id,
+                toInput.GetToAddress().Channel,
+                toInput.GetToAddress().Route.Server.Address);
         }
     }
 }

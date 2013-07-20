@@ -37,7 +37,10 @@ namespace SystemDot.Messaging.Publishing
 
         public void Subscribe(SubscriptionSchema schema)
         {
-            Logger.Info("Subscribing channel {0}", schema.SubscriberAddress);
+            Logger.Info(
+                "Subscribing channel {0} for {1}",
+                schema.SubscriberAddress.Channel,
+                schema.SubscriberAddress.Route.Server.Address);
 
             this.subscribers.AddSubscriber(schema);
         }

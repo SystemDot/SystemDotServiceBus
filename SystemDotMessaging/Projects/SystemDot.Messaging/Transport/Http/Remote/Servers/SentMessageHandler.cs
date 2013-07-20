@@ -21,9 +21,18 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Servers
         {
             if (toHandle.IsLongPollRequest()) 
                 return;
-            
-            Logger.Info("Handling sent message for {0}", toHandle.GetToAddress());
+
+            LogMessage(toHandle);
+
             this.outgoingQueue.Enqueue(toHandle);
+        }
+
+        static void LogMessage(MessagePayload toHandle)
+        {
+            Logger.Debug("Handling sent message {0} for {1} from {2}",
+                toHandle.Id,
+                toHandle.GetToAddress().Channel,
+                toHandle.GetToAddress().Route.Server.Address);
         }
     }
 }
