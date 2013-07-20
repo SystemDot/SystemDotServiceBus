@@ -1,17 +1,16 @@
 using System;
+using SystemDot.Messaging.Hooks;
 
 namespace SystemDot.Messaging.Specifications
 {
-    public class TestMessageProcessorHook : IMessageProcessor<object, object>
+    public class TestMessageProcessorHook : IMessageHook<object>
     {
         public object Message { get; private set; }
 
-        public event Action<object> MessageProcessed;
-
-        public void InputMessage(object toInput)
+        public void ProcessMessage(object toInput, Action<object> toPerformOnOutput)
         {
             Message = toInput;
-            MessageProcessed(toInput);
+            toPerformOnOutput(toInput);
         }
     }
 }

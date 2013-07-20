@@ -2,6 +2,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Filtering;
+using SystemDot.Messaging.Hooks;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Repeating;
@@ -59,9 +60,9 @@ namespace SystemDot.Messaging.Publishing.Builders
 
             MessagePipelineBuilder.Build()
                 .WithBusPublishTo(new MessageFilter(schema.MessageFilterStrategy))
-                .ToProcessors(schema.Hooks.ToArray())
+                .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
                 .ToConverter(new MessagePayloadPackager(serialiser))
-                .ToProcessors(schema.PostPackagingHooks.ToArray())
+                .ToProcessor(new MessageHookRunner<MessagePayload>(schema.PostPackagingHooks))
                 .ToProcessor(new Sequencer(cache))
                 .ToProcessor(new SendChannelMessageCacher(cache))
                 .ToSimpleMessageRepeater(cache, systemTime, taskRepeater)

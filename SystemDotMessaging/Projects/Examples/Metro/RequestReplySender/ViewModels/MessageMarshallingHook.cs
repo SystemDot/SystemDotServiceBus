@@ -1,10 +1,10 @@
 using System;
-using SystemDot.Messaging;
+using SystemDot.Messaging.Hooks;
 using Windows.UI.Core;
 
 namespace RequestReplySender.ViewModels
 {
-    public class MessageMarshallingHook : IMessageProcessor<object, object>
+    public class MessageMarshallingHook : IMessageHook<object>
     {
         readonly CoreDispatcher dispatcher;
 
@@ -13,11 +13,9 @@ namespace RequestReplySender.ViewModels
             this.dispatcher = dispatcher;
         }
 
-        public async void InputMessage(object toInput)
+        public async void ProcessMessage(object toInput, Action<object> toPerformOnOutput)
         {
-            await this.dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => this.MessageProcessed(toInput));
+            await this.dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => toPerformOnOutput(toInput));
         }
-
-        public event Action<object> MessageProcessed;
     }
 }

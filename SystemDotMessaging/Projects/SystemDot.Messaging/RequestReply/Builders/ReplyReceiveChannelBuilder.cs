@@ -6,6 +6,7 @@ using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Handling;
+using SystemDot.Messaging.Hooks;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Repeating;
@@ -73,7 +74,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToConverter(new MessagePayloadUnpackager(this.serialiser))
                 .ToProcessor(schema.UnitOfWorkRunnerCreator())
                 .ToProcessor(new BatchUnpackager())
-                .ToProcessors(schema.Hooks.ToArray())
+                .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
                 .ToEndPoint(this.messageHandlerRouter);
 
             Messenger.Send(new ReplyReceiveChannelBuilt

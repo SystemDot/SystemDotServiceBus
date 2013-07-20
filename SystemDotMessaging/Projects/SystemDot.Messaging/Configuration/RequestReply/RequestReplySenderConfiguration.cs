@@ -3,6 +3,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
+using SystemDot.Messaging.Hooks;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.RequestReply.Builders;
@@ -99,7 +100,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             return this;
         }
 
-        public RequestReplySenderConfiguration WithReceiveHook(IMessageProcessor<object, object> hook)
+        public RequestReplySenderConfiguration WithReceiveHook(IMessageHook<object> hook)
         {
             Contract.Requires(hook != null);
 
@@ -107,7 +108,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             return this;
         }
 
-        public RequestReplySenderConfiguration WithSendHook(IMessageProcessor<object, object> hook)
+        public RequestReplySenderConfiguration WithSendHook(IMessageHook<object> hook)
         {
             Contract.Requires(hook != null);
 
@@ -115,7 +116,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             return this;
         }
 
-        public RequestReplySenderConfiguration WithSendHook(IMessageProcessor<MessagePayload, MessagePayload> hook)
+        public RequestReplySenderConfiguration WithSendHook(IMessageHook<MessagePayload> hook)
         {
             Contract.Requires(hook != null);
 

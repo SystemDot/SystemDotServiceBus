@@ -8,6 +8,7 @@ using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Handling;
+using SystemDot.Messaging.Hooks;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Repeating;
@@ -75,12 +76,12 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToResequencerIfSequenced(messageCache, schema)
                 .ToProcessor(new ReplyChannelSelector(replyAddressLookup))
                 .ToProcessor(new ExceptionReplier())
-                .ToProcessors(schema.PreUnpackagingHooks.ToArray())
+                .ToProcessor(new MessageHookRunner<MessagePayload>(schema.PreUnpackagingHooks))
                 .ToConverter(new MessagePayloadUnpackager(serialiser))
                 .ToProcessor(new MessageFilter(schema.FilterStrategy))
                 .ToProcessor(schema.UnitOfWorkRunnerCreator())
                 .ToProcessor(new BatchUnpackager())
-                .ToProcessors(schema.Hooks.ToArray())
+                .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
                 .ToEndPoint(messageHandlerRouter);
 
             Messenger.Send(new RequestReceiveChannelBuilt

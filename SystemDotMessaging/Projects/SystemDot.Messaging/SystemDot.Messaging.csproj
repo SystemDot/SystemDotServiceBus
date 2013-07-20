@@ -73,6 +73,8 @@
     <Compile Include="Caching\MessageDecacher.cs" />
     <Compile Include="Filtering\NamespaceAndNamePatternMessageFilterStrategy.cs" />
     <Compile Include="Handling\TypeExtensions.cs" />
+    <Compile Include="Hooks\IMessageHook.cs" />
+    <Compile Include="Hooks\MessageHookRunner.cs" />
     <Compile Include="MessagingInitialised.cs" />
     <Compile Include="Ioc\IocContainerLocator.cs" />
     <Compile Include="ISerialiserExtensions.cs" />

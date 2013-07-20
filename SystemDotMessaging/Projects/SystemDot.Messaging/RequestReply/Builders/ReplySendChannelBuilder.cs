@@ -6,6 +6,7 @@ using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Distribution;
 using SystemDot.Messaging.Expiry;
+using SystemDot.Messaging.Hooks;
 using SystemDot.Messaging.LoadBalancing;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Pipelines;
@@ -66,7 +67,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
             MessagePipelineBuilder.Build()
                 .With(startPoint)
-                .ToProcessors(schema.Hooks.ToArray())
+                .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
                 .ToProcessor(new BatchPackager())
                 .ToConverter(new MessagePayloadPackager(this.serialiser))
                 .ToProcessor(new Sequencer(cache))

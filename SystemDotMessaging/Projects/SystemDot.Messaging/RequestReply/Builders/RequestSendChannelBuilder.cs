@@ -6,6 +6,7 @@ using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
+using SystemDot.Messaging.Hooks;
 using SystemDot.Messaging.LoadBalancing;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Pipelines;
@@ -64,10 +65,10 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
             MessagePipelineBuilder.Build()
                 .WithBusSendTo(new MessageFilter(schema.FilteringStrategy))
-                .ToProcessors(schema.Hooks.ToArray())
+                .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
                 .ToProcessor(new BatchPackager())
                 .ToConverter(new MessagePayloadPackager(serialiser))
-                .ToProcessors(schema.PostPackagingHooks.ToArray())
+                .ToProcessor(new MessageHookRunner<MessagePayload>(schema.PostPackagingHooks))
                 .ToProcessor(new Sequencer(cache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.RecieverAddress))
                 .ToProcessor(new SendChannelMessageCacher(cache))

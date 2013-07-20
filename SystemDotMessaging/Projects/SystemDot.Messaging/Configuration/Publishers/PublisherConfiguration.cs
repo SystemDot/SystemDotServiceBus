@@ -1,6 +1,7 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Filtering;
+using SystemDot.Messaging.Hooks;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Publishing.Builders;
 
@@ -42,7 +43,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
             return this;
         }
 
-        public PublisherConfiguration WithHook(IMessageProcessor<object, object> hook)
+        public PublisherConfiguration WithHook(IMessageHook<object> hook)
         {
             Contract.Requires(hook != null);
 
@@ -50,7 +51,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
             return this;
         }
 
-        public PublisherConfiguration WithHook(IMessageProcessor<MessagePayload, MessagePayload> hook)
+        public PublisherConfiguration WithHook(IMessageHook<MessagePayload> hook)
         {
             Contract.Requires(hook != null);
 
