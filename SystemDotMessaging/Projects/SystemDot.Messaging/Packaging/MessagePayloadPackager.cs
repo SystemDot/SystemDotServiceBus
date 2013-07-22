@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Packaging
             var messagePayload = new MessagePayload();
             messagePayload.SetBody(this.serialiser.Serialise(toInput));
 
-            Logger.Info("Packaging message payload");
+            Logger.Debug("Packaging message payload");
 
             this.MessageProcessed(messagePayload);
         }

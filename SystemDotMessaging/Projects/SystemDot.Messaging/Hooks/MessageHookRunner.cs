@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace SystemDot.Messaging.Hooks
 {
@@ -16,24 +17,15 @@ namespace SystemDot.Messaging.Hooks
 
         public void InputMessage(T toInput)
         {
-            IEnumerator<IMessageHook<T>> hooksEnumerator = hooks.GetEnumerator();
-            hooksEnumerator.MoveNext();
-
-            if (hooksEnumerator.Current != null)
-                RunHook(toInput, hooksEnumerator);
-            else
-                MessageProcessed(toInput);
+            ProcessMessage(toInput, 0);
         }
 
-        private void RunHook(T toInput, IEnumerator<IMessageHook<T>> hooksEnumerator)
+        public void ProcessMessage(T toInput, int hookIndex)
         {
-            IMessageHook<T> hook = hooksEnumerator.Current;
-            hooksEnumerator.MoveNext();
-
-            if(hooksEnumerator.Current != null)
-                hook.ProcessMessage(toInput, m => RunHook(m, hooksEnumerator));
+            if (hookIndex < hooks.Count())
+                hooks.ElementAt(hookIndex).ProcessMessage(toInput, m => ProcessMessage(m, hookIndex + 1));
             else
-                hook.ProcessMessage(toInput, m => MessageProcessed(m));
+                MessageProcessed(toInput);
         }
 
         public event Action<T> MessageProcessed;
