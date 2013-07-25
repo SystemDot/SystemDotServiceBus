@@ -43,7 +43,7 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
 
             return new MessageServerConfiguration(
                 this.messagingConfiguration,
-                Resolve<ServerPathBuilder>().Build(server, proxy));
+                Resolve<ServerPathBuilder>().Build(String.Concat(server, ".", Environment.MachineName), proxy));
         }
 
         public MessageServerConfiguration AsAServer(string name)

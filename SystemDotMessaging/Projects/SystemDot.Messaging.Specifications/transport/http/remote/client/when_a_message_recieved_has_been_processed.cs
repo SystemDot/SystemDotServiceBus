@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.Http.Remote.Clients;
@@ -28,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
             ConfigureAndRegister<ITaskStarter>(taskStarter); 
 
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                     .AsAServerUsingAProxy("Server", Proxy)
                 .OpenChannel(ReceiverName).ForPointToPointReceiving()

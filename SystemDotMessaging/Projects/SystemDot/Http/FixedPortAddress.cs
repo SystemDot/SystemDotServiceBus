@@ -11,7 +11,7 @@ namespace SystemDot.Http
 
         public string Url
         {
-            get { return String.Concat(GetProtocol(), this.address, ":8090/", this.instance, "/"); }
+            get { return String.Concat(GetProtocol(), this.address, "/", this.instance, "/"); }
         }
 
         string GetProtocol()
@@ -21,7 +21,7 @@ namespace SystemDot.Http
 
         public FixedPortAddress() {}
 
-        public FixedPortAddress(ServerAddress address, string instance) : this(address.Address, address.IsSecure, instance)
+        public FixedPortAddress(ServerAddress address, string instance) : this(address.Path, address.IsSecure, instance)
         {
         }
 

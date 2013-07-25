@@ -18,6 +18,6 @@ namespace SystemDot.Messaging.Specifications.transport.http
 
         It should_listen_a_url_based_on_the_machine_name = () =>
             TestHttpServer.Instance
-                .Url.ShouldEqual(String.Concat("https://", ServerAddress, ":8090/", ServerName, "/"));
+                .Url.ShouldEqual(String.Concat("https://", ServerAddress, "/", ServerName, "/"));
     }
 }

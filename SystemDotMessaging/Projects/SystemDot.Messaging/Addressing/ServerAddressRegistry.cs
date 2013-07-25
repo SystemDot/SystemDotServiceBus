@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Addressing
         {
             Contract.Requires(!String.IsNullOrEmpty(toLookup));
 
-            return this.addresses.ContainsKey(toLookup) && this.addresses[toLookup].Address != string.Empty
+            return this.addresses.ContainsKey(toLookup) && this.addresses[toLookup].Path != string.Empty
                 ? this.addresses[toLookup]
                 : ServerAddress.Local;
         }

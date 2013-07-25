@@ -26,6 +26,6 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
 
         It should_listen_on_the_correct_url = () =>
             TestHttpServer.Instance
-                .Url.ShouldEqual(String.Concat("http://", Environment.MachineName, ":8090/", RemoteServerName + "/"));
+                .Url.ShouldEqual(String.Concat("http://", Environment.MachineName, "/", RemoteServerName + "/"));
     }
 }

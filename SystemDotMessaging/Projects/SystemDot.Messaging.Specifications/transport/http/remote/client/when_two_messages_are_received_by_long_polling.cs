@@ -25,6 +25,8 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
         Establish context = () =>
         {
+            string serverPath = ServerName + "." + Environment.MachineName;
+        
             WebRequestor.ExpectAddress(ProxyName, Environment.MachineName);
 
             taskStarter = new TestTaskStarter(1);
@@ -33,21 +35,21 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsAServerUsingAProxy(ServerName, ProxyName)
+                    .AsAServerUsingAProxy(ServerName, ProxyName)
                 .OpenChannel(ReceiverName)
-                .ForPointToPointReceiving()
+                    .ForPointToPointReceiving()
                 .Initialise();
 
             messagePayload1 = new MessagePayload().MakeSequencedReceivable(
                 Message1,
-                BuildAddressWithProxy(SenderName, ServerName, ProxyName),
-                BuildAddressWithProxy(ReceiverName, ServerName, ProxyName),
+                BuildAddressWithProxy(SenderName, serverPath, ProxyName),
+                BuildAddressWithProxy(ReceiverName, serverPath, ProxyName),
                 PersistenceUseType.PointToPointSend);
 
             messagePayload2 = new MessagePayload().MakeSequencedReceivable(
                 Message2,
-                BuildAddressWithProxy(SenderName, ServerName, ProxyName),
-                BuildAddressWithProxy(ReceiverName, ServerName, ProxyName),
+                BuildAddressWithProxy(SenderName, serverPath, ProxyName),
+                BuildAddressWithProxy(ReceiverName, serverPath, ProxyName),
                 PersistenceUseType.PointToPointSend);
 
             handler = new TestMessageHandler<Int64>();

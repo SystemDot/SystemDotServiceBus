@@ -11,20 +11,18 @@ namespace SystemDot.Messaging.Addressing
             Contract.Requires(!string.IsNullOrEmpty(name));
             Contract.Requires(address != null);
 
-            return address.IsSecure 
-                ? new SecureMessageServer(name, address.Address) 
-                : new MessageServer(name, address.Address);
+            return new MessageServer(name, address);
         }
 
         public string Name { get; set; }
 
-        public string Address { get; set; }
+        public ServerAddress Address { get; set; }
 
         public MessageServer()
         {
         }
 
-        protected MessageServer(string name, string address)
+        protected MessageServer(string name, ServerAddress address)
         {
             Name = name;
             Address = address;

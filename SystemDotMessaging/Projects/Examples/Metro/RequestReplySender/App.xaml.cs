@@ -38,7 +38,7 @@ namespace RequestReplySender
         {
             var container = new IocContainer();
 
-            container.RegisterInstance(() => new ObservableLoggingMechanism(CoreWindow.GetForCurrentThread().Dispatcher) { ShowInfo = true });
+            container.RegisterInstance(() => new ObservableLoggingMechanism(CoreWindow.GetForCurrentThread().Dispatcher) { ShowInfo = true, ShowDebug = true });
             container.RegisterFromAssemblyOf<ResponseHandler>();
             
             Configure.Messaging()

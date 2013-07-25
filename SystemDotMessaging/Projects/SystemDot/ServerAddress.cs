@@ -10,7 +10,7 @@ namespace SystemDot
             get { return new ServerAddress(Environment.MachineName, false); }
         }
 
-        public string Address { get; set; }
+        public string Path { get; set; }
 
         public bool IsSecure { get; set; }
 
@@ -22,7 +22,7 @@ namespace SystemDot
         {
             Contract.Requires(!String.IsNullOrEmpty(address));
 
-            Address = address;
+            Path = address;
             IsSecure = isSecure;
         }
     }
