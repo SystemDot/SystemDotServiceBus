@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using SystemDot.Configuration;
-using SystemDot.Ioc;
 using SystemDot.Messaging.Acknowledgement.Builders;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.Local;
@@ -36,7 +33,7 @@ namespace SystemDot.Messaging.Configuration
 
             this.messagingConfiguration.BuildActions.ForEach(a => a());
 
-            Resolve<ITransportBuilder>().Build(GetServerPath());
+            Resolve<ITransportBuilder>().Build(GetMessageServer());
             
             Messenger.Send(new MessagingInitialising());
 
@@ -49,10 +46,7 @@ namespace SystemDot.Messaging.Configuration
         {
             Contract.Requires(!string.IsNullOrEmpty(name));
 
-            return new ChannelConfiguration(
-                new EndpointAddress(name, GetServerPath()),
-                GetServerPath(),
-                this.messagingConfiguration);
+            return new ChannelConfiguration(new EndpointAddress(name, GetMessageServer()), GetMessageServer(), messagingConfiguration);
         }
 
         public Configurer RegisterHandlers(Action<MessageHandlerRouter> registrationAction)
@@ -63,10 +57,10 @@ namespace SystemDot.Messaging.Configuration
 
         public LocalChannelConfiguration OpenLocalChannel()
         {
-            return new LocalChannelConfiguration(GetServerPath(), this.messagingConfiguration);
+            return new LocalChannelConfiguration(GetMessageServer(), messagingConfiguration);
         }
 
-        protected abstract ServerRoute GetServerPath();
+        protected abstract MessageServer GetMessageServer();
 
         internal UnitOfWorkRunner CreateUnitOfWorkRunner<TUnitOfWorkFactory>() 
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory
@@ -77,8 +71,8 @@ namespace SystemDot.Messaging.Configuration
         IUnitOfWorkFactory GetUnitOfWorkFactory<TUnitOfWorkFactory>()
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory
         {
-            return this.messagingConfiguration.ExternalResolver.ComponentExists<TUnitOfWorkFactory>()
-                ? this.messagingConfiguration.ExternalResolver.Resolve<TUnitOfWorkFactory>().As<IUnitOfWorkFactory>()
+            return messagingConfiguration.ExternalResolver.ComponentExists<TUnitOfWorkFactory>()
+                ? messagingConfiguration.ExternalResolver.Resolve<TUnitOfWorkFactory>().As<IUnitOfWorkFactory>()
                 : new NullUnitOfWorkFactory();
         }
     }

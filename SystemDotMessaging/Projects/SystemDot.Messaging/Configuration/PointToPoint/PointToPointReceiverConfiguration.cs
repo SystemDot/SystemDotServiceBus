@@ -8,22 +8,22 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
 {
     public class PointToPointReceiverConfiguration : Configurer
     {
-        readonly ServerRoute serverRoute;
+        readonly MessageServer server;
         readonly PointToPointReceiverChannelSchema schema;
 
         public PointToPointReceiverConfiguration(
             EndpointAddress address, 
-            ServerRoute serverRoute, 
+            MessageServer server, 
             MessagingConfiguration messagingConfiguration)
             : base(messagingConfiguration)
         {
             Contract.Requires(address != null);
-            Contract.Requires(serverRoute != null);
+            Contract.Requires(server != null);
             Contract.Requires(messagingConfiguration != null);
 
-            this.serverRoute = serverRoute;
+            this.server = server;
 
-            this.schema = new PointToPointReceiverChannelSchema
+            schema = new PointToPointReceiverChannelSchema
             {
                 UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>,
                 Address = address,
@@ -33,17 +33,17 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
 
         protected override void Build()
         {
-            Resolve<PointToPointReceiveChannelBuilder>().Build(this.schema);
+            Resolve<PointToPointReceiveChannelBuilder>().Build(schema);
         }
 
-        protected override ServerRoute GetServerPath()
+        protected override MessageServer GetMessageServer()
         {
-            return this.serverRoute;
+            return server;
         }
 
         public PointToPointReceiverConfiguration WithDurability()
         {
-            this.schema.IsDurable = true;
+            schema.IsDurable = true;
             return this;
         }
 

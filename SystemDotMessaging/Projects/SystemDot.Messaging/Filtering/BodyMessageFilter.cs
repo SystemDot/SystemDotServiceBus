@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Filtering
         public void InputMessage(MessagePayload toInput)
         {
             if(!toInput.HasBody()) return;
-            if(toInput.GetToAddress() != this.address) return;
+            if(toInput.GetToAddress().Channel != address.Channel) return;
 
             this.MessageProcessed(toInput);
         }

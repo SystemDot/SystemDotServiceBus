@@ -9,30 +9,32 @@ namespace SystemDot.Messaging.Addressing
 
         public string Channel { get; set; }
 
-        public ServerRoute Route { get; set; }
+        public MessageServer Server { get; set; }
+        
+        public string OriginatingMachineName { get; set; }
 
         public EndpointAddress() {}
 
-        public EndpointAddress(string channel, ServerRoute serverRoute) 
+        public EndpointAddress(string channel, MessageServer server) 
         {
             Contract.Requires(!string.IsNullOrEmpty(channel));
-            Contract.Requires(serverRoute != null);
+            Contract.Requires(server != null);
 
             Channel = channel;
-            Route = serverRoute;
+            Server = server;
+            OriginatingMachineName = Environment.MachineName;
         }
 
         protected bool Equals(EndpointAddress other)
         {
-            return string.Equals(Channel, other.Channel) 
-                && string.Equals(Route, other.Route);
+            return string.Equals(OriginatingMachineName, other.OriginatingMachineName) && Equals(Server, other.Server) && string.Equals(Channel, other.Channel);
         }
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
+            if (obj.GetType() != this.GetType()) return false;
             return Equals((EndpointAddress) obj);
         }
 
@@ -40,7 +42,10 @@ namespace SystemDot.Messaging.Addressing
         {
             unchecked
             {
-                return (Channel.GetHashCode()*397) ^ Route.GetHashCode();
+                int hashCode = (OriginatingMachineName != null ? OriginatingMachineName.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (Server != null ? Server.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (Channel != null ? Channel.GetHashCode() : 0);
+                return hashCode;
             }
         }
 
@@ -56,7 +61,7 @@ namespace SystemDot.Messaging.Addressing
 
         public override string ToString()
         {
-            return String.Concat(Channel, "@", Route);
+            return String.Concat(Channel, "@", Server);
         }
     }
 }

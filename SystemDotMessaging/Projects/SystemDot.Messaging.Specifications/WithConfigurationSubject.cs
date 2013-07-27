@@ -87,7 +87,7 @@ namespace SystemDot.Messaging.Specifications
 
         protected static EndpointAddress BuildAddress(string toBuild)
         {
-            return new EndpointAddress(toBuild, ServerRoute.None);
+            return new EndpointAddress(toBuild, MessageServer.None);
         }
 
         protected static EndpointAddress BuildAddress(string channelName, string serverName)
@@ -98,11 +98,6 @@ namespace SystemDot.Messaging.Specifications
         protected static EndpointAddress BuildAddress(string channelName, string serverName, string serverAddress)
         {
             return TestEndpointAddressBuilder.Build(channelName, serverName, serverAddress);
-        }
-
-        protected static EndpointAddress BuildAddressWithProxy(string channelName, string serverName, string proxyName)
-        {
-            return TestEndpointAddressBuilder.BuildWithProxy(channelName, serverName, proxyName);
         }
     }
 }

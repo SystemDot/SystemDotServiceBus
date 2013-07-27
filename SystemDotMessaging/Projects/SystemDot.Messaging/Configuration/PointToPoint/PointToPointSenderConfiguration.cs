@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
             MessagingConfiguration messagingConfiguration)
             : base(messagingConfiguration)
         {
-            this.sendSchema = new PointToPointSendChannelSchema
+            sendSchema = new PointToPointSendChannelSchema
             {
                 RepeatStrategy = EscalatingTimeRepeatStrategy.Default,
                 ExpiryStrategy = new PassthroughMessageExpiryStrategy(),
@@ -31,37 +31,37 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
 
         protected override void Build()
         {
-            Resolve<PointToPointSendChannelBuilder>().Build(this.sendSchema);
+            Resolve<PointToPointSendChannelBuilder>().Build(sendSchema);
         }
 
-        protected override ServerRoute GetServerPath()
+        protected override MessageServer GetMessageServer()
         {
-            return this.sendSchema.FromAddress.Route;
+            return sendSchema.FromAddress.Server;
         }
 
         public PointToPointSenderConfiguration WithMessageRepeating(IRepeatStrategy strategy)
         {
-            this.sendSchema.RepeatStrategy = strategy;
+            sendSchema.RepeatStrategy = strategy;
             return this;
         }
 
         public PointToPointSenderConfiguration WithMessageExpiry(IMessageExpiryStrategy strategy)
         {
-            this.sendSchema.ExpiryStrategy = strategy;
+            sendSchema.ExpiryStrategy = strategy;
             return this;
         }
 
         public PointToPointSenderConfiguration WithMessageExpiry(IMessageExpiryStrategy strategy, Action toRunOnExpiry)
         {
-            this.sendSchema.ExpiryStrategy = strategy;
-            this.sendSchema.ExpiryAction = toRunOnExpiry;
+            sendSchema.ExpiryStrategy = strategy;
+            sendSchema.ExpiryAction = toRunOnExpiry;
 
             return this;
         }
 
         public PointToPointSenderConfiguration WithDurability()
         {
-            this.sendSchema.IsDurable = true;
+            sendSchema.IsDurable = true;
             return this;
         }
 
@@ -69,7 +69,7 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
         {
             Contract.Requires(toFilterMessagesWith != null);
 
-            this.sendSchema.FilteringStrategy = toFilterMessagesWith;
+            sendSchema.FilteringStrategy = toFilterMessagesWith;
             return this;
         }
     }

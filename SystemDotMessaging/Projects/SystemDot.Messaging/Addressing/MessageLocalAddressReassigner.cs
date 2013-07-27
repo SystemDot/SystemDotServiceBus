@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Addressing
 
         public override void InputMessage(MessagePayload toInput)
         {
-            ReassignServerAddressIfRegistered(toInput.GetFromAddress().Route.Proxy);
+            ReassignServerAddressIfRegistered(toInput.GetFromAddress().Server);
             OnMessageProcessed(toInput);
         }
 

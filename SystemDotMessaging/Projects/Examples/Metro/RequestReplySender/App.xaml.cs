@@ -48,7 +48,7 @@ namespace RequestReplySender
                     .BasedOn<IMessageConsumer>()
                 .UsingFilePersistence()
                 .UsingHttpTransport()
-                    .AsAServerUsingAProxy("MetroServer", "MetroProxy")
+                    .AsAServerUsingAProxy("SenderServer")
                 .OpenChannel("TestMetroRequest")
                     .ForRequestReplySendingTo("TestReply@ReceiverServer")
                     .WithDurability()

@@ -27,6 +27,6 @@ namespace SystemDot.Messaging.Specifications.transport.http.sending
 
         It should_send_a_message_with_the_correct_to_address_server_name = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetToAddress().Route.Server.Name.ShouldEqual(ServerName);
+                .GetToAddress().Server.Name.ShouldEqual(ServerName);
     }
 }

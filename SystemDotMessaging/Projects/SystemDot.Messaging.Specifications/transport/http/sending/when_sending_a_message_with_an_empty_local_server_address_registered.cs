@@ -26,6 +26,6 @@ namespace SystemDot.Messaging.Specifications.transport.http.sending
 
         It should_send_a_message_with_a_from_server_address_set_to_the_local_machine_name = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetFromAddress().Route.Server.Address.Path.ShouldEqual(Environment.MachineName);
+                .GetFromAddress().Server.Address.Path.ShouldEqual(Environment.MachineName);
     }
 }

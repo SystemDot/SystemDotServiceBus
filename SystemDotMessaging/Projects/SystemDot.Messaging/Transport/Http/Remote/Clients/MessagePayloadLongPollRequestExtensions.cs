@@ -5,9 +5,9 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients
 {
     public static class MessagePayloadLongPollRequestExtensions
     {
-        public static void SetLongPollRequest(this MessagePayload payload, ServerRoute serverRoute)
+        public static void SetLongPollRequest(this MessagePayload payload, MessageServer server)
         {
-            payload.AddHeader(new LongPollRequestHeader(serverRoute));
+            payload.AddHeader(new LongPollRequestHeader(server));
         }
 
         public static bool IsLongPollRequest(this MessagePayload payload)
@@ -15,9 +15,9 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients
             return payload.HasHeader<LongPollRequestHeader>();
         }
 
-        public static ServerRoute GetLongPollRequestServerPath(this MessagePayload payload)
+        public static MessageServer GetLongPollRequestServerPath(this MessagePayload payload)
         {
-            return payload.GetHeader<LongPollRequestHeader>().ServerRoute;
+            return payload.GetHeader<LongPollRequestHeader>().Server;
         }
     }
 }

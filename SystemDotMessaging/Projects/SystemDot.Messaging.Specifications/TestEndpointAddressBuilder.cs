@@ -6,29 +6,12 @@ namespace SystemDot.Messaging.Specifications
     {
         public static EndpointAddress Build(string channel, string serverName)
         {
-            return new EndpointAddress(
-                channel, 
-                new ServerRoute(MessageServer.Named(serverName, ServerAddress.Local), MessageServer.None));
+            return new EndpointAddress(channel, MessageServer.Named(serverName, ServerAddress.Local));
         }
 
         public static EndpointAddress Build(string channel, string serverName, string serverAddress)
         {
-            return new EndpointAddress(
-                channel,
-                new ServerRoute(
-                    MessageServer.Named(serverName, new ServerAddress(serverAddress, false)),
-                    MessageServer.Named(serverName, new ServerAddress(serverAddress, false))));
+            return new EndpointAddress(channel, MessageServer.Named(serverName, new ServerAddress(serverAddress, false)));
         }
-
-        public static EndpointAddress BuildWithProxy(string channel, string serverName, string proxyName)
-        {
-            return new EndpointAddress(
-                channel,
-                new ServerRoute(
-                    MessageServer.Named(serverName, ServerAddress.Local),
-                    MessageServer.Named(proxyName, ServerAddress.Local)));
-        }
-
-        
     }
 }

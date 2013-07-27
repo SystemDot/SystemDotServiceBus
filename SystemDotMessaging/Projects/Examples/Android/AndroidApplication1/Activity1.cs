@@ -28,7 +28,7 @@ namespace AndroidApplication1
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = true, ShowDebug = false })
                 .ResolveReferencesWith(container)
                 .UsingHttpTransport()
-                    .AsAServerUsingAProxy("SenderServer", "Proxy")
+                    .AsAServerUsingAProxy("SenderServer")
                 .OpenChannel("TestAndroidRequest")
                     .ForRequestReplySendingTo("TestReply@ReceiverServer")
                     .WithDurability()

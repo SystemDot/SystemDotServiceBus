@@ -44,7 +44,7 @@ namespace SystemDot.Messaging.Specifications.sending
                 .Channel.ShouldEqual(ReceiverAddress);
 
         It should_send_a_message_with_the_to_address_server_path_not_set = () =>
-            Server.SentMessages.First().GetToAddress().Route.ShouldEqual(ServerRoute.None);
+            Server.SentMessages.First().GetToAddress().Server.ShouldEqual(MessageServer.None);
 
         It should_send_a_message_with_the_correct_from_address = () =>
             Server.SentMessages.First().GetFromAddress().ShouldEqual(BuildAddress(SenderAddress));

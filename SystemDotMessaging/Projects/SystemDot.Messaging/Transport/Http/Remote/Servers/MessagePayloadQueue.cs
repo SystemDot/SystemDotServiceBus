@@ -11,36 +11,36 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Servers
     class MessagePayloadQueue
     {
         readonly TimeSpan blockingTimeout;
-        readonly Dictionary<ServerRoute, BlockingQueue<MessagePayload>> queues;
+        readonly Dictionary<MessageServer, BlockingQueue<MessagePayload>> queues;
         
         public MessagePayloadQueue(TimeSpan blockingTimeout)
         {
             this.blockingTimeout = blockingTimeout;
-            this.queues = new Dictionary<ServerRoute, BlockingQueue<MessagePayload>>();
+            queues = new Dictionary<MessageServer, BlockingQueue<MessagePayload>>();
         }
 
         public void Enqueue(MessagePayload toEnqueue)
         {
             Contract.Requires(toEnqueue != null);
 
-            CreateQueueIfNonExistant(toEnqueue.GetToAddress().Route);
+            CreateQueueIfNonExistant(toEnqueue.GetToAddress().Server);
 
-            this.queues[toEnqueue.GetToAddress().Route].Enqueue(toEnqueue);
+            queues[toEnqueue.GetToAddress().Server].Enqueue(toEnqueue);
         }
 
-        public IEnumerable<MessagePayload> DequeueAll(ServerRoute serverRoute)
+        public IEnumerable<MessagePayload> DequeueAll(MessageServer server)
         {
-            Contract.Requires(serverRoute != null);
+            Contract.Requires(server != null);
             
-            CreateQueueIfNonExistant(serverRoute);
+            CreateQueueIfNonExistant(server);
             
-            return this.queues[serverRoute].DequeueAll();
+            return queues[server].DequeueAll();
         }
 
-        void CreateQueueIfNonExistant(ServerRoute serverRoute)
+        void CreateQueueIfNonExistant(MessageServer server)
         {
-            if (!this.queues.ContainsKey(serverRoute))
-                this.queues[serverRoute] = new BlockingQueue<MessagePayload>(this.blockingTimeout);
+            if (!queues.ContainsKey(server))
+                queues[server] = new BlockingQueue<MessagePayload>(blockingTimeout);
         }
     }
 }

@@ -40,7 +40,7 @@ namespace SystemDot.Messaging.Publishing
             Logger.Info(
                 "Subscribing channel {0} for {1}",
                 schema.SubscriberAddress.Channel,
-                schema.SubscriberAddress.Route.Server.Address);
+                schema.SubscriberAddress.Server.Address);
 
             this.subscribers.AddSubscriber(schema);
         }

@@ -41,9 +41,9 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             Resolve<RequestReceiveDistributionChannelBuilder>().Build(this.requestSchema);
         }
 
-        protected override ServerRoute GetServerPath()
+        protected override MessageServer GetMessageServer()
         {
-            return requestSchema.Address.Route;
+            return requestSchema.Address.Server;
         }
 
         public RequestReplyRecieverConfiguration WithDurability()

@@ -6,19 +6,18 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.transport.http.sending
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_to_a_receiver_with_named_server_and_proxy_but_with_no_addresses_registered 
+    public class when_sending_to_a_receiver_with_a_different_server_but_with_no_addresses_registered 
         : WithHttpConfigurationSubject
     {
         const string ChannelName = "ChannelName";
         const string ReceiverChannelName = "ReceiverChannelName";
         const string ReceiverServerName = "ReceiverServerName";
-        const string RemoteProxyName = "RemoteProxyName";
 
         static string receiverName;
 
         Establish context = () =>
         {
-            receiverName = ReceiverChannelName + "@" + ReceiverServerName + "." + RemoteProxyName;
+            receiverName = ReceiverChannelName + "@" + ReceiverServerName;
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
@@ -30,11 +29,6 @@ namespace SystemDot.Messaging.Specifications.transport.http.sending
         Because of = () => Bus.Send(1);
 
         It should_send_a_message_with_the_expected_to_address_server_name_set = () =>
-            WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetToAddress().Route.Server.Name.ShouldEqual(ReceiverServerName);
-
-        It should_send_a_message_with_the_expected_to_address_remote_proxy_name_set = () =>
-            WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetToAddress().Route.Proxy.Name.ShouldEqual(RemoteProxyName);
+            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetToAddress().Server.Name.ShouldEqual(ReceiverServerName);
     }
 }

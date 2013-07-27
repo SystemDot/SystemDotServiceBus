@@ -20,16 +20,15 @@ namespace SystemDot.Messaging.Publishing
         public void InputMessage(MessagePayload message)
         {
             SubscriptionSchema schema = message.GetSubscriptionRequestSchema();
-            EndpointAddress fromAddress = message.GetToAddress();
 
             Logger.Info("Handling request reply subscription request for {0}", schema.SubscriberAddress);
 
-            GetPublisher(fromAddress).Subscribe(schema);
+            GetPublisher(message.GetToAddress()).Subscribe(schema);
         }
 
         IPublisher GetPublisher(EndpointAddress address)
         {
-            return this.publisherRegistry.GetPublisher(address);
+            return publisherRegistry.GetPublisher(address);
         }
     }
 }

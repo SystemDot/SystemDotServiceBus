@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Transport.Http
             LogMessage(toInput);
 
             this.requestor.SendPut(
-                toInput.GetToAddress().Route.GetUrl(),
+                toInput.GetToAddress().Server.GetUrl(),
                 s => this.formatter.Serialise(s, toInput));
         }
 
@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Transport.Http
                 "Sending message {0} to {1} on {2}",
                 toInput.Id,
                 toInput.GetToAddress().Channel,
-                toInput.GetToAddress().Route.Server.Address);
+                toInput.GetToAddress().Server.Address);
         }
     }
 }

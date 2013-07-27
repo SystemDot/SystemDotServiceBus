@@ -11,15 +11,15 @@ namespace SystemDot.Messaging.Configuration
 {
     public class MessageServerConfiguration : ConfigurationBase
     {
-        readonly ServerRoute serverRoute;
+        readonly MessageServer server;
         readonly MessagingConfiguration messagingConfiguration;
 
-        public MessageServerConfiguration(MessagingConfiguration messagingConfiguration, ServerRoute serverRoute)
+        public MessageServerConfiguration(MessagingConfiguration messagingConfiguration, MessageServer server)
         {
             Contract.Requires(messagingConfiguration != null);
-            Contract.Requires(serverRoute != null);
+            Contract.Requires(server != null);
 
-            this.serverRoute = serverRoute;
+            this.server = server;
             this.messagingConfiguration = messagingConfiguration;
 
             IIocContainer container = IocContainerLocator.Locate();
@@ -33,17 +33,12 @@ namespace SystemDot.Messaging.Configuration
         {
             Contract.Requires(!string.IsNullOrEmpty(name));
 
-            return new ChannelConfiguration(
-                new EndpointAddress(name, this.serverRoute),
-                this.serverRoute,
-                this.messagingConfiguration);
+            return new ChannelConfiguration(new EndpointAddress(name, server), server, messagingConfiguration);
         }
 
         public LocalChannelConfiguration OpenLocalChannel()
         {
-            return new LocalChannelConfiguration(
-                this.serverRoute,
-                this.messagingConfiguration);
+            return new LocalChannelConfiguration(server, messagingConfiguration);
         }
 
         static void RegisterInMemoryPersistence(IIocContainer container)
@@ -58,7 +53,7 @@ namespace SystemDot.Messaging.Configuration
 
         void ConfigureExternalSources(IIocContainer container)
         {
-            container.Resolve<IExternalSourcesConfigurer>().Configure(this.messagingConfiguration, this);
+            container.Resolve<IExternalSourcesConfigurer>().Configure(messagingConfiguration, this);
         }
     }
 }

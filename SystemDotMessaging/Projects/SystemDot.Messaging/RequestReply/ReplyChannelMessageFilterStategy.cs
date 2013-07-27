@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.RequestReply
 
         public bool PassesThrough(object toCheck)
         {
-            return this.recieverAddress == this.replyAddressLookup.GetCurrentRecieverAddress();
+            return recieverAddress == replyAddressLookup.GetCurrentRecieverAddress();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace RequestReplyReceiver
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
                 .UsingHttpTransport()
-                    .AsAProxy("Proxy")
+                    .AsAProxyFor("SenderServer")
                     .AsAServer("ReceiverServer")
                 .OpenChannel("TestReply")
                     .ForRequestReplyRecieving()

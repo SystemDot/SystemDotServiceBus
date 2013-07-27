@@ -26,9 +26,9 @@ namespace SystemDot.Messaging.Configuration.Publishers
             Resolve<PublisherChannelBuilder>().Build(schema);
         }
 
-        protected override ServerRoute GetServerPath()
+        protected override MessageServer GetMessageServer()
         {
-            return schema.FromAddress.Route;
+            return schema.FromAddress.Server;
         }
 
         public PublisherConfiguration OnlyForMessages(IMessageFilterStrategy toFilterWith)

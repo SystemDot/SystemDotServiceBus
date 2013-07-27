@@ -19,8 +19,8 @@ namespace SystemDot.Messaging.LoadBalancing
         {
             this.cache = cache;
             this.taskScheduler = taskScheduler;
-            this.unsentMessages = new ConcurrentQueue<MessagePayload>();
-            this.sentMessages = new ConcurrentDictionary<Guid, MessagePayload>();
+            unsentMessages = new ConcurrentQueue<MessagePayload>();
+            sentMessages = new ConcurrentDictionary<Guid, MessagePayload>();
             
             Messenger.Register<MessageRemovedFromCache>(m => FreeUpSlot(m.MessageId, m.Address, m.UseType));
 
@@ -29,17 +29,17 @@ namespace SystemDot.Messaging.LoadBalancing
 
         void FreeUpSlot(Guid messageId, EndpointAddress address, PersistenceUseType useType)
         {
-            if (useType != this.cache.UseType || address != this.cache.Address) return;
+            if (useType != cache.UseType || address != cache.Address) return;
 
             MessagePayload message;
-            this.sentMessages.TryRemove(messageId, out message);
+            sentMessages.TryRemove(messageId, out message);
 
             SendMessages();
         }
 
         public override void InputMessage(MessagePayload toInput)
         {
-            this.unsentMessages.Enqueue(toInput);
+            unsentMessages.Enqueue(toInput);
             SendMessages();
         }
 
@@ -47,25 +47,25 @@ namespace SystemDot.Messaging.LoadBalancing
         {
             MessagePayload message;
             
-            if (this.sentMessages.Count >= 20)
+            if (sentMessages.Count >= 20)
             {
                 Logger.Info("Load balancer retaining messages");
                 return;
             }
 
-            if(!this.unsentMessages.TryDequeue(out message)) return;
+            if(!unsentMessages.TryDequeue(out message)) return;
 
-            this.sentMessages.TryAdd(message.Id, message);
+            sentMessages.TryAdd(message.Id, message);
 
             OnMessageProcessed(message);
         }
 
         void SendFeelerMessages()
         {
-            if (this.sentMessages.Count >= 20) 
-                this.sentMessages.Values.ForEach(OnMessageProcessed);
+            if (sentMessages.Count >= 20) 
+                sentMessages.Values.ForEach(OnMessageProcessed);
             
-            this.taskScheduler.ScheduleTask(TimeSpan.FromSeconds(4), SendFeelerMessages);
+            taskScheduler.ScheduleTask(TimeSpan.FromSeconds(4), SendFeelerMessages);
         }
     }
 }

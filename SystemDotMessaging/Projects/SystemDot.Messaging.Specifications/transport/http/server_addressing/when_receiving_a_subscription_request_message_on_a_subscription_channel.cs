@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.server_addressing
 
             request = new MessagePayload().BuildSubscriptionRequest(
                 BuildAddress(SubscriberChannel, SubscriberServer, SubscriberServerAddress),
-                BuildAddressWithProxy(PublisherChannel, PublisherServer, PublisherServer));
+                BuildAddress(PublisherChannel, PublisherServer));
         };
 
         Because of = () => SendMessagesToServer(request);

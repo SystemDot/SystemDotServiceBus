@@ -5,18 +5,17 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.transport.http.sending
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_to_a_receiver_on_a_different_machine_and_remote_proxy : WithHttpConfigurationSubject
+    public class when_sending_to_a_receiver_on_a_different_server : WithHttpConfigurationSubject
     {
         const string ChannelName = "ChannelName";
         const string ReceiverChannelName = "ReceiverChannelName";
         const string ReceiverServerName = "ReceiverServerName";
-        const string RemoteProxyName = "RemoteProxyName";
-        const string RemoteProxyAddress = "RemoteProxyAddress";
-        const string ReceiverName = ReceiverChannelName + "@" + ReceiverServerName + "." + RemoteProxyName;
+        const string ReceiverServerAddress = "ReceiverServerAddress";
+        const string ReceiverName = ReceiverChannelName + "@" + ReceiverServerName;
 
         Establish context = () =>
         {
-            ServerAddressConfiguration.AddAddress(RemoteProxyName, RemoteProxyAddress);
+            ServerAddressConfiguration.AddAddress(ReceiverServerName, ReceiverServerAddress);
             ServerAddressConfiguration.AddAddress("OtherName", "OtherAddress");
 
             Configuration.Configure.Messaging()
@@ -34,10 +33,10 @@ namespace SystemDot.Messaging.Specifications.transport.http.sending
 
         It should_send_a_message_with_the_correct_to_address_server_name = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetToAddress().Route.Server.Name.ShouldEqual(ReceiverServerName);
+                .GetToAddress().Server.Name.ShouldEqual(ReceiverServerName);
 
-        It should_send_a_message_with_the_correct_to_address_remote_proxy_name = () =>
+        It should_send_a_message_with_the_correct_to_address_server_address = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetToAddress().Route.Proxy.Name.ShouldEqual(RemoteProxyName);
+                .GetToAddress().Server.Address.Path.ShouldEqual(ReceiverServerAddress);
     }
 }

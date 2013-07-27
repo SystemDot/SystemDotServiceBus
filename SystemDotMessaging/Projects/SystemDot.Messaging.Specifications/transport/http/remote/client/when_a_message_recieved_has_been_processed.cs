@@ -11,7 +11,6 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
     [Subject(SpecificationGroup.Description)]
     public class when_a_message_recieved_has_been_processed : WithHttpConfigurationSubject
     {
-        const string Proxy = "Proxy";
         const string ReceiverName = "ReceiverName";
         const string SenderName = "SenderName";
 
@@ -26,8 +25,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
             ConfigureAndRegister<ITaskStarter>(taskStarter); 
 
             Configuration.Configure.Messaging()
-                .UsingHttpTransport()
-                    .AsAServerUsingAProxy("Server", Proxy)
+                .UsingHttpTransport().AsAServerUsingAProxy("Server")
                 .OpenChannel(ReceiverName).ForPointToPointReceiving()
                 .Initialise();
 

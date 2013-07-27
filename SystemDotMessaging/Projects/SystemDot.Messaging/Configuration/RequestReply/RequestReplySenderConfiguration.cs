@@ -46,9 +46,9 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             Resolve<ReplyReceiveChannelBuilder>().Build(receiveSchema);
         }
 
-        protected override ServerRoute GetServerPath()
+        protected override MessageServer GetMessageServer()
         {
-            return sendSchema.FromAddress.Route;
+            return sendSchema.FromAddress.Server;
         }
 
         public RequestReplySenderConfiguration OnlyForMessages(IMessageFilterStrategy toFilterMessagesWith)

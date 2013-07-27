@@ -19,42 +19,40 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
             this.messagingConfiguration = messagingConfiguration;
         }
 
-        public HttpTransportConfiguration AsAProxy(string instance)
+        public HttpTransportConfiguration AsAProxyFor(string instance)
         {
             Contract.Requires(!String.IsNullOrEmpty(instance));
             
             HttpRemoteServerComponents.Configure(IocContainerLocator.Locate());
-            this.messagingConfiguration.BuildActions.Add(() => Resolve<HttpRemoteServerBuilder>().Build(instance));
+            messagingConfiguration.BuildActions.Add(() => Resolve<HttpRemoteServerBuilder>().Build(instance));
 
             return this;
         }
 
         public void Initialise()
         {
-            this.messagingConfiguration.BuildActions.ForEach(a => a());
+            messagingConfiguration.BuildActions.ForEach(a => a());
         }
 
-        public MessageServerConfiguration AsAServerUsingAProxy(string server, string proxy)
+        public MessageServerConfiguration AsAServerUsingAProxy(string server)
         {
             Contract.Requires(!String.IsNullOrEmpty(server));
-            Contract.Requires(!String.IsNullOrEmpty(proxy)); 
             
             HttpRemoteClientComponents.Configure(IocContainerLocator.Locate());
-
-            return new MessageServerConfiguration(
-                this.messagingConfiguration,
-                Resolve<ServerPathBuilder>().Build(String.Concat(server, ".", Environment.MachineName), proxy));
+            return new MessageServerConfiguration(messagingConfiguration, BuildServer(server));
         }
 
-        public MessageServerConfiguration AsAServer(string name)
+        public MessageServerConfiguration AsAServer(string server)
         {
-            Contract.Requires(!String.IsNullOrEmpty(name));
+            Contract.Requires(!String.IsNullOrEmpty(server));
 
             HttpServerComponents.Configure(IocContainerLocator.Locate());
+            return new MessageServerConfiguration(messagingConfiguration, BuildServer(server));
+        }
 
-            return new MessageServerConfiguration(
-                this.messagingConfiguration,
-                Resolve<ServerPathBuilder>().Build(name, name));
+        static MessageServer BuildServer(string server)
+        {
+            return Resolve<MessageServerBuilder>().Build(server);
         }
     }
 }

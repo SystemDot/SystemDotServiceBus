@@ -50,19 +50,18 @@ namespace SystemDot.Messaging.Specifications
             
             RequestsMade.Add(request);
 
-            var requestMessagePayload = request.Deserialise<MessagePayload>(this.formatter);
+            var requestMessagePayload = request.Deserialise<MessagePayload>(formatter);
             
-            if(!requestMessagePayload.IsLongPollRequest()) 
-                return;
+            if(!requestMessagePayload.IsLongPollRequest()) return;
 
             var response = new MemoryStream();
 
             List<MessagePayload> matching = 
-                this.messages.Where(m => m.GetToAddress().Route == requestMessagePayload.GetLongPollRequestServerPath()).ToList();
+                messages.Where(m => m.GetToAddress().Server == requestMessagePayload.GetLongPollRequestServerPath()).ToList();
 
-            response.Serialise(matching, this.formatter);
+            response.Serialise(matching, formatter);
 
-            matching.ForEach(m => this.messages.Remove(m));
+            matching.ForEach(m => messages.Remove(m));
 
             toPerformOnResponse(response);
             toPerformOnCompletion();
@@ -70,7 +69,7 @@ namespace SystemDot.Messaging.Specifications
 
         public void AddMessages(params MessagePayload[] messagePayloads)
         {
-            this.messages.AddRange(messagePayloads);
+            messages.AddRange(messagePayloads);
         }
     }
 }

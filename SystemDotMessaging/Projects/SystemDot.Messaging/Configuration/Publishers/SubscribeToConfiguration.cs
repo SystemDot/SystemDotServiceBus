@@ -44,9 +44,9 @@ namespace SystemDot.Messaging.Configuration.Publishers
             Resolve<SubscriptionRequestSendChannelBuilder>().Build(requestSchema);
         }
 
-        protected override ServerRoute GetServerPath()
+        protected override MessageServer GetMessageServer()
         {
-            return requestSchema.SubscriberAddress.Route;
+            return requestSchema.SubscriberAddress.Server;
         }
 
         public SubscribeToConfiguration WithDurability()

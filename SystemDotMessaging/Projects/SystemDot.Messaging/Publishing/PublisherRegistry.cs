@@ -6,24 +6,24 @@ namespace SystemDot.Messaging.Publishing
 {
     class PublisherRegistry : IPublisherRegistry
     {
-        readonly Dictionary<EndpointAddress, IPublisher> publishers;
+        readonly Dictionary<string, IPublisher> publishers;
 
         public PublisherRegistry()
         {
-            this.publishers = new Dictionary<EndpointAddress, IPublisher>();
+            publishers = new Dictionary<string, IPublisher>();
         }
 
         public void RegisterPublisher(EndpointAddress address, IPublisher publisher)
         {
             Contract.Requires(address != null);
             Contract.Requires(publisher != null);
-            this.publishers.Add(address, publisher);
+            this.publishers.Add(address.Channel, publisher);
         }
 
         public IPublisher GetPublisher(EndpointAddress address)
         {
             Contract.Requires(address != null);
-            return this.publishers[address];
+            return publishers[address.Channel];
         }
     }
 }

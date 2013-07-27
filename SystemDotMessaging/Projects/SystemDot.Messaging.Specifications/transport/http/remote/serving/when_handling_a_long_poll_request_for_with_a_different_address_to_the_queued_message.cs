@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
 
             Messaging.Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsAProxy("RemoteServerName")
+                .AsAProxyFor("RemoteServerName")
                 .Initialise();
 
             sentMessageInQueue = new MessagePayload();
@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
             SendMessagesToServer(sentMessageInQueue);
 
             longPollRequest = new MessagePayload();
-            longPollRequest.SetLongPollRequest(TestEndpointAddressBuilder.Build("Address1", "TestServer1").Route);
+            longPollRequest.SetLongPollRequest(TestEndpointAddressBuilder.Build("Address1", "TestServer1").Server);
         };
 
         Because of = () => returnedMessages = SendMessagesToServer(longPollRequest);

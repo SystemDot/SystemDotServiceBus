@@ -13,10 +13,9 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
     {
         const string ReceiverName = "ReceiverName";
         const string SenderName = "SenderName";
+        const string ServerName = "ServerName";
         const Int64 Message1 = 1;
         const Int64 Message2 = 2;
-        const string ServerName = "ServerName";
-        const string ProxyName = "ProxyName";
 
         static TestTaskStarter taskStarter;
         static MessagePayload messagePayload1;
@@ -25,29 +24,27 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
         Establish context = () =>
         {
-            string serverPath = ServerName + "." + Environment.MachineName;
-        
             taskStarter = new TestTaskStarter(1);
             taskStarter.Pause(); 
             ConfigureAndRegister<ITaskStarter>(taskStarter);
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                    .AsAServerUsingAProxy(ServerName, ProxyName)
+                    .AsAServerUsingAProxy(ServerName)
                 .OpenChannel(ReceiverName)
                     .ForPointToPointReceiving()
                 .Initialise();
 
             messagePayload1 = new MessagePayload().MakeSequencedReceivable(
                 Message1,
-                BuildAddressWithProxy(SenderName, serverPath, ProxyName),
-                BuildAddressWithProxy(ReceiverName, serverPath, ProxyName),
+                BuildAddress(SenderName, ServerName),
+                BuildAddress(ReceiverName, ServerName),
                 PersistenceUseType.PointToPointSend);
 
             messagePayload2 = new MessagePayload().MakeSequencedReceivable(
                 Message2,
-                BuildAddressWithProxy(SenderName, serverPath, ProxyName),
-                BuildAddressWithProxy(ReceiverName, serverPath, ProxyName),
+                BuildAddress(SenderName, ServerName),
+                BuildAddress(ReceiverName, ServerName),
                 PersistenceUseType.PointToPointSend);
 
             handler = new TestMessageHandler<Int64>();

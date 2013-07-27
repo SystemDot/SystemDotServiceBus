@@ -26,16 +26,16 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
             this.messageReceiver = messageReceiver;
         }
 
-        public void Build(ServerRoute toListenFor)
+        public void Build(MessageServer toListenFor)
         {
-            this.httpServerBuilder
+            httpServerBuilder
                 .Build(toListenFor.GetUrl(), BuildMessagingServerHandler())
                 .Start();
         }
 
         IHttpHandler BuildMessagingServerHandler()
         {
-            return new HttpMessagingServer(this.serialiser, new MessageReceiverHandler(this.messageReceiver));
+            return new HttpMessagingServer(serialiser, new MessageReceiverHandler(messageReceiver));
         }
     }
 }

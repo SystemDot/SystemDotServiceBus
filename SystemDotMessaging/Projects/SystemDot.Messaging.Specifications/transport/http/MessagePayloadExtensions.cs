@@ -36,44 +36,43 @@ namespace SystemDot.Messaging.Specifications.transport.http
 
         public static MessagePayload SetFromChannel(this MessagePayload payload, string toSet)
         {
-            payload.SetFromAddress(new EndpointAddress(toSet, ServerRoute.None));
+            payload.SetFromAddress(new EndpointAddress(toSet, MessageServer.None));
             return payload;
         }
 
-        public static MessagePayload SetFromProxy(this MessagePayload payload, string toSet)
+        public static MessagePayload SetFromServer(this MessagePayload payload, string toSet)
         {
-            payload.GetFromAddress().Route.Proxy = MessageServer.Named(toSet, ServerAddress.Local);
+            payload.GetFromAddress().Server = MessageServer.Named(toSet, ServerAddress.Local);
             return payload;
         }
 
-        public static MessagePayload SetFromProxyAddress(this MessagePayload payload, string toSet)
+        public static MessagePayload SetFromServerAddress(this MessagePayload payload, string toSet)
         {
-            payload.GetFromAddress().Route.Proxy.Address = new ServerAddress(toSet, false);
+            payload.GetFromAddress().Server.Address = new ServerAddress(toSet, false);
             return payload;
         }
 
         public static MessagePayload SetToChannel(this MessagePayload payload, string toSet)
         {
-            payload.SetToAddress(new EndpointAddress(toSet, ServerRoute.None));
+            payload.SetToAddress(new EndpointAddress(toSet, MessageServer.None));
             return payload;
         }
 
         public static MessagePayload SetToServer(this MessagePayload payload, string toSet)
         {
-            payload.GetToAddress().Route.Server = MessageServer.Named(toSet, ServerAddress.Local);
-            payload.SetToProxy(toSet);
+            payload.GetToAddress().Server = MessageServer.Named(toSet, ServerAddress.Local);
             return payload;
         }
 
-        public static MessagePayload SetToProxy(this MessagePayload payload, string toSet)
+        public static MessagePayload SetToMachine(this MessagePayload payload, string toSet)
         {
-            payload.GetToAddress().Route.Proxy = MessageServer.Named(toSet, ServerAddress.Local);
+            payload.GetToAddress().OriginatingMachineName = toSet;
             return payload;
         }
 
         public static MessagePayload SetToServerAddress(this MessagePayload payload, string toSet)
         {
-            payload.GetToAddress().Route.Server.Address = new ServerAddress(toSet, false);
+            payload.GetToAddress().Server.Address = new ServerAddress(toSet, false);
             return payload;
         }
 

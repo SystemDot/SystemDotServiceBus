@@ -13,7 +13,7 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly IPublisherRegistry publisherRegistry;
         readonly ServerAddressRegistry serverAddressRegistry;
 
-        internal SubscriptionRequestReceiveChannelBuilder(
+        SubscriptionRequestReceiveChannelBuilder(
             IMessageReceiver messageReceiver, 
             AcknowledgementSender acknowledgementSender, 
             IPublisherRegistry publisherRegistry, 

@@ -6,14 +6,14 @@ namespace SystemDot.Messaging.Configuration.Local
 {
     public class LocalChannelConfiguration : Configurer
     {
-        readonly ServerRoute serverRoute;
+        readonly MessageServer server;
         readonly LocalChannelSchema schema;
 
-        public LocalChannelConfiguration(ServerRoute serverRoute, MessagingConfiguration messagingConfiguration)
+        public LocalChannelConfiguration(MessageServer server, MessagingConfiguration messagingConfiguration)
             : base(messagingConfiguration)
         {
-            this.serverRoute = serverRoute;
-            this.schema = new LocalChannelSchema
+            this.server = server;
+            schema = new LocalChannelSchema
             {
                 UnitOfWorkRunner = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>() 
             };
@@ -21,18 +21,18 @@ namespace SystemDot.Messaging.Configuration.Local
 
         protected override void Build()
         {
-            Resolve<LocalChannelBuilder>().Build(this.schema);
+            Resolve<LocalChannelBuilder>().Build(schema);
         }
 
-        protected override ServerRoute GetServerPath()
+        protected override MessageServer GetMessageServer()
         {
-            return this.serverRoute;
+            return server;
         }
 
         public LocalChannelConfiguration WithUnitOfWork<TUnitOfWorkFactory>()
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory
         {
-            this.schema.UnitOfWorkRunner = CreateUnitOfWorkRunner<TUnitOfWorkFactory>();
+            schema.UnitOfWorkRunner = CreateUnitOfWorkRunner<TUnitOfWorkFactory>();
             return this;
         }
     }

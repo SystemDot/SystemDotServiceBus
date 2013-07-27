@@ -9,7 +9,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_a_message_with_a_remote_server_and_a_client_configured : WithHttpConfigurationSubject
+    public class when_sending_a_message_with_a_proxy_and_a_client_configured : WithHttpConfigurationSubject
     {
         const string Proxy = "Proxy";
         const string ProxyAddress = "ProxyAddress";
@@ -27,13 +27,12 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                    .AsAProxy("OtherProxy")
-                    .AsAServerUsingAProxy("Server", Proxy)
+                    .AsAProxyFor("OtherProxy")
+                    .AsAServerUsingAProxy("Server")
                 .OpenChannel("ReceiverAddress").ForPointToPointReceiving()
                 .Initialise();
 
-             messagePayload = new MessagePayload()
-                .MakeReceivable(1, "SenderAddress", "ReceiverAddress", PersistenceUseType.PointToPointSend);
+             messagePayload = new MessagePayload().MakeReceivable(1, "SenderAddress", "ReceiverAddress", PersistenceUseType.PointToPointSend);
         };
 
         Because of = () => 

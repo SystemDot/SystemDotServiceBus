@@ -5,7 +5,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_configuring_a_remote_server_without_an_address_registered : WithServerConfigurationSubject
+    public class when_configuring_a_proxy_without_an_address_registered : WithServerConfigurationSubject
     {
         const string RemoteServerName = "RemoteServerName";
         static TestSystemTime systemTime;
@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
 
         Because of = () => Messaging.Configuration.Configure.Messaging()
             .UsingHttpTransport()
-            .AsAProxy(RemoteServerName)
+            .AsAProxyFor(RemoteServerName)
             .Initialise();
 
         It should_use_the_correct_long_poll_time = () => 

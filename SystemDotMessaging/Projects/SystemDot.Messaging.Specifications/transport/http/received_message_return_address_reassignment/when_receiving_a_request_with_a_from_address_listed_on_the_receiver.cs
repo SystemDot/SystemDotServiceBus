@@ -6,10 +6,10 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.transport.http.received_message_return_address_reassignment
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_a_request_with_a_from_proxy_address_listed_on_the_receiver : WithServerConfigurationSubject
+    public class when_receiving_a_request_with_a_from_address_listed_on_the_receiver : WithServerConfigurationSubject
     {
-        const string SenderProxyName = "SenderProxyName";
-        const string LocalSenderProxyAddress = "LocalSenderProxyAddress";
+        const string SenderServerName = "SenderServerName";
+        const string LocalSenderServerAddress = "LocalSenderServerAddress";
         const string ReceiverServerName = "ReceiverServerName";
         const string ReceiverChannel = "ReceiverChannel";
 
@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.received_message_ret
 
         Establish context = () =>
         {
-            ServerAddressConfiguration.AddAddress(SenderProxyName, LocalSenderProxyAddress);
+            ServerAddressConfiguration.AddAddress(SenderServerName, LocalSenderServerAddress);
             
             Configuration.Configure.Messaging()
                 .UsingHttpTransport().AsAServer(ReceiverServerName)
@@ -27,8 +27,8 @@ namespace SystemDot.Messaging.Specifications.transport.http.received_message_ret
             messagePayload = new MessagePayload()
                 .SetMessageBody(1)
                 .SetFromChannel("SenderChannel")
-                .SetFromProxy(SenderProxyName)
-                .SetFromProxyAddress("SenderProxyAddress")
+                .SetFromServer(SenderServerName)
+                .SetFromServerAddress("SenderServerAddress")
                 .SetToChannel(ReceiverChannel)
                 .SetToServer(ReceiverServerName)
                 .SetChannelType(PersistenceUseType.RequestReceive)
@@ -37,8 +37,8 @@ namespace SystemDot.Messaging.Specifications.transport.http.received_message_ret
 
         Because of = () => SendMessagesToServer(messagePayload);
 
-        It should_send_the_acknoweldgement_to_the_local_proxy_address_listed = () => 
+        It should_send_the_acknoweldgement_to_the_local_address_listed = () => 
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetToAddress().Route.Proxy.Address.Path.ShouldEqual(LocalSenderProxyAddress);
+                .GetToAddress().Server.Address.Path.ShouldEqual(LocalSenderServerAddress);
     }
 }

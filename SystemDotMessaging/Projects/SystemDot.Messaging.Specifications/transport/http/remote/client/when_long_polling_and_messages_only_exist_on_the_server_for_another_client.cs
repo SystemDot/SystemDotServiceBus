@@ -12,7 +12,6 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
         const string ReceiverChannel = "ReceiverChannel";
         const string SenderChannel = "SenderChannel";
         const string ServerName = "ServerName";
-        const string ProxyName = "ProxyName";
 
         static TestTaskStarter taskStarter; 
         static MessagePayload messagePayload;
@@ -26,7 +25,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsAServerUsingAProxy(ServerName, ProxyName)
+                .AsAServerUsingAProxy(ServerName)
                 .OpenChannel(ReceiverChannel)
                 .ForPointToPointReceiving()
                 .Initialise();
@@ -34,8 +33,8 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
             messagePayload =
                  new MessagePayload().MakeSequencedReceivable(
                  1,
-                 BuildAddressWithProxy(SenderChannel, ServerName, ProxyName),
-                 BuildAddressWithProxy("DifferentReceiverChannel", ServerName, ProxyName),
+                 BuildAddress(SenderChannel, ServerName),
+                 BuildAddress("DifferentReceiverChannel", ServerName),
                  PersistenceUseType.PointToPointSend);
 
             handler = new TestMessageHandler<int>();

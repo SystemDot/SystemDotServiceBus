@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
 
             Messaging.Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsAProxy("RemoteServerName")
+                .AsAProxyFor("RemoteServerName")
                 .Initialise();
         };
 

@@ -7,7 +7,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.transport.http.receiving
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_a_message : WithServerConfigurationSubject
+    public class when_receiving_a_message_from_a_different_server : WithServerConfigurationSubject
     {
         const Int64 Message = 1;
         const string ServerName = "ServerName";
@@ -24,12 +24,15 @@ namespace SystemDot.Messaging.Specifications.transport.http.receiving
                 .OpenChannel(ReceiverChannel).ForPointToPointReceiving()
                 .Initialise();
 
-            messagePayload =
-                new MessagePayload().MakeSequencedReceivable(
-                    Message,
-                    BuildAddress("SenderChannel", ServerName),
-                    BuildAddress("ReceiverChannel", ServerName),
-                    PersistenceUseType.PointToPointSend);
+            messagePayload = new MessagePayload()
+                .SetMessageBody(Message)
+                .SetFromChannel("SenderChannel")
+                .SetFromServer("SenderServer")
+                .SetToChannel(ReceiverChannel)
+                .SetToServer(ServerName)
+                .SetToMachine("OtherMachineName")
+                .SetChannelType(PersistenceUseType.PointToPointSend)
+                .Sequenced();
 
             handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);

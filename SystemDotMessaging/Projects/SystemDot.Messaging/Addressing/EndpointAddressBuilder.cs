@@ -4,22 +4,22 @@ namespace SystemDot.Messaging.Addressing
 {
     public class EndpointAddressBuilder
     {
-        readonly ServerPathBuilder serverPathBuilder;
+        readonly MessageServerBuilder messageServerBuilder;
 
-        public EndpointAddressBuilder(ServerPathBuilder serverPathBuilder)
+        public EndpointAddressBuilder(MessageServerBuilder messageServerBuilder)
         {
-            Contract.Requires(serverPathBuilder != null);
+            Contract.Requires(messageServerBuilder != null);
 
-            this.serverPathBuilder = serverPathBuilder;
+            this.messageServerBuilder = messageServerBuilder;
         }
 
-        public EndpointAddress Build(string address, ServerRoute defaultServerRoute)
+        public EndpointAddress Build(string address, MessageServer defaultServer)
         {
             Contract.Requires(!string.IsNullOrEmpty(address));
-            Contract.Requires(defaultServerRoute != null);
+            Contract.Requires(defaultServer != null);
 
             string channel = GetChannelName(address);
-            ServerRoute route = GetServerPath(address, defaultServerRoute);
+            MessageServer route = GetServer(address, defaultServer);
 
             return new EndpointAddress(channel, route);
         }
@@ -29,27 +29,17 @@ namespace SystemDot.Messaging.Addressing
             return ParseChannel(address)[0];
         }
 
-        ServerRoute GetServerPath(string address, ServerRoute defaultServerRoute)
+        MessageServer GetServer(string address, MessageServer defaultServer)
         {
             if (ParseChannel(address).Length == 1)
-                return defaultServerRoute;
+                return defaultServer;
 
-            string serverPath = ParseChannel(address)[1];
-            string[] pathParts = ParseServerPath(serverPath);
-
-            return pathParts.Length == 1 
-                ? this.serverPathBuilder.Build(serverPath, serverPath) 
-                : this.serverPathBuilder.Build(pathParts[0], pathParts[1]);
+            return messageServerBuilder.Build(ParseChannel(address)[1]);
         }
 
         static string[] ParseChannel(string address)
         {
             return address.Split('@');
-        }
-
-        static string[] ParseServerPath(string serverPath)
-        {
-            return serverPath.Split('.');
         }
     }
 }

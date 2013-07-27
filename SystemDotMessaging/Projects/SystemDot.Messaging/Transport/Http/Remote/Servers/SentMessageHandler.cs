@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Servers
             Logger.Debug("Handling sent message {0} for {1} from {2}",
                 toHandle.Id,
                 toHandle.GetToAddress().Channel,
-                toHandle.GetToAddress().Route.Server.Address);
+                toHandle.GetToAddress().Server.Address);
         }
     }
 }
