@@ -27,9 +27,14 @@ namespace SystemDot.Messaging.Addressing
         {
             Contract.Requires(!String.IsNullOrEmpty(toLookup));
 
-            return this.addresses.ContainsKey(toLookup) && this.addresses[toLookup].Path != string.Empty
-                ? this.addresses[toLookup]
-                : ServerAddress.Local;
+            return Contains(toLookup) ? addresses[toLookup] : ServerAddress.Local;
+        }
+
+        public bool Contains(string toCheck)
+        {
+            Contract.Requires(!String.IsNullOrEmpty(toCheck));
+            
+            return addresses.ContainsKey(toCheck) && addresses[toCheck].Path != string.Empty;
         }
     }
 }

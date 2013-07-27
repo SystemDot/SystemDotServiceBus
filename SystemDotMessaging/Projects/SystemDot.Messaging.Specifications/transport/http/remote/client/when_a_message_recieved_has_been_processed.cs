@@ -20,8 +20,6 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
         Establish context = () =>
         {
-            WebRequestor.ExpectAddress(Proxy, Environment.MachineName);
-
             taskStarter = new TestTaskStarter(2);
             taskStarter.Pause();
 

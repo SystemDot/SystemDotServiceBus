@@ -9,7 +9,6 @@ namespace SystemDot.Http
         public void SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest)
         {
             Log(address);
-
             SendPut(address, toPerformOnRequest, s => { }, _ => { }, () => { });
         }
 
@@ -27,7 +26,7 @@ namespace SystemDot.Http
 
         static void Log(FixedPortAddress address)
         {
-            Logger.Debug("Sending put to {0}", address);
+            Logger.Info("Sending put to {0}", address);
         }
     }
 }

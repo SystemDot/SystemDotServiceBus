@@ -13,14 +13,10 @@ namespace SystemDot.Messaging.Specifications.transport.http.sending
         const string ServerName = "ServerName";
 
         Establish context = () =>
-        {
-            WebRequestor.ExpectAddress(ServerName, Environment.MachineName);
-
             Configuration.Configure.Messaging()
                 .UsingHttpTransport().AsAServer(ServerName)
                 .OpenChannel(SenderAddress).ForPointToPointSendingTo(ReceiverAddress)
                 .Initialise();
-        };
 
         Because of = () => Bus.Send(1);
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
+using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Expiry;
@@ -28,6 +29,7 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly PersistenceFactorySelector persistenceFactory;
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
+        readonly ServerAddressRegistry serverAddressRegistry;
 
         internal SubscriberRecieveChannelBuilder(
             ISerialiser serialiser, 
@@ -36,7 +38,8 @@ namespace SystemDot.Messaging.Publishing.Builders
             AcknowledgementSender acknowledgementSender,
             PersistenceFactorySelector persistenceFactory, 
             ISystemTime systemTime, 
-            ITaskRepeater taskRepeater)
+            ITaskRepeater taskRepeater, 
+            ServerAddressRegistry serverAddressRegistry)
         {
             Contract.Requires(serialiser != null);
             Contract.Requires(messageHandlerRouter != null);
@@ -45,6 +48,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             Contract.Requires(persistenceFactory != null);
             Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
+            Contract.Requires(serverAddressRegistry != null);
             
             this.serialiser = serialiser;
             this.messageHandlerRouter = messageHandlerRouter;
@@ -53,6 +57,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             this.persistenceFactory = persistenceFactory;
             this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
+            this.serverAddressRegistry = serverAddressRegistry;
         }
 
         public void Build(SubscriberRecieveChannelSchema schema)
@@ -64,6 +69,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             MessagePipelineBuilder.Build()
                 .With(messageReceiver)
                 .ToProcessor(new BodyMessageFilter(schema.Address))
+                .ToProcessor(new MessageLocalAddressReassigner(serverAddressRegistry))
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToProcessor(new SequenceOriginApplier(messageCache))
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))

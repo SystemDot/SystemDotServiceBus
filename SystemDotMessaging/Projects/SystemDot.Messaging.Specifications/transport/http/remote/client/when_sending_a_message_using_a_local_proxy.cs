@@ -19,8 +19,6 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
         {
             ConfigureAndRegister<ITaskStarter>();
 
-            WebRequestor.ExpectAddress(Proxy, Environment.MachineName);
-
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                     .AsAServerUsingAProxy(Server, Proxy)

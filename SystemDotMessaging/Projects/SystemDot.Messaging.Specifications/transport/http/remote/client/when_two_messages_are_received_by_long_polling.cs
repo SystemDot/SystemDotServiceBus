@@ -27,8 +27,6 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
         {
             string serverPath = ServerName + "." + Environment.MachineName;
         
-            WebRequestor.ExpectAddress(ProxyName, Environment.MachineName);
-
             taskStarter = new TestTaskStarter(1);
             taskStarter.Pause(); 
             ConfigureAndRegister<ITaskStarter>(taskStarter);

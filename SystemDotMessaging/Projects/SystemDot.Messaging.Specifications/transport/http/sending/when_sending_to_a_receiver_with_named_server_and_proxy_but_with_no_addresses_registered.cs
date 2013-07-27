@@ -20,9 +20,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.sending
         {
             receiverName = ReceiverChannelName + "@" + ReceiverServerName + "." + RemoteProxyName;
 
-            WebRequestor.ExpectAddress(RemoteProxyName, Environment.MachineName);
-
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsAServer("ServerName")
                 .OpenChannel(ChannelName).ForPointToPointSendingTo(receiverName)

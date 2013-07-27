@@ -29,6 +29,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly PersistenceFactorySelector persistenceFactorySelector;
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
+        readonly ServerAddressRegistry serverAddressRegistry;
 
         internal RequestRecieveChannelBuilder(
             ReplyAddressLookup replyAddressLookup, 
@@ -37,7 +38,8 @@ namespace SystemDot.Messaging.RequestReply.Builders
             AcknowledgementSender acknowledgementSender,
             PersistenceFactorySelector persistenceFactorySelector, 
             ISystemTime systemTime, 
-            ITaskRepeater taskRepeater)
+            ITaskRepeater taskRepeater, 
+            ServerAddressRegistry serverAddressRegistry)
         {
             Contract.Requires(replyAddressLookup != null);
             Contract.Requires(serialiser != null);
@@ -46,6 +48,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(persistenceFactorySelector != null);
             Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
+            Contract.Requires(serverAddressRegistry != null);
             
             this.replyAddressLookup = replyAddressLookup;
             this.serialiser = serialiser;
@@ -54,6 +57,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             this.persistenceFactorySelector = persistenceFactorySelector;
             this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
+            this.serverAddressRegistry = serverAddressRegistry;
         }
 
         public IMessageInputter<MessagePayload> Build(RequestRecieveChannelSchema schema, EndpointAddress senderAddress)
@@ -62,7 +66,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .Select(schema)
                 .CreateReceiveCache(PersistenceUseType.RequestReceive, senderAddress);
 
-            var startPoint = new SequenceOriginApplier(messageCache);
+            var startPoint = new MessageLocalAddressReassigner(serverAddressRegistry);
 
             MessagePipelineBuilder.Build()
                 .With(startPoint)

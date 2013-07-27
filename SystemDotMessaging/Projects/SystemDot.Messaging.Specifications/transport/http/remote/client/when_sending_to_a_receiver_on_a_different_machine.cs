@@ -21,9 +21,8 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
             ConfigureAndRegister<ITaskStarter>();
 
             ServerAddressConfiguration.AddAddress(ReceiverServerName, ReceiverServerAddress);
-            WebRequestor.ExpectAddress(ReceiverServerName, ReceiverServerAddress);
-            
-            Messaging.Configuration.Configure.Messaging()
+           
+            Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsAServerUsingAProxy("Server", Proxy)
                 .OpenChannel(SenderAddress).ForPointToPointSendingTo(ReceiverAddress)

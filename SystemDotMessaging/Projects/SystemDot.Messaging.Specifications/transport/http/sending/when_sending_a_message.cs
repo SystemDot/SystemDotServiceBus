@@ -12,16 +12,12 @@ namespace SystemDot.Messaging.Specifications.transport.http.sending
         const Int64 Message = 1;
        
         Establish context = () =>
-        {
-            WebRequestor.ExpectAddress(ServerName, Environment.MachineName);
-
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsAServer(ServerName)
                 .OpenChannel("TestSender")
                 .ForPointToPointSendingTo("TestReceiver")
                 .Initialise();
-        };
 
         Because of = () => Bus.Send(Message);
 

@@ -42,6 +42,7 @@
     <Compile Include="Acknowledgement\Builders\AcknowledgementSendChannelBuilder.cs" />
     <Compile Include="Addressing\EndpointAddress.cs" />
     <Compile Include="Addressing\EndpointAddressBuilder.cs" />
+    <Compile Include="Addressing\MessageLocalAddressReassigner.cs" />
     <Compile Include="Addressing\NullMessageServer.cs" />
     <Compile Include="Addressing\ServerAddressLoader.cs" />
     <Compile Include="Addressing\ServerAddressRegistry.cs" />
@@ -132,8 +133,8 @@
     <Compile Include="Publishing\Builders\SubscriberRecieveChannelBuilder.cs" />
     <Compile Include="Publishing\Builders\SubscriberSendChannelSchema.cs" />
     <Compile Include="Publishing\SubscriptionRequestHandler.cs" />
-    <Compile Include="Publishing\Builders\SubscriptionHandlerChannelBuilder.cs" />
-    <Compile Include="Publishing\Builders\SubscriptionRequestChannelBuilder.cs" />
+    <Compile Include="Publishing\Builders\SubscriptionRequestReceiveChannelBuilder.cs" />
+    <Compile Include="Publishing\Builders\SubscriptionRequestSendChannelBuilder.cs" />
     <Compile Include="Publishing\SubscriptionRequestFilter.cs" />
     <Compile Include="RequestReply\Builders\ReplyReceiveChannelSchema.cs" />
     <Compile Include="RequestReply\Builders\ReplySendChannelSchema.cs" />

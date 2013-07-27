@@ -18,12 +18,17 @@ namespace SystemDot
         {
         }
 
-        public ServerAddress(string address, bool isSecure)
+        public ServerAddress(string path, bool isSecure)
         {
-            Contract.Requires(!String.IsNullOrEmpty(address));
+            Contract.Requires(!String.IsNullOrEmpty(path));
 
-            Path = address;
+            Path = path;
             IsSecure = isSecure;
+        }
+
+        public override string ToString()
+        {
+            return String.Concat(Path, IsSecure ? "(Secure)" : string.Empty);
         }
     }
 }

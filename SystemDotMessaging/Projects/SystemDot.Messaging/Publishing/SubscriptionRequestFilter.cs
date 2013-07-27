@@ -8,7 +8,7 @@ namespace SystemDot.Messaging.Publishing
         public void InputMessage(MessagePayload toInput)
         {
             if (!toInput.IsSubscriptionRequest()) return;
-            this.MessageProcessed(toInput);
+            MessageProcessed(toInput);
         }
 
         public event Action<MessagePayload> MessageProcessed;

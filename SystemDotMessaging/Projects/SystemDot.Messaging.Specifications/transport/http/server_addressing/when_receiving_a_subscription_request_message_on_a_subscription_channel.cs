@@ -17,8 +17,6 @@ namespace SystemDot.Messaging.Specifications.transport.http.server_addressing
         
         Establish context = () =>
         {
-            WebRequestor.ExpectAddress(SubscriberServer, SubscriberServerAddress);
-            
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsAServer(PublisherServer)

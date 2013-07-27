@@ -3,38 +3,42 @@ using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Transport;
-using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Publishing.Builders
 {
-    class SubscriptionHandlerChannelBuilder
+    class SubscriptionRequestReceiveChannelBuilder
     {
         readonly IMessageReceiver messageReceiver;
         readonly AcknowledgementSender acknowledgementSender;
         readonly IPublisherRegistry publisherRegistry;
+        readonly ServerAddressRegistry serverAddressRegistry;
 
-        internal SubscriptionHandlerChannelBuilder(
+        internal SubscriptionRequestReceiveChannelBuilder(
             IMessageReceiver messageReceiver, 
             AcknowledgementSender acknowledgementSender, 
-            IPublisherRegistry publisherRegistry)
+            IPublisherRegistry publisherRegistry, 
+            ServerAddressRegistry serverAddressRegistry)
         {
             Contract.Requires(messageReceiver != null);
             Contract.Requires(acknowledgementSender != null);
             Contract.Requires(publisherRegistry != null);
+            Contract.Requires(serverAddressRegistry != null);
             
             this.messageReceiver = messageReceiver;
             this.acknowledgementSender = acknowledgementSender;
             this.publisherRegistry = publisherRegistry;
+            this.serverAddressRegistry = serverAddressRegistry;
         }
 
         public void Build()
         {
             MessagePipelineBuilder.Build()
-                .With(this.messageReceiver)
+                .With(messageReceiver)
                 .Pump()
                 .ToProcessor(new SubscriptionRequestFilter())
-                .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))
-                .ToEndPoint(new SubscriptionRequestHandler(this.publisherRegistry));
+                .ToProcessor(new MessageLocalAddressReassigner(serverAddressRegistry))
+                .ToProcessor(new MessageAcknowledger(acknowledgementSender))
+                .ToEndPoint(new SubscriptionRequestHandler(publisherRegistry));
         }
     }
 }

@@ -64,9 +64,15 @@
     <Compile Include="hooks_for_publishing\when_receiving_an_event_on_a_subscriber_channel_with_a_pre_unpackaging_hook.cs" />
     <Compile Include="hooks_for_publishing\when_publishing_an_event_on_a_publish_channel_with_a_post_packaging_hook.cs" />
     <Compile Include="hooks_for_request_reply\when_sending_a_request_on_a_channel_with_a_post_packaging_send_hook.cs" />
+    <Compile Include="transport\http\received_message_return_address_reassignment\when_receiving_a_subscription_request_with_a_from_proxy_address_listed_on_the_publisher.cs" />
+    <Compile Include="transport\http\received_message_return_address_reassignment\when_receiving_an_event_with_a_from_proxy_address_listed_on_the_subscriber.cs" />
+    <Compile Include="transport\http\received_message_return_address_reassignment\when_receiving_a_reply_with_a_from_proxy_address_listed_on_the_sender.cs" />
+    <Compile Include="transport\http\received_message_return_address_reassignment\when_receiving_a_request_with_a_from_proxy_address_listed_on_the_receiver.cs" />
+    <Compile Include="transport\http\received_message_return_address_reassignment\SpecificationGroup.cs" />
     <Compile Include="TestMessagePayloadProcessorHook.cs" />
     <Compile Include="hooks_for_request_reply\when_receiving_a_request_on_a_channel_with_a_pre_unpackaging_receive_hook.cs" />
     <Compile Include="hooks_for_publishing\SpecificationGroup.cs" />
+    <Compile Include="transport\http\received_message_return_address_reassignment\when_receiving_a_message_with_a_from_proxy_address_listed_on_the_receiver.cs" />
     <Compile Include="unitofwork_for_local_channels\SpecificationGroup.cs" />
     <Compile Include="logging\SpecificationGroup.cs" />
     <Compile Include="logging\when_logging_a_message_with_a_logging_mechanism_configured.cs" />

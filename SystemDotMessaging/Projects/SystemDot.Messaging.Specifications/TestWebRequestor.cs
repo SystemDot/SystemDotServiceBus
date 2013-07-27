@@ -14,34 +14,24 @@ namespace SystemDot.Messaging.Specifications
     {
         readonly List<MessagePayload> messages;
         readonly ISerialiser formatter;
-        FixedPortAddress addressToCheck;
-
+        
         public List<Stream> RequestsMade { get; private set; }
         
         public TestWebRequestor(ISerialiser formatter)
         {
             this.formatter = formatter;
             this.messages = new List<MessagePayload>();
-            this.addressToCheck = new FixedPortAddress();
 
             RequestsMade = new List<Stream>();
         }
 
-        public void ExpectAddress(string instance, string address)
-        {
-            this.addressToCheck = new FixedPortAddress(address, false, instance);
-        }
-
         public T DeserialiseSingleRequest<T>()
         {
-            return RequestsMade.Single().Deserialise<T>(this.formatter);
+            return RequestsMade.Single().Deserialise<T>(formatter);
         }
 
         public void SendPut(FixedPortAddress address, Action<Stream> toPerformOnRequest)
         {
-            if (this.addressToCheck.Url != address.Url)
-                return;
-
             var request = new MemoryStream();
             toPerformOnRequest(request);
             
@@ -55,9 +45,6 @@ namespace SystemDot.Messaging.Specifications
             Action<Exception> toPerformOnError, 
             Action toPerformOnCompletion)
         {
-            if (this.addressToCheck.Url != address.Url)
-                return;
-
             var request = new MemoryStream();
             toPerformOnRequest(request);
             
@@ -71,15 +58,13 @@ namespace SystemDot.Messaging.Specifications
             var response = new MemoryStream();
 
             List<MessagePayload> matching = 
-                this.messages
-                    .Where(m => m.GetToAddress().Route == requestMessagePayload.GetLongPollRequestServerPath()).ToList();
+                this.messages.Where(m => m.GetToAddress().Route == requestMessagePayload.GetLongPollRequestServerPath()).ToList();
 
             response.Serialise(matching, this.formatter);
 
             matching.ForEach(m => this.messages.Remove(m));
 
             toPerformOnResponse(response);
-
             toPerformOnCompletion();
         }
 

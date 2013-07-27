@@ -18,7 +18,6 @@ namespace SystemDot.Messaging.Specifications.transport.http.server_addressing
 
         Establish context = () =>
         {
-            WebRequestor.ExpectAddress(SenderServerName, SenderServerAddress);
             ServerAddressConfiguration.AddAddress(ReceiverServerName, ReceiverServerAddress);
 
             Configuration.Configure.Messaging()

@@ -19,8 +19,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
             ConfigureAndRegister<ITaskStarter>();
             
             ServerAddressConfiguration.AddAddress(Proxy, ProxyAddress);
-            WebRequestor.ExpectAddress(Proxy, ProxyAddress);
-
+            
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                     .AsAServerUsingAProxy(Server, Proxy)

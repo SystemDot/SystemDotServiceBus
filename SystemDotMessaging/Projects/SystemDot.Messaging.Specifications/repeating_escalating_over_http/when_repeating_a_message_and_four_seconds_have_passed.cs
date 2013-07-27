@@ -14,12 +14,10 @@ namespace SystemDot.Messaging.Specifications.repeating_escalating_over_http
         
         Establish context = () =>
         {
-            WebRequestor.ExpectAddress(ServerInstance, Environment.MachineName);
-
             var systemTime = new TestSystemTime(DateTime.Now);
             ConfigureAndRegister<ISystemTime>(systemTime);
 
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingHttpTransport().AsAServer(ServerInstance)
                 .OpenChannel(ChannelName)
                 .ForPointToPointSendingTo(SenderChannelName)

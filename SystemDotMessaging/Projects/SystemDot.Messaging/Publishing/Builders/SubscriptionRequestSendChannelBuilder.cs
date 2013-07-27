@@ -11,7 +11,7 @@ using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Publishing.Builders
 {
-    class SubscriptionRequestChannelBuilder
+    class SubscriptionRequestSendChannelBuilder
     {
         readonly IMessageSender messageSender;
         readonly ISystemTime systemTime;
@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly InMemoryChangeStore changeStore;
         readonly MessageAcknowledgementHandler acknowledgementHandler;
 
-        public SubscriptionRequestChannelBuilder(
+        public SubscriptionRequestSendChannelBuilder(
             IMessageSender messageSender, 
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater,

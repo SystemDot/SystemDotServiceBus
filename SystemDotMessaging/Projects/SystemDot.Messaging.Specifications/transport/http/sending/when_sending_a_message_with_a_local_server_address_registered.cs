@@ -16,8 +16,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.sending
         Establish context = () =>
         {
             ServerAddressConfiguration.AddAddress(ServerName, ServerAddress);
-            WebRequestor.ExpectAddress(ServerName, ServerAddress);
-
+            
             Configuration.Configure.Messaging()
                 .UsingHttpTransport().AsAServer(ServerName)
                 .OpenChannel(SenderAddress).ForPointToPointSendingTo(ReceiverAddress)

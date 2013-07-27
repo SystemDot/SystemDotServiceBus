@@ -19,8 +19,6 @@ namespace SystemDot.Messaging.Specifications.transport.http.sending
             ServerAddressConfiguration.AddAddress(RemoteProxyName, RemoteProxyAddress);
             ServerAddressConfiguration.AddAddress("OtherName", "OtherAddress");
 
-            WebRequestor.ExpectAddress(RemoteProxyName, RemoteProxyAddress);
-
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsAServer("ServerName")

@@ -14,7 +14,6 @@ namespace SystemDot.Messaging.Specifications.transport.http.sending
 
         Establish context = () =>
         {
-            WebRequestor.ExpectAddress(ServerName, Environment.MachineName);
             ServerAddressConfiguration.AddAddress(ServerName, string.Empty);
 
             Configuration.Configure.Messaging()

@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.Configuration
 
         public void Initialise()
         {
-            Resolve<SubscriptionHandlerChannelBuilder>().Build();
+            Resolve<SubscriptionRequestReceiveChannelBuilder>().Build();
             Resolve<AcknowledgementSendChannelBuilder>().Build();
             Resolve<AcknowledgementRecieveChannelBuilder>().Build();
 

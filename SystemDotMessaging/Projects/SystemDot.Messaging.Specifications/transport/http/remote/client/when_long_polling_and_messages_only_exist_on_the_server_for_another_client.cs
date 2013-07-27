@@ -20,8 +20,6 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.client
 
         Establish context = () =>
         {
-            WebRequestor.ExpectAddress("DifferentServerName", null);
-
             taskStarter = new TestTaskStarter(1);
             taskStarter.Pause(); 
             ConfigureAndRegister<ITaskStarter>(taskStarter);

@@ -21,13 +21,11 @@ namespace SystemDot.Messaging.Specifications.transport.http.remote.serving
         {
             ServerAddressConfiguration.AddAddress(Proxy, ProxyAddress);
 
-            WebRequestor.ExpectAddress(Proxy, ProxyAddress);
-            
             taskStarter = new TestTaskStarter(1);
             ConfigureAndRegister<ITaskStarter>(taskStarter);
             taskStarter.Pause();
 
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                     .AsAProxy("OtherProxy")
                     .AsAServerUsingAProxy("Server", Proxy)
