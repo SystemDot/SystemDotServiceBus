@@ -40,8 +40,8 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
             var distributor = new ReplySendChannelDistributor(
                 GetChangeStore(schema), 
-                this.replyAddressLookup, 
-                this.builder, 
+                replyAddressLookup, 
+                builder, 
                 schema);
 
             MessagePipelineBuilder.Build()      
@@ -51,7 +51,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
             MessagePipelineBuilder.Build()
                 .WithBusReplyTo(new MessageFilter(
-                    new ReplyChannelMessageFilterStategy(this.replyAddressLookup, schema.FromAddress)))
+                    new ReplyChannelMessageFilterStategy(replyAddressLookup, schema.FromAddress)))
                 .ToEndPoint(distributor);
 
             distributor.Initialise();

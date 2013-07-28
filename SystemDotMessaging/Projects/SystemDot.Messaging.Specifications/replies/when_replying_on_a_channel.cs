@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Specifications.replies
 
         Establish context = () =>
         {
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForRequestReplyRecieving()
@@ -38,16 +38,13 @@ namespace SystemDot.Messaging.Specifications.replies
         Because of = () => Bus.Reply(message);
 
         It should_send_a_message_with_the_correct_to_address = () =>
-            Server.SentMessages.ExcludeAcknowledgements().First().GetToAddress()
-                .ShouldEqual(BuildAddress(SenderChannelName));
+            Server.SentMessages.ExcludeAcknowledgements().First().GetToAddress().ShouldEqual(BuildAddress(SenderChannelName));
 
         It should_send_a_message_with_the_correct_from_address = () =>
-            Server.SentMessages.ExcludeAcknowledgements().First().GetFromAddress()
-                .ShouldEqual(BuildAddress(ChannelName));
+            Server.SentMessages.ExcludeAcknowledgements().First().GetFromAddress().ShouldEqual(BuildAddress(ChannelName));
 
         It should_send_a_message_with_the_correct_content = () =>
-            Server.SentMessages.ExcludeAcknowledgements().First().DeserialiseTo<Int64>()
-                .ShouldEqual(message);
+            Server.SentMessages.ExcludeAcknowledgements().First().DeserialiseTo<Int64>().ShouldEqual(message);
 
         It should_mark_the_message_with_the_persistence_id = () =>
             Server.SentMessages.ExcludeAcknowledgements().First()
@@ -58,8 +55,7 @@ namespace SystemDot.Messaging.Specifications.replies
                .ShouldEqual(Server.SentMessages.ExcludeAcknowledgements().First().GetPersistenceId());
 
         It should_mark_the_time_the_message_is_sent = () =>
-            Server.SentMessages.ExcludeAcknowledgements().First().GetLastTimeSent()
-                .ShouldBeGreaterThan(DateTime.MinValue);
+            Server.SentMessages.ExcludeAcknowledgements().First().GetLastTimeSent().ShouldBeGreaterThan(DateTime.MinValue);
 
         It should_mark_the_amount_of_times_the_message_has_been_sent = () =>
             Server.SentMessages.ExcludeAcknowledgements().First().GetAmountSent().ShouldEqual(1);
