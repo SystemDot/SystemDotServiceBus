@@ -15,8 +15,9 @@ namespace SystemDot.Messaging.Specifications.replies
     {
         const string ChannelName = "Test";
         const string SenderChannelName = "TestSender";
+        const Int64 Reply = 1;
 
-        static Int64 message;
+        static MessagePayload messagePayload;
 
         Establish context = () =>
         {
@@ -26,29 +27,30 @@ namespace SystemDot.Messaging.Specifications.replies
                 .ForRequestReplyRecieving()
                 .Initialise();
 
-            Server.ReceiveMessage(new MessagePayload().MakeSequencedReceivable(
-                1, 
-                SenderChannelName, 
-                ChannelName, 
-                PersistenceUseType.RequestSend));
+            messagePayload = new MessagePayload()
+                .SetMessageBody(1)
+                .SetFromChannel(SenderChannelName)
+                .SetToChannel(ChannelName)
+                .SetChannelType(PersistenceUseType.RequestSend)
+                .Sequenced();
 
-            message = 1;
+            Server.ReceiveMessage(messagePayload);
         };
 
-        Because of = () => Bus.Reply(message);
+        Because of = () => Bus.Reply(Reply);
 
         It should_send_a_message_with_the_correct_to_address = () =>
-            Server.SentMessages.ExcludeAcknowledgements().First().GetToAddress().ShouldEqual(BuildAddress(SenderChannelName));
+            Server.SentMessages.ExcludeAcknowledgements().First().GetToAddress().ShouldEqual(messagePayload.GetFromAddress());
 
         It should_send_a_message_with_the_correct_from_address = () =>
             Server.SentMessages.ExcludeAcknowledgements().First().GetFromAddress().ShouldEqual(BuildAddress(ChannelName));
 
         It should_send_a_message_with_the_correct_content = () =>
-            Server.SentMessages.ExcludeAcknowledgements().First().DeserialiseTo<Int64>().ShouldEqual(message);
+            Server.SentMessages.ExcludeAcknowledgements().First().DeserialiseTo<Int64>().ShouldEqual(Reply);
 
         It should_mark_the_message_with_the_persistence_id = () =>
             Server.SentMessages.ExcludeAcknowledgements().First()
-                .ShouldHaveCorrectPersistenceId(SenderChannelName, PersistenceUseType.ReplySend);
+                .ShouldHaveCorrectPersistenceId(messagePayload.GetFromAddress(), PersistenceUseType.ReplySend);
 
         It should_set_original_persistence_id_to_the_persistence_id_of_the_message_with_the_persistence_id = () =>
            Server.SentMessages.ExcludeAcknowledgements().First().GetSourcePersistenceId()

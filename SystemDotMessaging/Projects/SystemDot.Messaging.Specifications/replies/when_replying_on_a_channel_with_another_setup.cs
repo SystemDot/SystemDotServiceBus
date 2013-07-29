@@ -15,17 +15,19 @@ namespace SystemDot.Messaging.Specifications.replies
 
         Establish context = () =>
         {
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForRequestReplyRecieving()
                 .OpenChannel("Test2").ForRequestReplyRecieving()
                 .Initialise();
 
-            Server.ReceiveMessage(new MessagePayload().MakeSequencedReceivable(
-                1, 
-                "TestSender", 
-                ChannelName, 
-                PersistenceUseType.RequestSend));
+            Server.ReceiveMessage(
+                new MessagePayload()
+                    .SetMessageBody(1)
+                    .SetFromChannel("TestSender")
+                    .SetToChannel(ChannelName)
+                    .SetChannelType(PersistenceUseType.RequestSend)
+                    .Sequenced());
         };
 
         Because of = () => Bus.Reply(1);

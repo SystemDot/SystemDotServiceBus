@@ -15,8 +15,7 @@ namespace SystemDot.Messaging.Specifications.transport.http
 
         public static IEnumerable<MessagePayload> SendMessagesToServer(params MessagePayload[] toSend)
         {
-            return SendObjectsToServer(toSend)
-                .Deserialise<IEnumerable<MessagePayload>>(new JsonSerialiser());
+            return SendObjectsToServer(toSend).Deserialise<IEnumerable<MessagePayload>>(new JsonSerialiser());
         }
 
         public static Stream SendObjectsToServer(params object[] toSend)

@@ -1,5 +1,4 @@
 using System;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.replies
@@ -11,13 +10,11 @@ namespace SystemDot.Messaging.Specifications.replies
         
         static Exception exception;
 
-        Establish context = () =>
-        {
-            Messaging.Configuration.Configure.Messaging()
+        Establish context = () => 
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenLocalChannel()
                 .Initialise();
-        };
 
         Because of = () => exception = Catch.Exception(() => Bus.Reply(new object()));
 

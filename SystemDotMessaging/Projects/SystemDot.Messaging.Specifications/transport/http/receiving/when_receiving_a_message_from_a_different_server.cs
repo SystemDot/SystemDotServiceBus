@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.transport.http.receiving
                 .SetFromServer("SenderServer")
                 .SetToChannel(ReceiverChannel)
                 .SetToServer(ServerName)
-                .SetToMachine("OtherMachineName")
+                .SetToOriginatingMachine("OtherMachineName")
                 .SetChannelType(PersistenceUseType.PointToPointSend)
                 .Sequenced();
 

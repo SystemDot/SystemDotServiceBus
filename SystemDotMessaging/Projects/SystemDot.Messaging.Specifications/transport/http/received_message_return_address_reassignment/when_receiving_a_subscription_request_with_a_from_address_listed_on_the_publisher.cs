@@ -32,7 +32,6 @@ namespace SystemDot.Messaging.Specifications.transport.http.received_message_ret
                 .SetFromServerAddress("SubscriberServerAddress")
                 .SetToChannel(PublisherChannel)
                 .SetToServer(PublisherServerName)
-                .SetChannelType(PersistenceUseType.SubscriberRequestReceive)
                 .SetSubscriptionRequest();
         };
 

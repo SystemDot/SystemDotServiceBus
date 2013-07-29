@@ -64,6 +64,7 @@
     <Compile Include="hooks_for_publishing\when_receiving_an_event_on_a_subscriber_channel_with_a_pre_unpackaging_hook.cs" />
     <Compile Include="hooks_for_publishing\when_publishing_an_event_on_a_publish_channel_with_a_post_packaging_hook.cs" />
     <Compile Include="hooks_for_request_reply\when_sending_a_request_on_a_channel_with_a_post_packaging_send_hook.cs" />
+    <Compile Include="replies\when_replying_on_a_channel_to_a_message_from_a_different_machine.cs" />
     <Compile Include="transport\http\received_message_return_address_reassignment\when_receiving_a_subscription_request_with_a_from_address_listed_on_the_publisher.cs" />
     <Compile Include="transport\http\received_message_return_address_reassignment\when_receiving_an_event_with_a_from_address_listed_on_the_subscriber.cs" />
     <Compile Include="transport\http\received_message_return_address_reassignment\when_receiving_a_reply_with_a_from_address_listed_on_the_sender.cs" />
