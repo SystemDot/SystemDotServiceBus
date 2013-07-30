@@ -4,7 +4,7 @@ using SystemDot.Messaging.Addressing;
 
 namespace SystemDot.Messaging.Storage
 {
-    public class MessagePersistenceId
+    public class MessagePersistenceId : Equatable<MessagePersistenceId> 
     {
         public Guid MessageId { get; set; }
         public EndpointAddress Address { get; set; }
@@ -25,19 +25,11 @@ namespace SystemDot.Messaging.Storage
             UseType = useType;
         }
 
-        bool Equals(MessagePersistenceId other)
+        public override bool Equals(MessagePersistenceId other)
         {
             return MessageId.Equals(other.MessageId) 
                 && Equals(Address, other.Address) 
                 && UseType.Equals(other.UseType);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((MessagePersistenceId) obj);
         }
 
         public override int GetHashCode()
@@ -49,16 +41,6 @@ namespace SystemDot.Messaging.Storage
                 hashCode = (hashCode*397) ^ UseType.GetHashCode();
                 return hashCode;
             }
-        }
-
-        public static bool operator ==(MessagePersistenceId left, MessagePersistenceId right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(MessagePersistenceId left, MessagePersistenceId right)
-        {
-            return !left.Equals(right);
         }
 
         public override string ToString()

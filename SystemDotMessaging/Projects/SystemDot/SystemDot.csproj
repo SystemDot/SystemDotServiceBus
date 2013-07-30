@@ -42,6 +42,7 @@
     <Compile Include="ByteArrayExtensions.cs" />
     <Compile Include="CurrentDateProvider.cs" />
     <Compile Include="Disposable.cs" />
+    <Compile Include="Equatable.cs" />
     <Compile Include="Files\FileSystem.cs" />
     <Compile Include="Http\Builders\HttpServerBuilder.cs" />
     <Compile Include="Http\Builders\IHttpServerBuilder.cs" />

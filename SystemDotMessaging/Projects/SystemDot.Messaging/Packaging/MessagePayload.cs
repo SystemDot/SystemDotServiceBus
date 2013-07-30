@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace SystemDot.Messaging.Packaging
 {
-    public class MessagePayload
+    public class MessagePayload : Equatable<MessagePayload> 
     {
         public ConcurrentDictionary<string, IMessageHeader> Headers { get; set; }
 
@@ -43,17 +43,9 @@ namespace SystemDot.Messaging.Packaging
             return Headers.Values.Any(h => h.GetType() == typeof(T));
         }
 
-        protected bool Equals(MessagePayload other)
+        public override bool Equals(MessagePayload other)
         {
             return Id.Equals(other.Id);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((MessagePayload)obj);
         }
 
         public override int GetHashCode()
@@ -61,19 +53,9 @@ namespace SystemDot.Messaging.Packaging
             return Id.GetHashCode();
         }
 
-        public static bool operator ==(MessagePayload left, MessagePayload right)
-        {
-            return Equals(left, right);
-        }
-
-        public static bool operator !=(MessagePayload left, MessagePayload right)
-        {
-            return !Equals(left, right);
-        }
-
         public override string ToString()
         {
-            return String.Concat("Message payload ", this.Id);
+            return String.Concat("Message payload ", Id);
         }
     }
 }

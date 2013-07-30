@@ -68,13 +68,13 @@ namespace SystemDot.Messaging.Specifications
 
         public static MessagePayload SetFromServer(this MessagePayload payload, string toSet)
         {
-            payload.GetFromAddress().Server = MessageServer.Named(toSet, ServerAddress.Local);
+            payload.GetFromAddress().Server = MessageServer.Inbound(toSet, ServerAddress.Local);
             return payload;
         }
 
-        public static MessagePayload SetFromOriginatingMachine(this MessagePayload payload, string toSet)
+        public static MessagePayload SetFromMachine(this MessagePayload payload, string toSet)
         {
-            payload.GetFromAddress().OriginatingMachineName = toSet;
+            payload.GetFromAddress().Server.MachineName = toSet;
             return payload;
         }
 
@@ -92,13 +92,13 @@ namespace SystemDot.Messaging.Specifications
 
         public static MessagePayload SetToServer(this MessagePayload payload, string toSet)
         {
-            payload.GetToAddress().Server = MessageServer.Named(toSet, ServerAddress.Local);
+            payload.GetToAddress().Server = MessageServer.Inbound(toSet, ServerAddress.Local);
             return payload;
         }
 
-        public static MessagePayload SetToOriginatingMachine(this MessagePayload payload, string toSet)
+        public static MessagePayload SetToMachine(this MessagePayload payload, string toSet)
         {
-            payload.GetToAddress().OriginatingMachineName = toSet;
+            payload.GetToAddress().Server.MachineName = toSet;
             return payload;
         }
 

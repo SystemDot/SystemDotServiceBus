@@ -52,7 +52,7 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
 
         static MessageServer BuildServer(string server)
         {
-            return Resolve<MessageServerBuilder>().Build(server);
+            return Resolve<MessageServerBuilder>().BuildInbound(server);
         }
     }
 }

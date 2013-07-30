@@ -30,10 +30,9 @@ namespace SystemDot.Messaging.Specifications.replies
                 .SetMessageBody(1)
                 .SetFromChannel(SenderChannelName)
                 .SetFromServer("SenderServer")
-                .SetFromOriginatingMachine(SenderMachine)
+                .SetFromMachine(SenderMachine)
                 .SetToChannel(ReceiverChannelName)
                 .SetToServer(ReceiverServer)
-                .SetToOriginatingMachine(SenderMachine)
                 .SetChannelType(PersistenceUseType.RequestSend)
                 .Sequenced();
 
