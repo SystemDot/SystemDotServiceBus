@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.Configuration
             IIocContainer container = configuration.GetInternalIocContainer();
 
             container.RegisterInstance<IChangeStore, EsentChangeStore>();
-            configuration.BuildActions.Add(() => container.Resolve<IChangeStore>().Initialise(string.Empty));
+            configuration.BuildActions.Add(() => container.Resolve<IChangeStore>().Initialise());
 
             return configuration;
         }

@@ -11,7 +11,7 @@ namespace SystemDot.Esent.Test
         static void Main(string[] args)
         {
             var store = new EsentChangeStore(new FileSystem(), new JsonSerialiser());
-            store.Initialise("Messaging");
+            store.Initialise();
 
             foreach (var c in store.GetChanges("Test"))
             {

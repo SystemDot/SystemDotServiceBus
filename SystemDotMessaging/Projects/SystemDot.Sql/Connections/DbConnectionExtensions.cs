@@ -1,19 +1,20 @@
 using System;
+using System.Data.Common;
 using System.Data.SqlClient;
 
 namespace SystemDot.Sql.Connections
 {
-    public static class SqlConnectionExtensions
+    public static class DbConnectionExtensions
     {
-        static SqlCommand GetCommand(this SqlConnection connection, string toExecute)
+        static DbCommand GetCommand(this DbConnection connection, string toExecute)
         {
-            SqlCommand command = connection.CreateCommand();
+            DbCommand command = connection.CreateCommand();
             command.CommandText = toExecute;
 
             return command;
         }
 
-        public static void ExecuteReader(this SqlConnection connection, string toExecute, Action<SqlDataReader> onRowRead)
+        public static void ExecuteReader(this DbConnection connection, string toExecute, Action<DbDataReader> onRowRead)
         {
             using (var command = connection.GetCommand(toExecute))
             {
@@ -27,7 +28,7 @@ namespace SystemDot.Sql.Connections
             }
         }
 
-        public static int Execute(this SqlConnection connection, string toExecute, Action<SqlCommand> onCommandInit)
+        public static int Execute(this DbConnection connection, string toExecute, Action<DbCommand> onCommandInit)
         {
             using (var command = connection.GetCommand(toExecute))
             {
@@ -36,7 +37,7 @@ namespace SystemDot.Sql.Connections
             }
         }
 
-        public static int Execute(this SqlConnection connection, SqlTransaction transaction, string toExecute, Action<SqlCommand> onCommandInit)
+        public static int Execute(this DbConnection connection, SqlTransaction transaction, string toExecute, Action<DbCommand> onCommandInit)
         {
             using (var command = connection.GetCommand(toExecute))
             {

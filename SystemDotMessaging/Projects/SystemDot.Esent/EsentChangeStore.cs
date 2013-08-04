@@ -26,9 +26,9 @@ namespace SystemDot.Esent
             this.serialiser = serialiser;
         }
 
-        public void Initialise(string connection)
+        public void Initialise()
         {
-            this.instance = new Instance(connection);
+            this.instance = new Instance(string.Empty);
             this.instance.Parameters.MaxVerPages = 1024;
             this.instance.Init();
 

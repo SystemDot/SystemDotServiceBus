@@ -1,10 +1,10 @@
-using System.Data.SqlServerCe;
+using System.Data.Common;
 
-namespace SystemDot.Messaging.Storage.Sql
+namespace SystemDot.Sql
 {
-    public static class SqlCeDataReaderExtensions
+    public static class DbDataReaderExtensions
     {
-        public static byte[] GetBytes(this SqlCeDataReader reader, int ordinal)
+        public static byte[] GetBytes(this DbDataReader reader, int ordinal)
         {
             long length = reader.GetBytes(ordinal, 0, null, 0, 0);
 

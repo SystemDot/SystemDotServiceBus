@@ -5,96 +5,75 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C3E83261-4845-42AC-8737-F63EF9889EFD}</ProjectGuid>
+    <ProjectGuid>{1C969A28-4945-4C4D-A6D4-83A5A3C99C30}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AndroidApplication1</RootNamespace>
-    <AssemblyName>AndroidApplication1</AssemblyName>
+    <RootNamespace>SystemDot.Sql</RootNamespace>
+    <AssemblyName>SystemDot.Sql</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <AndroidApplication>true</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\Build\Android\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
-    <AndroidLinkMode>None</AndroidLinkMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\..\Build\Android\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
-    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Activity1.cs" />
-    <Compile Include="Resources\Resource.Designer.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\..\SystemDot.Sql\*.cs">
+      <Link>%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\..\SystemDot.Sql\*\*.cs">
+      <Link>%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\..\SystemDot.Sql\*\*\*.cs">
+      <Link>%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\..\SystemDot.Sql\*\*\*\*.cs">
+      <Link>%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\..\SystemDot.Sql\*\*\*\*\*.cs">
+      <Link>%(RecursiveDir)%(FileName)</Link>
+    </Compile>
+    <Compile Include="..\..\SystemDot.Sql\*\*\*\*\*\*.cs">
+      <Link>%(RecursiveDir)%(FileName)</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\SystemDot.config" />
-    <None Include="Resources\AboutResources.txt" />
-    <None Include="Assets\AboutAssets.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\Layout\Main.axml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\Values\Strings.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\Drawable\Icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Android\SystemDot.Extensions.Android\SystemDot.Extensions.Android.csproj">
-      <Project>{34f8b744-4d0b-4151-ae4c-5530479342aa}</Project>
-      <Name>SystemDot.Extensions.Android</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Android\SystemDot.Messaging\SystemDot.Messaging.csproj">
+    <ProjectReference Include="..\SystemDot.Messaging\SystemDot.Messaging.csproj">
       <Project>{b50abbab-9cca-4307-9a82-54e6793e63a8}</Project>
       <Name>SystemDot.Messaging %28Android\SystemDot.Messaging%29</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Android\SystemDot.Sqlite\SystemDot.Sqlite.csproj">
-      <Project>{10261535-b476-4da8-a3d0-b88b9dcb870e}</Project>
-      <Name>SystemDot.Sqlite</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Android\SystemDot\SystemDot.csproj">
+    <ProjectReference Include="..\SystemDot\SystemDot.csproj">
       <Project>{00de20f1-75ad-48f8-b882-66bd2d9f0f8b}</Project>
       <Name>SystemDot %28Android\SystemDot%29</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Messages\Messages.csproj">
-      <Project>{560ee1bb-135b-491d-80ce-69530da14480}</Project>
-      <Name>Messages %28Android\Examples\Messages%29</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-     Other similar extension points exist, see Microsoft.Common.targets.
+       Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
   <Target Name="AfterBuild">

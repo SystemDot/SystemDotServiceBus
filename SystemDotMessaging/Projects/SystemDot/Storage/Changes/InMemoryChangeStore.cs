@@ -17,7 +17,7 @@ namespace SystemDot.Storage.Changes
             this.changes = new ConcurrentDictionary<int, ChangeContainer>();
         }
 
-        public void Initialise(string connection)
+        public void Initialise()
         {            
         }
 

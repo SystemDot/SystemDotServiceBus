@@ -4,7 +4,6 @@ using SystemDot.Logging;
 using SystemDot.Messaging;
 using SystemDot.Messaging.Configuration;
 using Android.App;
-using Android.Content.Res;
 using Android.Widget;
 using Android.OS;
 using Messages;
@@ -24,8 +23,11 @@ namespace AndroidApplication1
             container.RegisterFromAssemblyOf<Activity1>();
 
             AssetManagerLocator.Set(Assets);
+
+
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = true, ShowDebug = false })
+                .UsingSqlitePersistence()
                 .ResolveReferencesWith(container)
                 .UsingHttpTransport()
                     .AsAServerUsingAProxy("SenderServer")
@@ -43,8 +45,11 @@ namespace AndroidApplication1
 
             button.Click += delegate
             {
-                Bus.Send(new TestMessage {Text = string.Format("Message {0}", count)});
-                button.Text = string.Format("{0} messages sent!", count++);
+                for (int i = 0; i < 20; i++)
+                {
+                    Bus.Send(new TestMessage { Text = string.Format("Message {0}", count) });
+                    button.Text = string.Format("{0} messages sent!", count++);
+                }
             };
         }
     }
