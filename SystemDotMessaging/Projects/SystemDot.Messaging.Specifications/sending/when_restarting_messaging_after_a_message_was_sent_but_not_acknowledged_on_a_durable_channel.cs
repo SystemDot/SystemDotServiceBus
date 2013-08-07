@@ -61,12 +61,12 @@ namespace SystemDot.Messaging.Specifications.sending
             messagesLoadedToCacheEvents.ShouldContain(m =>
                 m.CacheAddress == BuildAddress(SenderAddress)
                 && m.UseType == PersistenceUseType.PointToPointSend
-                && m.Message == Server.SentMessages.First());
+                && m.Message == GetServer().SentMessages.First());
 
         It should_notify_that_the_second_sent_message_was_loaded_into_the_cache = () =>
             messagesLoadedToCacheEvents.ShouldContain(m =>
                 m.CacheAddress == BuildAddress(SenderAddress)
                 && m.UseType == PersistenceUseType.PointToPointSend
-                && m.Message == Server.SentMessages.ElementAt(1));
+                && m.Message == GetServer().SentMessages.ElementAt(1));
     }
 }

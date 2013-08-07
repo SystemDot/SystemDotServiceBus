@@ -35,7 +35,7 @@ namespace SystemDot.Messaging.Specifications.publishing
         };
 
         It should_mark_the_first_sequence_number_as_the_sequence_of_the_first_mesage_through_the_channel = () =>
-            Server.SentMessages.ExcludeAcknowledgements().Last().GetFirstSequence().ShouldEqual(2);
+            GetServer().SentMessages.ExcludeAcknowledgements().Last().GetFirstSequence().ShouldEqual(2);
 
     }
 }

@@ -33,7 +33,7 @@ namespace SystemDot.Messaging.Specifications.publishing
         Because of = () => Bus.Publish(message);
 
         It should_publish_a_message_with_the_correct_content_through_both_channels = () =>
-            Server.SentMessages.ExcludeAcknowledgements()
+            GetServer().SentMessages.ExcludeAcknowledgements()
                 .Count(m => m.DeserialiseTo<Int64>() == message).ShouldEqual(2);
     }
 }

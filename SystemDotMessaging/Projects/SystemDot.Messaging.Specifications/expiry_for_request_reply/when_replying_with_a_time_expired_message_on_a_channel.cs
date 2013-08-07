@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Specifications.expiry_for_request_reply
                         .WithMessageExpiry(MessageExpiry.ByTime(TimeSpan.FromMinutes(0)))
                 .Initialise();
 
-            Server.ReceiveMessage(new MessagePayload().MakeSequencedReceivable(
+            GetServer().ReceiveMessage(new MessagePayload().MakeSequencedReceivable(
                 1, 
                 SenderChannelName, 
                 ChannelName, 
@@ -35,6 +35,6 @@ namespace SystemDot.Messaging.Specifications.expiry_for_request_reply
 
         Because of = () => Bus.Reply(message);
 
-        It should_not_send_the_message = () => Server.SentMessages.ExcludeAcknowledgements().ShouldBeEmpty();
+        It should_not_send_the_message = () => GetServer().SentMessages.ExcludeAcknowledgements().ShouldBeEmpty();
     }
 }

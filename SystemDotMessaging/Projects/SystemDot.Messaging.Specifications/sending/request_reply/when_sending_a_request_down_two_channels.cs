@@ -27,9 +27,9 @@ namespace SystemDot.Messaging.Specifications.sending.request_reply
         Because of = () => Bus.Send(message);
 
         It should_send_a_message_with_the_correct_to_address_through_the_first_channel = () =>
-            Server.SentMessages.ShouldContain(m => m.GetToAddress() == BuildAddress(Reciever1Address));
+            GetServer().SentMessages.ShouldContain(m => m.GetToAddress() == BuildAddress(Reciever1Address));
 
         It should_send_a_message_with_the_correct_to_address_through_the_second_channel = () =>
-            Server.SentMessages.ShouldContain(m => m.GetToAddress() == BuildAddress(Reciever2Address));
+            GetServer().SentMessages.ShouldContain(m => m.GetToAddress() == BuildAddress(Reciever2Address));
     }
 }

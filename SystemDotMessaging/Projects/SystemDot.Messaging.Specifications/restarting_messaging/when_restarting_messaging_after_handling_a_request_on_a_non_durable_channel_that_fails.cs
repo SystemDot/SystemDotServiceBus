@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
                 .RegisterHandlers(r => r.RegisterHandler(new FailingMessageHandler<int>()))
                 .Initialise();
 
-            Catch.Exception(() => Server.ReceiveMessage(
+            Catch.Exception(() => GetServer().ReceiveMessage(
                 new MessagePayload().MakeSequencedReceivable(
                     Message, 
                     SenderAddress, 

@@ -38,10 +38,10 @@ namespace SystemDot.Messaging.Specifications.batching_for_request_reply
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
         };
 
-        Because of = () => Server.ReceiveMessage(messagePayload);
+        Because of = () => GetServer().ReceiveMessage(messagePayload);
 
         It should_send_a_batch_containing_both_replied_messages = () =>
-            Server.SentMessages.ExcludeAcknowledgements().Single()
+            GetServer().SentMessages.ExcludeAcknowledgements().Single()
                 .DeserialiseTo<BatchMessage>().Messages.ShouldContain(Message1, Message2);
     }
 }

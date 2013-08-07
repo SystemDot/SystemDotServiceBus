@@ -24,6 +24,6 @@ namespace SystemDot.Messaging.Specifications.local_channels
         Because of = () => Bus.Send(message);
 
         It should_send_the_message_down_the_channel = () =>
-            Server.SentMessages.First().DeserialiseTo<Int64>().ShouldEqual(message);
+            GetServer().SentMessages.First().DeserialiseTo<Int64>().ShouldEqual(message);
     }
 }

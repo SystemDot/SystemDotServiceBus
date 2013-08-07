@@ -42,7 +42,7 @@ namespace SystemDot.Messaging.Specifications.unitofwork
                 PersistenceUseType.PointToPointReceive);
         };
 
-        Because of = () => thrownException = Catch.Exception(() => Server.ReceiveMessage(payload));
+        Because of = () => thrownException = Catch.Exception(() => GetServer().ReceiveMessage(payload));
 
         It should_pass_the_exception_to_end_of_the_unit_of_work = () => 
             thrownException.ShouldBeTheSameAs(unitOfWork.GetException());

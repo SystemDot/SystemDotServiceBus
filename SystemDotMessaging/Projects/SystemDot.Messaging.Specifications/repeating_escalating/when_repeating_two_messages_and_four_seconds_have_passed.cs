@@ -34,6 +34,6 @@ namespace SystemDot.Messaging.Specifications.repeating_escalating
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_repeat_the_messages = () => Server.SentMessages.Count.ShouldEqual(4);
+        It should_repeat_the_messages = () => GetServer().SentMessages.Count.ShouldEqual(4);
     }
 }

@@ -39,6 +39,6 @@ namespace SystemDot.Messaging.Specifications.batching
         };
 
         It should_send_a_batch_containing_both_messages_for_the_second_time = () =>
-            Server.SentMessages.ElementAt(1).DeserialiseTo<BatchMessage>().Messages.ShouldContain(Message1, Message2);
+            GetServer().SentMessages.ElementAt(1).DeserialiseTo<BatchMessage>().Messages.ShouldContain(Message1, Message2);
     }
 }

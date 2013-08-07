@@ -46,6 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="direct_channels_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="direct_channels_for_request_reply\when_receiving_a_request.cs" />
+    <Compile Include="direct_channels_for_request_reply\when_receiving_a_request_from_a_different_channel.cs" />
+    <Compile Include="direct_channels_for_request_reply\when_sending_a_request.cs" />
     <Compile Include="exception_replying_for_request_reply\SpecificationGroup.cs" />
     <Compile Include="exception_replying_for_request_reply\when_failing_the_handling_of_a_request.cs" />
     <Compile Include="filtering_by_name\when_receiving_a_request_with_the_wrong_name_down_a_channel.cs" />
@@ -65,6 +69,7 @@
     <Compile Include="hooks_for_publishing\when_publishing_an_event_on_a_publish_channel_with_a_post_packaging_hook.cs" />
     <Compile Include="hooks_for_request_reply\when_sending_a_request_on_a_channel_with_a_post_packaging_send_hook.cs" />
     <Compile Include="replies\when_replying_on_a_channel_to_a_message_from_a_different_machine.cs" />
+    <Compile Include="TestInProcessMessageServerFactory.cs" />
     <Compile Include="transport\http\received_message_return_address_reassignment\when_receiving_a_subscription_request_with_a_from_address_listed_on_the_publisher.cs" />
     <Compile Include="transport\http\received_message_return_address_reassignment\when_receiving_an_event_with_a_from_address_listed_on_the_subscriber.cs" />
     <Compile Include="transport\http\received_message_return_address_reassignment\when_receiving_a_reply_with_a_from_address_listed_on_the_sender.cs" />
@@ -314,7 +319,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TestMessageProcessorHook.cs" />
-    <Compile Include="TestMessageServer.cs" />
+    <Compile Include="TestInProcessMessageServer.cs" />
     <Compile Include="filtering_by_name\TestNamePatternMessage.cs" />
     <Compile Include="TestTaskRepeater.cs" />
     <Compile Include="unitofwork\TestUnitOfWork.cs" />

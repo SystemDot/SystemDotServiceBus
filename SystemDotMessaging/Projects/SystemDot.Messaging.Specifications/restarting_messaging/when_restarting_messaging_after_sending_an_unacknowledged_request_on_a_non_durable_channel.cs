@@ -49,6 +49,6 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
                 .Initialise();
 
         It should_not_send_the_message_again = () =>
-            Server.SentMessages.ShouldNotContain(m => m.DeserialiseTo<int>() == Request);
+            GetServer().SentMessages.ShouldNotContain(m => m.DeserialiseTo<int>() == Request);
     }
 }

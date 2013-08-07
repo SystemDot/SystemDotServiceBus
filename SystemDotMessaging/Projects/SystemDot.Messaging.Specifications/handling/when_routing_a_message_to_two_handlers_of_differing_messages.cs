@@ -37,7 +37,7 @@ namespace SystemDot.Messaging.Specifications.handling
                 PersistenceUseType.PointToPointReceive);
         };
 
-        Because of = () => Server.ReceiveMessage(payload);
+        Because of = () => GetServer().ReceiveMessage(payload);
 
         It should_handle_the_message_only_in_the_handler_for_the_message_type = () => 
             handler1.LastHandledMessage.ShouldEqual(Message);

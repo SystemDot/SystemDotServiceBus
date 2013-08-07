@@ -26,13 +26,13 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
             Bus.Send(1);
              
             acknowledgement = new MessagePayload();
-            acknowledgement.SetAcknowledgementId(Server.SentMessages.First().GetPersistenceId());
-            acknowledgement.SetToAddress(Server.SentMessages.First().GetFromAddress());
+            acknowledgement.SetAcknowledgementId(GetServer().SentMessages.First().GetPersistenceId());
+            acknowledgement.SetToAddress(GetServer().SentMessages.First().GetFromAddress());
 
-            Server.ReceiveMessage(acknowledgement);
+            GetServer().ReceiveMessage(acknowledgement);
         };
 
-        Because of = () => Server.ReceiveMessage(acknowledgement);
+        Because of = () => GetServer().ReceiveMessage(acknowledgement);
 
         It should_notify_that_the_message_was_removed_from_the_cache = () => 
             @event.ShouldMatch(e => e.MessageId == acknowledgement.GetAcknowledgementId().MessageId

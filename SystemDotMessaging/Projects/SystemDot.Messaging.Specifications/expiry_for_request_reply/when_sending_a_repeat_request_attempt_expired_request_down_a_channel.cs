@@ -25,6 +25,6 @@ namespace SystemDot.Messaging.Specifications.expiry_for_request_reply
 
         Because of = () => Bus.Send(message);
 
-        It should_not_send_the_message = () => Server.SentMessages.ShouldBeEmpty();
+        It should_not_send_the_message = () => GetServer().SentMessages.ShouldBeEmpty();
     }
 }

@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Specifications.publishing_receiving
             payload.SetSequence(2);
         };
 
-        Because of = () => Server.ReceiveMessage(payload);
+        Because of = () => GetServer().ReceiveMessage(payload);
 
         It should_not_push_the_message_to_any_registered_handlers = () => handler.LastHandledMessage.ShouldEqual(0);
     }

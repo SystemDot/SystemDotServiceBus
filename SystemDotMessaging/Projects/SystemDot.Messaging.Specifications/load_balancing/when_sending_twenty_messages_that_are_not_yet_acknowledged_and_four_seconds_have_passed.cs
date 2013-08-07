@@ -30,6 +30,6 @@ namespace SystemDot.Messaging.Specifications.load_balancing
 
         Because of = () => scheduler.PassTime(TimeSpan.FromSeconds(4));
 
-        It should_repeat_the_messages_to_feel_out_the_connection = () => Server.SentMessages.Count.ShouldEqual(40);
+        It should_repeat_the_messages_to_feel_out_the_connection = () => GetServer().SentMessages.Count.ShouldEqual(40);
     }
 }

@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Transport.Http
 
         public void HandleMessage(MessagePayload toHandle, List<MessagePayload> outgoingMessages)
         {
-            this.messageReceiver.InputMessage(toHandle);
+            messageReceiver.InputMessage(toHandle);
         }
     }
 }

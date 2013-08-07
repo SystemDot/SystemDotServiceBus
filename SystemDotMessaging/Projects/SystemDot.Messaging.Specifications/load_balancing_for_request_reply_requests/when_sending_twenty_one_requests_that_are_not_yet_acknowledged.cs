@@ -24,6 +24,6 @@ namespace SystemDot.Messaging.Specifications.load_balancing_for_request_reply_re
 
         Because of = () => messages.ForEach(m => Bus.Send(m));
 
-        It should_not_send_the_twenty_first_message = () => Server.SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(20);
+        It should_not_send_the_twenty_first_message = () => GetServer().SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(20);
     }
 }

@@ -7,8 +7,9 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients.Configuration
     {
         public static void Configure(IIocContainer container)
         {
-            Contract.Requires(container != null); 
+            Contract.Requires(container != null);
 
+            container.RegisterInstance<IMessageTransporter, MessageTransporter>();
             container.RegisterInstance<LongPoller, LongPoller>();
             container.RegisterInstance<ITransportBuilder, HttpRemoteClientTransportBuilder>();
         }

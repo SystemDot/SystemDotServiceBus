@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Specifications.filtering_by_name
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
         };
 
-        Because of = () => Server.ReceiveMessage(payload);
+        Because of = () => GetServer().ReceiveMessage(payload);
 
         It should_not_pass_the_message_through = () => handler.HandledMessages.ShouldBeEmpty();
     }

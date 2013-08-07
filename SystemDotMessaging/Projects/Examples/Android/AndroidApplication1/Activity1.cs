@@ -1,4 +1,5 @@
-﻿using SystemDot.Configuration;
+﻿using System;
+using SystemDot.Configuration;
 using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging;

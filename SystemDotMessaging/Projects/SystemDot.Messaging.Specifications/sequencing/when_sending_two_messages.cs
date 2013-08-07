@@ -31,6 +31,6 @@ namespace SystemDot.Messaging.Specifications.sequencing
         };
 
         It should_mark_the_last_message_with_a_first_sequence_of_the_lowest_sequence_in_the_cache = () =>
-            Server.SentMessages.ExcludeAcknowledgements().Last().GetFirstSequence().ShouldEqual(1);
+            GetServer().SentMessages.ExcludeAcknowledgements().Last().GetFirstSequence().ShouldEqual(1);
     }
 }

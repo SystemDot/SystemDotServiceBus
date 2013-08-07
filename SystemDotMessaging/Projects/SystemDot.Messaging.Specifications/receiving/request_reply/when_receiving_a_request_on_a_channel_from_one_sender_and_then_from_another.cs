@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Specifications.receiving.request_reply
                 ReceiverAddress,
                 PersistenceUseType.RequestSend);
 
-            Server.ReceiveMessage(payload1);
+            GetServer().ReceiveMessage(payload1);
 
             payload2 = new MessagePayload().MakeSequencedReceivable(
                 Message,
@@ -45,7 +45,7 @@ namespace SystemDot.Messaging.Specifications.receiving.request_reply
                 PersistenceUseType.RequestSend);
         };
 
-        Because of = () => Server.ReceiveMessage(payload2);
+        Because of = () => GetServer().ReceiveMessage(payload2);
 
         It should_only_handle_the_requests_for_each_sender_once = () => 
             handler.HandledMessages.Count.ShouldEqual(2);

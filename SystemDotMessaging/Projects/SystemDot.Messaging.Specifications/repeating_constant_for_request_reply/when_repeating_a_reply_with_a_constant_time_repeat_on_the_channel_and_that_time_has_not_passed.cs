@@ -33,7 +33,7 @@ namespace SystemDot.Messaging.Specifications.repeating_constant_for_request_repl
                 .WithMessageRepeating(RepeatMessages.Every(TimeSpan.FromSeconds(10)))
                 .Initialise();
 
-            Server.ReceiveMessage(
+            GetServer().ReceiveMessage(
                 new MessagePayload().MakeSequencedReceivable(
                     Request,
                     SenderAddress,
@@ -47,6 +47,6 @@ namespace SystemDot.Messaging.Specifications.repeating_constant_for_request_repl
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_not_repeat_the_message = () => Server.SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(1);
+        It should_not_repeat_the_message = () => GetServer().SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(1);
     }
 }

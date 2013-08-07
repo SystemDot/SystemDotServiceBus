@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Specifications.sequencing_for_request_reply
             handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
-            Server.ReceiveMessage(messagePayload);
+            GetServer().ReceiveMessage(messagePayload);
 
             messagePayload = new MessagePayload()
                 .MakeReceivable(Message2, ReceiverAddress, SenderAddress, PersistenceUseType.ReplySend);
@@ -41,7 +41,7 @@ namespace SystemDot.Messaging.Specifications.sequencing_for_request_reply
             messagePayload.SetSequence(5);
         };
 
-        Because of = () => Server.ReceiveMessage(messagePayload);
+        Because of = () => GetServer().ReceiveMessage(messagePayload);
 
         It should_pass_the_message_after_the_reset_through = () => handler.HandledMessages.ShouldContain(Message2);
     }

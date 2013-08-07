@@ -28,12 +28,12 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
                 PersistenceUseType.PointToPointSend);
         };
 
-        Because of = () => Server.ReceiveMessage(messagePayload);
+        Because of = () => GetServer().ReceiveMessage(messagePayload);
 
         It should_send_an_acknowledgement_for_the_message_for_the_correct_message_id = () =>
-            Server.SentMessages.First().GetAcknowledgementId().ShouldEqual(messagePayload.GetSourcePersistenceId());
+            GetServer().SentMessages.First().GetAcknowledgementId().ShouldEqual(messagePayload.GetSourcePersistenceId());
 
         It should_send_an_acknowledgement_for_the_message_to_the_message_from_address = () =>
-            Server.SentMessages.First().GetToAddress().ShouldEqual(messagePayload.GetFromAddress());
+            GetServer().SentMessages.First().GetToAddress().ShouldEqual(messagePayload.GetFromAddress());
     }
 }

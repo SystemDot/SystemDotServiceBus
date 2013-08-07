@@ -10,14 +10,14 @@ namespace SystemDot.Messaging.Transport.Http
 {
     class HttpMessagingServer : IHttpHandler 
     {
-        readonly ISerialiser formatter;
+        readonly ISerialiser serialiser;
         readonly IMessagingServerHandler[] handlers;
 
-        public HttpMessagingServer(ISerialiser formatter, params IMessagingServerHandler[] handlers)
+        public HttpMessagingServer(ISerialiser serialiser, params IMessagingServerHandler[] handlers)
         {
-            Contract.Requires(formatter != null);
+            Contract.Requires(serialiser != null);
             
-            this.formatter = formatter;
+            this.serialiser = serialiser;
             this.handlers = handlers;
         }
 
@@ -34,14 +34,14 @@ namespace SystemDot.Messaging.Transport.Http
             foreach (IMessagingServerHandler handler in this.handlers)
                 handler.HandleMessage(message, outgoingMessages);
 
-            this.formatter.Serialise(outputStream, outgoingMessages);
+            this.serialiser.Serialise(outputStream, outgoingMessages);
         }
 
         object DeserialiseMessage(Stream inputStream)
         {
             try
             {
-                return this.formatter.Deserialise(inputStream);
+                return this.serialiser.Deserialise(inputStream);
             }
             catch (CannotDeserialiseException e)
             {

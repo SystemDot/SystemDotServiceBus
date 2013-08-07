@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.hooks_for_request_reply
                     .WithReplyHook(hook)
                 .Initialise();
 
-            Server.ReceiveMessage(new MessagePayload().MakeSequencedReceivable(
+            GetServer().ReceiveMessage(new MessagePayload().MakeSequencedReceivable(
                 Message,
                 SenderChannelName,
                 ChannelName,

@@ -31,23 +31,23 @@ namespace SystemDot.Messaging.Specifications.publishing_subscription
                 && m.PublisherAddress == BuildAddress(PublisherAddress));
 
         It should_mark_the_message_with_the_persistence_id = () =>
-            Server.SentMessages.Single().GetPersistenceId()
+            GetServer().SentMessages.Single().GetPersistenceId()
                 .ShouldEqual(new MessagePersistenceId(
-                    Server.SentMessages.Single().Id,
+                    GetServer().SentMessages.Single().Id,
                     BuildAddress(PublisherAddress),
                     PersistenceUseType.SubscriberRequestSend));
 
         It should_set_original_persistence_id_to_the_persistence_id_of_the_message_with_the_persistence_id = () =>
-           Server.SentMessages
+           GetServer().SentMessages
                .Single()
                .GetSourcePersistenceId()
-               .ShouldEqual(Server.SentMessages.Single().GetPersistenceId());
+               .ShouldEqual(GetServer().SentMessages.Single().GetPersistenceId());
 
         It should_send_a_request_for_non_persistent_subscriber_channel = () => 
-            Server.SentMessages.Single().GetSubscriptionRequestSchema().IsDurable.ShouldBeFalse();
+            GetServer().SentMessages.Single().GetSubscriptionRequestSchema().IsDurable.ShouldBeFalse();
 
         It should_send_a_request_for_a_subscriber_channel_with_the_correct_address = () =>
-            Server.SentMessages.Single().GetSubscriptionRequestSchema()
+            GetServer().SentMessages.Single().GetSubscriptionRequestSchema()
                 .SubscriberAddress.ShouldEqual(BuildAddress(SubscriberAddress));
     }
 }

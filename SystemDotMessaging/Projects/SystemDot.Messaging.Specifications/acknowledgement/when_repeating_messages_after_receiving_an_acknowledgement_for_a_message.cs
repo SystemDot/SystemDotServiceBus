@@ -27,17 +27,17 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
             Bus.Send(1);
              
             var acknowledgement = new MessagePayload();
-            acknowledgement.SetAcknowledgementId(Server.SentMessages.First().GetPersistenceId());
-            acknowledgement.SetToAddress(Server.SentMessages.First().GetFromAddress());
+            acknowledgement.SetAcknowledgementId(GetServer().SentMessages.First().GetPersistenceId());
+            acknowledgement.SetToAddress(GetServer().SentMessages.First().GetFromAddress());
 
-            Server.ReceiveMessage(acknowledgement);
+            GetServer().ReceiveMessage(acknowledgement);
 
             systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
-            Server.SentMessages.Clear();
+            GetServer().SentMessages.Clear();
         };
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_not_have_repeated_the_message = () => Server.SentMessages.ShouldBeEmpty();
+        It should_not_have_repeated_the_message = () => GetServer().SentMessages.ShouldBeEmpty();
     }
 }

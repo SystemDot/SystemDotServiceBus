@@ -35,7 +35,7 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
             acknowledgement.SetToAddress(address);
         };
 
-        Because of = () => exception = Catch.Exception(() => Server.ReceiveMessage(acknowledgement));
+        Because of = () => exception = Catch.Exception(() => GetServer().ReceiveMessage(acknowledgement));
 
         It should_not_fail = () => exception.ShouldBeNull();
     }

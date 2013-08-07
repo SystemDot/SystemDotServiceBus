@@ -52,6 +52,6 @@ namespace SystemDot.Messaging.Specifications.sequencing
         Because of = () => Bus.Send(new object());
 
         It should_mark_the_message_with_the_initial_sequence_origin_date = () =>
-            Server.SentMessages.ExcludeAcknowledgements().First().GetSequenceOriginSetOn().ShouldEqual(originDate);
+            GetServer().SentMessages.ExcludeAcknowledgements().First().GetSequenceOriginSetOn().ShouldEqual(originDate);
     }
 }

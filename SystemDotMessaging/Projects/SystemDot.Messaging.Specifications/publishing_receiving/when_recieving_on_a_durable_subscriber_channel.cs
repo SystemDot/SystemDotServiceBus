@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.publishing_receiving
                 PersistenceUseType.SubscriberSend);
         };
 
-        Because of = () => Server.ReceiveMessage(payload);
+        Because of = () => GetServer().ReceiveMessage(payload);
 
         It should_have_persisted_the_message = () =>
             Resolve<IChangeStore>()

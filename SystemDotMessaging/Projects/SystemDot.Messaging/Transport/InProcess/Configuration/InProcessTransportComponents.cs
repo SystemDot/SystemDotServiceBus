@@ -4,12 +4,11 @@ namespace SystemDot.Messaging.Transport.InProcess.Configuration
 {
     static class InProcessTransportComponents
     {
-        public static void Register(IIocContainer iocContainer)
+        public static void Register(IIocContainer container)
         {
-            iocContainer.RegisterInstance<ITransportBuilder, InProcessTransportBuilder>();
-            iocContainer.RegisterInstance<IInProcessMessageServer, InProcessMessageServer>();
-            iocContainer.RegisterInstance<IMessageReceiver, MessageReceiver>();
-            iocContainer.RegisterInstance<IMessageSender, MessageSender>();
+            container.RegisterInstance<IMessageTransporter, MessageTransporter>();
+            container.RegisterInstance<IInProcessMessageServerFactory, InProcessMessageServerFactory>();
+            container.RegisterInstance<ITransportBuilder, InProcessTransportBuilder>();
         }
     }
 }

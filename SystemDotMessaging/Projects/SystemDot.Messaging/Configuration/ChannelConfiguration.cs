@@ -34,9 +34,9 @@ namespace SystemDot.Messaging.Configuration
         public RequestReplySenderConfiguration ForRequestReplySendingTo(string recieverAddress)
         {
             return new RequestReplySenderConfiguration(
-                this.address,
+                address,
                 BuildEndpointAddress(recieverAddress, server),
-                this.messagingConfiguration);
+                messagingConfiguration);
         }
 
         public PublisherConfiguration ForPublishing()

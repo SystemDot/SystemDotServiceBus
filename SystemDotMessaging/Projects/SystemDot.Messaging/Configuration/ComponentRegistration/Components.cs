@@ -15,6 +15,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             PublishingComponents.Register(container);
             RequestReplyComponents.Register(container);
             PointToPointComponents.Register(container);
+            DirectChannelComponents.Register(container);
         }
     }
 }

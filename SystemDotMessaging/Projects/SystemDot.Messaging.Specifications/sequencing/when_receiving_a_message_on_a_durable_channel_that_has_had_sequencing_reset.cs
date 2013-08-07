@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
         };
 
-        Because of = () => Server.ReceiveMessage(messagePayload);
+        Because of = () => GetServer().ReceiveMessage(messagePayload);
 
         It should_pass_the_message_through = () => handler.HandledMessages.ShouldContain(Message);
     }

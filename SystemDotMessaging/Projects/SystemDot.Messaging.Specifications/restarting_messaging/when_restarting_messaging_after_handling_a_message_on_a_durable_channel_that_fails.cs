@@ -38,7 +38,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
                 .RegisterHandlers(r => r.RegisterHandler(new FailingMessageHandler<Int64>()))
                 .Initialise();
 
-            Catch.Exception(() => Server.ReceiveMessage(
+            Catch.Exception(() => GetServer().ReceiveMessage(
                 new MessagePayload().MakeSequencedReceivable(
                     Message1,
                     SenderAddress,
@@ -51,7 +51,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
                 ReceiverName,
                 PersistenceUseType.PointToPointSend);
 
-            Catch.Exception(() => Server.ReceiveMessage(payload1));
+            Catch.Exception(() => GetServer().ReceiveMessage(payload1));
 
             payload2 = new MessagePayload().MakeSequencedReceivable(
                 Message2,
@@ -59,7 +59,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
                 ReceiverName,
                 PersistenceUseType.PointToPointSend);
 
-            Catch.Exception(() => Server.ReceiveMessage(payload2));
+            Catch.Exception(() => GetServer().ReceiveMessage(payload2));
 
             Reset();
             ReInitialise();

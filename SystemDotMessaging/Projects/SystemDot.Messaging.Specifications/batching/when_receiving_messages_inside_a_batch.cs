@@ -39,7 +39,7 @@ namespace SystemDot.Messaging.Specifications.batching
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
         };
 
-        Because of = () => Server.ReceiveMessage(messagePayload);
+        Because of = () => GetServer().ReceiveMessage(messagePayload);
 
         It should_pass_both_the_messages_from_the_aggregation_through_seperately = () => 
             handler.HandledMessages.ShouldContain(Message1, Message2);

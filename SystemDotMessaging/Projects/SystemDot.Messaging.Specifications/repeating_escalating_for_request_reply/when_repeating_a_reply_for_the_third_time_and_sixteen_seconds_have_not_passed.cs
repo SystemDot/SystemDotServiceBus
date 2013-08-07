@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.repeating_escalating_for_request_re
                  .ForRequestReplyRecieving()
                  .Initialise();
 
-            Server.ReceiveMessage(
+            GetServer().ReceiveMessage(
                 new MessagePayload().MakeSequencedReceivable(
                     Request,
                     SenderAddress,
@@ -54,6 +54,6 @@ namespace SystemDot.Messaging.Specifications.repeating_escalating_for_request_re
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_repeat_the_message = () => Server.SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(3);
+        It should_repeat_the_message = () => GetServer().SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(3);
     }
 }

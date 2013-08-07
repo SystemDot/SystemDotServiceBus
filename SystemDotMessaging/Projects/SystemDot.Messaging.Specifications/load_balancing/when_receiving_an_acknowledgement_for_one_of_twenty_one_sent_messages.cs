@@ -29,13 +29,13 @@ namespace SystemDot.Messaging.Specifications.load_balancing
             messages.ForEach(m => Bus.Send(m));
 
             acknowledgement = new MessagePayload();
-            acknowledgement.SetAcknowledgementId(Server.SentMessages.First().GetPersistenceId());
-            acknowledgement.SetToAddress(Server.SentMessages.First().GetFromAddress());
+            acknowledgement.SetAcknowledgementId(GetServer().SentMessages.First().GetPersistenceId());
+            acknowledgement.SetToAddress(GetServer().SentMessages.First().GetFromAddress());
         };
 
-        Because of = () => Server.ReceiveMessage(acknowledgement);
+        Because of = () => GetServer().ReceiveMessage(acknowledgement);
 
         It should_send_the_twenty_first_message = () => 
-            Server.SentMessages.ElementAt(20).DeserialiseTo<Int64>().ShouldEqual(21);
+            GetServer().SentMessages.ElementAt(20).DeserialiseTo<Int64>().ShouldEqual(21);
     }
 }

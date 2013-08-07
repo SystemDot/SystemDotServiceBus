@@ -28,6 +28,6 @@ namespace SystemDot.Messaging.Specifications.batching_for_request_reply
         };
 
         It should_send_a_batch_containing_both_messages = () =>
-            Server.SentMessages.Single().DeserialiseTo<BatchMessage>().Messages.ShouldContain(Message1, Message2);
+            GetServer().SentMessages.Single().DeserialiseTo<BatchMessage>().Messages.ShouldContain(Message1, Message2);
     }
 }

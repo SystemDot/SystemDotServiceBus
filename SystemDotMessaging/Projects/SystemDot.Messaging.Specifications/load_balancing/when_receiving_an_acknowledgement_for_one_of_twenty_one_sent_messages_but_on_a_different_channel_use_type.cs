@@ -37,15 +37,15 @@ namespace SystemDot.Messaging.Specifications.load_balancing
             acknowledgement = new MessagePayload();
 
             acknowledgement.SetAcknowledgementId(new MessagePersistenceId(
-                Server.SentMessages.First().Id, 
+                GetServer().SentMessages.First().Id, 
                 BuildAddress(SenderAddress), 
                 PersistenceUseType.RequestSend));
 
-            acknowledgement.SetToAddress(Server.SentMessages.First().GetFromAddress());
+            acknowledgement.SetToAddress(GetServer().SentMessages.First().GetFromAddress());
         };
 
-        Because of = () => Server.ReceiveMessage(acknowledgement);
+        Because of = () => GetServer().ReceiveMessage(acknowledgement);
 
-        It should_not_send_the_twenty_first_message = () => Server.SentMessages.Count.ShouldEqual(20);
+        It should_not_send_the_twenty_first_message = () => GetServer().SentMessages.Count.ShouldEqual(20);
     }
 }

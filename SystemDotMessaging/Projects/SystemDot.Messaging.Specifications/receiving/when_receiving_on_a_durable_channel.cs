@@ -42,7 +42,7 @@ namespace SystemDot.Messaging.Specifications.receiving
                 PersistenceUseType.PointToPointReceive);
         };
 
-        Because of = () => Server.ReceiveMessage(payload);
+        Because of = () => GetServer().ReceiveMessage(payload);
 
         It should_persist_the_message = () =>
             Resolve<IChangeStore>()

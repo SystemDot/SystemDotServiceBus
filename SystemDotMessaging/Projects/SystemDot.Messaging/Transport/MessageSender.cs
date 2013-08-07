@@ -1,33 +1,27 @@
 using System.Diagnostics.Contracts;
-using SystemDot.Http;
 using SystemDot.Logging;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Serialisation;
 
-namespace SystemDot.Messaging.Transport.Http
+namespace SystemDot.Messaging.Transport
 {
     class MessageSender : IMessageSender
     {
-        readonly ISerialiser formatter;
-        readonly IWebRequestor requestor;
+        readonly IMessageTransporter transporter;
 
-        public MessageSender(ISerialiser formatter, IWebRequestor requestor)
+        public MessageSender(ISerialiser serialiser, IMessageTransporter transporter)
         {
-            Contract.Requires(formatter != null);
-            Contract.Requires(requestor != null);
+            Contract.Requires(serialiser != null);
+            Contract.Requires(transporter != null);
             
-            this.formatter = formatter;
-            this.requestor = requestor;
+            this.transporter = transporter;
         }
 
         public void InputMessage(MessagePayload toInput)
         {
             LogMessage(toInput);
-
-            this.requestor.SendPut(
-                toInput.GetToAddress().Server.GetUrl(),
-                s => this.formatter.Serialise(s, toInput));
+            transporter.TransportMessage(toInput);
         }
 
         static void LogMessage(MessagePayload toInput)

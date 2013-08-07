@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.publishing_subscription
             request = new MessagePayload().BuildSubscriptionRequest(BuildAddress(SubscriberAddress), BuildAddress(PublisherAddress));
         };
 
-        Because of = () => Server.ReceiveMessage(request);
+        Because of = () => GetServer().ReceiveMessage(request);
 
         It should_notify_that_the_channel_was_built = () =>
            channelBuiltEvent.ShouldMatch(m =>
@@ -37,6 +37,6 @@ namespace SystemDot.Messaging.Specifications.publishing_subscription
                && m.PublisherAddress == BuildAddress(PublisherAddress));
 
         It should_send_an_acknowledgement_for_the_request = () => 
-            Server.SentMessages.ShouldContain(a => a.GetAcknowledgementId() == request.GetPersistenceId());
+            GetServer().SentMessages.ShouldContain(a => a.GetAcknowledgementId() == request.GetPersistenceId());
     }
 }

@@ -38,7 +38,7 @@ namespace SystemDot.Messaging.Specifications.repeating_constant
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_repeat_the_message = () => Server.SentMessages.Count.ShouldEqual(2);
+        It should_repeat_the_message = () => GetServer().SentMessages.Count.ShouldEqual(2);
     }
 
 

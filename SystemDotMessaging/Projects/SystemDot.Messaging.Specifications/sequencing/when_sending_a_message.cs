@@ -35,12 +35,12 @@ namespace SystemDot.Messaging.Specifications.sequencing
         Because of = () => Bus.Send(message);
 
         It should_mark_the_message_with_the_sequence = () =>
-            Server.SentMessages.ExcludeAcknowledgements().First().GetSequence().ShouldEqual(1);
+            GetServer().SentMessages.ExcludeAcknowledgements().First().GetSequence().ShouldEqual(1);
 
         It should_mark_the_message_with_first_sequence = () =>
-            Server.SentMessages.ExcludeAcknowledgements().First().GetFirstSequence().ShouldEqual(1);
+            GetServer().SentMessages.ExcludeAcknowledgements().First().GetFirstSequence().ShouldEqual(1);
 
         It should_mark_the_message_with_sequence_origin_date = () =>
-            Server.SentMessages.ExcludeAcknowledgements().First().GetSequenceOriginSetOn().ShouldEqual(originDate);
+            GetServer().SentMessages.ExcludeAcknowledgements().First().GetSequenceOriginSetOn().ShouldEqual(originDate);
     }
 }

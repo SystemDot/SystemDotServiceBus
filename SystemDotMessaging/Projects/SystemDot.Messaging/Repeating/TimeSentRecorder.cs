@@ -19,13 +19,13 @@ namespace SystemDot.Messaging.Repeating
         {
             Logger.Debug("Recording the last time sent on message payload {0}", toInput.Id);
 
-            OnMessageProcessed(toInput);
             SetTimeOnMessage(toInput);
+            OnMessageProcessed(toInput);
         }
 
         void SetTimeOnMessage(MessagePayload toInput)
         {
-            toInput.SetLastTimeSent(this.systemTime.GetCurrentDate());
+            toInput.SetLastTimeSent(systemTime.GetCurrentDate());
             toInput.IncreaseAmountSent();
         }
     }

@@ -22,7 +22,7 @@ namespace RequestReplyReceiver
                     .AsAServer("ReceiverServer")
                 .OpenChannel("TestReply")
                     .ForRequestReplyRecieving()
-                    //.WithDurability()
+                    .WithDurability()
                 .Initialise();
 
             Console.WriteLine("I am the reciever. Press enter to exit");

@@ -35,7 +35,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
                 .WithDurability()
                 .Initialise();
 
-            Server.ReceiveMessage(
+            GetServer().ReceiveMessage(
                 new MessagePayload().MakeSequencedReceivable(
                     Request,
                     SenderAddress,
@@ -61,6 +61,6 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
                 .Initialise();
 
         It should_send_the_message_again = () =>
-            Server.SentMessages.ShouldContain(m => m.DeserialiseTo<Int64>() == Reply);
+            GetServer().SentMessages.ShouldContain(m => m.DeserialiseTo<Int64>() == Reply);
     }
 }

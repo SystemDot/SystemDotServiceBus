@@ -53,6 +53,6 @@ namespace SystemDot.Messaging.Specifications.repeating_constant
                 .Initialise();
 
         It should_send_the_message_again = () =>
-            Server.SentMessages.ShouldContain(m => m.DeserialiseTo<Int64>() == Message);
+            GetServer().SentMessages.ShouldContain(m => m.DeserialiseTo<Int64>() == Message);
     }
 }

@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Specifications.publishing_subscription
             nonRequest.SetToAddress(BuildAddress(ChannelName));
         };
 
-        Because of = () => exception = Catch.Exception(() => Server.ReceiveMessage(nonRequest));
+        Because of = () => exception = Catch.Exception(() => GetServer().ReceiveMessage(nonRequest));
 
         It should_not_fail = () => exception.ShouldBeNull();
     }

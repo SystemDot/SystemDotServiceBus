@@ -30,6 +30,6 @@ namespace SystemDot.Messaging.Specifications.load_balancing
 
         Because of = () => scheduler.PassTime(TimeSpan.FromSeconds(4));
 
-        It should_only_send_nineteen_messages = () => Server.SentMessages.Count.ShouldEqual(19);
+        It should_only_send_nineteen_messages = () => GetServer().SentMessages.Count.ShouldEqual(19);
     }
 }

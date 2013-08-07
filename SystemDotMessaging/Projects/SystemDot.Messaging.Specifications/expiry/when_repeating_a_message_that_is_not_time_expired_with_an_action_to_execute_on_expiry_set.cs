@@ -21,6 +21,6 @@ namespace SystemDot.Messaging.Specifications.expiry
 
         It should_not_execute_the_expiry_action = () => expiryActionExecuted.ShouldBeFalse();
 
-        It should_pass_the_message_through = () => Server.SentMessages.ShouldNotBeEmpty();
+        It should_pass_the_message_through = () => GetServer().SentMessages.ShouldNotBeEmpty();
     }
 }

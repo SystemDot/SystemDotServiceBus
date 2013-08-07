@@ -25,6 +25,6 @@ namespace SystemDot.Messaging.Specifications.filtering_by_name_for_publishing
 
         Because of = () => Bus.Publish(new TestNamePatternMessage());
 
-        It should_not_pass_the_message_through = () => Server.SentMessages.ExcludeAcknowledgements().ShouldBeEmpty();
+        It should_not_pass_the_message_through = () => GetServer().SentMessages.ExcludeAcknowledgements().ShouldBeEmpty();
     }
 }

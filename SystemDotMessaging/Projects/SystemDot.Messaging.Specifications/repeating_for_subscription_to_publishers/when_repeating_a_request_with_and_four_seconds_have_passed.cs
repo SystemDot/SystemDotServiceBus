@@ -30,6 +30,6 @@ namespace SystemDot.Messaging.Specifications.repeating_for_subscription_to_publi
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_repeat_the_message = () => Server.SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(2);
+        It should_repeat_the_message = () => GetServer().SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(2);
     }
 }

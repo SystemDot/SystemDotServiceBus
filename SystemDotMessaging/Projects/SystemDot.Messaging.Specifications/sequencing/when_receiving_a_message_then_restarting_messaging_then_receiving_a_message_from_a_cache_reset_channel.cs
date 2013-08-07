@@ -42,7 +42,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
             handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
-            Server.ReceiveMessage(messagePayload);
+            GetServer().ReceiveMessage(messagePayload);
 
             Reset();
             ReInitialise();
@@ -65,7 +65,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
             messagePayload.SetSequenceOriginSetOn(DateTime.Now);
         };
 
-        Because of = () => Server.ReceiveMessage(messagePayload);
+        Because of = () => GetServer().ReceiveMessage(messagePayload);
 
         It should_have_cleared_the_messages_from_before_the_reset_from_persistence = () =>
             handler.HandledMessages.ShouldContainOnly(Message);

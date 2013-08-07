@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.publishing_receiving
             payload.SetFirstSequence(1);
         };
 
-        Because of = () => exception = Catch.Exception(() => Server.ReceiveMessage(payload));
+        Because of = () => exception = Catch.Exception(() => GetServer().ReceiveMessage(payload));
 
         It should_not_fail = () => exception.ShouldBeNull();
     }

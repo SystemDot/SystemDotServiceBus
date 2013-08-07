@@ -19,6 +19,6 @@ namespace SystemDot.Messaging.Specifications.filtering_by_name_and_namespace
         Because of = () => Bus.Send(new TestNameAndNamespaceMessage());
 
         It should_pass_the_message_through = () =>
-           Server.SentMessages.First().DeserialiseTo<TestNameAndNamespaceMessage>().ShouldNotBeNull();
+           GetServer().SentMessages.First().DeserialiseTo<TestNameAndNamespaceMessage>().ShouldNotBeNull();
     }
 }

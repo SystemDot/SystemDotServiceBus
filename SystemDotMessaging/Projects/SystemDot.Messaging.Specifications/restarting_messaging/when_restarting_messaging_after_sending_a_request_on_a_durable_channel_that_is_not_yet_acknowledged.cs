@@ -51,6 +51,6 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
                 .Initialise();
 
         It should_send_the_message_again = () =>
-            Server.SentMessages.ShouldContain(m => m.DeserialiseTo<Int64>() == Request);
+            GetServer().SentMessages.ShouldContain(m => m.DeserialiseTo<Int64>() == Request);
     }
 }

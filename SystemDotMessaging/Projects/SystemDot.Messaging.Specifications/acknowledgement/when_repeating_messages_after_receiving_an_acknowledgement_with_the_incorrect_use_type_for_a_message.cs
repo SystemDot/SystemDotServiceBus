@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
 
             Bus.Send(1);
 
-            MessagePayload message = Server.SentMessages.First();
+            MessagePayload message = GetServer().SentMessages.First();
 
             acknowledgement = new MessagePayload();
             
@@ -42,14 +42,14 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
 
             acknowledgement.SetToAddress(message.GetFromAddress());
 
-            Server.ReceiveMessage(acknowledgement);
+            GetServer().ReceiveMessage(acknowledgement);
 
             systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
-            Server.SentMessages.Clear();
+            GetServer().SentMessages.Clear();
         };
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_have_repeated_the_message = () => Server.SentMessages.ShouldNotBeEmpty();
+        It should_have_repeated_the_message = () => GetServer().SentMessages.ShouldNotBeEmpty();
     }
 }

@@ -1,6 +1,7 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Configuration.Direct;
 using SystemDot.Messaging.Configuration.ExternalSources;
 using SystemDot.Messaging.Configuration.Local;
 using SystemDot.Messaging.Ioc;
@@ -34,6 +35,13 @@ namespace SystemDot.Messaging.Configuration
             Contract.Requires(!string.IsNullOrEmpty(name));
 
             return new ChannelConfiguration(new EndpointAddress(name, server), server, messagingConfiguration);
+        }
+
+        public DirectChannelConfiguration OpenDirectChannel(string name) 
+        {
+            Contract.Requires(!string.IsNullOrEmpty(name));
+
+            return new DirectChannelConfiguration(messagingConfiguration, BuildEndpointAddress(name, MessageServer.None));
         }
 
         public LocalChannelConfiguration OpenLocalChannel()

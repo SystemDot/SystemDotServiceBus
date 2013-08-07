@@ -44,8 +44,8 @@ namespace SystemDot.Messaging.Specifications.sequencing
 
         Because of = () =>
         {
-            Server.ReceiveMessage(messagePayload1);
-            Server.ReceiveMessage(messagePayload2);
+            GetServer().ReceiveMessage(messagePayload1);
+            GetServer().ReceiveMessage(messagePayload2);
         };
 
         It should_not_pass_the_messages_through = () => handler.HandledMessages.ShouldNotContain(Message1, Message2);

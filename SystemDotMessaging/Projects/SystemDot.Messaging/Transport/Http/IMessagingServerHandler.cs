@@ -5,7 +5,7 @@ using SystemDot.Messaging.Packaging;
 namespace SystemDot.Messaging.Transport.Http
 {
     [ContractClass(typeof(IMessagingServerHandlerContract))]
-    interface IMessagingServerHandler
+    public interface IMessagingServerHandler
     {
         void HandleMessage(MessagePayload toHandle, List<MessagePayload> outgoingMessages);
     }

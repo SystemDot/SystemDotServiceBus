@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Specifications.publishing_receiving
             payload = new MessagePayload().MakeSequencedReceivable(message, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
         };
 
-        Because of = () => Server.ReceiveMessage(payload);
+        Because of = () => GetServer().ReceiveMessage(payload);
 
         It should_push_the_message_to_any_registered_handlers = () => handler.LastHandledMessage.ShouldEqual(message);    
     }

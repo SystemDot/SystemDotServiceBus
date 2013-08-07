@@ -1,20 +1,25 @@
+using System.Collections.Generic;
 using SystemDot.Messaging.Packaging;
-using SystemDot.Serialisation;
+using SystemDot.Messaging.Transport.Http;
 
 namespace SystemDot.Messaging.Transport.InProcess
 {
-    class InProcessMessageServer : MessageProcessor, IInProcessMessageServer
+    class InProcessMessageServer : IInProcessMessageServer
     {
-        readonly ISerialiser serialiser;
+        readonly IMessagingServerHandler[] handlers;
 
-        public InProcessMessageServer(ISerialiser serialiser)
+        public InProcessMessageServer(params IMessagingServerHandler[] handlers)
         {
-            this.serialiser = serialiser;
+            this.handlers = handlers;
         }
 
-        public override void InputMessage(MessagePayload toInput)
+        public List<MessagePayload> InputMessage(MessagePayload toInput)
         {
-            OnMessageProcessed(this.serialiser.Copy(toInput));
+            var outgoingMessages = new List<MessagePayload>();
+
+            handlers.ForEach(h => h.HandleMessage(toInput, outgoingMessages));
+
+            return outgoingMessages;
         }
     }
 }

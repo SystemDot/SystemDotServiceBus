@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.receiving.request_reply
             payload.SetToAddress(BuildAddress(ChannelName));
         };
 
-        Because of = () => exception = Catch.Exception(() => Server.ReceiveMessage(payload));
+        Because of = () => exception = Catch.Exception(() => GetServer().ReceiveMessage(payload));
 
         It should_not_fail = () => exception.ShouldBeNull();
     }

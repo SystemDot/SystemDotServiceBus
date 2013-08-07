@@ -33,7 +33,7 @@ namespace SystemDot.Messaging.Specifications.hooks_for_request_reply
                 PersistenceUseType.RequestSend);
         };
 
-        Because of = () => Server.ReceiveMessage(payload);
+        Because of = () => GetServer().ReceiveMessage(payload);
 
         It should_run_the_message_through_the_hook = () => hook.Message.ShouldEqual(Message);
     }

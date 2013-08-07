@@ -27,13 +27,13 @@ namespace SystemDot.Messaging.Configuration
 
         public void Initialise()
         {
+            Resolve<ITransportBuilder>().Build(GetMessageServer());
+            
             Resolve<SubscriptionRequestReceiveChannelBuilder>().Build();
             Resolve<AcknowledgementSendChannelBuilder>().Build();
             Resolve<AcknowledgementRecieveChannelBuilder>().Build();
 
             this.messagingConfiguration.BuildActions.ForEach(a => a());
-
-            Resolve<ITransportBuilder>().Build(GetMessageServer());
             
             Messenger.Send(new MessagingInitialising());
 

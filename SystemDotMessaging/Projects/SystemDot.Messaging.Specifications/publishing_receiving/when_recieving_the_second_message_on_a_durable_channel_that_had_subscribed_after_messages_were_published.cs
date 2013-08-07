@@ -33,7 +33,7 @@ namespace SystemDot.Messaging.Specifications.publishing_receiving
             payload.SetSequenceOriginSetOn(DateTime.Today);
             payload.SetSequence(2);
 
-            Server.ReceiveMessage(payload);
+            GetServer().ReceiveMessage(payload);
 
             message = 2;
             payload = new MessagePayload().MakeReceivable(message, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
@@ -42,7 +42,7 @@ namespace SystemDot.Messaging.Specifications.publishing_receiving
             payload.SetSequence(3);
         };
 
-        Because of = () => Server.ReceiveMessage(payload);
+        Because of = () => GetServer().ReceiveMessage(payload);
 
         It should_push_the_message_to_any_registered_handlers = () => handler.LastHandledMessage.ShouldEqual(message);
     }

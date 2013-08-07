@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
             handler = new TestMessageHandler<int>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
 
-            Server.ReceiveMessage(messagePayload);
+            GetServer().ReceiveMessage(messagePayload);
 
             Reset();
             ReInitialise();

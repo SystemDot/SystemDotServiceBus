@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.exception_replying_for_request_repl
                 .RegisterHandlers(r => r.RegisterHandler(new FailingMessageHandler<Int64>()))
                 .Initialise();
 
-        Because of = () => exception = Catch.Exception(() => Server.ReceiveMessage(
+        Because of = () => exception = Catch.Exception(() => GetServer().ReceiveMessage(
                 new MessagePayload().MakeSequencedReceivable(
                     1,
                     "SenderAddress",
@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.exception_replying_for_request_repl
                     PersistenceUseType.RequestSend)));
 
         It should_not_pass_the_message_through = () =>
-            Server.SentMessages.ExcludeAcknowledgements()
+            GetServer().SentMessages.ExcludeAcknowledgements()
                 .First().DeserialiseTo<ExceptionOccured>().Message.ShouldEqual(exception.Message);
     }
 }

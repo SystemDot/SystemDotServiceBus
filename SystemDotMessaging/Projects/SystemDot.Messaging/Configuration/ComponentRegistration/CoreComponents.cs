@@ -4,6 +4,7 @@ using SystemDot.Http;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.ExternalSources;
+using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {
@@ -21,6 +22,9 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<IConfigurationReader, ConfigurationReader>();
             container.RegisterInstance<ServerAddressLoader, ServerAddressLoader>();
             container.RegisterInstance<ServerAddressRegistry, ServerAddressRegistry>();
+            container.RegisterInstance<IMessageSender, MessageSender>();
+            container.RegisterInstance<IMessageReceiver, MessageReceiver>();
+            
         }
     }
 }

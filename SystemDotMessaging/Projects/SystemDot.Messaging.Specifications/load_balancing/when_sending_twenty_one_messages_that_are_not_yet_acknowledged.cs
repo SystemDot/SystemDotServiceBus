@@ -24,6 +24,6 @@ namespace SystemDot.Messaging.Specifications.load_balancing
 
         Because of = () => messages.ForEach(m => Bus.Send(m));
 
-        It should_not_send_the_twenty_first_message = () => Server.SentMessages.Count.ShouldEqual(20);
+        It should_not_send_the_twenty_first_message = () => GetServer().SentMessages.Count.ShouldEqual(20);
     }
 }

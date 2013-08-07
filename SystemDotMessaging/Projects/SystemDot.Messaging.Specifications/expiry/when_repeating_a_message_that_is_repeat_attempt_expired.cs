@@ -18,11 +18,11 @@ namespace SystemDot.Messaging.Specifications.expiry
 
             Bus.Send(1);
 
-            Server.SentMessages.Clear();
+            GetServer().SentMessages.Clear();
         };
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_pass_the_message_through = () => Server.SentMessages.ShouldBeEmpty();
+        It should_pass_the_message_through = () => GetServer().SentMessages.ShouldBeEmpty();
     }
 }

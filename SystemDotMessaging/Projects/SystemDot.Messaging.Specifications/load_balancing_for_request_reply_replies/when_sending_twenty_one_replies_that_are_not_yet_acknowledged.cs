@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.load_balancing_for_request_reply_re
                 .ForRequestReplyRecieving()
                 .Initialise();
 
-            Server.ReceiveMessage(new MessagePayload().MakeSequencedReceivable(
+            GetServer().ReceiveMessage(new MessagePayload().MakeSequencedReceivable(
                 1,
                 "SenderAddress",
                 "ReceiverAddress",
@@ -32,6 +32,6 @@ namespace SystemDot.Messaging.Specifications.load_balancing_for_request_reply_re
 
         Because of = () => messages.ForEach(m => Bus.Reply(m));
 
-        It should_not_send_the_twenty_first_message = () => Server.SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(20);
+        It should_not_send_the_twenty_first_message = () => GetServer().SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(20);
     }
 }

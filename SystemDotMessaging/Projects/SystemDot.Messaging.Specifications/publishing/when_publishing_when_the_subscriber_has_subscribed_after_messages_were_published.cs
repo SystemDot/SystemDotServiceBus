@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.publishing
         Because of = () => Bus.Publish(message);
 
         It should_mark_the_first_sequence_number_in_the_subscriber_as_two = () =>
-            Server.SentMessages.ExcludeAcknowledgements().First().GetFirstSequence().ShouldEqual(2);
+            GetServer().SentMessages.ExcludeAcknowledgements().First().GetFirstSequence().ShouldEqual(2);
 
     }
 }

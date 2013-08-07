@@ -58,10 +58,19 @@
     <Compile Include="Caching\ReceiveChannelMessageCacher.cs" />
     <Compile Include="Caching\SendChannelMessageCacher.cs" />
     <Compile Include="Caching\SendChannelMessageCacheUpdater.cs" />
+    <Compile Include="Configuration\ComponentRegistration\DirectChannelComponents.cs" />
+    <Compile Include="Configuration\Direct\DirectChannelConfiguration.cs" />
+    <Compile Include="Configuration\Direct\DirectRequestReplyReceiverConfiguration.cs" />
+    <Compile Include="Configuration\Direct\DirectRequestReplySenderConfiguration.cs" />
     <Compile Include="Configuration\HandlerBasedOnConfiguration.cs" />
     <Compile Include="Configuration\ExternalSources\ExternalSourcesConfigurer.cs" />
     <Compile Include="Configuration\ExternalSources\IExternalConfigurationSource.cs" />
     <Compile Include="Configuration\ExternalSources\IExternalSourcesConfigurer.cs" />
+    <Compile Include="Direct\Builders\DirectRequestReceiverBuilder.cs" />
+    <Compile Include="Direct\Builders\DirectRequestReceiverSchema.cs" />
+    <Compile Include="Direct\Builders\DirectRequestSenderBuilder.cs" />
+    <Compile Include="Direct\Builders\DirectRequestReplySenderSchema.cs" />
+    <Compile Include="Direct\DirectChannelMessageSender.cs" />
     <Compile Include="Distribution\ChannelDistributor.cs" />
     <Compile Include="Distribution\IChannelDistrbutionStrategy.cs" />
     <Compile Include="Distribution\Queue.cs" />
@@ -160,7 +169,12 @@
     <Compile Include="Transport\Http\Configuration\HttpServerTransportBuilder.cs" />
     <Compile Include="Transport\Http\MessageReceiverHandler.cs" />
     <Compile Include="Transport\Http\MessageServerExtensions.cs" />
+    <Compile Include="Transport\Http\MessageTransporter.cs" />
+    <Compile Include="Transport\IMessageTransporter.cs" />
+    <Compile Include="Transport\InProcess\IInProcessMessageServerFactory.cs" />
+    <Compile Include="Transport\InProcess\InProcessMessageServerFactory.cs" />
     <Compile Include="Transport\InProcess\IInProcessMessageServer.cs" />
+    <Compile Include="Transport\InProcess\MessageTransporter.cs" />
     <Compile Include="Transport\MessageReceiver.cs" />
     <Compile Include="Transport\Http\Remote\Clients\Configuration\HttpRemoteClientComponents.cs" />
     <Compile Include="Transport\Http\Remote\Clients\Configuration\HttpRemoteClientTransportBuilder.cs" />
@@ -264,15 +278,13 @@
     <Compile Include="Transport\Http\Remote\Clients\LongPoller.cs" />
     <Compile Include="Packaging\MessagePayload.cs" />
     <Compile Include="Packaging\MessagePayloadPackager.cs" />
-    <Compile Include="Transport\Http\MessageSender.cs" />
+    <Compile Include="Transport\MessageSender.cs" />
     <Compile Include="Handling\MessageHandlerRouter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transport\Http\Remote\Servers\LongPollHandler.cs" />
     <Compile Include="Transport\Http\Remote\Servers\MessagePayloadQueue.cs" />
     <Compile Include="Transport\Http\Remote\Servers\SentMessageHandler.cs" />
     <Compile Include="Transport\InProcess\InProcessMessageServer.cs" />
-    <Compile Include="Transport\InProcess\MessageReceiver.cs" />
-    <Compile Include="Transport\InProcess\MessageSender.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SystemDot.Extensions\SystemDot.Extensions.csproj">

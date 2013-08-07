@@ -35,7 +35,7 @@ namespace SystemDot.Messaging.Specifications.receiving
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
         };
 
-        Because of = () => Server.ReceiveMessage(payload);
+        Because of = () => GetServer().ReceiveMessage(payload);
 
         It should_not_handle_the_message = () => handler.LastHandledMessage.ShouldEqual(0);
     }

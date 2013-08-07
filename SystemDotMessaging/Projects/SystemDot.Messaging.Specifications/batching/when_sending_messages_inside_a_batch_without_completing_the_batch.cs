@@ -22,6 +22,6 @@ namespace SystemDot.Messaging.Specifications.batching
         };
 
         It should_not_send_a_batch_containing_messages = () =>
-            Server.SentMessages.ShouldBeEmpty();
+            GetServer().SentMessages.ShouldBeEmpty();
     }
 }

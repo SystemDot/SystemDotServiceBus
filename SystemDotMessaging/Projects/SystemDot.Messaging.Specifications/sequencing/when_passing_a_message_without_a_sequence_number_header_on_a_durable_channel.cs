@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
 
         Because of = () =>
         {
-            exception = Catch.Exception(() => Server.ReceiveMessage(messagePayload));
+            exception = Catch.Exception(() => GetServer().ReceiveMessage(messagePayload));
         };
 
         It should_not_fail = () => exception.ShouldBeNull();

@@ -44,7 +44,7 @@ namespace SystemDot.Messaging.Specifications.receiving
                 PersistenceUseType.PointToPointReceive);
         };
 
-        Because of = () => Server.ReceiveMessage(payload);
+        Because of = () => GetServer().ReceiveMessage(payload);
 
         It should_notify_that_the_message_was_cached = () =>
             messageAddedToCacheEvent.ShouldMatch(m =>
@@ -62,7 +62,7 @@ namespace SystemDot.Messaging.Specifications.receiving
                 && e.UseType == PersistenceUseType.PointToPointReceive);
 
         It should_send_an_acknowledgement_for_the_message = () =>
-            Server.SentMessages.ShouldContain(a => a.GetAcknowledgementId() == payload.GetSourcePersistenceId());
+            GetServer().SentMessages.ShouldContain(a => a.GetAcknowledgementId() == payload.GetSourcePersistenceId());
     }
     
    

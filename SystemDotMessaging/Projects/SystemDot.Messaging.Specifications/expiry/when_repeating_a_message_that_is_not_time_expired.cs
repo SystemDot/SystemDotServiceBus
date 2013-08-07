@@ -16,6 +16,6 @@ namespace SystemDot.Messaging.Specifications.expiry
 
         Because of = () => Bus.Send(1);
 
-        It should_pass_the_message_through = () => Server.SentMessages.ShouldNotBeEmpty();
+        It should_pass_the_message_through = () => GetServer().SentMessages.ShouldNotBeEmpty();
     }
 }
