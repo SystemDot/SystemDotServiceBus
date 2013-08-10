@@ -4,11 +4,11 @@ using SystemDot.Messaging.Filtering;
 
 namespace SystemDot.Messaging.Direct
 {
-    class DirectChannelMessageFilterStrategy : IMessageFilterStrategy
+    class MessageReplyContextMessageFilterStrategy : IMessageFilterStrategy
     {
         readonly EndpointAddress address;
 
-        public DirectChannelMessageFilterStrategy(EndpointAddress address)
+        public MessageReplyContextMessageFilterStrategy(EndpointAddress address)
         {
             Contract.Requires(address != null);
 
@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Direct
 
         public bool PassesThrough(object toCheck)
         {
-            return DirectChannelMessageReplyContext.GetCurrentAddress() == address;
+            return MessageReplyContext.GetCurrentAddress() == address;
         }
     }
 }

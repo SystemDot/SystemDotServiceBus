@@ -6,26 +6,26 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Direct.Builders
 {
-    class DirectReplySenderBuilder
+    class ReplySenderBuilder
     {
         readonly ISerialiser serialiser;
 
-        public DirectReplySenderBuilder(ISerialiser serialiser)
+        public ReplySenderBuilder(ISerialiser serialiser)
         {
             Contract.Requires(serialiser != null);
 
             this.serialiser = serialiser;
         }
 
-        public void Build(DirectReplySenderSchema schema)
+        public void Build(ReplySenderSchema schema)
         {
             Contract.Requires(schema != null);
             
             MessagePipelineBuilder.Build()
-                .WithBusReplyTo(new MessageFilter(new DirectChannelMessageFilterStrategy(schema.Address)))
+                .WithBusReplyTo(new MessageFilter(new MessageReplyContextMessageFilterStrategy(schema.Address)))
                 .ToConverter(new MessagePayloadPackager(serialiser))
-                .ToProcessor(new DirectMessageAddresser(schema.Address))
-                .ToEndPoint(new DirectChannelReplySender());
+                .ToProcessor(new MessageAddresser(schema.Address))
+                .ToEndPoint(new ReplySender());
         }
     }
 }

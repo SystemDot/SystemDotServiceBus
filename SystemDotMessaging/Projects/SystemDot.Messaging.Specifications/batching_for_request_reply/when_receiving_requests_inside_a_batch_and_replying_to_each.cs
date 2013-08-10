@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Specifications.batching_for_request_reply
         {
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel(ReceiverAddress).ForRequestReplyRecieving()
+                .OpenChannel(ReceiverAddress).ForRequestReplyReceiving()
                 .Initialise();
 
             var aggregateMessage = new BatchMessage();

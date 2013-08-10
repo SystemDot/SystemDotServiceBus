@@ -2,7 +2,7 @@ using SystemDot.Messaging.Packaging;
 
 namespace SystemDot.Messaging.Direct
 {
-    public static class DirectChannelMessagePayloadExtensions
+    public static class MessagePayloadExtensions
     {
         public static void SetIsDirectChannelMessage(this MessagePayload payload)
         {

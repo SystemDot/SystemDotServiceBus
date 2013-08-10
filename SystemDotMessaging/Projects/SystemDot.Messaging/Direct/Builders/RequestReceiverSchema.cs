@@ -3,7 +3,7 @@ using SystemDot.Messaging.Filtering;
 
 namespace SystemDot.Messaging.Direct.Builders
 {
-    class DirectRequestReceiverSchema
+    class RequestReceiverSchema
     {
         public EndpointAddress Address { get; set; }
         public IMessageFilterStrategy FilterStrategy { get; set; }

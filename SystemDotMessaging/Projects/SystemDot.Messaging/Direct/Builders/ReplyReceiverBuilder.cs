@@ -1,5 +1,4 @@
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
@@ -9,13 +8,13 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Direct.Builders
 {
-    class DirectReplyReceiverBuilder
+    class ReplyReceiverBuilder
     {
         readonly MessageReceiver messageReceiver;
         readonly ISerialiser serialiser;
         readonly MessageHandlerRouter messageHandlerRouter;
 
-        public DirectReplyReceiverBuilder(MessageReceiver messageReceiver, ISerialiser serialiser, MessageHandlerRouter messageHandlerRouter)
+        public ReplyReceiverBuilder(MessageReceiver messageReceiver, ISerialiser serialiser, MessageHandlerRouter messageHandlerRouter)
         {
             Contract.Requires(messageReceiver != null);
             Contract.Requires(serialiser != null);
@@ -26,7 +25,7 @@ namespace SystemDot.Messaging.Direct.Builders
             this.messageHandlerRouter = messageHandlerRouter;
         }
 
-        public void Build(DirectReplyReceiverSchema schema)
+        public void Build(ReplyReceiverSchema schema)
         {
             MessagePipelineBuilder.Build()
                 .With(messageReceiver)
@@ -34,10 +33,5 @@ namespace SystemDot.Messaging.Direct.Builders
                 .ToConverter(new MessagePayloadUnpackager(serialiser))
                 .ToEndPoint(messageHandlerRouter);
         }
-    }
-
-    class DirectReplyReceiverSchema
-    {
-        public EndpointAddress Address { get; set; }
     }
 }

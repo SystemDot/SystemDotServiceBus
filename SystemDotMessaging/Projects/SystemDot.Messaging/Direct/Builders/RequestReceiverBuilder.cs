@@ -8,13 +8,13 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Direct.Builders
 {
-    class DirectRequestReceiverBuilder
+    class RequestReceiverBuilder
     {
         readonly MessageReceiver messageReceiver;
         readonly MessageHandlerRouter messageHandlerRouter;
         readonly ISerialiser serialiser;
 
-        public DirectRequestReceiverBuilder(MessageReceiver messageReceiver, MessageHandlerRouter messageHandlerRouter, ISerialiser serialiser)
+        public RequestReceiverBuilder(MessageReceiver messageReceiver, MessageHandlerRouter messageHandlerRouter, ISerialiser serialiser)
         {
             Contract.Requires(messageReceiver != null);
             Contract.Requires(messageHandlerRouter != null);
@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Direct.Builders
             this.serialiser = serialiser;
         }
 
-        public void Build(DirectRequestReceiverSchema schema)
+        public void Build(RequestReceiverSchema schema)
         {
             Contract.Requires(schema != null);
 

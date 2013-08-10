@@ -6,12 +6,12 @@ using SystemDot.Messaging.Transport;
 
 namespace SystemDot.Messaging.Direct
 {
-    class DirectChannelRequestSender : IMessageInputter<MessagePayload>
+    class RequestSender : IMessageInputter<MessagePayload>
     {
         readonly IMessageTransporter messageTransporter;
         readonly MessageReceiver messageReceiver;
 
-        public DirectChannelRequestSender(IMessageTransporter messageTransporter, MessageReceiver messageReceiver)
+        public RequestSender(IMessageTransporter messageTransporter, MessageReceiver messageReceiver)
         {
             Contract.Requires(messageTransporter != null);
 

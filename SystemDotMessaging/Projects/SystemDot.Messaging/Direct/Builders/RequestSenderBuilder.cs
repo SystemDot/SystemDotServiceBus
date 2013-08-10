@@ -7,12 +7,12 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Direct.Builders
 {
-    class DirectRequestSenderBuilder
+    class RequestSenderBuilder
     {
         readonly ISerialiser serialser;
-        readonly DirectChannelRequestSender requestSender;
+        readonly RequestSender requestSender;
 
-        public DirectRequestSenderBuilder(ISerialiser serialser, DirectChannelRequestSender requestSender)
+        public RequestSenderBuilder(ISerialiser serialser, RequestSender requestSender)
         {
             Contract.Requires(serialser != null);
             Contract.Requires(requestSender != null);
@@ -21,14 +21,14 @@ namespace SystemDot.Messaging.Direct.Builders
             this.requestSender = requestSender;
         }
 
-        public void Build(DirectRequestSenderSchema schema) 
+        public void Build(RequestSenderSchema schema) 
         {
             Contract.Requires(schema != null);
 
             MessagePipelineBuilder.Build()
                 .WithBusSendTo(new MessageFilter(schema.FilterStrategy))
                 .ToConverter(new MessagePayloadPackager(serialser))
-                .ToProcessor(new MessageAddresser(schema.FromAddress, schema.ToAddress))
+                .ToProcessor(new Addressing.MessageAddresser(schema.FromAddress, schema.ToAddress))
                 .ToEndPoint(requestSender);
         }
     }

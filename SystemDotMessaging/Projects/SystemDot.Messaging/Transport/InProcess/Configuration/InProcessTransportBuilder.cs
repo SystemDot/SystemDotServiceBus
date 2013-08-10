@@ -4,6 +4,7 @@ using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Direct;
 using SystemDot.Messaging.Direct.Builders;
 using SystemDot.Messaging.Transport.Http;
+using MessageReceiverHandler = SystemDot.Messaging.Direct.MessageReceiverHandler;
 
 namespace SystemDot.Messaging.Transport.InProcess.Configuration
 {
@@ -27,8 +28,8 @@ namespace SystemDot.Messaging.Transport.InProcess.Configuration
         public void Build(MessageServer toListenFor) 
         {
             container.RegisterInstance(() => messageServerFactory.Create(
-                new MessageReceiverHandler(messageReceiver), 
-                new DirectChannelMessageReceiverHandler(messageReceiver)));
+                new Http.MessageReceiverHandler(messageReceiver), 
+                new MessageReceiverHandler(messageReceiver)));
         }
     }
 

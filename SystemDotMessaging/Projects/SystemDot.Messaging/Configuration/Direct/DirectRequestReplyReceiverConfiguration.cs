@@ -7,8 +7,8 @@ namespace SystemDot.Messaging.Configuration.Direct
 {
     public class DirectRequestReplyReceiverConfiguration : Configurer
     {
-        readonly DirectRequestReceiverSchema receiveSchema;
-        readonly DirectReplySenderSchema sendSchema;
+        readonly RequestReceiverSchema receiveSchema;
+        readonly ReplySenderSchema sendSchema;
 
         public DirectRequestReplyReceiverConfiguration(MessagingConfiguration messagingConfiguration, EndpointAddress address) 
             : base(messagingConfiguration) 
@@ -16,13 +16,13 @@ namespace SystemDot.Messaging.Configuration.Direct
             Contract.Requires(messagingConfiguration != null);
             Contract.Requires(address != null);
 
-            receiveSchema = new DirectRequestReceiverSchema
+            receiveSchema = new RequestReceiverSchema
             {
                 Address = address,
                 FilterStrategy = new PassThroughMessageFilterStategy()
             };
 
-            sendSchema = new DirectReplySenderSchema()
+            sendSchema = new ReplySenderSchema()
             {
                 Address = address
             };
@@ -30,8 +30,8 @@ namespace SystemDot.Messaging.Configuration.Direct
 
         protected override void Build()
         {
-            Resolve<DirectRequestReceiverBuilder>().Build(receiveSchema);
-            Resolve<DirectReplySenderBuilder>().Build(sendSchema);
+            Resolve<RequestReceiverBuilder>().Build(receiveSchema);
+            Resolve<ReplySenderBuilder>().Build(sendSchema);
         }
 
         protected override MessageServer GetMessageServer()

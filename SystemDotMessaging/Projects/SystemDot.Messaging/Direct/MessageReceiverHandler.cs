@@ -7,11 +7,11 @@ using SystemDot.Messaging.Packaging.Headers;
 
 namespace SystemDot.Messaging.Direct
 {
-    class DirectChannelMessageReceiverHandler : IMessagingServerHandler
+    class MessageReceiverHandler : IMessagingServerHandler
     {
         readonly MessageReceiver messageReceiver;
 
-        public DirectChannelMessageReceiverHandler(MessageReceiver messageReceiver)
+        public MessageReceiverHandler(MessageReceiver messageReceiver)
         {
             Contract.Requires(messageReceiver != null);
 
@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Direct
         {
             if (!toHandle.IsDirectChannelMessage()) return;
 
-            using (var context = new DirectChannelMessageReplyContext(toHandle.GetToAddress(), toHandle.GetFromAddress()))
+            using (var context = new MessageReplyContext(toHandle.GetToAddress(), toHandle.GetFromAddress()))
             {
                 messageReceiver.InputMessage(toHandle);
                 outgoingMessages.AddRange(context.GetCurrentReplies());
