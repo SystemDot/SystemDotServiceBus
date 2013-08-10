@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Publishing.Builders
     {
         readonly ISerialiser serialiser;
         readonly MessageHandlerRouter messageHandlerRouter;
-        readonly IMessageReceiver messageReceiver;
+        readonly MessageReceiver messageReceiver;
         readonly AcknowledgementSender acknowledgementSender;
         readonly PersistenceFactorySelector persistenceFactory;
         readonly ISystemTime systemTime;
@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Publishing.Builders
         internal SubscriberRecieveChannelBuilder(
             ISerialiser serialiser, 
             MessageHandlerRouter messageHandlerRouter, 
-            IMessageReceiver messageReceiver,
+            MessageReceiver messageReceiver,
             AcknowledgementSender acknowledgementSender,
             PersistenceFactorySelector persistenceFactory, 
             ISystemTime systemTime, 

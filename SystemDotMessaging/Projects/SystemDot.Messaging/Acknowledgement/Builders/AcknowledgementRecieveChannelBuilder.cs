@@ -8,12 +8,12 @@ namespace SystemDot.Messaging.Acknowledgement.Builders
 {
     class AcknowledgementRecieveChannelBuilder
     {
-        readonly IMessageReceiver messageReceiver;
+        readonly MessageReceiver messageReceiver;
         readonly MessageAcknowledgementHandler handler;
         readonly ISerialiser serialiser;
 
         public AcknowledgementRecieveChannelBuilder(
-            IMessageReceiver messageReceiver, 
+            MessageReceiver messageReceiver, 
             MessageAcknowledgementHandler handler, 
             ISerialiser serialiser)
         {

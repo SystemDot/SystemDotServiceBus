@@ -21,15 +21,15 @@ namespace SystemDot.Messaging.Publishing
 
         void Start()
         {
-            Logger.Info("Sending subscription request");
+            Logger.Info("Sending subscription request for {0}", subscriberAddress);
 
             var request = new MessagePayload();
             request.SetSubscriptionRequest(new SubscriptionSchema
             {
-                SubscriberAddress = this.subscriberAddress,
-                IsDurable = this.isDurable
+                SubscriberAddress = subscriberAddress,
+                IsDurable = isDurable
             });
-            this.MessageProcessed(request);
+            MessageProcessed(request);
         }
     }
 }

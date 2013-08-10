@@ -5,10 +5,10 @@ namespace SystemDot.Messaging.Configuration.Direct
 {
     public class DirectChannelConfiguration : ConfigurationBase
     {
-        readonly MessagingConfiguration messagingConfiguration;
         readonly EndpointAddress address;
-
-        public DirectChannelConfiguration(MessagingConfiguration messagingConfiguration, EndpointAddress address)
+        readonly MessagingConfiguration messagingConfiguration;
+        
+        public DirectChannelConfiguration(EndpointAddress address, MessagingConfiguration messagingConfiguration)
         {
             Contract.Requires(messagingConfiguration != null);
             Contract.Requires(address != null);
@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Configuration.Direct
             return new DirectRequestReplySenderConfiguration(
                 messagingConfiguration, 
                 address,
-                BuildEndpointAddress(receiverName, MessageServer.None));
+                BuildEndpointAddress(receiverName, address.Server));
         }
 
         public DirectRequestReplyReceiverConfiguration ForRequestReplyReceiving()

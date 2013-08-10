@@ -9,9 +9,11 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
     {
         public static void Register(IIocContainer container)
         {
-            container.RegisterInstance<DirectChannelMessageSender, DirectChannelMessageSender>();
+            container.RegisterInstance<DirectChannelRequestSender, DirectChannelRequestSender>();
             container.RegisterInstance<DirectRequestSenderBuilder, DirectRequestSenderBuilder>();
             container.RegisterInstance<DirectRequestReceiverBuilder, DirectRequestReceiverBuilder>();
+            container.RegisterInstance<DirectReplySenderBuilder, DirectReplySenderBuilder>();
+            container.RegisterInstance<DirectReplyReceiverBuilder, DirectReplyReceiverBuilder>();
         }
     }
 }

@@ -9,25 +9,25 @@ namespace SystemDot.Messaging
     {
         public static void Send(object message)
         {
-            Logger.Info("Sending message: {0}", message.GetType().Name);
+            Logger.Debug("Sending message: {0}", message.GetType().Name);
             GetBus().Send(message);
         }
 
         public static void SendLocal(object message)
         {
-            Logger.Info("Sending local message: {0}", message.GetType().Name);
+            Logger.Debug("Sending local message: {0}", message.GetType().Name);
             GetBus().SendLocal(message);
         }
 
         public static void Reply(object message)
         {
-            Logger.Info("Replying with message: {0}", message.GetType().Name);
+            Logger.Debug("Replying with message: {0}", message.GetType().Name);
             GetBus().Reply(message);
         }
 
         public static void Publish(object message)
         {
-            Logger.Info("Publishing message: {0}", message.GetType().Name);
+            Logger.Debug("Publishing message: {0}", message.GetType().Name);
             GetBus().Publish(message);
         }
 

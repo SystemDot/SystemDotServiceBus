@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
 {
     class RequestSendChannelBuilder
     {
-        readonly IMessageSender messageSender;
+        readonly MessageSender messageSender;
         readonly ISerialiser serialiser;
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly ITaskScheduler taskScheduler;
 
         public RequestSendChannelBuilder(
-            IMessageSender messageSender, 
+            MessageSender messageSender, 
             ISerialiser serialiser, 
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 

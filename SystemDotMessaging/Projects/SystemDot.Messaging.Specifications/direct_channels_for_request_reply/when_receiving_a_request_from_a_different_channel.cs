@@ -1,3 +1,4 @@
+using SystemDot.Messaging.Direct;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using Machine.Specifications;
@@ -8,7 +9,6 @@ namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply
     public class when_receiving_a_request_from_a_different_channel : WithMessageConfigurationSubject
     {
         const long Message = 1;
-        const string Receiver = "Receiver";
 
         static MessagePayload payload;
         static TestMessageHandler<long> handler;
@@ -17,11 +17,14 @@ namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply
         {
             payload = new MessagePayload()
                 .SetMessageBody(Message)
+                .SetFromChannel("OtherSender")
                 .SetToChannel("OtherReceiver");
+
+            payload.SetIsDirectChannelMessage();
 
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenDirectChannel(Receiver).ForRequestReplyReceiving()
+                .OpenDirectChannel("Receiver").ForRequestReplyReceiving()
                 .Initialise();
 
             handler = new TestMessageHandler<long>();

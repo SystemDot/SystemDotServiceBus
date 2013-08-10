@@ -8,14 +8,14 @@ namespace SystemDot.Messaging.RequestReply.Builders
 {
     class ReplySendDistributionChannelBuilder
     {
-        readonly IMessageReceiver messageReceiver;
+        readonly MessageReceiver messageReceiver;
         readonly ReplySendChannelBuilder builder;
         readonly ReplyAddressLookup replyAddressLookup;
         readonly IChangeStore changeStore;
         readonly InMemoryChangeStore inMemoryStore;
 
         public ReplySendDistributionChannelBuilder(
-            IMessageReceiver messageReceiver,
+            MessageReceiver messageReceiver,
             ReplySendChannelBuilder builder, 
             ReplyAddressLookup replyAddressLookup, 
             IChangeStore changeStore, 

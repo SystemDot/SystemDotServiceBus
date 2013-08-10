@@ -54,7 +54,7 @@ namespace SystemDot.Messaging.Handling
 
         static void LogHandled(object message)
         {
-            Logger.Info("Message handled: {0}", message.GetType().Name);
+            Logger.Debug("Message handled: {0}", message.GetType().Name);
         }
 
         MethodInfo GetHandlerMethodInfo(object handler, object message)

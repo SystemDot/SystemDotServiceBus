@@ -41,7 +41,7 @@ namespace SystemDot.Messaging.Configuration
         {
             Contract.Requires(!string.IsNullOrEmpty(name));
 
-            return new DirectChannelConfiguration(messagingConfiguration, BuildEndpointAddress(name, MessageServer.None));
+            return new DirectChannelConfiguration(BuildEndpointAddress(name, server), messagingConfiguration);
         }
 
         public LocalChannelConfiguration OpenLocalChannel()

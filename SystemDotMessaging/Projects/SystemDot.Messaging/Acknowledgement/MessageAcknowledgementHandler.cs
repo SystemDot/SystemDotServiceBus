@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Acknowledgement
 
             var messageId = toInput.GetAcknowledgementId().MessageId;
 
-            Logger.Info("Received acknowledgement for {0}", messageId);
+            Logger.Debug("Received acknowledgement for {0}", messageId);
 
             if (cache != null)
                 cache.Delete(messageId);

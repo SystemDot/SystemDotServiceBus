@@ -2,6 +2,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Http;
 using SystemDot.Http.Builders;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Direct;
 using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Transport.Http.Configuration
@@ -10,12 +11,12 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
     {
         readonly IHttpServerBuilder httpServerBuilder;
         readonly ISerialiser serialiser;
-        readonly IMessageReceiver messageReceiver;
+        readonly MessageReceiver messageReceiver;
 
         public HttpServerTransportBuilder(
             IHttpServerBuilder httpServerBuilder, 
             ISerialiser serialiser, 
-            IMessageReceiver messageReceiver)
+            MessageReceiver messageReceiver)
         {
             Contract.Requires(httpServerBuilder != null);
             Contract.Requires(serialiser != null);
@@ -35,7 +36,10 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
 
         IHttpHandler BuildMessagingServerHandler()
         {
-            return new HttpMessagingServer(serialiser, new MessageReceiverHandler(messageReceiver));
+            return new HttpMessagingServer(
+                serialiser, 
+                new MessageReceiverHandler(messageReceiver),
+                new DirectChannelMessageReceiverHandler(messageReceiver));
         }
     }
 }

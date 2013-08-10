@@ -8,13 +8,13 @@ namespace SystemDot.Messaging.Publishing.Builders
 {
     class SubscriptionRequestReceiveChannelBuilder
     {
-        readonly IMessageReceiver messageReceiver;
+        readonly MessageReceiver messageReceiver;
         readonly AcknowledgementSender acknowledgementSender;
         readonly IPublisherRegistry publisherRegistry;
         readonly ServerAddressRegistry serverAddressRegistry;
 
         SubscriptionRequestReceiveChannelBuilder(
-            IMessageReceiver messageReceiver, 
+            MessageReceiver messageReceiver, 
             AcknowledgementSender acknowledgementSender, 
             IPublisherRegistry publisherRegistry, 
             ServerAddressRegistry serverAddressRegistry)

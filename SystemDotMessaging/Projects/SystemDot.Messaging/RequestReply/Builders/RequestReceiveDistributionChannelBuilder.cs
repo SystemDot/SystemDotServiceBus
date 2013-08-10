@@ -8,13 +8,13 @@ namespace SystemDot.Messaging.RequestReply.Builders
 {
     class RequestReceiveDistributionChannelBuilder 
     {
-        readonly IMessageReceiver messageReceiver;
+        readonly MessageReceiver messageReceiver;
         readonly RequestRecieveChannelBuilder builder;
         readonly IChangeStore changeStore;
         readonly InMemoryChangeStore inMemoryStore;
 
         public RequestReceiveDistributionChannelBuilder(
-            IMessageReceiver messageReceiver, 
+            MessageReceiver messageReceiver, 
             RequestRecieveChannelBuilder builder, 
             IChangeStore changeStore, 
             InMemoryChangeStore inMemoryStore)

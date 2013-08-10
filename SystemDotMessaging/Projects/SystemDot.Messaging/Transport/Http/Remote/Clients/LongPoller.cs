@@ -16,14 +16,14 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients
         readonly IWebRequestor requestor;
         readonly ISerialiser formatter;
         readonly ITaskScheduler scheduler;
-        readonly IMessageReceiver receiver;
+        readonly MessageReceiver receiver;
         readonly ITaskStarter starter;
 
         public LongPoller(
             IWebRequestor requestor, 
             ISerialiser formatter, 
             ITaskScheduler scheduler, 
-            IMessageReceiver receiver, 
+            MessageReceiver receiver, 
             ITaskStarter starter)
         {
             Contract.Requires(requestor != null);

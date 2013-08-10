@@ -41,7 +41,6 @@ namespace SystemDot.Messaging.Specifications.batching_for_request_reply
         Because of = () => GetServer().ReceiveMessage(messagePayload);
 
         It should_send_a_batch_containing_both_replied_messages = () =>
-            GetServer().SentMessages.ExcludeAcknowledgements().Single()
-                .DeserialiseTo<BatchMessage>().Messages.ShouldContain(Message1, Message2);
+            GetServer().SentMessages.ExcludeAcknowledgements().Single().DeserialiseTo<BatchMessage>().Messages.ShouldContain(Message1, Message2);
     }
 }

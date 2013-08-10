@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
 {
     class PointToPointReceiveChannelBuilder
     {
-        readonly IMessageReceiver messageReceiver;
+        readonly MessageReceiver messageReceiver;
         readonly ISerialiser serialiser;
         readonly AcknowledgementSender acknowledgementSender;
         readonly MessageHandlerRouter messageHandlerRouter;
@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
         readonly ServerAddressRegistry serverAddressRegistry;
 
         internal PointToPointReceiveChannelBuilder(
-            IMessageReceiver messageReceiver, 
+            MessageReceiver messageReceiver, 
             ISerialiser serialiser, 
             AcknowledgementSender acknowledgementSender, 
             MessageHandlerRouter messageHandlerRouter,

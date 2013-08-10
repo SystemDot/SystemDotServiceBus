@@ -13,8 +13,8 @@ namespace SystemDot.Messaging.Filtering
 
         public void InputMessage(object toInput)
         {
-            if(this.filterStrategy.PassesThrough(toInput))
-                this.MessageProcessed(toInput);
+            if(filterStrategy.PassesThrough(toInput))
+                MessageProcessed(toInput);
         }
 
         public event Action<object> MessageProcessed;

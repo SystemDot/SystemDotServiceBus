@@ -1,6 +1,7 @@
 using System.Linq;
 using Machine.Specifications;
 using SystemDot.Messaging.Packaging.Headers;
+using SystemDot.Messaging.Direct;
 
 namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply
 {
@@ -27,5 +28,8 @@ namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply
 
         It should_send_the_message_with_the_correct_from_address =
             () => GetServer().SentMessages.Single().GetFromAddress().ShouldEqual(BuildAddress(Sender));
+
+        It should_send_the_message_marked_for_direct_channeling =
+            () => GetServer().SentMessages.Single().IsDirectChannelMessage().ShouldBeTrue();
     }
 }

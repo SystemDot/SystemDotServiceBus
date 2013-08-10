@@ -13,14 +13,14 @@ namespace SystemDot.Messaging.Publishing.Builders
 {
     class SubscriptionRequestSendChannelBuilder
     {
-        readonly IMessageSender messageSender;
+        readonly MessageSender messageSender;
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
         readonly InMemoryChangeStore changeStore;
         readonly MessageAcknowledgementHandler acknowledgementHandler;
 
         public SubscriptionRequestSendChannelBuilder(
-            IMessageSender messageSender, 
+            MessageSender messageSender, 
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater,
             InMemoryChangeStore changeStore, 

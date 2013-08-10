@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement.Builders;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Configuration.Direct;
 using SystemDot.Messaging.Configuration.Local;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Publishing.Builders;
@@ -47,6 +48,11 @@ namespace SystemDot.Messaging.Configuration
             Contract.Requires(!string.IsNullOrEmpty(name));
 
             return new ChannelConfiguration(new EndpointAddress(name, GetMessageServer()), GetMessageServer(), messagingConfiguration);
+        }
+
+        public DirectChannelConfiguration OpenDirectChannel(string name)
+        {
+            return new DirectChannelConfiguration(new EndpointAddress(name, GetMessageServer()), messagingConfiguration);
         }
 
         public Configurer RegisterHandlers(Action<MessageHandlerRouter> registrationAction)

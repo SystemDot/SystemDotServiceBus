@@ -1,16 +1,17 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Direct.Builders;
+using SystemDot.Messaging.Filtering;
 
 namespace SystemDot.Messaging.Configuration.Direct
 {
     public class DirectRequestReplySenderConfiguration : Configurer
     {
-        readonly EndpointAddress address;
-        readonly DirectRequestReplySenderSchema schema;
+        readonly DirectRequestSenderSchema sendSchema;
+        readonly DirectReplyReceiverSchema receiveSchema;
 
         public DirectRequestReplySenderConfiguration(
-            MessagingConfiguration messagingConfiguration,
+            MessagingConfiguration messagingConfiguration, 
             EndpointAddress address, 
             EndpointAddress toAddress) 
             : base(messagingConfiguration) 
@@ -19,20 +20,34 @@ namespace SystemDot.Messaging.Configuration.Direct
             Contract.Requires(address != null);
             Contract.Requires(toAddress != null);
 
-            this.address = address;
-            
-            schema = new DirectRequestReplySenderSchema
+            sendSchema = new DirectRequestSenderSchema
             {
                 FromAddress = address,
-                ToAddress = toAddress
+                ToAddress = toAddress,
+                FilterStrategy = new PassThroughMessageFilterStategy()
+            };
+
+            receiveSchema = new DirectReplyReceiverSchema
+            {
+                Address = address
             };
         }
 
         protected override void Build()
         {
-            Resolve<DirectRequestSenderBuilder>().Build(schema);
+            Resolve<DirectRequestSenderBuilder>().Build(sendSchema);
+            Resolve<DirectReplyReceiverBuilder>().Build(receiveSchema);
         }
 
-        protected override MessageServer GetMessageServer() { return null; }
+        protected override MessageServer GetMessageServer()
+        {
+            return sendSchema.FromAddress.Server;
+        }
+
+        public DirectRequestReplySenderConfiguration OnlyForMessages(IMessageFilterStrategy toFilterBy)
+        {
+            sendSchema.FilterStrategy = toFilterBy;
+            return this;
+        }
     }
 }

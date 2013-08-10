@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Acknowledgement
             acknowledgement.SetAcknowledgementId(toInput.GetSourcePersistenceId());
             acknowledgement.SetToAddress(toInput.GetFromAddress());
 
-            Logger.Info("Sending acknowledgement {0} acknowledging message {1}", acknowledgement.Id, toInput.Id);
+            Logger.Debug("Sending acknowledgement {0} acknowledging message {1}", acknowledgement.Id, toInput.Id);
 
             MessageProcessed(acknowledgement);
         }

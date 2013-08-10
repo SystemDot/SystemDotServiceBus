@@ -42,6 +42,22 @@ namespace SystemDot.Messaging.Specifications
         }
 
 
+        public static MessagePayload MakeSequencedReceivable(
+            this MessagePayload payload,
+            object message,
+            EndpointAddress from,
+            EndpointAddress to,
+            PersistenceUseType useType)
+        {
+            payload.SetMessageBody(message);
+            payload.SetFromAddress(from);
+            payload.SetToAddress(to);
+            payload.SetChannelType(useType);
+            payload.Sequenced();
+
+            return payload;
+        }
+
         public static MessagePayload BuildSubscriptionRequest(
             this MessagePayload request,
             EndpointAddress subscriberAddress,

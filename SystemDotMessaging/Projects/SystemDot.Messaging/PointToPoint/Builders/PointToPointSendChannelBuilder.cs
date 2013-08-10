@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
 {
     class PointToPointSendChannelBuilder
     {
-        readonly IMessageSender messageSender;
+        readonly MessageSender messageSender;
         readonly ISerialiser serialiser;
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
         readonly ITaskScheduler taskScheduler;
 
         public PointToPointSendChannelBuilder(
-            IMessageSender messageSender, 
+            MessageSender messageSender, 
             ISerialiser serialiser, 
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 

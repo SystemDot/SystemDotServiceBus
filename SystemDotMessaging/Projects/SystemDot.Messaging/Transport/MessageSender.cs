@@ -6,7 +6,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Transport
 {
-    class MessageSender : IMessageSender
+    class MessageSender : IMessageInputter<MessagePayload>
     {
         readonly IMessageTransporter transporter;
 
@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Transport
 
         static void LogMessage(MessagePayload toInput)
         {
-            Logger.Info(
+            Logger.Debug(
                 "Sending message {0} to {1} on {2}",
                 toInput.Id,
                 toInput.GetToAddress().Channel,

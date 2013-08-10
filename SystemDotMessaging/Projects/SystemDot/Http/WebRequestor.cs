@@ -26,7 +26,7 @@ namespace SystemDot.Http
 
         static void Log(FixedPortAddress address)
         {
-            Logger.Info("Sending put to {0}", address);
+            Logger.Debug("Sending put to {0}", address);
         }
     }
 }

@@ -7,9 +7,9 @@ namespace SystemDot.Messaging.Acknowledgement.Builders
     class AcknowledgementSendChannelBuilder
     {
         readonly AcknowledgementSender acknowledgementSender;
-        readonly IMessageSender sender;
+        readonly MessageSender sender;
 
-        internal AcknowledgementSendChannelBuilder(AcknowledgementSender acknowledgementSender, IMessageSender sender)
+        internal AcknowledgementSendChannelBuilder(AcknowledgementSender acknowledgementSender, MessageSender sender)
         {
             Contract.Requires(acknowledgementSender != null);
             Contract.Requires(sender != null);

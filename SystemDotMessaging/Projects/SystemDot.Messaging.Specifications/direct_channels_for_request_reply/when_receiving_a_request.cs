@@ -1,5 +1,5 @@
 using System;
-using SystemDot.Messaging.Handling;
+using SystemDot.Messaging.Direct;
 using SystemDot.Messaging.Packaging;
 using Machine.Specifications;
 
@@ -18,15 +18,18 @@ namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply
         {
             payload = new MessagePayload()
                 .SetMessageBody(Message)
+                .SetFromChannel("Sender")
                 .SetToChannel(Receiver);
+
+            payload.SetIsDirectChannelMessage();
+
+            handler = new TestMessageHandler<long>();
 
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenDirectChannel(Receiver).ForRequestReplyReceiving()
+                .RegisterHandlers(h => h.RegisterHandler(handler))
                 .Initialise();
-
-            handler = new TestMessageHandler<Int64>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
         };
 
         Because of = () => GetServer().ReceiveMessage(payload);

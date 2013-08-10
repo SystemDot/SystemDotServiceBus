@@ -1,14 +1,16 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Direct;
 using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Direct.Builders;
 
 namespace SystemDot.Messaging.Transport.Http
 {
     class MessageReceiverHandler : IMessagingServerHandler
     {
-        readonly IMessageReceiver messageReceiver;
+        readonly MessageReceiver messageReceiver;
 
-        public MessageReceiverHandler(IMessageReceiver messageReceiver)
+        public MessageReceiverHandler(MessageReceiver messageReceiver)
         {
             Contract.Requires(messageReceiver != null);
 
@@ -17,6 +19,8 @@ namespace SystemDot.Messaging.Transport.Http
 
         public void HandleMessage(MessagePayload toHandle, List<MessagePayload> outgoingMessages)
         {
+            if (toHandle.IsDirectChannelMessage()) return;
+
             messageReceiver.InputMessage(toHandle);
         }
     }

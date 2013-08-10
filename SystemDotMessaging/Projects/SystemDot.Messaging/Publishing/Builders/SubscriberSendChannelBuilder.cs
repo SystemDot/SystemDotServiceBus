@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Publishing.Builders
 {
     class SubscriberSendChannelBuilder : ISubscriberSendChannelBuilder
     {
-        readonly IMessageSender messageSender;
+        readonly MessageSender messageSender;
         readonly PersistenceFactorySelector persistenceFactorySelector;
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly ITaskScheduler taskScheduler;
 
         public SubscriberSendChannelBuilder(
-            IMessageSender messageSender, 
+            MessageSender messageSender, 
             PersistenceFactorySelector persistenceFactorySelector, 
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 

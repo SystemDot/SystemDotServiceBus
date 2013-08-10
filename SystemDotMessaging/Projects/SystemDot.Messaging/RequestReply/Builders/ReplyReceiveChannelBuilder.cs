@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
     {
         readonly ISerialiser serialiser;
         readonly MessageHandlerRouter messageHandlerRouter;
-        readonly IMessageReceiver messageReceiver;
+        readonly MessageReceiver messageReceiver;
         readonly AcknowledgementSender acknowledgementSender;
         readonly PersistenceFactorySelector persistenceFactorySelector;
         readonly ISystemTime systemTime;
@@ -33,7 +33,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         internal ReplyReceiveChannelBuilder(
             ISerialiser serialiser, 
             MessageHandlerRouter messageHandlerRouter, 
-            IMessageReceiver messageReceiver, 
+            MessageReceiver messageReceiver, 
             AcknowledgementSender acknowledgementSender,
             PersistenceFactorySelector persistenceFactorySelector, 
             ISystemTime systemTime, 

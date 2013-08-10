@@ -22,8 +22,8 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<IConfigurationReader, ConfigurationReader>();
             container.RegisterInstance<ServerAddressLoader, ServerAddressLoader>();
             container.RegisterInstance<ServerAddressRegistry, ServerAddressRegistry>();
-            container.RegisterInstance<IMessageSender, MessageSender>();
-            container.RegisterInstance<IMessageReceiver, MessageReceiver>();
+            container.RegisterInstance<MessageSender, MessageSender>();
+            container.RegisterInstance<MessageReceiver, MessageReceiver>();
             
         }
     }
