@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Specifications.local_channels
         {
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel("Channel").ForRequestReplyRecieving()
+                .OpenChannel("Channel").ForRequestReplyReceiving()
                 .OpenLocalChannel()
                 .Initialise();
 

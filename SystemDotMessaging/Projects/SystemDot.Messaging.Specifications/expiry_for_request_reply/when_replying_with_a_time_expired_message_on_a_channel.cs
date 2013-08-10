@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Specifications.expiry_for_request_reply
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                    .ForRequestReplyRecieving()
+                    .ForRequestReplyReceiving()
                         .WithMessageExpiry(MessageExpiry.ByTime(TimeSpan.FromMinutes(0)))
                 .Initialise();
 

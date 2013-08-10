@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.repeating_escalating_for_request_re
             Messaging.Configuration.Configure.Messaging()
                  .UsingInProcessTransport()
                  .OpenChannel(ChannelName)
-                 .ForRequestReplyRecieving()
+                 .ForRequestReplyReceiving()
                  .Initialise();
 
             GetServer().ReceiveMessage(

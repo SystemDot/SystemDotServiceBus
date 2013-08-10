@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.request_reply
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsAServer(ReceiverServer)
-                .OpenChannel(ReceiverChannelName).ForRequestReplyRecieving()
+                .OpenChannel(ReceiverChannelName).ForRequestReplyReceiving()
                 .Initialise();
 
             messagePayload = new MessagePayload()

@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Configuration
             this.messagingConfiguration = messagingConfiguration;
         }
 
-        public RequestReplyRecieverConfiguration ForRequestReplyRecieving()
+        public RequestReplyRecieverConfiguration ForRequestReplyReceiving()
         {
             return new RequestReplyRecieverConfiguration(address, messagingConfiguration);
         }

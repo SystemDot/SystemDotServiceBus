@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.TestRequestReply.Reciever
                 .UsingHttpTransport()
                     .AsAServer("ReceiverServer")
                 .OpenChannel("TestReply")
-                    .ForRequestReplyRecieving()
+                    .ForRequestReplyReceiving()
                     .WithDurability()
                 .Initialise();
 

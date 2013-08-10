@@ -20,7 +20,7 @@ namespace MultiChannelRecieverA
                 .UsingFilePersistence()
                 .UsingHttpTransport()
                     .AsAServer("ServerA")
-                .OpenChannel("TestRecieverA").ForRequestReplyRecieving()
+                .OpenChannel("TestRecieverA").ForRequestReplyReceiving()
                     .WithDurability()
                 .Initialise();
 

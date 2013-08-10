@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.sequencing_for_request_reply
             Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ReceiverAddress)
-                .ForRequestReplyRecieving().WithDurability()
+                .ForRequestReplyReceiving().WithDurability()
                 .Initialise();
 
             messagePayload = new MessagePayload()

@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.load_balancing_for_request_reply_re
             Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("ReceiverAddress")
-                .ForRequestReplyRecieving()
+                .ForRequestReplyReceiving()
                 .Initialise();
 
             GetServer().ReceiveMessage(new MessagePayload().MakeSequencedReceivable(

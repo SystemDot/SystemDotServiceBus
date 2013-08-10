@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Specifications.request_reply
         {
             Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel(ChannelName).ForRequestReplyRecieving()
+                .OpenChannel(ChannelName).ForRequestReplyReceiving()
                 .Initialise();
 
             payload = new MessagePayload();

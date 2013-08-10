@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Specifications.request_reply
              Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                     .OpenChannel(ReceiverAddress)
-                    .ForRequestReplyRecieving()
+                    .ForRequestReplyReceiving()
                 .Initialise();
 
             Messenger.Register<ReplySendChannelBuilt>(m => replySendChannelBuiltEvent = m);

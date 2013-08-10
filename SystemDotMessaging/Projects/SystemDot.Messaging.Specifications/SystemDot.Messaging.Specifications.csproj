@@ -377,7 +377,7 @@
     </ProjectReference>
     <ProjectReference Include="..\SystemDot.Sql\SystemDot.Sql.csproj">
       <Project>{80FFA53E-9C4D-45CE-A7D2-8FE0B6A9FBFB}</Project>
-      <Name>SystemDot.Sql</Name>
+      <Name>SystemDot.Sql %28Windows\SystemDot.Sql%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">
       <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>

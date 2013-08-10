@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.server_addressing
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport().AsAServer(ReceiverServerName)
-                .OpenChannel(ReceiverChannel).ForRequestReplyRecieving()
+                .OpenChannel(ReceiverChannel).ForRequestReplyReceiving()
                 .Initialise();
 
             messagePayload = new MessagePayload().MakeSequencedReceivable(

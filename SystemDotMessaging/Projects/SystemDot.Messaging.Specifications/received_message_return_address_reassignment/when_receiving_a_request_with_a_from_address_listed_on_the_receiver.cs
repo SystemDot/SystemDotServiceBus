@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.received_message_return_address_rea
             
             Configuration.Configure.Messaging()
                 .UsingHttpTransport().AsAServer(ReceiverServerName)
-                .OpenChannel(ReceiverChannel).ForRequestReplyRecieving()
+                .OpenChannel(ReceiverChannel).ForRequestReplyReceiving()
                 .Initialise();
 
             messagePayload = new MessagePayload()

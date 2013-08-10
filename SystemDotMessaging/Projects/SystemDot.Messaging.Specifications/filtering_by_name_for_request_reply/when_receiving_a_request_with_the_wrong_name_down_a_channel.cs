@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Specifications.filtering_by_name_for_request_reply
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ReceiverAddress)
-                .ForRequestReplyRecieving()
+                .ForRequestReplyReceiving()
                 .OnlyForMessages(FilteredBy.NamePattern("SomethingElse"))
                 .Initialise();
 

@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Specifications.repeating_constant_for_request_repl
             Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                .ForRequestReplyRecieving()
+                .ForRequestReplyReceiving()
                 .WithMessageRepeating(RepeatMessages.Every(TimeSpan.FromSeconds(10)))
                 .Initialise();
 

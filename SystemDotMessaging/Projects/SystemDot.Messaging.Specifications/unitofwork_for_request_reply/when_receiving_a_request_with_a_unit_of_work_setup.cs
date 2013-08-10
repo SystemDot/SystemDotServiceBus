@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Specifications.unitofwork_for_request_reply
             Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                    .ForRequestReplyRecieving()
+                    .ForRequestReplyReceiving()
                     .WithUnitOfWork<TestUnitOfWorkFactory>()
                 .Initialise();
 

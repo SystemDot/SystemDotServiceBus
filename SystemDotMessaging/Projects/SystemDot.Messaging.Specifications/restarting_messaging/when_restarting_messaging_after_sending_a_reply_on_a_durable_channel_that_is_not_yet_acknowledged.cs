@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
             Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                .ForRequestReplyRecieving()
+                .ForRequestReplyReceiving()
                 .WithDurability()
                 .Initialise();
 
@@ -56,7 +56,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
             Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                .ForRequestReplyRecieving()
+                .ForRequestReplyReceiving()
                 .WithDurability()
                 .Initialise();
 

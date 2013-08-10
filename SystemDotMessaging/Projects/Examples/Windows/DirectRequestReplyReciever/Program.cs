@@ -3,7 +3,7 @@ using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
 
-namespace RequestReplyReceiver
+namespace DirectRequestReplyReciever
 {
     class Program
     {
@@ -18,11 +18,9 @@ namespace RequestReplyReceiver
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
                 .UsingHttpTransport()
-                    .AsAProxyFor("SenderServer")
                     .AsAServer("ReceiverServer")
-                .OpenChannel("TestReply")
+                .OpenDirectChannel("TestReply")
                     .ForRequestReplyReceiving()
-                    .WithDurability()
                 .Initialise();
 
             Console.WriteLine("I am the reciever. Press enter to exit");

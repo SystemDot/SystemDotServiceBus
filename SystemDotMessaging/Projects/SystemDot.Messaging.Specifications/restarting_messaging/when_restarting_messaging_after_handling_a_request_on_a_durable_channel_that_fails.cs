@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
             Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                .ForRequestReplyRecieving()
+                .ForRequestReplyReceiving()
                 .WithDurability()
                 .RegisterHandlers(r => r.RegisterHandler(new FailingMessageHandler<Int64>()))
                 .Initialise();
@@ -50,7 +50,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
             Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                .ForRequestReplyRecieving()
+                .ForRequestReplyReceiving()
                 .WithDurability()
                 .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();

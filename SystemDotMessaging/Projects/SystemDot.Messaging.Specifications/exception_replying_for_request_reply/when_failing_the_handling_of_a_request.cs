@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.exception_replying_for_request_repl
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("ReceiverChannel")
-                .ForRequestReplyRecieving()
+                .ForRequestReplyReceiving()
                 .WithDurability()
                 .RegisterHandlers(r => r.RegisterHandler(new FailingMessageHandler<Int64>()))
                 .Initialise();

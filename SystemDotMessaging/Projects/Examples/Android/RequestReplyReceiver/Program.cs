@@ -21,7 +21,7 @@ namespace RequestReplyReceiver
                     .AsAProxyFor("SenderServer")
                     .AsAServer("ReceiverServer")
                 .OpenChannel("TestReply")
-                    .ForRequestReplyRecieving()
+                    .ForRequestReplyReceiving()
                     .WithDurability()
                 .Initialise();
 

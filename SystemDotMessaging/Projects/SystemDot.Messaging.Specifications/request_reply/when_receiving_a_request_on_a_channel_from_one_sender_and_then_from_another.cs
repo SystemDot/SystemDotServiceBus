@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.request_reply
         {
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel(ReceiverAddress).ForRequestReplyRecieving()
+                .OpenChannel(ReceiverAddress).ForRequestReplyReceiving()
                 .Initialise();
 
             handler = new TestMessageHandler<Int64>();

@@ -78,7 +78,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\Android\SystemDot.Sqlite\SystemDot.Sqlite.csproj">
       <Project>{10261535-b476-4da8-a3d0-b88b9dcb870e}</Project>
-      <Name>SystemDot.Sqlite</Name>
+      <Name>SystemDot.Sqlite %28Android\SystemDot.Sqlite%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Android\SystemDot\SystemDot.csproj">
       <Project>{00de20f1-75ad-48f8-b882-66bd2d9f0f8b}</Project>

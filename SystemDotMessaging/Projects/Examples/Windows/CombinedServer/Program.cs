@@ -20,7 +20,7 @@ namespace CombinedServer
                 .UsingFilePersistence()
                 .UsingHttpTransport()
                 .AsAServer("ReceiverPublisherServer")
-                    .OpenChannel("TestReceiver").ForRequestReplyRecieving()
+                    .OpenChannel("TestReceiver").ForRequestReplyReceiving()
                     .OpenChannel("TestPublisher").ForPublishing()
                 .Initialise();
 

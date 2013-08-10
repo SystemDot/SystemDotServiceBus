@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.hooks_for_request_reply
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                    .ForRequestReplyRecieving()
+                    .ForRequestReplyReceiving()
                     .WithReceiveHook(hook)
                 .Initialise();
 

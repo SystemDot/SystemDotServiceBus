@@ -16,8 +16,8 @@ namespace SystemDot.Messaging.Specifications.request_reply
         {
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel(ChannelName).ForRequestReplyRecieving()
-                .OpenChannel("Test2").ForRequestReplyRecieving()
+                .OpenChannel(ChannelName).ForRequestReplyReceiving()
+                .OpenChannel("Test2").ForRequestReplyReceiving()
                 .Initialise();
 
             GetServer().ReceiveMessage(
