@@ -119,5 +119,11 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             requestSchema.FilterStrategy = toFilterWith;
             return this;
         }
+
+        public RequestReplyRecieverConfiguration HandleRequestsOnMainThread()
+        {
+            requestSchema.HandleRequestsOnMainThread = true;
+            return this;
+        }
     }
 }

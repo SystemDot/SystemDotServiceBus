@@ -5,5 +5,6 @@ namespace SystemDot.Messaging.RequestReply.Builders
 {
     class RequestRecieveChannelSchema : RecieveChannelSchema
     {
+        public bool HandleRequestsOnMainThread { get; set; }
     }
 }

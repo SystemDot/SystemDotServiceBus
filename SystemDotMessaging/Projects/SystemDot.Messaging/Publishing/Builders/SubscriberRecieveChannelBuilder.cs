@@ -14,9 +14,11 @@ using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.ThreadMarshalling;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
+using SystemDot.ThreadMashalling;
 
 namespace SystemDot.Messaging.Publishing.Builders
 {
@@ -30,6 +32,7 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
         readonly ServerAddressRegistry serverAddressRegistry;
+        readonly IMainThreadMarshaller mainThreadMarshaller;
 
         internal SubscriberRecieveChannelBuilder(
             ISerialiser serialiser, 
@@ -39,7 +42,8 @@ namespace SystemDot.Messaging.Publishing.Builders
             PersistenceFactorySelector persistenceFactory, 
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 
-            ServerAddressRegistry serverAddressRegistry)
+            ServerAddressRegistry serverAddressRegistry, 
+            IMainThreadMarshaller mainThreadMarshaller)
         {
             Contract.Requires(serialiser != null);
             Contract.Requires(messageHandlerRouter != null);
@@ -49,6 +53,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
             Contract.Requires(serverAddressRegistry != null);
+            Contract.Requires(mainThreadMarshaller != null);
             
             this.serialiser = serialiser;
             this.messageHandlerRouter = messageHandlerRouter;
@@ -58,6 +63,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
             this.serverAddressRegistry = serverAddressRegistry;
+            this.mainThreadMarshaller = mainThreadMarshaller;
         }
 
         public void Build(SubscriberRecieveChannelSchema schema)
@@ -81,6 +87,7 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .ToProcessor(new MessageHookRunner<MessagePayload>(schema.PreUnpackagingHooks))
                 .ToConverter(new MessagePayloadUnpackager(serialiser))
                 .ToProcessor(new MessageFilter(schema.FilterStrategy))
+                .ToProcessorIf(new MainThreadMessageMashaller(mainThreadMarshaller), schema.HandleEventsOnMainThread)
                 .ToProcessor(schema.UnitOfWorkRunnerCreator())
                 .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
                 .ToEndPoint(messageHandlerRouter);

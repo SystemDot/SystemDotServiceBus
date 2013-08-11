@@ -1,5 +1,4 @@
 using System.Diagnostics.Contracts;
-using SystemDot.Ioc;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Batching;
@@ -15,8 +14,10 @@ using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.RequestReply.ExceptionHandling;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.ThreadMarshalling;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
+using SystemDot.ThreadMashalling;
 
 namespace SystemDot.Messaging.RequestReply.Builders
 {
@@ -30,6 +31,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
         readonly ServerAddressRegistry serverAddressRegistry;
+        readonly IMainThreadMarshaller mainThreadMarshaller;
 
         internal RequestRecieveChannelBuilder(
             ReplyAddressLookup replyAddressLookup, 
@@ -39,7 +41,8 @@ namespace SystemDot.Messaging.RequestReply.Builders
             PersistenceFactorySelector persistenceFactorySelector, 
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 
-            ServerAddressRegistry serverAddressRegistry)
+            ServerAddressRegistry serverAddressRegistry, 
+            IMainThreadMarshaller mainThreadMarshaller)
         {
             Contract.Requires(replyAddressLookup != null);
             Contract.Requires(serialiser != null);
@@ -49,6 +52,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
             Contract.Requires(serverAddressRegistry != null);
+            Contract.Requires(mainThreadMarshaller != null);
             
             this.replyAddressLookup = replyAddressLookup;
             this.serialiser = serialiser;
@@ -58,6 +62,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
             this.serverAddressRegistry = serverAddressRegistry;
+            this.mainThreadMarshaller = mainThreadMarshaller;
         }
 
         public IMessageInputter<MessagePayload> Build(RequestRecieveChannelSchema schema, EndpointAddress senderAddress)
@@ -85,6 +90,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new MessageFilter(schema.FilterStrategy))
                 .ToProcessor(schema.UnitOfWorkRunnerCreator())
                 .ToProcessor(new BatchUnpackager())
+                .ToProcessorIf(new MainThreadMessageMashaller(mainThreadMarshaller), schema.HandleRequestsOnMainThread)
                 .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
                 .ToEndPoint(messageHandlerRouter);
 

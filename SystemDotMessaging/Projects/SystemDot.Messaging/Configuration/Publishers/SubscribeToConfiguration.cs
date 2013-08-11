@@ -86,5 +86,11 @@ namespace SystemDot.Messaging.Configuration.Publishers
             receiveSchema.FilterStrategy = toFilterWith;
             return this;
         }
+
+        public SubscribeToConfiguration HandleEventsOnMainThread()
+        {
+            receiveSchema.HandleEventsOnMainThread = true;
+            return this;
+        }
     }
 }
