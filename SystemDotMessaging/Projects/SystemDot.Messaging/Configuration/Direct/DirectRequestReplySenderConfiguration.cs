@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Direct.Builders;
@@ -24,7 +25,8 @@ namespace SystemDot.Messaging.Configuration.Direct
             {
                 FromAddress = address,
                 ToAddress = toAddress,
-                FilterStrategy = new PassThroughMessageFilterStategy()
+                FilterStrategy = new PassThroughMessageFilterStategy(),
+                OnServerException = _ => { }
             };
 
             receiveSchema = new ReplyReceiverSchema
@@ -46,7 +48,17 @@ namespace SystemDot.Messaging.Configuration.Direct
 
         public DirectRequestReplySenderConfiguration OnlyForMessages(IMessageFilterStrategy toFilterBy)
         {
+            Contract.Requires(toFilterBy != null);
+
             sendSchema.FilterStrategy = toFilterBy;
+            return this;
+        }
+
+        public DirectRequestReplySenderConfiguration OnServerException(Action<Exception> toRunOnException)
+        {
+            Contract.Requires(toRunOnException != null); 
+            
+            sendSchema.OnServerException = toRunOnException;
             return this;
         }
     }

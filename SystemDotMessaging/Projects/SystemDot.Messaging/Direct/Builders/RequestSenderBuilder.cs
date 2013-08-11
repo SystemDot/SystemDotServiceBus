@@ -1,8 +1,8 @@
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Pipelines;
+using SystemDot.Messaging.Transport;
 using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Direct.Builders
@@ -10,15 +10,18 @@ namespace SystemDot.Messaging.Direct.Builders
     class RequestSenderBuilder
     {
         readonly ISerialiser serialser;
-        readonly RequestSender requestSender;
+        readonly IMessageTransporter messageTransporter;
+        readonly MessageReceiver messageReceiver;
 
-        public RequestSenderBuilder(ISerialiser serialser, RequestSender requestSender)
+        public RequestSenderBuilder(ISerialiser serialser, IMessageTransporter messageTransporter, MessageReceiver messageReceiver)
         {
             Contract.Requires(serialser != null);
-            Contract.Requires(requestSender != null);
+            Contract.Requires(messageTransporter != null);
+            Contract.Requires(messageReceiver != null);
 
             this.serialser = serialser;
-            this.requestSender = requestSender;
+            this.messageTransporter = messageTransporter;
+            this.messageReceiver = messageReceiver;
         }
 
         public void Build(RequestSenderSchema schema) 
@@ -29,7 +32,7 @@ namespace SystemDot.Messaging.Direct.Builders
                 .WithBusSendTo(new MessageFilter(schema.FilterStrategy))
                 .ToConverter(new MessagePayloadPackager(serialser))
                 .ToProcessor(new Addressing.MessageAddresser(schema.FromAddress, schema.ToAddress))
-                .ToEndPoint(requestSender);
+                .ToEndPoint(new RequestSender(messageTransporter, messageReceiver, schema.OnServerException));
         }
     }
 }

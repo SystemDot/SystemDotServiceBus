@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="direct_channels_for_request_reply_over_http\when_a_server_error_occurs_when_sending_a_request_with_an_error_action_configured.cs" />
     <Compile Include="filtering_by_name_for_direct_channel_request_reply\SpecificationGroup.cs" />
     <Compile Include="filtering_by_name_for_direct_channel_request_reply\when_receiving_a_request_with_the_wrong_name_down_a_channel.cs" />
     <Compile Include="filtering_by_name_for_direct_channel_request_reply\when_sending_a_request_with_the_wrong_name_down_a_channel.cs" />

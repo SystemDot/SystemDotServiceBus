@@ -14,7 +14,8 @@ namespace SystemDot.Messaging.Specifications
     {
         readonly List<MessagePayload> messages;
         readonly ISerialiser formatter;
-        
+        Exception exceptionToThrowOnSendPut;
+
         public List<Stream> RequestsMade { get; private set; }
         
         public TestWebRequestor(ISerialiser formatter)
@@ -23,6 +24,11 @@ namespace SystemDot.Messaging.Specifications
             this.messages = new List<MessagePayload>();
 
             RequestsMade = new List<Stream>();
+        }
+
+        public void ThrowExceptionOnPut(Exception toThrow)
+        {
+            exceptionToThrowOnSendPut = toThrow;
         }
 
         public T DeserialiseSingleRequest<T>()
@@ -45,6 +51,8 @@ namespace SystemDot.Messaging.Specifications
             Action<Exception> toPerformOnError, 
             Action toPerformOnCompletion)
         {
+            if (exceptionToThrowOnSendPut != null) toPerformOnError(exceptionToThrowOnSendPut);
+
             var request = new MemoryStream();
             toPerformOnRequest(request);
             

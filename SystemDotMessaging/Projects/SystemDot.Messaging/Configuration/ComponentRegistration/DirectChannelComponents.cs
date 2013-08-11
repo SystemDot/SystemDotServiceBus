@@ -9,7 +9,6 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
     {
         public static void Register(IIocContainer container)
         {
-            container.RegisterInstance<RequestSender, RequestSender>();
             container.RegisterInstance<RequestSenderBuilder, RequestSenderBuilder>();
             container.RegisterInstance<RequestReceiverBuilder, RequestReceiverBuilder>();
             container.RegisterInstance<ReplySenderBuilder, ReplySenderBuilder>();
