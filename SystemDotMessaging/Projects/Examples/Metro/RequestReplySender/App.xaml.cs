@@ -1,6 +1,8 @@
 ﻿using System;
+using SystemDot;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Configuration;
+using SystemDot.ThreadMashalling;
 using RequestReplySender.Handlers;
 using RequestReplySender.ViewModels;
 using Windows.ApplicationModel;
@@ -38,7 +40,7 @@ namespace RequestReplySender
         {
             var container = new IocContainer();
 
-            container.RegisterInstance(() => new ObservableLoggingMechanism(CoreWindow.GetForCurrentThread().Dispatcher) { ShowInfo = true, ShowDebug = true });
+            container.RegisterInstance(() => new ObservableLoggingMechanism(new MainThreadDispatcher()) { ShowInfo = true, ShowDebug = true });
             container.RegisterFromAssemblyOf<ResponseHandler>();
             
             Configure.Messaging()
@@ -51,8 +53,8 @@ namespace RequestReplySender
                     .AsAServerUsingAProxy("SenderServer")
                 .OpenChannel("TestMetroRequest")
                     .ForRequestReplySendingTo("TestReply@ReceiverServer")
+                    .HandleRepliesOnMainThread()
                     .WithDurability()
-                    .WithReceiveHook(new MessageMarshallingHook(CoreWindow.GetForCurrentThread().Dispatcher))
                 .Initialise();
 
             ViewModelLocator.SetContainer(container);

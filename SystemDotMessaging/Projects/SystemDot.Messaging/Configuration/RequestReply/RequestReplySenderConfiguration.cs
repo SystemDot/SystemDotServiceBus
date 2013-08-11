@@ -123,5 +123,11 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             sendSchema.PostPackagingHooks.Add(hook);
             return this;
         }
+
+        public RequestReplySenderConfiguration HandleRepliesOnMainThread()
+        {
+            receiveSchema.HandleRepliesOnMainThread = true;
+            return this;
+        }
     }
 }

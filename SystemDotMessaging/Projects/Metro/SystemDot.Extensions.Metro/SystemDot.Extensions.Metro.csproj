@@ -111,6 +111,7 @@
     <Compile Include="Configuration\IConfigurationReader.cs" />
     <Compile Include="Configuration\XmlAttribute.cs" />
     <Compile Include="Configuration\XmlNode.cs" />
+    <Compile Include="MainThreadDispatcher.cs" />
     <Compile Include="PutSender.cs" />
     <Compile Include="Console.cs" />
     <Compile Include="File.cs" />

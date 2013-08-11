@@ -1,6 +1,7 @@
 using SystemDot.Ioc;
 using SystemDot.Messaging.Distribution;
 using SystemDot.Messaging.Ioc;
+using SystemDot.Messaging.ThreadMarshalling;
 using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Pipelines
@@ -59,6 +60,12 @@ namespace SystemDot.Messaging.Pipelines
             return new ProcessorBuilder<TOut>(messageProcessor);
         }
 
+        public ProcessorBuilder<TOut> ToProcessorIf(IMessageProcessor<TOut, TOut> messageProcessor, bool condition)
+        {
+            if (!condition) messageProcessor = new Pipe<TOut>();
+            return ToProcessor(messageProcessor);
+        }
+
         public ProcessorBuilder<TOut> ToProcessors(params IMessageProcessor<TOut, TOut>[] processors)
         {
             var builder = this;
@@ -72,5 +79,7 @@ namespace SystemDot.Messaging.Pipelines
         {
             this.processor.MessageProcessed += endPoint.InputMessage;
         }
+
+        
     }
 }

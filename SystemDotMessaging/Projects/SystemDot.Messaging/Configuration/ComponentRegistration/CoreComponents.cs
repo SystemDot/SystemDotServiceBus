@@ -5,6 +5,7 @@ using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.ExternalSources;
 using SystemDot.Messaging.Transport;
+using SystemDot.ThreadMashalling;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {
@@ -13,6 +14,8 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
         public static void Register(IIocContainer container)
         {
             container.RegisterInstance<IIocContainer>(() => container);
+            container.RegisterInstance<MainThreadDispatcher, MainThreadDispatcher>();
+            container.RegisterInstance<IMainThreadMarshaller, MainThreadMarshaller>();
             container.RegisterInstance<IExternalSourcesConfigurer, ExternalSourcesConfigurer>();
             container.RegisterInstance<IFileSystem, FileSystem>();
             container.RegisterInstance<IWebRequestor, WebRequestor>();
@@ -24,7 +27,6 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<ServerAddressRegistry, ServerAddressRegistry>();
             container.RegisterInstance<MessageSender, MessageSender>();
             container.RegisterInstance<MessageReceiver, MessageReceiver>();
-            
         }
     }
 }

@@ -34,8 +34,14 @@
     <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\SystemDot.Extensions\*.cs">
-      <Link>%(RecursiveDir)%(FileName)</Link>
+    <Compile Include="..\..\SystemDot.Extensions\AssemblyExtensions.cs">
+      <Link>AssemblyExtensions</Link>
+    </Compile>
+    <Compile Include="..\..\SystemDot.Extensions\PutSender.cs">
+      <Link>PutSender</Link>
+    </Compile>
+    <Compile Include="..\..\SystemDot.Extensions\TypeExtensions.cs">
+      <Link>TypeExtensions</Link>
     </Compile>
     <Compile Include="..\..\SystemDot.Extensions\*\*.cs">
       <Link>%(RecursiveDir)%(FileName)</Link>
@@ -47,6 +53,7 @@
     <Compile Include="Composition\DirectoryCatalog.cs" />
     <Compile Include="Composition\ImportManyAttribute.cs" />
     <Compile Include="Composition\InheritedExportAttribute.cs" />
+    <Compile Include="MainThreadDispatcher.cs" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

@@ -13,9 +13,11 @@ using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
+using SystemDot.Messaging.ThreadMarshalling;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
+using SystemDot.ThreadMashalling;
 
 namespace SystemDot.Messaging.RequestReply.Builders
 {
@@ -29,6 +31,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
         readonly ServerAddressRegistry serverAddressRegistry;
+        readonly IMainThreadMarshaller mainThreadMarshaller;
 
         internal ReplyReceiveChannelBuilder(
             ISerialiser serialiser, 
@@ -38,7 +41,8 @@ namespace SystemDot.Messaging.RequestReply.Builders
             PersistenceFactorySelector persistenceFactorySelector, 
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 
-            ServerAddressRegistry serverAddressRegistry)
+            ServerAddressRegistry serverAddressRegistry, 
+            IMainThreadMarshaller mainThreadMarshaller)
         {
             Contract.Requires(serialiser != null);
             Contract.Requires(messageHandlerRouter != null);
@@ -48,6 +52,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
             Contract.Requires(serverAddressRegistry != null);
+            Contract.Requires(mainThreadMarshaller != null);
             
             this.serialiser = serialiser;
             this.messageHandlerRouter = messageHandlerRouter;
@@ -57,6 +62,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
             this.serverAddressRegistry = serverAddressRegistry;
+            this.mainThreadMarshaller = mainThreadMarshaller;
         }
 
         public void Build(ReplyReceiveChannelSchema schema)
@@ -72,16 +78,17 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new SequenceOriginApplier(messageCache))
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
-                .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))
-                .ToSimpleMessageRepeater(messageCache, this.systemTime, this.taskRepeater)
+                .ToProcessor(new MessageAcknowledger(acknowledgementSender))
+                .ToSimpleMessageRepeater(messageCache, systemTime, taskRepeater)
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
                 .Queue()
                 .ToResequencerIfSequenced(messageCache, schema)
-                .ToConverter(new MessagePayloadUnpackager(this.serialiser))
+                .ToConverter(new MessagePayloadUnpackager(serialiser))
                 .ToProcessor(schema.UnitOfWorkRunnerCreator())
                 .ToProcessor(new BatchUnpackager())
+                .ToProcessorIf(new MainThreadMessageMashaller(mainThreadMarshaller), schema.HandleRepliesOnMainThread)
                 .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
-                .ToEndPoint(this.messageHandlerRouter);
+                .ToEndPoint(messageHandlerRouter);
 
             Messenger.Send(new ReplyReceiveChannelBuilt
             {

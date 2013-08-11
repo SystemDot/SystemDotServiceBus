@@ -13,7 +13,7 @@ namespace SystemDot.Configuration
         {
             this.document = new XmlDocument();
 
-            using (var reader = XmlReader.Create(AssetManagerLocator.Locate().Open(fileName)))
+            using (var reader = XmlReader.Create(MainActivityLocator.Locate().Assets.Open(fileName)))
                 this.document.Load(reader);
         }
 

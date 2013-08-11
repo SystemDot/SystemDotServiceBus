@@ -5,8 +5,10 @@ using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Pipelines;
+using SystemDot.Messaging.Specifications.running_handlers_on_main_thread_for_request_reply;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
+using SystemDot.ThreadMashalling;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -16,6 +18,7 @@ namespace SystemDot.Messaging.Specifications
     {
         protected static TestTaskRepeater TaskRepeater;
         protected static TestServerAddressConfigurationReader ServerAddressConfiguration;
+        protected static TestMainThreadMarshaller MainThreadMarshaller;
 
         Establish context = () =>
         {
@@ -31,6 +34,9 @@ namespace SystemDot.Messaging.Specifications
 
         static void RegisterComponents()
         {
+            MainThreadMarshaller = new TestMainThreadMarshaller();
+            ConfigureAndRegister<IMainThreadMarshaller>(MainThreadMarshaller);
+
             ConfigureAndRegister<ISerialiser>(new JsonSerialiser());
 
             TaskRepeater = new TestTaskRepeater();

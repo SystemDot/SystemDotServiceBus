@@ -81,6 +81,10 @@
     <Compile Include="hooks_for_publishing\when_publishing_an_event_on_a_publish_channel_with_a_post_packaging_hook.cs" />
     <Compile Include="hooks_for_publishing\hooks_for_request_reply\when_sending_a_request_on_a_channel_with_a_post_packaging_send_hook.cs" />
     <Compile Include="request_reply\when_replying_on_a_channel_to_a_message_from_a_different_machine.cs" />
+    <Compile Include="running_handlers_on_main_thread_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="running_handlers_on_main_thread_for_request_reply\when_receiving_a_reply_on_a_channel_not_configured_to_handle_on_main_thread.cs" />
+    <Compile Include="TestMainThreadMarshaller.cs" />
+    <Compile Include="running_handlers_on_main_thread_for_request_reply\when_receiving_a_reply_on_a_channel.cs" />
     <Compile Include="TestInProcessMessageServerFactory.cs" />
     <Compile Include="TestReplyMessageHandler.cs" />
     <Compile Include="received_message_return_address_reassignment\when_receiving_a_subscription_request_with_a_from_address_listed_on_the_publisher.cs" />

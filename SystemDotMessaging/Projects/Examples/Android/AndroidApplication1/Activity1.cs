@@ -23,9 +23,8 @@ namespace AndroidApplication1
             var container = new IocContainer();
             container.RegisterFromAssemblyOf<Activity1>();
 
-            AssetManagerLocator.Set(Assets);
-
-
+            MainActivityLocator.Set(this);
+            
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = true, ShowDebug = false })
                 .UsingSqlitePersistence()
@@ -34,6 +33,7 @@ namespace AndroidApplication1
                     .AsAServerUsingAProxy("SenderServer")
                 .OpenChannel("TestAndroidRequest")
                     .ForRequestReplySendingTo("TestReply@ReceiverServer")
+                    .HandleRepliesOnMainThread()
                     .WithDurability()
                 .Initialise();
 
