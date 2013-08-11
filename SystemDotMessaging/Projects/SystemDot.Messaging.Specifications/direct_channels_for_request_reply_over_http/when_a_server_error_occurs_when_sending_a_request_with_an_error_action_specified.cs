@@ -4,7 +4,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply_over_http
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_a_server_error_occurs_when_sending_a_request_with_an_error_action_configured : WithHttpServerConfigurationSubject
+    public class when_a_server_error_occurs_when_sending_a_request_with_an_error_action_specified : WithHttpServerConfigurationSubject
     {
         const long Message = 1;
         static Exception expectedException;
@@ -20,11 +20,10 @@ namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply_o
                 .AsAServer("SenderServer")
                 .OpenDirectChannel("SenderChannel")
                     .ForRequestReplySendingTo("ReceiverChannel@ReceiverServer")
-                    .OnServerException(e => exception = e)
                 .Initialise();
         };
 
-        Because of = () => Bus.Send(Message);
+        Because of = () => Bus.SendDirect(Message, e => exception = e);
 
         It should_run_the_server_error_action = () => exception.ShouldEqual(expectedException);
     }

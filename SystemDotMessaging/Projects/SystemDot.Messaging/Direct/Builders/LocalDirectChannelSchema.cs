@@ -1,6 +1,6 @@
-namespace SystemDot.Messaging.Local.Builders
+namespace SystemDot.Messaging.Direct.Builders
 {
-    class LocalChannelSchema
+    class LocalDirectChannelSchema
     {
         public IMessageProcessor<object, object> UnitOfWorkRunner { get; set; }
     }

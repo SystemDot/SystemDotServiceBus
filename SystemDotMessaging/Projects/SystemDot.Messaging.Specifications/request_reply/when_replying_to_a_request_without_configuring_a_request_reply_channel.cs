@@ -13,7 +13,7 @@ namespace SystemDot.Messaging.Specifications.request_reply
         Establish context = () => 
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenLocalChannel()
+                .OpenDirectChannel()
                 .Initialise();
 
         Because of = () => exception = Catch.Exception(() => Bus.Reply(new object()));

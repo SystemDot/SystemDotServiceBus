@@ -1,10 +1,6 @@
 ﻿using System;
-using SystemDot.Ioc;
 using SystemDot.Logging;
-using SystemDot.Messaging;
-using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Configuration;
-using Messages;
 
 namespace OtherDirectRequestReplySender
 {
@@ -12,40 +8,23 @@ namespace OtherDirectRequestReplySender
     {
         static void Main(string[] args)
         {
-            var container = new IocContainer();
-            container.RegisterFromAssemblyOf<Program>();
-
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false, ShowDebug = false })
-                .ResolveReferencesWith(container)
-                .RegisterHandlersFromAssemblyOf<Program>()
-                    .BasedOn<IMessageConsumer>()
                 .UsingHttpTransport()
                     .AsAServer("OtherSenderServer")
                 .OpenDirectChannel("OtherTestRequest")
                     .ForRequestReplySendingTo("TestReply@ReceiverServer")
                 .Initialise();
 
+            var sender = new DirectSender();
+            
             do
             {
-                Console.WriteLine("I am the sender. Press enter to send messages..");
+                Console.WriteLine("I am the other sender. Press enter to send messages..");
                 Console.ReadLine();
-
                 Console.WriteLine("Sending messages");
 
-                using (Batch batch = Bus.BatchSend())
-                {
-                    Bus.Send(new TestMessage("Hello"));
-                    Bus.Send(new TestMessage("Hello1"));
-                    Bus.Send(new TestMessage("Hello2"));
-                    Bus.Send(new TestMessage("Hello3"));
-                    Bus.Send(new TestMessage("Hello4"));
-                    Bus.Send(new TestMessage("Hello5"));
-                    Bus.Send(new TestMessage("Hello6"));
-                    Bus.Send(new TestMessage("Hello7"));
-
-                    batch.Complete();
-                }
+                sender.Send();
             }
             while (true);
         }

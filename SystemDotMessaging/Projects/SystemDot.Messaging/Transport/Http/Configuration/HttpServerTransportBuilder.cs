@@ -39,7 +39,7 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
             return new HttpMessagingServer(
                 serialiser, 
                 new MessageReceiverHandler(messageReceiver),
-                new Direct.MessageReceiverHandler(messageReceiver));
+                new DirectChannelMessageReceiverHandler(messageReceiver));
         }
     }
 }

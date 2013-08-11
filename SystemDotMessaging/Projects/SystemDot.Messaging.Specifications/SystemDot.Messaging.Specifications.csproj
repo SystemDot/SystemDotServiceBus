@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="direct_channels_for_request_reply_over_http\when_a_server_error_occurs_when_sending_a_request_with_an_error_action_configured.cs" />
+    <Compile Include="direct_channels_for_request_reply_over_http\when_a_server_error_occurs_when_sending_a_request_with_an_error_action_specified.cs" />
     <Compile Include="filtering_by_name_for_direct_channel_request_reply\SpecificationGroup.cs" />
     <Compile Include="filtering_by_name_for_direct_channel_request_reply\when_receiving_a_request_with_the_wrong_name_down_a_channel.cs" />
     <Compile Include="filtering_by_name_for_direct_channel_request_reply\when_sending_a_request_with_the_wrong_name_down_a_channel.cs" />
@@ -217,11 +217,11 @@
     <Compile Include="external_sources\TestExternalSourcesConfigurer.cs" />
     <Compile Include="unitofwork\when_receiving_a_message_with_a_unit_of_work_specified.cs" />
     <Compile Include="unitofwork\when_receiving_a_message_with_a_unit_of_work_specified_and_the_target_processor_throws_an_exception.cs" />
-    <Compile Include="local_channels\SpecificationGroup.cs" />
-    <Compile Include="local_channels\when_sending_a_local_message.cs" />
-    <Compile Include="local_channels\when_sending_a_local_message_after_configuring_a_channel_and_then_a_local_channel.cs" />
+    <Compile Include="direct_local_channels\SpecificationGroup.cs" />
+    <Compile Include="direct_local_channels\when_sending_a_local_message.cs" />
+    <Compile Include="direct_local_channels\when_sending_a_local_message_after_configuring_a_channel_and_then_a_local_channel.cs" />
     <Compile Include="unitofwork_for_local_channels\when_sending_a_local_message_with_a_unit_of_work_setup.cs" />
-    <Compile Include="local_channels\when_sending_a_message_after_configuring_a_channel_and_then_a_local_channel.cs" />
+    <Compile Include="direct_local_channels\when_sending_a_message_after_configuring_a_channel_and_then_a_local_channel.cs" />
     <Compile Include="handling\when_sending_a_message_with_handlers_auto_registered.cs" />
     <Compile Include="external_sources\when_configuring_messaging.cs" />
     <Compile Include="remote_clients\when_sending_to_a_receiver_on_a_different_machine.cs" />

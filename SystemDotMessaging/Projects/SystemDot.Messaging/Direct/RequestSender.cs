@@ -10,17 +10,14 @@ namespace SystemDot.Messaging.Direct
     {
         readonly IMessageTransporter messageTransporter;
         readonly MessageReceiver messageReceiver;
-        readonly Action<Exception> toRunOnException;
 
-        public RequestSender(IMessageTransporter messageTransporter, MessageReceiver messageReceiver, Action<Exception> toRunOnException)
+        public RequestSender(IMessageTransporter messageTransporter, MessageReceiver messageReceiver)
         {
             Contract.Requires(messageTransporter != null);
             Contract.Requires(messageReceiver != null);
-            Contract.Requires(toRunOnException != null);
 
             this.messageTransporter = messageTransporter;
             this.messageReceiver = messageReceiver;
-            this.toRunOnException = toRunOnException;
         }
 
         public void InputMessage(MessagePayload toInput)
@@ -31,7 +28,12 @@ namespace SystemDot.Messaging.Direct
 
         void SendPayloadToServer(MessagePayload toSend)
         {
-            messageTransporter.TransportMessage(toSend, toRunOnException, () => { }, ReturnMessages);
+            messageTransporter.TransportMessage(toSend, GetServerErrorAction(), () => { }, ReturnMessages);
+        }
+
+        static Action<Exception> GetServerErrorAction()
+        {
+            return DirectSendContext.IsActive() ? DirectSendContext.GetServerError() : e => { };
         }
 
         void ReturnMessages(IEnumerable<MessagePayload> toReturn) 

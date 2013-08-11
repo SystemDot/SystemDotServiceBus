@@ -6,11 +6,11 @@ using SystemDot.Messaging.Packaging;
 
 namespace SystemDot.Messaging.Direct
 {
-    class MessageReplyContext : Disposable
+    class DirectReplyContext : Disposable
     {
         readonly static ThreadLocal<ContextData> current = new ThreadLocal<ContextData>();
 
-        public MessageReplyContext(EndpointAddress address, EndpointAddress clientAddress)
+        public DirectReplyContext(EndpointAddress address, EndpointAddress clientAddress)
         {
             current.Value = new ContextData(address, clientAddress);
         }

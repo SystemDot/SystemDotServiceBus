@@ -9,6 +9,5 @@ namespace SystemDot.Messaging.Direct.Builders
         public EndpointAddress ToAddress { get; set; }
         public EndpointAddress FromAddress { get; set; }
         public IMessageFilterStrategy FilterStrategy { get; set; }
-        public Action<Exception> OnServerException { get; set; }
     }
 }

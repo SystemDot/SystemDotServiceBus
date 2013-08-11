@@ -24,12 +24,12 @@ namespace SystemDot.Messaging.Specifications.handling_with_external_ioc_resoluti
                 .RegisterHandlersFromAssemblyOf<when_sending_a_message_with_handlers_in_an_assembly_auto_registered_twice>()
                     .BasedOn<IHandleMessage>()
                 .UsingInProcessTransport()
-                .OpenLocalChannel()
+                .OpenDirectChannel()
                 .Initialise();
             message = new Message1();
         };
 
-        Because of = () => Bus.SendLocal(message);
+        Because of = () => Bus.SendDirect(message);
 
         It should_send_the_message_to_its_handler = () => messageHandler.LastHandledMessage.ShouldBeTheSameAs(message);
     }

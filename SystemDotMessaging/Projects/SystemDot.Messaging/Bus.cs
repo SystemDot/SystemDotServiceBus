@@ -1,4 +1,4 @@
-using SystemDot.Ioc;
+using System;
 using SystemDot.Logging;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Ioc;
@@ -13,10 +13,22 @@ namespace SystemDot.Messaging
             GetBus().Send(message);
         }
 
-        public static void SendLocal(object message)
+        public static void SendDirect(object message)
         {
-            Logger.Debug("Sending local message: {0}", message.GetType().Name);
-            GetBus().SendLocal(message);
+            Logger.Debug("Sending direct message: {0}", message.GetType().Name);
+            GetBus().SendDirect(message);
+        }
+
+        public static void SendDirect(object message, Action<Exception> onServerError)
+        {
+            Logger.Debug("Sending direct message: {0}", message.GetType().Name);
+            GetBus().SendDirect(message, onServerError);
+        }
+
+        public static void SendDirect(object message, object handleReplyWith, Action<Exception> onServerError)
+        {
+            Logger.Debug("Sending direct message: {0} with reply handler {1}", message.GetType().Name, handleReplyWith.GetType().Name);
+            GetBus().SendDirect(message, handleReplyWith, onServerError);
         }
 
         public static void Reply(object message)

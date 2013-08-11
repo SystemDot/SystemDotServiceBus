@@ -1,19 +1,19 @@
 using SystemDot.Messaging.Addressing;
-using SystemDot.Messaging.Local.Builders;
+using SystemDot.Messaging.Direct.Builders;
 using SystemDot.Messaging.UnitOfWork;
 
-namespace SystemDot.Messaging.Configuration.Local
+namespace SystemDot.Messaging.Configuration.Direct
 {
-    public class LocalChannelConfiguration : Configurer
+    public class LocalDirectChannelConfiguration : Configurer
     {
         readonly MessageServer server;
-        readonly LocalChannelSchema schema;
+        readonly LocalDirectChannelSchema schema;
 
-        public LocalChannelConfiguration(MessageServer server, MessagingConfiguration messagingConfiguration)
+        public LocalDirectChannelConfiguration(MessageServer server, MessagingConfiguration messagingConfiguration)
             : base(messagingConfiguration)
         {
             this.server = server;
-            schema = new LocalChannelSchema
+            schema = new LocalDirectChannelSchema
             {
                 UnitOfWorkRunner = CreateUnitOfWorkRunner<NullUnitOfWorkFactory>() 
             };
@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Configuration.Local
 
         protected override void Build()
         {
-            Resolve<LocalChannelBuilder>().Build(schema);
+            Resolve<LocalDirectChannelBuilder>().Build(schema);
         }
 
         protected override MessageServer GetMessageServer()
@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Configuration.Local
             return server;
         }
 
-        public LocalChannelConfiguration WithUnitOfWork<TUnitOfWorkFactory>()
+        public LocalDirectChannelConfiguration WithUnitOfWork<TUnitOfWorkFactory>()
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory
         {
             schema.UnitOfWorkRunner = CreateUnitOfWorkRunner<TUnitOfWorkFactory>();

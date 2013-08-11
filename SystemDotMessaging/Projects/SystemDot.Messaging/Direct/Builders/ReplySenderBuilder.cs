@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Direct.Builders
             MessagePipelineBuilder.Build()
                 .WithBusReplyTo(new MessageFilter(new MessageReplyContextMessageFilterStrategy(schema.Address)))
                 .ToConverter(new MessagePayloadPackager(serialiser))
-                .ToProcessor(new MessageAddresser(schema.Address))
+                .ToProcessor(new DirectChannelMessageAddresser(schema.Address))
                 .ToEndPoint(new ReplySender());
         }
     }

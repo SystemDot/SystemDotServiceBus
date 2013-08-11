@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
         {
             Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenLocalChannel()
+                .OpenDirectChannel()
                 .Initialise();
 
             var address = BuildAddress("Test", "Test");

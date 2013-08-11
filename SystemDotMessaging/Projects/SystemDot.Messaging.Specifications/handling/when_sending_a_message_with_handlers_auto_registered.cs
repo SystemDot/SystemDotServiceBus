@@ -38,14 +38,14 @@ namespace SystemDot.Messaging.Specifications.handling
                 .RegisterHandlersFromAssemblyOf<when_sending_a_message_with_handlers_auto_registered>()
                     .BasedOn<IHandleMessage>()
                 .UsingInProcessTransport()
-                .OpenLocalChannel()
+                .OpenDirectChannel()
                 .Initialise();
         };
 
         Because of = () =>
         {
-            Bus.SendLocal(message1);
-            Bus.SendLocal(message2);
+            Bus.SendDirect(message1);
+            Bus.SendDirect(message2);
         };
 
         It should_send_the_first_message_to_its_first_handler =

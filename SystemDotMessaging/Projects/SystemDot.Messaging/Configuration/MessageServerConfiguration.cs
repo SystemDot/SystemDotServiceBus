@@ -3,7 +3,6 @@ using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.Direct;
 using SystemDot.Messaging.Configuration.ExternalSources;
-using SystemDot.Messaging.Configuration.Local;
 using SystemDot.Messaging.Ioc;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
@@ -37,16 +36,16 @@ namespace SystemDot.Messaging.Configuration
             return new ChannelConfiguration(new EndpointAddress(name, server), server, messagingConfiguration);
         }
 
+        public LocalDirectChannelConfiguration OpenDirectChannel()
+        {
+            return new LocalDirectChannelConfiguration(server, messagingConfiguration);
+        }
+
         public DirectChannelConfiguration OpenDirectChannel(string name) 
         {
             Contract.Requires(!string.IsNullOrEmpty(name));
 
             return new DirectChannelConfiguration(BuildEndpointAddress(name, server), messagingConfiguration);
-        }
-
-        public LocalChannelConfiguration OpenLocalChannel()
-        {
-            return new LocalChannelConfiguration(server, messagingConfiguration);
         }
 
         static void RegisterInMemoryPersistence(IIocContainer container)

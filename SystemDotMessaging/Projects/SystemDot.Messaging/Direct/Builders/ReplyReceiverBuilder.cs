@@ -12,17 +12,14 @@ namespace SystemDot.Messaging.Direct.Builders
     {
         readonly MessageReceiver messageReceiver;
         readonly ISerialiser serialiser;
-        readonly MessageHandlerRouter messageHandlerRouter;
 
-        public ReplyReceiverBuilder(MessageReceiver messageReceiver, ISerialiser serialiser, MessageHandlerRouter messageHandlerRouter)
+        public ReplyReceiverBuilder(MessageReceiver messageReceiver, ISerialiser serialiser)
         {
             Contract.Requires(messageReceiver != null);
             Contract.Requires(serialiser != null);
-            Contract.Requires(messageHandlerRouter != null);
 
             this.messageReceiver = messageReceiver;
             this.serialiser = serialiser;
-            this.messageHandlerRouter = messageHandlerRouter;
         }
 
         public void Build(ReplyReceiverSchema schema)
@@ -31,7 +28,7 @@ namespace SystemDot.Messaging.Direct.Builders
                 .With(messageReceiver)
                 .ToProcessor(new BodyMessageFilter(schema.Address))
                 .ToConverter(new MessagePayloadUnpackager(serialiser))
-                .ToEndPoint(messageHandlerRouter);
+                .ToEndPoint(new DirectReplyMessageHandlerRouter());
         }
     }
 }

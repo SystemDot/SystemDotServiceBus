@@ -1,4 +1,5 @@
 using SystemDot.Ioc;
+using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Ioc;
 
 namespace SystemDot.Messaging.Pipelines
@@ -23,12 +24,6 @@ namespace SystemDot.Messaging.Pipelines
             return new ProcessorBuilder<T>(processor);
         }
 
-        public ProcessorBuilder<T> WithBusSendLocalTo<T>(IMessageProcessor<T, T> processor)
-        {
-            IocContainerLocator.Locate().Resolve<IBus>().MessageSentLocal += o => processor.InputMessage(o.As<T>());
-            return new ProcessorBuilder<T>(processor);
-        }
-
         public ProcessorBuilder<T> WithBusReplyTo<T>(IMessageProcessor<T, T> processor)
         {
             IocContainerLocator.Locate().Resolve<IBus>().MessageReplied += o => processor.InputMessage(o.As<T>());
@@ -38,6 +33,12 @@ namespace SystemDot.Messaging.Pipelines
         public ProcessorBuilder<T> WithBusPublishTo<T>(IMessageProcessor<T, T> processor)
         {
             IocContainerLocator.Locate().Resolve<IBus>().MessagePublished += o => processor.InputMessage(o.As<T>());
+            return new ProcessorBuilder<T>(processor);
+        }
+
+        public ProcessorBuilder<T> WithBusSendDirectTo<T>(IMessageProcessor<T, T> processor)
+        {
+            IocContainerLocator.Locate().Resolve<IBus>().MessageSentDirect += o => processor.InputMessage(o.As<T>());
             return new ProcessorBuilder<T>(processor);
         }
     }

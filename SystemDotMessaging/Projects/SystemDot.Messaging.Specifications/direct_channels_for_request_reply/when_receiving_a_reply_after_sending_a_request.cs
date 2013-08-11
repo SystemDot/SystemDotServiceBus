@@ -18,13 +18,12 @@ namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenDirectChannel(Sender).ForRequestReplySendingTo("Receiver")
-                .RegisterHandlers(h => h.RegisterHandler(handler))
                 .Initialise();
 
             GetServer().ReplyAfterRequestSentWith(new MessagePayload().SetMessageBody(Message).SetToChannel(Sender));
         };
 
-        Because of = () => Bus.Send(Message);
+        Because of = () => Bus.SendDirect(Message, handler, exception => { });
 
         It should_push_the_reply_to_any_registered_handlers = () => handler.LastHandledMessage.ShouldEqual(Message);
     }

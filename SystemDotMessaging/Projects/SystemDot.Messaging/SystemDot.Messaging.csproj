@@ -67,14 +67,16 @@
     <Compile Include="Configuration\ExternalSources\IExternalConfigurationSource.cs" />
     <Compile Include="Configuration\ExternalSources\IExternalSourcesConfigurer.cs" />
     <Compile Include="Direct\Builders\ReplyReceiverSchema.cs" />
-    <Compile Include="Direct\MessageAddresser.cs" />
+    <Compile Include="Direct\DirectReplyMessageHandlerRouter.cs" />
+    <Compile Include="Direct\DirectSendContext.cs" />
+    <Compile Include="Direct\DirectChannelMessageAddresser.cs" />
     <Compile Include="Direct\Builders\ReplyReceiverBuilder.cs" />
     <Compile Include="Direct\MessageReplyContextMessageFilterStrategy.cs" />
     <Compile Include="Direct\Builders\ReplySenderSchema.cs" />
     <Compile Include="Direct\DirectChannelMessageHeader.cs" />
     <Compile Include="Direct\MessagePayloadExtensions.cs" />
-    <Compile Include="Direct\MessageReceiverHandler.cs" />
-    <Compile Include="Direct\MessageReplyContext.cs" />
+    <Compile Include="Direct\DirectChannelMessageReceiverHandler.cs" />
+    <Compile Include="Direct\DirectReplyContext.cs" />
     <Compile Include="Direct\ReplySender.cs" />
     <Compile Include="Direct\Builders\ReplySenderBuilder.cs" />
     <Compile Include="Direct\Builders\RequestReceiverBuilder.cs" />
@@ -93,6 +95,7 @@
     <Compile Include="Expiry\TimeMessageExpiryStrategy.cs" />
     <Compile Include="Caching\MessageDecacher.cs" />
     <Compile Include="Filtering\NamespaceAndNamePatternMessageFilterStrategy.cs" />
+    <Compile Include="Handling\BasicMessageHandlerRouter.cs" />
     <Compile Include="Handling\TypeExtensions.cs" />
     <Compile Include="Hooks\IMessageHook.cs" />
     <Compile Include="Hooks\MessageHookRunner.cs" />
@@ -100,8 +103,8 @@
     <Compile Include="Ioc\IocContainerLocator.cs" />
     <Compile Include="ISerialiserExtensions.cs" />
     <Compile Include="LoadBalancing\LoadBalancer.cs" />
-    <Compile Include="Local\Builders\LocalChannelBuilder.cs" />
-    <Compile Include="Local\Builders\LocalChannelSchema.cs" />
+    <Compile Include="Direct\Builders\LocalDirectChannelBuilder.cs" />
+    <Compile Include="Direct\Builders\LocalDirectChannelSchema.cs" />
     <Compile Include="MessageProcessor.cs" />
     <Compile Include="Builders\PersistenceFactorySelector.cs" />
     <Compile Include="MessagingInitialising.cs" />
@@ -223,7 +226,7 @@
     <Compile Include="Configuration\ComponentRegistration\ThreadingComponents.cs" />
     <Compile Include="Publishing\SubscriptionRequestor.cs" />
     <Compile Include="Configuration\ConfigurationBase.cs" />
-    <Compile Include="Configuration\Local\LocalChannelConfiguration.cs" />
+    <Compile Include="Configuration\Direct\LocalDirectChannelConfiguration.cs" />
     <Compile Include="Configuration\MessageExpiry.cs" />
     <Compile Include="Addressing\MessageServer.cs" />
     <Compile Include="Configuration\MessageServerConfiguration.cs" />

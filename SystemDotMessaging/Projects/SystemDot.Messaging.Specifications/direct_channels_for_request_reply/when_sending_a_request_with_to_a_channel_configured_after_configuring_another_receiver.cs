@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply
                 .OpenDirectChannel(Sender).ForRequestReplySendingTo(Receiver)
                 .Initialise();
 
-        Because of = () => Bus.Send(Message);
+        Because of = () => Bus.SendDirect(Message);
 
         It should_send_the_message_on_the_sender_channel_with_the_correct_from_address = () =>
             GetServer().SentMessages.Last().GetFromAddress().ShouldEqual(BuildAddress(Sender));

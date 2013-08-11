@@ -23,11 +23,11 @@ namespace SystemDot.Messaging.Specifications.handling
                 .RegisterHandlersFromAssemblyOf<when_sending_a_message_with_handlers_in_an_assembly_auto_registered_twice>()
                     .BasedOn<IHandleMessage>()
                 .UsingInProcessTransport()
-                .OpenLocalChannel()
+                .OpenDirectChannel()
                 .Initialise();
         };
 
-        Because of = () => Bus.SendLocal(new Message1());
+        Because of = () => Bus.SendDirect(new Message1());
 
         It should_only_send_the_message_to_its_handler_once = () => messageHandler.NumberOfTimeHandleCalled.ShouldEqual(1);
     }

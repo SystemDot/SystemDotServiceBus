@@ -25,8 +25,7 @@ namespace SystemDot.Messaging.Configuration.Direct
             {
                 FromAddress = address,
                 ToAddress = toAddress,
-                FilterStrategy = new PassThroughMessageFilterStategy(),
-                OnServerException = _ => { }
+                FilterStrategy = new PassThroughMessageFilterStategy()
             };
 
             receiveSchema = new ReplyReceiverSchema
@@ -51,14 +50,6 @@ namespace SystemDot.Messaging.Configuration.Direct
             Contract.Requires(toFilterBy != null);
 
             sendSchema.FilterStrategy = toFilterBy;
-            return this;
-        }
-
-        public DirectRequestReplySenderConfiguration OnServerException(Action<Exception> toRunOnException)
-        {
-            Contract.Requires(toRunOnException != null); 
-            
-            sendSchema.OnServerException = toRunOnException;
             return this;
         }
     }

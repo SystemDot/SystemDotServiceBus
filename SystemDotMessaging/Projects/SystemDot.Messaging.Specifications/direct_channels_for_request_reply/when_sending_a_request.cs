@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply
                 .OpenDirectChannel(Sender).ForRequestReplySendingTo(Receiver)
                 .Initialise();
 
-        Because of = () => Bus.Send(Message);
+        Because of = () => Bus.SendDirect(Message);
 
         It should_send_the_message_with_the_correct_payload =
             () => GetServer().SentMessages.Single().DeserialiseTo<long>().ShouldEqual(Message);

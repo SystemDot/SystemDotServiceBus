@@ -6,7 +6,7 @@ namespace SystemDot.Messaging.Direct
     {
         public void InputMessage(MessagePayload toInput)
         {
-            MessageReplyContext.AddReply(toInput);
+            DirectReplyContext.AddReply(toInput);
         }
     }
 }

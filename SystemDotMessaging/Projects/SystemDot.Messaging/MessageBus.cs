@@ -1,13 +1,14 @@
 using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Batching;
+using SystemDot.Messaging.Direct;
 
 namespace SystemDot.Messaging
 {
     public class MessageBus : IBus
     {
         public event Action<object> MessageSent;
-        public event Action<object> MessageSentLocal;
+        public event Action<object> MessageSentDirect;
         public event Action<object> MessagePublished;
         public event Action<object> MessageReplied;
 
@@ -19,12 +20,34 @@ namespace SystemDot.Messaging
             MessageSent(message);
         }
 
-        public void SendLocal(object message)
+        public void SendDirect(object message)
         {
             Contract.Requires(message != null);
+            
+            if (MessageSentDirect == null) return;
+            MessageSentDirect(message);
+        }
 
-            if (MessageSentLocal == null) return;
-            MessageSentLocal(message);
+        public void SendDirect(object message, Action<Exception> onServerError) 
+        {
+            Contract.Requires(message != null);
+            Contract.Requires(onServerError != null);
+            using (new DirectSendContext(onServerError))
+            {
+                SendDirect(message);
+            }
+        }
+
+        public void SendDirect(object message, object handleReplyWith, Action<Exception> onServerError) 
+        {
+            Contract.Requires(message != null);
+            Contract.Requires(handleReplyWith != null);
+            Contract.Requires(onServerError != null);
+
+            using (new DirectSendContext(onServerError, handleReplyWith))
+            {
+                SendDirect(message);
+            }
         }
 
         public void Reply(object message)

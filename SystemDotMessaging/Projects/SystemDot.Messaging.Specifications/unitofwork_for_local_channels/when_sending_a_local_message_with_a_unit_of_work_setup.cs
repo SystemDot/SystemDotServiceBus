@@ -16,12 +16,12 @@ namespace SystemDot.Messaging.Specifications.unitofwork_for_local_channels
 
             Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenLocalChannel()
+                .OpenDirectChannel()
                 .WithUnitOfWork<TestUnitOfWorkFactory>()
                 .Initialise();
         };
 
-        Because of = () => Bus.SendLocal(new object());
+        Because of = () => Bus.SendDirect(new object());
 
         It should_begin_the_unit_of_work = () => unitOfWork.HasBegun().ShouldBeTrue();
     }

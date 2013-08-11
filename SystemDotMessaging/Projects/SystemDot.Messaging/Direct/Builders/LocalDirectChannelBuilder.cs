@@ -2,24 +2,24 @@
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Pipelines;
 
-namespace SystemDot.Messaging.Local.Builders
+namespace SystemDot.Messaging.Direct.Builders
 {
-    class LocalChannelBuilder
+    class LocalDirectChannelBuilder
     {
         readonly MessageHandlerRouter messageHandlerRouter;
         
-        public LocalChannelBuilder(MessageHandlerRouter messageHandlerRouter)
+        public LocalDirectChannelBuilder(MessageHandlerRouter messageHandlerRouter)
         {
             Contract.Requires(messageHandlerRouter != null);
             this.messageHandlerRouter = messageHandlerRouter;
         }
 
-        public void Build(LocalChannelSchema schema)
+        public void Build(LocalDirectChannelSchema schema)
         {
             MessagePipelineBuilder
                 .Build()
-                .WithBusSendLocalTo(schema.UnitOfWorkRunner)
-                .ToEndPoint(this.messageHandlerRouter);
+                .WithBusSendDirectTo(schema.UnitOfWorkRunner)
+                .ToEndPoint(messageHandlerRouter);
         }
     }
 }

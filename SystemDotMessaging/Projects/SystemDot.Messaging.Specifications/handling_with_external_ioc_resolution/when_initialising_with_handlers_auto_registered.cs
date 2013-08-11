@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Specifications.handling_with_external_ioc_resoluti
                 .RegisterHandlersFromAssemblyOf<when_initialising_with_handlers_auto_registered>()
                     .BasedOn<IHandleMessage>()
                 .UsingInProcessTransport()
-                .OpenLocalChannel()
+                .OpenDirectChannel()
                 .Initialise();
 
         It should_not_resolve_any_message_handlers = () => wasAnythingResolvedFromIoc.ShouldBeFalse();

@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.Specifications.publishing
         
         Establish context = () => Messaging.Configuration.Configure.Messaging()
             .UsingInProcessTransport()
-            .OpenLocalChannel()
+            .OpenDirectChannel()
             .Initialise();
 
         Because of = () => exception = Catch.Exception(() => Bus.Publish(1));

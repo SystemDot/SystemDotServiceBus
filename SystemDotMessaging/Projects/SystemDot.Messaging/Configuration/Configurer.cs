@@ -3,7 +3,6 @@ using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement.Builders;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.Direct;
-using SystemDot.Messaging.Configuration.Local;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Publishing.Builders;
 using SystemDot.Messaging.Transport;
@@ -50,6 +49,11 @@ namespace SystemDot.Messaging.Configuration
             return new ChannelConfiguration(new EndpointAddress(name, GetMessageServer()), GetMessageServer(), messagingConfiguration);
         }
 
+        public LocalDirectChannelConfiguration OpenDirectChannel()
+        {
+            return new LocalDirectChannelConfiguration(GetMessageServer(), messagingConfiguration);
+        }
+
         public DirectChannelConfiguration OpenDirectChannel(string name)
         {
             return new DirectChannelConfiguration(new EndpointAddress(name, GetMessageServer()), messagingConfiguration);
@@ -59,11 +63,6 @@ namespace SystemDot.Messaging.Configuration
         {
             registrationAction(Resolve<MessageHandlerRouter>());
             return this;
-        }
-
-        public LocalChannelConfiguration OpenLocalChannel()
-        {
-            return new LocalChannelConfiguration(GetMessageServer(), messagingConfiguration);
         }
 
         protected abstract MessageServer GetMessageServer();

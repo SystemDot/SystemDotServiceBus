@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.local_channels
+namespace SystemDot.Messaging.Specifications.direct_local_channels
 {
     [Subject(SpecificationGroup.Description)]
     public class when_sending_a_message_after_configuring_a_channel_and_then_a_local_channel 
@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.Specifications.local_channels
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("Channel").ForRequestReplySendingTo("Reciever")
-                .OpenLocalChannel()
+                .OpenDirectChannel()
                 .Initialise();
 
             message = 1;
