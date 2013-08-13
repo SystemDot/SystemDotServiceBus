@@ -1,6 +1,7 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Configuration.Authentication;
 using SystemDot.Messaging.Configuration.Direct;
 using SystemDot.Messaging.Configuration.ExternalSources;
 using SystemDot.Messaging.Ioc;
@@ -12,6 +13,7 @@ namespace SystemDot.Messaging.Configuration
     public class MessageServerConfiguration : ConfigurationBase
     {
         readonly MessageServer server;
+
         readonly MessagingConfiguration messagingConfiguration;
 
         public MessageServerConfiguration(MessagingConfiguration messagingConfiguration, MessageServer server)
@@ -27,6 +29,18 @@ namespace SystemDot.Messaging.Configuration
             RegisterInMemoryPersistence(container);
             RegisterJsonSerialiser(container);
             ConfigureExternalSources(container);
+        }
+
+        public RequiresAuthenticationConfiguration RequiresAuthentication()
+        {
+            return new RequiresAuthenticationConfiguration(messagingConfiguration, server);
+        }
+
+        public AuthenticateToServerConfiguration AuthenticateToServer(string serverRequiringAuthentication)
+        {
+            Contract.Requires(!string.IsNullOrEmpty(serverRequiringAuthentication));
+            
+            return new AuthenticateToServerConfiguration(messagingConfiguration, server, serverRequiringAuthentication);
         }
 
         public ChannelConfiguration OpenChannel(string name)

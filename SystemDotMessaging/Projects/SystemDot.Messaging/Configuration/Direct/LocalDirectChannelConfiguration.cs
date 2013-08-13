@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Configuration.Direct
             };
         }
 
-        protected override void Build()
+        protected internal override void Build()
         {
             Resolve<LocalDirectChannelBuilder>().Build(schema);
         }

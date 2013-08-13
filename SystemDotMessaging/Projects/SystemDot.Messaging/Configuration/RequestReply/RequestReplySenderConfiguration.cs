@@ -40,7 +40,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             };
         }
 
-        protected override void Build()
+        protected internal override void Build()
         {
             Resolve<RequestSendChannelBuilder>().Build(sendSchema);
             Resolve<ReplyReceiveChannelBuilder>().Build(receiveSchema);

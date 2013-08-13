@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
             };
         }
 
-        protected override void Build()
+        protected internal override void Build()
         {
             Resolve<PointToPointReceiveChannelBuilder>().Build(schema);
         }

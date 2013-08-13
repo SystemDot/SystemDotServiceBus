@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
             };
         }
 
-        protected override void Build()
+        protected internal override void Build()
         {
             Resolve<PublisherChannelBuilder>().Build(schema);
         }

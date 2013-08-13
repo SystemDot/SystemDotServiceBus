@@ -38,7 +38,7 @@ namespace SystemDot.Messaging.Configuration.Publishers
             };
         }
 
-        protected override void Build()
+        protected internal override void Build()
         {
             Resolve<SubscriberRecieveChannelBuilder>().Build(receiveSchema);
             Resolve<SubscriptionRequestSendChannelBuilder>().Build(requestSchema);

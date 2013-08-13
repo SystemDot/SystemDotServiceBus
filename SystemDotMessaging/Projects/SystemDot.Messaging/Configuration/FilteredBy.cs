@@ -27,5 +27,10 @@ namespace SystemDot.Messaging.Configuration
 
             return new NamespaceAndNamePatternMessageFilterStrategy(namespacePattern, namePattern);
         }
+
+        public static IMessageFilterStrategy Type<T>()
+        {
+            return new TypeMessageFilterStrategy<T>();
+        }
     }
 }

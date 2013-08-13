@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement.Builders;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Configuration.Authentication;
 using SystemDot.Messaging.Configuration.Direct;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Publishing.Builders;
@@ -23,7 +24,7 @@ namespace SystemDot.Messaging.Configuration
             this.messagingConfiguration.BuildActions.Add(Build);
         }
 
-        protected abstract void Build();
+        protected internal abstract void Build();
 
         public void Initialise()
         {
@@ -40,6 +41,13 @@ namespace SystemDot.Messaging.Configuration
             Resolve<ITaskRepeater>().Start();
 
             Messenger.Send(new MessagingInitialised());
+        }
+
+        public AuthenticateToServerConfiguration AuthenticateToServer(string serverRequiringAuthentication)
+        {
+            Contract.Requires(!string.IsNullOrEmpty(serverRequiringAuthentication));
+
+            return new AuthenticateToServerConfiguration(messagingConfiguration, GetMessageServer(), serverRequiringAuthentication);
         }
 
         public ChannelConfiguration OpenChannel(string name)

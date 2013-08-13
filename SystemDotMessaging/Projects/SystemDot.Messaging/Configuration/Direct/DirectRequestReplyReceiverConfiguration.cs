@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Configuration.Direct
             };
         }
 
-        protected override void Build()
+        protected internal override void Build()
         {
             Resolve<RequestReceiverBuilder>().Build(receiveSchema);
             Resolve<ReplySenderBuilder>().Build(sendSchema);

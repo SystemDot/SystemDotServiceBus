@@ -58,6 +58,11 @@
     <Compile Include="Caching\ReceiveChannelMessageCacher.cs" />
     <Compile Include="Caching\SendChannelMessageCacher.cs" />
     <Compile Include="Caching\SendChannelMessageCacheUpdater.cs" />
+    <Compile Include="Configuration\Authentication\AuthenticateToServerConfiguration.cs" />
+    <Compile Include="Configuration\Authentication\AuthenticatToServerWithRequestConfiguration.cs" />
+    <Compile Include="Configuration\Authentication\ChannelNames.cs" />
+    <Compile Include="Configuration\Authentication\RequiresAuthenticationAcceptsRequestConfiguration.cs" />
+    <Compile Include="Configuration\Authentication\RequiresAuthenticationConfiguration.cs" />
     <Compile Include="Configuration\ComponentRegistration\DirectChannelComponents.cs" />
     <Compile Include="Configuration\Direct\DirectChannelConfiguration.cs" />
     <Compile Include="Configuration\Direct\DirectRequestReplyReceiverConfiguration.cs" />
@@ -95,6 +100,7 @@
     <Compile Include="Expiry\TimeMessageExpiryStrategy.cs" />
     <Compile Include="Caching\MessageDecacher.cs" />
     <Compile Include="Filtering\NamespaceAndNamePatternMessageFilterStrategy.cs" />
+    <Compile Include="Filtering\TypeMessageFilterStrategy.cs" />
     <Compile Include="Handling\BasicMessageHandlerRouter.cs" />
     <Compile Include="Handling\TypeExtensions.cs" />
     <Compile Include="Hooks\IMessageHook.cs" />

@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
         public HttpTransportConfiguration AsAProxyFor(string instance)
         {
             Contract.Requires(!String.IsNullOrEmpty(instance));
-            
+
             HttpRemoteServerComponents.Configure(IocContainerLocator.Locate());
             messagingConfiguration.BuildActions.Add(() => Resolve<HttpRemoteServerBuilder>().Build(instance));
 
@@ -37,7 +37,7 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
         public MessageServerConfiguration AsAServerUsingAProxy(string server)
         {
             Contract.Requires(!String.IsNullOrEmpty(server));
-            
+
             HttpRemoteClientComponents.Configure(IocContainerLocator.Locate());
             return new MessageServerConfiguration(messagingConfiguration, BuildServer(server));
         }
