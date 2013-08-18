@@ -5,7 +5,7 @@ using SystemDot.Messaging.Packaging.Headers;
 
 namespace SystemDot.Messaging.Filtering
 {
-    class BodyMessageFilter : IMessageProcessor<MessagePayload, MessagePayload>
+    class BodyMessageFilter : MessageProcessor
     {
         readonly EndpointAddress address;
 
@@ -14,14 +14,12 @@ namespace SystemDot.Messaging.Filtering
             this.address = address;
         }
 
-        public void InputMessage(MessagePayload toInput)
+        public override void InputMessage(MessagePayload toInput)
         {
             if(!toInput.HasBody()) return;
             if(toInput.GetToAddress() != address) return;
 
-            this.MessageProcessed(toInput);
+            OnMessageProcessed(toInput);
         }
-
-        public event Action<MessagePayload> MessageProcessed;
     }
 }

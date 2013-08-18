@@ -1,14 +1,12 @@
-using System;
+using SystemDot.Messaging.Direct;
 using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.Packaging.Headers;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
+namespace SystemDot.Messaging.Specifications.authentication
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_an_authentication_request_on_a_server_configured_to_require_authentication : WithHttpServerConfigurationSubject
+    public class when_receiving_an_authentication_request_on_a_server_requiring_authentication : WithHttpServerConfigurationSubject
     {
-        const string AuthenticationChannelName = "Authentication";
         const string ReceiverServer = "ReceiverServer";
 
         static MessagePayload payload;
@@ -19,14 +17,18 @@ namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
             handler = new TestMessageHandler<TestAuthenticationRequest>();
 
             payload = new MessagePayload()
-                .SetMessageBody(new TestAuthenticationRequest())
-                .SetToChannel(AuthenticationChannelName)
+                .MakeAuthenticationRequest<TestAuthenticationRequest>()
+                .SetFromServer("SenderServer")
                 .SetToServer(ReceiverServer);
+
+            payload.SetIsDirectChannelMessage();
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsAServer(ReceiverServer)
-                .RequiresAuthentication().AcceptsRequest<TestAuthenticationRequest>()
+                .RequiresAuthentication()
+                    .AcceptsRequest<TestAuthenticationRequest>()
+                    .AuthenticatesOnReply<TestAuthenticationResponse>()
                 .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
         };

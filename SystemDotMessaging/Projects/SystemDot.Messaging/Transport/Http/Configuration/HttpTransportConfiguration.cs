@@ -29,11 +29,6 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
             return this;
         }
 
-        public void Initialise()
-        {
-            messagingConfiguration.BuildActions.ForEach(a => a());
-        }
-
         public MessageServerConfiguration AsAServerUsingAProxy(string server)
         {
             Contract.Requires(!String.IsNullOrEmpty(server));
@@ -53,6 +48,11 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
         static MessageServer BuildServer(string server)
         {
             return Resolve<MessageServerBuilder>().BuildInbound(server);
+        }
+
+        public void Initialise()
+        {
+            messagingConfiguration.BuildActions.ForEach(a => a());
         }
     }
 }

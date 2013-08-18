@@ -1,24 +1,22 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Authentication.Builders;
 
 namespace SystemDot.Messaging.Configuration.Authentication
 {
-    public class RequiresAuthenticationAcceptsRequestConfiguration<TAuthenticationRequest> : Configurer
+    public class AuthenticatesOnReplyConfiguration<TAuthenticationRequest, TAuthenticationResponse> : Configurer
     {
         readonly MessageServer server;
 
-        public RequiresAuthenticationAcceptsRequestConfiguration(MessagingConfiguration messagingConfiguration, MessageServer server) : base(messagingConfiguration)
+        public AuthenticatesOnReplyConfiguration(MessagingConfiguration messagingConfiguration, MessageServer server) : base(messagingConfiguration)
         {
             Contract.Requires(server != null);
-
             this.server = server;
         }
 
         protected internal override void Build()
         {
-            OpenDirectChannel(ChannelNames.Authentication)
-                .ForRequestReplyReceiving()
-                    .OnlyForMessages(FilteredBy.Type<TAuthenticationRequest>());
+            Resolve<AuthenticationReceiverBuilder>().Build<TAuthenticationRequest, TAuthenticationResponse>(this, server);
         }
 
         protected override MessageServer GetMessageServer()

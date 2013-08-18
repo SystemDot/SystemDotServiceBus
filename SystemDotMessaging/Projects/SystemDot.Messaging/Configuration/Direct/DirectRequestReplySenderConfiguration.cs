@@ -1,8 +1,9 @@
-using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Direct.Builders;
 using SystemDot.Messaging.Filtering;
+using SystemDot.Messaging.Hooks;
+using SystemDot.Messaging.Packaging;
 
 namespace SystemDot.Messaging.Configuration.Direct
 {
@@ -50,6 +51,14 @@ namespace SystemDot.Messaging.Configuration.Direct
             Contract.Requires(toFilterBy != null);
 
             sendSchema.FilterStrategy = toFilterBy;
+            return this;
+        }
+
+        public DirectRequestReplySenderConfiguration WithReceiveHook(IMessageHook<MessagePayload> hook)
+        {
+            Contract.Requires(hook != null);
+
+            receiveSchema.Hooks.Add(hook);
             return this;
         }
     }

@@ -1,6 +1,7 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Repeating;
@@ -18,25 +19,29 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly ITaskRepeater taskRepeater;
         readonly InMemoryChangeStore changeStore;
         readonly MessageAcknowledgementHandler acknowledgementHandler;
+        readonly AuthenticationSessionCache authenticationSessionCache;
 
         public SubscriptionRequestSendChannelBuilder(
             MessageSender messageSender, 
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater,
             InMemoryChangeStore changeStore, 
-            MessageAcknowledgementHandler acknowledgementHandler)
+            MessageAcknowledgementHandler acknowledgementHandler, 
+            AuthenticationSessionCache authenticationSessionCache)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
             Contract.Requires(changeStore != null);
             Contract.Requires(acknowledgementHandler != null);
+            Contract.Requires(authenticationSessionCache != null);
 
             this.messageSender = messageSender;
             this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
             this.changeStore = changeStore;
             this.acknowledgementHandler = acknowledgementHandler;
+            this.authenticationSessionCache = authenticationSessionCache;
         }
 
         public void Build(SubscriptionRequestChannelSchema schema)
@@ -57,6 +62,7 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Pump()
                 .ToProcessor(new LastSentRecorder(systemTime))
+                .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache))
                 .ToEndPoint(messageSender);
         }
     }

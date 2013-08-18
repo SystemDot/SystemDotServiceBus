@@ -1,6 +1,7 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Handling;
+using SystemDot.Messaging.Hooks;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Transport;
@@ -24,9 +25,12 @@ namespace SystemDot.Messaging.Direct.Builders
 
         public void Build(ReplyReceiverSchema schema)
         {
+            Contract.Requires(schema != null);
+            
             MessagePipelineBuilder.Build()
                 .With(messageReceiver)
                 .ToProcessor(new BodyMessageFilter(schema.Address))
+                .ToProcessor(new MessageHookRunner<MessagePayload>(schema.Hooks))
                 .ToConverter(new MessagePayloadUnpackager(serialiser))
                 .ToEndPoint(new DirectReplyMessageHandlerRouter());
         }

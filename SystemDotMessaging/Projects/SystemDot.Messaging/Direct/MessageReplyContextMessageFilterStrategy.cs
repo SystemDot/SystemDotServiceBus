@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Direct
 
         public bool PassesThrough(object toCheck)
         {
-            return DirectReplyContext.GetCurrentAddress() == address;
+            return DirectReplyContext.IsCurrent() && DirectReplyContext.GetCurrentAddress() == address;
         }
     }
 }

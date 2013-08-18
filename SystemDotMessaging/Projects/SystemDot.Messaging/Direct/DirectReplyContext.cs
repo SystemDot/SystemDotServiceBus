@@ -37,6 +37,11 @@ namespace SystemDot.Messaging.Direct
             current.Value.Replies.Add(toAdd);
         }
 
+        public static bool IsCurrent()
+        {
+            return current.Value != null;
+        }
+
         protected override void DisposeOfManagedResources()
         {
             current.Value = null;

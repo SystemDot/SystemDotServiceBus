@@ -1,6 +1,7 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
@@ -28,6 +29,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly PersistenceFactorySelector persistenceFactorySelector;
         readonly MessageAcknowledgementHandler acknowledgementHandler;
         readonly ITaskScheduler taskScheduler;
+        readonly AuthenticationSessionCache authenticationSessionCache;
 
         public ReplySendChannelBuilder(
             MessageSender messageSender, 
@@ -36,7 +38,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             ITaskRepeater taskRepeater, 
             PersistenceFactorySelector persistenceFactorySelector, 
             MessageAcknowledgementHandler acknowledgementHandler, 
-            ITaskScheduler taskScheduler)
+            ITaskScheduler taskScheduler, AuthenticationSessionCache authenticationSessionCache)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(serialiser != null);
@@ -53,6 +55,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             this.persistenceFactorySelector = persistenceFactorySelector;
             this.acknowledgementHandler = acknowledgementHandler;
             this.taskScheduler = taskScheduler;
+            this.authenticationSessionCache = authenticationSessionCache;
         }
 
         public IMessageInputter<object> Build(ReplySendChannelSchema schema, EndpointAddress senderAddress)
@@ -69,19 +72,20 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .With(startPoint)
                 .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
                 .ToProcessor(new BatchPackager())
-                .ToConverter(new MessagePayloadPackager(this.serialiser))
+                .ToConverter(new MessagePayloadPackager(serialiser))
                 .ToProcessor(new Sequencer(cache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, senderAddress))
                 .ToProcessor(new SendChannelMessageCacher(cache))
-                .ToMessageRepeater(cache, this.systemTime, this.taskRepeater, schema.RepeatStrategy)
+                .ToMessageRepeater(cache, systemTime, taskRepeater, schema.RepeatStrategy)
                 .ToProcessor(new SendChannelMessageCacheUpdater(cache))
                 .ToProcessor(new SequenceOriginRecorder(cache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()
                 .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, schema.ExpiryAction, cache))
-                .ToProcessor(new LoadBalancer(cache, this.taskScheduler))
-                .ToProcessor(new LastSentRecorder(this.systemTime))
-                .ToEndPoint(this.messageSender);
+                .ToProcessor(new LoadBalancer(cache, taskScheduler))
+                .ToProcessor(new LastSentRecorder(systemTime))
+                .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache))
+                .ToEndPoint(messageSender);
 
             Messenger.Send(new ReplySendChannelBuilt
             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Expiry;
@@ -33,6 +34,8 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly ITaskRepeater taskRepeater;
         readonly ServerAddressRegistry serverAddressRegistry;
         readonly IMainThreadMarshaller mainThreadMarshaller;
+        readonly AuthenticationSessionCache authenticationSessionCache;
+        readonly AuthenticatedServerRegistry authenticatedServerRegistry;
 
         internal SubscriberRecieveChannelBuilder(
             ISerialiser serialiser, 
@@ -43,7 +46,9 @@ namespace SystemDot.Messaging.Publishing.Builders
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 
             ServerAddressRegistry serverAddressRegistry, 
-            IMainThreadMarshaller mainThreadMarshaller)
+            IMainThreadMarshaller mainThreadMarshaller, 
+            AuthenticationSessionCache authenticationSessionCache, 
+            AuthenticatedServerRegistry authenticatedServerRegistry)
         {
             Contract.Requires(serialiser != null);
             Contract.Requires(messageHandlerRouter != null);
@@ -54,6 +59,8 @@ namespace SystemDot.Messaging.Publishing.Builders
             Contract.Requires(taskRepeater != null);
             Contract.Requires(serverAddressRegistry != null);
             Contract.Requires(mainThreadMarshaller != null);
+            Contract.Requires(authenticationSessionCache != null);
+            Contract.Requires(authenticatedServerRegistry != null);
             
             this.serialiser = serialiser;
             this.messageHandlerRouter = messageHandlerRouter;
@@ -64,6 +71,8 @@ namespace SystemDot.Messaging.Publishing.Builders
             this.taskRepeater = taskRepeater;
             this.serverAddressRegistry = serverAddressRegistry;
             this.mainThreadMarshaller = mainThreadMarshaller;
+            this.authenticationSessionCache = authenticationSessionCache;
+            this.authenticatedServerRegistry = authenticatedServerRegistry;
         }
 
         public void Build(SubscriberRecieveChannelSchema schema)
@@ -75,6 +84,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             MessagePipelineBuilder.Build()
                 .With(messageReceiver)
                 .ToProcessor(new BodyMessageFilter(schema.Address))
+                .ToProcessor(new SenderAuthenticationSessionVerifier(authenticationSessionCache, authenticatedServerRegistry))
                 .ToProcessor(new MessageLocalAddressReassigner(serverAddressRegistry))
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToProcessor(new SequenceOriginApplier(messageCache))

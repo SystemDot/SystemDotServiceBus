@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
         {
             Messenger.Register<MessageRemovedFromCache>(e => @event = e);
             
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("SenderAddress").ForPointToPointSendingTo("ReceiverAddress")
                 .Initialise();

@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
@@ -29,6 +30,9 @@ namespace SystemDot.Messaging.PointToPoint.Builders
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
         readonly ServerAddressRegistry serverAddressRegistry;
+        readonly AuthenticationSessionCache authenticationSessionCache;
+        readonly AuthenticatedServerRegistry authenticatedServerRegistry;
+        readonly InvalidAuthenticationSessionNotifier invalidAuthenticationSessionNotifier;
 
         internal PointToPointReceiveChannelBuilder(
             MessageReceiver messageReceiver, 
@@ -38,7 +42,10 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             PersistenceFactorySelector persistenceFactorySelector, 
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 
-            ServerAddressRegistry serverAddressRegistry)
+            ServerAddressRegistry serverAddressRegistry, 
+            AuthenticationSessionCache authenticationSessionCache, 
+            AuthenticatedServerRegistry authenticatedServerRegistry,
+            InvalidAuthenticationSessionNotifier invalidAuthenticationSessionNotifier)
         {
             Contract.Requires(messageReceiver != null);
             Contract.Requires(serialiser != null);
@@ -48,6 +55,9 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
             Contract.Requires(serverAddressRegistry != null);
+            Contract.Requires(authenticationSessionCache != null);
+            Contract.Requires(authenticatedServerRegistry != null);
+            Contract.Requires(invalidAuthenticationSessionNotifier != null);
 
             this.messageReceiver = messageReceiver;
             this.serialiser = serialiser;
@@ -57,31 +67,35 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
             this.serverAddressRegistry = serverAddressRegistry;
+            this.authenticationSessionCache = authenticationSessionCache;
+            this.authenticatedServerRegistry = authenticatedServerRegistry;
+            this.invalidAuthenticationSessionNotifier = invalidAuthenticationSessionNotifier;
         }
 
         public void Build(PointToPointReceiverChannelSchema schema)
         {
-            ReceiveMessageCache messageCache = this.persistenceFactorySelector
+            ReceiveMessageCache messageCache = persistenceFactorySelector
                 .Select(schema)
                 .CreateReceiveCache(PersistenceUseType.PointToPointReceive, schema.Address);
 
             MessagePipelineBuilder.Build()
-                .With(this.messageReceiver)
+                .With(messageReceiver)
                 .ToProcessor(new BodyMessageFilter(schema.Address))
+                .ToProcessor(new ReceiverAuthenticationSessionVerifier(authenticationSessionCache, authenticatedServerRegistry, invalidAuthenticationSessionNotifier))
                 .ToProcessor(new MessageLocalAddressReassigner(serverAddressRegistry))
                 .ToProcessor(new SequenceOriginApplier(messageCache))
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
-                .ToProcessor(new MessageAcknowledger(this.acknowledgementSender))
-                .ToSimpleMessageRepeater(messageCache, this.systemTime, this.taskRepeater)
+                .ToProcessor(new MessageAcknowledger(acknowledgementSender))
+                .ToSimpleMessageRepeater(messageCache, systemTime, taskRepeater)
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
                 .Queue()
                 .ToResequencerIfSequenced(messageCache, schema)
-                .ToConverter(new MessagePayloadUnpackager(this.serialiser))
+                .ToConverter(new MessagePayloadUnpackager(serialiser))
                 .ToProcessor(new MessageFilter(schema.FilterStrategy))
                 .ToProcessor(schema.UnitOfWorkRunnerCreator())
                 .ToProcessor(new BatchUnpackager())
-                .ToEndPoint(this.messageHandlerRouter);
+                .ToEndPoint(messageHandlerRouter);
 
             Messenger.Send(new PointToPointReceiveChannelBuilt { Address = schema.Address });
         }

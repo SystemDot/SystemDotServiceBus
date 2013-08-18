@@ -1,6 +1,7 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
@@ -28,6 +29,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly PersistenceFactorySelector persistenceFactory;
         readonly MessageAcknowledgementHandler acknowledgementHandler;
         readonly ITaskScheduler taskScheduler;
+        readonly AuthenticationSessionCache authenticationSessionCache;
 
         public RequestSendChannelBuilder(
             MessageSender messageSender, 
@@ -36,7 +38,8 @@ namespace SystemDot.Messaging.RequestReply.Builders
             ITaskRepeater taskRepeater, 
             PersistenceFactorySelector persistenceFactory, 
             MessageAcknowledgementHandler acknowledgementHandler, 
-            ITaskScheduler taskScheduler)
+            ITaskScheduler taskScheduler, 
+            AuthenticationSessionCache authenticationSessionCache)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(serialiser != null);
@@ -45,6 +48,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(persistenceFactory != null);
             Contract.Requires(acknowledgementHandler != null);
             Contract.Requires(taskScheduler != null);
+            Contract.Requires(authenticationSessionCache != null);
             
             this.messageSender = messageSender;
             this.serialiser = serialiser;
@@ -53,6 +57,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             this.persistenceFactory = persistenceFactory;
             this.acknowledgementHandler = acknowledgementHandler;
             this.taskScheduler = taskScheduler;
+            this.authenticationSessionCache = authenticationSessionCache;
         }
 
         public void Build(RequestSendChannelSchema schema)
@@ -80,6 +85,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, schema.ExpiryAction, cache))
                 .ToProcessor(new LoadBalancer(cache, taskScheduler))
                 .ToProcessor(new LastSentRecorder(systemTime))
+                .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache))
                 .ToEndPoint(messageSender);
 
             Messenger.Send(new RequestSendChannelBuilt

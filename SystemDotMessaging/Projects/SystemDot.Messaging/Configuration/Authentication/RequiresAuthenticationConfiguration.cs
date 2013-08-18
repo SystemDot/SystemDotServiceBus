@@ -17,9 +17,9 @@ namespace SystemDot.Messaging.Configuration.Authentication
             this.server = server;
         }
 
-        public RequiresAuthenticationAcceptsRequestConfiguration<T> AcceptsRequest<T>()
+        public AcceptsRequestConfiguration<T> AcceptsRequest<T>()
         {
-            return new RequiresAuthenticationAcceptsRequestConfiguration<T>(messagingConfiguration, server);
+            return new AcceptsRequestConfiguration<T>(messagingConfiguration, server);
         }
     }
 }

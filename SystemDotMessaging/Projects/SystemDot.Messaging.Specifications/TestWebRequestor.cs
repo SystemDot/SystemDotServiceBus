@@ -21,8 +21,7 @@ namespace SystemDot.Messaging.Specifications
         public TestWebRequestor(ISerialiser formatter)
         {
             this.formatter = formatter;
-            this.messages = new List<MessagePayload>();
-
+            messages = new List<MessagePayload>();
             RequestsMade = new List<Stream>();
         }
 
@@ -58,18 +57,10 @@ namespace SystemDot.Messaging.Specifications
             
             RequestsMade.Add(request);
 
-            var requestMessagePayload = request.Deserialise<MessagePayload>(formatter);
-            
-            if(!requestMessagePayload.IsLongPollRequest()) return;
-
             var response = new MemoryStream();
 
-            List<MessagePayload> matching = 
-                messages.Where(m => m.GetToAddress().Server == requestMessagePayload.GetLongPollRequestServerPath()).ToList();
-
-            response.Serialise(matching, formatter);
-
-            matching.ForEach(m => messages.Remove(m));
+            response.Serialise(messages, formatter);
+            messages.ForEach(m => messages.Remove(m));
 
             toPerformOnResponse(response);
             toPerformOnCompletion();

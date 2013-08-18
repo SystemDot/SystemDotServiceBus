@@ -2,10 +2,10 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
+namespace SystemDot.Messaging.Specifications.authentication
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_an_authentication_request_with_two_servers_configured_to_require_authentication : WithHttpConfigurationSubject
+    public class when_sending_an_authentication_request_with_two_servers_requiring_authentication : WithHttpConfigurationSubject
     {
         const string OtherReceiverServerName = "OtherReceiverServerName";
 

@@ -1,7 +1,5 @@
-using SystemDot.Ioc;
 using SystemDot.Messaging.Distribution;
 using SystemDot.Messaging.Ioc;
-using SystemDot.Messaging.ThreadMarshalling;
 using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Pipelines
@@ -20,7 +18,7 @@ namespace SystemDot.Messaging.Pipelines
             if (MessagePipelineBuilder.BuildSynchronousPipelines) return Pipe();
 
             var pump = new Pump<TOut>(GetTaskStarter());
-            this.processor.MessageProcessed += pump.InputMessage;
+            processor.MessageProcessed += pump.InputMessage;
 
             return new ProcessorBuilder<TOut>(pump);
         }
@@ -30,7 +28,7 @@ namespace SystemDot.Messaging.Pipelines
             if (MessagePipelineBuilder.BuildSynchronousPipelines) return Pipe();
  
             var queue = new Queue<TOut>(GetTaskStarter());
-            this.processor.MessageProcessed += queue.InputMessage;
+            processor.MessageProcessed += queue.InputMessage;
             
             return new ProcessorBuilder<TOut>(queue);
         }
@@ -38,7 +36,7 @@ namespace SystemDot.Messaging.Pipelines
         ProcessorBuilder<TOut> Pipe()
         {
             var pipe = new Pipe<TOut>();
-            this.processor.MessageProcessed += pipe.InputMessage;
+            processor.MessageProcessed += pipe.InputMessage;
 
             return new ProcessorBuilder<TOut>(pipe);
         }
@@ -50,13 +48,13 @@ namespace SystemDot.Messaging.Pipelines
 
         public ProcessorBuilder<TNextOut> ToConverter<TNextOut>(IMessageProcessor<TOut, TNextOut> messageProcessor)
         {
-            this.processor.MessageProcessed += messageProcessor.InputMessage;
+            processor.MessageProcessed += messageProcessor.InputMessage;
             return new ProcessorBuilder<TNextOut>(messageProcessor);
         }
 
         public ProcessorBuilder<TOut> ToProcessor(IMessageProcessor<TOut, TOut> messageProcessor)
         {
-            this.processor.MessageProcessed += messageProcessor.InputMessage;
+            processor.MessageProcessed += messageProcessor.InputMessage;
             return new ProcessorBuilder<TOut>(messageProcessor);
         }
 
@@ -66,18 +64,9 @@ namespace SystemDot.Messaging.Pipelines
             return ToProcessor(messageProcessor);
         }
 
-        public ProcessorBuilder<TOut> ToProcessors(params IMessageProcessor<TOut, TOut>[] processors)
-        {
-            var builder = this;
-
-            processors.ForEach(p => builder = builder.ToProcessor(p));
-
-            return builder;
-        }
-
         public void ToEndPoint(IMessageInputter<TOut> endPoint)
         {
-            this.processor.MessageProcessed += endPoint.InputMessage;
+            processor.MessageProcessed += endPoint.InputMessage;
         }
 
         

@@ -14,8 +14,6 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
         public static void Register(IIocContainer container)
         {
             container.RegisterInstance<IIocContainer>(() => container);
-            container.RegisterInstance<MainThreadDispatcher, MainThreadDispatcher>();
-            container.RegisterInstance<IMainThreadMarshaller, MainThreadMarshaller>();
             container.RegisterInstance<IExternalSourcesConfigurer, ExternalSourcesConfigurer>();
             container.RegisterInstance<IFileSystem, FileSystem>();
             container.RegisterInstance<IWebRequestor, WebRequestor>();
