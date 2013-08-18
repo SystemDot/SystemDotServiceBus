@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B75A7B93-6CE5-4FAB-805C-DF714693AFEB}</ProjectGuid>
+    <ProjectGuid>{BD1B842E-9BA7-4998-B646-8996C92F7D31}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RequestReplyReciever</RootNamespace>
-    <AssemblyName>RequestReplyReciever</AssemblyName>
+    <RootNamespace>AuthenticationRequestReplySender</RootNamespace>
+    <AssemblyName>AuthenticationRequestReplySender</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -26,7 +26,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -57,8 +57,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IMessageConsumer.cs" />
-    <Compile Include="MessageConsumer.cs" />
+    <Compile Include="IMessageHandler.cs" />
+    <Compile Include="TestMessageHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

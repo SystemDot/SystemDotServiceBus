@@ -3,9 +3,9 @@ using System.Threading;
 using SystemDot.Messaging;
 using Messages;
 
-namespace RequestReplyReciever
+namespace AuthenticationRequestReplyReciever
 {
-    public class MessageConsumer : IMessageConsumer
+    public class TestMessageHandler : IMessageHandler
     {
        public void Handle(TestMessage message)
         {

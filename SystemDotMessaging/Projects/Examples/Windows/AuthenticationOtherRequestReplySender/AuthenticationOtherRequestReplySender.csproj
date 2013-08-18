@@ -1,15 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B75A7B93-6CE5-4FAB-805C-DF714693AFEB}</ProjectGuid>
+    <ProjectGuid>{FD96AF42-880C-44A5-B6DB-E91F913003F2}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RequestReplyReciever</RootNamespace>
-    <AssemblyName>RequestReplyReciever</AssemblyName>
+    <RootNamespace>AuthenticationOtherRequestReplySender</RootNamespace>
+    <AssemblyName>AuthenticationOtherRequestReplySender</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -57,16 +58,12 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IMessageConsumer.cs" />
-    <Compile Include="MessageConsumer.cs" />
+    <Compile Include="IMessageHandler.cs" />
+    <Compile Include="TestMessageHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\SystemDot.Esent\SystemDot.Esent.csproj">
-      <Project>{C7DBF177-FCDB-4530-A6CA-3B1EFBAD63EB}</Project>
-      <Name>SystemDot.Esent %28Windows\SystemDot.Esent%29</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\SystemDot\SystemDot.csproj">
       <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>
       <Name>SystemDot %28Windows\SystemDot%29</Name>
@@ -81,7 +78,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

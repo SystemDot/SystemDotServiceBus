@@ -35,6 +35,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthenticatedResponse.cs" />
+    <Compile Include="AuthenticationFailedResponse.cs" />
+    <Compile Include="AuthenticationRequest.cs" />
     <Compile Include="Channel1Request.cs" />
     <Compile Include="Channel2Request.cs" />
     <Compile Include="TestMessage.cs" />

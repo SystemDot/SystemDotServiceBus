@@ -2,8 +2,9 @@
 using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Configuration;
+using Messages;
 
-namespace RequestReplyReciever
+namespace AuthenticationRequestReplyReciever
 {
     class Program
     {
@@ -16,9 +17,12 @@ namespace RequestReplyReciever
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false })
                 .ResolveReferencesWith(container)
                 .RegisterHandlersFromAssemblyOf<Program>()
-                    .BasedOn<IMessageConsumer>()
+                    .BasedOn<IMessageHandler>()
                 .UsingHttpTransport()
                     .AsAServer("ReceiverServer")
+                    .RequiresAuthentication()
+                        .AcceptsRequest<AuthenticationRequest>()
+                        .AuthenticatesOnReply<AuthenticatedResponse>()
                 .OpenChannel("TestReply")
                     .ForRequestReplyReceiving()
                     .WithDurability()
@@ -29,6 +33,4 @@ namespace RequestReplyReciever
             Console.ReadLine();
         }
     }
-
-    
 }

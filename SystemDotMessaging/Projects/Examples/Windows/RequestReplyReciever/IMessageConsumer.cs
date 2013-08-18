@@ -1,4 +1,4 @@
-namespace SystemDot.Messaging.TestRequestReply.Reciever
+namespace RequestReplyReciever
 {
     public interface IMessageConsumer
     {
