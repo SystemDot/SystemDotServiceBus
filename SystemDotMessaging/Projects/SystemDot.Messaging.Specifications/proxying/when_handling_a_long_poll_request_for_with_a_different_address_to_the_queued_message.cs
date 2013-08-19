@@ -6,7 +6,7 @@ using SystemDot.Messaging.Transport.Http.Remote.Clients;
 using SystemDot.Specifications;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.remote_serving
+namespace SystemDot.Messaging.Specifications.proxying
 {
     [Subject(SpecificationGroup.Description)]
     public class when_handling_a_long_poll_request_with_a_different_address_to_the_queued_message

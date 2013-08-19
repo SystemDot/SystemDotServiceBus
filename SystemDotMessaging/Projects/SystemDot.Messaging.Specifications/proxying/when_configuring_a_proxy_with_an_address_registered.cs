@@ -1,7 +1,7 @@
 using System;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.remote_serving
+namespace SystemDot.Messaging.Specifications.proxying
 {
     [Subject(SpecificationGroup.Description)]
     public class when_configuring_a_proxy_with_an_address_registered : WithHttpServerConfigurationSubject

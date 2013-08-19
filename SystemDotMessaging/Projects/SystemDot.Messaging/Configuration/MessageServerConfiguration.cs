@@ -13,7 +13,6 @@ namespace SystemDot.Messaging.Configuration
     public class MessageServerConfiguration : ConfigurationBase
     {
         readonly MessageServer server;
-
         readonly MessagingConfiguration messagingConfiguration;
 
         public MessageServerConfiguration(MessagingConfiguration messagingConfiguration, MessageServer server)

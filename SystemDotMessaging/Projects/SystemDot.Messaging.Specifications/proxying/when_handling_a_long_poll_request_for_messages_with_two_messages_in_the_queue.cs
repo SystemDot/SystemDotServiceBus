@@ -5,7 +5,7 @@ using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Transport.Http.Remote.Clients;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.remote_serving
+namespace SystemDot.Messaging.Specifications.proxying
 {
     [Subject(SpecificationGroup.Description)]
     public class when_handling_a_long_poll_request_for_messages_with_two_messages_in_the_queue 

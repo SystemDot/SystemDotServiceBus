@@ -6,7 +6,7 @@ using SystemDot.Messaging.Storage;
 using SystemDot.Parallelism;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.remote_clients
+namespace SystemDot.Messaging.Specifications.servers_using_proxies
 {
     [Subject(SpecificationGroup.Description)]
     public class when_two_messages_are_received_by_long_polling : WithHttpConfigurationSubject
@@ -28,27 +28,35 @@ namespace SystemDot.Messaging.Specifications.remote_clients
             taskStarter.Pause(); 
             ConfigureAndRegister<ITaskStarter>(taskStarter);
 
+            handler = new TestMessageHandler<Int64>();
+            
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                     .AsAServerUsingAProxy(ServerName)
                 .OpenChannel(ReceiverName)
                     .ForPointToPointReceiving()
+                .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
 
-            messagePayload1 = new MessagePayload().MakeSequencedReceivable(
-                Message1,
-                BuildAddress(SenderName, ServerName),
-                BuildAddress(ReceiverName, ServerName),
-                PersistenceUseType.PointToPointSend);
+            messagePayload1 = new MessagePayload()
+                .SetMessageBody(Message1)
+                .SetFromChannel(SenderName)
+                .SetFromServer(ServerName)
+                .SetToChannel(ReceiverName)
+                .SetToServer(ServerName)
+                .SetToMachineLocal()
+                .SetChannelType(PersistenceUseType.PointToPointSend)
+                .Sequenced();
 
-            messagePayload2 = new MessagePayload().MakeSequencedReceivable(
-                Message2,
-                BuildAddress(SenderName, ServerName),
-                BuildAddress(ReceiverName, ServerName),
-                PersistenceUseType.PointToPointSend);
-
-            handler = new TestMessageHandler<Int64>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            messagePayload2 = new MessagePayload()
+                .SetMessageBody(Message2)
+                .SetFromChannel(SenderName)
+                .SetFromServer(ServerName)
+                .SetToChannel(ReceiverName)
+                .SetToServer(ServerName)
+                .SetToMachineLocal()
+                .SetChannelType(PersistenceUseType.PointToPointSend)
+                .Sequenced();
         };
 
         Because of = () =>

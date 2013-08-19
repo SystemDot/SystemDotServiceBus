@@ -26,7 +26,6 @@ namespace SystemDot.Messaging.Specifications.authentication
             authenticationResponse = new MessagePayload()
                 .MakeAuthenticationRequest<TestAuthenticationResponse>()
                 .SetFromServer(ReceiverServerName)
-                .SetFromMachine(null)
                 .SetToServer(SenderServer);
 
             authenticationResponse.SetAuthenticationSession(Guid.NewGuid());

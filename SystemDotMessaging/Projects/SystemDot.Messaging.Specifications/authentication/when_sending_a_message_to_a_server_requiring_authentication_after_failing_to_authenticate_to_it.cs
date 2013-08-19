@@ -25,7 +25,6 @@ namespace SystemDot.Messaging.Specifications.authentication
             authenticationResponse = new MessagePayload()
                 .MakeAuthenticationRequest<FailingAuthenticationResponse>()
                 .SetFromServer(ReceiverServerName)
-                .SetFromMachine(null)
                 .SetToServer(SenderServer);
             
             WebRequestor.AddMessages(authenticationResponse);

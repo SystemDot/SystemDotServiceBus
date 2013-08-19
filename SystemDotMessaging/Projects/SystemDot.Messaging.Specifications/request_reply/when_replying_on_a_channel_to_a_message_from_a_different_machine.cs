@@ -11,7 +11,6 @@ namespace SystemDot.Messaging.Specifications.request_reply
         const string ReceiverChannelName = "Test";
         const string ReceiverServer = "ReceiverServer";
         const string SenderChannelName = "TestSender";
-        const string SenderMachine = "SenderMachine";
 
         const Int64 Reply = 1;
         
@@ -29,7 +28,6 @@ namespace SystemDot.Messaging.Specifications.request_reply
                 .SetMessageBody(1)
                 .SetFromChannel(SenderChannelName)
                 .SetFromServer("SenderServer")
-                .SetFromMachine(SenderMachine)
                 .SetToChannel(ReceiverChannelName)
                 .SetToServer(ReceiverServer)
                 .SetChannelType(PersistenceUseType.RequestSend)

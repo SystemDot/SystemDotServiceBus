@@ -7,11 +7,11 @@ namespace SystemDot.Messaging.Authentication
 {
     public class AuthenticationSessionCache
     {
-        readonly ConcurrentDictionary<string, Guid> sessions;
+        readonly ConcurrentDictionary<MessageServer, Guid> sessions;
 
         public AuthenticationSessionCache()
         {
-            sessions = new ConcurrentDictionary<string, Guid>();
+            sessions = new ConcurrentDictionary<MessageServer, Guid>();
         }
 
         public Guid GetCurrentSessionFor(MessageServer forServer)
@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Authentication
             
             Guid temp;
 
-            sessions.TryGetValue(forServer.Name, out temp);
+            sessions.TryGetValue(forServer, out temp);
 
             return temp;
         }
@@ -35,13 +35,14 @@ namespace SystemDot.Messaging.Authentication
             Contract.Requires(forServer != null);
             Contract.Requires(session != Guid.Empty);
 
-            sessions.TryAdd(forServer.Name, session);
+            sessions.TryAdd(forServer, session);
         }
 
         public bool HasCurrentSessionFor(MessageServer forServer)
         {
             Contract.Requires(forServer != null);
-            return forServer != MessageServer.None && sessions.ContainsKey(forServer.Name);
+
+            return forServer != MessageServer.None && sessions.ContainsKey(forServer);
         }
     }
 }

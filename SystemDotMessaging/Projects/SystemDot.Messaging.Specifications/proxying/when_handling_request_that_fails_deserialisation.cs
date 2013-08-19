@@ -2,7 +2,7 @@ using System;
 using SystemDot.Serialisation;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.remote_serving
+namespace SystemDot.Messaging.Specifications.proxying
 {
     [Subject(SpecificationGroup.Description)]
     public class when_handling_request_that_fails_deserialisation : WithHttpServerConfigurationSubject

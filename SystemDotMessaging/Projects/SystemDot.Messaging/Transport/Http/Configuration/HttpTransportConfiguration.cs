@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
             Contract.Requires(!String.IsNullOrEmpty(server));
 
             HttpRemoteClientComponents.Configure(IocContainerLocator.Locate());
-            return new MessageServerConfiguration(messagingConfiguration, BuildServer(server));
+            return new MessageServerConfiguration(messagingConfiguration, BuildMultipointServer(server));
         }
 
         public MessageServerConfiguration AsAServer(string server)
@@ -45,14 +45,21 @@ namespace SystemDot.Messaging.Transport.Http.Configuration
             return new MessageServerConfiguration(messagingConfiguration, BuildServer(server));
         }
 
+        MessageServer BuildMultipointServer(string client)
+        {
+            return Resolve<MessageServerBuilder>().BuildMultipoint(client);
+        }
+
         static MessageServer BuildServer(string server)
         {
-            return Resolve<MessageServerBuilder>().BuildInbound(server);
+            return Resolve<MessageServerBuilder>().Build(server);
         }
 
         public void Initialise()
         {
             messagingConfiguration.BuildActions.ForEach(a => a());
         }
+
+        
     }
 }

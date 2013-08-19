@@ -4,7 +4,7 @@ using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Parallelism;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.remote_clients
+namespace SystemDot.Messaging.Specifications.servers_using_proxies
 {
     [Subject(SpecificationGroup.Description)]
     public class when_sending_a_message : WithHttpConfigurationSubject
@@ -42,5 +42,8 @@ namespace SystemDot.Messaging.Specifications.remote_clients
 
         It should_send_a_message_with_the_from_address_server_name_set_correctly = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetFromAddress().Server.Name.ShouldEqual(Server);
+
+        It should_send_a_message_with_the_from_address_server_machine_name_set_correctly = () =>
+            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetFromAddress().Server.MachineName.ShouldEqual(Environment.MachineName);
     }
 }

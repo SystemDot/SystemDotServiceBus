@@ -12,20 +12,20 @@ namespace SystemDot.Messaging.Addressing
             this.serverAddressRegistry = serverAddressRegistry;
         }
 
-        public MessageServer BuildOutbound(string server)
+        public MessageServer Build(string server)
         {
             Contract.Requires(!string.IsNullOrEmpty(server));
 
-            return MessageServer.Outbound(server, GetAddress(server));
-        }
-
-        public MessageServer BuildInbound(string server)
-        {
-            Contract.Requires(!string.IsNullOrEmpty(server));
-
-            return MessageServer.Inbound(server, GetAddress(server));
+            return MessageServer.Named(server, GetAddress(server));
         }
 
         ServerAddress GetAddress(string server) { return serverAddressRegistry.Lookup(server); }
+
+        public MessageServer BuildMultipoint(string client)
+        {
+            Contract.Requires(!string.IsNullOrEmpty(client));
+
+            return MessageServer.NamedMultipoint(client, GetAddress(client));
+        }
     }
 }

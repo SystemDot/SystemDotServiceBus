@@ -4,7 +4,7 @@ using SystemDot.Messaging.Storage;
 using SystemDot.Parallelism;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.remote_clients
+namespace SystemDot.Messaging.Specifications.servers_using_proxies
 {
     [Subject(SpecificationGroup.Description)]
     public class when_long_polling_and_messages_only_exist_on_the_server_for_another_client : WithHttpConfigurationSubject

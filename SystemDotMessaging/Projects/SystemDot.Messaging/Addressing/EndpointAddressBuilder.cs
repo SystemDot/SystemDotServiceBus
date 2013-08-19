@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Addressing
             if (ParseChannel(address).Length == 1)
                 return defaultServer;
 
-            return messageServerBuilder.BuildOutbound(ParseChannel(address)[1]);
+            return messageServerBuilder.Build(ParseChannel(address)[1]);
         }
 
         static string[] ParseChannel(string address)

@@ -5,7 +5,7 @@ using SystemDot.Messaging.Transport.Http.Remote.Clients;
 using SystemDot.Parallelism;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.remote_clients
+namespace SystemDot.Messaging.Specifications.servers_using_proxies
 {
     [Subject(SpecificationGroup.Description)]
     public class when_a_message_recieved_has_been_processed : WithHttpConfigurationSubject

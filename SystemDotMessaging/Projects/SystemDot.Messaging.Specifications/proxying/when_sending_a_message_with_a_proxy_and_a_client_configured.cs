@@ -1,12 +1,11 @@
 using System.Linq;
 using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.Specifications.remote_clients;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.Http.Remote.Clients;
 using SystemDot.Parallelism;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.remote_serving
+namespace SystemDot.Messaging.Specifications.proxying
 {
     [Subject(SpecificationGroup.Description)]
     public class when_sending_a_message_with_a_proxy_and_a_client_configured : WithHttpConfigurationSubject
