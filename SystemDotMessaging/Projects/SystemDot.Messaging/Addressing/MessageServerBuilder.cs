@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.Contracts;
 
 namespace SystemDot.Messaging.Addressing
@@ -12,20 +13,53 @@ namespace SystemDot.Messaging.Addressing
             this.serverAddressRegistry = serverAddressRegistry;
         }
 
+        public MessageServer BuildMultipoint(string server)
+        {
+            Contract.Requires(!string.IsNullOrEmpty(server));
+            
+            return MessageServer.NamedMultipoint(server, Environment.MachineName, GetAddress(server));
+        }
+
         public MessageServer Build(string server)
         {
             Contract.Requires(!string.IsNullOrEmpty(server));
 
-            return MessageServer.Named(server, GetAddress(server));
+            return ServerHasMachineName(server) ? GetNamedMultipointServer(server) : GetNamedServer(server);
         }
 
-        ServerAddress GetAddress(string server) { return serverAddressRegistry.Lookup(server); }
-
-        public MessageServer BuildMultipoint(string client)
+        MessageServer GetNamedServer(string server)
         {
-            Contract.Requires(!string.IsNullOrEmpty(client));
+            return MessageServer.Named(server, GetAddress(GetServerName(server)));
+        }
 
-            return MessageServer.NamedMultipoint(client, GetAddress(client));
+        MessageServer GetNamedMultipointServer(string server)
+        {
+            return MessageServer.NamedMultipoint(GetServerName(server), GetMachineName(server), GetAddress(GetServerName(server)));
+        }
+
+        static string GetMachineName(string server)
+        {
+            return ParseServer(server)[1];
+        }
+
+        static string GetServerName(string server)
+        {
+            return ParseServer(server)[0];
+        }
+
+        static bool ServerHasMachineName(string server)
+        {
+            return ParseServer(server).Length == 2;
+        }
+
+        static string[] ParseServer(string server)
+        {
+            return server.Split('.');
+        }
+
+        ServerAddress GetAddress(string server)
+        {
+            return serverAddressRegistry.Lookup(server);
         }
     }
 }

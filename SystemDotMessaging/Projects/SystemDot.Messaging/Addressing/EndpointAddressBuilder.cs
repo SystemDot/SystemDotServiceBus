@@ -18,10 +18,7 @@ namespace SystemDot.Messaging.Addressing
             Contract.Requires(!string.IsNullOrEmpty(address));
             Contract.Requires(defaultServer != null);
 
-            string channel = GetChannelName(address);
-            MessageServer route = GetServer(address, defaultServer);
-
-            return new EndpointAddress(channel, route);
+            return new EndpointAddress(GetChannelName(address), GetServer(address, defaultServer));
         }
 
         string GetChannelName(string address)
@@ -31,10 +28,19 @@ namespace SystemDot.Messaging.Addressing
 
         MessageServer GetServer(string address, MessageServer defaultServer)
         {
-            if (ParseChannel(address).Length == 1)
-                return defaultServer;
+            return AddressHasServerName(address)
+                ? messageServerBuilder.Build(GetServerName(address)) 
+                : defaultServer;
+        }
 
-            return messageServerBuilder.Build(ParseChannel(address)[1]);
+        static bool AddressHasServerName(string address)
+        {
+            return ParseChannel(address).Length == 2;
+        }
+
+        static string GetServerName(string address)
+        {
+            return ParseChannel(address)[1];
         }
 
         static string[] ParseChannel(string address)

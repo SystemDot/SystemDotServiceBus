@@ -10,8 +10,8 @@ namespace SystemDot.Messaging.Specifications.servers_using_proxies
     public class when_sending_a_message : WithHttpConfigurationSubject
     {
         const string Server = "Server";
-        const string ChannelAddress = "TestSender";
-        const string RecieverAddress = "TestReceiver";
+        const string SenderChannel = "SenderChannel";
+        const string ReceiverChannel = "ReceiverChannel";
         const Int64 Message = 1;
 
         Establish context = () =>
@@ -21,8 +21,8 @@ namespace SystemDot.Messaging.Specifications.servers_using_proxies
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                     .AsAServerUsingAProxy(Server)
-                .OpenChannel(ChannelAddress)
-                    .ForPointToPointSendingTo(RecieverAddress)
+                .OpenChannel(SenderChannel)
+                    .ForPointToPointSendingTo(ReceiverChannel)
                 .Initialise();
         };
 
@@ -32,13 +32,13 @@ namespace SystemDot.Messaging.Specifications.servers_using_proxies
             WebRequestor.DeserialiseSingleRequest<MessagePayload>().DeserialiseTo<Int64>().ShouldEqual(Message);
 
         It should_send_a_message_with_the_to_address_channel_name_set_correctly = () =>
-            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetToAddress().Channel.ShouldEqual(RecieverAddress);
+            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetToAddress().Channel.ShouldEqual(ReceiverChannel);
 
         It should_send_a_message_with_the_to_address_server_name_set_correctly = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetToAddress().Server.Name.ShouldEqual(Server);
 
         It should_send_a_message_with_the_from_address_channel_name_set_correctly = () =>
-            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetFromAddress().Channel.ShouldEqual(ChannelAddress);
+            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetFromAddress().Channel.ShouldEqual(SenderChannel);
 
         It should_send_a_message_with_the_from_address_server_name_set_correctly = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetFromAddress().Server.Name.ShouldEqual(Server);

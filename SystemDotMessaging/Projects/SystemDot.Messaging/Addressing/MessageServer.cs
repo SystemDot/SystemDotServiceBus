@@ -15,12 +15,13 @@ namespace SystemDot.Messaging.Addressing
             return new MessageServer(name, address);
         }
 
-        public static MessageServer NamedMultipoint(string name, ServerAddress address)
+        public static MessageServer NamedMultipoint(string name, string machineName, ServerAddress address)
         {
             Contract.Requires(!string.IsNullOrEmpty(name));
+            Contract.Requires(!string.IsNullOrEmpty(machineName));
             Contract.Requires(address != null);
 
-            return new MessageServer(name, Environment.MachineName, address);
+            return new MessageServer(name, machineName, address);
         }
 
         public string Name { get; set; }
