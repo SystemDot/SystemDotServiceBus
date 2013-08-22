@@ -48,6 +48,6 @@ namespace SystemDot.Messaging.Specifications.authentication_for_publishing
 
         It should_send_the_subscription_in_a_payload_containing_the_expected_authentication_session_for_the_server = () => 
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetAuthenticationSession().ShouldEqual(authenticationResponse.GetAuthenticationSession());
+                .GetAuthenticationSession().Id.ShouldEqual(authenticationResponse.GetAuthenticationSession().Id);
     }
 }

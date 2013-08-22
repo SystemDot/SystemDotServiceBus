@@ -2,7 +2,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.hooks_for_request_reply
+namespace SystemDot.Messaging.Specifications.hooks_for_publishing.hooks_for_request_reply
 {
     [Subject(SpecificationGroup.Description)]
     public class when_replying_on_a_channel_with_a_hook : WithMessageConfigurationSubject

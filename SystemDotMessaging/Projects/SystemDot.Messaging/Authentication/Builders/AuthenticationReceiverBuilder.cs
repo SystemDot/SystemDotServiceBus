@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration;
@@ -22,22 +23,23 @@ namespace SystemDot.Messaging.Authentication.Builders
             this.serverRegistry = serverRegistry;
         }
 
-        public void Build<TAuthenticationRequest, TAuthenticationResponse>(Configurer configurer, MessageServer server)
+        public void Build<TAuthenticationRequest, TAuthenticationResponse>(Configurer configurer, MessageServer server, ExpiryPlan expiryPlan)
         {
             Contract.Requires(configurer != null);
             Contract.Requires(server != null);
-            
-            BuildChannel<TAuthenticationRequest, TAuthenticationResponse>(configurer);
+            Contract.Requires(expiryPlan != null);
+
+            BuildChannel<TAuthenticationRequest, TAuthenticationResponse>(configurer, expiryPlan);
             RegisterAuthenticatedServer(server);
             CreateNewSessionForServer(server);
         }
 
-        void BuildChannel<TAuthenticationRequest, TAuthenticationResponse>(Configurer configurer)
+        void BuildChannel<TAuthenticationRequest, TAuthenticationResponse>(Configurer configurer, ExpiryPlan expiryPlan)
         {
             configurer.OpenDirectChannel(ChannelNames.AuthenticationChannelName)
                 .ForRequestReplyReceiving()
                 .OnlyForMessages(FilteredBy.Type<TAuthenticationRequest>())
-                .WithReplyHook(new AuthenticationResponseHook<TAuthenticationResponse>(serialiser, cache));
+                .WithReplyHook(new AuthenticationResponseHook<TAuthenticationResponse>(serialiser, cache, expiryPlan));
         }
 
         void RegisterAuthenticatedServer(MessageServer server)
@@ -47,7 +49,7 @@ namespace SystemDot.Messaging.Authentication.Builders
 
         void CreateNewSessionForServer(MessageServer server)
         {
-            cache.CacheNewSessionFor(server);
+            cache.CacheSessionFor(server, new AuthenticationSession());
         }
     }
 }

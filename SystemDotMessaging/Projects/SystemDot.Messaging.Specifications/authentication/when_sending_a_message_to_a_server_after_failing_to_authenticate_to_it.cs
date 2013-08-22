@@ -5,7 +5,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.authentication
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_a_message_to_a_server_requiring_authentication_after_failing_to_authenticate_to_it : WithHttpConfigurationSubject
+    public class when_sending_a_message_to_a_server_after_failing_to_authenticate_to_it : WithHttpConfigurationSubject
     {
         const string ReceiverServerName = "ReceiverServer";
         const string SenderServer = "SenderServer";

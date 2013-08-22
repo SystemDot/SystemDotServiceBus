@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
 
         static TestReplyMessageHandler<long> handler;
         static MessagePayload request;
-        static Guid session;
+        static AuthenticationSession session;
 
         Establish context = () =>
         {

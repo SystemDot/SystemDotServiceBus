@@ -1,7 +1,7 @@
 using System;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.hooks_for_request_reply
+namespace SystemDot.Messaging.Specifications.hooks_for_publishing.hooks_for_request_reply
 {
     [Subject(SpecificationGroup.Description)]
     public class when_sending_a_request_on_a_channel_with_a_post_packaging_send_hook : WithMessageConfigurationSubject

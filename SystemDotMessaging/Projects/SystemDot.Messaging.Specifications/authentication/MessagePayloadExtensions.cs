@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Specifications.authentication
             where TResponse : new()
         {
             payload.MakeAuthenticationRequest<TResponse>();
-            payload.SetAuthenticationSession(Guid.NewGuid());
+            payload.SetAuthenticationSession(new AuthenticationSession());
 
             return payload;
         }

@@ -6,7 +6,7 @@ using SystemDot.Messaging.Packaging.Headers;
 namespace SystemDot.Messaging.Specifications.authentication
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_an_authentication_request_to_a_server_requiring_authentication : WithHttpConfigurationSubject
+    public class when_sending_an_authentication_request_to_a_server : WithHttpConfigurationSubject
     {
         const string ReceiverServerName = "ReceiverServer";
 

@@ -2,38 +2,44 @@ using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Configuration.Authentication;
 
 namespace SystemDot.Messaging.Authentication
 {
     public class AuthenticationSessionCache
     {
-        readonly ConcurrentDictionary<MessageServer, Guid> sessions;
+        readonly ConcurrentDictionary<MessageServer, AuthenticationSession> sessions;
+        readonly ISystemTime systemTime;
 
-        public AuthenticationSessionCache()
+        public AuthenticationSessionCache(ISystemTime systemTime)
         {
-            sessions = new ConcurrentDictionary<MessageServer, Guid>();
+            this.systemTime = systemTime;
+            sessions = new ConcurrentDictionary<MessageServer, AuthenticationSession>();
         }
 
-        public Guid GetCurrentSessionFor(MessageServer forServer)
+        public AuthenticationSession GetCurrentSessionFor(MessageServer forServer)
         {
             Contract.Requires(forServer != null);
-            
-            Guid temp;
+
+            AuthenticationSession temp;
 
             sessions.TryGetValue(forServer, out temp);
 
             return temp;
         }
 
-        public void CacheNewSessionFor(MessageServer forServer)
-        {
-            CacheSessionFor(forServer, Guid.NewGuid());
-        }
-
-        public void CacheSessionFor(MessageServer forServer, Guid session)
+        public void CacheNewSessionFor(MessageServer forServer, ExpiryPlan expiryPlan)
         {
             Contract.Requires(forServer != null);
-            Contract.Requires(session != Guid.Empty);
+            Contract.Requires(expiryPlan != null);
+
+            CacheSessionFor(forServer, AuthenticationSession.FromPlan(systemTime.GetCurrentDate(), expiryPlan));
+        }
+
+        public void CacheSessionFor(MessageServer forServer, AuthenticationSession session)
+        {
+            Contract.Requires(forServer != null);
+            Contract.Requires(session != null);
 
             sessions.TryAdd(forServer, session);
         }
@@ -44,5 +50,7 @@ namespace SystemDot.Messaging.Authentication
 
             return forServer != MessageServer.None && sessions.ContainsKey(forServer);
         }
+
+        
     }
 }

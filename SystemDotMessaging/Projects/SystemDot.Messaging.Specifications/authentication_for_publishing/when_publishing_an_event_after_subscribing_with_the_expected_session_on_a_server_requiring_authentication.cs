@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Specifications.authentication_for_publishing
         const string SubscriberServer = "SubscriberServer";
         const string PublisherChannel = "PublisherChannel";
 
-        static Guid session;
+        static AuthenticationSession session;
 
         Establish context = () =>
         {

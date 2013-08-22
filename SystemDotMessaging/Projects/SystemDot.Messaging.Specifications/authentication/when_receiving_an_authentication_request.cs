@@ -5,7 +5,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.authentication
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_an_authentication_request_on_a_server_requiring_authentication : WithHttpServerConfigurationSubject
+    public class when_receiving_an_authentication_request : WithHttpServerConfigurationSubject
     {
         const string ReceiverServer = "ReceiverServer";
 

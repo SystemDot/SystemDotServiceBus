@@ -6,7 +6,7 @@ using SystemDot.Messaging.Authentication;
 namespace SystemDot.Messaging.Specifications.authentication
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_a_message_to_a_server_requiring_authentication_after_authenticating_to_it : WithHttpConfigurationSubject
+    public class when_sending_a_message_to_a_server_after_authenticating_to_it : WithHttpConfigurationSubject
     {
         const string ReceiverServerName = "ReceiverServer";
         const string SenderServer = "SenderServer";
@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.authentication
                 .SetFromServer(ReceiverServerName)
                 .SetToServer(SenderServer);
 
-            authenticationResponse.SetAuthenticationSession(Guid.NewGuid());
+            authenticationResponse.SetAuthenticationSession(new AuthenticationSession());
 
             WebRequestor.AddMessages(authenticationResponse);
 
@@ -41,6 +41,6 @@ namespace SystemDot.Messaging.Specifications.authentication
 
         It should_send_the_message_in_a_payload_containing_the_expected_authentication_session_for_the_server = () => 
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetAuthenticationSession().ShouldEqual(authenticationResponse.GetAuthenticationSession());
+                .GetAuthenticationSession().Id.ShouldEqual(authenticationResponse.GetAuthenticationSession().Id);
     }
 }

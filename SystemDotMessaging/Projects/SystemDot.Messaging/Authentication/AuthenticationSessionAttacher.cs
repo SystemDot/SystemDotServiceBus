@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;

@@ -8,8 +8,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.authentication
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_a_message_with_the_expected_session_from_another_server_on_a_server_requiring_authentication 
-        : WithHttpServerConfigurationSubject
+    public class when_receiving_a_message_with_the_expected_session : WithHttpServerConfigurationSubject
     {
         const string ReceiverServer = "ReceiverServer";
         const string SenderServer = "SenderServer";
@@ -40,22 +39,22 @@ namespace SystemDot.Messaging.Specifications.authentication
                     .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
 
-            Guid authenticationSession = SendMessagesToServer(authenticationRequestPayload).Single().GetAuthenticationSession();
+            AuthenticationSession session = SendMessagesToServer(authenticationRequestPayload).Single().GetAuthenticationSession();
 
             payload = new MessagePayload()
                 .SetMessageBody(Message)
                 .SetFromChannel("SenderChannel")
-                .SetFromServer("OtherSenderServer")
+                .SetFromServer(SenderServer)
                 .SetToChannel(ReceiverChannel)
                 .SetToServer(ReceiverServer)
                 .SetChannelType(PersistenceUseType.PointToPointSend)
                 .Sequenced();
 
-            payload.SetAuthenticationSession(authenticationSession);
+            payload.SetAuthenticationSession(session);
         };
 
         Because of = () => SendMessagesToServer(payload);
 
-        It should_not_handle_the_message_in_the_registered_handler = () => handler.HandledMessages.ShouldBeEmpty();
+        It should_handle_the_message_in_the_registered_handler = () => handler.LastHandledMessage.ShouldEqual(Message);
     }
 }

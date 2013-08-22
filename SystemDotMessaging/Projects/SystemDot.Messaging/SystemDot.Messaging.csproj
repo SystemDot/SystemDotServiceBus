@@ -51,12 +51,14 @@
     <Compile Include="Authentication\AuthenticatedServerRegistry.cs" />
     <Compile Include="Authentication\AuthenticationReceiveHook.cs" />
     <Compile Include="Authentication\AuthenticationResponseHook.cs" />
+    <Compile Include="Authentication\AuthenticationSession.cs" />
     <Compile Include="Authentication\AuthenticationSessionAttacher.cs" />
     <Compile Include="Authentication\AuthenticationSessionCache.cs" />
     <Compile Include="Authentication\AuthenticationSessionHeader.cs" />
     <Compile Include="Authentication\AuthenticationSessionVerifier.cs" />
     <Compile Include="Authentication\Builders\AuthenticationReceiverBuilder.cs" />
     <Compile Include="Authentication\Builders\AuthenticationSenderBuilder.cs" />
+    <Compile Include="Authentication\ExpiryPlan.cs" />
     <Compile Include="Authentication\InvalidAuthenticationSessionNotifier.cs" />
     <Compile Include="Authentication\MessagePayloadExtensions.cs" />
     <Compile Include="Authentication\ReceiverAuthenticationSessionVerifier.cs" />

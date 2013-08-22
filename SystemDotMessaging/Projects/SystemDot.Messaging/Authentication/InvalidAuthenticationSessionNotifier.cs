@@ -25,7 +25,6 @@ namespace SystemDot.Messaging.Authentication
         {
             var notification = new MessagePayload();
 
-            notification.SetIsInvalidAuthenticationSessionNotification();
             notification.SetToAddress(forMessage.GetFromAddress());
             notification.SetFromAddress(forMessage.GetToAddress());
 

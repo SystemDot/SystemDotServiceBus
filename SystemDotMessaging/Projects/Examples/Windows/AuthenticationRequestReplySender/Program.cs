@@ -32,6 +32,7 @@ namespace AuthenticationRequestReplySender
             string password = Console.ReadLine();
 
             Bus.SendDirect(new AuthenticationRequest {Password = password});
+
             do
             {
                 Console.WriteLine("I am the sender. Press enter to send messages..");

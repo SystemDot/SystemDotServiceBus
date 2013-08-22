@@ -8,7 +8,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.authentication
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_replying_to_an_authentication_request_on_a_server_requiring_authentication : WithHttpServerConfigurationSubject
+    public class when_replying_to_an_authentication_request : WithHttpServerConfigurationSubject
     {
        const string ReceiverServer = "ReceiverServer";
 
@@ -38,6 +38,6 @@ namespace SystemDot.Messaging.Specifications.authentication
         Because of = () => returnedMessages = SendMessagesToServer(payload);
 
         It should_reply_with_the_specified_authentication_response_containing_the_new_authentication_session_in_the_headers = () =>
-            returnedMessages.Single().GetAuthenticationSession().ShouldNotEqual(Guid.Empty);
+            returnedMessages.Single().GetAuthenticationSession().Id.ShouldNotEqual(Guid.Empty);
     }
 }

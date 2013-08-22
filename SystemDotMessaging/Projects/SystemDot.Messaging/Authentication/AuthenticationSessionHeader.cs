@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Packaging;
 
@@ -6,15 +5,15 @@ namespace SystemDot.Messaging.Authentication
 {
     public class AuthenticationSessionHeader : IMessageHeader
     {
-        public Guid Session { get; set; }
+        public AuthenticationSession Session { get; set; }
 
         public AuthenticationSessionHeader()
         {
         }
 
-        public AuthenticationSessionHeader(Guid session)
+        public AuthenticationSessionHeader(AuthenticationSession session)
         {
-            Contract.Requires(session != Guid.Empty);
+            Contract.Requires(session != null);
             Session = session;
         }
     }

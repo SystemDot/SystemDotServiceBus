@@ -6,7 +6,7 @@ namespace SystemDot.Messaging.Authentication
 {
     public static class MessagePayloadExtensions
     {
-        public static Guid GetAuthenticationSession(this MessagePayload payload)
+        public static AuthenticationSession GetAuthenticationSession(this MessagePayload payload)
         {
             return payload.GetHeader<AuthenticationSessionHeader>().Session;
         }
@@ -16,24 +16,10 @@ namespace SystemDot.Messaging.Authentication
             return payload.HasHeader<AuthenticationSessionHeader>();
         }
 
-        public static void SetAuthenticationSession(this MessagePayload payload, Guid toSet)
+        public static void SetAuthenticationSession(this MessagePayload payload, AuthenticationSession toSet)
         {
-            Contract.Requires(toSet != Guid.Empty);
+            Contract.Requires(toSet != null);
             payload.AddHeader(new AuthenticationSessionHeader(toSet));
         }
-
-        public static void SetIsInvalidAuthenticationSessionNotification(this MessagePayload payload)
-        {
-            payload.AddHeader(new InvalidAuthenticationSessionNotificationHeader());
-        }
-
-        public static bool IsInvalidAuthenticationSessionNotification(this MessagePayload payload)
-        {
-            return payload.HasHeader<InvalidAuthenticationSessionNotificationHeader>();
-        }
-    }
-
-    public class InvalidAuthenticationSessionNotificationHeader : IMessageHeader
-    {
     }
 }
