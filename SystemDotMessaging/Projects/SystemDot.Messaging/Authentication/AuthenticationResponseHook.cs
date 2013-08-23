@@ -1,7 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
-using SystemDot.Messaging.Configuration.Authentication;
 using SystemDot.Messaging.Direct;
 using SystemDot.Messaging.Hooks;
 using SystemDot.Messaging.Packaging;
@@ -10,7 +9,7 @@ using SystemDot.Messaging.Packaging.Headers;
 
 namespace SystemDot.Messaging.Authentication
 {
-    public class AuthenticationResponseHook<TAuthenticationResponse> : IMessageHook<MessagePayload>
+    class AuthenticationResponseHook<TAuthenticationResponse> : IMessageHook<MessagePayload>
     {
         readonly ISerialiser serialiser;
         readonly AuthenticationSessionCache cache;

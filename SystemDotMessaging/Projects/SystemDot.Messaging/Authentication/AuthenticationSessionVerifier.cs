@@ -17,15 +17,10 @@ namespace SystemDot.Messaging.Authentication
         public override void InputMessage(MessagePayload toInput)
         {
             if (ServerRequiresAuthentication(toInput) && !PayloadHasExpectedSession(toInput))
-            {
-                NotifyInvalidAuthenticationSession(toInput);
                 return;
-            }
 
             OnMessageProcessed(toInput);
         }
-
-        protected abstract void NotifyInvalidAuthenticationSession(MessagePayload toInput);
 
         protected abstract bool ServerRequiresAuthentication(MessagePayload toInput);
         

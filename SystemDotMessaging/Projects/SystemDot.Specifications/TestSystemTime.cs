@@ -27,16 +27,16 @@ namespace SystemDot.Specifications
 
         public void AddToCurrentDate(TimeSpan toAdd)
         {
-            this.currentDate = this.currentDate.Add(toAdd);
+            currentDate = currentDate.Add(toAdd);
         }
 
         public TimeSpan SpanFromSeconds(int seconds)
         {
             LastTimeSpanRequested = TimeSpan.FromSeconds(seconds);
 
-            return this.fromSecondsSpanOverride == TimeSpan.MinValue
+            return fromSecondsSpanOverride == TimeSpan.MinValue
                 ? LastTimeSpanRequested
-                : this.fromSecondsSpanOverride;
+                : fromSecondsSpanOverride;
         }
     }
 }

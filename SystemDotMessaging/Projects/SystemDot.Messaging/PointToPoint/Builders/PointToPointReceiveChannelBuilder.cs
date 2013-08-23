@@ -32,7 +32,6 @@ namespace SystemDot.Messaging.PointToPoint.Builders
         readonly ServerAddressRegistry serverAddressRegistry;
         readonly AuthenticationSessionCache authenticationSessionCache;
         readonly AuthenticatedServerRegistry authenticatedServerRegistry;
-        readonly InvalidAuthenticationSessionNotifier invalidAuthenticationSessionNotifier;
 
         internal PointToPointReceiveChannelBuilder(
             MessageReceiver messageReceiver, 
@@ -44,8 +43,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             ITaskRepeater taskRepeater, 
             ServerAddressRegistry serverAddressRegistry, 
             AuthenticationSessionCache authenticationSessionCache, 
-            AuthenticatedServerRegistry authenticatedServerRegistry,
-            InvalidAuthenticationSessionNotifier invalidAuthenticationSessionNotifier)
+            AuthenticatedServerRegistry authenticatedServerRegistry)
         {
             Contract.Requires(messageReceiver != null);
             Contract.Requires(serialiser != null);
@@ -57,7 +55,6 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             Contract.Requires(serverAddressRegistry != null);
             Contract.Requires(authenticationSessionCache != null);
             Contract.Requires(authenticatedServerRegistry != null);
-            Contract.Requires(invalidAuthenticationSessionNotifier != null);
 
             this.messageReceiver = messageReceiver;
             this.serialiser = serialiser;
@@ -69,7 +66,6 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             this.serverAddressRegistry = serverAddressRegistry;
             this.authenticationSessionCache = authenticationSessionCache;
             this.authenticatedServerRegistry = authenticatedServerRegistry;
-            this.invalidAuthenticationSessionNotifier = invalidAuthenticationSessionNotifier;
         }
 
         public void Build(PointToPointReceiverChannelSchema schema)
@@ -81,7 +77,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             MessagePipelineBuilder.Build()
                 .With(messageReceiver)
                 .ToProcessor(new BodyMessageFilter(schema.Address))
-                .ToProcessor(new ReceiverAuthenticationSessionVerifier(authenticationSessionCache, authenticatedServerRegistry, invalidAuthenticationSessionNotifier))
+                .ToProcessor(new ReceiverAuthenticationSessionVerifier(authenticationSessionCache, authenticatedServerRegistry))
                 .ToProcessor(new MessageLocalAddressReassigner(serverAddressRegistry))
                 .ToProcessor(new SequenceOriginApplier(messageCache))
                 .ToProcessor(new MessageSendTimeRemover())

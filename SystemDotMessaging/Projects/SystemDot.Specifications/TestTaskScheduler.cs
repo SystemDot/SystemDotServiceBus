@@ -19,11 +19,11 @@ namespace SystemDot.Specifications
 
         public void ScheduleTask(TimeSpan delay, Action task)
         {
-            if (++schedulesExecuted > this.schedulesPermitted)
+            if (++schedulesExecuted > schedulesPermitted)
                 return;
 
-            this.LastDelay = delay;
-            this.systemTime.AddToCurrentDate(delay);
+            LastDelay = delay;
+            //systemTime.AddToCurrentDate(delay);
             task.Invoke();
 
         }

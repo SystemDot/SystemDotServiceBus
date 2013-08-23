@@ -36,7 +36,6 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly IMainThreadMarshaller mainThreadMarshaller;
         readonly AuthenticationSessionCache authenticationSessionCache;
         readonly AuthenticatedServerRegistry authenticatedServerRegistry;
-        readonly InvalidAuthenticationSessionNotifier invalidAuthenticationSessionNotifier;
 
         internal RequestRecieveChannelBuilder(
             ReplyAddressLookup replyAddressLookup, 
@@ -49,8 +48,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             ServerAddressRegistry serverAddressRegistry, 
             IMainThreadMarshaller mainThreadMarshaller, 
             AuthenticationSessionCache authenticationSessionCache, 
-            AuthenticatedServerRegistry authenticatedServerRegistry,
-            InvalidAuthenticationSessionNotifier invalidAuthenticationSessionNotifier)
+            AuthenticatedServerRegistry authenticatedServerRegistry)
         {
             Contract.Requires(replyAddressLookup != null);
             Contract.Requires(serialiser != null);
@@ -63,7 +61,6 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(mainThreadMarshaller != null);
             Contract.Requires(authenticationSessionCache != null);
             Contract.Requires(authenticatedServerRegistry != null);
-            Contract.Requires(invalidAuthenticationSessionNotifier != null);
             
             this.replyAddressLookup = replyAddressLookup;
             this.serialiser = serialiser;
@@ -76,7 +73,6 @@ namespace SystemDot.Messaging.RequestReply.Builders
             this.mainThreadMarshaller = mainThreadMarshaller;
             this.authenticationSessionCache = authenticationSessionCache;
             this.authenticatedServerRegistry = authenticatedServerRegistry;
-            this.invalidAuthenticationSessionNotifier = invalidAuthenticationSessionNotifier;
         }
 
         public IMessageInputter<MessagePayload> Build(RequestRecieveChannelSchema schema, EndpointAddress senderAddress)
@@ -92,7 +88,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
             MessagePipelineBuilder.Build()
                 .With(startPoint)
-                .ToProcessor(new ReceiverAuthenticationSessionVerifier(authenticationSessionCache, authenticatedServerRegistry, invalidAuthenticationSessionNotifier))
+                .ToProcessor(new ReceiverAuthenticationSessionVerifier(authenticationSessionCache, authenticatedServerRegistry))
                 .ToProcessor(new SequenceOriginApplier(messageCache))
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))

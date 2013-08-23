@@ -6,7 +6,7 @@ using SystemDot.Messaging.Packaging.Headers;
 
 namespace SystemDot.Messaging.Authentication
 {
-    public class AuthenticationReceiveHook : IMessageHook<MessagePayload>
+    class AuthenticationReceiveHook : IMessageHook<MessagePayload>
     {
         readonly AuthenticationSessionCache cache;
 

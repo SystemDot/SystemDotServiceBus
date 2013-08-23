@@ -15,7 +15,6 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly ServerAddressRegistry serverAddressRegistry;
         readonly AuthenticationSessionCache authenticationSessionCache;
         readonly AuthenticatedServerRegistry authenticatedServerRegistry;
-        readonly InvalidAuthenticationSessionNotifier invalidAuthenticationSessionNotifier;
 
         SubscriptionRequestReceiveChannelBuilder(
             MessageReceiver messageReceiver, 
@@ -23,8 +22,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             IPublisherRegistry publisherRegistry, 
             ServerAddressRegistry serverAddressRegistry, 
             AuthenticationSessionCache authenticationSessionCache, 
-            AuthenticatedServerRegistry authenticatedServerRegistry, 
-            InvalidAuthenticationSessionNotifier invalidAuthenticationSessionNotifier)
+            AuthenticatedServerRegistry authenticatedServerRegistry)
         {
             Contract.Requires(messageReceiver != null);
             Contract.Requires(acknowledgementSender != null);
@@ -32,7 +30,6 @@ namespace SystemDot.Messaging.Publishing.Builders
             Contract.Requires(serverAddressRegistry != null);
             Contract.Requires(authenticationSessionCache != null);
             Contract.Requires(authenticatedServerRegistry != null);
-            Contract.Requires(invalidAuthenticationSessionNotifier != null);
             
             this.messageReceiver = messageReceiver;
             this.acknowledgementSender = acknowledgementSender;
@@ -40,7 +37,6 @@ namespace SystemDot.Messaging.Publishing.Builders
             this.serverAddressRegistry = serverAddressRegistry;
             this.authenticationSessionCache = authenticationSessionCache;
             this.authenticatedServerRegistry = authenticatedServerRegistry;
-            this.invalidAuthenticationSessionNotifier = invalidAuthenticationSessionNotifier;
         }
 
         public void Build()
@@ -49,7 +45,7 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .With(messageReceiver)
                 .Pump()
                 .ToProcessor(new SubscriptionRequestFilter())
-                .ToProcessor(new ReceiverAuthenticationSessionVerifier(authenticationSessionCache, authenticatedServerRegistry, invalidAuthenticationSessionNotifier))
+                .ToProcessor(new ReceiverAuthenticationSessionVerifier(authenticationSessionCache, authenticatedServerRegistry))
                 .ToProcessor(new MessageLocalAddressReassigner(serverAddressRegistry))
                 .ToProcessor(new MessageAcknowledger(acknowledgementSender))
                 .ToEndPoint(new SubscriptionRequestHandler(publisherRegistry));

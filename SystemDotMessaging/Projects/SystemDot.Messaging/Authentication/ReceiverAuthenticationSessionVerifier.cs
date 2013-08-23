@@ -7,21 +7,13 @@ namespace SystemDot.Messaging.Authentication
     class ReceiverAuthenticationSessionVerifier : AuthenticationSessionVerifier
     {
         readonly AuthenticatedServerRegistry registry;
-        readonly InvalidAuthenticationSessionNotifier notifier;
 
-        public ReceiverAuthenticationSessionVerifier(AuthenticationSessionCache cache, AuthenticatedServerRegistry registry, InvalidAuthenticationSessionNotifier notifier)
+        public ReceiverAuthenticationSessionVerifier(AuthenticationSessionCache cache, AuthenticatedServerRegistry registry)
             : base(cache)
         {
             Contract.Requires(registry != null);
-            Contract.Requires(notifier != null);
 
             this.registry = registry;
-            this.notifier = notifier;
-        }
-
-        protected override void NotifyInvalidAuthenticationSession(MessagePayload toInput)
-        {
-            notifier.Notify(toInput);
         }
 
         protected override bool ServerRequiresAuthentication(MessagePayload toInput)

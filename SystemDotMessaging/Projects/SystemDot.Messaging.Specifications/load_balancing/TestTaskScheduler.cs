@@ -16,8 +16,8 @@ namespace SystemDot.Messaging.Specifications.load_balancing
 
         public void PassTime(TimeSpan toPass)
         {
-            if (toPass == this.delayToRunTaskAfter)
-                this.taskToRun();
+            if (toPass == delayToRunTaskAfter)
+                taskToRun();
         }
     }
 }

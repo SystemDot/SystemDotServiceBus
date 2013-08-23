@@ -12,7 +12,7 @@ namespace SystemDot.Messaging.Authentication
 
         public static ExpiryPlan Never()
         {
-            return new ExpiryPlan(new TimeSpan(0));
+            return new ExpiryPlan(TimeSpan.MaxValue).WithGracePeriodOf(TimeSpan.MaxValue);
         }
 
         public TimeSpan AfterTime { get; set; }

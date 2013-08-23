@@ -34,27 +34,27 @@ namespace SystemDot.Parallelism
             Contract.Requires(delay != null);
             Contract.Requires(toLoop != null);
 
-            if(this.started)
+            if(started)
                 ScheduleTask(new RegisteredAction(delay, toLoop));
             else
-                this.registeredActions.Add(new RegisteredAction(delay, toLoop));
+                registeredActions.Add(new RegisteredAction(delay, toLoop));
         }
 
         public void Start()
         {
-            this.started = true;
-            this.registeredActions.ForEach(ScheduleTask);
+            started = true;
+            registeredActions.ForEach(ScheduleTask);
         }
 
         void ScheduleTask(RegisteredAction task)
         {
-            this.scheduler.ScheduleTask(TimeSpan.FromMilliseconds(1), () => LoopTask(task));
+            scheduler.ScheduleTask(TimeSpan.FromMilliseconds(1), () => LoopTask(task));
         }
 
         void LoopTask(RegisteredAction task)
         {
             task.ToLoop();
-            this.scheduler.ScheduleTask(task.Delay, () => LoopTask(task));
+            scheduler.ScheduleTask(task.Delay, () => LoopTask(task));
         }
     }
 

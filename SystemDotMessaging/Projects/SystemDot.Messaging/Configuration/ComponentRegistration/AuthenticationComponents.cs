@@ -12,7 +12,8 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<AuthenticationSenderBuilder, AuthenticationSenderBuilder>();
             container.RegisterInstance<AuthenticationReceiverBuilder, AuthenticationReceiverBuilder>();
             container.RegisterInstance<AuthenticatedServerRegistry, AuthenticatedServerRegistry>();
-            container.RegisterInstance<InvalidAuthenticationSessionNotifier, InvalidAuthenticationSessionNotifier>();
+            container.RegisterInstance<AuthenticationSessionExpirer, AuthenticationSessionExpirer>();
+            container.RegisterInstance<AuthenticationSessionFactory, AuthenticationSessionFactory>();
         }
     }
 }

@@ -49,7 +49,7 @@ namespace SystemDot.Messaging.Authentication.Builders
 
         void CreateNewSessionForServer(MessageServer server)
         {
-            cache.CacheSessionFor(server, new AuthenticationSession());
+            cache.CacheNewSessionFor(server, ExpiryPlan.Never());
         }
     }
 }

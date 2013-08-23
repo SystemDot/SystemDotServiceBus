@@ -5,23 +5,6 @@ namespace SystemDot.Messaging.Authentication
 {
     public class AuthenticationSession : Equatable<AuthenticationSession>
     {
-        public static AuthenticationSession FromPlan(DateTime currentDate, ExpiryPlan from)
-        {
-            Contract.Requires(@from != null);
-
-            return new AuthenticationSession(GetExpiresOnFromPlan(currentDate, @from), GetGracePeriodEndOnFromPlan(currentDate, @from));
-        }
-
-        static DateTime GetGracePeriodEndOnFromPlan(DateTime currentDate, ExpiryPlan from)
-        {
-            return GetExpiresOnFromPlan(currentDate, @from).Add(@from.GracePeriod);
-        }
-
-        static DateTime GetExpiresOnFromPlan(DateTime currentDate, ExpiryPlan from)
-        {
-            return currentDate.Add(@from.AfterTime);
-        }
-
         public Guid Id { get; set; }
 
         public DateTime ExpiresOn { get; set; }
@@ -29,7 +12,6 @@ namespace SystemDot.Messaging.Authentication
         public DateTime GracePeriodEndOn { get; set; }
 
         public AuthenticationSession()
-            : this(DateTime.MinValue, DateTime.MinValue)
         {
         }
 

@@ -12,12 +12,9 @@ namespace SystemDot.Messaging.Authentication
             : base(cache)
         {
             Contract.Requires(registry != null);
+            Contract.Requires(cache != null);
 
             this.registry = registry;
-        }
-
-        protected override void NotifyInvalidAuthenticationSession(MessagePayload toInput)
-        {
         }
 
         protected override bool ServerRequiresAuthentication(MessagePayload toInput)
