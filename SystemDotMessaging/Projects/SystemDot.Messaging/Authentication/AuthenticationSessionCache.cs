@@ -1,12 +1,14 @@
+using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using SystemDot.Messaging.Addressing;
 
 namespace SystemDot.Messaging.Authentication
 {
     class AuthenticationSessionCache
     {
-        readonly ConcurrentDictionary<MessageServer, AuthenticationSession> sessions;
+        readonly ConcurrentDictionary<Guid, AuthenticationSession> sessions;
         readonly AuthenticationSessionFactory sessionFactory;
         readonly AuthenticationSessionExpirer sessionExpirer;
 
@@ -18,7 +20,7 @@ namespace SystemDot.Messaging.Authentication
             this.sessionFactory = sessionFactory;
             this.sessionExpirer = sessionExpirer;
 
-            sessions = new ConcurrentDictionary<MessageServer, AuthenticationSession>();
+            sessions = new ConcurrentDictionary<Guid, AuthenticationSession>();
 
             Messenger.Register<SessionExpired>(DecacheSession);
         }
@@ -26,18 +28,20 @@ namespace SystemDot.Messaging.Authentication
         void DecacheSession(SessionExpired sessionExpired)
         {
             AuthenticationSession temp;
-            sessions.TryRemove(sessionExpired.Session.Server, out temp);
+            sessions.TryRemove(sessionExpired.Session.Id, out temp);
+        }
+
+        public bool HasCurrentSessionFor(MessageServer forServer)
+        {
+            Contract.Requires(forServer != null);
+            return forServer != MessageServer.None && sessions.Any(s => s.Value.Server == forServer);
         }
 
         public AuthenticationSession GetCurrentSessionFor(MessageServer forServer)
         {
             Contract.Requires(forServer != null);
 
-            AuthenticationSession temp;
-
-            sessions.TryGetValue(forServer, out temp);
-
-            return temp;
+            return sessions.OrderBy(s => s.Value.ExpiresOn).Last(s => s.Value.Server == forServer).Value;
         }
 
         public void CacheNewSessionFor(MessageServer forServer, ExpiryPlan expiryPlan)
@@ -52,20 +56,14 @@ namespace SystemDot.Messaging.Authentication
         {
             Contract.Requires(session != null);
 
-            sessions.TryAdd(session.Server, session);
+            sessions.TryAdd(session.Id, session);
             sessionExpirer.Track(session);
         }
 
-        public bool HasCurrentSessionFor(MessageServer forServer)
-        {
-            Contract.Requires(forServer != null);
-            return forServer != MessageServer.None && sessions.ContainsKey(forServer);
-        }
-
-        public bool Contains(AuthenticationSession toCheck)
+        public bool ContainsSession(AuthenticationSession toCheck)
         {
             Contract.Requires(toCheck != null);
-            return GetCurrentSessionFor(toCheck.Server) == toCheck;
+            return sessions.Any(s => s.Value == toCheck);
         }
     }
 }

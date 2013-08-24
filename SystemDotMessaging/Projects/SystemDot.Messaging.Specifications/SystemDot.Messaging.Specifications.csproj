@@ -66,6 +66,8 @@
     <Compile Include="authentication\when_sending_a_message_to_a_server_after_failing_to_authenticate_to_it.cs" />
     <Compile Include="authentication\when_sending_a_message_with_both_sender_and_receiver_on_the_same_server.cs" />
     <Compile Include="authentication_expiry\SpecificationGroup.cs" />
+    <Compile Include="authentication_expiry\when_receiving_a_message_on_an_expired_session_with_grace_left_whilst_a_new_session_exists_for_that_sender.cs" />
+    <Compile Include="authentication_expiry\when_receiving_two_authentication_requests.cs" />
     <Compile Include="authentication_expiry\when_receiving_a_message_with_an_expired_session_and_the_grace_period_has_run_out.cs" />
     <Compile Include="authentication_expiry\when_replying_to_an_authentication_request_on_a_server_with_session_expiry_and_grace_period.cs" />
     <Compile Include="authentication_for_publishing\SpecificationGroup.cs" />

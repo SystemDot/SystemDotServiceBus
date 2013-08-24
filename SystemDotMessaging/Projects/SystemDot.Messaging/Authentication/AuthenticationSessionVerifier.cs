@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Authentication
         
         bool PayloadHasExpectedSession(MessagePayload toInput)
         {
-            return toInput.HasAuthenticationSession() && cache.Contains(toInput.GetAuthenticationSession());
+            return toInput.HasAuthenticationSession() && cache.ContainsSession(toInput.GetAuthenticationSession());
         }
     }
 }
