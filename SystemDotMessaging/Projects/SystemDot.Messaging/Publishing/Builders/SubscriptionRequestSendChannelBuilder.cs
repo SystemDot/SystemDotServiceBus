@@ -54,7 +54,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             acknowledgementHandler.RegisterCache(cache);
 
             MessagePipelineBuilder.Build()
-                .With(new SubscriptionRequestor(schema.SubscriberAddress, schema.IsDurable))
+                .With(new SubscriptionRequestor(schema.SubscriberAddress, schema.IsDurable, systemTime))
                 .ToProcessor(new MessageAddresser(schema.SubscriberAddress, schema.PublisherAddress))
                 .ToProcessor(new SendChannelMessageCacher(cache))
                 .ToMessageRepeater(cache, systemTime, taskRepeater, EscalatingTimeRepeatStrategy.Default)

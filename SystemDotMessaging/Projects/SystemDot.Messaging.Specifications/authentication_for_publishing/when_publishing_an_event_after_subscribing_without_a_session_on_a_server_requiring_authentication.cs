@@ -14,7 +14,8 @@ namespace SystemDot.Messaging.Specifications.authentication_for_publishing
         Establish context = () =>
         {
             var authenticationRequest = new MessagePayload()
-                .MakeAuthenticationRequest<TestAuthenticationRequest>()
+                .SetAuthenticationRequestChannels()
+                .SetMessageBody(new TestAuthenticationRequest())
                 .SetFromServer(SubscriberServer)
                 .SetToServer(PublisherServer);
 

@@ -71,9 +71,9 @@ namespace SystemDot.Messaging.Storage
         public void AddMessageAndIncrementSequence(MessagePayload message)
         {
             if(FirstItemCachedOn == DateTime.MinValue)
-                AddChange(new SetFirstItemCachedOnChange(this.systemTime.GetCurrentDate()));
+                AddChange(new SetFirstItemCachedOnChange(systemTime.GetCurrentDate()));
 
-            AddChange(new AddMessageAndIncrementSequenceChange(message, this.sequence + 1));
+            AddChange(new AddMessageAndIncrementSequenceChange(message, sequence + 1));
 
             Messenger.Send(new MessageAddedToCache
             {

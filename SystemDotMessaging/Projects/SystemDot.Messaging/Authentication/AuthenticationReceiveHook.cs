@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Authentication
         {
             if (!toInput.HasAuthenticationSession()) return;
 
-            cache.CacheSessionFor(toInput.GetFromAddress().Server, toInput.GetAuthenticationSession());
+            cache.CacheSessionFor(toInput.GetAuthenticationSession());
             toPerformOnOutput(toInput);
         }
     }

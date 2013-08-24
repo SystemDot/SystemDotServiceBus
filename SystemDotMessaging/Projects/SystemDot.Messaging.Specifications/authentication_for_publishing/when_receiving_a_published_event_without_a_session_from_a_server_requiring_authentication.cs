@@ -30,9 +30,11 @@ namespace SystemDot.Messaging.Specifications.authentication_for_publishing
                 .Initialise();
 
             WebRequestor.AddMessages(new MessagePayload()
-                .MakeAuthenticationResponse<TestAuthenticationResponse>()
+                .SetAuthenticationRequestChannels()
+                .SetMessageBody(new TestAuthenticationResponse())
                 .SetFromServer(PublisherServer)
-                .SetToServer(SubscriberServer));
+                .SetToServer(SubscriberServer)
+                .SetAuthenticationSession());
 
             Bus.SendDirect(new TestAuthenticationRequest(), new TestMessageHandler<TestAuthenticationResponse>(), e => { });
             WebRequestor.RequestsMade.Clear();

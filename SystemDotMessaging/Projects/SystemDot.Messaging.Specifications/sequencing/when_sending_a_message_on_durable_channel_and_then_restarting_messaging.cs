@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Specifications.publishing;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using SystemDot.Serialisation;
 using SystemDot.Specifications;
 using SystemDot.Storage.Changes;
@@ -16,19 +15,18 @@ namespace SystemDot.Messaging.Specifications.sequencing
         const string ChannelName = "Test";
         const string ReceiverName = "TestReceiver";
 
-        
         static DateTime originDate;
         static IChangeStore changeStore;
         
         Establish context = () =>
         {
             changeStore = new InMemoryChangeStore(new JsonSerialiser());
-            ConfigureAndRegister<IChangeStore>(changeStore);
-            
-            originDate = DateTime.Now.AddHours(-1);
-            ConfigureAndRegister<ISystemTime>(new TestSystemTime(originDate));
+            ConfigureAndRegister(changeStore);
 
-            Messaging.Configuration.Configure.Messaging()
+            SystemTime.AdvanceTime(TimeSpan.FromHours(-1));
+            originDate = SystemTime.GetCurrentDate();
+
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForPointToPointSendingTo(ReceiverName)
                     .WithDurability()
@@ -39,10 +37,10 @@ namespace SystemDot.Messaging.Specifications.sequencing
             Reset();
             ReInitialise();
 
-            ConfigureAndRegister<IChangeStore>(changeStore);
-            ConfigureAndRegister<ISystemTime>(new TestSystemTime(DateTime.Now));
+            ConfigureAndRegister(changeStore);
+            SystemTime.AdvanceTime(TimeSpan.FromHours(1));
 
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForPointToPointSendingTo(ReceiverName)
                     .WithDurability()

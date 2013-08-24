@@ -27,9 +27,7 @@ namespace SystemDot.Messaging.Specifications.point_to_point
             messagesLoadedToCacheEvents = new List<MessageLoadedToCache>();
             
             changeStore = new InMemoryChangeStore(new JsonSerialiser());
-
-            ConfigureAndRegister<IChangeStore>(changeStore);
-            ConfigureAndRegister<ITaskRepeater>(new TestTaskRepeater());
+            ConfigureAndRegister(changeStore);
 
             Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
@@ -43,9 +41,8 @@ namespace SystemDot.Messaging.Specifications.point_to_point
             Reset();
             ReInitialise();
 
-            ConfigureAndRegister<IChangeStore>(changeStore);
-            ConfigureAndRegister<ITaskRepeater>(new TestTaskRepeater());
-            ConfigureAndRegister<ISystemTime>(new TestSystemTime(DateTime.Now.AddDays(1)));
+            ConfigureAndRegister(changeStore);
+            SystemTime.AdvanceTime(TimeSpan.FromDays(1));
 
             Messenger.Register<MessageLoadedToCache>(e => messagesLoadedToCacheEvents.Add(e));
         };

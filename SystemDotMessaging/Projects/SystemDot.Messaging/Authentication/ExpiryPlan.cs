@@ -7,21 +7,21 @@ namespace SystemDot.Messaging.Authentication
     {
         public static ExpiryPlan ExpiresAfter(TimeSpan time)
         {
+            Contract.Requires(time != null);
             return new ExpiryPlan(time);
         }
 
         public static ExpiryPlan Never()
         {
-            return new ExpiryPlan(TimeSpan.MaxValue).WithGracePeriodOf(TimeSpan.MaxValue);
+            return new ExpiryPlan(TimeSpan.MinValue).WithGracePeriodOf(TimeSpan.MinValue);
         }
 
-        public TimeSpan AfterTime { get; set; }
+        public TimeSpan AfterTime { get; private set; }
 
-        public TimeSpan GracePeriod { get; set; }
+        public TimeSpan GracePeriod { get; private set; }
 
         ExpiryPlan(TimeSpan afterTime)
         {
-            Contract.Requires(afterTime != null);
             AfterTime = afterTime;
         }
 

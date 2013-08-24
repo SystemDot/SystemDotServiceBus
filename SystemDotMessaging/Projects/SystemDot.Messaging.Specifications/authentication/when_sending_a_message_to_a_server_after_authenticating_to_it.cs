@@ -24,11 +24,11 @@ namespace SystemDot.Messaging.Specifications.authentication
                 .Initialise();
 
             authenticationResponse = new MessagePayload()
-                .MakeAuthenticationRequest<TestAuthenticationResponse>()
+                .SetAuthenticationRequestChannels()
+                .SetMessageBody(new TestAuthenticationRequest())
                 .SetFromServer(ReceiverServerName)
-                .SetToServer(SenderServer);
-
-            authenticationResponse.SetAuthenticationSession(new AuthenticationSession());
+                .SetToServer(SenderServer)
+                .SetAuthenticationSession();
 
             WebRequestor.AddMessages(authenticationResponse);
 

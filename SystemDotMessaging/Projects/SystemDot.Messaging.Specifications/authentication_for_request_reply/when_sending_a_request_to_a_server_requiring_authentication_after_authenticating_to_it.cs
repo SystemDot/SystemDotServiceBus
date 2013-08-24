@@ -25,9 +25,11 @@ namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
                 .Initialise();
 
             authenticationResponse = new MessagePayload()
-                .MakeAuthenticationResponse<TestAuthenticationResponse>()
+                .SetAuthenticationRequestChannels()
+                .SetMessageBody(new TestAuthenticationResponse())
                 .SetFromServer(ReceiverServer)
-                .SetToServer(SenderServer);
+                .SetToServer(SenderServer)
+                .SetAuthenticationSession();
 
             WebRequestor.AddMessages(authenticationResponse);
 

@@ -21,7 +21,8 @@ namespace SystemDot.Messaging.Specifications.authentication
             handler = new TestReplyMessageHandler<TestAuthenticationRequest, TestAuthenticationResponse>();
 
             payload = new MessagePayload()
-                .MakeAuthenticationRequest<TestAuthenticationRequest>()
+                .SetAuthenticationRequestChannels()
+                .SetMessageBody(new TestAuthenticationRequest())
                 .SetFromServer("SenderServer")
                 .SetToServer(ReceiverServer);
 

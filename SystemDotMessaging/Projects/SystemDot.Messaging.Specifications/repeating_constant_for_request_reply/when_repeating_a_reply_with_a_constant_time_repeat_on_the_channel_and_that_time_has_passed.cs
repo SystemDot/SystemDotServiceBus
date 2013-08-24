@@ -18,15 +18,9 @@ namespace SystemDot.Messaging.Specifications.repeating_constant_for_request_repl
         const int Request = 1;
         const int Reply = 2;
         
-        
-        static TestSystemTime systemTime;
-
         Establish context = () =>
         {
-            systemTime = new TestSystemTime(DateTime.Now);
-            ConfigureAndRegister<ISystemTime>(systemTime);
-
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForRequestReplyReceiving()
@@ -42,7 +36,7 @@ namespace SystemDot.Messaging.Specifications.repeating_constant_for_request_repl
 
             Bus.Reply(Reply);
 
-            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(10));
+            SystemTime.AdvanceTime(TimeSpan.FromSeconds(10));
         };
 
         Because of = () => The<ITaskRepeater>().Start();

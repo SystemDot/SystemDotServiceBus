@@ -1,11 +1,13 @@
 using System;
-using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Addressing;
 
 namespace SystemDot.Messaging.Authentication
 {
     public class AuthenticationSession : Equatable<AuthenticationSession>
     {
         public Guid Id { get; set; }
+
+        public MessageServer Server { get; set; }
 
         public DateTime ExpiresOn { get; set; }
 
@@ -15,11 +17,17 @@ namespace SystemDot.Messaging.Authentication
         {
         }
 
-        public AuthenticationSession(DateTime expiresOn, DateTime gracePeriodEndOn)
+        public AuthenticationSession(MessageServer server, DateTime expiresOn, DateTime gracePeriodEndOn)
         {
             Id = Guid.NewGuid();
+            Server = server;
             ExpiresOn = expiresOn;
             GracePeriodEndOn = gracePeriodEndOn;
+        }
+
+        public bool NeverExpires()
+        {
+            return GracePeriodEndOn == DateTime.MinValue;
         }
 
         public override bool Equals(AuthenticationSession other)

@@ -1,13 +1,13 @@
-using System.Xml;
+using System;
 using SystemDot.Configuration;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Pipelines;
-using SystemDot.Messaging.Specifications.running_handlers_on_main_thread_for_request_reply;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
+using SystemDot.Specifications;
 using SystemDot.ThreadMashalling;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -19,6 +19,7 @@ namespace SystemDot.Messaging.Specifications
         protected static TestTaskRepeater TaskRepeater;
         protected static TestServerAddressConfigurationReader ServerAddressConfiguration;
         protected static TestMainThreadMarshaller MainThreadMarshaller;
+        protected static TestSystemTime SystemTime;
 
         Establish context = () =>
         {
@@ -34,6 +35,11 @@ namespace SystemDot.Messaging.Specifications
 
         static void RegisterComponents()
         {
+            SystemTime = new TestSystemTime(DateTime.Now);
+            ConfigureAndRegister<ISystemTime>(SystemTime);
+
+            ConfigureAndRegister<ITaskScheduler>(new TestTaskScheduler(SystemTime));
+
             MainThreadMarshaller = new TestMainThreadMarshaller();
             ConfigureAndRegister<IMainThreadMarshaller>(MainThreadMarshaller);
 
@@ -42,7 +48,7 @@ namespace SystemDot.Messaging.Specifications
             TaskRepeater = new TestTaskRepeater();
             ConfigureAndRegister<ITaskRepeater>(TaskRepeater);
 
-            ConfigureAndRegister<MessageHandlerRouter>(new MessageHandlerRouter());
+            ConfigureAndRegister(new MessageHandlerRouter());
 
             ServerAddressConfiguration = new TestServerAddressConfigurationReader();
             ConfigureAndRegister<IConfigurationReader>(ServerAddressConfiguration);

@@ -86,13 +86,14 @@
     <Compile Include="messenger\when_sending_a_message_with_a_handler_for_another_message_type_registered.cs" />
     <Compile Include="messenger\when_sending_a_message_with_a_handler_registered.cs" />
     <Compile Include="messenger\when_sending_a_message_with_two_handlers_registered.cs" />
-    <Compile Include="parallelism\when_starting_task_repeating_with_a_task_registered.cs" />
+    <Compile Include="parallelism\when_starting_task_repeating_with_a_task_registered_and_the_time_delay_has_passed_twice.cs" />
     <Compile Include="parallelism\when_starting_task_repeating_with_two_tasks_registered.cs" />
     <Compile Include="parallelism\ZeroTimespanPassThroughTaskScheduler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="serialisation\when_serialising_an_object_to_json.cs" />
     <Compile Include="StreamExtensions.cs" />
     <Compile Include="TestSystemTime.cs" />
+    <Compile Include="TestSystemTimeAdvanced.cs" />
     <Compile Include="TestTaskScheduler.cs" />
   </ItemGroup>
   <ItemGroup>

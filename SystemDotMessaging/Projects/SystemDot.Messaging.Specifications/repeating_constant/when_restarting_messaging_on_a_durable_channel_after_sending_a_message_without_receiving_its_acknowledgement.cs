@@ -22,9 +22,8 @@ namespace SystemDot.Messaging.Specifications.repeating_constant
         {
             changeStore = new InMemoryChangeStore(new JsonSerialiser());
 
-            ConfigureAndRegister<IChangeStore>(changeStore);
-            ConfigureAndRegister<ITaskRepeater>(new TestTaskRepeater());
-
+            ConfigureAndRegister(changeStore);
+            
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
@@ -38,9 +37,8 @@ namespace SystemDot.Messaging.Specifications.repeating_constant
             Reset();
             ReInitialise();
 
-            ConfigureAndRegister<IChangeStore>(changeStore);
-            ConfigureAndRegister<ITaskRepeater>(new TestTaskRepeater());
-            ConfigureAndRegister<ISystemTime>(new TestSystemTime(DateTime.Now.AddDays(1)));
+            ConfigureAndRegister(changeStore);
+            SystemTime.AdvanceTime(TimeSpan.FromDays(1));
         };
 
         Because of = () =>

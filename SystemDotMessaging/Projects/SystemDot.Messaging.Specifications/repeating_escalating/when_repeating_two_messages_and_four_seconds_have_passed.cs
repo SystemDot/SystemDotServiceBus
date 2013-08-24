@@ -1,6 +1,5 @@
 using System;
 using SystemDot.Parallelism;
-using SystemDot.Specifications;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.repeating_escalating
@@ -12,15 +11,9 @@ namespace SystemDot.Messaging.Specifications.repeating_escalating
         const string ChannelName = "Test";
         const string SenderChannelName = "TestSender";
 
-        
-        static TestSystemTime systemTime;
-
         Establish context = () =>
         {
-            systemTime = new TestSystemTime(DateTime.Now);
-            ConfigureAndRegister<ISystemTime>(systemTime);
-
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForPointToPointSendingTo(SenderChannelName)
@@ -29,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.repeating_escalating
             Bus.Send(1);
             Bus.Send(2);
 
-            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
+            SystemTime.AdvanceTime(TimeSpan.FromSeconds(4));
         };
 
         Because of = () => The<ITaskRepeater>().Start();

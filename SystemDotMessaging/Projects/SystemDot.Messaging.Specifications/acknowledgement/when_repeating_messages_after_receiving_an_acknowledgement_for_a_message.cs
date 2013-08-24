@@ -4,9 +4,7 @@ using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using SystemDot.Parallelism;
-using SystemDot.Specifications;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.acknowledgement
@@ -16,10 +14,7 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
     {
         Establish context = () =>
         {
-            var systemTime = new TestSystemTime(DateTime.Now);
-            ConfigureAndRegister<ISystemTime>(systemTime);
-
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("SenderAddress").ForPointToPointSendingTo("ReceiverAddress")
                 .Initialise();
@@ -32,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
 
             GetServer().ReceiveMessage(acknowledgement);
 
-            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
+            SystemTime.AdvanceTime(TimeSpan.FromSeconds(4));
             GetServer().SentMessages.Clear();
         };
 

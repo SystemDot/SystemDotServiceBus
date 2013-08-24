@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
-using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Authentication
 {
@@ -14,9 +12,21 @@ namespace SystemDot.Messaging.Authentication
 
         public AuthenticationSessionCache(AuthenticationSessionFactory sessionFactory, AuthenticationSessionExpirer sessionExpirer)
         {
+            Contract.Requires(sessionFactory != null);
+            Contract.Requires(sessionExpirer != null);
+
             this.sessionFactory = sessionFactory;
             this.sessionExpirer = sessionExpirer;
+
             sessions = new ConcurrentDictionary<MessageServer, AuthenticationSession>();
+
+            Messenger.Register<SessionExpired>(DecacheSession);
+        }
+
+        void DecacheSession(SessionExpired sessionExpired)
+        {
+            AuthenticationSession temp;
+            sessions.TryRemove(sessionExpired.Session.Server, out temp);
         }
 
         public AuthenticationSession GetCurrentSessionFor(MessageServer forServer)
@@ -35,46 +45,27 @@ namespace SystemDot.Messaging.Authentication
             Contract.Requires(forServer != null);
             Contract.Requires(expiryPlan != null);
 
-            CacheSessionFor(forServer, sessionFactory.CreateFromPlan(expiryPlan));
+            CacheSessionFor(sessionFactory.CreateFromPlan(forServer, expiryPlan));
         }
 
-        public void CacheSessionFor(MessageServer forServer, AuthenticationSession session)
+        public void CacheSessionFor(AuthenticationSession session)
         {
-            Contract.Requires(forServer != null);
             Contract.Requires(session != null);
 
-            sessions.TryAdd(forServer, session);
-            sessionExpirer.Track(this, session);
+            sessions.TryAdd(session.Server, session);
+            sessionExpirer.Track(session);
         }
 
         public bool HasCurrentSessionFor(MessageServer forServer)
         {
             Contract.Requires(forServer != null);
-            
             return forServer != MessageServer.None && sessions.ContainsKey(forServer);
         }
 
-        public void DecacheSession(AuthenticationSession toDecache)
+        public bool Contains(AuthenticationSession toCheck)
         {
-            sessions.Values.Remove(toDecache);
-        }
-    }
-
-    class AuthenticationSessionExpirer
-    {
-        readonly ISystemTime systemTime;
-        readonly ITaskScheduler taskScheduler;
-
-        public AuthenticationSessionExpirer(ISystemTime systemTime, ITaskScheduler taskScheduler)
-        {
-            this.systemTime = systemTime;
-            this.taskScheduler = taskScheduler;
-        }
-
-        public void Track(AuthenticationSessionCache cache, AuthenticationSession toTrack)
-        {
-            if (toTrack.GracePeriodEndOn == DateTime.MaxValue) return;
-            taskScheduler.ScheduleTask(toTrack.GracePeriodEndOn.Subtract(systemTime.GetCurrentDate()), () => cache.DecacheSession(toTrack));
+            Contract.Requires(toCheck != null);
+            return GetCurrentSessionFor(toCheck.Server) == toCheck;
         }
     }
 }

@@ -11,10 +11,7 @@ namespace SystemDot.Messaging.Specifications.expiry
     {
         Establish context = () =>
         {
-            var systemTime = new TestSystemTime(DateTime.Now);
-            ConfigureAndRegister<ISystemTime>(systemTime);
-
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("ReceiverAddress")
                 .ForPointToPointSendingTo("SenderAddress")
@@ -23,7 +20,7 @@ namespace SystemDot.Messaging.Specifications.expiry
 
             Bus.Send(1);
 
-            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
+            SystemTime.AdvanceTime(TimeSpan.FromSeconds(4));
             GetServer().SentMessages.Clear();
         };
 

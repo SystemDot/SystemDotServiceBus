@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
@@ -8,8 +5,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.authentication
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_a_message_with_the_expected_session_from_another_server
-        : WithHttpServerConfigurationSubject
+    public class when_receiving_a_message_with_an_unauthenticated_server : WithHttpServerConfigurationSubject
     {
         const string ReceiverServer = "ReceiverServer";
         const string SenderServer = "SenderServer";
@@ -23,11 +19,6 @@ namespace SystemDot.Messaging.Specifications.authentication
         {
             handler = new TestMessageHandler<long>();
 
-            var authenticationRequestPayload = new MessagePayload()
-                .MakeAuthenticationRequest<TestAuthenticationRequest>()
-                .SetFromServer(SenderServer)
-                .SetToServer(ReceiverServer);
-
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                     .AsAServer(ReceiverServer)
@@ -40,7 +31,11 @@ namespace SystemDot.Messaging.Specifications.authentication
                     .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
 
-            AuthenticationSession session = SendMessagesToServer(authenticationRequestPayload).Single().GetAuthenticationSession();
+            SendMessagesToServer(new MessagePayload()
+                .SetAuthenticationRequestChannels()
+                .SetMessageBody(new TestAuthenticationRequest())
+                .SetFromServer(SenderServer)
+                .SetToServer(ReceiverServer));
 
             payload = new MessagePayload()
                 .SetMessageBody(Message)
@@ -51,7 +46,7 @@ namespace SystemDot.Messaging.Specifications.authentication
                 .SetChannelType(PersistenceUseType.PointToPointSend)
                 .Sequenced();
 
-            payload.SetAuthenticationSession(session);
+            payload.SetAuthenticationSession();
         };
 
         Because of = () => SendMessagesToServer(payload);

@@ -1,7 +1,5 @@
 using System;
-using SystemDot.Parallelism;
 using SystemDot.Serialisation;
-using SystemDot.Specifications;
 using SystemDot.Storage.Changes;
 using Machine.Specifications;
 
@@ -21,10 +19,9 @@ namespace SystemDot.Messaging.Specifications.repeating_escalating
         {
             changeStore = new InMemoryChangeStore(new JsonSerialiser());
 
-            ConfigureAndRegister<IChangeStore>(changeStore);
-            ConfigureAndRegister<ITaskRepeater>(new TestTaskRepeater());
-
-            Messaging.Configuration.Configure.Messaging()
+            ConfigureAndRegister(changeStore);
+            
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForPointToPointSendingTo(ReceiverAddress)
@@ -36,9 +33,8 @@ namespace SystemDot.Messaging.Specifications.repeating_escalating
             Reset();
             ReInitialise();
 
-            ConfigureAndRegister<IChangeStore>(changeStore);
-            ConfigureAndRegister<ITaskRepeater>(new TestTaskRepeater());
-            ConfigureAndRegister<ISystemTime>(new TestSystemTime(DateTime.Now.AddDays(1)));
+            ConfigureAndRegister(changeStore);
+            SystemTime.AdvanceTime(TimeSpan.FromDays(1));
         };
 
         Because of = () =>
@@ -49,7 +45,6 @@ namespace SystemDot.Messaging.Specifications.repeating_escalating
                 .WithDurability()
                 .Initialise();
 
-        It should_send_the_message_again = () =>
-            GetServer().SentMessages.ShouldContain(m => m.DeserialiseTo<Int64>() == Message);
+        It should_send_the_message_again = () => GetServer().SentMessages.ShouldContain(m => m.DeserialiseTo<Int64>() == Message);
     }
 }

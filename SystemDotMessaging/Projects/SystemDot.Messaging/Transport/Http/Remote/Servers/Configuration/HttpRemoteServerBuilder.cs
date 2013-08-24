@@ -45,7 +45,7 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Servers.Configuration
 
         HttpMessagingServer BuildMessagingServerHandler()
         {
-            var messagePayloadQueue = new MessagePayloadQueue(this.systemTime.SpanFromSeconds(30));
+            var messagePayloadQueue = new MessagePayloadQueue(systemTime.SpanFromSeconds(30));
 
             return new HttpMessagingServer(
                 this.serialiser,

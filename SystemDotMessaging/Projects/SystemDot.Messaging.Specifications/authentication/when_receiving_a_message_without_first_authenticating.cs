@@ -1,29 +1,31 @@
 using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.authentication
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_a_message_without_first_authenticating
-        : WithHttpServerConfigurationSubject
+    public class when_receiving_a_message_without_first_authenticating : WithHttpServerConfigurationSubject
     {
         const string ReceiverServer = "ReceiverServer";
         const string ReceiverChannel = "ReceiverChannel";
 
         static MessagePayload payload;
+        static TestMessageHandler<long> handler;
 
         Establish context = () =>
         {
+            handler = new TestMessageHandler<long>();
+
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsAServer(ReceiverServer)
-                .RequiresAuthentication()
-                .AcceptsRequest<TestAuthenticationRequest>()
-                .AuthenticatesOnReply<TestAuthenticationResponse>()
+                    .AsAServer(ReceiverServer)
+                    .RequiresAuthentication()
+                        .AcceptsRequest<TestAuthenticationRequest>()
+                        .AuthenticatesOnReply<TestAuthenticationResponse>()
                 .OpenChannel(ReceiverChannel)
-                .ForPointToPointReceiving()
+                    .ForPointToPointReceiving()
+                .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
 
             payload = new MessagePayload()
@@ -37,11 +39,7 @@ namespace SystemDot.Messaging.Specifications.authentication
         };
 
         Because of = () => SendMessagesToServer(payload);
-        
-        It should_send_back_an_authentication_required_notification_to_the_sender = () => 
-            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetToAddress().ShouldEqual(payload.GetFromAddress());
 
-        It should_send_back_an_authentication_required_notification_from_the_receiver = () =>
-            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetFromAddress().ShouldEqual(payload.GetToAddress());
+        It should_not_handle_the_message = () => handler.HandledMessages.Count.ShouldEqual(0);
     }
 }

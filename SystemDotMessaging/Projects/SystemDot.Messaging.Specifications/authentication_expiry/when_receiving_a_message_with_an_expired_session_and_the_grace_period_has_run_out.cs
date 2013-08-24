@@ -4,7 +4,6 @@ using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.authentication;
 using SystemDot.Messaging.Storage;
-using SystemDot.Specifications;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.authentication_expiry
@@ -24,12 +23,10 @@ namespace SystemDot.Messaging.Specifications.authentication_expiry
         Establish context = () =>
         {
             handler = new TestMessageHandler<long>();
-
-            var time = new TestSystemTime(DateTime.Now);
-            ConfigureAndRegister<ISystemTime>(time);
-
+            
             var authenticationRequestPayload = new MessagePayload()
-                .MakeAuthenticationRequest<TestAuthenticationRequest>()
+                .SetAuthenticationRequestChannels()
+                .SetMessageBody(new TestAuthenticationRequest())
                 .SetFromServer(SenderServer)
                 .SetToServer(ReceiverServer);
 
@@ -59,9 +56,9 @@ namespace SystemDot.Messaging.Specifications.authentication_expiry
 
             payload.SetAuthenticationSession(session);
 
-            time.AddToCurrentDate(TimeSpan.FromMinutes(ExpiryInMinutes));
-            time.AddToCurrentDate(TimeSpan.FromMinutes(GracePeriodInMinutes));
-            time.AddToCurrentDate(TimeSpan.FromTicks(1));
+            SystemTime.AdvanceTime(TimeSpan.FromMinutes(ExpiryInMinutes));
+            SystemTime.AdvanceTime(TimeSpan.FromMinutes(GracePeriodInMinutes));
+            SystemTime.AdvanceTime(TimeSpan.FromTicks(1));
         };
 
         Because of = () => SendMessagesToServer(payload);

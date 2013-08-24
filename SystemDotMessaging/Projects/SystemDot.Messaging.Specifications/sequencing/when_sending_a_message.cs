@@ -2,8 +2,6 @@ using System;
 using System.Linq;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Specifications.publishing;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
-using SystemDot.Specifications;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.sequencing
@@ -14,17 +12,14 @@ namespace SystemDot.Messaging.Specifications.sequencing
         const string ChannelName = "Test";
         const string ReceiverName = "TestReceiver";
         
-        
         static int message;
         static DateTime originDate;
 
         Establish context = () =>
         {
-            originDate = DateTime.Now;
+            originDate = SystemTime.GetCurrentDate();
 
-            ConfigureAndRegister<ISystemTime>(new TestSystemTime(originDate));
-
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForPointToPointSendingTo(ReceiverName)
                 .Initialise();

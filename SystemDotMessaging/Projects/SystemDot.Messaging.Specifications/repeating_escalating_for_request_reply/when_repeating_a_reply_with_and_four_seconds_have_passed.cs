@@ -3,7 +3,6 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.publishing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Parallelism;
-using SystemDot.Specifications;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.repeating_escalating_for_request_reply
@@ -16,16 +15,10 @@ namespace SystemDot.Messaging.Specifications.repeating_escalating_for_request_re
         const string SenderAddress = "TestSender";
         const int Request = 1;
         const int Reply = 2;
-
         
-        static TestSystemTime systemTime;
-
         Establish context = () =>
         {
-            systemTime = new TestSystemTime(DateTime.Now);
-            ConfigureAndRegister<ISystemTime>(systemTime);
-
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                  .UsingInProcessTransport()
                  .OpenChannel(ChannelName)
                  .ForRequestReplyReceiving()
@@ -40,7 +33,7 @@ namespace SystemDot.Messaging.Specifications.repeating_escalating_for_request_re
 
             Bus.Reply(Reply);
 
-            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
+            SystemTime.AdvanceTime(TimeSpan.FromSeconds(4));
         };
 
         Because of = () => The<ITaskRepeater>().Start();

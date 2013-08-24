@@ -1,6 +1,5 @@
 using System;
 using SystemDot.Parallelism;
-using SystemDot.Specifications;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.repeating_escalating_over_http
@@ -14,9 +13,6 @@ namespace SystemDot.Messaging.Specifications.repeating_escalating_over_http
         
         Establish context = () =>
         {
-            var systemTime = new TestSystemTime(DateTime.Now);
-            ConfigureAndRegister<ISystemTime>(systemTime);
-
             Configuration.Configure.Messaging()
                 .UsingHttpTransport().AsAServer(ServerInstance)
                 .OpenChannel(ChannelName)
@@ -25,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.repeating_escalating_over_http
 
             Bus.Send(1);
 
-            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
+            SystemTime.AdvanceTime(TimeSpan.FromSeconds(4));
         };
 
         Because of = () => The<ITaskRepeater>().Start();

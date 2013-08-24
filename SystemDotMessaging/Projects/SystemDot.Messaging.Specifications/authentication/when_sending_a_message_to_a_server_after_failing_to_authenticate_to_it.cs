@@ -23,7 +23,8 @@ namespace SystemDot.Messaging.Specifications.authentication
                 .Initialise();
 
             authenticationResponse = new MessagePayload()
-                .MakeAuthenticationRequest<FailingAuthenticationResponse>()
+                .SetAuthenticationRequestChannels()
+                .SetMessageBody(new FailingAuthenticationResponse())
                 .SetFromServer(ReceiverServerName)
                 .SetToServer(SenderServer);
             

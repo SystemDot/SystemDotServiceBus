@@ -3,15 +3,15 @@ using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Configuration.Authentication;
 using SystemDot.Messaging.Direct;
 using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Packaging.Headers;
 
 namespace SystemDot.Messaging.Specifications.authentication
 {
     public static class MessagePayloadExtensions
     {
-        public static MessagePayload MakeAuthenticationRequest<TRequest>(this MessagePayload payload)
-            where TRequest : new()
+        public static MessagePayload SetAuthenticationRequestChannels(this MessagePayload payload)
         {
-            payload.SetMessageBody(new TRequest())
+            payload
                 .SetFromChannel(ChannelNames.AuthenticationChannelName)
                 .SetToChannel(ChannelNames.AuthenticationChannelName);
 
@@ -20,11 +20,9 @@ namespace SystemDot.Messaging.Specifications.authentication
             return payload;
         }
 
-        public static MessagePayload MakeAuthenticationResponse<TResponse>(this MessagePayload payload)
-            where TResponse : new()
+        public static MessagePayload SetAuthenticationSession(this MessagePayload payload)
         {
-            payload.MakeAuthenticationRequest<TResponse>();
-            payload.SetAuthenticationSession(new AuthenticationSession());
+            payload.SetAuthenticationSession(new AuthenticationSession(payload.GetFromAddress().Server, DateTime.MinValue, DateTime.MinValue));
 
             return payload;
         }

@@ -19,8 +19,8 @@ namespace SystemDot.Messaging.Sequencing
         {
             Logger.Debug("Recording message sequence origin on payload {0}", toInput.Id);
 
-            toInput.SetFirstSequence(this.messageCache.GetFirstSequenceInCache());
-            toInput.SetSequenceOriginSetOn(this.messageCache.FirstItemCachedOn);
+            toInput.SetFirstSequence(messageCache.GetFirstSequenceInCache());
+            toInput.SetSequenceOriginSetOn(messageCache.FirstItemCachedOn);
             OnMessageProcessed(toInput);
         }
     }

@@ -1,6 +1,5 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.Packaging.Headers;
 
 namespace SystemDot.Messaging.Authentication
 {
@@ -26,8 +25,7 @@ namespace SystemDot.Messaging.Authentication
         
         bool PayloadHasExpectedSession(MessagePayload toInput)
         {
-            return toInput.HasAuthenticationSession() 
-                && cache.GetCurrentSessionFor(toInput.GetFromAddress().Server) == toInput.GetAuthenticationSession();
+            return toInput.HasAuthenticationSession() && cache.Contains(toInput.GetAuthenticationSession());
         }
     }
 }

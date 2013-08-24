@@ -1,31 +1,60 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using SystemDot.Parallelism;
 
 namespace SystemDot.Specifications
 {
     public class TestTaskScheduler : ITaskScheduler
     {
-        readonly int schedulesPermitted;
         readonly TestSystemTime systemTime;
+        readonly List<Task> tasks;
         int schedulesExecuted;
 
-        public TestTaskScheduler(int schedulesPermitted, TestSystemTime systemTime)
+        public int SchedulesPermitted { get; set; }
+
+        public TestTaskScheduler(TestSystemTime systemTime)
         {
-            this.schedulesPermitted = schedulesPermitted;
             this.systemTime = systemTime;
+            tasks = new List<Task>();
+
+            Messenger.Register<TestSystemTimeAdvanced>(_ => RunAwaitingTasks());
         }
 
-        public TimeSpan LastDelay { get; private set;  }
+        void RunAwaitingTasks()
+        {
+            tasks
+                .Where(t => t.ExecuteAt <= systemTime.GetCurrentDate())
+                .ToList()
+                .ForEach(t => t.Run());
+
+            tasks
+                .RemoveAll(t => t.ExecuteAt <= systemTime.GetCurrentDate());
+        }
 
         public void ScheduleTask(TimeSpan delay, Action task)
         {
-            if (++schedulesExecuted > schedulesPermitted)
-                return;
+            if (SchedulesPermitted > 0 && ++schedulesExecuted > SchedulesPermitted) return;
 
-            LastDelay = delay;
-            //systemTime.AddToCurrentDate(delay);
-            task.Invoke();
+            tasks.Add(new Task(task, systemTime.GetCurrentDate().Add(delay)));
+        }
 
+        class Task
+        {
+            readonly Action toRun;
+
+            public DateTime ExecuteAt { get; private set; }
+
+            public Task(Action toRun, DateTime executeAt)
+            {
+                this.toRun = toRun;
+                ExecuteAt = executeAt;
+            }
+
+            public void Run()
+            {
+                toRun.Invoke();
+            }
         }
     }
 }

@@ -12,16 +12,11 @@ namespace SystemDot.Messaging.Specifications.repeating_escalating_for_request_re
         const string ChannelName = "Test";
         const string SenderChannelName = "TestSender";
 
-        
         static int message;
-        static TestSystemTime systemTime;
 
         Establish context = () =>
         {
-            systemTime = new TestSystemTime(DateTime.Now);
-            ConfigureAndRegister<ISystemTime>(systemTime);
-
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForRequestReplySendingTo(SenderChannelName)
@@ -31,15 +26,15 @@ namespace SystemDot.Messaging.Specifications.repeating_escalating_for_request_re
 
             Bus.Send(message);
 
-            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
+            SystemTime.AdvanceTime(TimeSpan.FromSeconds(4));
 
             The<ITaskRepeater>().Start();
 
-            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(8));
+            SystemTime.AdvanceTime(TimeSpan.FromSeconds(8));
 
             The<ITaskRepeater>().Start();
 
-            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(16).Subtract(TimeSpan.FromTicks(1)));
+            SystemTime.AdvanceTime(TimeSpan.FromSeconds(16).Subtract(TimeSpan.FromTicks(1)));
         };
 
         Because of = () => The<ITaskRepeater>().Start();

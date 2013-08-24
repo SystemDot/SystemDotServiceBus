@@ -5,19 +5,14 @@ namespace SystemDot.Specifications
     public class TestSystemTime : ISystemTime
     {
         DateTime currentDate;
-        readonly TimeSpan fromSecondsSpanOverride;
+
+        public TimeSpan FromSecondsSpanOverride { get; set; }
 
         public TimeSpan LastTimeSpanRequested { get; set; }
-        
-        public TestSystemTime(DateTime currentDate)
-            : this(currentDate, TimeSpan.MinValue)
-        {
-        }
 
-        public TestSystemTime(DateTime currentDate, TimeSpan fromSecondsSpanOverride)
+        public TestSystemTime(DateTime currentDate)
         {
             this.currentDate = currentDate;
-            this.fromSecondsSpanOverride = fromSecondsSpanOverride;
         }
 
         public DateTime GetCurrentDate()
@@ -25,18 +20,19 @@ namespace SystemDot.Specifications
             return this.currentDate;
         }
 
-        public void AddToCurrentDate(TimeSpan toAdd)
+        public void AdvanceTime(TimeSpan toAdd)
         {
             currentDate = currentDate.Add(toAdd);
+            Messenger.Send(new TestSystemTimeAdvanced());
         }
 
         public TimeSpan SpanFromSeconds(int seconds)
         {
             LastTimeSpanRequested = TimeSpan.FromSeconds(seconds);
 
-            return fromSecondsSpanOverride == TimeSpan.MinValue
+            return FromSecondsSpanOverride == TimeSpan.MinValue
                 ? LastTimeSpanRequested
-                : fromSecondsSpanOverride;
+                : FromSecondsSpanOverride;
         }
     }
 }

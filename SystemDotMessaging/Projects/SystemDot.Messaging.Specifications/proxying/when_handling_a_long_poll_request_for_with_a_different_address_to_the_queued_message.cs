@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Transport.Http.Remote.Clients;
-using SystemDot.Specifications;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.proxying
@@ -18,19 +17,19 @@ namespace SystemDot.Messaging.Specifications.proxying
 
         Establish context = () =>
         {
-            ConfigureAndRegister<ISystemTime>(new TestSystemTime(DateTime.Now, TimeSpan.FromSeconds(0)));
-
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsAProxyFor("RemoteServerName")
                 .Initialise();
-
+            
             sentMessageInQueue = new MessagePayload();
             sentMessageInQueue.SetToAddress(TestEndpointAddressBuilder.Build("Address1", "TestServer"));
             SendMessagesToServer(sentMessageInQueue);
 
             longPollRequest = new MessagePayload();
             longPollRequest.SetLongPollRequest(TestEndpointAddressBuilder.Build("Address1", "TestServer1").Server);
+
+            SystemTime.FromSecondsSpanOverride = TimeSpan.FromSeconds(0);
         };
 
         Because of = () => returnedMessages = SendMessagesToServer(longPollRequest);

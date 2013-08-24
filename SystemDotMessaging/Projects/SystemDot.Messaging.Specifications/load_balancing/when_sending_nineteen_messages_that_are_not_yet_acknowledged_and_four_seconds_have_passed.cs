@@ -10,14 +10,9 @@ namespace SystemDot.Messaging.Specifications.load_balancing
     public class when_sending_nineteen_messages_that_are_not_yet_acknowledged_and_four_seconds_have_passed
         : WithMessageConfigurationSubject
     {
-        static TestTaskScheduler scheduler;
-
         Establish context = () =>
         {
-            scheduler = new TestTaskScheduler();
-            ConfigureAndRegister<ITaskScheduler>(scheduler);
-
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel("SenderAddress")
                 .ForPointToPointSendingTo("ReceiverAddress")
@@ -28,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.load_balancing
             messages.ForEach(m => Bus.Send(m));
         };
 
-        Because of = () => scheduler.PassTime(TimeSpan.FromSeconds(4));
+        Because of = () => SystemTime.AdvanceTime(TimeSpan.FromSeconds(4));
 
         It should_only_send_nineteen_messages = () => GetServer().SentMessages.Count.ShouldEqual(19);
     }

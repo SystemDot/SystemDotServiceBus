@@ -1,7 +1,6 @@
 using System;
 using SystemDot.Messaging.Specifications.publishing;
 using SystemDot.Parallelism;
-using SystemDot.Specifications;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.repeating_for_subscription_to_publishers
@@ -13,19 +12,14 @@ namespace SystemDot.Messaging.Specifications.repeating_for_subscription_to_publi
         const string ChannelName = "Test";
         const string PublisherName = "PublisherName";
 
-        static TestSystemTime systemTime;
-
         Establish context = () =>
         {
-            systemTime = new TestSystemTime(DateTime.Now);
-            ConfigureAndRegister<ISystemTime>(systemTime);
-
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName).ForSubscribingTo(PublisherName)
                 .Initialise();
 
-            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
+            SystemTime.AdvanceTime(TimeSpan.FromSeconds(4));
         };
 
         Because of = () => The<ITaskRepeater>().Start();

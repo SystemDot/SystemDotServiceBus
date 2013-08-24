@@ -14,13 +14,9 @@ namespace SystemDot.Messaging.Specifications.authentication_for_publishing
         const string PublisherServer = "PublisherServer";
         const string SubscriberServer = "SubscriberServer";
         static MessagePayload authenticationResponse;
-        static TestSystemTime systemTime;
 
         Establish context = () =>
         {
-            systemTime = new TestSystemTime(DateTime.Now);
-            ConfigureAndRegister<ISystemTime>(systemTime);
-
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsAServer(SubscriberServer)
@@ -30,9 +26,11 @@ namespace SystemDot.Messaging.Specifications.authentication_for_publishing
                 .Initialise();
 
             authenticationResponse = new MessagePayload()
-                .MakeAuthenticationResponse<TestAuthenticationResponse>()
+                .SetAuthenticationRequestChannels()
+                .SetMessageBody(new TestAuthenticationResponse())
                 .SetFromServer(PublisherServer)
-                .SetToServer(SubscriberServer);
+                .SetToServer(SubscriberServer)
+                .SetAuthenticationSession();
 
             WebRequestor.AddMessages(authenticationResponse);
 
@@ -42,7 +40,7 @@ namespace SystemDot.Messaging.Specifications.authentication_for_publishing
 
         Because of = () =>
         {
-            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(4));
+            SystemTime.AdvanceTime(TimeSpan.FromSeconds(4));
             The<ITaskRepeater>().Start();
         };
 

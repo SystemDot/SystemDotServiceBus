@@ -1,7 +1,6 @@
 using System;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Parallelism;
-using SystemDot.Specifications;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.repeating_constant
@@ -12,17 +11,11 @@ namespace SystemDot.Messaging.Specifications.repeating_constant
     {
         const string ChannelName = "Test";
         const string ReceiverName = "TestReceiver";
-
-        
         static int message;
-        static TestSystemTime systemTime;
 
         Establish context = () =>
         {
-            systemTime = new TestSystemTime(DateTime.Now);
-            ConfigureAndRegister<ISystemTime>(systemTime);
-
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                     .ForPointToPointSendingTo(ReceiverName)
@@ -33,7 +26,7 @@ namespace SystemDot.Messaging.Specifications.repeating_constant
 
             Bus.Send(message);
 
-            systemTime.AddToCurrentDate(TimeSpan.FromSeconds(10));
+            SystemTime.AdvanceTime(TimeSpan.FromSeconds(10));
         };
 
         Because of = () => The<ITaskRepeater>().Start();

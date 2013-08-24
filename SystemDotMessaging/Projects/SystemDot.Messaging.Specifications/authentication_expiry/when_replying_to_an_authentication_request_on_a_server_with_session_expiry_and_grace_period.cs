@@ -4,7 +4,6 @@ using System.Linq;
 using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.authentication;
-using SystemDot.Specifications;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.authentication_expiry
@@ -20,17 +19,14 @@ namespace SystemDot.Messaging.Specifications.authentication_expiry
         static MessagePayload payload;
         static TestReplyMessageHandler<TestAuthenticationRequest, TestAuthenticationResponse> handler;
         static IEnumerable<MessagePayload> returnedMessages;
-        static TestSystemTime time;
-
+        
         Establish context = () =>
         {
-            time = new TestSystemTime(DateTime.Now);
-            ConfigureAndRegister<ISystemTime>(time);
-
             handler = new TestReplyMessageHandler<TestAuthenticationRequest, TestAuthenticationResponse>();
 
             payload = new MessagePayload()
-                .MakeAuthenticationRequest<TestAuthenticationRequest>()
+                .SetAuthenticationRequestChannels()
+                .SetMessageBody(new TestAuthenticationRequest())
                 .SetFromServer("SenderServer")
                 .SetToServer(ReceiverServer);
 
@@ -49,11 +45,11 @@ namespace SystemDot.Messaging.Specifications.authentication_expiry
 
         It should_reply_with_the_specified_authentication_response_containing_the_new_authentication_session_with_the_specified_expiry = () =>
             returnedMessages.Single().GetAuthenticationSession()
-                .ExpiresOn.ShouldEqual(time.GetCurrentDate().AddMinutes(ExpiryInMinutes));
+                .ExpiresOn.ShouldEqual(SystemTime.GetCurrentDate().AddMinutes(ExpiryInMinutes));
 
         It should_reply_with_the_specified_authentication_response_containing_the_new_authentication_session_with_the_specified_expiry_grace_period = () =>
             returnedMessages.Single().GetAuthenticationSession()
-                .GracePeriodEndOn.ShouldEqual(time.GetCurrentDate()
+                .GracePeriodEndOn.ShouldEqual(SystemTime.GetCurrentDate()
                     .AddMinutes(ExpiryInMinutes)
                         .AddMinutes(GracePeriodInMinutes));
     }

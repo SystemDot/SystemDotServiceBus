@@ -72,7 +72,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .With(startPoint)
                 .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
                 .ToProcessor(new BatchPackager())
-                .ToConverter(new MessagePayloadPackager(serialiser))
+                .ToConverter(new MessagePayloadPackager(serialiser, systemTime))
                 .ToProcessor(new Sequencer(cache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, senderAddress))
                 .ToProcessor(new SendChannelMessageCacher(cache))

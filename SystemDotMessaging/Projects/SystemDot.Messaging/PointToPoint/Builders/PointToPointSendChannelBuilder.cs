@@ -72,7 +72,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             MessagePipelineBuilder.Build()
                 .WithBusSendTo(new MessageFilter(schema.FilteringStrategy))
                 .ToProcessor(new BatchPackager())
-                .ToConverter(new MessagePayloadPackager(serialiser))
+                .ToConverter(new MessagePayloadPackager(serialiser, systemTime))
                 .ToProcessor(new Sequencer(cache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.ReceiverAddress))
                 .ToProcessor(new SendChannelMessageCacher(cache))

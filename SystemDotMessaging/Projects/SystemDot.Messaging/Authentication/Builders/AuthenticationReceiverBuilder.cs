@@ -17,6 +17,7 @@ namespace SystemDot.Messaging.Authentication.Builders
         {
             Contract.Requires(cache != null);
             Contract.Requires(serialiser != null);
+            Contract.Requires(serverRegistry != null);
 
             this.cache = cache;
             this.serialiser = serialiser;
