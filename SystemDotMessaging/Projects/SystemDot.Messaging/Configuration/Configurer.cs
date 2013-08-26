@@ -2,6 +2,8 @@ using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement.Builders;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Authentication;
+using SystemDot.Messaging.Authentication.Caching;
 using SystemDot.Messaging.Configuration.Authentication;
 using SystemDot.Messaging.Configuration.Direct;
 using SystemDot.Messaging.Handling;
@@ -29,12 +31,13 @@ namespace SystemDot.Messaging.Configuration
         public void Initialise()
         {
             Resolve<ITransportBuilder>().Build(GetMessageServer());
-            
+
+            Resolve<AuthenticationSessionCache>().Initialise();
             Resolve<SubscriptionRequestReceiveChannelBuilder>().Build();
             Resolve<AcknowledgementSendChannelBuilder>().Build();
             Resolve<AcknowledgementRecieveChannelBuilder>().Build();
-
-            this.messagingConfiguration.BuildActions.ForEach(a => a());
+            
+            messagingConfiguration.BuildActions.ForEach(a => a());
             
             Messenger.Send(new MessagingInitialising());
 

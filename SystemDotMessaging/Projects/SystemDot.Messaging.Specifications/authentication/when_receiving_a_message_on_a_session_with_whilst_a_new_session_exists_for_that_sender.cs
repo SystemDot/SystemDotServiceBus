@@ -2,19 +2,17 @@ using System;
 using System.Linq;
 using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.Specifications.authentication;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.authentication_expiry
+namespace SystemDot.Messaging.Specifications.authentication
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_a_message_on_an_expired_session_with_grace_left_whilst_a_new_session_exists_for_that_sender : WithHttpServerConfigurationSubject
+    public class when_receiving_a_message_on_a_session_with_whilst_a_new_session_exists_for_that_sender : WithHttpServerConfigurationSubject
     {
         const string ReceiverServer = "ReceiverServer";
         const string SenderServer = "SenderServer";
         const string ReceiverChannel = "ReceiverChannel";
-        const int GracePeriodInMinutes = 10;
         const int ExpiryInMinutes = 20;
         const int Message = 1;
 
@@ -37,18 +35,14 @@ namespace SystemDot.Messaging.Specifications.authentication_expiry
                     .RequiresAuthentication()
                         .AcceptsRequest<TestAuthenticationRequest>()
                         .AuthenticatesOnReply<TestAuthenticationResponse>()
-                    .Expires(ExpiryPlan.ExpiresAfter(TimeSpan.FromMinutes(ExpiryInMinutes)).WithGracePeriodOf(TimeSpan.FromMinutes(GracePeriodInMinutes)))
+                    .ExpiresAfter(TimeSpan.FromMinutes(ExpiryInMinutes))
                 .OpenChannel(ReceiverChannel)
                     .ForPointToPointReceiving()
                 .RegisterHandlers(r => r.RegisterHandler(new TestReplyMessageHandler<TestAuthenticationRequest, TestAuthenticationResponse>()))
                 .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
 
-            AuthenticationSession expiredSessionWithGraceLeft = SendMessagesToServer(authenticationRequestPayload).Single().GetAuthenticationSession();
-            
-            SystemTime.AdvanceTime(TimeSpan.FromMinutes(ExpiryInMinutes));
-            SystemTime.AdvanceTime(TimeSpan.FromTicks(1));
-
+            AuthenticationSession firstSession = SendMessagesToServer(authenticationRequestPayload).Single().GetAuthenticationSession();
             SendMessagesToServer(authenticationRequestPayload);
 
             payload = new MessagePayload()
@@ -60,7 +54,7 @@ namespace SystemDot.Messaging.Specifications.authentication_expiry
                 .SetChannelType(PersistenceUseType.PointToPointSend)
                 .Sequenced();
 
-            payload.SetAuthenticationSession(expiredSessionWithGraceLeft);
+            payload.SetAuthenticationSession(firstSession);
         };
 
         Because of = () => SendMessagesToServer(payload);

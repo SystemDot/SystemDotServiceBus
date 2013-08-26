@@ -16,5 +16,10 @@ namespace SystemDot.Messaging.Authentication
             Contract.Requires(session != null);
             Session = session;
         }
+
+        public override string ToString()
+        {
+            return string.Format("Session: {0}", Session);
+        }
     }
 }

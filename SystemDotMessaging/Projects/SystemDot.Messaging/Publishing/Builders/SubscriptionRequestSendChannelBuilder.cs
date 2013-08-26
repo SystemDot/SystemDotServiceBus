@@ -2,6 +2,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication;
+using SystemDot.Messaging.Authentication.Caching;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Repeating;
@@ -54,7 +55,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             acknowledgementHandler.RegisterCache(cache);
 
             MessagePipelineBuilder.Build()
-                .With(new SubscriptionRequestor(schema.SubscriberAddress, schema.IsDurable, systemTime))
+                .With(new SubscriptionRequestor(schema.SubscriberAddress, schema.IsDurable))
                 .ToProcessor(new MessageAddresser(schema.SubscriberAddress, schema.PublisherAddress))
                 .ToProcessor(new SendChannelMessageCacher(cache))
                 .ToMessageRepeater(cache, systemTime, taskRepeater, EscalatingTimeRepeatStrategy.Default)
@@ -62,7 +63,7 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Pump()
                 .ToProcessor(new LastSentRecorder(systemTime))
-                .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache))
+                .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache, schema.PublisherAddress))
                 .ToEndPoint(messageSender);
         }
     }

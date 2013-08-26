@@ -15,13 +15,9 @@ namespace SystemDot.Messaging.Packaging
 
         public MessagePayload()
         {
+            CreatedOn = SystemTime.Current.GetCurrentDate();
             Headers = new ConcurrentDictionary<string, IMessageHeader>();
             Id = Guid.NewGuid();
-        }
-
-        public MessagePayload(DateTime createdOn) : this()
-        {
-            CreatedOn = createdOn;
         }
 
         public void AddHeader(IMessageHeader toAdd)

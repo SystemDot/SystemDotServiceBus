@@ -2,6 +2,8 @@ using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication;
+using SystemDot.Messaging.Authentication.Caching;
+using SystemDot.Messaging.Authentication.Expiry;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
@@ -29,6 +31,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
         readonly MessageAcknowledgementHandler acknowledgementHandler;
         readonly ITaskScheduler taskScheduler;
         readonly AuthenticationSessionCache authenticationSessionCache;
+        AuthenticatedServerRegistry authenticatedServerRegistry;
 
         public PointToPointSendChannelBuilder(
             MessageSender messageSender, 
@@ -38,7 +41,8 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             PersistenceFactorySelector persistenceFactorySelector, 
             MessageAcknowledgementHandler acknowledgementHandler, 
             ITaskScheduler taskScheduler, 
-            AuthenticationSessionCache authenticationSessionCache)
+            AuthenticationSessionCache authenticationSessionCache, 
+            AuthenticatedServerRegistry authenticatedServerRegistry)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(serialiser != null);
@@ -48,6 +52,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             Contract.Requires(acknowledgementHandler != null);
             Contract.Requires(taskScheduler != null);
             Contract.Requires(authenticationSessionCache != null);
+            Contract.Requires(authenticatedServerRegistry != null);
 
             this.messageSender = messageSender;
             this.serialiser = serialiser;
@@ -57,6 +62,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             this.acknowledgementHandler = acknowledgementHandler;
             this.taskScheduler = taskScheduler;
             this.authenticationSessionCache = authenticationSessionCache;
+            this.authenticatedServerRegistry = authenticatedServerRegistry;
         }
 
         public void Build(PointToPointSendChannelSchema schema)
@@ -69,10 +75,13 @@ namespace SystemDot.Messaging.PointToPoint.Builders
 
             acknowledgementHandler.RegisterCache(cache);
 
+            var sessionExpiryStrategy = new AuthenticationSessionExpiryStrategy(authenticatedServerRegistry, schema.ReceiverAddress.Server);
+
             MessagePipelineBuilder.Build()
                 .WithBusSendTo(new MessageFilter(schema.FilteringStrategy))
                 .ToProcessor(new BatchPackager())
-                .ToConverter(new MessagePayloadPackager(serialiser, systemTime))
+                .ToConverter(new MessagePayloadPackager(serialiser))
+                .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache, schema.ReceiverAddress))
                 .ToProcessor(new Sequencer(cache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.ReceiverAddress))
                 .ToProcessor(new SendChannelMessageCacher(cache))
@@ -81,10 +90,9 @@ namespace SystemDot.Messaging.PointToPoint.Builders
                 .ToProcessor(new SequenceOriginRecorder(cache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()
-                .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, schema.ExpiryAction, cache))
+                .ToProcessor(new MessageExpirer(schema.ExpiryAction, cache, schema.ExpiryStrategy, sessionExpiryStrategy))
                 .ToProcessor(new LoadBalancer(cache, taskScheduler))
                 .ToProcessor(new LastSentRecorder(systemTime))
-                .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache))
                 .ToEndPoint(messageSender);
 
             Messenger.Send(new PointToPointSendChannelBuilt

@@ -1,11 +1,12 @@
-using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Specifications.authentication;
 using Machine.Specifications;
+using SystemDot.Messaging.Authentication;
 
-namespace SystemDot.Messaging.Specifications.authentication
+namespace SystemDot.Messaging.Specifications.authentication_expiry
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_sending_a_message_to_a_server_after_failing_to_authenticate_to_it : WithHttpConfigurationSubject
+    public class when_sending_a_message_when_the_current_session_is_expired : WithHttpConfigurationSubject
     {
         const string ReceiverServerName = "ReceiverServer";
         const string SenderServer = "SenderServer";
@@ -17,20 +18,23 @@ namespace SystemDot.Messaging.Specifications.authentication
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
                 .AsAServer(SenderServer)
-                .AuthenticateToServer(ReceiverServerName)
-                .WithRequest<TestAuthenticationRequest>()
-                .OpenChannel("SenderChannel").ForPointToPointSendingTo("ReceiverChannel@" + ReceiverServerName)
+                    .AuthenticateToServer(ReceiverServerName)
+                        .WithRequest<TestAuthenticationRequest>()
+                    .OpenChannel("SenderChannel").ForPointToPointSendingTo("ReceiverChannel@" + ReceiverServerName)
                 .Initialise();
 
             authenticationResponse = new MessagePayload()
                 .SetAuthenticationRequestChannels()
-                .SetMessageBody(new FailingAuthenticationResponse())
+                .SetMessageBody(new TestAuthenticationRequest())
                 .SetFromServer(ReceiverServerName)
-                .SetToServer(SenderServer);
-            
+                .SetToServer(SenderServer)
+                .SetAuthenticationSession();
+
+            authenticationResponse.GetAuthenticationSession().ExpiresOn = SystemTime.GetCurrentDate().AddDays(-1);
+
             WebRequestor.AddMessages(authenticationResponse);
 
-            Bus.SendDirect(new TestAuthenticationRequest(), new TestMessageHandler<FailingAuthenticationResponse>(), e => { });
+            Bus.SendDirect(new TestAuthenticationRequest(), new TestMessageHandler<TestAuthenticationResponse>(), e => { });
 
             WebRequestor.RequestsMade.Clear();
         };

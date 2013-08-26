@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using SystemDot.Logging;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
@@ -8,33 +9,35 @@ namespace SystemDot.Messaging.Expiry
 {
     class MessageExpirer : IMessageProcessor<MessagePayload, MessagePayload>
     {
-        readonly IMessageExpiryStrategy strategy;
+        readonly IMessageExpiryStrategy[] strategies;
         readonly Action expiryAction;
         readonly IMessageCache messageCache;
 
-        public MessageExpirer(IMessageExpiryStrategy strategy, Action expiryAction, IMessageCache messageCache)
+        public MessageExpirer(Action expiryAction, IMessageCache messageCache, params IMessageExpiryStrategy[] strategies)
         {
-            Contract.Requires(strategy != null);
+            Contract.Requires(strategies != null);
             Contract.Requires(expiryAction != null);
             Contract.Requires(messageCache != null);
 
-            this.strategy = strategy;
+            this.strategies = strategies;
             this.expiryAction = expiryAction;
             this.messageCache = messageCache;
         }
 
         public void InputMessage(MessagePayload toInput)
         {
-            if (strategy.HasExpired(toInput))
-            {
-                Logger.Debug("Expiring message payload {0}", toInput.Id);
+            if (strategies.Any(strategy => strategy.HasExpired(toInput)))
+                ExpireMessage(toInput);
+            else 
+                MessageProcessed(toInput);
+        }
 
-                messageCache.Delete(toInput.Id);
-                expiryAction();
-                return;
-            }
+        void ExpireMessage(MessagePayload toInput)
+        {
+            Logger.Debug("Expiring message payload {0}", toInput.Id);
 
-            MessageProcessed(toInput);
+            messageCache.Delete(toInput.Id);
+            expiryAction();
         }
 
         public event Action<MessagePayload> MessageProcessed;

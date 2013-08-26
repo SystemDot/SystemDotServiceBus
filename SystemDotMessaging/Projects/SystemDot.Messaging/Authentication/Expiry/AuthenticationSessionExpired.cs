@@ -1,12 +1,12 @@
 using System.Diagnostics.Contracts;
 
-namespace SystemDot.Messaging.Authentication
+namespace SystemDot.Messaging.Authentication.Expiry
 {
-    class SessionExpired
+    class AuthenticationSessionExpired
     {
         public AuthenticationSession Session { get; set; }
 
-        public SessionExpired(AuthenticationSession session)
+        public AuthenticationSessionExpired(AuthenticationSession session)
         {
             Contract.Requires(session != null);
 

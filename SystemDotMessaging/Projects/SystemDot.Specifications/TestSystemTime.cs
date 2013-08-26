@@ -12,6 +12,7 @@ namespace SystemDot.Specifications
 
         public TestSystemTime(DateTime currentDate)
         {
+            SystemTime.SetCurrent(this);
             this.currentDate = currentDate;
         }
 

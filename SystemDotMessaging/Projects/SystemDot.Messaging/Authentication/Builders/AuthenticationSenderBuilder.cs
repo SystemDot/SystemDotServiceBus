@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Authentication.Caching;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Configuration.Authentication;
 

@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Authentication.Caching;
 using SystemDot.Messaging.Direct;
 using SystemDot.Messaging.Hooks;
 using SystemDot.Messaging.Packaging;
@@ -13,17 +14,17 @@ namespace SystemDot.Messaging.Authentication
     {
         readonly ISerialiser serialiser;
         readonly AuthenticationSessionCache cache;
-        readonly ExpiryPlan expiryPlan;
+        readonly TimeSpan expiresAfter;
 
-        public AuthenticationResponseHook(ISerialiser serialiser, AuthenticationSessionCache cache, ExpiryPlan expiryPlan)
+        public AuthenticationResponseHook(ISerialiser serialiser, AuthenticationSessionCache cache, TimeSpan expiresAfter)
         {
             Contract.Requires(serialiser != null);
             Contract.Requires(cache != null);
-            Contract.Requires(expiryPlan != null);
+            Contract.Requires(expiresAfter != null);
 
             this.serialiser = serialiser;
             this.cache = cache;
-            this.expiryPlan = expiryPlan;
+            this.expiresAfter = expiresAfter;
         }
 
         public void ProcessMessage(MessagePayload toInput, Action<MessagePayload> toPerformOnOutput)
@@ -39,7 +40,7 @@ namespace SystemDot.Messaging.Authentication
 
         void AddAuthenticationToPayload(MessagePayload toInput)
         {
-            cache.CacheNewSessionFor(GetCurrentClientServer(), expiryPlan);
+            cache.CacheNewSessionFor(GetCurrentClientServer(), expiresAfter);
             toInput.SetAuthenticationSession(cache.GetCurrentSessionFor(GetCurrentClientServer()));
         }
 

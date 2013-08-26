@@ -18,8 +18,8 @@ namespace SystemDot.Storage.Changes
 
         public virtual void Initialise()
         {
-            List<Change> changes = this.changeStore.GetChanges(Id).ToList();
-            this.changeCount = changes.Count;
+            List<Change> changes = changeStore.GetChanges(Id).ToList();
+            changeCount = changes.Count;
 
             changes.ForEach(ReplayChange);
         }
@@ -36,27 +36,27 @@ namespace SystemDot.Storage.Changes
 
         protected void CheckPoint(CheckPointChange change)
         {
-            lock (this.checkPointLock)
+            lock (checkPointLock)
             {
                 if (!ShouldCheckPoint()) return;
                 
                 AddChangeWithoutCheckPoint(change);
                 
-                this.changeCount = 0;
+                changeCount = 0;
             }
         }
 
         bool ShouldCheckPoint()
         {
-            return this.changeCount >= 1000;
+            return changeCount >= 1000;
         }
 
         void AddChangeWithoutCheckPoint(Change change)
         {
-            this.changeStore.StoreChange(this.Id, change);
+            changeStore.StoreChange(Id, change);
             ReplayChange(change);
 
-            this.changeCount++;
+            changeCount++;
         }
 
         void ReplayChange(Change change)

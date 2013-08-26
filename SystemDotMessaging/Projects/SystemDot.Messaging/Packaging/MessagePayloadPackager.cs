@@ -9,22 +9,19 @@ namespace SystemDot.Messaging.Packaging
     class MessagePayloadPackager : IMessageProcessor<object, MessagePayload>
     {
         readonly ISerialiser serialiser;
-        readonly ISystemTime systemTime;
 
         public event Action<MessagePayload> MessageProcessed;
 
-        public MessagePayloadPackager(ISerialiser serialiser, ISystemTime systemTime)
+        public MessagePayloadPackager(ISerialiser serialiser)
         {
             Contract.Requires(serialiser != null);
-            Contract.Requires(systemTime != null);
 
             this.serialiser = serialiser;
-            this.systemTime = systemTime;
         }
 
         public void InputMessage(object toInput)
         {
-            var messagePayload = new MessagePayload(systemTime.GetCurrentDate());
+            var messagePayload = new MessagePayload();
             messagePayload.SetBody(serialiser.Serialise(toInput));
 
             Logger.Debug("Packaging message payload");

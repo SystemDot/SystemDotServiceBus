@@ -26,8 +26,8 @@ namespace SystemDot.Messaging.Storage
             UseType = useType;
             Id = address + "|" + useType;
             
-            this.messages = new ConcurrentDictionary<Guid, MessagePayload>();
-            this.sequence = 1;           
+            messages = new ConcurrentDictionary<Guid, MessagePayload>();
+            sequence = 1;           
         }
 
         public override void Initialise()

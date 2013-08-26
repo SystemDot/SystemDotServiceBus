@@ -1,6 +1,8 @@
 using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Authentication.Caching;
+using SystemDot.Messaging.Authentication.Expiry;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Configuration.Authentication;
 using SystemDot.Serialisation;
@@ -24,23 +26,29 @@ namespace SystemDot.Messaging.Authentication.Builders
             this.serverRegistry = serverRegistry;
         }
 
-        public void Build<TAuthenticationRequest, TAuthenticationResponse>(Configurer configurer, MessageServer server, ExpiryPlan expiryPlan)
+        public void Build<TAuthenticationRequest, TAuthenticationResponse>(Configurer configurer, MessageServer server, AuthenticationReceiverSchema schema)
         {
             Contract.Requires(configurer != null);
             Contract.Requires(server != null);
-            Contract.Requires(expiryPlan != null);
+            Contract.Requires(schema != null);
 
-            BuildChannel<TAuthenticationRequest, TAuthenticationResponse>(configurer, expiryPlan);
+            BuildChannel<TAuthenticationRequest, TAuthenticationResponse>(configurer, schema);
+            RunActionOnExpiry(schema.ToRunOnExpiry);
             RegisterAuthenticatedServer(server);
             CreateNewSessionForServer(server);
         }
 
-        void BuildChannel<TAuthenticationRequest, TAuthenticationResponse>(Configurer configurer, ExpiryPlan expiryPlan)
+        void BuildChannel<TAuthenticationRequest, TAuthenticationResponse>(Configurer configurer, AuthenticationReceiverSchema schema)
         {
             configurer.OpenDirectChannel(ChannelNames.AuthenticationChannelName)
                 .ForRequestReplyReceiving()
                 .OnlyForMessages(FilteredBy.Type<TAuthenticationRequest>())
-                .WithReplyHook(new AuthenticationResponseHook<TAuthenticationResponse>(serialiser, cache, expiryPlan));
+                .WithReplyHook(new AuthenticationResponseHook<TAuthenticationResponse>(serialiser, cache, schema.ExpiresAfter));
+        }
+
+        void RunActionOnExpiry(Action<AuthenticationSession> toRunOnExpiry)
+        {
+            Messenger.Register<AuthenticationSessionExpired>(e => toRunOnExpiry(e.Session));
         }
 
         void RegisterAuthenticatedServer(MessageServer server)
@@ -50,7 +58,8 @@ namespace SystemDot.Messaging.Authentication.Builders
 
         void CreateNewSessionForServer(MessageServer server)
         {
-            cache.CacheNewSessionFor(server, ExpiryPlan.Never());
+            if (cache.HasCurrentSessionFor(server)) return;
+            cache.CacheNewSessionFor(server, TimeSpan.MaxValue);
         }
     }
 }

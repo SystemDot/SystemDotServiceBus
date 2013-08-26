@@ -14,29 +14,19 @@ namespace SystemDot.Messaging.Authentication
             this.systemTime = systemTime;
         }
 
-        public AuthenticationSession CreateFromPlan(MessageServer server, ExpiryPlan from)
+        public AuthenticationSession Create(MessageServer server, TimeSpan expiresAfter)
         {
             Contract.Requires(server != null);
-            Contract.Requires(from != null);
+            Contract.Requires(expiresAfter != null);
 
-            DateTime expiresOn = GetExpiresOnFromPlan(@from);
-            DateTime gracePeriodEndsOn = GetGracePeriodEndsOn(@from, expiresOn);
-
-            return new AuthenticationSession(server, expiresOn, gracePeriodEndsOn);
+            return new AuthenticationSession(server, GetExpiresOn(expiresAfter));
         }
 
-        static DateTime GetGracePeriodEndsOn(ExpiryPlan from, DateTime expiresOn)
+        DateTime GetExpiresOn(TimeSpan expiresAfter)
         {
-            return from.AfterTime == TimeSpan.MinValue 
-                ? DateTime.MinValue 
-                : expiresOn.Add(@from.GracePeriod);
-        }
-
-        DateTime GetExpiresOnFromPlan(ExpiryPlan from)
-        {
-            return from.GracePeriod == TimeSpan.MinValue 
-                ? DateTime.MinValue 
-                : systemTime.GetCurrentDate().Add(@from.AfterTime);
+            return expiresAfter == TimeSpan.MaxValue 
+                ? DateTime.MaxValue
+                : systemTime.GetCurrentDate().Add(expiresAfter);
         }
     }
 }

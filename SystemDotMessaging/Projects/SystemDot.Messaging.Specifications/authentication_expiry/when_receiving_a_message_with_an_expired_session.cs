@@ -9,25 +9,21 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.authentication_expiry
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_two_authentication_requests : WithHttpServerConfigurationSubject
+    public class when_receiving_a_message_with_an_expired_session : WithHttpServerConfigurationSubject
     {
         const string ReceiverServer = "ReceiverServer";
         const string SenderServer = "SenderServer";
         const string ReceiverChannel = "ReceiverChannel";
-        const int GracePeriodInMinutes = 10;
         const int ExpiryInMinutes = 20;
-        const int Message = 1;
 
-        static MessagePayload authenticationRequestPayload;
+        static MessagePayload payload;
         static TestMessageHandler<long> handler;
-        static AuthenticationSession currentSession;
-        static AuthenticationSession firstSession;
 
         Establish context = () =>
         {
             handler = new TestMessageHandler<long>();
-
-            authenticationRequestPayload = new MessagePayload()
+            
+            var authenticationRequestPayload = new MessagePayload()
                 .SetAuthenticationRequestChannels()
                 .SetMessageBody(new TestAuthenticationRequest())
                 .SetFromServer(SenderServer)
@@ -39,19 +35,32 @@ namespace SystemDot.Messaging.Specifications.authentication_expiry
                     .RequiresAuthentication()
                         .AcceptsRequest<TestAuthenticationRequest>()
                         .AuthenticatesOnReply<TestAuthenticationResponse>()
-                            .Expires(ExpiryPlan.ExpiresAfter(TimeSpan.FromMinutes(ExpiryInMinutes)).WithGracePeriodOf(TimeSpan.FromMinutes(GracePeriodInMinutes)))
+                        .ExpiresAfter(TimeSpan.FromMinutes(ExpiryInMinutes))
                     .OpenChannel(ReceiverChannel)
                         .ForPointToPointReceiving()
-                .RegisterHandlers(r => r.RegisterHandler(new TestReplyMessageHandler<TestAuthenticationRequest, TestAuthenticationResponse>()))
-                .RegisterHandlers(r => r.RegisterHandler(handler))
+                    .RegisterHandlers(r => r.RegisterHandler(new TestReplyMessageHandler<TestAuthenticationRequest, TestAuthenticationResponse>()))
+                    .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
 
-            firstSession = SendMessagesToServer(authenticationRequestPayload).Single().GetAuthenticationSession();
-            SystemTime.AdvanceTime(TimeSpan.FromMinutes(1));
+            AuthenticationSession session = SendMessagesToServer(authenticationRequestPayload).Single().GetAuthenticationSession();
+
+            payload = new MessagePayload()
+                .SetMessageBody(1)
+                .SetFromChannel("SenderChannel")
+                .SetFromServer(SenderServer)
+                .SetToChannel(ReceiverChannel)
+                .SetToServer(ReceiverServer)
+                .SetChannelType(PersistenceUseType.PointToPointSend)
+                .Sequenced();
+
+            payload.SetAuthenticationSession(session);
+
+            SystemTime.AdvanceTime(TimeSpan.FromMinutes(ExpiryInMinutes));
+            SystemTime.AdvanceTime(TimeSpan.FromTicks(1));
         };
 
-        Because of = () => currentSession = SendMessagesToServer(authenticationRequestPayload).Single().GetAuthenticationSession();
+        Because of = () => SendMessagesToServer(payload);
 
-        It should_change_the_current_session = () => currentSession.ShouldNotEqual(firstSession);
+        It should_not_handle_the_message_in_the_registered_handler = () => handler.HandledMessages.Count.ShouldEqual(0);
     }
 }

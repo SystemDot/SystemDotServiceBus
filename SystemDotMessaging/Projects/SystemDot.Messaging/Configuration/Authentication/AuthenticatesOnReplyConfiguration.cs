@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication;
@@ -8,18 +9,24 @@ namespace SystemDot.Messaging.Configuration.Authentication
     public class AuthenticatesOnReplyConfiguration<TAuthenticationRequest, TAuthenticationResponse> : Configurer
     {
         readonly MessageServer server;
-        ExpiryPlan expiryPlan;
+        readonly AuthenticationReceiverSchema schema;
 
         public AuthenticatesOnReplyConfiguration(MessagingConfiguration messagingConfiguration, MessageServer server) : base(messagingConfiguration)
         {
             Contract.Requires(server != null);
+
             this.server = server;
-            expiryPlan = ExpiryPlan.Never();
+
+            schema = new AuthenticationReceiverSchema
+            {
+                ExpiresAfter = TimeSpan.MaxValue,
+                ToRunOnExpiry = _ => { }
+            };
         }
 
         protected internal override void Build()
         {
-            Resolve<AuthenticationReceiverBuilder>().Build<TAuthenticationRequest, TAuthenticationResponse>(this, server, expiryPlan);
+            Resolve<AuthenticationReceiverBuilder>().Build<TAuthenticationRequest, TAuthenticationResponse>(this, server, schema);
         }
 
         protected override MessageServer GetMessageServer()
@@ -27,11 +34,17 @@ namespace SystemDot.Messaging.Configuration.Authentication
             return server;
         }
 
-        public AuthenticatesOnReplyConfiguration<TAuthenticationRequest, TAuthenticationResponse> Expires(ExpiryPlan expiry)
+        public AuthenticatesOnReplyConfiguration<TAuthenticationRequest, TAuthenticationResponse> ExpiresAfter(TimeSpan after)
         {
-            Contract.Requires(expiry != null);
+            Contract.Requires(after != null);
 
-            expiryPlan = expiry;
+            schema.ExpiresAfter = after;
+            return this;
+        }
+
+        public AuthenticatesOnReplyConfiguration<TAuthenticationRequest, TAuthenticationResponse> OnExpiry(Action<AuthenticationSession> toRunOnExpiry)
+        {
+            schema.ToRunOnExpiry = toRunOnExpiry;
             return this;
         }
     }

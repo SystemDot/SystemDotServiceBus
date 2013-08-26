@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
     {
         public IMessageFilterStrategy FilteringStrategy { get; set; }
 
-        public EndpointAddress RecieverAddress { get; set; }
+        public EndpointAddress ReceiverAddress { get; set; }
 
         public List<IMessageHook<object>> Hooks { get; set; }
 

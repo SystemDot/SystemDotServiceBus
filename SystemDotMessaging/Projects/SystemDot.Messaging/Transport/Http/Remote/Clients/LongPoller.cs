@@ -18,29 +18,25 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients
         readonly ITaskScheduler scheduler;
         readonly MessageReceiver receiver;
         readonly ITaskStarter starter;
-        readonly ISystemTime systemTime;
 
         public LongPoller(
             IWebRequestor requestor, 
             ISerialiser formatter, 
             ITaskScheduler scheduler, 
             MessageReceiver receiver, 
-            ITaskStarter starter, 
-            ISystemTime systemTime)
+            ITaskStarter starter)
         {
             Contract.Requires(requestor != null);
             Contract.Requires(formatter != null);
             Contract.Requires(scheduler != null);
             Contract.Requires(receiver != null);
             Contract.Requires(starter != null);
-            Contract.Requires(systemTime != null);
 
             this.requestor = requestor;
             this.formatter = formatter;
             this.scheduler = scheduler;
             this.receiver = receiver;
             this.starter = starter;
-            this.systemTime = systemTime;
         }
 
         public void ListenTo(MessageServer toListenFor)
@@ -78,7 +74,7 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients
 
         MessagePayload CreateLongPollPayload(MessageServer toListenFor)
         {
-            var payload = new MessagePayload(systemTime.GetCurrentDate());
+            var payload = new MessagePayload();
             payload.SetLongPollRequest(toListenFor);
 
             return payload;
@@ -91,7 +87,7 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients
             foreach (var message in messages)
             {
                 Logger.Info("Recieved message");
-                this.receiver.InputMessage(message);
+                receiver.InputMessage(message);
             }
         }
     }

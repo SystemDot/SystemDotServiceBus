@@ -9,12 +9,20 @@ namespace SystemDot.Messaging.Specifications
     {
         protected static TestWebRequestor WebRequestor { get; private set; }
 
-        Establish context = () =>
+        Establish context = () => RegisterServerComponents();
+
+        static void RegisterServerComponents()
         {
             ConfigureAndRegister<IHttpServerBuilder>(new TestHttpServerBuilder());
 
             WebRequestor = new TestWebRequestor(Resolve<ISerialiser>());
             ConfigureAndRegister<IWebRequestor>(WebRequestor);
-        };
+        }
+
+        protected new static void ReInitialise()
+        {
+            WithConfigurationSubject.ReInitialise();
+            RegisterServerComponents();
+        }
     }
 }

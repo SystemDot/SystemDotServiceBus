@@ -1,24 +1,27 @@
-using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Authentication.Caching;
 using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.Packaging.Headers;
 
 namespace SystemDot.Messaging.Authentication
 {
     class AuthenticationSessionAttacher : MessageProcessor
     {
         readonly AuthenticationSessionCache cache;
+        readonly EndpointAddress address;
 
-        public AuthenticationSessionAttacher(AuthenticationSessionCache cache)
+        public AuthenticationSessionAttacher(AuthenticationSessionCache cache, EndpointAddress address)
         {
             Contract.Requires(cache != null);
+            Contract.Requires(address != null);
             this.cache = cache;
+            this.address = address;
         }
 
         public override void InputMessage(MessagePayload toInput)
         {
-            if (cache.HasCurrentSessionFor(toInput.GetToAddress().Server))
-                toInput.SetAuthenticationSession(cache.GetCurrentSessionFor(toInput.GetToAddress().Server));
+            if (cache.HasCurrentSessionFor(address.Server))
+                toInput.SetAuthenticationSession(cache.GetCurrentSessionFor(address.Server));
 
             OnMessageProcessed(toInput);
         }

@@ -2,6 +2,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication;
+using SystemDot.Messaging.Authentication.Caching;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
@@ -72,27 +73,27 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .WithBusSendTo(new MessageFilter(schema.FilteringStrategy))
                 .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
                 .ToProcessor(new BatchPackager())
-                .ToConverter(new MessagePayloadPackager(serialiser, systemTime))
+                .ToConverter(new MessagePayloadPackager(serialiser))
+                .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache, schema.ReceiverAddress))
                 .ToProcessor(new MessageHookRunner<MessagePayload>(schema.PostPackagingHooks))
                 .ToProcessor(new Sequencer(cache))
-                .ToProcessor(new MessageAddresser(schema.FromAddress, schema.RecieverAddress))
+                .ToProcessor(new MessageAddresser(schema.FromAddress, schema.ReceiverAddress))
                 .ToProcessor(new SendChannelMessageCacher(cache))
                 .ToMessageRepeater(cache, systemTime, taskRepeater, schema.RepeatStrategy)
                 .ToProcessor(new SendChannelMessageCacheUpdater(cache))
                 .ToProcessor(new SequenceOriginRecorder(cache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()
-                .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, schema.ExpiryAction, cache))
+                .ToProcessor(new MessageExpirer(schema.ExpiryAction, cache, schema.ExpiryStrategy))
                 .ToProcessor(new LoadBalancer(cache, taskScheduler))
                 .ToProcessor(new LastSentRecorder(systemTime))
-                .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache))
                 .ToEndPoint(messageSender);
 
             Messenger.Send(new RequestSendChannelBuilt
             {
                 CacheAddress = schema.FromAddress, 
                 SenderAddress = schema.FromAddress, 
-                ReceiverAddress = schema.RecieverAddress
+                ReceiverAddress = schema.ReceiverAddress
             });
         }
     }

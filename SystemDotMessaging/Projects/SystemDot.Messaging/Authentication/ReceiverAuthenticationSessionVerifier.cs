@@ -1,4 +1,5 @@
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Authentication.Caching;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 

@@ -10,17 +10,14 @@ namespace SystemDot.Messaging.Direct.Builders
     {
         readonly ISerialiser serialser;
         readonly RequestSender requestSender;
-        readonly ISystemTime systemTime;
 
-        public RequestSenderBuilder(ISerialiser serialser, RequestSender requestSender, ISystemTime systemTime)
+        public RequestSenderBuilder(ISerialiser serialser, RequestSender requestSender)
         {
             Contract.Requires(serialser != null);
             Contract.Requires(requestSender != null);
-            Contract.Requires(systemTime != null);
 
             this.serialser = serialser;
             this.requestSender = requestSender;
-            this.systemTime = systemTime;
         }
 
         public void Build(RequestSenderSchema schema) 
@@ -29,7 +26,7 @@ namespace SystemDot.Messaging.Direct.Builders
 
             MessagePipelineBuilder.Build()
                 .WithBusSendDirectTo(new MessageFilter(schema.FilterStrategy))
-                .ToConverter(new MessagePayloadPackager(serialser, systemTime))
+                .ToConverter(new MessagePayloadPackager(serialser))
                 .ToProcessor(new Addressing.MessageAddresser(schema.FromAddress, schema.ToAddress))
                 .ToEndPoint(requestSender);
         }

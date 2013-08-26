@@ -27,5 +27,11 @@ namespace SystemDot.Messaging.Specifications
 
             return TestHttpServer.Instance.Request(request);
         }
+
+        protected new static void ReInitialise()
+        {
+            TestHttpServer.ClearInstance();
+            WithHttpConfigurationSubject.ReInitialise();
+        }
     }
 }

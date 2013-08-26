@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Parallelism;
 
-namespace SystemDot.Messaging.Authentication
+namespace SystemDot.Messaging.Authentication.Expiry
 {
     class AuthenticationSessionExpirer
     {
@@ -28,12 +28,12 @@ namespace SystemDot.Messaging.Authentication
 
         void ScheduleDecache(AuthenticationSession toTrack)
         {
-            taskScheduler.ScheduleTask(GetDecacheTime(toTrack), () => Messenger.Send(new SessionExpired(toTrack)));
+            taskScheduler.ScheduleTask(GetDecacheTime(toTrack), () => Messenger.Send(new AuthenticationSessionExpired(toTrack)));
         }
 
         TimeSpan GetDecacheTime(AuthenticationSession toTrack)
         {
-            return toTrack.GracePeriodEndOn.Subtract(systemTime.GetCurrentDate());
+            return toTrack.ExpiresOn.Subtract(systemTime.GetCurrentDate());
         }
     }
 }

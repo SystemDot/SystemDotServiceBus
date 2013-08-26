@@ -3,6 +3,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication;
+using SystemDot.Messaging.Authentication.Caching;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Expiry;
@@ -70,6 +71,7 @@ namespace SystemDot.Messaging.Publishing.Builders
 
             MessagePipelineBuilder.Build()
                 .With(copier)
+                .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache, schema.SubscriberAddress))
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.SubscriberAddress))
                 .ToProcessor(new SendChannelMessageCacher(cache))
@@ -80,7 +82,6 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .Queue()
                 .ToProcessor(new LoadBalancer(cache, taskScheduler))
                 .ToProcessor(new LastSentRecorder(systemTime))
-                .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache))
                 .ToEndPoint(messageSender);
 
             Messenger.Send(new SubscriberSendChannelBuilt

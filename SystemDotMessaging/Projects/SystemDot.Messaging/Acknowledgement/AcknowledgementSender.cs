@@ -9,19 +9,11 @@ namespace SystemDot.Messaging.Acknowledgement
 {
     class AcknowledgementSender : IMessageProcessor<MessagePayload>
     {
-        readonly ISystemTime systemTime;
-
-        public AcknowledgementSender(ISystemTime systemTime)
-        {
-            Contract.Requires(systemTime != null);
-            this.systemTime = systemTime;
-        }
-
         public void SendAcknowledgement(MessagePayload toInput)
         {
             Contract.Requires(toInput != null);
 
-            var acknowledgement = new MessagePayload(systemTime.GetCurrentDate());
+            var acknowledgement = new MessagePayload();
             acknowledgement.SetAcknowledgementId(toInput.GetSourcePersistenceId());
             acknowledgement.SetToAddress(toInput.GetFromAddress());
 

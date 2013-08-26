@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using SystemDot.Logging;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Sequencing;

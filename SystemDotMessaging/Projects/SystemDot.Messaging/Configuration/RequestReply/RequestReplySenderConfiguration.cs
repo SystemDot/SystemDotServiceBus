@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             {
                 FilteringStrategy = new PassThroughMessageFilterStategy(),
                 FromAddress = address,
-                RecieverAddress = recieverAddress,
+                ReceiverAddress = recieverAddress,
                 ExpiryStrategy = new PassthroughMessageExpiryStrategy(),
                 ExpiryAction = () => { },
                 RepeatStrategy = EscalatingTimeRepeatStrategy.Default

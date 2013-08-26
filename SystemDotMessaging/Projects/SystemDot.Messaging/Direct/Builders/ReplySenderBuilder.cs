@@ -10,15 +10,12 @@ namespace SystemDot.Messaging.Direct.Builders
     class ReplySenderBuilder
     {
         readonly ISerialiser serialiser;
-        readonly ISystemTime systemTime;
 
-        public ReplySenderBuilder(ISerialiser serialiser, ISystemTime systemTime)
+        public ReplySenderBuilder(ISerialiser serialiser)
         {
             Contract.Requires(serialiser != null);
-            Contract.Requires(systemTime != null);
 
             this.serialiser = serialiser;
-            this.systemTime = systemTime;
         }
 
         public void Build(ReplySenderSchema schema)
@@ -27,7 +24,7 @@ namespace SystemDot.Messaging.Direct.Builders
             
             MessagePipelineBuilder.Build()
                 .WithBusReplyTo(new MessageFilter(new MessageReplyContextMessageFilterStrategy(schema.Address)))
-                .ToConverter(new MessagePayloadPackager(serialiser, systemTime))
+                .ToConverter(new MessagePayloadPackager(serialiser))
                 .ToProcessor(new MessageHookRunner<MessagePayload>(schema.Hooks))
                 .ToProcessor(new DirectChannelMessageAddresser(schema.Address))
                 .ToEndPoint(new ReplySender());

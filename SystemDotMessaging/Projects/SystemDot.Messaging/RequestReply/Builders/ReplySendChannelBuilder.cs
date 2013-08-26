@@ -2,6 +2,8 @@ using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication;
+using SystemDot.Messaging.Authentication.Caching;
+using SystemDot.Messaging.Authentication.RequestReply;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
@@ -30,6 +32,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly MessageAcknowledgementHandler acknowledgementHandler;
         readonly ITaskScheduler taskScheduler;
         readonly AuthenticationSessionCache authenticationSessionCache;
+        readonly ReplyAuthenticationSessionLookup replyAuthenticationSessionLookup;
 
         public ReplySendChannelBuilder(
             MessageSender messageSender, 
@@ -38,7 +41,9 @@ namespace SystemDot.Messaging.RequestReply.Builders
             ITaskRepeater taskRepeater, 
             PersistenceFactorySelector persistenceFactorySelector, 
             MessageAcknowledgementHandler acknowledgementHandler, 
-            ITaskScheduler taskScheduler, AuthenticationSessionCache authenticationSessionCache)
+            ITaskScheduler taskScheduler, 
+            AuthenticationSessionCache authenticationSessionCache, 
+            ReplyAuthenticationSessionLookup replyAuthenticationSessionLookup)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(serialiser != null);
@@ -47,6 +52,8 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(persistenceFactorySelector != null);
             Contract.Requires(acknowledgementHandler != null);
             Contract.Requires(taskScheduler != null);
+            Contract.Requires(authenticationSessionCache != null);
+            Contract.Requires(replyAuthenticationSessionLookup != null);
             
             this.messageSender = messageSender;
             this.serialiser = serialiser;
@@ -56,6 +63,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             this.acknowledgementHandler = acknowledgementHandler;
             this.taskScheduler = taskScheduler;
             this.authenticationSessionCache = authenticationSessionCache;
+            this.replyAuthenticationSessionLookup = replyAuthenticationSessionLookup;
         }
 
         public IMessageInputter<object> Build(ReplySendChannelSchema schema, EndpointAddress senderAddress)
@@ -72,7 +80,8 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .With(startPoint)
                 .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
                 .ToProcessor(new BatchPackager())
-                .ToConverter(new MessagePayloadPackager(serialiser, systemTime))
+                .ToConverter(new MessagePayloadPackager(serialiser))
+                .ToProcessor(new ReplyAuthenticationSessionAttacher(replyAuthenticationSessionLookup))
                 .ToProcessor(new Sequencer(cache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, senderAddress))
                 .ToProcessor(new SendChannelMessageCacher(cache))
@@ -81,10 +90,10 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new SequenceOriginRecorder(cache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()
-                .ToProcessor(new MessageExpirer(schema.ExpiryStrategy, schema.ExpiryAction, cache))
+                .ToProcessor(new MessageExpirer(schema.ExpiryAction, cache, schema.ExpiryStrategy))
                 .ToProcessor(new LoadBalancer(cache, taskScheduler))
                 .ToProcessor(new LastSentRecorder(systemTime))
-                .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache))
+                
                 .ToEndPoint(messageSender);
 
             Messenger.Send(new ReplySendChannelBuilt
