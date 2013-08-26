@@ -1,4 +1,5 @@
 using System.Diagnostics.Contracts;
+using SystemDot.Logging;
 using SystemDot.Messaging.Authentication.Caching;
 using SystemDot.Messaging.Packaging;
 
@@ -16,8 +17,12 @@ namespace SystemDot.Messaging.Authentication
 
         public override void InputMessage(MessagePayload toInput)
         {
+            Logger.Debug("Verifying session for message: {0}", toInput.Id);
+                
             if (ServerRequiresAuthentication(toInput) && !PayloadHasExpectedSession(toInput))
                 return;
+
+            Logger.Debug("Verified session for message: {0}", toInput.Id);
 
             OnMessageProcessed(toInput);
         }

@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Repeating
 
         void FirstRepeat()
         {
-            this.messageCache.GetOrderedMessages().ForEach(InputMessage);
+            messageCache.GetOrderedMessages().ForEach(InputMessage);
         }
 
         public override void InputMessage(MessagePayload toInput)
@@ -35,7 +35,7 @@ namespace SystemDot.Messaging.Repeating
 
         public void Repeat()
         {
-            this.repeatStrategy.Repeat(this, this.messageCache, this.systemTime);
+            repeatStrategy.Repeat(this, messageCache, systemTime);
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Logging;
 using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Authentication.Expiry
@@ -28,7 +29,11 @@ namespace SystemDot.Messaging.Authentication.Expiry
 
         void ScheduleDecache(AuthenticationSession toTrack)
         {
-            taskScheduler.ScheduleTask(GetDecacheTime(toTrack), () => Messenger.Send(new AuthenticationSessionExpired(toTrack)));
+            taskScheduler.ScheduleTask(GetDecacheTime(toTrack), () =>
+            {
+                Logger.Debug("Expiring authentication session {0}", toTrack.Id);
+                Messenger.Send(new AuthenticationSessionExpired(toTrack));
+            });
         }
 
         TimeSpan GetDecacheTime(AuthenticationSession toTrack)

@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Logging;
 using SystemDot.Messaging.Packaging;
 
 namespace SystemDot.Messaging.Expiry
@@ -20,7 +21,8 @@ namespace SystemDot.Messaging.Expiry
 
         public bool HasExpired(MessagePayload toCheck)
         {
-            return toCheck.CreatedOn <= this.systemTime.GetCurrentDate().Subtract(this.expiryTime);
+            Logger.Debug("Checking expiry due to time expiry: {0}", toCheck.Id);
+            return toCheck.CreatedOn <= systemTime.GetCurrentDate().Subtract(expiryTime);
         }
     }
 }

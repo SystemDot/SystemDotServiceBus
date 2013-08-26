@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Serialisation;

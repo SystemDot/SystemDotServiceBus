@@ -1,9 +1,9 @@
 using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Logging;
 using SystemDot.Messaging.Authentication.Caching;
 using SystemDot.Messaging.Hooks;
 using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.Packaging.Headers;
 
 namespace SystemDot.Messaging.Authentication
 {
@@ -21,6 +21,8 @@ namespace SystemDot.Messaging.Authentication
         {
             if (!toInput.HasAuthenticationSession()) return;
 
+            Logger.Debug("Caching session: {0} from authentication repsonse: {1}", toInput.GetAuthenticationSession().Id, toInput.Id);
+                
             cache.CacheSessionFor(toInput.GetAuthenticationSession());
             toPerformOnOutput(toInput);
         }

@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Logging;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication.Caching;
 using SystemDot.Messaging.Direct;
@@ -29,7 +30,11 @@ namespace SystemDot.Messaging.Authentication
 
         public void ProcessMessage(MessagePayload toInput, Action<MessagePayload> toPerformOnOutput)
         {
-            if(PayloadContainsAuthenticationResponse(toInput)) AddAuthenticationToPayload(toInput);
+            if (PayloadContainsAuthenticationResponse(toInput))
+            {
+                Logger.Debug("Caching session and setting on authentication repsonse: {0}", toInput.Id);
+                AddAuthenticationToPayload(toInput);
+            }
             toPerformOnOutput(toInput);
         }
 

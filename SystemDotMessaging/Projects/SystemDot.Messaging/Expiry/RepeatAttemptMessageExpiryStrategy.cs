@@ -1,3 +1,4 @@
+using SystemDot.Logging;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Repeating;
 
@@ -14,7 +15,8 @@ namespace SystemDot.Messaging.Expiry
 
         public bool HasExpired(MessagePayload toCheck)
         {
-            return toCheck.GetAmountSent() == this.attempts;
+            Logger.Debug("Checking expiry due to repeat limit: {0}", toCheck.Id);
+            return toCheck.GetAmountSent() == attempts;
         }
     }
 }

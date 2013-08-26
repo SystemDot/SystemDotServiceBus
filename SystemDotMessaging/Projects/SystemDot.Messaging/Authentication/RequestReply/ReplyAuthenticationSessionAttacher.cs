@@ -1,4 +1,5 @@
 using System.Diagnostics.Contracts;
+using SystemDot.Logging;
 using SystemDot.Messaging.Packaging;
 
 namespace SystemDot.Messaging.Authentication.RequestReply
@@ -16,7 +17,10 @@ namespace SystemDot.Messaging.Authentication.RequestReply
         public override void InputMessage(MessagePayload toInput)
         {
             if (lookup.HasCurrentSession())
+            {
+                Logger.Debug("Attaching current session: {0} to reply: {1}", lookup.GetCurrentSession().Id, toInput.Id);
                 toInput.SetAuthenticationSession(lookup.GetCurrentSession());
+            }
 
             OnMessageProcessed(toInput);
         }

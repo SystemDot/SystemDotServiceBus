@@ -3,6 +3,7 @@ using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Authentication.Caching;
+using SystemDot.Messaging.Authentication.Expiry;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
@@ -31,6 +32,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly MessageAcknowledgementHandler acknowledgementHandler;
         readonly ITaskScheduler taskScheduler;
         readonly AuthenticationSessionCache authenticationSessionCache;
+        readonly AuthenticatedServerRegistry authenticatedServerRegistry;
 
         public RequestSendChannelBuilder(
             MessageSender messageSender, 
@@ -40,7 +42,8 @@ namespace SystemDot.Messaging.RequestReply.Builders
             PersistenceFactorySelector persistenceFactory, 
             MessageAcknowledgementHandler acknowledgementHandler, 
             ITaskScheduler taskScheduler, 
-            AuthenticationSessionCache authenticationSessionCache)
+            AuthenticationSessionCache authenticationSessionCache, 
+            AuthenticatedServerRegistry authenticatedServerRegistry)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(serialiser != null);
@@ -50,6 +53,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(acknowledgementHandler != null);
             Contract.Requires(taskScheduler != null);
             Contract.Requires(authenticationSessionCache != null);
+            Contract.Requires(authenticatedServerRegistry != null);
             
             this.messageSender = messageSender;
             this.serialiser = serialiser;
@@ -59,16 +63,31 @@ namespace SystemDot.Messaging.RequestReply.Builders
             this.acknowledgementHandler = acknowledgementHandler;
             this.taskScheduler = taskScheduler;
             this.authenticationSessionCache = authenticationSessionCache;
+            this.authenticatedServerRegistry = authenticatedServerRegistry;
         }
 
         public void Build(RequestSendChannelSchema schema)
         {
-            SendMessageCache cache = persistenceFactory
+            SendMessageCache cache = CreateCache(schema);
+            RegisterCacheWithAcknowledgementHandler(cache);
+            BuildPipeline(schema, cache);
+            SendChannelBuiltEvent(schema);
+        }
+
+        SendMessageCache CreateCache(RequestSendChannelSchema schema)
+        {
+            return persistenceFactory
                 .Select(schema)
                 .CreateSendCache(PersistenceUseType.RequestSend, schema.FromAddress);
+        }
 
+        void RegisterCacheWithAcknowledgementHandler(SendMessageCache cache)
+        {
             acknowledgementHandler.RegisterCache(cache);
+        }
 
+        void BuildPipeline(RequestSendChannelSchema schema, SendMessageCache cache)
+        {
             MessagePipelineBuilder.Build()
                 .WithBusSendTo(new MessageFilter(schema.FilteringStrategy))
                 .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
@@ -84,15 +103,26 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new SequenceOriginRecorder(cache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()
-                .ToProcessor(new MessageExpirer(schema.ExpiryAction, cache, schema.ExpiryStrategy))
+                .ToProcessor(new MessageExpirer(schema.ExpiryAction, cache, schema.ExpiryStrategy, CreateAuthenticationSessionExpiryStrategy(schema)))
                 .ToProcessor(new LoadBalancer(cache, taskScheduler))
                 .ToProcessor(new LastSentRecorder(systemTime))
                 .ToEndPoint(messageSender);
+        }
 
+        AuthenticationSessionExpiryStrategy CreateAuthenticationSessionExpiryStrategy(RequestSendChannelSchema schema)
+        {
+            return new AuthenticationSessionExpiryStrategy(
+                authenticatedServerRegistry, 
+                schema.ReceiverAddress.Server, 
+                systemTime);
+        }
+
+        static void SendChannelBuiltEvent(RequestSendChannelSchema schema)
+        {
             Messenger.Send(new RequestSendChannelBuilt
             {
-                CacheAddress = schema.FromAddress, 
-                SenderAddress = schema.FromAddress, 
+                CacheAddress = schema.FromAddress,
+                SenderAddress = schema.FromAddress,
                 ReceiverAddress = schema.ReceiverAddress
             });
         }
