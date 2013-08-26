@@ -1,4 +1,3 @@
-using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Packaging;
 using Machine.Specifications;
 

@@ -49,6 +49,7 @@
     <Compile Include="authentication\FailingAuthenticationResponse.cs" />
     <Compile Include="authentication\MessagePayloadExtensions.cs" />
     <Compile Include="authentication\TestAuthenticationResponse.cs" />
+    <Compile Include="authentication\when_a_sent_message_is_repeated_after_restarting_messaging_and_its_session_has_expired.cs" />
     <Compile Include="authentication\when_receiving_a_message_without_first_authenticating.cs" />
     <Compile Include="authentication\when_receiving_a_message_without_a_session_with_both_sender_and_receiver_on_the_same_server.cs" />
     <Compile Include="authentication\OtherTestAuthenticationRequest.cs" />

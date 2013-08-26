@@ -75,7 +75,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
 
             acknowledgementHandler.RegisterCache(cache);
 
-            var sessionExpiryStrategy = new AuthenticationSessionExpiryStrategy(authenticatedServerRegistry, schema.ReceiverAddress.Server);
+            var sessionExpiryStrategy = new AuthenticationSessionExpiryStrategy(authenticatedServerRegistry, schema.ReceiverAddress.Server, systemTime);
 
             MessagePipelineBuilder.Build()
                 .WithBusSendTo(new MessageFilter(schema.FilteringStrategy))

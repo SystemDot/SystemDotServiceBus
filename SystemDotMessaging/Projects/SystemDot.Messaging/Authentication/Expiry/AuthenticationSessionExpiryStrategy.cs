@@ -9,19 +9,27 @@ namespace SystemDot.Messaging.Authentication.Expiry
     {
         readonly AuthenticatedServerRegistry registry;
         readonly MessageServer server;
+        readonly ISystemTime systemTime;
 
-        public AuthenticationSessionExpiryStrategy(AuthenticatedServerRegistry registry, MessageServer server)
+        public AuthenticationSessionExpiryStrategy(AuthenticatedServerRegistry registry, MessageServer server, ISystemTime systemTime)
         {
             Contract.Requires(registry != null);
             Contract.Requires(server != null);
+            Contract.Requires(systemTime != null);
 
             this.registry = registry;
             this.server = server;
+            this.systemTime = systemTime;
         }
 
         public bool HasExpired(MessagePayload toCheck)
         {
-            return !toCheck.HasAuthenticationSession() && registry.Contains(server);
+            return registry.Contains(server) && (!toCheck.HasAuthenticationSession() || IsExpired(toCheck));
+        }
+
+        bool IsExpired(MessagePayload toCheck)
+        {
+            return toCheck.GetAuthenticationSession().ExpiresOn <= systemTime.GetCurrentDate();
         }
     }
 }
