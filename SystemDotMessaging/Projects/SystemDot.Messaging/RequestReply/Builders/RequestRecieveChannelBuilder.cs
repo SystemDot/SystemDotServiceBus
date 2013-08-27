@@ -40,17 +40,17 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly ReplyAuthenticationSessionLookup replyAuthenticationSessionLookup;
 
         internal RequestRecieveChannelBuilder(
-            ReplyAddressLookup replyAddressLookup, 
-            ISerialiser serialiser, 
-            MessageHandlerRouter messageHandlerRouter, 
+            ReplyAddressLookup replyAddressLookup,
+            ISerialiser serialiser,
+            MessageHandlerRouter messageHandlerRouter,
             AcknowledgementSender acknowledgementSender,
-            PersistenceFactorySelector persistenceFactorySelector, 
-            ISystemTime systemTime, 
-            ITaskRepeater taskRepeater, 
-            ServerAddressRegistry serverAddressRegistry, 
-            IMainThreadMarshaller mainThreadMarshaller, 
-            AuthenticationSessionCache authenticationSessionCache, 
-            AuthenticatedServerRegistry authenticatedServerRegistry, 
+            PersistenceFactorySelector persistenceFactorySelector,
+            ISystemTime systemTime,
+            ITaskRepeater taskRepeater,
+            ServerAddressRegistry serverAddressRegistry,
+            IMainThreadMarshaller mainThreadMarshaller,
+            AuthenticationSessionCache authenticationSessionCache,
+            AuthenticatedServerRegistry authenticatedServerRegistry,
             ReplyAuthenticationSessionLookup replyAuthenticationSessionLookup)
         {
             Contract.Requires(replyAddressLookup != null);
@@ -65,7 +65,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(authenticationSessionCache != null);
             Contract.Requires(authenticatedServerRegistry != null);
             Contract.Requires(replyAuthenticationSessionLookup != null);
-            
+
             this.replyAddressLookup = replyAddressLookup;
             this.serialiser = serialiser;
             this.messageHandlerRouter = messageHandlerRouter;
@@ -85,16 +85,27 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(schema != null);
             Contract.Requires(senderAddress != null);
 
-            ReceiveMessageCache messageCache = this.persistenceFactorySelector
+            IMessageInputter<MessagePayload> messageInputter = BuildChannel(schema, CreateCache(schema, senderAddress));
+
+            SendChannelBuiltEvent(schema, senderAddress);
+
+            return messageInputter;
+        }
+
+        ReceiveMessageCache CreateCache(RequestRecieveChannelSchema schema, EndpointAddress senderAddress)
+        {
+            return persistenceFactorySelector
                 .Select(schema)
                 .CreateReceiveCache(PersistenceUseType.RequestReceive, senderAddress);
+        }
 
+        IMessageInputter<MessagePayload> BuildChannel(RequestRecieveChannelSchema schema, ReceiveMessageCache messageCache)
+        {
             var startPoint = new MessageLocalAddressReassigner(serverAddressRegistry);
 
             MessagePipelineBuilder.Build()
                 .With(startPoint)
                 .ToProcessor(new ReceiverAuthenticationSessionVerifier(authenticationSessionCache, authenticatedServerRegistry))
-                .ToProcessor(new ReplyAuthenticationSessionSelector(replyAuthenticationSessionLookup))
                 .ToProcessor(new SequenceOriginApplier(messageCache))
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
@@ -104,6 +115,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .Queue()
                 .ToResequencerIfSequenced(messageCache, schema)
                 .ToProcessor(new ReplyChannelSelector(replyAddressLookup))
+                .ToProcessor(new ReplyAuthenticationSessionSelector(replyAuthenticationSessionLookup))
                 .ToProcessor(new ExceptionReplier())
                 .ToProcessor(new MessageHookRunner<MessagePayload>(schema.PreUnpackagingHooks))
                 .ToConverter(new MessagePayloadUnpackager(serialiser))
@@ -114,14 +126,17 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
                 .ToEndPoint(messageHandlerRouter);
 
+            return startPoint;
+        }
+
+        static void SendChannelBuiltEvent(RequestRecieveChannelSchema schema, EndpointAddress senderAddress)
+        {
             Messenger.Send(new RequestReceiveChannelBuilt
             {
                 CacheAddress = senderAddress,
                 SenderAddress = senderAddress,
                 ReceiverAddress = schema.Address
             });
-
-            return startPoint;
         }
     }
 }

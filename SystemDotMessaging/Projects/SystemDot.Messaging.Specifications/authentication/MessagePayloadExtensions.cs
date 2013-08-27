@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.authentication
 
         public static MessagePayload SetAuthenticationSession(this MessagePayload payload)
         {
-            payload.SetAuthenticationSession(new AuthenticationSession(payload.GetFromAddress().Server, DateTime.MaxValue));
+            payload.SetAuthenticationSession(new AuthenticationSession(DateTime.MaxValue));
 
             return payload;
         }

@@ -43,7 +43,8 @@ namespace SystemDot.Messaging.Authentication.Builders
             configurer.OpenDirectChannel(ChannelNames.AuthenticationChannelName)
                 .ForRequestReplyReceiving()
                 .OnlyForMessages(FilteredBy.Type<TAuthenticationRequest>())
-                .WithReplyHook(new AuthenticationResponseHook<TAuthenticationResponse>(serialiser, cache, schema.ExpiresAfter));
+                .WithReplyHook(new AuthenticationResponseHook<TAuthenticationResponse>(serialiser, cache, schema.ExpiresAfter))
+                .Build();
         }
 
         void RunActionOnExpiry(Action<AuthenticationSession> toRunOnExpiry)

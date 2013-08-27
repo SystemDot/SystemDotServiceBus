@@ -23,6 +23,8 @@ namespace AuthenticationRequestReplyReciever
                     .RequiresAuthentication()
                         .AcceptsRequest<AuthenticationRequest>()
                         .AuthenticatesOnReply<AuthenticatedResponse>()
+                        .ExpiresAfter(TimeSpan.FromMinutes(1))
+                        .OnExpiry(s => Console.WriteLine("Session expired: {0}", s))
                 .OpenChannel("TestReply")
                     .ForRequestReplyReceiving()
                     .WithDurability()

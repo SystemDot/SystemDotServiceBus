@@ -2,7 +2,6 @@
 using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging;
-using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Configuration;
 using Messages;
 
@@ -16,6 +15,7 @@ namespace AuthenticationOtherRequestReplySender
             container.RegisterFromAssemblyOf<Program>();
 
             Configure.Messaging()
+                .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false })
                 .ResolveReferencesWith(container)
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageHandler>()
@@ -23,6 +23,7 @@ namespace AuthenticationOtherRequestReplySender
                     .AsAServer("OtherSenderServer")
                     .AuthenticateToServer("ReceiverServer")
                         .WithRequest<AuthenticationRequest>()
+                        .OnExpiry(s => Console.WriteLine("Session expired: {0}", s))
                 .OpenChannel("OtherTestRequest")
                     .ForRequestReplySendingTo("TestReply@ReceiverServer")
                     .WithDurability()
@@ -32,7 +33,7 @@ namespace AuthenticationOtherRequestReplySender
             Console.WriteLine("I am the sender. Whats the password? (its 'Hello')");
             string password = Console.ReadLine();
 
-            Bus.SendDirect(new AuthenticationRequest {Password = password});
+            Bus.SendDirect(new AuthenticationRequest { Password = password }, new AuthenticationHandler(), exception => { });
 
             do
             {
@@ -41,20 +42,22 @@ namespace AuthenticationOtherRequestReplySender
 
                 Console.WriteLine("Sending messages");
 
-                using (Batch batch = Bus.BatchSend())
-                {
-                    Bus.Send(new TestMessage("Hello"));
-                    Bus.Send(new TestMessage("Hello1"));
-                    Bus.Send(new TestMessage("Hello2"));
-                    Bus.Send(new TestMessage("Hello3"));
-                    Bus.Send(new TestMessage("Hello4"));
-                    Bus.Send(new TestMessage("Hello5"));
-                    Bus.Send(new TestMessage("Hello6"));
-                    Bus.Send(new TestMessage("Hello7"));
-
-                    batch.Complete();
-                }
+                Bus.Send(new TestMessage("Hello"));
             } while (true);
+        }
+
+        class AuthenticationHandler
+        {
+            public void Handle(AuthenticatedResponse message)
+            {
+                Console.WriteLine("Authenticated to server");
+            }
+
+            public void Handle(AuthenticationFailedResponse message)
+            {
+                Console.WriteLine("Failed authentication to server");
+            }
         }
     }
 }
+

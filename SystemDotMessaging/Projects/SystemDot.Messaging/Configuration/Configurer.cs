@@ -1,8 +1,8 @@
 using System;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using SystemDot.Messaging.Acknowledgement.Builders;
 using SystemDot.Messaging.Addressing;
-using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Authentication.Caching;
 using SystemDot.Messaging.Configuration.Authentication;
 using SystemDot.Messaging.Configuration.Direct;
@@ -36,9 +36,9 @@ namespace SystemDot.Messaging.Configuration
             Resolve<SubscriptionRequestReceiveChannelBuilder>().Build();
             Resolve<AcknowledgementSendChannelBuilder>().Build();
             Resolve<AcknowledgementRecieveChannelBuilder>().Build();
-            
-            messagingConfiguration.BuildActions.ForEach(a => a());
-            
+
+            messagingConfiguration.BuildActions.ToList().ForEach(a => a());
+
             Messenger.Send(new MessagingInitialising());
 
             Resolve<ITaskRepeater>().Start();
@@ -78,7 +78,7 @@ namespace SystemDot.Messaging.Configuration
 
         protected abstract MessageServer GetMessageServer();
 
-        internal UnitOfWorkRunner CreateUnitOfWorkRunner<TUnitOfWorkFactory>() 
+        internal UnitOfWorkRunner CreateUnitOfWorkRunner<TUnitOfWorkFactory>()
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory
         {
             return new UnitOfWorkRunner(GetUnitOfWorkFactory<TUnitOfWorkFactory>());

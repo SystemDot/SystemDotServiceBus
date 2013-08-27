@@ -54,6 +54,7 @@
     <Compile Include="Authentication\AuthenticationSession.cs" />
     <Compile Include="Authentication\AuthenticationSessionAttacher.cs" />
     <Compile Include="Authentication\Builders\AuthenticationReceiverSchema.cs" />
+    <Compile Include="Authentication\Builders\AuthenticationSenderSchema.cs" />
     <Compile Include="Authentication\Caching\AuthenticationSessionCache.cs" />
     <Compile Include="Authentication\Caching\Changes\AuthenticationSessionCachedChange.cs" />
     <Compile Include="Authentication\Caching\Changes\AuthenticationSessionCheckpointChange.cs" />

@@ -11,14 +11,14 @@ namespace SystemDot.Messaging.Authentication.Caching
 {
     class AuthenticationSessionCache : ChangeRoot
     {
-        readonly ConcurrentDictionary<Guid, AuthenticationSession> sessions;
+        readonly ConcurrentDictionary<Guid, ServerSession> sessions;
         readonly AuthenticationSessionFactory sessionFactory;
         readonly AuthenticationSessionExpirer sessionExpirer;
 
         public AuthenticationSessionCache(
-            AuthenticationSessionFactory sessionFactory, 
-            AuthenticationSessionExpirer sessionExpirer, 
-            IChangeStore changeStore) 
+            AuthenticationSessionFactory sessionFactory,
+            AuthenticationSessionExpirer sessionExpirer,
+            IChangeStore changeStore)
             : base(changeStore)
         {
             Contract.Requires(sessionFactory != null);
@@ -27,16 +27,16 @@ namespace SystemDot.Messaging.Authentication.Caching
 
             this.sessionFactory = sessionFactory;
             this.sessionExpirer = sessionExpirer;
-            sessions = new ConcurrentDictionary<Guid, AuthenticationSession>();
+            sessions = new ConcurrentDictionary<Guid, ServerSession>();
 
             Messenger.Register<AuthenticationSessionExpired>(e => DecacheSession(e.Session));
-            
+
             Id = "AuthenticationSessions";
         }
 
         void DecacheSession(AuthenticationSession session)
         {
-            AuthenticationSession temp;
+            ServerSession temp;
             sessions.TryRemove(session.Id, out temp);
         }
 
@@ -44,7 +44,7 @@ namespace SystemDot.Messaging.Authentication.Caching
         {
             Contract.Requires(forServer != null);
 
-            return forServer != MessageServer.None 
+            return forServer != MessageServer.None
                 && sessions.Any(s => s.Value.Server == forServer);
         }
 
@@ -53,8 +53,8 @@ namespace SystemDot.Messaging.Authentication.Caching
             Contract.Requires(forServer != null);
 
             return sessions
-                .OrderBy(s => s.Value.CreatedOn)
-                .Last(s => s.Value.Server == forServer).Value;
+                .OrderBy(s => s.Value.Session.CreatedOn)
+                .Last(s => s.Value.Server == forServer).Value.Session;
         }
 
         public void CacheNewSessionFor(MessageServer forServer, TimeSpan expiresAfter)
@@ -62,21 +62,22 @@ namespace SystemDot.Messaging.Authentication.Caching
             Contract.Requires(forServer != null);
             Contract.Requires(expiresAfter != null);
 
-            CacheSessionFor(sessionFactory.Create(forServer, expiresAfter));
+            CacheSessionFor(this.sessionFactory.Create(expiresAfter), forServer);
         }
 
-        public void CacheSessionFor(AuthenticationSession session)
+        public void CacheSessionFor(AuthenticationSession session, MessageServer forServer)
         {
             Contract.Requires(session != null);
+            Contract.Requires(forServer != null);
 
-            AddChange(new AuthenticationSessionCachedChange(session));
+            AddChange(new AuthenticationSessionCachedChange(forServer, session));
         }
 
         public void ApplyChange(AuthenticationSessionCachedChange change)
         {
             if (change.Session.ExpiresOn < SystemTime.Current.GetCurrentDate()) return;
 
-            sessions.TryAdd(change.Session.Id, change.Session);
+            sessions.TryAdd(change.Session.Id, new ServerSession(change.Server, change.Session));
             sessionExpirer.Track(change.Session);
         }
 
@@ -84,13 +85,26 @@ namespace SystemDot.Messaging.Authentication.Caching
         {
             Contract.Requires(toCheck != null);
 
-            return sessions.Any(s => s.Value == toCheck);
+            return sessions.Any(s => s.Value.Session == toCheck);
         }
 
         protected override void UrgeCheckPoint()
         {
             if (sessions.Count == 0)
                 CheckPoint(new AuthenticationSessionCheckpointChange());
+        }
+
+        class ServerSession
+        {
+            public MessageServer Server { get; private set; }
+
+            public AuthenticationSession Session { get; private set; }
+
+            public ServerSession(MessageServer server, AuthenticationSession session)
+            {
+                Server = server;
+                Session = session;
+            }
         }
     }
 }

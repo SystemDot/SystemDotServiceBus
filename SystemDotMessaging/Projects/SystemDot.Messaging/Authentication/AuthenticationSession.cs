@@ -1,6 +1,5 @@
 using System;
-using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Addressing;
+using System.Globalization;
 
 namespace SystemDot.Messaging.Authentication
 {
@@ -10,21 +9,16 @@ namespace SystemDot.Messaging.Authentication
 
         public DateTime CreatedOn { get; set; }
 
-        public MessageServer Server { get; set; }
-
         public DateTime ExpiresOn { get; set; }
 
         public AuthenticationSession()
         {
         }
 
-        public AuthenticationSession(MessageServer server, DateTime expiresOn)
+        public AuthenticationSession(DateTime expiresOn)
         {
-            Contract.Requires(server != null);
-
             Id = Guid.NewGuid();
             CreatedOn = SystemTime.Current.GetCurrentDate();
-            Server = server;
             ExpiresOn = expiresOn;
         }
 
@@ -45,12 +39,12 @@ namespace SystemDot.Messaging.Authentication
 
         public override string ToString()
         {
-            return String.Format("For: {0}, Created on: {1}, Expires on: {2}", Server, CreatedOn, GetExpiresOnToString());
+            return String.Format("Id: {0}, Created on: {1}, Expires on: {2}", Id, CreatedOn, GetExpiresOnToString());
         }
 
         string GetExpiresOnToString()
         {
-            return ExpiresOn == DateTime.MaxValue ? "Never" : ExpiresOn.ToShortDateString();
+            return ExpiresOn == DateTime.MaxValue ? "Never" : ExpiresOn.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

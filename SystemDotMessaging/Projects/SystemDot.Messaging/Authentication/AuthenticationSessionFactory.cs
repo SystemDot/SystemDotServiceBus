@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics.Contracts;
-using SystemDot.Messaging.Addressing;
 
 namespace SystemDot.Messaging.Authentication
 {
@@ -14,17 +13,16 @@ namespace SystemDot.Messaging.Authentication
             this.systemTime = systemTime;
         }
 
-        public AuthenticationSession Create(MessageServer server, TimeSpan expiresAfter)
+        public AuthenticationSession Create(TimeSpan expiresAfter)
         {
-            Contract.Requires(server != null);
             Contract.Requires(expiresAfter != null);
 
-            return new AuthenticationSession(server, GetExpiresOn(expiresAfter));
+            return new AuthenticationSession(GetExpiresOn(expiresAfter));
         }
 
         DateTime GetExpiresOn(TimeSpan expiresAfter)
         {
-            return expiresAfter == TimeSpan.MaxValue 
+            return expiresAfter == TimeSpan.MaxValue
                 ? DateTime.MaxValue
                 : systemTime.GetCurrentDate().Add(expiresAfter);
         }

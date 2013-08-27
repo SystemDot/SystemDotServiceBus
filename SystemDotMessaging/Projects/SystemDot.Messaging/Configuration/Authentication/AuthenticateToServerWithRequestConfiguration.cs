@@ -1,5 +1,7 @@
+using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Authentication.Builders;
 
 namespace SystemDot.Messaging.Configuration.Authentication
@@ -7,11 +9,11 @@ namespace SystemDot.Messaging.Configuration.Authentication
     public class AuthenticateToServerWithRequestConfiguration<TAuthenticationRequest> : Configurer
     {
         readonly MessageServer server;
-        readonly string serverRequiringAuthentication;
+        readonly AuthenticationSenderSchema schema;
 
         public AuthenticateToServerWithRequestConfiguration(
             MessagingConfiguration messagingConfiguration,
-            MessageServer server, 
+            MessageServer server,
             string serverRequiringAuthentication)
             : base(messagingConfiguration)
         {
@@ -19,17 +21,27 @@ namespace SystemDot.Messaging.Configuration.Authentication
             Contract.Requires(!string.IsNullOrEmpty(serverRequiringAuthentication));
 
             this.server = server;
-            this.serverRequiringAuthentication = serverRequiringAuthentication;
+            this.schema = new AuthenticationSenderSchema
+            {
+                Server = serverRequiringAuthentication
+            };
         }
 
         protected internal override void Build()
         {
-            Resolve<AuthenticationSenderBuilder>().Build<TAuthenticationRequest>(this, serverRequiringAuthentication);
+            Resolve<AuthenticationSenderBuilder>().Build<TAuthenticationRequest>(this, schema);
         }
 
         protected override MessageServer GetMessageServer()
         {
             return server;
+        }
+
+        public AuthenticateToServerWithRequestConfiguration<TAuthenticationRequest> OnExpiry(
+            Action<AuthenticationSession> toRunOnExpiry)
+        {
+            schema.ToRunOnExpiry = toRunOnExpiry;
+            return this;
         }
     }
 }
