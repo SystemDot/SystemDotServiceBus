@@ -78,7 +78,7 @@ namespace SystemDot.Messaging.Authentication.Caching
             if (change.Session.ExpiresOn < SystemTime.Current.GetCurrentDate()) return;
 
             sessions.TryAdd(change.Session.Id, new ServerSession(change.Server, change.Session));
-            sessionExpirer.Track(change.Session);
+            sessionExpirer.Track(change.Server, change.Session);
         }
 
         public bool ContainsSession(AuthenticationSession toCheck)

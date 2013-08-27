@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Linq;
 using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.authentication;
@@ -7,10 +8,9 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.authentication_expiry
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_a_session_expires_for_a_server_requiring_authentication_with_an_expired_session_action_configured : WithHttpConfigurationSubject
+    public class when_a_session_expires_on_a_server_requiring_authentication_with_an_expired_session_action_configured : WithHttpServerConfigurationSubject
     {
-        const string ReceiverServerName = "ReceiverServer";
-        const string SenderServer = "SenderServer";
+        const string ReceiverServer = "ReceiverServer";
         const int ExpiryInMinutes = 20;
 
         static AuthenticationSession session;
@@ -18,30 +18,26 @@ namespace SystemDot.Messaging.Specifications.authentication_expiry
 
         Establish context = () =>
         {
-            Configuration.Configure.Messaging()
-                .UsingHttpTransport()
-                .AsAServer(SenderServer)
-                .AuthenticateToServer(ReceiverServerName)
-                .WithRequest<TestAuthenticationRequest>()
-                .OnExpiry(s => sessionReceivedInExpiryAction = s)
-                .OpenChannel("SenderChannel").ForPointToPointSendingTo("ReceiverChannel@" + ReceiverServerName)
-                .Initialise();
-
-            var authenticationResponse = new MessagePayload()
+            var authenticationRequestPayload = new MessagePayload()
                 .SetAuthenticationRequestChannels()
                 .SetMessageBody(new TestAuthenticationRequest())
-                .SetFromServer(ReceiverServerName)
-                .SetToServer(SenderServer)
-                .SetAuthenticationSession();
+                .SetFromServer("SenderServer")
+                .SetToServer(ReceiverServer);
 
-            session = authenticationResponse.GetAuthenticationSession();
-            session.ExpiresOn = SystemTime.GetCurrentDate().AddMinutes(ExpiryInMinutes);
+            Configuration.Configure.Messaging()
+                .UsingHttpTransport()
+                    .AsAServer(ReceiverServer)
+                    .RequiresAuthentication()
+                        .AcceptsRequest<TestAuthenticationRequest>()
+                        .AuthenticatesOnReply<TestAuthenticationResponse>()
+                        .ExpiresAfter(TimeSpan.FromMinutes(ExpiryInMinutes))
+                        .OnExpiry(s => sessionReceivedInExpiryAction = s)
+                    .OpenChannel("ReceiverChannel")
+                        .ForPointToPointReceiving()
+                    .RegisterHandlers(r => r.RegisterHandler(new TestReplyMessageHandler<TestAuthenticationRequest, TestAuthenticationResponse>()))
+                .Initialise();
 
-            WebRequestor.AddMessages(authenticationResponse);
-
-            Bus.SendDirect(new TestAuthenticationRequest(), new TestMessageHandler<TestAuthenticationResponse>(), e => { });
-
-            WebRequestor.RequestsMade.Clear();
+            session = SendMessagesToServer(authenticationRequestPayload).Single().GetAuthenticationSession();
         };
 
         Because of = () =>
@@ -52,4 +48,6 @@ namespace SystemDot.Messaging.Specifications.authentication_expiry
 
         It should_run_the_action = () => sessionReceivedInExpiryAction.ShouldEqual(session);
     }
+
+
 }

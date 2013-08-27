@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Authentication.Builders
 
             BuildChannel<TAuthenticationRequest>(configurer, schema);
             RegisterAuthenticatedServer(schema);
-            RunActionOnExpiry(schema.ToRunOnExpiry);
+            RunActionOnExpiry(schema);
         }
 
         void BuildChannel<TAuthenticationRequest>(Configurer configurer, AuthenticationSenderSchema schema)
@@ -50,9 +50,12 @@ namespace SystemDot.Messaging.Authentication.Builders
             serverRegistry.Register(schema.Server);
         }
 
-        void RunActionOnExpiry(Action<AuthenticationSession> toRunOnExpiry)
+        void RunActionOnExpiry(AuthenticationSenderSchema schema)
         {
-            Messenger.Register<AuthenticationSessionExpired>(e => toRunOnExpiry(e.Session));
+            Messenger.Register<AuthenticationSessionExpired>(e =>
+            {
+                if (schema.Server == e.Server.Name) schema.ToRunOnExpiry(e.Session);
+            });
         }
     }
 }

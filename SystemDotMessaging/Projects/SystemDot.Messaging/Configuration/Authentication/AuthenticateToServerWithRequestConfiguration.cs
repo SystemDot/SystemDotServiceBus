@@ -23,7 +23,8 @@ namespace SystemDot.Messaging.Configuration.Authentication
             this.server = server;
             this.schema = new AuthenticationSenderSchema
             {
-                Server = serverRequiringAuthentication
+                Server = serverRequiringAuthentication,
+                ToRunOnExpiry = s => {}
             };
         }
 
@@ -40,6 +41,7 @@ namespace SystemDot.Messaging.Configuration.Authentication
         public AuthenticateToServerWithRequestConfiguration<TAuthenticationRequest> OnExpiry(
             Action<AuthenticationSession> toRunOnExpiry)
         {
+            Contract.Requires(toRunOnExpiry != null);
             schema.ToRunOnExpiry = toRunOnExpiry;
             return this;
         }

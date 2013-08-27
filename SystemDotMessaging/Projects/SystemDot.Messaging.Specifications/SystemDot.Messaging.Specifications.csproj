@@ -68,11 +68,12 @@
     <Compile Include="authentication\when_sending_a_message_to_a_server_after_failing_to_authenticate_to_it.cs" />
     <Compile Include="authentication\when_sending_a_message_with_both_sender_and_receiver_on_the_same_server.cs" />
     <Compile Include="authentication\when_sending_a_message_with_sender_and_receiver_on_the_same_server_after_restarting_messaging.cs" />
-    <Compile Include="authentication_expiry\when_a_session_expires_on_a_server_requiring_authentication_with_an_expired_session_action_configured.cs" />
+    <Compile Include="authentication_expiry\when_a_session_expires_for_a_server_requiring_authentication_with_an_expired_session_action_configured.cs" />
     <Compile Include="authentication_expiry\SpecificationGroup.cs" />
     <Compile Include="authentication\when_receiving_a_message_on_a_session_with_whilst_a_new_session_exists_for_that_sender.cs" />
+    <Compile Include="authentication_expiry\when_a_session_expires_with_an_expired_session_action_configured_for_different_server.cs" />
     <Compile Include="authentication_expiry\when_receiving_a_message_with_an_expired_session.cs" />
-    <Compile Include="authentication_expiry\when_a_session_expires_with_a_expired_session_action_configured.cs" />
+    <Compile Include="authentication_expiry\when_a_session_expires_on_a_server_requiring_authentication_with_an_expired_session_action_configured.cs" />
     <Compile Include="authentication_expiry\when_replying_to_an_authentication_request_on_a_server_with_session_expiry.cs" />
     <Compile Include="authentication_expiry\when_sending_a_message_when_the_current_session_is_expired.cs" />
     <Compile Include="authentication_for_publishing\SpecificationGroup.cs" />
