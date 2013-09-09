@@ -1,11 +1,12 @@
 using System;
+using System.Threading.Tasks;
 using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging.Specifications
 {
     public class TestTaskStarter : ITaskStarter
     {
-        public static ITaskStarter Unlimited()
+        public static TestTaskStarter Unlimited()
         {
             return new TestTaskStarter(0);
         }
@@ -26,22 +27,28 @@ namespace SystemDot.Messaging.Specifications
             this.allowedInvocationCount = allowedInvocationCount;
         }
 
-        public void StartTask(Action action)
+        public Task StartTask(Action toStart)
         {
-            if (allowedInvocationCount > 0 && InvocationCount == allowedInvocationCount) return;
-            this.action = action;
+            if (allowedInvocationCount > 0 && InvocationCount == allowedInvocationCount) return NullTask();
+            this.action = toStart;
 
             InvocationCount++;
-            
-            if (this.paused) return;
 
-            this.action.Invoke();
+            if (!this.paused)
+                this.action.Invoke();
+
+            return NullTask();
+        }
+
+        static Task NullTask()
+        {
+            return new Task(() => { });
         }
 
         public void UnPause()
         {
             this.paused = false;
-            if(this.action != null) this.action.Invoke();
+            if (this.action != null) this.action.Invoke();
         }
 
         public void Pause()

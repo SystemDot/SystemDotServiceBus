@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Transport;
+using SystemDot.ThreadMashalling;
 
 namespace SystemDot.Messaging.Direct
 {
@@ -10,14 +11,16 @@ namespace SystemDot.Messaging.Direct
     {
         readonly IMessageTransporter messageTransporter;
         readonly MessageReceiver messageReceiver;
+        readonly IMainThreadMarshaller marshaller;
 
-        public RequestSender(IMessageTransporter messageTransporter, MessageReceiver messageReceiver)
+        public RequestSender(IMessageTransporter messageTransporter, MessageReceiver messageReceiver, IMainThreadMarshaller marshaller)
         {
             Contract.Requires(messageTransporter != null);
             Contract.Requires(messageReceiver != null);
 
             this.messageTransporter = messageTransporter;
             this.messageReceiver = messageReceiver;
+            this.marshaller = marshaller;
         }
 
         public void InputMessage(MessagePayload toInput)
@@ -31,12 +34,18 @@ namespace SystemDot.Messaging.Direct
             messageTransporter.TransportMessage(toSend, GetServerErrorAction(), () => { }, ReturnMessages);
         }
 
-        static Action<Exception> GetServerErrorAction()
+        Action<Exception> GetServerErrorAction()
         {
-            return DirectSendContext.IsActive() ? DirectSendContext.GetServerError() : e => { };
+            return DirectSendContext.HasServerErrorAction() ? GetServerErrorActionOnMainThread() : e => { };
         }
 
-        void ReturnMessages(IEnumerable<MessagePayload> toReturn) 
+        Action<Exception> GetServerErrorActionOnMainThread()
+        {
+            Action<Exception> serverErrorAction = DirectSendContext.GetServerErrorAction();
+            return e => marshaller.RunOnMainThread(() => serverErrorAction(e));
+        }
+
+        void ReturnMessages(IEnumerable<MessagePayload> toReturn)
         {
             toReturn.ForEach(messageReceiver.InputMessage);
         }

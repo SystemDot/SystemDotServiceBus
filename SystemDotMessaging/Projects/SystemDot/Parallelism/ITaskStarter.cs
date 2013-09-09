@@ -1,9 +1,10 @@
 using System;
+using System.Threading.Tasks;
 
 namespace SystemDot.Parallelism
 {
     public interface ITaskStarter
     {
-        void StartTask(Action action);
+        Task StartTask(Action action);
     }
 }

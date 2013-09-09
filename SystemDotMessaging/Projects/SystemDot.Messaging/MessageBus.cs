@@ -1,12 +1,22 @@
 using System;
 using System.Diagnostics.Contracts;
+using System.Threading.Tasks;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Direct;
+using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging
 {
     public class MessageBus : IBus
     {
+        readonly ITaskStarter taskStarter;
+
+        public MessageBus(ITaskStarter taskStarter)
+        {
+            Contract.Requires(taskStarter != null);
+            this.taskStarter = taskStarter;
+        }
+
         public event Action<object> MessageSent;
         public event Action<object> MessageSentDirect;
         public event Action<object> MessagePublished;
@@ -15,7 +25,7 @@ namespace SystemDot.Messaging
         public void Send(object message)
         {
             Contract.Requires(message != null);
-            
+
             if (MessageSent == null) return;
             MessageSent(message);
         }
@@ -23,22 +33,36 @@ namespace SystemDot.Messaging
         public void SendDirect(object message)
         {
             Contract.Requires(message != null);
-            
-            if (MessageSentDirect == null) return;
-            MessageSentDirect(message);
-        }
 
-        public void SendDirect(object message, Action<Exception> onServerError) 
-        {
-            Contract.Requires(message != null);
-            Contract.Requires(onServerError != null);
-            using (new DirectSendContext(onServerError))
+            using (new DirectSendContext())
             {
-                SendDirect(message);
+                OnMessageSentDirect(message);
             }
         }
 
-        public void SendDirect(object message, object handleReplyWith, Action<Exception> onServerError) 
+        public Task SendDirectAsync(object message)
+        {
+            Contract.Requires(message != null);
+            return taskStarter.StartTask(() => SendDirect(message));
+        }
+
+        public void SendDirect(object message, Action<Exception> onServerError)
+        {
+            Contract.Requires(message != null);
+            Contract.Requires(onServerError != null);
+
+            using (new DirectSendContext(onServerError))
+            {
+                OnMessageSentDirect(message);
+            }
+        }
+
+        public Task SendDirectAsync(object message, Action<Exception> onServerError)
+        {
+            return taskStarter.StartTask(() => SendDirect(message, onServerError));
+        }
+
+        public void SendDirect(object message, object handleReplyWith, Action<Exception> onServerError)
         {
             Contract.Requires(message != null);
             Contract.Requires(handleReplyWith != null);
@@ -46,8 +70,19 @@ namespace SystemDot.Messaging
 
             using (new DirectSendContext(onServerError, handleReplyWith))
             {
-                SendDirect(message);
+                OnMessageSentDirect(message);
             }
+        }
+
+        public Task SendDirectAsync(object message, object handleReplyWith, Action<Exception> onServerError)
+        {
+            return taskStarter.StartTask(() => SendDirect(message, handleReplyWith, onServerError));
+        }
+
+        void OnMessageSentDirect(object message)
+        {
+            if (MessageSentDirect == null) return;
+            MessageSentDirect(message);
         }
 
         public void Reply(object message)

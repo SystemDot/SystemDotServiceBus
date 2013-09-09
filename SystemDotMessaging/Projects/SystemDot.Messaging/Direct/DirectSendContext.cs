@@ -7,6 +7,11 @@ namespace SystemDot.Messaging.Direct
     {
         readonly static ThreadLocal<ContextData> current = new ThreadLocal<ContextData>();
 
+        public DirectSendContext()
+            : this(null, null)
+        {
+        }
+
         public DirectSendContext(Action<Exception> onServerError)
             : this(onServerError, null)
         {
@@ -17,9 +22,12 @@ namespace SystemDot.Messaging.Direct
             current.Value = new ContextData(onServerError, handleReplyWith);
         }
 
-        public static bool IsActive() { return current.Value != null; }
 
-        public static Action<Exception> GetServerError() { return current.Value.OnServerError; }
+        public static bool HasServerErrorAction() { return current.Value.OnServerError != null; }
+
+        public static Action<Exception> GetServerErrorAction() { return current.Value.OnServerError; }
+
+        public static bool HasReplyHandler() { return current.Value.HandleReplyWith != null; }
 
         public static object GetHandleReplyWith() { return current.Value.HandleReplyWith; }
 

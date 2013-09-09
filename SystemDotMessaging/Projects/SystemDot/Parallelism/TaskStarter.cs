@@ -6,9 +6,9 @@ namespace SystemDot.Parallelism
 {
     public class TaskStarter : ITaskStarter
     {
-        public void StartTask(Action action)
+        public Task StartTask(Action toStart)
         {
-            Task.Factory.StartNew(() => DoTask(action));
+            return Task.Factory.StartNew(() => DoTask(toStart));
         }
 
         static void DoTask(Action task)
