@@ -3,7 +3,6 @@ using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
 using Machine.Specifications;
