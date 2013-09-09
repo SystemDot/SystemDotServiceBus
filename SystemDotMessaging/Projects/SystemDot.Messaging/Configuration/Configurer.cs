@@ -11,6 +11,7 @@ using SystemDot.Messaging.Publishing.Builders;
 using SystemDot.Messaging.Transport;
 using SystemDot.Messaging.UnitOfWork;
 using SystemDot.Parallelism;
+using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Configuration
 {
@@ -31,8 +32,10 @@ namespace SystemDot.Messaging.Configuration
         public void Initialise()
         {
             Resolve<ITransportBuilder>().Build(GetMessageServer());
+            Resolve<IChangeStore>().Initialise();
 
             Resolve<AuthenticationSessionCache>().Initialise();
+
             Resolve<SubscriptionRequestReceiveChannelBuilder>().Build();
             Resolve<AcknowledgementSendChannelBuilder>().Build();
             Resolve<AcknowledgementRecieveChannelBuilder>().Build();

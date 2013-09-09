@@ -10,24 +10,9 @@ namespace SystemDot.Messaging.Configuration
         {
             DbChangeStore.ConnectionString = connection;
 
-            IIocContainer container = configuration.GetInternalIocContainer();
-
-            RegisterChangeStore(container);
-            SetChangeStoreInitialisationAsConfigBuildAction(configuration, container);
+            configuration.GetInternalIocContainer().RegisterInstance<IChangeStore, SqlChangeStore>();
 
             return configuration;
-        }
-
-        static void RegisterChangeStore(IIocContainer container)
-        {
-            container.RegisterInstance<IChangeStore, SqlChangeStore>();
-        }
-
-        static void SetChangeStoreInitialisationAsConfigBuildAction(
-            MessagingConfiguration configuration,
-            IIocContainer container)
-        {
-            configuration.BuildActions.Add(() => container.Resolve<IChangeStore>().Initialise());
         }
     }
 }
