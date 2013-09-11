@@ -6,14 +6,14 @@ namespace SystemDot
     {
         public static ISystemTime Current { get; private set; }
 
+        static SystemTime()
+        {
+            SetCurrent(new SystemTime());
+        }
+
         public static void SetCurrent(ISystemTime toSet)
         {
             Current = toSet;
-        }
-
-        public SystemTime()
-        {
-            SetCurrent(this);
         }
 
         public DateTime GetCurrentDate()

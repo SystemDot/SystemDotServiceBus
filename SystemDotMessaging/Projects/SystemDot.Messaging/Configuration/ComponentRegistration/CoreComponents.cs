@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<IWebRequestor, WebRequestor>();
             container.RegisterInstance<EndpointAddressBuilder, EndpointAddressBuilder>();
             container.RegisterInstance<MessageServerBuilder, MessageServerBuilder>();
-            container.RegisterInstance<ISystemTime, SystemTime>();
+            container.RegisterInstance<ISystemTime>(() => SystemTime.Current);
             container.RegisterInstance<IConfigurationReader, ConfigurationReader>();
             container.RegisterInstance<ServerAddressLoader, ServerAddressLoader>();
             container.RegisterInstance<ServerAddressRegistry, ServerAddressRegistry>();
