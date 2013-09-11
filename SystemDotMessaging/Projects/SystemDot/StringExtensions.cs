@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 namespace SystemDot
 {
@@ -6,11 +7,7 @@ namespace SystemDot
     {
         public static byte[] ToBytes(this string toConvert)
         {
-            var bytes = new byte[toConvert.Length * sizeof(char)];
-
-            Buffer.BlockCopy(toConvert.ToCharArray(), 0, bytes, 0, bytes.Length);
-
-            return bytes;
+            return Encoding.UTF8.GetBytes(toConvert);
         }
     }
 }

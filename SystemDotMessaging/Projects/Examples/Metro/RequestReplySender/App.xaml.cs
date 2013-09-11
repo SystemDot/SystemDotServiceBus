@@ -48,7 +48,7 @@ namespace RequestReplySender
                 .ResolveReferencesWith(container)
                 .RegisterHandlersFromAssemblyOf<ResponseHandler>()
                     .BasedOn<IMessageConsumer>()
-                .UsingFilePersistence()
+                //.UsingFilePersistence()
                 .UsingHttpTransport()
                     .AsAServerUsingAProxy("SenderServer")
                 .OpenChannel("TestMetroRequest")
