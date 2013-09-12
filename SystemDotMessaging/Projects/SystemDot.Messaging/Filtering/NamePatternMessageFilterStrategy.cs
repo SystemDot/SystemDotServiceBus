@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Filtering
             bool passesThrough = toCheck.GetType().Name.Contains(pattern);
 
             if (passesThrough)
-                Logger.Debug("Passes filter for message name: {0}", pattern);
+                Logger.Debug("{0} message passes filter for message name: {0}", toCheck.GetType().Name, pattern);
 
             return passesThrough;
         }

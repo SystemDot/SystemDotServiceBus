@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Authentication.Expiry
 
         public bool HasExpired(MessagePayload toCheck)
         {
-            Logger.Debug("Checking expiry due to no or expired authentication: {0}", toCheck.Id);
+            Logger.Debug("Checking expiry due to no or expired authentication on message: {0}", toCheck.Id);
             return registry.Contains(server) && (!toCheck.HasAuthenticationSession() || IsExpired(toCheck));
         }
 

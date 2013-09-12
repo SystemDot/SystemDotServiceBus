@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.Contracts;
 using System.Threading.Tasks;
+using SystemDot.Logging;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Direct;
 using SystemDot.Parallelism;
@@ -26,6 +27,8 @@ namespace SystemDot.Messaging
         {
             Contract.Requires(message != null);
 
+            Logger.Debug("Sending message: {0}", message.GetType().Name);
+            
             if (MessageSent == null) return;
             MessageSent(message);
         }
@@ -34,6 +37,8 @@ namespace SystemDot.Messaging
         {
             Contract.Requires(message != null);
 
+            Logger.Debug("Sending direct message: {0}", message.GetType().Name);
+            
             using (new DirectSendContext())
             {
                 OnMessageSentDirect(message);
@@ -43,6 +48,9 @@ namespace SystemDot.Messaging
         public Task SendDirectAsync(object message)
         {
             Contract.Requires(message != null);
+
+            Logger.Debug("Sending direct message asynchronously: {0}", message.GetType().Name);
+            
             return taskStarter.StartTask(() => SendDirect(message));
         }
 
@@ -51,6 +59,8 @@ namespace SystemDot.Messaging
             Contract.Requires(message != null);
             Contract.Requires(onServerError != null);
 
+            Logger.Debug("Sending direct message: {0}", message.GetType().Name);
+            
             using (new DirectSendContext(onServerError))
             {
                 OnMessageSentDirect(message);
@@ -59,6 +69,10 @@ namespace SystemDot.Messaging
 
         public Task SendDirectAsync(object message, Action<Exception> onServerError)
         {
+            Contract.Requires(message != null);
+            Contract.Requires(onServerError != null);
+            
+            Logger.Debug("Sending direct message asynchronously: {0}", message.GetType().Name);
             return taskStarter.StartTask(() => SendDirect(message, onServerError));
         }
 
@@ -67,7 +81,9 @@ namespace SystemDot.Messaging
             Contract.Requires(message != null);
             Contract.Requires(handleReplyWith != null);
             Contract.Requires(onServerError != null);
-
+            
+            Logger.Debug("Sending direct message: {0} with reply handler {1}", message.GetType().Name, handleReplyWith.GetType().Name);
+            
             using (new DirectSendContext(onServerError, handleReplyWith))
             {
                 OnMessageSentDirect(message);
@@ -76,6 +92,12 @@ namespace SystemDot.Messaging
 
         public Task SendDirectAsync(object message, object handleReplyWith, Action<Exception> onServerError)
         {
+            Contract.Requires(message != null);
+            Contract.Requires(handleReplyWith != null);
+            Contract.Requires(onServerError != null);
+            
+            Logger.Debug("Sending direct message asynchronously: {0} with reply handler {1}", message.GetType().Name, handleReplyWith.GetType().Name);
+            
             return taskStarter.StartTask(() => SendDirect(message, handleReplyWith, onServerError));
         }
 
@@ -89,6 +111,8 @@ namespace SystemDot.Messaging
         {
             Contract.Requires(message != null);
 
+            Logger.Debug("Replying with message: {0}", message.GetType().Name);
+            
             if (MessageReplied == null) return;
             MessageReplied(message);
         }
@@ -97,12 +121,16 @@ namespace SystemDot.Messaging
         {
             Contract.Requires(message != null);
 
+            Logger.Debug("Publishing message: {0}", message.GetType().Name);
+            
             if (MessagePublished == null) return;
             MessagePublished(message);
         }
 
         public Batch BatchSend()
         {
+            Logger.Debug("Starting batch");
+
             return new Batch();
         }
     }

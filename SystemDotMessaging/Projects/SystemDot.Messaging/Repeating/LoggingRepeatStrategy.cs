@@ -10,8 +10,9 @@ namespace SystemDot.Messaging.Repeating
         protected static void LogMessage(MessagePayload toInput)
         {
             Logger.Debug(
-                "Repeating message on {0} with sequence {1}",
-                toInput.HasHeader<AddressHeader>() ? toInput.GetFromAddress().Channel : "n/a",
+                "Repeating message: {0} on {1} with sequence {2}",
+                toInput.Id,
+                toInput.HasHeader<FromAddressHeader>() ? toInput.GetFromAddress().Channel : "n/a",
                 toInput.HasSequence() ? toInput.GetSequence().ToString() : "n/a");
         }
     }

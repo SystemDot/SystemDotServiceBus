@@ -23,13 +23,13 @@ namespace SystemDot.Messaging.Packaging
         {
             if (!toInput.HasBody()) return;
 
-            Logger.Debug("Unpackaging message payload");
+            Logger.Debug("Unpackaging message payload {0}", toInput.Id);
 
             object message = Deserialise(toInput.GetBody());
             
             if (message == null) return;
 
-            Logger.Debug("Unpackaged message payload");
+            Logger.Debug("Unpackaged message payload {0}", toInput.Id);
 
             MessageProcessed(message);
         }

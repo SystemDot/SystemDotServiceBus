@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
+using System.Linq;
 using SystemDot.Http;
 using SystemDot.Logging;
 using SystemDot.Messaging.Addressing;
@@ -84,9 +85,10 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Clients
         {
             var messages = this.formatter.Deserialise(responseStream).As<IEnumerable<MessagePayload>>();
 
+            Logger.Debug("Recieved {0} messages from long poll", messages.Count());
+                
             foreach (var message in messages)
             {
-                Logger.Info("Recieved message");
                 receiver.InputMessage(message);
             }
         }
