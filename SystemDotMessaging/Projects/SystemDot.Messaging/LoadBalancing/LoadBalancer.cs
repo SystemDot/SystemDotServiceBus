@@ -49,7 +49,7 @@ namespace SystemDot.Messaging.LoadBalancing
             
             if (sentMessages.Count >= 20)
             {
-                Logger.Info("Load balancer retaining messages");
+                Logger.Debug("Load balancer retaining messages");
                 return;
             }
 

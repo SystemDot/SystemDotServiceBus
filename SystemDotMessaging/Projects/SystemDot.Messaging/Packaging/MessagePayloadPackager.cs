@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Packaging
             var messagePayload = new MessagePayload();
             messagePayload.SetBody(serialiser.Serialise(toInput));
 
-            Logger.Debug("Packaging message payload");
+            Logger.Debug("Packaging message payload: {0}", toInput.GetType().Name);
 
             this.MessageProcessed(messagePayload);
         }

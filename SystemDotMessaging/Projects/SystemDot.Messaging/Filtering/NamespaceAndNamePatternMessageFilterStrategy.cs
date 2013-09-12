@@ -26,7 +26,8 @@ namespace SystemDot.Messaging.Filtering
                 && type.Namespace.Contains(namespacePattern);
 
             if (passesThrough)
-                Logger.Debug("Passes filter for message namespace {0} and name {1}",
+                Logger.Debug("{0} message passes filter for message namespace {0} and name {1}",
+                    toCheck.GetType().Name, 
                     namespacePattern,
                     namePattern);
 

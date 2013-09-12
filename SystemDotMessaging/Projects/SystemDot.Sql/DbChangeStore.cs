@@ -45,7 +45,7 @@ namespace SystemDot.Sql
 
         void StoreChange(DbConnection connection, string changeRootId, Change change)
         {
-            Logger.Debug("Storing change in sql");
+            Logger.Debug("Storing change in sql for id {0}", changeRootId);
             
             connection.Execute(
                 "insert into ChangeStore(changeRootId, change) values(@changeRootId, @change)",

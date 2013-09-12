@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Logging;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Direct;
 
@@ -15,7 +16,9 @@ namespace SystemDot.Messaging
         public void Send(object message)
         {
             Contract.Requires(message != null);
-            
+
+            Logger.Debug("Sending message: {0}", message.GetType().Name);
+
             if (MessageSent == null) return;
             MessageSent(message);
         }
@@ -23,6 +26,8 @@ namespace SystemDot.Messaging
         public void SendDirect(object message)
         {
             Contract.Requires(message != null);
+
+            Logger.Debug("Sending direct message: {0}", message.GetType().Name);
             
             if (MessageSentDirect == null) return;
             MessageSentDirect(message);
@@ -32,6 +37,9 @@ namespace SystemDot.Messaging
         {
             Contract.Requires(message != null);
             Contract.Requires(onServerError != null);
+
+            Logger.Debug("Sending direct message: {0}", message.GetType().Name);
+            
             using (new DirectSendContext(onServerError))
             {
                 SendDirect(message);
@@ -44,6 +52,8 @@ namespace SystemDot.Messaging
             Contract.Requires(handleReplyWith != null);
             Contract.Requires(onServerError != null);
 
+            Logger.Debug("Sending direct message: {0} with reply handler {1}", message.GetType().Name, handleReplyWith.GetType().Name);
+            
             using (new DirectSendContext(onServerError, handleReplyWith))
             {
                 SendDirect(message);
@@ -54,6 +64,8 @@ namespace SystemDot.Messaging
         {
             Contract.Requires(message != null);
 
+            Logger.Debug("Replying with message: {0}", message.GetType().Name);
+            
             if (MessageReplied == null) return;
             MessageReplied(message);
         }
@@ -62,12 +74,16 @@ namespace SystemDot.Messaging
         {
             Contract.Requires(message != null);
 
+            Logger.Debug("Publishing message: {0}", message.GetType().Name);
+            
             if (MessagePublished == null) return;
             MessagePublished(message);
         }
 
         public Batch BatchSend()
         {
+            Logger.Debug("Starting new batch");
+
             return new Batch();
         }
     }

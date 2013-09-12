@@ -47,8 +47,6 @@ namespace SystemDot.Http
         {
             try
             {
-                Logger.Info("Http server: received request");
-
                 handler.HandleRequest(context.Request.InputStream, context.Response.OutputStream);
                 context.Response.StatusCode = (int)HttpStatusCode.OK;
             }

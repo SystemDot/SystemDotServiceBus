@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Batching
 
             if(currentPackage == null)
             {
-                Logger.Debug("Batching message");
+                Logger.Debug("Batching {0} message", toInput.GetType().Name);
 
                 currentPackage = new BatchMessage();
                 Batch.GetCurrent().Finished += completed =>

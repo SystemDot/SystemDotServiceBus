@@ -26,7 +26,8 @@ namespace SystemDot.Messaging.Sequencing
         {
             int startSequence = this.messageCache.GetSequence();
 
-            Logger.Debug("Resequencing message on {0}, sequence: {1}, expected sequence: {2}",
+            Logger.Debug("Resequencing message {0} on {1}, sequence: {2}, expected sequence: {3}", 
+                toInput.Id,
                 toInput.GetToAddress().Channel,
                 toInput.GetSequence(),
                 startSequence);
@@ -52,10 +53,10 @@ namespace SystemDot.Messaging.Sequencing
         {
             while (this.messageCache.GetMessages().Any(m => m.GetSequence() == startSequence))
             {
-                Logger.Debug("Releasing message from resequencer with sequence {0}", startSequence);
-
                 MessagePayload message = this.messageCache.GetMessages().Last(m => m.GetSequence() == startSequence);
-                
+
+                Logger.Debug("Releasing message {0} from resequencer with sequence {1}", message.Id, startSequence);
+
                 MessageProcessed(message);
 
                 startSequence++;
