@@ -1,16 +1,19 @@
 using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.UnitOfWork
 {
     class UnitOfWorkRunner : IMessageProcessor<object, object>
     {
         readonly IUnitOfWorkFactory unitOfWorkFactory;
+        readonly ISerialiser serialiser;
 
-        public UnitOfWorkRunner(IUnitOfWorkFactory unitOfWorkFactory)
+        public UnitOfWorkRunner(IUnitOfWorkFactory unitOfWorkFactory, ISerialiser serialiser)
         {
             Contract.Requires(unitOfWorkFactory != null);
             this.unitOfWorkFactory = unitOfWorkFactory;
+            this.serialiser = serialiser;
         }
 
         public void InputMessage(object toInput)
@@ -21,12 +24,12 @@ namespace SystemDot.Messaging.UnitOfWork
 
             try
             {
-                this.MessageProcessed(toInput);
+                MessageProcessed(toInput);
             }
             catch (Exception exception)
             {
                 unitOfWork.End(exception);
-                throw;
+                throw new UnitOfWorkException(serialiser.SerialiseToString(toInput), exception);
             }
 
             unitOfWork.End();

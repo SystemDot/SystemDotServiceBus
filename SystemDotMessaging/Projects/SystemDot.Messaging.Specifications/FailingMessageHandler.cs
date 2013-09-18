@@ -4,9 +4,11 @@ namespace SystemDot.Messaging.Specifications
 {
     public class FailingMessageHandler<T>
     {
+        public string ExceptionText { get { return "I am an exception"; } }
+
         public void Handle(T message)
         {
-            throw new Exception("I am an exception");
+            throw new Exception(ExceptionText);
         }
     }
 }

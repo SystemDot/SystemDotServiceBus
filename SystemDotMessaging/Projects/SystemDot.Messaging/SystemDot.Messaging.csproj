@@ -235,6 +235,7 @@
     <Compile Include="UnitOfWork\IUnitOfWorkFactory.cs" />
     <Compile Include="UnitOfWork\NullUnitOfWork.cs" />
     <Compile Include="UnitOfWork\NullUnitOfWorkFactory.cs" />
+    <Compile Include="UnitOfWork\UnitOfWorkException.cs" />
     <Compile Include="UnitOfWork\UnitOfWorkRunner.cs" />
     <Compile Include="Configuration\ComponentRegistration\PointToPointComponents.cs" />
     <Compile Include="Configuration\FilteredBy.cs" />

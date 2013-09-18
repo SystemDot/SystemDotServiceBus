@@ -22,13 +22,18 @@ namespace SystemDot.Serialisation
 
         public byte[] Serialise(object toSerialise)
         {
+            return SerialiseToString(toSerialise).ToBytes();
+        }
+
+        public string SerialiseToString(object toSerialise)
+        {
             var stringBuilder = new StringBuilder();
 
             using (var stringWriter = new StringWriter(stringBuilder))
-                using (var textWriter = new JsonTextWriter(stringWriter))
-                    this.typedSerializer.Serialize(textWriter, toSerialise);
+            using (var textWriter = new JsonTextWriter(stringWriter))
+                this.typedSerializer.Serialize(textWriter, toSerialise);
 
-            return stringBuilder.ToString().ToBytes();
+            return stringBuilder.ToString();
         }
 
         public void Serialise(Stream toSerialise, object graph)
