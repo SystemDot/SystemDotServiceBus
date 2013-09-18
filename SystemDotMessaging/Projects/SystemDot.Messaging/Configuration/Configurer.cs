@@ -11,6 +11,7 @@ using SystemDot.Messaging.Publishing.Builders;
 using SystemDot.Messaging.Transport;
 using SystemDot.Messaging.UnitOfWork;
 using SystemDot.Parallelism;
+using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Configuration
@@ -84,7 +85,12 @@ namespace SystemDot.Messaging.Configuration
         internal UnitOfWorkRunner CreateUnitOfWorkRunner<TUnitOfWorkFactory>()
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory
         {
-            return new UnitOfWorkRunner(GetUnitOfWorkFactory<TUnitOfWorkFactory>());
+            return new UnitOfWorkRunner(GetUnitOfWorkFactory<TUnitOfWorkFactory>(), GetSerialiser());
+        }
+
+        ISerialiser GetSerialiser()
+        {
+            return Resolve<ISerialiser>();
         }
 
         IUnitOfWorkFactory GetUnitOfWorkFactory<TUnitOfWorkFactory>()

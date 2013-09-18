@@ -147,6 +147,7 @@
     <Compile Include="hooks_for_publishing\SpecificationGroup.cs" />
     <Compile Include="received_message_return_address_reassignment\when_receiving_a_message_with_a_from_address_listed_on_the_receiver.cs" />
     <Compile Include="receiving_over_http\when_receiving_a_message_from_a_different_server.cs" />
+    <Compile Include="unitofwork\when_receiving_a_message_with_a_unit_of_work_specified_and_an_exception_occurs.cs" />
     <Compile Include="unitofwork_for_local_channels\SpecificationGroup.cs" />
     <Compile Include="logging\SpecificationGroup.cs" />
     <Compile Include="logging\when_logging_a_message_with_a_logging_mechanism_configured.cs" />

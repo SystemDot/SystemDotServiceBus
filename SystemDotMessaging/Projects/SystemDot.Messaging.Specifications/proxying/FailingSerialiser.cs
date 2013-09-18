@@ -11,6 +11,11 @@ namespace SystemDot.Messaging.Specifications.proxying
             throw new Exception();
         }
 
+        public string SerialiseToString(object toSerialise)
+        {
+            throw new Exception();
+        }
+
         public void Serialise(Stream toSerialise, object graph)
         {
             throw new Exception();
