@@ -58,6 +58,7 @@
     <Compile Include="Authentication\Caching\AuthenticationSessionCache.cs" />
     <Compile Include="Authentication\Caching\Changes\AuthenticationSessionCachedChange.cs" />
     <Compile Include="Authentication\Caching\Changes\AuthenticationSessionCheckpointChange.cs" />
+    <Compile Include="Authentication\Caching\ServerSession.cs" />
     <Compile Include="Authentication\Expiry\AuthenticationSessionExpirer.cs" />
     <Compile Include="Authentication\AuthenticationSessionFactory.cs" />
     <Compile Include="Authentication\AuthenticationSessionHeader.cs" />
