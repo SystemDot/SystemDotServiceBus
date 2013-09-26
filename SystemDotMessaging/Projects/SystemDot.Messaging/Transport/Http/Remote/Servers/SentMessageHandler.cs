@@ -29,10 +29,21 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Servers
 
         static void LogMessage(MessagePayload toHandle)
         {
+            if (toHandle.HasToAddress()) LogWithAddress(toHandle);
+            else LogWithoutAddress();
+        }
+
+        static void LogWithAddress(MessagePayload toHandle)
+        {
             Logger.Debug("Handling sent message {0} for {1} from {2}",
                 toHandle.Id,
                 toHandle.GetToAddress().Channel,
                 toHandle.GetToAddress().Server.Address);
+        }
+
+        static void LogWithoutAddress()
+        {
+            Logger.Debug("Handling sent message");
         }
     }
 }

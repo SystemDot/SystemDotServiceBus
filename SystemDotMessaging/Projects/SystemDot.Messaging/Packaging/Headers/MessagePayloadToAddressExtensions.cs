@@ -27,6 +27,11 @@ namespace SystemDot.Messaging.Packaging.Headers
             payload.AddHeader(new ToAddressHeader(address));
         }
 
+        public static bool HasToAddress(this MessagePayload payload)
+        {
+            return payload.HasHeader<FromAddressHeader>();
+        }
+
         public static EndpointAddress GetToAddress(this MessagePayload payload)
         {
             return payload.GetHeader<ToAddressHeader>().Address;
