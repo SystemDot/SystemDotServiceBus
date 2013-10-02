@@ -77,7 +77,8 @@
     <Compile Include="Batching\BatchMessage.cs" />
     <Compile Include="Batching\BatchPackager.cs" />
     <Compile Include="Batching\BatchUnpackager.cs" />
-    <Compile Include="Builders\ChannelSchema.cs" />
+    <Compile Include="Builders\ISequenceOptionSchema.cs" />
+    <Compile Include="Builders\IDurableOptionSchema.cs" />
     <Compile Include="Bus.cs" />
     <Compile Include="Caching\PersistenceSourceRecorder.cs" />
     <Compile Include="Caching\ReceiveChannelMessageCacher.cs" />

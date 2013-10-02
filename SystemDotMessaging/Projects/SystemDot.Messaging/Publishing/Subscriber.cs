@@ -11,14 +11,14 @@ namespace SystemDot.Messaging.Publishing
     {
         readonly ISubscriberSendChannelBuilder builder;
         IMessageInputter<MessagePayload> channel;
-        object locker;
+        readonly object locker;
 
         public Subscriber(ISubscriberSendChannelBuilder builder)
         {
             Contract.Requires(builder != null);
 
             this.builder = builder;
-            this.locker = new object();
+            locker = new object();
         }
 
         public void BuildChannel(EndpointAddress address, SubscriptionSchema schema)
@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Publishing
             Contract.Requires(address != EndpointAddress.Empty);
             Contract.Requires(schema != null);
 
-            this.channel =  this.builder.BuildChannel(
+            channel =  builder.BuildChannel(
                 new SubscriberSendChannelSchema
                 {
                     FromAddress = address,
@@ -36,17 +36,16 @@ namespace SystemDot.Messaging.Publishing
                     RepeatStrategy = EscalatingTimeRepeatStrategy.Default
                 });
 
-            lock (this.locker)
-                Monitor.Pulse(this.locker);
+            lock (locker) Monitor.Pulse(locker);
         }
 
         public IMessageInputter<MessagePayload> GetChannel()
         {
-            if (this.channel == null)
-                lock (this.locker)
-                    Monitor.Wait(this.locker);
+            if (channel != null) return channel;
 
-            return this.channel;
+            lock (locker) Monitor.Wait(locker);
+
+            return channel;
         }
     }
 }

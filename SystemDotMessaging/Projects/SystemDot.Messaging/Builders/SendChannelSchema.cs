@@ -5,7 +5,7 @@ using SystemDot.Messaging.Repeating;
 
 namespace SystemDot.Messaging.Builders
 {
-    class SendChannelSchema : ChannelSchema
+    class SendChannelSchema : IDurableOptionSchema
     {
         public EndpointAddress FromAddress { get; set; }
 
@@ -14,5 +14,7 @@ namespace SystemDot.Messaging.Builders
         public Action ExpiryAction { get; set; }
 
         public IRepeatStrategy RepeatStrategy { get; set; }
+
+        public bool IsDurable { get; set; }
     }
 }

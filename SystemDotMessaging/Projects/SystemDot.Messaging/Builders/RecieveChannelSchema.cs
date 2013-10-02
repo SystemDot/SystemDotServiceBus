@@ -7,7 +7,7 @@ using SystemDot.Messaging.Packaging;
 
 namespace SystemDot.Messaging.Builders
 {
-    class RecieveChannelSchema : ChannelSchema
+    class RecieveChannelSchema : ISequenceOptionSchema, IDurableOptionSchema
     {
         public EndpointAddress Address { get; set; }
 
@@ -20,7 +20,11 @@ namespace SystemDot.Messaging.Builders
         public List<IMessageHook<MessagePayload>> PreUnpackagingHooks { get; set; }
 
         public IMessageFilterStrategy FilterStrategy { get; set; }
-        
+
+        public bool IsSequenced { get; set; }
+
+        public bool IsDurable { get; set; }
+
         public RecieveChannelSchema()
         {
             Hooks = new List<IMessageHook<object>>();

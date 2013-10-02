@@ -23,13 +23,13 @@ namespace SystemDot.Messaging.Configuration.Publishers
             Contract.Requires(publisherAddress != EndpointAddress.Empty);
             Contract.Requires(messagingConfiguration != null);
 
-            this.requestSchema = new SubscriptionRequestChannelSchema
+            requestSchema = new SubscriptionRequestChannelSchema
             {
                 PublisherAddress = publisherAddress,
                 SubscriberAddress = subscriberAddress
             };
 
-            this.receiveSchema = new SubscriberRecieveChannelSchema
+            receiveSchema = new SubscriberRecieveChannelSchema
             {
                 Address = subscriberAddress,
                 ToAddress = publisherAddress,
@@ -47,6 +47,12 @@ namespace SystemDot.Messaging.Configuration.Publishers
         protected override MessageServer GetMessageServer()
         {
             return requestSchema.SubscriberAddress.Server;
+        }
+
+        public SubscribeToConfiguration Sequenced()
+        {
+            receiveSchema.IsSequenced = true;
+            return this;
         }
 
         public SubscribeToConfiguration WithDurability()

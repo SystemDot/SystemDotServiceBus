@@ -59,6 +59,12 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             return this;
         }
 
+        public RequestReplySenderConfiguration Sequenced()
+        {
+            receiveSchema.IsSequenced = true;
+            return this;
+        }
+
         public RequestReplySenderConfiguration WithDurability()
         {
             sendSchema.IsDurable = true;

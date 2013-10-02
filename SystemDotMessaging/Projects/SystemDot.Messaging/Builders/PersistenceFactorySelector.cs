@@ -24,13 +24,13 @@ namespace SystemDot.Messaging.Builders
             this.systemTime = systemTime;
         }
 
-        public MessageCacheFactory Select(ChannelSchema schema)
+        public MessageCacheFactory Select(IDurableOptionSchema schema)
         {
             Contract.Requires(schema != null);
             
             return (schema.IsDurable) 
-                ? this.messageCacheFactory
-                : new MessageCacheFactory(this.inMemoryStore, this.systemTime);
+                ? messageCacheFactory
+                : new MessageCacheFactory(inMemoryStore, systemTime);
         }
     }
 }

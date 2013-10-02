@@ -8,7 +8,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.sequencing
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_a_message_on_a_durable_channel_that_has_had_sequencing_reset : WithMessageConfigurationSubject
+    public class when_receiving_a_message_on_a_sequenced_channel_that_has_had_sequencing_reset : WithMessageConfigurationSubject
     {
         const Int64 Message = 1;
         const string ReceiverAddress = "ReceiverAddress";
@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
         {
             Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel(ReceiverAddress).ForPointToPointReceiving().WithDurability()
+                .OpenChannel(ReceiverAddress).ForPointToPointReceiving().Sequenced()
                 .Initialise();
 
             messagePayload = new MessagePayload()

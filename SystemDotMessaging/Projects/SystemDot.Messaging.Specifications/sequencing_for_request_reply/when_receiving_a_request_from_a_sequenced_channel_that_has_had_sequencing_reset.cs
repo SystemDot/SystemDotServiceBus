@@ -8,7 +8,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.sequencing_for_request_reply
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_a_reply_from_a_durable_channel_that_has_had_sequencing_reset : WithMessageConfigurationSubject
+    public class when_receiving_a_request_from_a_sequenced_channel_that_has_had_sequencing_reset : WithMessageConfigurationSubject
     {
         const Int64 Message1 = 1;
         const Int64 Message2 = 2;
@@ -22,12 +22,12 @@ namespace SystemDot.Messaging.Specifications.sequencing_for_request_reply
         {
             Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel(SenderAddress)
-                .ForRequestReplySendingTo(ReceiverAddress).WithDurability()
+                .OpenChannel(ReceiverAddress)
+                .ForRequestReplyReceiving().Sequenced()
                 .Initialise();
 
             messagePayload = new MessagePayload()
-                .MakeSequencedReceivable(Message1, ReceiverAddress, SenderAddress, PersistenceUseType.ReplySend);
+                .MakeSequencedReceivable(Message1, SenderAddress, ReceiverAddress, PersistenceUseType.RequestSend);
 
             handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
@@ -35,7 +35,7 @@ namespace SystemDot.Messaging.Specifications.sequencing_for_request_reply
             GetServer().ReceiveMessage(messagePayload);
 
             messagePayload = new MessagePayload()
-                .MakeReceivable(Message2, ReceiverAddress, SenderAddress, PersistenceUseType.ReplySend);
+                .MakeReceivable(Message2, SenderAddress, ReceiverAddress, PersistenceUseType.RequestSend);
             messagePayload.SetFirstSequence(5);
             messagePayload.SetSequenceOriginSetOn(DateTime.Now);
             messagePayload.SetSequence(5);

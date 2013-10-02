@@ -5,10 +5,10 @@ using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.sequencing_for_request_reply
+namespace SystemDot.Messaging.Specifications.sequencing
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_a_request_from_a_durable_channel_that_has_had_sequencing_reset : WithMessageConfigurationSubject
+    public class when_receiving_a_message_from_a_sequenced_channel_that_has_had_sequencing_reset : WithMessageConfigurationSubject
     {
         const Int64 Message1 = 1;
         const Int64 Message2 = 2;
@@ -20,14 +20,13 @@ namespace SystemDot.Messaging.Specifications.sequencing_for_request_reply
 
         Establish context = () =>
         {
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel(ReceiverAddress)
-                .ForRequestReplyReceiving().WithDurability()
+                .OpenChannel(ReceiverAddress).ForPointToPointReceiving().Sequenced()
                 .Initialise();
 
             messagePayload = new MessagePayload()
-                .MakeSequencedReceivable(Message1, SenderAddress, ReceiverAddress, PersistenceUseType.RequestSend);
+                .MakeSequencedReceivable(Message1, SenderAddress, ReceiverAddress, PersistenceUseType.PointToPointSend);
 
             handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
@@ -35,7 +34,7 @@ namespace SystemDot.Messaging.Specifications.sequencing_for_request_reply
             GetServer().ReceiveMessage(messagePayload);
 
             messagePayload = new MessagePayload()
-                .MakeReceivable(Message2, SenderAddress, ReceiverAddress, PersistenceUseType.RequestSend);
+                .MakeReceivable(Message2, SenderAddress, ReceiverAddress, PersistenceUseType.PointToPointSend);
             messagePayload.SetFirstSequence(5);
             messagePayload.SetSequenceOriginSetOn(DateTime.Now);
             messagePayload.SetSequence(5);

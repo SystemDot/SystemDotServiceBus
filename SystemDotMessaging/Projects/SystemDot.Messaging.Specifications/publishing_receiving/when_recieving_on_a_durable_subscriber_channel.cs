@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Specifications.publishing_receiving
         
         Establish context = () =>
         {
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                     .ForSubscribingTo(PublisherName)

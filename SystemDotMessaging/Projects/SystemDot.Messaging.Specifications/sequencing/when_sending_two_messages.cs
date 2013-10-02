@@ -16,13 +16,10 @@ namespace SystemDot.Messaging.Specifications.sequencing
         const int Message1 = 1;
         const int Message2 = 2;
         
-        Establish context = () =>
-        {    
-            Messaging.Configuration.Configure.Messaging()
-                .UsingInProcessTransport()
-                .OpenChannel(ChannelName).ForPointToPointSendingTo(ReceiverName)
-                .Initialise();
-        };
+        Establish context = () => Messaging.Configuration.Configure.Messaging()
+            .UsingInProcessTransport()
+            .OpenChannel(ChannelName).ForPointToPointSendingTo(ReceiverName)
+            .Initialise();
 
         Because of = () =>
         {

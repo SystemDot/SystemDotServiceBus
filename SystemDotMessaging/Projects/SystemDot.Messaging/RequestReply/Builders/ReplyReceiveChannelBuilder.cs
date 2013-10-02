@@ -77,7 +77,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
         public void Build(ReplyReceiveChannelSchema schema)
         {
-            ReceiveMessageCache messageCache = this.persistenceFactorySelector
+            ReceiveMessageCache messageCache = persistenceFactorySelector
                 .Select(schema)
                 .CreateReceiveCache(PersistenceUseType.ReplyReceive, schema.Address);
 

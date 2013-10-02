@@ -41,9 +41,16 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
             return server;
         }
 
+        public PointToPointReceiverConfiguration Sequenced()
+        {
+            schema.IsSequenced = true;
+            return this;
+        }
+
         public PointToPointReceiverConfiguration WithDurability()
         {
             schema.IsDurable = true;
+            schema.IsSequenced = true;
             return this;
         }
 

@@ -127,24 +127,24 @@ namespace SystemDot.Messaging.Storage
         public void ApplyChange(DeleteMessageAndSetSequenceChange change)
         {
             ApplyDelete(change.Id);
-            this.sequence = change.Sequence;
+            sequence = change.Sequence;
         }
 
         void ApplyDelete(Guid id)
         {       
             MessagePayload temp;
-            this.messages.TryRemove(id, out temp);
+            messages.TryRemove(id, out temp);
         }
 
         protected override void UrgeCheckPoint()
         {
-            if (this.messages.Count == 0)
+            if (messages.Count == 0)
                 CheckPoint(new MessageCheckpointChange { Sequence = this.sequence });
         }
 
         public void ApplyChange(MessageCheckpointChange change)
         {
-            this.sequence = change.Sequence;
+            sequence = change.Sequence;
         }
     }
 }

@@ -46,11 +46,16 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             return requestSchema.Address.Server;
         }
 
+        public RequestReplyRecieverConfiguration Sequenced()
+        {
+            requestSchema.IsSequenced = true;
+            return this;
+        }
+
         public RequestReplyRecieverConfiguration WithDurability()
         {
             replySchema.IsDurable = true;
             requestSchema.IsDurable = true;
-
             return this;
         }
 

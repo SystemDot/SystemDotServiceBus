@@ -48,13 +48,14 @@ namespace RequestReplySender
                 .ResolveReferencesWith(container)
                 .RegisterHandlersFromAssemblyOf<ResponseHandler>()
                     .BasedOn<IMessageConsumer>()
-                //.UsingFilePersistence()
+                .UsingFilePersistence()
                 .UsingHttpTransport()
                     .AsAServerUsingAProxy("SenderServer")
                 .OpenChannel("TestMetroRequest")
                     .ForRequestReplySendingTo("TestReply@ReceiverServer")
                     .HandleRepliesOnMainThread()
                     .WithDurability()
+                    .Sequenced()
                 .Initialise();
 
             ViewModelLocator.SetContainer(container);

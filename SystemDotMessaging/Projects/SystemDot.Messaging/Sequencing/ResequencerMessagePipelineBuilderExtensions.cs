@@ -11,11 +11,11 @@ namespace SystemDot.Messaging.Sequencing
         public static ProcessorBuilder<MessagePayload> ToResequencerIfSequenced(
             this ProcessorBuilder<MessagePayload> builder,
             ReceiveMessageCache messageCache,
-            ChannelSchema schema)
+            ISequenceOptionSchema schema)
         {
             IMessageProcessor<MessagePayload, MessagePayload> processor;
             
-            if(schema.IsDurable)
+            if(schema.IsSequenced)
                 processor = new Resequencer(messageCache);    
             else 
                 processor = new MessageDecacher(messageCache);

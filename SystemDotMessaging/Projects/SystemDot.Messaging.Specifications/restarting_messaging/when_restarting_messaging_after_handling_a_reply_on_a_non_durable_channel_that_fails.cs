@@ -1,6 +1,5 @@
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
 using Machine.Specifications;
@@ -23,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
             changeStore = new InMemoryChangeStore(new JsonSerialiser());
             ConfigureAndRegister<IChangeStore>(changeStore);
             
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForRequestReplySendingTo(ReceiverAddress)
@@ -45,7 +44,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
         };
 
         Because of = () => 
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForRequestReplySendingTo(ReceiverAddress)

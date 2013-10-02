@@ -8,7 +8,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.sequencing_for_request_reply
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_an_out_of_sequence_request_on_a_durable_channel : WithMessageConfigurationSubject
+    public class when_receiving_an_out_of_sequence_request_on_a_sequenced_channel : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
         const string SenderAddress = "TestSenderAddress";
@@ -19,11 +19,11 @@ namespace SystemDot.Messaging.Specifications.sequencing_for_request_reply
 
         Establish context = () =>
         {
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                     .ForRequestReplyReceiving()
-                    .WithDurability()
+                    .Sequenced()
                 .Initialise();
 
             handler = new TestMessageHandler<int>();

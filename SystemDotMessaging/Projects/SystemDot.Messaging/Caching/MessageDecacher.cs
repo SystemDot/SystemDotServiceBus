@@ -16,8 +16,8 @@ namespace SystemDot.Messaging.Caching
 
         public override void InputMessage(MessagePayload toInput)
         {
-            this.messageCache.Delete(toInput.Id);
             OnMessageProcessed(toInput);
+            messageCache.Delete(toInput.Id);
         }
     }
 }

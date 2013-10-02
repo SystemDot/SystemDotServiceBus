@@ -15,6 +15,7 @@ namespace RequestReplyReceiver
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false })
                 .ResolveReferencesWith(container)
+                .UsingFilePersistence()
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
                 .UsingHttpTransport()
@@ -23,6 +24,7 @@ namespace RequestReplyReceiver
                 .OpenChannel("TestReply")
                     .ForRequestReplyReceiving()
                     .WithDurability()
+                    .Sequenced()
                 .Initialise();
 
             Console.WriteLine("I am the reciever. Press enter to exit");

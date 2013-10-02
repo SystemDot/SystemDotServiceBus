@@ -9,37 +9,38 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.sequencing
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_passing_messages_in_the_incorrect_order_on_a_durable_channel : WithMessageConfigurationSubject
+    public class when_passing_messages_in_the_correct_order_on_a_sequenced_channel : WithMessageConfigurationSubject
     {
-        const int Message1 = 1;
-        const int Message2 = 2;
+        const Int64 Message1 = 1;
+        const Int64 Message2 = 2;
+        const string ReceiverAddress = "ReceiverAddress";
+        const string SenderAddress = "SenderAddress";
 
-        static TestMessageHandler<int> handler;
+        static TestMessageHandler<Int64> handler;
         static MessagePayload messagePayload1;
         static MessagePayload messagePayload2;
-
+        
         Establish context = () =>
         {
             Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel("ReceiverAddress").ForPointToPointReceiving().WithDurability()
+                .OpenChannel(ReceiverAddress).ForPointToPointReceiving().Sequenced()
                 .Initialise();
-
+            
             messagePayload1 = new MessagePayload()
-                .MakeReceivable(Message1, "SenderAddress", "ReceiverAddress", PersistenceUseType.PointToPointSend);
-            messagePayload1.SetSequence(2);
+                .MakeReceivable(Message1, SenderAddress, ReceiverAddress, PersistenceUseType.PointToPointSend);
+            messagePayload1.SetSequence(1);
             messagePayload1.SetFirstSequence(1);
             messagePayload1.SetSequenceOriginSetOn(DateTime.Today);
 
             messagePayload2 = new MessagePayload()
-                .MakeReceivable(Message2, "SenderAddress", "ReceiverAddress", PersistenceUseType.PointToPointSend);
-            messagePayload2.SetSequence(4);
-            messagePayload2.SetFirstSequence(1);
+                .MakeReceivable(Message2, SenderAddress, ReceiverAddress, PersistenceUseType.PointToPointSend);
+            messagePayload2.SetSequence(2);
+            messagePayload2.SetFirstSequence(2);
             messagePayload2.SetSequenceOriginSetOn(DateTime.Today);
 
-            handler = new TestMessageHandler<int>();
+            handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
-
         };
 
         Because of = () =>
@@ -48,6 +49,6 @@ namespace SystemDot.Messaging.Specifications.sequencing
             GetServer().ReceiveMessage(messagePayload2);
         };
 
-        It should_not_pass_the_messages_through = () => handler.HandledMessages.ShouldNotContain(Message1, Message2);
+        It should_pass_the_messages_through = () => handler.HandledMessages.ShouldContain(Message1, Message2);
     }
 }

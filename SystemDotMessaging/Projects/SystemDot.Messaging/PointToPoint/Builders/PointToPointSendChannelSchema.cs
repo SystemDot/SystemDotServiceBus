@@ -8,6 +8,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
     class PointToPointSendChannelSchema : SendChannelSchema
     {
         public EndpointAddress ReceiverAddress { get; set; }
+
         public IMessageFilterStrategy FilteringStrategy { get; set; }
     }
 }
