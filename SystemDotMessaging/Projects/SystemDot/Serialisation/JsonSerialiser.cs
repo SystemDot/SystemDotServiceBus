@@ -46,14 +46,36 @@ namespace SystemDot.Serialisation
         {
             try
             {
-                using (var stringReader = new StringReader(toDeserialise.GetString()))
-                using (var reader = new JsonTextReader(stringReader))
-                    return this.typedSerializer.Deserialize(reader);
+                return DeserialiseFromUtf8(toDeserialise);
+            }
+            catch
+            {
+                return DeserialiseFromNoEncoding(toDeserialise);
+            }
+        }
+
+        object DeserialiseFromUtf8(byte[] toDeserialise)
+        {
+            return DeserialiseFromString(toDeserialise.GetStringFromUtf8());
+        }
+
+        object DeserialiseFromNoEncoding(byte[] toDeserialise)
+        {
+            try
+            {
+                return DeserialiseFromString(toDeserialise.GetStringFromNoEncoding());
             }
             catch (Exception e)
             {
                 throw new CannotDeserialiseException(e);
             }
+        }
+
+        object DeserialiseFromString(string toDeserialise)
+        {
+            using (var stringReader = new StringReader(toDeserialise))
+                using (var reader = new JsonTextReader(stringReader))
+                    return this.typedSerializer.Deserialize(reader);
         }
 
         public object Deserialise(Stream toDeserialise)

@@ -32,7 +32,13 @@ namespace SystemDot.Messaging.Publishing
 
         public void AddSubscriber(SubscriptionSchema schema)
         {
+            if (SubscriberExists(schema)) return;
             AddChange(new SubscribeChange { Schema = schema });
+        }
+
+        bool SubscriberExists(SubscriptionSchema schema)
+        {
+            return this.subscribers.ContainsKey(schema.SubscriberAddress);
         }
 
         public void ApplyChange(SubscribeChange change)

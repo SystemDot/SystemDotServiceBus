@@ -28,6 +28,19 @@ namespace SystemDot.Messaging.Distribution
             return this.channels[address].GetChannel();
         }
 
+        public void RegisterChannel(EndpointAddress address)
+        {
+            if (ChannelExists(address)) return;
+            AddRegisterChannelChange(address);
+        }
+
+        bool ChannelExists(EndpointAddress address)
+        {
+            return channels.ContainsKey(address);
+        }
+
+        protected abstract void AddRegisterChannelChange(EndpointAddress address);
+
         protected void RegisterChannel(EndpointAddress address, Func<IMessageInputter<T>> toRegister)
         {
             var channelContainer = new ChannelContainer(toRegister);

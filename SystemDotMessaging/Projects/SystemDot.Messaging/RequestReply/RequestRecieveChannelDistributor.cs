@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.RequestReply
             GetChannel(toDistribute.GetFromAddress()).InputMessage(toDistribute);
         }
 
-        public void RegisterChannel(EndpointAddress address)
+        protected override void AddRegisterChannelChange(EndpointAddress address)
         {
             AddChange(new RegisterRequestReceiveChannelChange { Address = address });
         }
