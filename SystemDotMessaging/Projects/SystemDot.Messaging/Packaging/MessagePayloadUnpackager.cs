@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Packaging
             
             if (message == null) return;
 
-            Logger.Debug("Unpackaged message payload {0}", toInput.Id);
+            Logger.Debug("Unpackaged message {0} from payload: {0}", serialiser.SerialiseToString(message), toInput.Id);
 
             MessageProcessed(message);
         }
