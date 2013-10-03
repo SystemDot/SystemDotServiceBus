@@ -7,23 +7,29 @@ namespace SystemDot
     {
         static readonly MessengerHandlerRegistry Registry = new MessengerHandlerRegistry();
 
-        public static void Send<T>(T message)
+        public static void Send<TMessage>(TMessage message)
         {
-            Contract.Requires(!message.Equals(default(T)));
+            Contract.Requires(!message.Equals(default(TMessage)));
 
-            if (Registry.ContainsHandler<T>())
-                Registry.GetHandlers<T>().ForEach(h => h.Value.As<Action<T>>().Invoke(message));
+            if (Registry.ContainsHandler<TMessage>())
+                Registry.GetHandlers<TMessage>().ForEach(h => h.Value.As<Action<TMessage>>().Invoke(message));
         }
 
-        public static void Register<T>(Action<T> toRegister)
+        public static void Register<TMessage>(Action<TMessage> toRegister)
         {
             Contract.Requires(toRegister != null);
-            Registry.Register<T>(toRegister);
+            Registry.Register<TMessage>(toRegister);
         }
 
         public static void Reset()
         {
             Registry.Clear();
+        }
+
+        public static void Unregister<TMessage>(Action<TMessage> toUnregister)
+        {
+            Contract.Requires(toUnregister != null);
+            Registry.Unregister<TMessage>(toUnregister);
         }
     }
 }
