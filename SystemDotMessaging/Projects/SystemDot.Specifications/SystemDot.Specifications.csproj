@@ -86,6 +86,8 @@
     <Compile Include="messenger\when_sending_a_message_with_a_handler_for_another_message_type_registered.cs" />
     <Compile Include="messenger\when_sending_a_message_with_a_handler_registered.cs" />
     <Compile Include="messenger\when_sending_a_message_with_two_handlers_registered.cs" />
+    <Compile Include="messenger\when_unregistering_an_action_after_registering_it_and_then_sending_a_message.cs" />
+    <Compile Include="messenger\when_unregistering_an_unregistered_action_and_then_sending_a_message.cs" />
     <Compile Include="parallelism\when_starting_task_repeating_with_a_task_registered_and_the_time_delay_has_passed_twice.cs" />
     <Compile Include="parallelism\when_starting_task_repeating_with_two_tasks_registered.cs" />
     <Compile Include="parallelism\ZeroTimespanPassThroughTaskScheduler.cs" />
