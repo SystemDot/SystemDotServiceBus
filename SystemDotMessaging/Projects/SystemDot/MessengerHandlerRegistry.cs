@@ -13,29 +13,39 @@ namespace SystemDot
             this.handlers = new ConcurrentDictionary<Type, MessageHandlerList>();
         }
 
-        public MessageHandlerList GetHandlers<T>()
+        public MessageHandlerList GetHandlers<TMessage>()
         {
-            return this.handlers[typeof (T)];
+            return this.handlers[typeof(TMessage)];
         }
 
-        public bool ContainsHandler<T>()
+        public bool ContainsHandler<TMessage>()
         {
-            return this.handlers.ContainsKey(typeof(T));
+            return this.handlers.ContainsKey(typeof(TMessage));
         }
 
-        public void Register<T>(Action<T> toRegister)
+        public void Register<TMessage>(Action<TMessage> toRegister)
         {
             Contract.Requires(toRegister != null);
 
-            if(!ContainsHandler<T>())
-                this.handlers.TryAdd(typeof(T), new MessageHandlerList());
+            if(!ContainsHandler<TMessage>())
+                this.handlers.TryAdd(typeof(TMessage), new MessageHandlerList());
 
-            this.handlers[typeof(T)].TryAdd(toRegister, toRegister);
+            this.handlers[typeof(TMessage)].TryAdd(toRegister, toRegister);
         }
 
         public void Clear()
         {
             this.handlers.Clear();
+        }
+
+        public void Unregister<TMessage>(Action<TMessage> toUnregister)
+        {
+            Contract.Requires(toUnregister != null);
+
+            if (!this.handlers.ContainsKey(typeof(TMessage))) return;
+
+            object outValue;
+            this.handlers[typeof(TMessage)].TryRemove(toUnregister, out outValue);
         }
     }
 }
