@@ -3,7 +3,6 @@ using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Configuration.Authentication;
 using SystemDot.Messaging.Direct;
 using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.Packaging.Headers;
 
 namespace SystemDot.Messaging.Specifications.authentication
 {

@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Packaging
             
             if (message == null) return;
 
-            Logger.Debug("Unpackaged message {0} from payload: {0}", serialiser.SerialiseToString(message), toInput.Id);
+            Logger.Debug("Unpackaged message {0} from payload: {1}", serialiser.SerialiseToString(message), toInput.Id);
 
             MessageProcessed(message);
         }
@@ -42,7 +42,7 @@ namespace SystemDot.Messaging.Packaging
             }
             catch (CannotDeserialiseException e)
             {
-                Logger.Info("Cannot deserialise message: {0}", e.Message);
+                Logger.Error(e);
                 return null;
             }
         }
