@@ -12,7 +12,7 @@ namespace SystemDot.Messaging.Storage
 {
     class ReceiveMessageCache : ChangeRoot, IMessageCache
     {
-        int sequence;
+        volatile int sequence;
         readonly ConcurrentDictionary<Guid, MessagePayload> messages;
         
         public EndpointAddress Address { get; private set; }

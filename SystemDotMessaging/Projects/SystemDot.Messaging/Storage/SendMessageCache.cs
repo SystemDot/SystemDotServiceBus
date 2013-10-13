@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.Storage
     {
         readonly ISystemTime systemTime;
         readonly ConcurrentDictionary<Guid, MessagePayload> messages;
-        int sequence;
+        volatile int sequence;
 
         public EndpointAddress Address { get; private set; }
         

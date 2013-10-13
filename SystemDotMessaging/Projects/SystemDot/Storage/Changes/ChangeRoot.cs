@@ -7,7 +7,7 @@ namespace SystemDot.Storage.Changes
     {
         readonly IChangeStore changeStore;
         readonly object checkPointLock = new object();
-        int changeCount;
+        volatile int changeCount;
 
         protected ChangeRoot(IChangeStore changeStore)
         {
