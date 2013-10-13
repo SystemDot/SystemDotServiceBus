@@ -14,6 +14,7 @@ namespace PointToPointReceiver
 
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false, ShowInfo = false })
+                .UsingFilePersistence()
                 .ResolveReferencesWith(container)
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
@@ -23,6 +24,7 @@ namespace PointToPointReceiver
                 .OpenChannel("TestReceive")
                     .ForPointToPointReceiving()
                     .WithDurability()
+                    .Sequenced()
                 .Initialise();
 
             Console.WriteLine("I am the reciever. Press enter to exit");

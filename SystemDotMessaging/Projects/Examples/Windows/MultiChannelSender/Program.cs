@@ -26,10 +26,12 @@ namespace MultiChannelSender
                     .ForRequestReplySendingTo("TestRecieverA@ServerA")
                     .OnlyForMessages(FilteredBy.NamePattern("Channel1"))
                     .WithDurability()
+                    .Sequenced()
                 .OpenChannel("TestSenderB")
                     .ForRequestReplySendingTo("TestRecieverB@ServerB")
                     .OnlyForMessages(FilteredBy.NamePattern("Channel2"))
                     .WithDurability()
+                    .Sequenced()
                 .Initialise();
 
             do

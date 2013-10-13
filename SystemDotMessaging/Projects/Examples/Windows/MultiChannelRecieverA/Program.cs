@@ -22,6 +22,7 @@ namespace MultiChannelRecieverA
                     .AsAServer("ServerA")
                 .OpenChannel("TestRecieverA").ForRequestReplyReceiving()
                     .WithDurability()
+                    .Sequenced()
                 .Initialise();
 
             Console.WriteLine("I am reciever A");

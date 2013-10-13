@@ -14,6 +14,7 @@ namespace Subscriber
 
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false, ShowInfo = false})
+                .UsingFilePersistence()
                 .ResolveReferencesWith(container)
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
@@ -23,6 +24,7 @@ namespace Subscriber
                 .OpenChannel("TestSubscriber")
                     .ForSubscribingTo("TestPublisher@PublisherServer")
                     .WithDurability()
+                    .Sequenced()
                 .Initialise();
             
             Console.WriteLine("I am a subscriber, listening for messages..");

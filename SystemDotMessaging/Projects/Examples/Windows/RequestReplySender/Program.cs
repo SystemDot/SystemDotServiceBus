@@ -16,6 +16,7 @@ namespace RequestReplySender
 
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism {ShowInfo = false, ShowDebug = false})
+                .UsingFilePersistence()
                 .ResolveReferencesWith(container)
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
@@ -24,6 +25,7 @@ namespace RequestReplySender
                 .OpenChannel("TestRequest")
                     .ForRequestReplySendingTo("TestReply@ReceiverServer")
                     .WithDurability()
+                    .Sequenced()
                 .Initialise();
 
             do

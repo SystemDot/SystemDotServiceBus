@@ -24,6 +24,7 @@ namespace OtherSubscriber
                 .OpenChannel("TestOtherSubscriber")
                     .ForSubscribingTo("TestPublisher@PublisherServer")
                     .WithDurability()
+                    .Sequenced()
                 .Initialise();
             
             Console.WriteLine("I am the other subscriber, listening for messages..");
