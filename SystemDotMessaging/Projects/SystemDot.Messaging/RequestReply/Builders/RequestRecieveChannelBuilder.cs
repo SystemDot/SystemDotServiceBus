@@ -7,6 +7,7 @@ using SystemDot.Messaging.Authentication.RequestReply;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
+using SystemDot.Messaging.ExceptionHandling;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Handling;
@@ -103,6 +104,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         {
             var startPoint = new MessageLocalAddressReassigner(serverAddressRegistry);
 
+
             MessagePipelineBuilder.Build()
                 .With(startPoint)
                 .ToProcessor(new ReceiverAuthenticationSessionVerifier(authenticationSessionCache, authenticatedServerRegistry))
@@ -116,6 +118,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToResequencerIfSequenced(messageCache, schema)
                 .ToProcessor(new ReplyChannelSelector(replyAddressLookup))
                 .ToProcessor(new ReplyAuthenticationSessionSelector(replyAuthenticationSessionLookup))
+                .ToProcessor(new ExceptionHandler(schema.ContinueOnException))
                 .ToProcessor(new ExceptionReplier())
                 .ToProcessor(new MessageHookRunner<MessagePayload>(schema.PreUnpackagingHooks))
                 .ToConverter(new MessagePayloadUnpackager(serialiser))
@@ -125,7 +128,6 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessorIf(new MainThreadMessageMashaller(mainThreadMarshaller), schema.HandleRequestsOnMainThread)
                 .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
                 .ToEndPoint(messageHandlerRouter);
-
             return startPoint;
         }
 

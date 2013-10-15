@@ -1,6 +1,8 @@
 using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Configuration.ExceptionHandling;
+using SystemDot.Messaging.ExceptionHandling;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Hooks;
@@ -11,7 +13,7 @@ using SystemDot.Messaging.UnitOfWork;
 
 namespace SystemDot.Messaging.Configuration.RequestReply
 {
-    public class RequestReplyRecieverConfiguration : Configurer
+    public class RequestReplyRecieverConfiguration : Configurer, IExceptionHandlingConfigurer
     {
         readonly ReplySendChannelSchema replySchema;
         readonly RequestRecieveChannelSchema requestSchema;
@@ -129,6 +131,16 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             requestSchema.HandleRequestsOnMainThread = true;
             return this;
+        }
+
+        public OnExceptionConfiguration<RequestReplyRecieverConfiguration> OnException()
+        {
+            return new OnExceptionConfiguration<RequestReplyRecieverConfiguration>(this);
+        }
+
+        public void SetContinueOnException()
+        {
+            requestSchema.ContinueOnException = true;
         }
     }
 }

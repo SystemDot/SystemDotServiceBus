@@ -99,6 +99,8 @@
     <Compile Include="Configuration\ExternalSources\ExternalSourcesConfigurer.cs" />
     <Compile Include="Configuration\ExternalSources\IExternalConfigurationSource.cs" />
     <Compile Include="Configuration\ExternalSources\IExternalSourcesConfigurer.cs" />
+    <Compile Include="Configuration\ExceptionHandling\IExceptionHandlingConfigurer.cs" />
+    <Compile Include="Configuration\ExceptionHandling\OnExceptionConfiguration.cs" />
     <Compile Include="Direct\Builders\ReplyReceiverSchema.cs" />
     <Compile Include="Direct\DirectReplyMessageHandlerRouter.cs" />
     <Compile Include="Direct\DirectSendContext.cs" />
@@ -175,6 +177,7 @@
     <Compile Include="RequestReply\Builders\RequestReceiveChannelBuilt.cs" />
     <Compile Include="RequestReply\Builders\RequestReceiveDistributionChannelBuilder.cs" />
     <Compile Include="RequestReply\Builders\RequestSendChannelBuilt.cs" />
+    <Compile Include="ExceptionHandling\ExceptionHandler.cs" />
     <Compile Include="RequestReply\ExceptionHandling\ExceptionReplier.cs" />
     <Compile Include="RequestReply\ExceptionHandling\ExceptionOccured.cs" />
     <Compile Include="RequestReply\RegisterReplySendChannelChange.cs" />

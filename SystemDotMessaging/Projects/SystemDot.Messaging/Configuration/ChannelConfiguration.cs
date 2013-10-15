@@ -1,5 +1,6 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Configuration.ExceptionHandling;
 using SystemDot.Messaging.Configuration.PointToPoint;
 using SystemDot.Messaging.Configuration.Publishers;
 using SystemDot.Messaging.Configuration.RequestReply;
@@ -63,8 +64,6 @@ namespace SystemDot.Messaging.Configuration
         public PointToPointReceiverConfiguration ForPointToPointReceiving()
         {
             return new PointToPointReceiverConfiguration(address, server, messagingConfiguration);
-        }
+        }  
     }
-
-    
 }
