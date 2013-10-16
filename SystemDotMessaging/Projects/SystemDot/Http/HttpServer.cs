@@ -52,7 +52,7 @@ namespace SystemDot.Http
             }
             catch (Exception e)
             {
-                Logger.Info("Http server: Bad request: {0}", e.Message);
+                Logger.Error(e);
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             }
             finally

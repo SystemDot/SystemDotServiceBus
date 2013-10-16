@@ -45,7 +45,7 @@ namespace SystemDot.Messaging.Transport.Http
             }
             catch (CannotDeserialiseException e)
             {
-                Logger.Info("Http server cannot deserialise message: {0}", e.Message);
+                Logger.Error(e);
                 return null;
             }
         }
