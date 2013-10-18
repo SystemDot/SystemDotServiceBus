@@ -7,6 +7,7 @@ using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Authentication.Caching;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
+using SystemDot.Messaging.ExceptionHandling;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Handling;
@@ -95,6 +96,7 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
                 .Queue()
                 .ToResequencerIfSequenced(messageCache, schema)
+                .ToProcessor(new ExceptionHandler(schema.ContinueOnException))
                 .ToProcessor(new MessageHookRunner<MessagePayload>(schema.PreUnpackagingHooks))
                 .ToConverter(new MessagePayloadUnpackager(serialiser))
                 .ToProcessor(new MessageFilter(schema.FilterStrategy))

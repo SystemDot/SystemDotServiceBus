@@ -1,26 +1,21 @@
 ﻿using System;
-using System.Linq;
-using SystemDot.Messaging.Configuration;
-using SystemDot.Messaging.Configuration.RequestReply;
 using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.RequestReply.ExceptionHandling;
-using SystemDot.Messaging.Specifications.publishing;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.exception_handling_for_request_reply
+namespace SystemDot.Messaging.Specifications.exception_handling_for_point_to_point_receiving
 {
     [Subject(SpecificationGroup.Description)]
     public class when_failing_the_handling_of_a_request_with_continue_on_exception_configured : WithMessageConfigurationSubject
     {
-        const string ReceiverAddress = "ReceiverAddress";
+        const string ReceiverChannel = "ReceiverChannel";
         static Exception exception;
 
         Establish context = () =>
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel(ReceiverAddress)
-                .ForRequestReplyReceiving()
+                .OpenChannel(ReceiverChannel)
+                .ForPointToPointReceiving()
                 .OnException().ContinueProcessingMessages()
                 .RegisterHandlers(r => r.RegisterHandler(new FailingMessageHandler<Int64>()))
                 .Initialise();
@@ -29,14 +24,11 @@ namespace SystemDot.Messaging.Specifications.exception_handling_for_request_repl
             () => GetServer().ReceiveMessage(
                 new MessagePayload()
                     .SetMessageBody(1)
-                    .SetFromChannel("SenderAddress")
-                    .SetToChannel(ReceiverAddress)
-                    .SetChannelType(PersistenceUseType.RequestSend)
+                    .SetFromChannel("SenderChannel")
+                    .SetToChannel(ReceiverChannel)
+                    .SetChannelType(PersistenceUseType.PointToPointReceive)
                     .Sequenced()));
 
         It should_not_throw_an_exception = () => exception.ShouldBeNull();
-
-        It should_reply_with_an_exception_occurred_message = () =>
-            GetServer().SentMessages.ExcludeAcknowledgements().First().DeserialiseTo<ExceptionOccured>().Message.ShouldNotBeEmpty();
     }
 }
