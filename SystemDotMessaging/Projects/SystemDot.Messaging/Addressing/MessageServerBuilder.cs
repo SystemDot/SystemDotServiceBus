@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Addressing
         {
             Contract.Requires(!string.IsNullOrEmpty(server));
             
-            return MessageServer.NamedMultipoint(server, Environment.MachineName, GetAddress(server));
+            return MessageServer.NamedMultipoint(server, UniqueMachineNameProvider.GetUniqueName(), GetAddress(server));
         }
 
         public MessageServer Build(string server)

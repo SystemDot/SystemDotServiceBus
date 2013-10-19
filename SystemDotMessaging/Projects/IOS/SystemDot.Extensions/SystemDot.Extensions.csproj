@@ -54,6 +54,7 @@
     <Compile Include="Composition\ImportManyAttribute.cs" />
     <Compile Include="Composition\InheritedExportAttribute.cs" />
     <Compile Include="MainThreadDispatcher.cs" />
+    <Compile Include="UniqueMachineNameProvider.cs" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
