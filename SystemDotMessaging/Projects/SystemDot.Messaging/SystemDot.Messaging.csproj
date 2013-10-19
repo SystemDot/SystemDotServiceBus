@@ -155,7 +155,6 @@
     <Compile Include="Publishing\Builders\SubscriberRecieveChannelSchema.cs" />
     <Compile Include="Publishing\Builders\SubscriberSendChannelBuilt.cs" />
     <Compile Include="Publishing\Builders\SubscriptionRequestChannelSchema.cs" />
-    <Compile Include="Builders\RecieveChannelSchema.cs" />
     <Compile Include="Publishing\PersistentSubscriberCollection.cs" />
     <Compile Include="Publishing\SubscribeChange.cs" />
     <Compile Include="Publishing\Subscriber.cs" />
@@ -186,7 +185,6 @@
     <Compile Include="RequestReply\ReplySendChannelDistributor.cs" />
     <Compile Include="RequestReply\RequestRecieveChannelDistributor.cs" />
     <Compile Include="RequestReply\Builders\RequestRecieveChannelSchema.cs" />
-    <Compile Include="Builders\SendChannelSchema.cs" />
     <Compile Include="Publishing\Builders\PublisherChannelBuilder.cs" />
     <Compile Include="Publishing\Builders\PublisherChannelSchema.cs" />
     <Compile Include="Publishing\Builders\SubscriberRecieveChannelBuilder.cs" />

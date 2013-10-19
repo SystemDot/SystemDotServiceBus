@@ -16,5 +16,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
         public bool IsSequenced { get; set; }
 
         public bool IsDurable { get; set; }
+
+        public bool ContinueOnException { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Configuration.ExceptionHandling;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Hooks;
 using SystemDot.Messaging.Packaging;
@@ -8,7 +9,7 @@ using SystemDot.Messaging.UnitOfWork;
 
 namespace SystemDot.Messaging.Configuration.Publishers
 {
-    public class SubscribeToConfiguration : Configurer
+    public class SubscribeToConfiguration : Configurer, IExceptionHandlingConfigurer
     {
         readonly SubscriptionRequestChannelSchema requestSchema;
         readonly SubscriberRecieveChannelSchema receiveSchema;
@@ -97,6 +98,16 @@ namespace SystemDot.Messaging.Configuration.Publishers
         {
             receiveSchema.HandleEventsOnMainThread = true;
             return this;
+        }
+
+        public OnExceptionConfiguration<SubscribeToConfiguration> OnException()
+        {
+            return new OnExceptionConfiguration<SubscribeToConfiguration>(this);
+        }
+
+        public void SetContinueOnException()
+        {
+            receiveSchema.ContinueOnException = true;
         }
     }
 }
