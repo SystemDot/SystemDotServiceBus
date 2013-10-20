@@ -14,9 +14,9 @@ namespace SystemDot
 #endif
         }
 
-        static object GetUniqueId()
+        static string GetUniqueId()
         {
-            return new EasClientDeviceInformation().Id;
+            return new EasClientDeviceInformation().Id.ToString();
         }
 
         static string GetMachineName()
