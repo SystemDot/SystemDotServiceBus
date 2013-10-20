@@ -8,7 +8,7 @@ namespace SystemDot
     {
         public static string GetUniqueName()
         {
-            return String.Format("{0}({1})", GetUniqueIdentifier(), GetMachineName());
+            return String.Format("{0}-{1}", GetMachineName(), GetUniqueIdentifier());
         }
 
         static string GetMachineName()
