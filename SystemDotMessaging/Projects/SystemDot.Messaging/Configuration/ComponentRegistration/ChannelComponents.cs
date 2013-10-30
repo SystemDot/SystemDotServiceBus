@@ -2,6 +2,7 @@ using SystemDot.Ioc;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Acknowledgement.Builders;
 using SystemDot.Messaging.Builders;
+using SystemDot.Messaging.Correlation;
 using SystemDot.Messaging.Direct.Builders;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Storage;
@@ -23,6 +24,8 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<MessageCacheFactory, MessageCacheFactory>();
             container.RegisterInstance<InMemoryChangeStore, InMemoryChangeStore>();
             container.RegisterInstance<PersistenceFactorySelector, PersistenceFactorySelector>();
+            container.RegisterInstance<ReplyCorrelationLookup, ReplyCorrelationLookup>();
+            container.RegisterInstance<CorrelationLookup, CorrelationLookup>();
         }
     }
 }

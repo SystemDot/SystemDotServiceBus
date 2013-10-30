@@ -24,6 +24,7 @@ namespace SystemDot.Sql.Connections
                     {
                         onRowRead(reader);
                     }
+                    reader.Close();
                 }
             }
         }

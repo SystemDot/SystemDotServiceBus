@@ -11,7 +11,7 @@ namespace SystemDot.Http
         readonly FixedPortAddress address;
         readonly IHttpHandler handler;
         readonly HttpListener listener;
-        
+
         public HttpServer(FixedPortAddress address, IHttpHandler handler)
         {
             Contract.Requires(handler != null);
@@ -33,14 +33,14 @@ namespace SystemDot.Http
         }
 
         public void PerformWork()
-        {    
+        {
             Task<HttpListenerContext> context = Task.Factory.FromAsync<HttpListenerContext>(
-                listener.BeginGetContext, 
-                listener.EndGetContext, 
+                listener.BeginGetContext,
+                listener.EndGetContext,
                 listener);
 
             context.ContinueWith(_ => PerformWork());
-            context.ContinueWith(task => HandleRequest(task.Result));            
+            context.ContinueWith(task => HandleRequest(task.Result));
         }
 
         private void HandleRequest(HttpListenerContext context)
@@ -49,6 +49,10 @@ namespace SystemDot.Http
             {
                 handler.HandleRequest(context.Request.InputStream, context.Response.OutputStream);
                 context.Response.StatusCode = (int)HttpStatusCode.OK;
+            }
+            catch (HttpListenerException)
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             }
             catch (Exception e)
             {

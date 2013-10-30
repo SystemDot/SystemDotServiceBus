@@ -7,6 +7,7 @@ using SystemDot.Messaging.Authentication.RequestReply;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
+using SystemDot.Messaging.Correlation;
 using SystemDot.Messaging.ExceptionHandling;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
@@ -39,6 +40,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly AuthenticationSessionCache authenticationSessionCache;
         readonly AuthenticatedServerRegistry authenticatedServerRegistry;
         readonly ReplyAuthenticationSessionLookup replyAuthenticationSessionLookup;
+        readonly ReplyCorrelationLookup correlationLookup;
 
         internal RequestRecieveChannelBuilder(
             ReplyAddressLookup replyAddressLookup,
@@ -52,7 +54,8 @@ namespace SystemDot.Messaging.RequestReply.Builders
             IMainThreadMarshaller mainThreadMarshaller,
             AuthenticationSessionCache authenticationSessionCache,
             AuthenticatedServerRegistry authenticatedServerRegistry,
-            ReplyAuthenticationSessionLookup replyAuthenticationSessionLookup)
+            ReplyAuthenticationSessionLookup replyAuthenticationSessionLookup,
+            ReplyCorrelationLookup correlationLookup)
         {
             Contract.Requires(replyAddressLookup != null);
             Contract.Requires(serialiser != null);
@@ -66,6 +69,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(authenticationSessionCache != null);
             Contract.Requires(authenticatedServerRegistry != null);
             Contract.Requires(replyAuthenticationSessionLookup != null);
+            Contract.Requires(correlationLookup != null);
 
             this.replyAddressLookup = replyAddressLookup;
             this.serialiser = serialiser;
@@ -79,6 +83,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             this.authenticationSessionCache = authenticationSessionCache;
             this.authenticatedServerRegistry = authenticatedServerRegistry;
             this.replyAuthenticationSessionLookup = replyAuthenticationSessionLookup;
+            this.correlationLookup = correlationLookup;
         }
 
         public IMessageInputter<MessagePayload> Build(RequestRecieveChannelSchema schema, EndpointAddress senderAddress)
@@ -104,7 +109,6 @@ namespace SystemDot.Messaging.RequestReply.Builders
         {
             var startPoint = new MessageLocalAddressReassigner(serverAddressRegistry);
 
-
             MessagePipelineBuilder.Build()
                 .With(startPoint)
                 .ToProcessor(new ReceiverAuthenticationSessionVerifier(authenticationSessionCache, authenticatedServerRegistry))
@@ -116,7 +120,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
                 .Queue()
                 .ToResequencerIfSequenced(messageCache, schema)
-                .ToProcessor(new ReplyChannelSelector(replyAddressLookup))
+                .ToProcessor(new ReplyChannelSelector(replyAddressLookup, correlationLookup))
                 .ToProcessor(new ReplyAuthenticationSessionSelector(replyAuthenticationSessionLookup))
                 .ToProcessor(new ExceptionHandler(schema.ContinueOnException))
                 .ToProcessor(new ExceptionReplier())

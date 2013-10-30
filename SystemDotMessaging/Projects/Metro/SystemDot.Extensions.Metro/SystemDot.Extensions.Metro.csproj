@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyExtensions.cs" />
+    <Compile Include="HttpListenerException.cs" />
     <Compile Include="Composition\CompositionContainer.cs" />
     <Compile Include="Composition\DirectoryCatalog.cs" />
     <Compile Include="Composition\ImportManyAttribute.cs" />

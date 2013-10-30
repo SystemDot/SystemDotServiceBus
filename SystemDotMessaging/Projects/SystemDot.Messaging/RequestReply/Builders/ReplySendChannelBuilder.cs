@@ -8,6 +8,7 @@ using SystemDot.Messaging.Authentication.RequestReply;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
+using SystemDot.Messaging.Correlation;
 using SystemDot.Messaging.Distribution;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Hooks;
@@ -32,21 +33,22 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly PersistenceFactorySelector persistenceFactorySelector;
         readonly MessageAcknowledgementHandler acknowledgementHandler;
         readonly ITaskScheduler taskScheduler;
-        readonly AuthenticationSessionCache authenticationSessionCache;
         readonly ReplyAuthenticationSessionLookup replyAuthenticationSessionLookup;
         readonly AuthenticatedServerRegistry authenticatedServerRegistry;
+        readonly ReplyCorrelationLookup correlationLookup;
 
         public ReplySendChannelBuilder(
-            MessageSender messageSender, 
-            ISerialiser serialiser, 
-            ISystemTime systemTime, 
-            ITaskRepeater taskRepeater, 
-            PersistenceFactorySelector persistenceFactorySelector, 
-            MessageAcknowledgementHandler acknowledgementHandler, 
-            ITaskScheduler taskScheduler, 
-            AuthenticationSessionCache authenticationSessionCache, 
-            ReplyAuthenticationSessionLookup replyAuthenticationSessionLookup, 
-            AuthenticatedServerRegistry authenticatedServerRegistry)
+            MessageSender messageSender,
+            ISerialiser serialiser,
+            ISystemTime systemTime,
+            ITaskRepeater taskRepeater,
+            PersistenceFactorySelector persistenceFactorySelector,
+            MessageAcknowledgementHandler acknowledgementHandler,
+            ITaskScheduler taskScheduler,
+            AuthenticationSessionCache authenticationSessionCache,
+            ReplyAuthenticationSessionLookup replyAuthenticationSessionLookup,
+            AuthenticatedServerRegistry authenticatedServerRegistry,
+            ReplyCorrelationLookup correlationLookup)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(serialiser != null);
@@ -58,7 +60,8 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(authenticationSessionCache != null);
             Contract.Requires(replyAuthenticationSessionLookup != null);
             Contract.Requires(authenticatedServerRegistry != null);
-            
+            Contract.Requires(correlationLookup != null);
+
             this.messageSender = messageSender;
             this.serialiser = serialiser;
             this.systemTime = systemTime;
@@ -66,9 +69,9 @@ namespace SystemDot.Messaging.RequestReply.Builders
             this.persistenceFactorySelector = persistenceFactorySelector;
             this.acknowledgementHandler = acknowledgementHandler;
             this.taskScheduler = taskScheduler;
-            this.authenticationSessionCache = authenticationSessionCache;
             this.replyAuthenticationSessionLookup = replyAuthenticationSessionLookup;
             this.authenticatedServerRegistry = authenticatedServerRegistry;
+            this.correlationLookup = correlationLookup;
         }
 
         public IMessageInputter<object> Build(ReplySendChannelSchema schema, EndpointAddress senderAddress)
@@ -99,6 +102,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new BatchPackager())
                 .ToConverter(new MessagePayloadPackager(serialiser))
                 .ToProcessor(new ReplyAuthenticationSessionAttacher(replyAuthenticationSessionLookup))
+                .ToProcessor(new ReplyCorrelationApplier(correlationLookup))
                 .ToProcessor(new Sequencer(cache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, senderAddress))
                 .ToProcessor(new SendChannelMessageCacher(cache))
@@ -125,8 +129,8 @@ namespace SystemDot.Messaging.RequestReply.Builders
         AuthenticationSessionExpiryStrategy CreateAuthenticationSessionExpiryStrategy(ReplySendChannelSchema schema)
         {
             return new AuthenticationSessionExpiryStrategy(
-                authenticatedServerRegistry, 
-                schema.FromAddress.Server, 
+                authenticatedServerRegistry,
+                schema.FromAddress.Server,
                 systemTime);
         }
 

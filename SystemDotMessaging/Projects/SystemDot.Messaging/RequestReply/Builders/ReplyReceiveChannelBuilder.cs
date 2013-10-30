@@ -6,6 +6,7 @@ using SystemDot.Messaging.Authentication.Caching;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
+using SystemDot.Messaging.Correlation;
 using SystemDot.Messaging.ExceptionHandling;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
@@ -37,19 +38,21 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly IMainThreadMarshaller mainThreadMarshaller;
         readonly AuthenticationSessionCache authenticationSessionCache;
         readonly AuthenticatedServerRegistry authenticatedServerRegistry;
+        readonly CorrelationLookup correlationLookup;
 
         internal ReplyReceiveChannelBuilder(
-            ISerialiser serialiser, 
-            MessageHandlerRouter messageHandlerRouter, 
-            MessageReceiver messageReceiver, 
+            ISerialiser serialiser,
+            MessageHandlerRouter messageHandlerRouter,
+            MessageReceiver messageReceiver,
             AcknowledgementSender acknowledgementSender,
-            PersistenceFactorySelector persistenceFactorySelector, 
-            ISystemTime systemTime, 
-            ITaskRepeater taskRepeater, 
-            ServerAddressRegistry serverAddressRegistry, 
-            IMainThreadMarshaller mainThreadMarshaller, 
-            AuthenticationSessionCache authenticationSessionCache, 
-            AuthenticatedServerRegistry authenticatedServerRegistry)
+            PersistenceFactorySelector persistenceFactorySelector,
+            ISystemTime systemTime,
+            ITaskRepeater taskRepeater,
+            ServerAddressRegistry serverAddressRegistry,
+            IMainThreadMarshaller mainThreadMarshaller,
+            AuthenticationSessionCache authenticationSessionCache,
+            AuthenticatedServerRegistry authenticatedServerRegistry,
+            CorrelationLookup correlationLookup)
         {
             Contract.Requires(serialiser != null);
             Contract.Requires(messageHandlerRouter != null);
@@ -62,7 +65,8 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(mainThreadMarshaller != null);
             Contract.Requires(authenticationSessionCache != null);
             Contract.Requires(authenticatedServerRegistry != null);
-            
+            Contract.Requires(correlationLookup != null);
+
             this.serialiser = serialiser;
             this.messageHandlerRouter = messageHandlerRouter;
             this.messageReceiver = messageReceiver;
@@ -74,6 +78,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             this.mainThreadMarshaller = mainThreadMarshaller;
             this.authenticationSessionCache = authenticationSessionCache;
             this.authenticatedServerRegistry = authenticatedServerRegistry;
+            this.correlationLookup = correlationLookup;
         }
 
         public void Build(ReplyReceiveChannelSchema schema)
@@ -95,6 +100,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))
                 .Queue()
                 .ToResequencerIfSequenced(messageCache, schema)
+                .ToProcessorIf(new RequestReplyCorrelator(correlationLookup), schema.CorrelateReplyToRequest)
                 .ToProcessor(new ExceptionHandler(schema.ContinueOnException))
                 .ToConverter(new MessagePayloadUnpackager(serialiser))
                 .ToProcessor(schema.UnitOfWorkRunnerCreator())

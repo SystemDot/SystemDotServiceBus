@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         public IRepeatStrategy RepeatStrategy { get; set; }
 
         public bool IsDurable { get; set; }
-    
+
         public IMessageFilterStrategy FilteringStrategy { get; set; }
 
         public EndpointAddress ReceiverAddress { get; set; }
@@ -29,6 +29,8 @@ namespace SystemDot.Messaging.RequestReply.Builders
         public List<IMessageHook<object>> Hooks { get; set; }
 
         public List<IMessageHook<MessagePayload>> PostPackagingHooks { get; set; }
+
+        public bool CorrelateReplyToRequest { get; set; }
 
         public RequestSendChannelSchema()
         {

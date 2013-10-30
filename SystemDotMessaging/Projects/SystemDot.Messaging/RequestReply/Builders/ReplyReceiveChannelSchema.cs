@@ -27,6 +27,8 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
         public bool ContinueOnException { get; set; }
 
+        public bool CorrelateReplyToRequest { get; set; }
+
         public ReplyReceiveChannelSchema()
         {
             Hooks = new List<IMessageHook<object>>();

@@ -89,6 +89,15 @@
     <Compile Include="authentication_for_request_reply\when_replying_to_a_request_on_a_previous_session_after_subsequent_authentication.cs" />
     <Compile Include="authentication_for_request_reply\when_sending_a_message_to_a_server_after_failing_to_authenticate_to_it.cs" />
     <Compile Include="authentication_for_request_reply\when_sending_a_request_to_a_server_requiring_authentication_after_authenticating_to_it.cs" />
+    <Compile Include="correlation_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="correlation_for_request_reply\when_receiving_a_reply_that_correlates_to_a_request_with_correlate_configured.cs" />
+    <Compile Include="correlation_for_request_reply\when_receiving_a_reply_that_does_not_correlate_to_a_request_with_correlate_configured.cs" />
+    <Compile Include="correlation_for_request_reply\when_receiving_a_reply_that_has_no_correlation_with_correlate_configured.cs" />
+    <Compile Include="correlation_for_request_reply\when_receiving_two_replies_that_correlate_with_two_requests_with_correlate_configured.cs" />
+    <Compile Include="correlation_for_request_reply\when_replying_to_a_request_without_a_correlation.cs" />
+    <Compile Include="correlation_for_request_reply\when_replying_to_a_request_with_a_correlation.cs" />
+    <Compile Include="correlation_for_request_reply\when_sending_a_request_without_correlation_configured.cs" />
+    <Compile Include="correlation_for_request_reply\when_sending_a_request_with_correlation_configured.cs" />
     <Compile Include="exception_handling_for_point_to_point_receiving\SpecificationGroup.cs" />
     <Compile Include="exception_handling_for_point_to_point_receiving\when_failing_the_handling_of_a_request_with_continue_on_exception_configured.cs" />
     <Compile Include="exception_handling_for_subscriptions\SpecificationGroup.cs" />

@@ -1,5 +1,6 @@
 using System;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Correlation;
 using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
@@ -24,7 +25,7 @@ namespace SystemDot.Messaging.Specifications
             payload.SetFromAddress(BuildAddress(fromAddress));
             payload.SetToAddress(BuildAddress(toAddress));
             payload.SetChannelType(useType);
-            
+
             return payload;
         }
 
@@ -133,6 +134,12 @@ namespace SystemDot.Messaging.Specifications
             return payload;
         }
 
+        public static MessagePayload SetNewCorrelationId(this MessagePayload payload)
+        {
+            payload.SetCorrelationId(Guid.NewGuid());
+            return payload;
+        }
+
         public static MessagePayload SetSubscriptionRequest(this MessagePayload payload)
         {
             payload.SetSubscriptionRequest(new SubscriptionSchema { SubscriberAddress = payload.GetFromAddress() });
@@ -160,8 +167,8 @@ namespace SystemDot.Messaging.Specifications
         }
 
         public static void ShouldHaveCorrectPersistenceId(
-            this MessagePayload payload, 
-            string address, 
+            this MessagePayload payload,
+            string address,
             PersistenceUseType persistenceUseType)
         {
             payload.ShouldHaveCorrectPersistenceId(BuildAddress(address), persistenceUseType);

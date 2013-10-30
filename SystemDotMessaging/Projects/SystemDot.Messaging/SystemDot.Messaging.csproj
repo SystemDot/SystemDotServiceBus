@@ -101,6 +101,13 @@
     <Compile Include="Configuration\ExternalSources\IExternalSourcesConfigurer.cs" />
     <Compile Include="Configuration\ExceptionHandling\IExceptionHandlingConfigurer.cs" />
     <Compile Include="Configuration\ExceptionHandling\OnExceptionConfiguration.cs" />
+    <Compile Include="Correlation\CorrelationAssigner.cs" />
+    <Compile Include="Correlation\CorrelationHeader.cs" />
+    <Compile Include="Correlation\CorrelationLookup.cs" />
+    <Compile Include="Correlation\CorrelationMessagePayloadExtensions.cs" />
+    <Compile Include="Correlation\ReplyCorrelationApplier.cs" />
+    <Compile Include="Correlation\ReplyCorrelationLookup.cs" />
+    <Compile Include="Correlation\RequestReplyCorrelator.cs" />
     <Compile Include="Direct\Builders\ReplyReceiverSchema.cs" />
     <Compile Include="Direct\DirectReplyMessageHandlerRouter.cs" />
     <Compile Include="Direct\DirectSendContext.cs" />

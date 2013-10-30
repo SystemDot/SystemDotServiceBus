@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.ExceptionHandling;
-using SystemDot.Messaging.Configuration.PointToPoint;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Hooks;
@@ -19,7 +18,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         readonly ReplyReceiveChannelSchema receiveSchema;
 
         public RequestReplySenderConfiguration(
-            EndpointAddress address, 
+            EndpointAddress address,
             EndpointAddress recieverAddress,
             MessagingConfiguration messagingConfiguration)
             : base(messagingConfiguration)
@@ -101,7 +100,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             return this;
         }
 
-        public RequestReplySenderConfiguration WithUnitOfWork<TUnitOfWorkFactory>() 
+        public RequestReplySenderConfiguration WithUnitOfWork<TUnitOfWorkFactory>()
             where TUnitOfWorkFactory : class, IUnitOfWorkFactory
         {
             receiveSchema.UnitOfWorkRunnerCreator = CreateUnitOfWorkRunner<TUnitOfWorkFactory>;
@@ -141,6 +140,13 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         public OnExceptionConfiguration<RequestReplySenderConfiguration> OnException()
         {
             return new OnExceptionConfiguration<RequestReplySenderConfiguration>(this);
+        }
+
+        public RequestReplySenderConfiguration CorrelateReplyToRequest()
+        {
+            receiveSchema.CorrelateReplyToRequest = true;
+            sendSchema.CorrelateReplyToRequest = true;
+            return this;
         }
 
         public void SetContinueOnException()

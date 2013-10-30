@@ -1,31 +1,47 @@
-using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Correlation;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 
 namespace SystemDot.Messaging.RequestReply
 {
-    class ReplyChannelSelector : IMessageProcessor<MessagePayload, MessagePayload>
+    class ReplyChannelSelector : MessageProcessor
     {
         readonly ReplyAddressLookup addressLookup;
+        readonly ReplyCorrelationLookup correlationLookup;
 
-        public ReplyChannelSelector(ReplyAddressLookup addressLookup)
+        public ReplyChannelSelector(ReplyAddressLookup addressLookup, ReplyCorrelationLookup correlationLookup)
         {
             Contract.Requires(addressLookup != null);
+            Contract.Requires(correlationLookup != null);
 
             this.addressLookup = addressLookup;
+            this.correlationLookup = correlationLookup;
         }
 
-        public void InputMessage(MessagePayload toInput)
+        public override void InputMessage(MessagePayload toInput)
         {
-            Contract.Requires(toInput != null);
+            SetCurentSenderAddress(toInput);
+            SetCurrentReceiverAddress(toInput);
+            SetCurrentCorrelationId(toInput);
 
-            this.addressLookup.SetCurrentSenderAddress(toInput.GetFromAddress());
-            this.addressLookup.SetCurrentRecieverAddress(toInput.GetToAddress());
-
-            MessageProcessed(toInput);
+            OnMessageProcessed(toInput);
         }
 
-        public event Action<MessagePayload> MessageProcessed;
+        void SetCurentSenderAddress(MessagePayload toInput)
+        {
+            this.addressLookup.SetCurrentSenderAddress(toInput.GetFromAddress());
+        }
+
+        void SetCurrentReceiverAddress(MessagePayload toInput)
+        {
+            this.addressLookup.SetCurrentRecieverAddress(toInput.GetToAddress());
+        }
+
+        void SetCurrentCorrelationId(MessagePayload toInput)
+        {
+            if (!toInput.HasCorrelationId()) return;
+            correlationLookup.SetCurrentCorrelationId(toInput.GetCorrelationId());
+        }
     }
 }
