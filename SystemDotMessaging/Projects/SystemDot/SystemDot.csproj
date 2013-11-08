@@ -75,7 +75,7 @@
     <Compile Include="Http\IHttpHandler.cs" />
     <Compile Include="Serialisation\CannotDeserialiseException.cs" />
     <Compile Include="Serialisation\ISerialiser.cs" />
-    <Compile Include="Parallelism\BlockingQueue.cs" />
+    <Compile Include="Parallelism\UniqueBlockingQueue.cs" />
     <Compile Include="Parallelism\ITaskScheduler.cs" />
     <Compile Include="Parallelism\ITaskStarter.cs" />
     <Compile Include="Parallelism\TaskStarter.cs" />

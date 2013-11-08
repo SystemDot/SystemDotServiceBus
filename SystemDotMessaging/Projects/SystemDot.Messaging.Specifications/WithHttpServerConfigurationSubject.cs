@@ -13,17 +13,17 @@ namespace SystemDot.Messaging.Specifications
 
         Cleanup cleanup = () => TestHttpServer.ClearInstance();
 
-        public static IEnumerable<MessagePayload> SendMessagesToServer(params MessagePayload[] toSend)
+        public static IEnumerable<MessagePayload> SendMessagesToServer(MessagePayload toSend)
         {
             return SendObjectsToServer(toSend).Deserialise<IEnumerable<MessagePayload>>(new JsonSerialiser());
         }
 
-        public static Stream SendObjectsToServer(params object[] toSend)
+        public static Stream SendObjectsToServer(object toSend)
         {
             Stream request = new MemoryStream();
             var serialiser = new JsonSerialiser();
 
-            toSend.ForEach(m => request.Serialise(m, serialiser));
+            request.Serialise(toSend, serialiser);
 
             return TestHttpServer.Instance.Request(request);
         }

@@ -7,12 +7,12 @@ namespace SystemDot.Specifications.blocking_queue
 {
     public class when_queuing_an_item
     {
-        static BlockingQueue<string> queue;
+        static UniqueBlockingQueue<string> queue;
         static IEnumerable<string> dequeued;
 
         Establish context = () =>
         {
-            queue = new BlockingQueue<string>(new TimeSpan(0, 0, 1));
+            queue = new UniqueBlockingQueue<string>(new TimeSpan(0, 0, 1));
             queue.Enqueue("Test");
         };
 

@@ -9,11 +9,8 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.proxying
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_handling_a_long_poll_request_for_messages_with_two_messages_in_the_queue 
-        : WithHttpServerConfigurationSubject
+    public class when_handling_a_long_poll_request_for_the_same_message_queued_twice : WithHttpServerConfigurationSubject
     {
-        static MessagePayload sentMessageInQueue1;
-        static MessagePayload sentMessageInQueue2;
         static MessagePayload longPollRequest;
         static IEnumerable<MessagePayload> returnedMessages;
 
@@ -25,12 +22,12 @@ namespace SystemDot.Messaging.Specifications.proxying
                 .Initialise();
 
             EndpointAddress address = BuildAddress("Address2", "TestServer");
-
-            sentMessageInQueue1 = new MessagePayload();
+            
+            var sentMessageInQueue1 = new MessagePayload();
             sentMessageInQueue1.SetToAddress(address);
             SendMessagesToServer(sentMessageInQueue1);
 
-            sentMessageInQueue2 = new MessagePayload();
+            var sentMessageInQueue2 = new MessagePayload { Id = sentMessageInQueue1.Id };
             sentMessageInQueue2.SetToAddress(address);
             SendMessagesToServer(sentMessageInQueue2);
 
@@ -40,8 +37,6 @@ namespace SystemDot.Messaging.Specifications.proxying
 
         Because of = () => returnedMessages = SendMessagesToServer(longPollRequest);
 
-        It should_put_the_first_message_in_the_response = () => returnedMessages.ShouldContain(sentMessageInQueue1);
-
-        It should_put_the_second_message_in_the_response = () => returnedMessages.ShouldContain(sentMessageInQueue2);
+        It should_only_return_the_first_copy_of_the_message = () => returnedMessages.Count().ShouldEqual(1);
     }
 }
