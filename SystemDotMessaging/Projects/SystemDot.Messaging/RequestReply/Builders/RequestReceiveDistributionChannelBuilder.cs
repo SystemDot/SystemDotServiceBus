@@ -11,23 +11,19 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly MessageReceiver messageReceiver;
         readonly RequestRecieveChannelBuilder builder;
         readonly IChangeStore changeStore;
-        readonly InMemoryChangeStore inMemoryStore;
 
         public RequestReceiveDistributionChannelBuilder(
             MessageReceiver messageReceiver, 
             RequestRecieveChannelBuilder builder, 
-            IChangeStore changeStore, 
-            InMemoryChangeStore inMemoryStore)
+            IChangeStore changeStore)
         {
             Contract.Requires(messageReceiver != null);
             Contract.Requires(builder != null);
             Contract.Requires(changeStore != null);
-            Contract.Requires(inMemoryStore != null);
             
             this.messageReceiver = messageReceiver;
             this.builder = builder;
             this.changeStore = changeStore;
-            this.inMemoryStore = inMemoryStore;
         }
 
         public void Build(RequestRecieveChannelSchema schema)
@@ -51,7 +47,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
         IChangeStore GetChangeStore(RequestRecieveChannelSchema schema)
         {
-            return schema.IsDurable ? this.changeStore : this.inMemoryStore;
+            return schema.IsDurable ? changeStore : new NullChangeStore();
         }
     }
 }

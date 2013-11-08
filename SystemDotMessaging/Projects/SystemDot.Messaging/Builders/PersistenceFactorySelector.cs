@@ -7,20 +7,16 @@ namespace SystemDot.Messaging.Builders
     class PersistenceFactorySelector 
     {
         readonly MessageCacheFactory messageCacheFactory;
-        readonly InMemoryChangeStore inMemoryStore;
         readonly ISystemTime systemTime;
 
         public PersistenceFactorySelector(
             MessageCacheFactory messageCacheFactory, 
-            InMemoryChangeStore inMemoryStore, 
             ISystemTime systemTime)
         {
             Contract.Requires(messageCacheFactory != null);
-            Contract.Requires(inMemoryStore != null);
             Contract.Requires(systemTime != null);
             
             this.messageCacheFactory = messageCacheFactory;
-            this.inMemoryStore = inMemoryStore;
             this.systemTime = systemTime;
         }
 
@@ -30,7 +26,7 @@ namespace SystemDot.Messaging.Builders
             
             return (schema.IsDurable) 
                 ? messageCacheFactory
-                : new MessageCacheFactory(inMemoryStore, systemTime);
+                : new MessageCacheFactory(new NullChangeStore(), systemTime);
         }
     }
 }

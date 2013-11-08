@@ -22,7 +22,6 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<MessageAcknowledgementHandler, MessageAcknowledgementHandler>();
             container.RegisterInstance<AcknowledgementSender, AcknowledgementSender>();
             container.RegisterInstance<MessageCacheFactory, MessageCacheFactory>();
-            container.RegisterInstance<InMemoryChangeStore, InMemoryChangeStore>();
             container.RegisterInstance<PersistenceFactorySelector, PersistenceFactorySelector>();
             container.RegisterInstance<ReplyCorrelationLookup, ReplyCorrelationLookup>();
             container.RegisterInstance<CorrelationLookup, CorrelationLookup>();

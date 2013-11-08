@@ -18,36 +18,32 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly MessageSender messageSender;
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
-        readonly InMemoryChangeStore changeStore;
         readonly MessageAcknowledgementHandler acknowledgementHandler;
         readonly AuthenticationSessionCache authenticationSessionCache;
 
         public SubscriptionRequestSendChannelBuilder(
             MessageSender messageSender, 
             ISystemTime systemTime, 
-            ITaskRepeater taskRepeater,
-            InMemoryChangeStore changeStore, 
+            ITaskRepeater taskRepeater, 
             MessageAcknowledgementHandler acknowledgementHandler, 
             AuthenticationSessionCache authenticationSessionCache)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
-            Contract.Requires(changeStore != null);
             Contract.Requires(acknowledgementHandler != null);
             Contract.Requires(authenticationSessionCache != null);
 
             this.messageSender = messageSender;
             this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
-            this.changeStore = changeStore;
             this.acknowledgementHandler = acknowledgementHandler;
             this.authenticationSessionCache = authenticationSessionCache;
         }
 
         public void Build(SubscriptionRequestChannelSchema schema)
         {
-            SendMessageCache cache = new MessageCacheFactory(changeStore, systemTime)
+            SendMessageCache cache = new MessageCacheFactory(new NullChangeStore(), systemTime)
                 .CreateSendCache(
                     PersistenceUseType.SubscriberRequestSend, 
                     schema.PublisherAddress);

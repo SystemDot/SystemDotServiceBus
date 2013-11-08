@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Specifications.point_to_point
         Establish context = () =>
         {
             messagesLoadedToCacheEvents = new List<MessageLoadedToCache>();
-            
+
             changeStore = new InMemoryChangeStore(new JsonSerialiser());
             ConfigureAndRegister(changeStore);
 
