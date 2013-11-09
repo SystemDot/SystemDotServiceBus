@@ -3,7 +3,6 @@ using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Authentication.Caching;
-using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.LoadBalancing;
@@ -21,7 +20,7 @@ namespace SystemDot.Messaging.Publishing.Builders
     class SubscriberSendChannelBuilder : ISubscriberSendChannelBuilder
     {
         readonly MessageSender messageSender;
-        readonly PersistenceFactorySelector persistenceFactorySelector;
+        readonly MessageCacheFactory messageCacheFactory;
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
         readonly MessageAcknowledgementHandler acknowledgementHandler;
@@ -31,7 +30,7 @@ namespace SystemDot.Messaging.Publishing.Builders
 
         public SubscriberSendChannelBuilder(
             MessageSender messageSender, 
-            PersistenceFactorySelector persistenceFactorySelector, 
+            MessageCacheFactory messageCacheFactory, 
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 
             MessageAcknowledgementHandler acknowledgementHandler, 
@@ -40,7 +39,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             AuthenticationSessionCache authenticationSessionCache)
         {
             Contract.Requires(messageSender != null);
-            Contract.Requires(persistenceFactorySelector != null);
+            Contract.Requires(messageCacheFactory != null);
             Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
             Contract.Requires(acknowledgementHandler != null);
@@ -49,7 +48,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             Contract.Requires(authenticationSessionCache != null);
 
             this.messageSender = messageSender;
-            this.persistenceFactorySelector = persistenceFactorySelector;
+            this.messageCacheFactory = messageCacheFactory;
             this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
             this.acknowledgementHandler = acknowledgementHandler;
@@ -60,16 +59,35 @@ namespace SystemDot.Messaging.Publishing.Builders
 
         public IMessageInputter<MessagePayload> BuildChannel(SubscriberSendChannelSchema schema)
         {
-            SendMessageCache cache = this.persistenceFactorySelector
-                .Select(schema)
-                .CreateSendCache(PersistenceUseType.SubscriberSend, schema.SubscriberAddress);
+            SendMessageCache cache = CreateCache(schema);
+            MessageProcessor startPoint = CreateStartPoint();
 
-            this.acknowledgementHandler.RegisterCache(cache);
+            RegisterCacheWithAcknowledgementHandler(cache);
+            BuildPipeline(schema, startPoint, cache);
+            NotifySubscriberSendChannelBuilt(schema);
 
-            var copier = new MessagePayloadCopier(serialiser);
+            return startPoint;
+        }
 
+        SendMessageCache CreateCache(SubscriberSendChannelSchema schema)
+        {
+            return messageCacheFactory.CreateSendCache(PersistenceUseType.SubscriberSend, schema.SubscriberAddress, schema);
+        }
+
+        void RegisterCacheWithAcknowledgementHandler(SendMessageCache cache)
+        {
+            acknowledgementHandler.RegisterCache(cache);
+        }
+
+        MessageProcessor CreateStartPoint()
+        {
+            return new MessagePayloadCopier(serialiser);
+        }
+
+        void BuildPipeline(SubscriberSendChannelSchema schema, MessageProcessor startPoint, SendMessageCache cache)
+        {
             MessagePipelineBuilder.Build()
-                .With(copier)
+                .With(startPoint)
                 .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache, schema.SubscriberAddress))
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.SubscriberAddress))
@@ -82,15 +100,16 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .ToProcessor(new LoadBalancer(cache, taskScheduler))
                 .ToProcessor(new LastSentRecorder(systemTime))
                 .ToEndPoint(messageSender);
+        }
 
+        static void NotifySubscriberSendChannelBuilt(SubscriberSendChannelSchema schema)
+        {
             Messenger.Send(new SubscriberSendChannelBuilt
             {
                 CacheAddress = schema.SubscriberAddress,
                 SubscriberAddress = schema.SubscriberAddress,
                 PublisherAddress = schema.FromAddress
             });
-
-            return copier;
         }
     }
 }

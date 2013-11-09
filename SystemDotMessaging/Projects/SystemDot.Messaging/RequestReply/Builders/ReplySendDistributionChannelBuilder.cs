@@ -1,8 +1,8 @@
 using System.Diagnostics.Contracts;
+using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Transport;
-using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.RequestReply.Builders
 {
@@ -11,24 +11,23 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly MessageReceiver messageReceiver;
         readonly ReplySendChannelBuilder builder;
         readonly ReplyAddressLookup replyAddressLookup;
-        readonly IChangeStore changeStore;
+        readonly ChangeStoreSelector changeStoreSelector;
         
         public ReplySendDistributionChannelBuilder(
             MessageReceiver messageReceiver,
             ReplySendChannelBuilder builder, 
-            ReplyAddressLookup replyAddressLookup, 
-            IChangeStore changeStore)
+            ReplyAddressLookup replyAddressLookup,
+            ChangeStoreSelector changeStoreSelector)
         {
             Contract.Requires(messageReceiver != null);
             Contract.Requires(builder != null);
             Contract.Requires(replyAddressLookup != null);
-            Contract.Requires(changeStore != null);
+            Contract.Requires(changeStoreSelector != null);
 
             this.messageReceiver = messageReceiver;
             this.builder = builder;
             this.replyAddressLookup = replyAddressLookup;
-            this.changeStore = changeStore;
-            
+            this.changeStoreSelector = changeStoreSelector;
         }
 
         public void Build(ReplySendChannelSchema schema)
@@ -36,27 +35,31 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(schema != null);
 
             var distributor = new ReplySendChannelDistributor(
-                GetChangeStore(schema), 
+                changeStoreSelector.SelectChangeStore(schema), 
                 replyAddressLookup, 
                 builder, 
                 schema);
 
             MessagePipelineBuilder.Build()      
-                .With(this.messageReceiver)
+                .With(messageReceiver)
                 .ToProcessor(new BodyMessageFilter(schema.FromAddress))
                 .ToEndPoint(new ReplySendSubscriptionHandler(distributor));
 
             MessagePipelineBuilder.Build()
-                .WithBusReplyTo(new MessageFilter(
-                    new ReplyChannelMessageFilterStategy(replyAddressLookup, schema.FromAddress)))
+                .WithBusReplyTo(CreateReplyChannelMessageFilter(schema))
                 .ToEndPoint(distributor);
 
             distributor.Initialise();
         }
 
-        IChangeStore GetChangeStore(ReplySendChannelSchema schema)
+        MessageFilter CreateReplyChannelMessageFilter(ReplySendChannelSchema schema)
         {
-            return schema.IsDurable ? changeStore : new NullChangeStore();
+            return new MessageFilter(CreateReplyChannelMessageFilterStategy(schema));
+        }
+
+        ReplyChannelMessageFilterStategy CreateReplyChannelMessageFilterStategy(ReplySendChannelSchema schema)
+        {
+            return new ReplyChannelMessageFilterStategy(replyAddressLookup, schema.FromAddress);
         }
     }
 }

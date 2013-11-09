@@ -9,7 +9,6 @@ using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
-using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Publishing.Builders
 {
@@ -20,36 +19,50 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly ITaskRepeater taskRepeater;
         readonly MessageAcknowledgementHandler acknowledgementHandler;
         readonly AuthenticationSessionCache authenticationSessionCache;
+        readonly MessageCacheFactory messageCacheFactory;
 
         public SubscriptionRequestSendChannelBuilder(
             MessageSender messageSender, 
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 
             MessageAcknowledgementHandler acknowledgementHandler, 
-            AuthenticationSessionCache authenticationSessionCache)
+            AuthenticationSessionCache authenticationSessionCache, 
+            MessageCacheFactory messageCacheFactory)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
             Contract.Requires(acknowledgementHandler != null);
             Contract.Requires(authenticationSessionCache != null);
+            Contract.Requires(messageCacheFactory != null);
 
             this.messageSender = messageSender;
             this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
             this.acknowledgementHandler = acknowledgementHandler;
             this.authenticationSessionCache = authenticationSessionCache;
+            this.messageCacheFactory = messageCacheFactory;
         }
 
         public void Build(SubscriptionRequestChannelSchema schema)
         {
-            SendMessageCache cache = new MessageCacheFactory(new NullChangeStore(), systemTime)
-                .CreateSendCache(
-                    PersistenceUseType.SubscriberRequestSend, 
-                    schema.PublisherAddress);
+            SendMessageCache cache = CreateCache(schema);
+            RegisterCacheWithAcknowledgementHandler(cache);
+            BuildPipeline(schema, cache);
+        }
 
+        SendMessageCache CreateCache(SubscriptionRequestChannelSchema schema)
+        {
+            return messageCacheFactory.CreateNonDurableSendCache(PersistenceUseType.SubscriberRequestSend, schema.PublisherAddress);
+        }
+
+        void RegisterCacheWithAcknowledgementHandler(SendMessageCache cache)
+        {
             acknowledgementHandler.RegisterCache(cache);
+        }
 
+        void BuildPipeline(SubscriptionRequestChannelSchema schema, SendMessageCache cache)
+        {
             MessagePipelineBuilder.Build()
                 .With(new SubscriptionRequestor(schema.SubscriberAddress, schema.IsDurable))
                 .ToProcessor(new MessageAddresser(schema.SubscriberAddress, schema.PublisherAddress))

@@ -5,7 +5,6 @@ using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Authentication.Caching;
 using SystemDot.Messaging.Authentication.Expiry;
 using SystemDot.Messaging.Batching;
-using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Correlation;
 using SystemDot.Messaging.Expiry;
@@ -29,7 +28,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly ISerialiser serialiser;
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
-        readonly PersistenceFactorySelector persistenceFactory;
+        readonly MessageCacheFactory messageCacheFactory;
         readonly MessageAcknowledgementHandler acknowledgementHandler;
         readonly ITaskScheduler taskScheduler;
         readonly AuthenticationSessionCache authenticationSessionCache;
@@ -41,7 +40,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             ISerialiser serialiser,
             ISystemTime systemTime,
             ITaskRepeater taskRepeater,
-            PersistenceFactorySelector persistenceFactory,
+            MessageCacheFactory messageCacheFactory,
             MessageAcknowledgementHandler acknowledgementHandler,
             ITaskScheduler taskScheduler,
             AuthenticationSessionCache authenticationSessionCache,
@@ -52,7 +51,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(serialiser != null);
             Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
-            Contract.Requires(persistenceFactory != null);
+            Contract.Requires(messageCacheFactory != null);
             Contract.Requires(acknowledgementHandler != null);
             Contract.Requires(taskScheduler != null);
             Contract.Requires(authenticationSessionCache != null);
@@ -63,7 +62,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             this.serialiser = serialiser;
             this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
-            this.persistenceFactory = persistenceFactory;
+            this.messageCacheFactory = messageCacheFactory;
             this.acknowledgementHandler = acknowledgementHandler;
             this.taskScheduler = taskScheduler;
             this.authenticationSessionCache = authenticationSessionCache;
@@ -81,9 +80,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
         SendMessageCache CreateCache(RequestSendChannelSchema schema)
         {
-            return persistenceFactory
-                .Select(schema)
-                .CreateSendCache(PersistenceUseType.RequestSend, schema.FromAddress);
+            return messageCacheFactory.CreateSendCache(PersistenceUseType.RequestSend, schema.FromAddress, schema);
         }
 
         void RegisterCacheWithAcknowledgementHandler(SendMessageCache cache)

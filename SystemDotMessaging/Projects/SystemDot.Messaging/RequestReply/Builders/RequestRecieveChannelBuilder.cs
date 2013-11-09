@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly ISerialiser serialiser;
         readonly MessageHandlerRouter messageHandlerRouter;
         readonly AcknowledgementSender acknowledgementSender;
-        readonly PersistenceFactorySelector persistenceFactorySelector;
+        readonly MessageCacheFactory messageCacheFactory;
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
         readonly ServerAddressRegistry serverAddressRegistry;
@@ -47,7 +47,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             ISerialiser serialiser,
             MessageHandlerRouter messageHandlerRouter,
             AcknowledgementSender acknowledgementSender,
-            PersistenceFactorySelector persistenceFactorySelector,
+            MessageCacheFactory messageCacheFactory,
             ISystemTime systemTime,
             ITaskRepeater taskRepeater,
             ServerAddressRegistry serverAddressRegistry,
@@ -61,7 +61,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(serialiser != null);
             Contract.Requires(messageHandlerRouter != null);
             Contract.Requires(acknowledgementSender != null);
-            Contract.Requires(persistenceFactorySelector != null);
+            Contract.Requires(messageCacheFactory != null);
             Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
             Contract.Requires(serverAddressRegistry != null);
@@ -75,7 +75,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             this.serialiser = serialiser;
             this.messageHandlerRouter = messageHandlerRouter;
             this.acknowledgementSender = acknowledgementSender;
-            this.persistenceFactorySelector = persistenceFactorySelector;
+            this.messageCacheFactory = messageCacheFactory;
             this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
             this.serverAddressRegistry = serverAddressRegistry;
@@ -91,24 +91,25 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(schema != null);
             Contract.Requires(senderAddress != null);
 
-            IMessageInputter<MessagePayload> messageInputter = BuildChannel(schema, CreateCache(schema, senderAddress));
-
+            MessageProcessor startPoint = CreateStartPoint();
+            BuildChannel(startPoint, schema, CreateCache(schema, senderAddress));
             SendChannelBuiltEvent(schema, senderAddress);
 
-            return messageInputter;
+            return startPoint;
+        }
+
+        MessageLocalAddressReassigner CreateStartPoint()
+        {
+            return new MessageLocalAddressReassigner(serverAddressRegistry);
         }
 
         ReceiveMessageCache CreateCache(RequestRecieveChannelSchema schema, EndpointAddress senderAddress)
         {
-            return persistenceFactorySelector
-                .Select(schema)
-                .CreateReceiveCache(PersistenceUseType.RequestReceive, senderAddress);
+            return messageCacheFactory.CreateReceiveCache(PersistenceUseType.RequestReceive, senderAddress, schema);
         }
 
-        IMessageInputter<MessagePayload> BuildChannel(RequestRecieveChannelSchema schema, ReceiveMessageCache messageCache)
+        void BuildChannel(MessageProcessor startPoint, RequestRecieveChannelSchema schema, ReceiveMessageCache messageCache)
         {
-            var startPoint = new MessageLocalAddressReassigner(serverAddressRegistry);
-
             MessagePipelineBuilder.Build()
                 .With(startPoint)
                 .ToProcessor(new ReceiverAuthenticationSessionVerifier(authenticationSessionCache, authenticatedServerRegistry))
@@ -132,7 +133,6 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessorIf(new MainThreadMessageMashaller(mainThreadMarshaller), schema.HandleRequestsOnMainThread)
                 .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
                 .ToEndPoint(messageHandlerRouter);
-            return startPoint;
         }
 
         static void SendChannelBuiltEvent(RequestRecieveChannelSchema schema, EndpointAddress senderAddress)
