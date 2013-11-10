@@ -2,7 +2,6 @@ using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Storage;
-using SystemDot.Storage.Changes;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.point_to_point
@@ -22,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.point_to_point
         {
             Messenger.Register<MessageRemovedFromCache>(e => @event = e);
 
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ReceiverAddress)
                 .ForPointToPointReceiving()
@@ -42,11 +41,6 @@ namespace SystemDot.Messaging.Specifications.point_to_point
         };
 
         Because of = () => GetServer().ReceiveMessage(payload);
-
-        It should_persist_the_message = () =>
-            Resolve<IChangeStore>()
-                .GetReceiveMessages(PersistenceUseType.PointToPointReceive, BuildAddress(ReceiverAddress))
-                .ShouldNotBeEmpty();
 
         It should_notify_that_the_message_was_removed_from_the_cache = () =>
             @event.ShouldMatch(e => e.MessageId == payload.Id

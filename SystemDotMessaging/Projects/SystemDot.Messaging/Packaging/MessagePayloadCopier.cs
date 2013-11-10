@@ -4,7 +4,7 @@ using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Packaging
 {
-    class MessagePayloadCopier : IMessageProcessor<MessagePayload, MessagePayload>
+    class MessagePayloadCopier : MessageProcessor
     {
         readonly ISerialiser serialiser;
 
@@ -14,17 +14,14 @@ namespace SystemDot.Messaging.Packaging
             this.serialiser = serialiser;
         }
 
-        public void InputMessage(MessagePayload toInput)
+        public override void InputMessage(MessagePayload toInput)
         {
-            MessagePayload copied = Copy(toInput);
-            this.MessageProcessed(copied);
+            OnMessageProcessed(Copy(toInput));
         }
 
         MessagePayload Copy(MessagePayload toCopy)
         {
-            return this.serialiser.Copy(toCopy);
+            return serialiser.Copy(toCopy);
         }
-
-        public event Action<MessagePayload> MessageProcessed;
     }
 }

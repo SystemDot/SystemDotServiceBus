@@ -36,7 +36,14 @@ namespace RequestReplySender
                 Console.WriteLine("Sending messages");
 
                 Bus.Send(new TestMessage("Hello"));
-                        
+                Bus.Send(new TestMessage("Hello1"));
+                Bus.Send(new TestMessage("Hello2"));
+                Bus.Send(new TestMessage("Hello3"));
+                Bus.Send(new TestMessage("Hello4"));
+                Bus.Send(new TestMessage("Hello5"));
+                Bus.Send(new TestMessage("Hello6"));
+                Bus.Send(new TestMessage("Hello7"));
+
             }
             while (true);
         }

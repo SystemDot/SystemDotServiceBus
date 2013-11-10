@@ -6,14 +6,14 @@ namespace SystemDot.Specifications.blocking_queue
 {
     public class when_dequeueing_with_no_items
     {
-        static BlockingQueue<string> queue;
+        static UniqueBlockingQueue<string> queue;
         static DateTime start;
         static TimeSpan blockingTimeout;
 
         Establish context = () =>
         {
             blockingTimeout = new TimeSpan(0, 0, 1);
-            queue = new BlockingQueue<string>(blockingTimeout);
+            queue = new UniqueBlockingQueue<string>(blockingTimeout);
         };
 
         Because of = () =>

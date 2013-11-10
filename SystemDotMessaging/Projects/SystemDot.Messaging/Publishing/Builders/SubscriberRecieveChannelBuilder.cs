@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Authentication.Caching;
-using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.ExceptionHandling;
 using SystemDot.Messaging.Expiry;
@@ -31,7 +28,7 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly MessageHandlerRouter messageHandlerRouter;
         readonly MessageReceiver messageReceiver;
         readonly AcknowledgementSender acknowledgementSender;
-        readonly PersistenceFactorySelector persistenceFactory;
+        readonly MessageCacheFactory messageCacheFactory;
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
         readonly ServerAddressRegistry serverAddressRegistry;
@@ -44,7 +41,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             MessageHandlerRouter messageHandlerRouter, 
             MessageReceiver messageReceiver,
             AcknowledgementSender acknowledgementSender,
-            PersistenceFactorySelector persistenceFactory, 
+            MessageCacheFactory messageCacheFactory, 
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 
             ServerAddressRegistry serverAddressRegistry, 
@@ -56,7 +53,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             Contract.Requires(messageHandlerRouter != null);
             Contract.Requires(messageReceiver != null);
             Contract.Requires(acknowledgementSender != null);
-            Contract.Requires(persistenceFactory != null);
+            Contract.Requires(messageCacheFactory != null);
             Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
             Contract.Requires(serverAddressRegistry != null);
@@ -68,7 +65,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             this.messageHandlerRouter = messageHandlerRouter;
             this.messageReceiver = messageReceiver;
             this.acknowledgementSender = acknowledgementSender;
-            this.persistenceFactory = persistenceFactory;
+            this.messageCacheFactory = messageCacheFactory;
             this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
             this.serverAddressRegistry = serverAddressRegistry;
@@ -79,10 +76,17 @@ namespace SystemDot.Messaging.Publishing.Builders
 
         public void Build(SubscriberRecieveChannelSchema schema)
         {
-            ReceiveMessageCache messageCache = persistenceFactory
-                .Select(schema)
-                    .CreateReceiveCache(PersistenceUseType.SubscriberReceive, schema.Address);
+            BuildPipeline(schema, CreateCache(schema));
+            NotifySubscriberReceiveChannelBuilt(schema);
+        }
 
+        ReceiveMessageCache CreateCache(SubscriberRecieveChannelSchema schema)
+        {
+            return messageCacheFactory.CreateReceiveCache(PersistenceUseType.SubscriberReceive, schema.Address, schema);
+        }
+
+        void BuildPipeline(SubscriberRecieveChannelSchema schema, ReceiveMessageCache messageCache)
+        {
             MessagePipelineBuilder.Build()
                 .With(messageReceiver)
                 .ToProcessor(new BodyMessageFilter(schema.Address))
@@ -104,7 +108,10 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .ToProcessor(schema.UnitOfWorkRunnerCreator())
                 .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
                 .ToEndPoint(messageHandlerRouter);
+        }
 
+        static void NotifySubscriberReceiveChannelBuilt(SubscriberRecieveChannelSchema schema)
+        {
             Messenger.Send(new SubscriberReceiveChannelBuilt
             {
                 CacheAddress = schema.Address,

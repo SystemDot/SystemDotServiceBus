@@ -25,7 +25,7 @@ namespace SystemDot.Messaging.Configuration
 
             IIocContainer container = IocContainerLocator.Locate();
 
-            RegisterInMemoryPersistence(container);
+            RegisterNullPersistence(container);
             RegisterJsonSerialiser(container);
             ConfigureExternalSources(container);
         }
@@ -61,9 +61,9 @@ namespace SystemDot.Messaging.Configuration
             return new DirectChannelConfiguration(BuildEndpointAddress(name, server), messagingConfiguration);
         }
 
-        static void RegisterInMemoryPersistence(IIocContainer container)
+        static void RegisterNullPersistence(IIocContainer container)
         {
-            container.RegisterInstance<IChangeStore, InMemoryChangeStore>();
+            container.RegisterInstance<IChangeStore, NullChangeStore>();
         }
 
         static void RegisterJsonSerialiser(IIocContainer container)

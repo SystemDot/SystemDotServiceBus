@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly ISerialiser serialiser;
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
-        readonly PersistenceFactorySelector persistenceFactorySelector;
+        readonly MessageCacheFactory messageCacheFactory;
         readonly MessageAcknowledgementHandler acknowledgementHandler;
         readonly ITaskScheduler taskScheduler;
         readonly ReplyAuthenticationSessionLookup replyAuthenticationSessionLookup;
@@ -42,7 +42,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             ISerialiser serialiser,
             ISystemTime systemTime,
             ITaskRepeater taskRepeater,
-            PersistenceFactorySelector persistenceFactorySelector,
+            MessageCacheFactory messageCacheFactory,
             MessageAcknowledgementHandler acknowledgementHandler,
             ITaskScheduler taskScheduler,
             AuthenticationSessionCache authenticationSessionCache,
@@ -54,7 +54,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(serialiser != null);
             Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
-            Contract.Requires(persistenceFactorySelector != null);
+            Contract.Requires(messageCacheFactory != null);
             Contract.Requires(acknowledgementHandler != null);
             Contract.Requires(taskScheduler != null);
             Contract.Requires(authenticationSessionCache != null);
@@ -66,7 +66,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             this.serialiser = serialiser;
             this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
-            this.persistenceFactorySelector = persistenceFactorySelector;
+            this.messageCacheFactory = messageCacheFactory;
             this.acknowledgementHandler = acknowledgementHandler;
             this.taskScheduler = taskScheduler;
             this.replyAuthenticationSessionLookup = replyAuthenticationSessionLookup;
@@ -77,14 +77,19 @@ namespace SystemDot.Messaging.RequestReply.Builders
         public IMessageInputter<object> Build(ReplySendChannelSchema schema, EndpointAddress senderAddress)
         {
             SendMessageCache cache = CreateCache(schema, senderAddress);
-
             RegisterCacheWithAcknowledgementHandler(cache);
 
-            Pipe<object> startPoint = BuildPipeline(schema, senderAddress, cache);
+            IMessageProcessor<object, object> startPoint = CreateStartPoint();
+            BuildPipeline(startPoint, schema, senderAddress, cache);
 
             SendChannelBuiltEvent(schema, senderAddress);
 
             return startPoint;
+        }
+
+        SendMessageCache CreateCache(ReplySendChannelSchema schema, EndpointAddress senderAddress)
+        {
+            return messageCacheFactory.CreateSendCache(PersistenceUseType.ReplySend, senderAddress, schema);
         }
 
         void RegisterCacheWithAcknowledgementHandler(SendMessageCache cache)
@@ -92,10 +97,13 @@ namespace SystemDot.Messaging.RequestReply.Builders
             acknowledgementHandler.RegisterCache(cache);
         }
 
-        Pipe<object> BuildPipeline(ReplySendChannelSchema schema, EndpointAddress senderAddress, SendMessageCache cache)
+        static IMessageProcessor<object, object> CreateStartPoint()
         {
-            var startPoint = new Pipe<object>();
+            return new Pipe<object>();
+        }
 
+        void BuildPipeline(IMessageProcessor<object, object> startPoint, ReplySendChannelSchema schema, EndpointAddress senderAddress, SendMessageCache cache)
+        {
             MessagePipelineBuilder.Build()
                 .With(startPoint)
                 .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
@@ -115,15 +123,6 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new LoadBalancer(cache, taskScheduler))
                 .ToProcessor(new LastSentRecorder(systemTime))
                 .ToEndPoint(messageSender);
-
-            return startPoint;
-        }
-
-        SendMessageCache CreateCache(ReplySendChannelSchema schema, EndpointAddress senderAddress)
-        {
-            return persistenceFactorySelector
-                .Select(schema)
-                .CreateSendCache(PersistenceUseType.ReplySend, senderAddress);
         }
 
         AuthenticationSessionExpiryStrategy CreateAuthenticationSessionExpiryStrategy(ReplySendChannelSchema schema)

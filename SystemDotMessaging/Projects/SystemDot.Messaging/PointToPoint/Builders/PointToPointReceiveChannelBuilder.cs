@@ -1,11 +1,9 @@
-using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Authentication.Caching;
 using SystemDot.Messaging.Batching;
-using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.ExceptionHandling;
 using SystemDot.Messaging.Expiry;
@@ -28,7 +26,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
         readonly ISerialiser serialiser;
         readonly AcknowledgementSender acknowledgementSender;
         readonly MessageHandlerRouter messageHandlerRouter;
-        readonly PersistenceFactorySelector persistenceFactorySelector;
+        readonly MessageCacheFactory messageCacheFactory;
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
         readonly ServerAddressRegistry serverAddressRegistry;
@@ -40,7 +38,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             ISerialiser serialiser, 
             AcknowledgementSender acknowledgementSender, 
             MessageHandlerRouter messageHandlerRouter,
-            PersistenceFactorySelector persistenceFactorySelector, 
+            MessageCacheFactory messageCacheFactory, 
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 
             ServerAddressRegistry serverAddressRegistry, 
@@ -51,7 +49,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             Contract.Requires(serialiser != null);
             Contract.Requires(acknowledgementSender != null);
             Contract.Requires(messageHandlerRouter != null);
-            Contract.Requires(persistenceFactorySelector != null);
+            Contract.Requires(messageCacheFactory != null);
             Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
             Contract.Requires(serverAddressRegistry != null);
@@ -62,7 +60,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             this.serialiser = serialiser;
             this.acknowledgementSender = acknowledgementSender;
             this.messageHandlerRouter = messageHandlerRouter;
-            this.persistenceFactorySelector = persistenceFactorySelector;
+            this.messageCacheFactory = messageCacheFactory;
             this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
             this.serverAddressRegistry = serverAddressRegistry;
@@ -72,10 +70,17 @@ namespace SystemDot.Messaging.PointToPoint.Builders
 
         public void Build(PointToPointReceiverChannelSchema schema)
         {
-            ReceiveMessageCache messageCache = persistenceFactorySelector
-                .Select(schema)
-                .CreateReceiveCache(PersistenceUseType.PointToPointReceive, schema.Address);
+            BuildPipeline(schema, CreateCache(schema));
+            NotifyPointToPointReceiveChannelBuilt(schema);
+        }
 
+        ReceiveMessageCache CreateCache(PointToPointReceiverChannelSchema schema)
+        {
+            return messageCacheFactory.CreateReceiveCache(PersistenceUseType.PointToPointReceive, schema.Address, schema);
+        }
+
+        void BuildPipeline(PointToPointReceiverChannelSchema schema, ReceiveMessageCache messageCache)
+        {
             MessagePipelineBuilder.Build()
                 .With(messageReceiver)
                 .ToProcessor(new BodyMessageFilter(schema.Address))
@@ -95,8 +100,11 @@ namespace SystemDot.Messaging.PointToPoint.Builders
                 .ToProcessor(schema.UnitOfWorkRunnerCreator())
                 .ToProcessor(new BatchUnpackager())
                 .ToEndPoint(messageHandlerRouter);
+        }
 
-            Messenger.Send(new PointToPointReceiveChannelBuilt { Address = schema.Address });
+        static void NotifyPointToPointReceiveChannelBuilt(PointToPointReceiverChannelSchema schema)
+        {
+            Messenger.Send(new PointToPointReceiveChannelBuilt {Address = schema.Address});
         }
     }
 }

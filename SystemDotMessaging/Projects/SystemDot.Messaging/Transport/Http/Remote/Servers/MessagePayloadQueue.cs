@@ -11,12 +11,12 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Servers
     class MessagePayloadQueue
     {
         readonly TimeSpan blockingTimeout;
-        readonly Dictionary<MessageServer, BlockingQueue<MessagePayload>> queues;
+        readonly Dictionary<MessageServer, UniqueBlockingQueue<MessagePayload>> queues;
         
         public MessagePayloadQueue(TimeSpan blockingTimeout)
         {
             this.blockingTimeout = blockingTimeout;
-            queues = new Dictionary<MessageServer, BlockingQueue<MessagePayload>>();
+            queues = new Dictionary<MessageServer, UniqueBlockingQueue<MessagePayload>>();
         }
 
         public void Enqueue(MessagePayload toEnqueue)
@@ -40,7 +40,7 @@ namespace SystemDot.Messaging.Transport.Http.Remote.Servers
         void CreateQueueIfNonExistant(MessageServer server)
         {
             if (!queues.ContainsKey(server))
-                queues[server] = new BlockingQueue<MessagePayload>(blockingTimeout);
+                queues[server] = new UniqueBlockingQueue<MessagePayload>(blockingTimeout);
         }
     }
 }

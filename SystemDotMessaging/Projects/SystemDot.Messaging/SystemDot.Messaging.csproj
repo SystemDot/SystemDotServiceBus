@@ -77,6 +77,7 @@
     <Compile Include="Batching\BatchMessage.cs" />
     <Compile Include="Batching\BatchPackager.cs" />
     <Compile Include="Batching\BatchUnpackager.cs" />
+    <Compile Include="Builders\ChangeStoreSelector.cs" />
     <Compile Include="Builders\ISequenceOptionSchema.cs" />
     <Compile Include="Builders\IDurableOptionSchema.cs" />
     <Compile Include="Bus.cs" />
@@ -151,7 +152,6 @@
     <Compile Include="Direct\Builders\LocalDirectChannelBuilder.cs" />
     <Compile Include="Direct\Builders\LocalDirectChannelSchema.cs" />
     <Compile Include="MessageProcessor.cs" />
-    <Compile Include="Builders\PersistenceFactorySelector.cs" />
     <Compile Include="MessagingInitialising.cs" />
     <Compile Include="PointToPoint\Builders\PointToPointReceiveChannelBuilt.cs" />
     <Compile Include="PointToPoint\Builders\PointToPointReceiverChannelSchema.cs" />

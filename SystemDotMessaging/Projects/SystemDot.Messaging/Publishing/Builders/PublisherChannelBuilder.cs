@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly IPublisherRegistry publisherRegistry;
         readonly ISerialiser serialiser;
         readonly ITaskRepeater taskRepeater;
-        readonly PersistenceFactorySelector persistenceFactorySelector;
+        readonly MessageCacheFactory messageCacheFactory;
         readonly ISubscriberSendChannelBuilder subscriberChannelBuilder;
         readonly ISystemTime systemTime;
         readonly IChangeStore changeStore;
@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             IPublisherRegistry publisherRegistry, 
             ISerialiser serialiser, 
             ITaskRepeater taskRepeater,
-            PersistenceFactorySelector persistenceFactorySelector, 
+            MessageCacheFactory messageCacheFactory, 
             ISubscriberSendChannelBuilder subscriberChannelBuilder, 
             ISystemTime systemTime, 
             IChangeStore changeStore)
@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             Contract.Requires(publisherRegistry != null);
             Contract.Requires(serialiser != null);
             Contract.Requires(taskRepeater != null);
-            Contract.Requires(persistenceFactorySelector != null);
+            Contract.Requires(messageCacheFactory != null);
             Contract.Requires(subscriberChannelBuilder != null);
             Contract.Requires(systemTime != null);
             Contract.Requires(changeStore != null);
@@ -44,7 +44,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             this.publisherRegistry = publisherRegistry;
             this.serialiser = serialiser;
             this.taskRepeater = taskRepeater;
-            this.persistenceFactorySelector = persistenceFactorySelector;
+            this.messageCacheFactory = messageCacheFactory;
             this.subscriberChannelBuilder = subscriberChannelBuilder;
             this.systemTime = systemTime;
             this.changeStore = changeStore;
@@ -52,12 +52,25 @@ namespace SystemDot.Messaging.Publishing.Builders
 
         public void Build(PublisherChannelSchema schema)
         {
-            SendMessageCache cache = persistenceFactorySelector
-                .Select(schema)
-                    .CreateSendCache(PersistenceUseType.PublisherSend, schema.FromAddress);
+            Publisher publisherEndpoint = CreatePublisher(schema);
 
-            var publisherEndpoint = new Publisher(schema.FromAddress, subscriberChannelBuilder, changeStore);
+            BuildPipeline(schema, CreateCache(schema), publisherEndpoint);
+            RegisterPublisher(schema, publisherEndpoint);
+            NotifyPublisherChannelBuilt(schema);
+        }
 
+        static void NotifyPublisherChannelBuilt(PublisherChannelSchema schema)
+        {
+            Messenger.Send(new PublisherChannelBuilt {Address = schema.FromAddress});
+        }
+
+        void RegisterPublisher(PublisherChannelSchema schema, Publisher publisherEndpoint)
+        {
+            publisherRegistry.RegisterPublisher(schema.FromAddress, publisherEndpoint);
+        }
+
+        void BuildPipeline(PublisherChannelSchema schema, SendMessageCache cache, Publisher publisherEndpoint)
+        {
             MessagePipelineBuilder.Build()
                 .WithBusPublishTo(new MessageFilter(schema.MessageFilterStrategy))
                 .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
@@ -69,10 +82,16 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .ToProcessor(new SendChannelMessageCacheUpdater(cache))
                 .ToProcessor(publisherEndpoint)
                 .ToEndPoint(new MessageDecacher(cache));
+        }
 
-            this.publisherRegistry.RegisterPublisher(schema.FromAddress, publisherEndpoint);
+        Publisher CreatePublisher(PublisherChannelSchema schema)
+        {
+            return new Publisher(schema.FromAddress, subscriberChannelBuilder, changeStore);
+        }
 
-            Messenger.Send(new PublisherChannelBuilt { Address = schema.FromAddress });
+        SendMessageCache CreateCache(PublisherChannelSchema schema)
+        {
+            return messageCacheFactory.CreateSendCache(PersistenceUseType.PublisherSend, schema.FromAddress, schema);
         }
     }
 }
