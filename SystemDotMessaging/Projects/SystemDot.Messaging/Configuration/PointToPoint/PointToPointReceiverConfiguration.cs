@@ -7,7 +7,8 @@ using SystemDot.Messaging.UnitOfWork;
 
 namespace SystemDot.Messaging.Configuration.PointToPoint
 {
-    public class PointToPointReceiverConfiguration : Configurer, IExceptionHandlingConfigurer
+    public class PointToPointReceiverConfiguration : Configurer, 
+        IExceptionHandlingConfigurer
     {
         readonly MessageServer server;
         readonly PointToPointReceiverChannelSchema schema;

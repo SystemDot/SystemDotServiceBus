@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.repeating_constant
                 .OpenChannel(ChannelName)
                 .ForPointToPointSendingTo(ReceiverAddress)
                 .WithDurability()
-                .WithMessageRepeating(RepeatMessages.Every(TimeSpan.FromSeconds(10)))
+                .RepeatMessages().Every(TimeSpan.FromSeconds(10))
                 .Initialise();
 
             Bus.Send(Message);
@@ -40,12 +40,12 @@ namespace SystemDot.Messaging.Specifications.repeating_constant
         };
 
         Because of = () =>
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForPointToPointSendingTo(ReceiverAddress)
                 .WithDurability()
-                .WithMessageRepeating(RepeatMessages.Every(TimeSpan.FromSeconds(10)))
+                .RepeatMessages().Every(TimeSpan.FromSeconds(10))
                 .Initialise();
 
         It should_send_the_message_again = () =>

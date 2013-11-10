@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.ExceptionHandling;
-using SystemDot.Messaging.ExceptionHandling;
+using SystemDot.Messaging.Configuration.Repeating;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Hooks;
@@ -13,7 +13,9 @@ using SystemDot.Messaging.UnitOfWork;
 
 namespace SystemDot.Messaging.Configuration.RequestReply
 {
-    public class RequestReplyRecieverConfiguration : Configurer, IExceptionHandlingConfigurer
+    public class RequestReplyRecieverConfiguration : Configurer, 
+        IExceptionHandlingConfigurer,
+        IRepeatMessagesConfigurer
     {
         readonly ReplySendChannelSchema replySchema;
         readonly RequestRecieveChannelSchema requestSchema;
@@ -25,9 +27,10 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             {
                 FromAddress = address,
                 ExpiryStrategy = new PassthroughMessageExpiryStrategy(),
-                ExpiryAction = () => { },
-                RepeatStrategy = EscalatingTimeRepeatStrategy.Default
+                ExpiryAction = () => { }
             };
+
+            RepeatMessages().WithDefaultEscalationStrategy();
 
             requestSchema = new RequestRecieveChannelSchema
             {
@@ -80,12 +83,16 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             return this;
         }
 
-        public RequestReplyRecieverConfiguration WithMessageRepeating(IRepeatStrategy strategy)
+        public RepeatMessagesConfiguration<RequestReplyRecieverConfiguration> RepeatMessages()
+        {
+            return new RepeatMessagesConfiguration<RequestReplyRecieverConfiguration>(this);
+        }
+
+        public void SetMessageRepeatingStrategy(IRepeatStrategy strategy)
         {
             Contract.Requires(strategy != null);
 
             replySchema.RepeatStrategy = strategy;
-            return this;
         }
 
         public RequestReplyRecieverConfiguration WithUnitOfWork<TUnitOfWorkFactory>()

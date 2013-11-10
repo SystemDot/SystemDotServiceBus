@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Configuration.Repeating;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.PointToPoint.Builders;
@@ -8,7 +9,8 @@ using SystemDot.Messaging.Repeating;
 
 namespace SystemDot.Messaging.Configuration.PointToPoint
 {
-    public class PointToPointSenderConfiguration : Configurer
+    public class PointToPointSenderConfiguration : Configurer,
+        IRepeatMessagesConfigurer
     {
         readonly PointToPointSendChannelSchema sendSchema;
         
@@ -20,13 +22,14 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
         {
             sendSchema = new PointToPointSendChannelSchema
             {
-                RepeatStrategy = EscalatingTimeRepeatStrategy.Default,
                 ExpiryStrategy = new PassthroughMessageExpiryStrategy(),
                 ExpiryAction = () => { },
                 FilteringStrategy = new PassThroughMessageFilterStategy(),
                 ReceiverAddress = toAddress,
                 FromAddress = fromAddress
             };
+
+            RepeatMessages().WithDefaultEscalationStrategy();
         }
 
         protected internal override void Build()
@@ -39,10 +42,16 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
             return sendSchema.FromAddress.Server;
         }
 
-        public PointToPointSenderConfiguration WithMessageRepeating(IRepeatStrategy strategy)
+        public RepeatMessagesConfiguration<PointToPointSenderConfiguration> RepeatMessages()
         {
+            return new RepeatMessagesConfiguration<PointToPointSenderConfiguration>(this);
+        }
+
+        public void SetMessageRepeatingStrategy(IRepeatStrategy strategy)
+        {
+            Contract.Requires(strategy != null);
+
             sendSchema.RepeatStrategy = strategy;
-            return this;
         }
 
         public PointToPointSenderConfiguration WithMessageExpiry(IMessageExpiryStrategy strategy)

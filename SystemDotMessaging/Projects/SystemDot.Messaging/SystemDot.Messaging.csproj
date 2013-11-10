@@ -101,6 +101,8 @@
     <Compile Include="Configuration\ExternalSources\IExternalSourcesConfigurer.cs" />
     <Compile Include="Configuration\ExceptionHandling\IExceptionHandlingConfigurer.cs" />
     <Compile Include="Configuration\ExceptionHandling\OnExceptionConfiguration.cs" />
+    <Compile Include="Configuration\Repeating\IRepeatMessagesConfigurer.cs" />
+    <Compile Include="Configuration\Repeating\RepeatMessagesConfiguration.cs" />
     <Compile Include="Correlation\CorrelationAssigner.cs" />
     <Compile Include="Correlation\CorrelationHeader.cs" />
     <Compile Include="Correlation\CorrelationLookup.cs" />

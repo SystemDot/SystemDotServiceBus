@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Specifications.repeating_constant
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                     .ForPointToPointSendingTo(ReceiverName)
-                    .WithMessageRepeating(RepeatMessages.Every(TimeSpan.FromSeconds(10)))
+                    .RepeatMessages().Every(TimeSpan.FromSeconds(10))
                 .Initialise();
 
             message = 1;

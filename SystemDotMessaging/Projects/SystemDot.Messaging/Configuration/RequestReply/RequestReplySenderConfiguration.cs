@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.ExceptionHandling;
+using SystemDot.Messaging.Configuration.Repeating;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Hooks;
@@ -12,7 +13,9 @@ using SystemDot.Messaging.UnitOfWork;
 
 namespace SystemDot.Messaging.Configuration.RequestReply
 {
-    public class RequestReplySenderConfiguration : Configurer, IExceptionHandlingConfigurer
+    public class RequestReplySenderConfiguration : Configurer, 
+        IExceptionHandlingConfigurer,
+        IRepeatMessagesConfigurer
     {
         readonly RequestSendChannelSchema sendSchema;
         readonly ReplyReceiveChannelSchema receiveSchema;
@@ -29,9 +32,10 @@ namespace SystemDot.Messaging.Configuration.RequestReply
                 FromAddress = address,
                 ReceiverAddress = recieverAddress,
                 ExpiryStrategy = new PassthroughMessageExpiryStrategy(),
-                ExpiryAction = () => { },
-                RepeatStrategy = EscalatingTimeRepeatStrategy.Default
+                ExpiryAction = () => { }
             };
+
+            RepeatMessages().WithDefaultEscalationStrategy();
 
             receiveSchema = new ReplyReceiveChannelSchema
             {
@@ -91,13 +95,16 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             return this;
         }
 
+        public RepeatMessagesConfiguration<RequestReplySenderConfiguration> RepeatMessages()
+        {
+            return new RepeatMessagesConfiguration<RequestReplySenderConfiguration>(this);
+        }
 
-        public RequestReplySenderConfiguration WithMessageRepeating(IRepeatStrategy strategy)
+        public void SetMessageRepeatingStrategy(IRepeatStrategy strategy)
         {
             Contract.Requires(strategy != null);
 
             sendSchema.RepeatStrategy = strategy;
-            return this;
         }
 
         public RequestReplySenderConfiguration WithUnitOfWork<TUnitOfWorkFactory>()
