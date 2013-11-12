@@ -89,6 +89,8 @@
     <Compile Include="authentication_for_request_reply\when_replying_to_a_request_on_a_previous_session_after_subsequent_authentication.cs" />
     <Compile Include="authentication_for_request_reply\when_sending_a_message_to_a_server_after_failing_to_authenticate_to_it.cs" />
     <Compile Include="authentication_for_request_reply\when_sending_a_request_to_a_server_requiring_authentication_after_authenticating_to_it.cs" />
+    <Compile Include="repeating_constant_for_subscribers\SpecificationGroup.cs" />
+    <Compile Include="repeating_constant_for_subscribers\when_repeating_an_event_with_a_constant_time_repeat_on_the_channel_and_that_time_has_passed.cs" />
     <Compile Include="correlation_for_request_reply\SpecificationGroup.cs" />
     <Compile Include="correlation_for_request_reply\when_receiving_a_reply_that_correlates_to_a_request_with_correlate_configured.cs" />
     <Compile Include="correlation_for_request_reply\when_receiving_a_reply_that_does_not_correlate_to_a_request_with_correlate_configured.cs" />
@@ -110,6 +112,8 @@
     <Compile Include="exception_handling_for_request_reply\when_failing_the_handling_of_a_request_with_continue_on_exception_configured.cs" />
     <Compile Include="InMemoryChangeStore.cs" />
     <Compile Include="proxying\when_handling_a_long_poll_request_for_the_same_message_queued_twice.cs" />
+    <Compile Include="repeating_constant_for_subscribers\when_subscribing_to_a_publisher_without_a_repeat_strategy_configured.cs" />
+    <Compile Include="repeating_constant_for_subscribers\when_subscribing_to_a_publisher_with_a_constant_time_repeat_strategy_configured.cs" />
     <Compile Include="running_handlers_on_main_thread_for_subscribers\SpecificationGroup.cs" />
     <Compile Include="running_handlers_on_main_thread_for_subscribers\when_receiving_an_event_on_a_channel_configured_to_handle_on_main_thread.cs" />
     <Compile Include="direct_channels_for_request_reply_over_http\when_a_server_error_occurs_when_sending_a_request_with_an_error_action_specified.cs" />
@@ -303,8 +307,7 @@
     <Compile Include="receiving_over_http\when_receiving_a_message.cs" />
     <Compile Include="sending_over_http\when_sending_to_a_receiver_on_a_different_server.cs" />
     <Compile Include="repeating_for_subscription_to_publishers\SpecificationGroup.cs" />
-    <Compile Include="repeating_for_subscription_to_publishers\when_repeating_a_request_for_the_third_time_and_sixteen_seconds_have_not_passed.cs" />
-    <Compile Include="repeating_for_subscription_to_publishers\when_repeating_a_request_with_and_four_seconds_have_passed.cs" />
+    <Compile Include="repeating_for_subscription_to_publishers\when_repeating_a_request_with_and_ten_seconds_have_passed.cs" />
     <Compile Include="repeating_constant_for_request_reply\SpecificationGroup.cs" />
     <Compile Include="repeating_constant_for_request_reply\when_repeating_a_reply_with_a_constant_time_repeat_on_the_channel_and_that_time_has_not_passed.cs" />
     <Compile Include="repeating_constant_for_request_reply\when_repeating_a_reply_with_a_constant_time_repeat_on_the_channel_and_that_time_has_passed.cs" />

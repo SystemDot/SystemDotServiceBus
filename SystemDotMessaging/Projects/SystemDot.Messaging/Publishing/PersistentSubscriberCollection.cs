@@ -38,22 +38,20 @@ namespace SystemDot.Messaging.Publishing
 
         bool SubscriberExists(SubscriptionSchema schema)
         {
-            return this.subscribers.ContainsKey(schema.SubscriberAddress);
+            return subscribers.ContainsKey(schema.SubscriberAddress);
         }
 
         public void ApplyChange(SubscribeChange change)
         {
-            var subscriber = new Subscriber(this.builder);
+            var subscriber = new Subscriber(builder);
 
-            if(this.subscribers.TryAdd(change.Schema.SubscriberAddress, subscriber))
-            {
-                subscriber.BuildChannel(this.address, change.Schema);
-            }
+            if(subscribers.TryAdd(change.Schema.SubscriberAddress, subscriber))
+                subscriber.BuildChannel(address, change.Schema);
         }
 
         public IEnumerator<Subscriber> GetEnumerator()
         {
-            return this.subscribers.Values.GetEnumerator();
+            return subscribers.Values.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

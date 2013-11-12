@@ -21,13 +21,13 @@ namespace SystemDot.Messaging.Publishing
             Contract.Requires(builder != null);
             Contract.Requires(changeStore != null);
 
-            this.subscribers = new PersistentSubscriberCollection(address, changeStore, builder);
+            subscribers = new PersistentSubscriberCollection(address, changeStore, builder);
         }
 
         public void InputMessage(MessagePayload toInput)
         {
-            this.subscribers.ForEach(s => SendMessageToSubscriber(toInput, s));
-            this.MessageProcessed(toInput);
+            subscribers.ForEach(s => SendMessageToSubscriber(toInput, s));
+            MessageProcessed(toInput);
         }
 
         static void SendMessageToSubscriber(MessagePayload toSend, Subscriber toSendTo)
@@ -42,7 +42,7 @@ namespace SystemDot.Messaging.Publishing
                 schema.SubscriberAddress.Channel,
                 schema.SubscriberAddress.Server.Address);
 
-            this.subscribers.AddSubscriber(schema);
+            subscribers.AddSubscriber(schema);
         }
     }
 }

@@ -23,12 +23,16 @@ namespace SystemDot.Messaging.Specifications.server_addressing
                 .OpenChannel(PublisherChannel).ForPublishing()
                 .Initialise();
 
-            request = new MessagePayload().BuildSubscriptionRequest(
-                BuildAddress(SubscriberChannel, SubscriberServer, SubscriberServerAddress),
-                BuildAddress(PublisherChannel, PublisherServer));
+            request = new MessagePayload()
+                .SetFromChannel(SubscriberChannel)
+                .SetFromServer(SubscriberServer)
+                .SetFromServerAddress(SubscriberServerAddress)
+                .SetToChannel(PublisherChannel)
+                .SetToServer(PublisherServer)
+                .SetSubscriptionRequest();
         };
 
-        Because of = () => SendMessagesToServer(request);
+        Because of = () => SendMessageToServer(request);
 
         It should_send_an_acknowledgement_to_the_server_address_specified_on_the_incoming_subscription = () => 
             WebRequestor.DeserialiseSingleRequest<MessagePayload>().IsAcknowledgement();

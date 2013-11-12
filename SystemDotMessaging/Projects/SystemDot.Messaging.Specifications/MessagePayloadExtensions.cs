@@ -5,6 +5,7 @@ using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Publishing;
+using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Serialisation;
@@ -41,8 +42,7 @@ namespace SystemDot.Messaging.Specifications
 
             return payload;
         }
-
-
+        
         public static MessagePayload MakeSequencedReceivable(
             this MessagePayload payload,
             object message,
@@ -57,18 +57,6 @@ namespace SystemDot.Messaging.Specifications
             payload.Sequenced();
 
             return payload;
-        }
-
-        public static MessagePayload BuildSubscriptionRequest(
-            this MessagePayload request,
-            EndpointAddress subscriberAddress,
-            EndpointAddress publisherAddress)
-        {
-            request.SetFromAddress(subscriberAddress);
-            request.SetToAddress(publisherAddress);
-            request.SetSubscriptionRequest();
-
-            return request;
         }
 
         public static MessagePayload SetMessageBody(this MessagePayload payload, object toSet)
@@ -95,6 +83,12 @@ namespace SystemDot.Messaging.Specifications
             return payload;
         }
 
+        public static MessagePayload SetFromEndpointAddress(this MessagePayload payload, EndpointAddress toSet)
+        {
+            payload.SetFromAddress(toSet);
+            return payload;
+        }
+
         public static MessagePayload SetToChannel(this MessagePayload payload, string toSet)
         {
             payload.SetToAddress(new EndpointAddress(toSet, MessageServer.None));
@@ -104,6 +98,12 @@ namespace SystemDot.Messaging.Specifications
         public static MessagePayload SetToServer(this MessagePayload payload, string toSet)
         {
             payload.GetToAddress().Server = MessageServer.Named(toSet, ServerAddress.Local);
+            return payload;
+        }
+
+        public static MessagePayload SetToEndpointAddress(this MessagePayload payload, EndpointAddress toSet)
+        {
+            payload.SetToAddress(toSet);
             return payload;
         }
 
@@ -142,7 +142,12 @@ namespace SystemDot.Messaging.Specifications
 
         public static MessagePayload SetSubscriptionRequest(this MessagePayload payload)
         {
-            payload.SetSubscriptionRequest(new SubscriptionSchema { SubscriberAddress = payload.GetFromAddress() });
+            payload.SetSubscriptionRequest(new SubscriptionSchema
+            {
+                SubscriberAddress = payload.GetFromAddress(),
+                RepeatStrategy = new ConstantTimeRepeatStrategy { RepeatEvery = TimeSpan.FromSeconds(10) }
+            });
+
             payload.SetChannelType(PersistenceUseType.SubscriberRequestReceive);
             payload.SetSequence(1);
 

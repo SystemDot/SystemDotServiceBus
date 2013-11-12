@@ -35,7 +35,7 @@ namespace SystemDot.Messaging.Specifications.receiving_over_http
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);
         };
 
-        Because of = () => SendMessagesToServer(messagePayload);
+        Because of = () => SendMessageToServer(messagePayload);
 
         It should_receive_the_message_down_the_channel = () => handler.LastHandledMessage.ShouldEqual(Message);
     }

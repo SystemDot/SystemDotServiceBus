@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Specifications.proxying
             
             sentMessageInQueue = new MessagePayload();
             sentMessageInQueue.SetToAddress(TestEndpointAddressBuilder.Build("Address1", "TestServer"));
-            SendMessagesToServer(sentMessageInQueue);
+            SendMessageToServer(sentMessageInQueue);
 
             longPollRequest = new MessagePayload();
             longPollRequest.SetLongPollRequest(TestEndpointAddressBuilder.Build("Address1", "TestServer1").Server);
@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Specifications.proxying
             SystemTime.FromSecondsSpanOverride = TimeSpan.FromSeconds(0);
         };
 
-        Because of = () => returnedMessages = SendMessagesToServer(longPollRequest);
+        Because of = () => returnedMessages = SendMessageToServer(longPollRequest);
 
         It should_not_output_the_message_in_the_response = () => returnedMessages.ShouldBeEmpty();
     }

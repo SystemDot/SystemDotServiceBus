@@ -49,7 +49,7 @@ namespace SystemDot.Messaging.Specifications.authentication_for_publishing
                 .Sequenced();
         };
 
-        Because of = () => SendMessagesToServer(publishedEvent);
+        Because of = () => SendMessageToServer(publishedEvent);
 
         It should_not_handle_the_message = () => handler.HandledMessages.ShouldBeEmpty();
     }

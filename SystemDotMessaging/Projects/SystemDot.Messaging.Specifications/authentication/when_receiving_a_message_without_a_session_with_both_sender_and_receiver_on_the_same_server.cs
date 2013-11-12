@@ -40,7 +40,7 @@ namespace SystemDot.Messaging.Specifications.authentication
                 .Sequenced();
         };
 
-        Because of = () => SendMessagesToServer(payload);
+        Because of = () => SendMessageToServer(payload);
 
         It should_not_handle_the_event = () => handler.HandledMessages.ShouldBeEmpty();
     }

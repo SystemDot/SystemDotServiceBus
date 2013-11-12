@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.authentication_for_publishing
                     .RegisterHandlers(r => r.RegisterHandler(new TestReplyMessageHandler<TestAuthenticationRequest, TestAuthenticationResponse>()))
                 .Initialise();
 
-            SendMessagesToServer(authenticationRequest);
+            SendMessageToServer(authenticationRequest);
 
             var subscriptionRequest = new MessagePayload()
                 .SetFromChannel("SubscriberChannel")
@@ -39,7 +39,7 @@ namespace SystemDot.Messaging.Specifications.authentication_for_publishing
                 .SetToServer(PublisherServer)
                 .SetSubscriptionRequest();
 
-            SendMessagesToServer(subscriptionRequest);
+            SendMessageToServer(subscriptionRequest);
             WebRequestor.RequestsMade.Clear();
         };
 

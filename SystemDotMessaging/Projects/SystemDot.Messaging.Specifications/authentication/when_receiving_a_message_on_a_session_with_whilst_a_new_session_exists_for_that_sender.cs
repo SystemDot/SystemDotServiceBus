@@ -42,8 +42,8 @@ namespace SystemDot.Messaging.Specifications.authentication
                 .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
 
-            AuthenticationSession firstSession = SendMessagesToServer(authenticationRequestPayload).Single().GetAuthenticationSession();
-            SendMessagesToServer(authenticationRequestPayload);
+            AuthenticationSession firstSession = SendMessageToServer(authenticationRequestPayload).Single().GetAuthenticationSession();
+            SendMessageToServer(authenticationRequestPayload);
 
             payload = new MessagePayload()
                 .SetMessageBody(Message)
@@ -57,7 +57,7 @@ namespace SystemDot.Messaging.Specifications.authentication
             payload.SetAuthenticationSession(firstSession);
         };
 
-        Because of = () => SendMessagesToServer(payload);
+        Because of = () => SendMessageToServer(payload);
 
         It should_handle_the_message_in_the_registered_handler = () => handler.LastHandledMessage.ShouldEqual(Message);
     }

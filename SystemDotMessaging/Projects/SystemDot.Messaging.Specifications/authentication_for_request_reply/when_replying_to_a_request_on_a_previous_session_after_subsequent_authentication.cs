@@ -42,11 +42,11 @@ namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
                 .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
 
-            session = SendMessagesToServer(authenticationRequest).First().GetAuthenticationSession();
+            session = SendMessageToServer(authenticationRequest).First().GetAuthenticationSession();
             
             SystemTime.AdvanceTime(TimeSpan.FromSeconds(1));
             
-            SendMessagesToServer(authenticationRequest);
+            SendMessageToServer(authenticationRequest);
 
             request = new MessagePayload()
                 .SetMessageBody(Message)
@@ -60,7 +60,7 @@ namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
             request.SetAuthenticationSession(session);
         };
 
-        Because of = () => SendMessagesToServer(request);
+        Because of = () => SendMessageToServer(request);
 
         It should_send_the_reply_in_a_payload_with_the_correct_authentication_session = () =>
             WebRequestor.RequestsMade.DeserialiseToPayloads().Last().GetAuthenticationSession().ShouldEqual(session);

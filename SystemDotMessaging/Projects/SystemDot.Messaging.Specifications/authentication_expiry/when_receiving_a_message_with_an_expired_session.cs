@@ -42,7 +42,7 @@ namespace SystemDot.Messaging.Specifications.authentication_expiry
                     .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
 
-            AuthenticationSession session = SendMessagesToServer(authenticationRequestPayload).Single().GetAuthenticationSession();
+            AuthenticationSession session = SendMessageToServer(authenticationRequestPayload).Single().GetAuthenticationSession();
 
             payload = new MessagePayload()
                 .SetMessageBody(1)
@@ -59,7 +59,7 @@ namespace SystemDot.Messaging.Specifications.authentication_expiry
             SystemTime.AdvanceTime(TimeSpan.FromTicks(1));
         };
 
-        Because of = () => SendMessagesToServer(payload);
+        Because of = () => SendMessageToServer(payload);
 
         It should_not_handle_the_message_in_the_registered_handler = () => handler.HandledMessages.Count.ShouldEqual(0);
     }

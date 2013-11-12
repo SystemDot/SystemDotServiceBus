@@ -1,5 +1,6 @@
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Builders;
+using SystemDot.Messaging.Repeating;
 
 namespace SystemDot.Messaging.Publishing.Builders
 {
@@ -10,5 +11,7 @@ namespace SystemDot.Messaging.Publishing.Builders
         public EndpointAddress PublisherAddress { get; set; }
 
         public bool IsDurable { get; set; }
+
+        public IRepeatStrategy RepeatStrategy { get; set; }
     }
 }

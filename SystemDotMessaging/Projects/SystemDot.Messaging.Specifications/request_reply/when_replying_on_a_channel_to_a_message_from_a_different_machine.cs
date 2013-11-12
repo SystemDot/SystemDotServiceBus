@@ -33,7 +33,7 @@ namespace SystemDot.Messaging.Specifications.request_reply
                 .SetChannelType(PersistenceUseType.RequestSend)
                 .Sequenced();
 
-            SendMessagesToServer(messagePayload);
+            SendMessageToServer(messagePayload);
 
             WebRequestor.RequestsMade.Clear();
         };

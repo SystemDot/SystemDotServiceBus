@@ -37,7 +37,7 @@ namespace SystemDot.Messaging.Specifications.authentication_expiry
                     .RegisterHandlers(r => r.RegisterHandler(new TestReplyMessageHandler<TestAuthenticationRequest, TestAuthenticationResponse>()))
                 .Initialise();
 
-            session = SendMessagesToServer(authenticationRequestPayload).Single().GetAuthenticationSession();
+            session = SendMessageToServer(authenticationRequestPayload).Single().GetAuthenticationSession();
         };
 
         Because of = () =>

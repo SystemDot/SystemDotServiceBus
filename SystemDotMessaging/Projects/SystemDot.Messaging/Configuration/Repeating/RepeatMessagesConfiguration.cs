@@ -18,13 +18,21 @@ namespace SystemDot.Messaging.Configuration.Repeating
 
         public TConfiguration Every(TimeSpan toRepeat)
         {
-            configuration.SetMessageRepeatingStrategy(new ConstantTimeRepeatStrategy(toRepeat));
+            configuration.SetMessageRepeatingStrategy(new ConstantTimeRepeatStrategy { RepeatEvery = toRepeat });
             return configuration;
         }
 
         internal void WithDefaultEscalationStrategy()
         {
-            configuration.SetMessageRepeatingStrategy(EscalatingTimeRepeatStrategy.Default);
+            OnAnEscalatingTimeScale()
+                .StartingAtSeconds(4)
+                .EscalatingByAFactorOf(2)
+                .PeakingAtSeconds(16);
+        }
+
+        public EscalatingTimeScaleStartingConfiguration<TConfiguration> OnAnEscalatingTimeScale()
+        {
+            return new EscalatingTimeScaleStartingConfiguration<TConfiguration>(configuration);
         }
     }
 }

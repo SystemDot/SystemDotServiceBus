@@ -35,7 +35,7 @@ namespace SystemDot.Messaging.Specifications.authentication_for_publishing
                 .RegisterHandlers(r => r.RegisterHandler(new TestReplyMessageHandler<TestAuthenticationRequest, TestAuthenticationResponse>()))
                 .Initialise();
 
-            session = SendMessagesToServer(authenticationRequest).First().GetAuthenticationSession();
+            session = SendMessageToServer(authenticationRequest).First().GetAuthenticationSession();
 
             var subscriptionRequest = new MessagePayload()
                 .SetFromChannel("SubscriberChannel")
@@ -46,7 +46,7 @@ namespace SystemDot.Messaging.Specifications.authentication_for_publishing
 
             subscriptionRequest.SetAuthenticationSession(session);
 
-            SendMessagesToServer(subscriptionRequest);
+            SendMessageToServer(subscriptionRequest);
             WebRequestor.RequestsMade.Clear();
         };
 

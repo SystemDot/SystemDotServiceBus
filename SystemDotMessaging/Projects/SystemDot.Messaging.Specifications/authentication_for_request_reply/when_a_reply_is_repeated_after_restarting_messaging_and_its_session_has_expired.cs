@@ -48,7 +48,7 @@ namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
                 .SetFromServer(SenderServer)
                 .SetToServer(ReceiverServer);
 
-            session = SendMessagesToServer(authenticationRequest).First().GetAuthenticationSession();
+            session = SendMessageToServer(authenticationRequest).First().GetAuthenticationSession();
 
             var request = new MessagePayload()
                 .SetMessageBody(Message)
@@ -60,7 +60,7 @@ namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
                 .Sequenced();
 
             request.SetAuthenticationSession(session);
-            SendMessagesToServer(request);
+            SendMessageToServer(request);
 
             Reset();
             ReInitialise();

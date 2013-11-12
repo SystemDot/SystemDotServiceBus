@@ -9,6 +9,8 @@ namespace SystemDot.Messaging.Publishing
 
         public bool IsDurable { get; set; }
 
+        public IRepeatStrategy RepeatStrategy { get; set; }
+
         public override string ToString()
         {
             return SubscriberAddress.ToString();

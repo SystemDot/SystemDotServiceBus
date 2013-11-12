@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.authentication
                 .Initialise();
         };
 
-        Because of = () => SendMessagesToServer(payload);
+        Because of = () => SendMessageToServer(payload);
 
         It should_not_handle_the_request_in_the_handler_configured = () => handler.HandledMessages.ShouldBeEmpty();
     }

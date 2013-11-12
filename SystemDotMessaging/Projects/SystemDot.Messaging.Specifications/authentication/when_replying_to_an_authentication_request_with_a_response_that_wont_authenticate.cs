@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Specifications.authentication
                 .Initialise();
         };
 
-        Because of = () => returnedMessages = SendMessagesToServer(payload);
+        Because of = () => returnedMessages = SendMessageToServer(payload);
 
         It should_reply_with_a_response_that_does_not_contain_the_authentication_session_in_the_headers = () =>
             returnedMessages.Single().HasAuthenticationSession().ShouldBeFalse();

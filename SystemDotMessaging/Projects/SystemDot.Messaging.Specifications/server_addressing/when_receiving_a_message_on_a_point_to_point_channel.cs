@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Specifications.server_addressing
                 PersistenceUseType.RequestSend);
         };
 
-        Because of = () => SendMessagesToServer(messagePayload);
+        Because of = () => SendMessageToServer(messagePayload);
 
         It should_send_an_acknowledgement_to_the_server_address_specified_on_the_incoming_message = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>().IsAcknowledgement();

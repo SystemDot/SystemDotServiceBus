@@ -38,7 +38,7 @@ namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
                     .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
 
-            SendMessagesToServer(authenticationRequest);
+            SendMessageToServer(authenticationRequest);
 
             payload = new MessagePayload()
                 .SetMessageBody(Message)
@@ -50,7 +50,7 @@ namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
                 .Sequenced();
         };
 
-        Because of = () => SendMessagesToServer(payload);
+        Because of = () => SendMessageToServer(payload);
 
         It should_not_handle_the_message_in_the_registered_handler = () => handler.HandledMessages.ShouldBeEmpty();
     }

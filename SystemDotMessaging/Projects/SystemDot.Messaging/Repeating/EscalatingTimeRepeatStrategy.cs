@@ -6,36 +6,17 @@ namespace SystemDot.Messaging.Repeating
 {
     public class EscalatingTimeRepeatStrategy : LoggingRepeatStrategy, IRepeatStrategy
     {
-        public static EscalatingTimeRepeatStrategy Default
-        {
-            get
-            {
-                return new EscalatingTimeRepeatStrategy(4, 2, 16);
-            }
-        }
-
-        readonly int start;
-        readonly int multiplier;
-        readonly int maximum;
+        public int ToStartAt { get; set; }
+        public int Multiplier { get; set; }
+        public int Peak { get; set; }
         
-        EscalatingTimeRepeatStrategy(int start, int multiplier, int maximum)
-        {
-            this.start = start;
-            this.multiplier = multiplier;
-            this.maximum = maximum;
-        }
-
-        public void Repeat(
-            MessageRepeater repeater, 
-            IMessageCache messageCache, 
-            ISystemTime systemTime)
+        public void Repeat(MessageRepeater repeater, IMessageCache messageCache, ISystemTime systemTime)
         {
             IEnumerable<MessagePayload> messages = messageCache.GetOrderedMessages();
 
             messages.ForEach(m =>
             {
-                if (m.GetAmountSent() > 0 
-                    && m.GetLastTimeSent().Ticks <= systemTime.GetCurrentDate().AddSeconds(-GetDelay(m)).Ticks)
+                if (m.GetAmountSent() > 0 && m.GetLastTimeSent().Ticks <= systemTime.GetCurrentDate().AddSeconds(-GetDelay(m)).Ticks)
                 {
                     LogMessage(m);
                     repeater.InputMessage(m);
@@ -47,21 +28,21 @@ namespace SystemDot.Messaging.Repeating
         {
             int unlimitedDelay = GetUnlimitedDelay(toGetDelayFor);
 
-            return unlimitedDelay < this.maximum 
+            return unlimitedDelay < Peak 
                 ? unlimitedDelay 
-                : this.maximum;
+                : Peak;
         }
 
         int GetUnlimitedDelay(MessagePayload toGetDelayFor)
         {
             return toGetDelayFor.GetAmountSent() == 1 
-                ? this.start 
-                : this.start * GetMultiplier(toGetDelayFor);
+                ? ToStartAt 
+                : ToStartAt * GetMultiplier(toGetDelayFor);
         }
 
         int GetMultiplier(MessagePayload toGetDelayFor)
         {
-            return (toGetDelayFor.GetAmountSent() - 1) * this.multiplier;
+            return (toGetDelayFor.GetAmountSent() - 1) * Multiplier;
         }
     }
 }

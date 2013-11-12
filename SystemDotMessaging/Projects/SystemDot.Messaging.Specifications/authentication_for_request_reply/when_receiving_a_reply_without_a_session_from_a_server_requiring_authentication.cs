@@ -52,7 +52,7 @@ namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
                 .Sequenced();
         };
 
-        Because of = () => SendMessagesToServer(response);
+        Because of = () => SendMessageToServer(response);
 
         It should_not_handle_the_message = () => handler.HandledMessages.ShouldBeEmpty();
     }

@@ -27,17 +27,17 @@ namespace SystemDot.Messaging.Specifications.proxying
 
             sentMessageInQueue1 = new MessagePayload();
             sentMessageInQueue1.SetToAddress(address);
-            SendMessagesToServer(sentMessageInQueue1);
+            SendMessageToServer(sentMessageInQueue1);
 
             sentMessageInQueue2 = new MessagePayload();
             sentMessageInQueue2.SetToAddress(address);
-            SendMessagesToServer(sentMessageInQueue2);
+            SendMessageToServer(sentMessageInQueue2);
 
             longPollRequest = new MessagePayload();
             longPollRequest.SetLongPollRequest(address.Server);
         };
 
-        Because of = () => returnedMessages = SendMessagesToServer(longPollRequest);
+        Because of = () => returnedMessages = SendMessageToServer(longPollRequest);
 
         It should_put_the_first_message_in_the_response = () => returnedMessages.ShouldContain(sentMessageInQueue1);
 

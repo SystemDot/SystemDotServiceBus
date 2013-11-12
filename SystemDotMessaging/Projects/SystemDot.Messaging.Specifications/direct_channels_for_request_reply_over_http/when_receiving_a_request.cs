@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply_o
                 .Initialise();
         };
 
-        Because of = () => SendMessagesToServer(payload);
+        Because of = () => SendMessageToServer(payload);
 
         It should_push_the_message_to_any_registered_handlers = () => handler.LastHandledMessage.ShouldEqual(Message);
     }

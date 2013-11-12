@@ -20,12 +20,15 @@ namespace SystemDot.Messaging.Specifications.publishing_subscription
         {
             Messenger.Register<SubscriberSendChannelBuilt>(e => channelBuiltEvent = e);
             
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(PublisherAddress).ForPublishing()
                 .Initialise();
 
-            request = new MessagePayload().BuildSubscriptionRequest(BuildAddress(SubscriberAddress), BuildAddress(PublisherAddress));
+            request = new MessagePayload()
+                .SetFromChannel(SubscriberAddress)
+                .SetToChannel(PublisherAddress)
+                .SetSubscriptionRequest();
         };
 
         Because of = () => GetServer().ReceiveMessage(request);

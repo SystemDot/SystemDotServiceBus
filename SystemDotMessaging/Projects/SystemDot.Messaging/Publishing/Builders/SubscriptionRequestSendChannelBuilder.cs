@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
@@ -14,6 +15,8 @@ namespace SystemDot.Messaging.Publishing.Builders
 {
     class SubscriptionRequestSendChannelBuilder
     {
+        const int RepeatSeconds = 10;
+
         readonly MessageSender messageSender;
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
@@ -64,16 +67,21 @@ namespace SystemDot.Messaging.Publishing.Builders
         void BuildPipeline(SubscriptionRequestChannelSchema schema, SendMessageCache cache)
         {
             MessagePipelineBuilder.Build()
-                .With(new SubscriptionRequestor(schema.SubscriberAddress, schema.IsDurable))
+                .With(new SubscriptionRequestor(schema))
                 .ToProcessor(new MessageAddresser(schema.SubscriberAddress, schema.PublisherAddress))
                 .ToProcessor(new SendChannelMessageCacher(cache))
-                .ToMessageRepeater(cache, systemTime, taskRepeater, EscalatingTimeRepeatStrategy.Default)
+                .ToMessageRepeater(cache, systemTime, taskRepeater, CreateConstantTimeRepeatStrategy())
                 .ToProcessor(new SendChannelMessageCacheUpdater(cache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Pump()
                 .ToProcessor(new LastSentRecorder(systemTime))
                 .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache, schema.PublisherAddress))
                 .ToEndPoint(messageSender);
+        }
+
+        static ConstantTimeRepeatStrategy CreateConstantTimeRepeatStrategy()
+        {
+            return new ConstantTimeRepeatStrategy { RepeatEvery = TimeSpan.FromSeconds(RepeatSeconds) };
         }
     }
 }

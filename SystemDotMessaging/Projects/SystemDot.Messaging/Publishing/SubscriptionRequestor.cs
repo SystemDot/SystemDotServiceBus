@@ -1,37 +1,34 @@
 using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Logging;
-using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Publishing.Builders;
 
 namespace SystemDot.Messaging.Publishing
 {
     class SubscriptionRequestor : IMessageProcessor<MessagePayload>
     {
-        readonly EndpointAddress subscriberAddress;
-        readonly bool isDurable;
-
+        readonly SubscriptionRequestChannelSchema schema;
+        
         public event Action<MessagePayload> MessageProcessed;
         
-        public SubscriptionRequestor(EndpointAddress subscriberAddress, bool isDurable)
+        public SubscriptionRequestor(SubscriptionRequestChannelSchema schema)
         {
-            Contract.Requires(subscriberAddress != null);
-
-            this.subscriberAddress = subscriberAddress;
-            this.isDurable = isDurable;
-
+            Contract.Requires(schema != null);
+            this.schema = schema;
             Messenger.Register<MessagingInitialised>(_ => Start());
         }
 
         void Start()
         {
-            Logger.Info("Sending subscription request for {0}", subscriberAddress);
+            Logger.Info("Sending subscription request for {0}", schema.SubscriberAddress);
 
             var request = new MessagePayload();
             request.SetSubscriptionRequest(new SubscriptionSchema
             {
-                SubscriberAddress = subscriberAddress,
-                IsDurable = isDurable
+                SubscriberAddress = schema.SubscriberAddress,
+                IsDurable = schema.IsDurable,
+                RepeatStrategy = schema.RepeatStrategy
             });
             MessageProcessed(request);
         }

@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Specifications.authentication
                 .Initialise();
         };
 
-        Because of = () => returnedMessages = SendMessagesToServer(payload);
+        Because of = () => returnedMessages = SendMessageToServer(payload);
 
         It should_reply_with_the_specified_authentication_response_containing_the_new_authentication_session_in_the_headers = () =>
             returnedMessages.Single().GetAuthenticationSession().Id.ShouldNotEqual(Guid.Empty);

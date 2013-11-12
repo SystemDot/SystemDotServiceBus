@@ -3,7 +3,6 @@ using System.Threading;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Publishing.Builders;
-using SystemDot.Messaging.Repeating;
 
 namespace SystemDot.Messaging.Publishing
 {
@@ -33,7 +32,7 @@ namespace SystemDot.Messaging.Publishing
                     FromAddress = address,
                     SubscriberAddress = schema.SubscriberAddress,
                     IsDurable = schema.IsDurable,
-                    RepeatStrategy = EscalatingTimeRepeatStrategy.Default
+                    RepeatStrategy = schema.RepeatStrategy
                 });
 
             lock (locker) Monitor.Pulse(locker);

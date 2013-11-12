@@ -41,7 +41,7 @@ namespace SystemDot.Messaging.Specifications.authentication
                 .SetFromServer(Server)
                 .SetToServer(Server);
 
-            session = SendMessagesToServer(authenticationRequestPayload).First().GetAuthenticationSession();
+            session = SendMessageToServer(authenticationRequestPayload).First().GetAuthenticationSession();
 
             Reset();
             ReInitialise();

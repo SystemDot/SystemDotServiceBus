@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Specifications.authentication
             Bus.Send(1);
         };
 
-        Because of = () => SendMessagesToServer(WebRequestor.DeserialiseSingleRequest<MessagePayload>());
+        Because of = () => SendMessageToServer(WebRequestor.DeserialiseSingleRequest<MessagePayload>());
 
         It should_handle_the_event = () => handler.LastHandledMessage.ShouldEqual(1);
     }

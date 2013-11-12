@@ -1,9 +1,11 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Configuration.Repeating;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Hooks;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Publishing.Builders;
+using SystemDot.Messaging.Repeating;
 
 namespace SystemDot.Messaging.Configuration.Publishers
 {

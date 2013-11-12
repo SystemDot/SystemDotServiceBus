@@ -38,7 +38,7 @@ namespace SystemDot.Messaging.Specifications.received_message_return_address_rea
             WebRequestor.RequestsMade.Clear();
         };
 
-        Because of = () => SendMessagesToServer(messagePayload);
+        Because of = () => SendMessageToServer(messagePayload);
 
         It should_send_the_acknoweldgement_to_the_local_address_listed = () => 
             WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetToAddress().Server.Address.Path.ShouldEqual(LocalPublisherServerAddress);

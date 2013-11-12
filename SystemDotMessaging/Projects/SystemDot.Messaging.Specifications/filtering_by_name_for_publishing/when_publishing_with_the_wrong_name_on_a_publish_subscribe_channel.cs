@@ -9,18 +9,17 @@ namespace SystemDot.Messaging.Specifications.filtering_by_name_for_publishing
     public class when_publishing_with_the_wrong_name_on_a_publish_subscribe_channel
         : WithPublisherSubject
     {
-        const string ChannelName = "Test";
-        const string SubscriberName = "TestSubscriber";
-        
+        const string PublisherChannel = "PublisherChannel";
+
         Establish context = () =>
         {
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel(ChannelName).ForPublishing()
+                .OpenChannel(PublisherChannel).ForPublishing()
                 .OnlyForMessages(FilteredBy.NamePattern("SomeOtherThing"))
                 .Initialise();
 
-            Subscribe(BuildAddress(SubscriberName), BuildAddress(ChannelName));
+            Subscribe(BuildAddress("SubscriberChannel"), BuildAddress(PublisherChannel));
         };
 
         Because of = () => Bus.Publish(new TestNamePatternMessage());

@@ -8,14 +8,22 @@ namespace SystemDot.Messaging.Specifications
     {
         protected static void Subscribe(EndpointAddress subscriberAddress, EndpointAddress publisherAddress)
         {
-            GetServer().ReceiveMessage(new MessagePayload().BuildSubscriptionRequest(subscriberAddress, publisherAddress)); 
+            GetServer().ReceiveMessage(CreateSubscriptionRequest(subscriberAddress, publisherAddress));
         }
-        
+
         protected static void SubscribeDurable(EndpointAddress subscriberAddress, EndpointAddress publisherAddress)
         {
-            MessagePayload request = new MessagePayload().BuildSubscriptionRequest(subscriberAddress, publisherAddress);
+            MessagePayload request = CreateSubscriptionRequest(subscriberAddress, publisherAddress);
             request.GetSubscriptionRequestSchema().IsDurable = true;
             GetServer().ReceiveMessage(request);
+        }
+
+        static MessagePayload CreateSubscriptionRequest(EndpointAddress subscriberAddress, EndpointAddress publisherAddress)
+        {
+            return new MessagePayload()
+                .SetFromEndpointAddress(subscriberAddress)
+                .SetToEndpointAddress(publisherAddress)
+                .SetSubscriptionRequest();
         }
     }
 }

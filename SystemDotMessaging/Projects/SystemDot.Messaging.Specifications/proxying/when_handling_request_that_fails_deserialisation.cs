@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Specifications.proxying
                 .Initialise();
         };
 
-        Because of = () => exception = Catch.Exception(() => SendObjectsToServer(new object()));
+        Because of = () => exception = Catch.Exception(() => SendObjectToServer(new object()));
 
         It should_not_fail = () => exception.ShouldBeNull();
     }

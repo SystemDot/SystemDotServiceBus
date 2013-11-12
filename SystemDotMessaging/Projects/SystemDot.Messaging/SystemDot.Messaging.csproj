@@ -102,6 +102,9 @@
     <Compile Include="Configuration\ExternalSources\IExternalSourcesConfigurer.cs" />
     <Compile Include="Configuration\ExceptionHandling\IExceptionHandlingConfigurer.cs" />
     <Compile Include="Configuration\ExceptionHandling\OnExceptionConfiguration.cs" />
+    <Compile Include="Configuration\Repeating\EscalatingTimeScaleFactorConfiguration.cs" />
+    <Compile Include="Configuration\Repeating\EscalatingTimeScalePeakConfiguration.cs" />
+    <Compile Include="Configuration\Repeating\EscalatingTimeScaleStartingConfiguration.cs" />
     <Compile Include="Configuration\Repeating\IRepeatMessagesConfigurer.cs" />
     <Compile Include="Configuration\Repeating\RepeatMessagesConfiguration.cs" />
     <Compile Include="Correlation\CorrelationAssigner.cs" />
@@ -280,7 +283,6 @@
     <Compile Include="Configuration\MessagingConfiguration.cs" />
     <Compile Include="Configuration\PointToPoint\PointToPointReceiverConfiguration.cs" />
     <Compile Include="Configuration\PointToPoint\PointToPointSenderConfiguration.cs" />
-    <Compile Include="Configuration\RepeatMessages.cs" />
     <Compile Include="Configuration\RequestReply\RequestReplySenderConfiguration.cs" />
     <Compile Include="Configuration\RequestReply\RequestReplyRecieverConfiguration.cs" />
     <Compile Include="IBus.cs" />

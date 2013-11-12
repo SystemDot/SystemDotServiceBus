@@ -25,17 +25,17 @@ namespace SystemDot.Messaging.Specifications.proxying
             
             var sentMessageInQueue1 = new MessagePayload();
             sentMessageInQueue1.SetToAddress(address);
-            SendMessagesToServer(sentMessageInQueue1);
+            SendMessageToServer(sentMessageInQueue1);
 
             var sentMessageInQueue2 = new MessagePayload { Id = sentMessageInQueue1.Id };
             sentMessageInQueue2.SetToAddress(address);
-            SendMessagesToServer(sentMessageInQueue2);
+            SendMessageToServer(sentMessageInQueue2);
 
             longPollRequest = new MessagePayload();
             longPollRequest.SetLongPollRequest(address.Server);
         };
 
-        Because of = () => returnedMessages = SendMessagesToServer(longPollRequest);
+        Because of = () => returnedMessages = SendMessageToServer(longPollRequest);
 
         It should_only_return_the_first_copy_of_the_message = () => returnedMessages.Count().ShouldEqual(1);
     }

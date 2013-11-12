@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.authentication
                     .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
 
-            SendMessagesToServer(new MessagePayload()
+            SendMessageToServer(new MessagePayload()
                 .SetAuthenticationRequestChannels()
                 .SetMessageBody(new TestAuthenticationRequest())
                 .SetFromServer(SenderServer)
@@ -49,7 +49,7 @@ namespace SystemDot.Messaging.Specifications.authentication
             payload.SetAuthenticationSession();
         };
 
-        Because of = () => SendMessagesToServer(payload);
+        Because of = () => SendMessageToServer(payload);
 
         It should_not_handle_the_message_in_the_registered_handler = () => handler.HandledMessages.ShouldBeEmpty();
     }
