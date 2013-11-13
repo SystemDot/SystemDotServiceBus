@@ -42,7 +42,7 @@ namespace SystemDot.Messaging.Authentication.Builders
         {
             configurer.OpenDirectChannel(ChannelNames.AuthenticationChannelName)
                 .ForRequestReplyReceiving()
-                .OnlyForMessages(FilteredBy.Type<TAuthenticationRequest>())
+                .OnlyForMessages().OfType<TAuthenticationRequest>()
                 .WithReplyHook(new AuthenticationResponseHook<TAuthenticationResponse>(serialiser, cache, schema.ExpiresAfter))
                 .Build();
         }

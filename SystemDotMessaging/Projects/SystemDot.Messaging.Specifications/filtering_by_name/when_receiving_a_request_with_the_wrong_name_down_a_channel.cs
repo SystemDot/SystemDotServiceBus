@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Specifications.filtering_by_name
                 .UsingInProcessTransport()
                 .OpenChannel(ReceiverAddress)
                 .ForPointToPointReceiving()
-                .OnlyForMessages(FilteredBy.NamePattern("SomethingElse"))
+                .OnlyForMessages().WithNamePattern("SomethingElse")
                 .Initialise();
 
             payload = new MessagePayload().MakeSequencedReceivable(

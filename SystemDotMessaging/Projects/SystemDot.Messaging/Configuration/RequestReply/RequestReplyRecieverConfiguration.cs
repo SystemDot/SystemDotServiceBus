@@ -3,6 +3,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.ExceptionHandling;
 using SystemDot.Messaging.Configuration.Expiry;
+using SystemDot.Messaging.Configuration.Filtering;
 using SystemDot.Messaging.Configuration.Repeating;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
@@ -17,14 +18,18 @@ namespace SystemDot.Messaging.Configuration.RequestReply
     public class RequestReplyRecieverConfiguration : Configurer, 
         IExceptionHandlingConfigurer,
         IRepeatMessagesConfigurer,
-        IExpireMessagesConfigurer
+        IExpireMessagesConfigurer,
+        IFilterMessagesConfigurer
     {
         readonly ReplySendChannelSchema replySchema;
         readonly RequestRecieveChannelSchema requestSchema;
+        readonly ISystemTime systemTime;
 
-        public RequestReplyRecieverConfiguration(EndpointAddress address, MessagingConfiguration messagingConfiguration)
+        public RequestReplyRecieverConfiguration(EndpointAddress address, MessagingConfiguration messagingConfiguration, ISystemTime systemTime)
             : base(messagingConfiguration)
         {
+            this.systemTime = systemTime;
+
             replySchema = new ReplySendChannelSchema
             {
                 FromAddress = address,
@@ -74,7 +79,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
 
         public ExpireMessagesConfiguration<RequestReplyRecieverConfiguration> ExpireMessages()
         {
-            return new ExpireMessagesConfiguration<RequestReplyRecieverConfiguration>(this, Resolve<ISystemTime>());
+            return new ExpireMessagesConfiguration<RequestReplyRecieverConfiguration>(this, systemTime);
         }
 
         public RequestReplyRecieverConfiguration OnMessageExpiry(Action expiryAction)
@@ -129,12 +134,14 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             return this;
         }
 
-        public RequestReplyRecieverConfiguration OnlyForMessages(IMessageFilterStrategy toFilterWith)
+        public FilterMessagesConfiguration<RequestReplyRecieverConfiguration> OnlyForMessages()
         {
-            Contract.Requires(toFilterWith != null);
+            return new FilterMessagesConfiguration<RequestReplyRecieverConfiguration>(this);
+        }
 
-            requestSchema.FilterStrategy = toFilterWith;
-            return this;
+        public void SetMessageFilterStrategy(IMessageFilterStrategy strategy)
+        {
+            requestSchema.FilterStrategy = strategy;
         }
 
         public RequestReplyRecieverConfiguration HandleRequestsOnMainThread()

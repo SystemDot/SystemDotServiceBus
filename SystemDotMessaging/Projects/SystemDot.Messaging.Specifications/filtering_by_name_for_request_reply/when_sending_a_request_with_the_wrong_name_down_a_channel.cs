@@ -1,4 +1,3 @@
-using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Specifications.filtering_by_name;
 using Machine.Specifications;
 
@@ -13,7 +12,7 @@ namespace SystemDot.Messaging.Specifications.filtering_by_name_for_request_reply
                 .UsingInProcessTransport()
                 .OpenChannel("Test")
                     .ForRequestReplySendingTo("TestRecieverAddress")
-                    .OnlyForMessages(FilteredBy.NamePattern("SomethingElse"))
+                    .OnlyForMessages().WithNamePattern("SomethingElse")
                 .Initialise();
 
         Because of = () => Bus.Send(new TestNamePatternMessage());

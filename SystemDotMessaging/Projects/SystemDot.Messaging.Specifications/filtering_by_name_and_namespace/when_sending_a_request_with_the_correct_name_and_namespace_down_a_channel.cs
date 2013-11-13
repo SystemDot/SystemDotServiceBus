@@ -1,5 +1,4 @@
 using System.Linq;
-using SystemDot.Messaging.Configuration;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.filtering_by_name_and_namespace
@@ -13,7 +12,7 @@ namespace SystemDot.Messaging.Specifications.filtering_by_name_and_namespace
                 .UsingInProcessTransport()
                 .OpenChannel("Test")
                     .ForPointToPointSendingTo("TestRecieverAddress")
-                    .OnlyForMessages(FilteredBy.NamespaceAndNamePattern("filtering_by_name_and_namespace", "Name"))
+                    .OnlyForMessages().WithNamespaceAndNamePattern("filtering_by_name_and_namespace", "Name")
                 .Initialise();
 
         Because of = () => Bus.Send(new TestNameAndNamespaceMessage());

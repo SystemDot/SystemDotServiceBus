@@ -1,6 +1,7 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.ExceptionHandling;
+using SystemDot.Messaging.Configuration.Filtering;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.PointToPoint.Builders;
 using SystemDot.Messaging.UnitOfWork;
@@ -8,7 +9,8 @@ using SystemDot.Messaging.UnitOfWork;
 namespace SystemDot.Messaging.Configuration.PointToPoint
 {
     public class PointToPointReceiverConfiguration : Configurer, 
-        IExceptionHandlingConfigurer
+        IExceptionHandlingConfigurer,
+        IFilterMessagesConfigurer
     {
         readonly MessageServer server;
         readonly PointToPointReceiverChannelSchema schema;
@@ -63,12 +65,14 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
             return this;
         }
 
-        public PointToPointReceiverConfiguration OnlyForMessages(IMessageFilterStrategy toFilterWith)
+        public FilterMessagesConfiguration<PointToPointReceiverConfiguration> OnlyForMessages()
         {
-            Contract.Requires(toFilterWith != null);
+            return new FilterMessagesConfiguration<PointToPointReceiverConfiguration>(this);
+        }
 
-            schema.FilterStrategy = toFilterWith;
-            return this;
+        public void SetMessageFilterStrategy(IMessageFilterStrategy strategy)
+        {
+            schema.FilterStrategy = strategy;
         }
 
         public OnExceptionConfiguration<PointToPointReceiverConfiguration> OnException()

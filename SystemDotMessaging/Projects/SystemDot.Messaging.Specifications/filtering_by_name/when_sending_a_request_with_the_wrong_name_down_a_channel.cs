@@ -12,7 +12,7 @@ namespace SystemDot.Messaging.Specifications.filtering_by_name
                 .UsingInProcessTransport()
                 .OpenChannel("Test")
                     .ForPointToPointSendingTo("TestRecieverAddress")
-                    .OnlyForMessages(FilteredBy.NamePattern("SomethingElse"))
+                    .OnlyForMessages().WithNamePattern("SomethingElse")
                 .Initialise();
 
         Because of = () => Bus.Send(new TestNamePatternMessage());

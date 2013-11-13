@@ -1,4 +1,3 @@
-using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Specifications.filtering_by_name;
 using SystemDot.Messaging.Specifications.publishing;
 using Machine.Specifications;
@@ -16,7 +15,7 @@ namespace SystemDot.Messaging.Specifications.filtering_by_name_for_publishing
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(PublisherChannel).ForPublishing()
-                .OnlyForMessages(FilteredBy.NamePattern("SomeOtherThing"))
+                .OnlyForMessages().WithNamePattern("SomeOtherThing")
                 .Initialise();
 
             Subscribe(BuildAddress("SubscriberChannel"), BuildAddress(PublisherChannel));

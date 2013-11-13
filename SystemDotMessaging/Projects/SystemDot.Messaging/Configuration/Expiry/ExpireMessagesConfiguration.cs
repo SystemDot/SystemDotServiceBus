@@ -13,6 +13,7 @@ namespace SystemDot.Messaging.Configuration.Expiry
         public ExpireMessagesConfiguration(TConfiguration configuration, ISystemTime systemTime)
         {
             Contract.Requires(!configuration.Equals(default(TConfiguration)));
+            Contract.Requires(systemTime != null);
 
             this.configuration = configuration;
             this.systemTime = systemTime;

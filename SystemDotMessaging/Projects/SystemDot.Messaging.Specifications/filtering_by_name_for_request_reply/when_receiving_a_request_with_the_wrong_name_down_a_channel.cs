@@ -1,4 +1,3 @@
-using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.filtering_by_name;
@@ -20,7 +19,7 @@ namespace SystemDot.Messaging.Specifications.filtering_by_name_for_request_reply
                 .UsingInProcessTransport()
                 .OpenChannel(ReceiverAddress)
                 .ForRequestReplyReceiving()
-                .OnlyForMessages(FilteredBy.NamePattern("SomethingElse"))
+                .OnlyForMessages().WithNamePattern("SomethingElse")
                 .Initialise();
 
             payload = new MessagePayload().MakeSequencedReceivable(

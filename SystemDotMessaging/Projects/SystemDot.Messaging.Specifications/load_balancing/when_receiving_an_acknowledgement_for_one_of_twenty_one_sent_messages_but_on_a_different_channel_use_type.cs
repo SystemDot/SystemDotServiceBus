@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using SystemDot.Messaging.Acknowledgement;
-using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.load_balancing
@@ -28,7 +26,7 @@ namespace SystemDot.Messaging.Specifications.load_balancing
                 .ForPointToPointSendingTo(RecieverAddress)
                 .OpenChannel(SenderAddress)
                 .ForRequestReplySendingTo(RecieverAddress)
-                .OnlyForMessages(FilteredBy.NamePattern("NotInt"))
+                .OnlyForMessages().WithNamePattern("NotInt")
                 .Initialise();
 
             messages = Enumerable.Range(1, 21).ToList();

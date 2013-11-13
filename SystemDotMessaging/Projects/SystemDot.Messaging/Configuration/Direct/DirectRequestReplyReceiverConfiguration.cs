@@ -1,5 +1,6 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Configuration.Filtering;
 using SystemDot.Messaging.Direct.Builders;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Hooks;
@@ -7,7 +8,7 @@ using SystemDot.Messaging.Packaging;
 
 namespace SystemDot.Messaging.Configuration.Direct
 {
-    public class DirectRequestReplyReceiverConfiguration : Configurer
+    public class DirectRequestReplyReceiverConfiguration : Configurer, IFilterMessagesConfigurer
     {
         readonly RequestReceiverSchema receiveSchema;
         readonly ReplySenderSchema sendSchema;
@@ -41,12 +42,14 @@ namespace SystemDot.Messaging.Configuration.Direct
             return receiveSchema.Address.Server;
         }
 
-        public DirectRequestReplyReceiverConfiguration OnlyForMessages(IMessageFilterStrategy toFilterBy)
+        public FilterMessagesConfiguration<DirectRequestReplyReceiverConfiguration> OnlyForMessages()
         {
-            Contract.Requires(toFilterBy != null);
-            
-            receiveSchema.FilterStrategy = toFilterBy;
-            return this;
+            return new FilterMessagesConfiguration<DirectRequestReplyReceiverConfiguration>(this);
+        }
+
+        public void SetMessageFilterStrategy(IMessageFilterStrategy strategy)
+        {
+            receiveSchema.FilterStrategy = strategy;
         }
 
         public DirectRequestReplyReceiverConfiguration WithReplyHook(IMessageHook<MessagePayload> hook)

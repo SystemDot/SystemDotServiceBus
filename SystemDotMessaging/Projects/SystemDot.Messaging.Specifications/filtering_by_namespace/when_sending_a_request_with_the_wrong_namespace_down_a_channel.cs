@@ -1,4 +1,3 @@
-using SystemDot.Messaging.Configuration;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.filtering_by_namespace
@@ -12,7 +11,7 @@ namespace SystemDot.Messaging.Specifications.filtering_by_namespace
                 .UsingInProcessTransport()
                 .OpenChannel("Test")
                     .ForRequestReplySendingTo("TestRecieverAddress")
-                        .OnlyForMessages(FilteredBy.Namespace("SomethingElse"))
+                        .OnlyForMessages().WithNamespace("SomethingElse")
                 .Initialise();
 
         Because of = () => Bus.Send(new TestNamespaceMessage());

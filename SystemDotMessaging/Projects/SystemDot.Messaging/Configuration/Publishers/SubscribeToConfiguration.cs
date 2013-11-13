@@ -1,6 +1,7 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.ExceptionHandling;
+using SystemDot.Messaging.Configuration.Filtering;
 using SystemDot.Messaging.Configuration.Repeating;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Hooks;
@@ -11,7 +12,7 @@ using SystemDot.Messaging.UnitOfWork;
 
 namespace SystemDot.Messaging.Configuration.Publishers
 {
-    public class SubscribeToConfiguration : Configurer, IExceptionHandlingConfigurer, IRepeatMessagesConfigurer
+    public class SubscribeToConfiguration : Configurer, IExceptionHandlingConfigurer, IRepeatMessagesConfigurer, IFilterMessagesConfigurer
     {
         readonly SubscriptionRequestChannelSchema requestSchema;
         readonly SubscriberRecieveChannelSchema receiveSchema;
@@ -90,12 +91,14 @@ namespace SystemDot.Messaging.Configuration.Publishers
             return this;
         }
 
-        public SubscribeToConfiguration OnlyForMessages(IMessageFilterStrategy toFilterWith)
+        public FilterMessagesConfiguration<SubscribeToConfiguration> OnlyForMessages()
         {
-            Contract.Requires(toFilterWith != null);
+            return new FilterMessagesConfiguration<SubscribeToConfiguration>(this);
+        }
 
-            receiveSchema.FilterStrategy = toFilterWith;
-            return this;
+        public void SetMessageFilterStrategy(IMessageFilterStrategy strategy)
+        {
+            receiveSchema.FilterStrategy = strategy;
         }
 
         public SubscribeToConfiguration HandleEventsOnMainThread()

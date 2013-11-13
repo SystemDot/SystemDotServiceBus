@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.Configuration
         readonly EndpointAddress address;
         readonly MessageServer server;
         readonly MessagingConfiguration messagingConfiguration;
-
+        
         public ChannelConfiguration(
             EndpointAddress address,
             MessageServer server, 
@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Configuration
             Contract.Requires(address != EndpointAddress.Empty);
             Contract.Requires(server != null);
             Contract.Requires(messagingConfiguration != null);
-
+            
             this.address = address;
             this.server = server;
             this.messagingConfiguration = messagingConfiguration;
@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Configuration
 
         public RequestReplyRecieverConfiguration ForRequestReplyReceiving()
         {
-            return new RequestReplyRecieverConfiguration(address, messagingConfiguration);
+            return new RequestReplyRecieverConfiguration(address, messagingConfiguration, GetSystemTime());
         }
 
         public RequestReplySenderConfiguration ForRequestReplySendingTo(string recieverAddress)
@@ -36,7 +36,8 @@ namespace SystemDot.Messaging.Configuration
             return new RequestReplySenderConfiguration(
                 address,
                 BuildEndpointAddress(recieverAddress, server),
-                messagingConfiguration);
+                messagingConfiguration,
+                GetSystemTime());
         }
 
         public PublisherConfiguration ForPublishing()
@@ -57,12 +58,18 @@ namespace SystemDot.Messaging.Configuration
             return new PointToPointSenderConfiguration(
                 address,
                 BuildEndpointAddress(recieverAddress, server),
-                messagingConfiguration);
+                messagingConfiguration,
+                GetSystemTime());
         }
 
         public PointToPointReceiverConfiguration ForPointToPointReceiving()
         {
             return new PointToPointReceiverConfiguration(address, server, messagingConfiguration);
-        }  
+        }
+
+        static ISystemTime GetSystemTime()
+        {
+            return Resolve<ISystemTime>();
+        }
     }
 }

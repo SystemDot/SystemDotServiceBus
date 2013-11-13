@@ -98,6 +98,8 @@
     <Compile Include="Configuration\Direct\DirectRequestReplySenderConfiguration.cs" />
     <Compile Include="Configuration\Expiry\ExpireMessagesConfiguration.cs" />
     <Compile Include="Configuration\Expiry\IExpireMessagesConfigurer.cs" />
+    <Compile Include="Configuration\Filtering\FilterMessagesConfiguration.cs" />
+    <Compile Include="Configuration\Filtering\IFilterMessagesConfigurer.cs" />
     <Compile Include="Configuration\HandlerBasedOnConfiguration.cs" />
     <Compile Include="Configuration\ExternalSources\ExternalSourcesConfigurer.cs" />
     <Compile Include="Configuration\ExternalSources\IExternalConfigurationSource.cs" />

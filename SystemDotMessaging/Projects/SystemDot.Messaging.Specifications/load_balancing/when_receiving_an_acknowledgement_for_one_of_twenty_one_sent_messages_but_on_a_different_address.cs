@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.load_balancing
                     .ForPointToPointSendingTo(RecieverAddress)
                 .OpenChannel(OtherSenderAddress)
                     .ForPointToPointSendingTo(OtherRecieverAddress)
-                        .OnlyForMessages(FilteredBy.NamePattern("NotInt"))
+                        .OnlyForMessages().WithNamePattern("NotInt")
                 .Initialise();
 
             messages = Enumerable.Range(1, 21).ToList();

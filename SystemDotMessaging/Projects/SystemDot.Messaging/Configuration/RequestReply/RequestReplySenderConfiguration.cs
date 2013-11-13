@@ -3,6 +3,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.ExceptionHandling;
 using SystemDot.Messaging.Configuration.Expiry;
+using SystemDot.Messaging.Configuration.Filtering;
 using SystemDot.Messaging.Configuration.Repeating;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
@@ -17,17 +18,22 @@ namespace SystemDot.Messaging.Configuration.RequestReply
     public class RequestReplySenderConfiguration : Configurer, 
         IExceptionHandlingConfigurer,
         IRepeatMessagesConfigurer,
-        IExpireMessagesConfigurer
+        IExpireMessagesConfigurer, 
+        IFilterMessagesConfigurer
     {
         readonly RequestSendChannelSchema sendSchema;
         readonly ReplyReceiveChannelSchema receiveSchema;
+        readonly ISystemTime systemTime;
 
         public RequestReplySenderConfiguration(
             EndpointAddress address,
             EndpointAddress recieverAddress,
-            MessagingConfiguration messagingConfiguration)
+            MessagingConfiguration messagingConfiguration, 
+            ISystemTime systemTime)
             : base(messagingConfiguration)
         {
+            this.systemTime = systemTime;
+
             sendSchema = new RequestSendChannelSchema
             {
                 FilteringStrategy = new PassThroughMessageFilterStategy(),
@@ -58,12 +64,14 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             return sendSchema.FromAddress.Server;
         }
 
-        public RequestReplySenderConfiguration OnlyForMessages(IMessageFilterStrategy toFilterMessagesWith)
+        public FilterMessagesConfiguration<RequestReplySenderConfiguration> OnlyForMessages()
         {
-            Contract.Requires(toFilterMessagesWith != null);
+            return new FilterMessagesConfiguration<RequestReplySenderConfiguration>(this);
+        }
 
-            sendSchema.FilteringStrategy = toFilterMessagesWith;
-            return this;
+        public void SetMessageFilterStrategy(IMessageFilterStrategy strategy)
+        {
+            sendSchema.FilteringStrategy = strategy;
         }
 
         public RequestReplySenderConfiguration Sequenced()
@@ -81,7 +89,7 @@ namespace SystemDot.Messaging.Configuration.RequestReply
 
         public ExpireMessagesConfiguration<RequestReplySenderConfiguration> ExpireMessages()
         {
-            return new ExpireMessagesConfiguration<RequestReplySenderConfiguration>(this, Resolve<ISystemTime>());
+            return new ExpireMessagesConfiguration<RequestReplySenderConfiguration>(this, systemTime);
         }
 
         public RequestReplySenderConfiguration OnMessageExpiry(Action expiryAction)

@@ -1,4 +1,3 @@
-using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.filtering_by_name;
 using Machine.Specifications;
@@ -21,7 +20,7 @@ namespace SystemDot.Messaging.Specifications.filtering_by_name_for_direct_channe
                 .UsingInProcessTransport()
                 .OpenDirectChannel(Receiver)
                     .ForRequestReplyReceiving()
-                        .OnlyForMessages(FilteredBy.NamePattern("SomethingElse"))
+                        .OnlyForMessages().WithNamePattern("SomethingElse")
                 .RegisterHandlers(h => h.RegisterHandler(handler))
                 .Initialise();
 

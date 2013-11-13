@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.filtering_by_name_for_publishing
                 .UsingInProcessTransport()
                 .OpenChannel(SubscriberAddress)
                 .ForSubscribingTo(PublisherAddress)
-                .OnlyForMessages(FilteredBy.NamePattern("SomethingElse"))
+                .OnlyForMessages().WithNamePattern("SomethingElse")
                 .Initialise();
 
             payload = new MessagePayload().MakeSequencedReceivable(

@@ -1,5 +1,6 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Configuration.Filtering;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Hooks;
 using SystemDot.Messaging.Packaging;
@@ -7,7 +8,7 @@ using SystemDot.Messaging.Publishing.Builders;
 
 namespace SystemDot.Messaging.Configuration.Publishers
 {
-    public class PublisherConfiguration : Configurer
+    public class PublisherConfiguration : Configurer, IFilterMessagesConfigurer
     {
         readonly PublisherChannelSchema schema;
 
@@ -31,10 +32,14 @@ namespace SystemDot.Messaging.Configuration.Publishers
             return schema.FromAddress.Server;
         }
 
-        public PublisherConfiguration OnlyForMessages(IMessageFilterStrategy toFilterWith)
+        public FilterMessagesConfiguration<PublisherConfiguration> OnlyForMessages()
         {
-            schema.MessageFilterStrategy = toFilterWith;
-            return this;
+            return new FilterMessagesConfiguration<PublisherConfiguration>(this);
+        }
+
+        public void SetMessageFilterStrategy(IMessageFilterStrategy strategy)
+        {
+            schema.MessageFilterStrategy = strategy;
         }
 
         public PublisherConfiguration WithDurability()

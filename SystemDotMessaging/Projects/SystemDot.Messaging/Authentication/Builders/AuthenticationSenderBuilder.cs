@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Authentication.Builders
             configurer.OpenDirectChannel(ChannelNames.AuthenticationChannelName)
                 .ForRequestReplySendingTo(GetAuthenticationReceiverChannel(schema.Server))
                 .WithReceiveHook(new AuthenticationReceiveHook(cache))
-                .OnlyForMessages(FilteredBy.Type<TAuthenticationRequest>())
+                .OnlyForMessages().OfType<TAuthenticationRequest>()
                 .Build();
         }
 

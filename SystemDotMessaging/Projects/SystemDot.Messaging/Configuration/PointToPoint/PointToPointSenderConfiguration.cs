@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.Expiry;
+using SystemDot.Messaging.Configuration.Filtering;
 using SystemDot.Messaging.Configuration.Repeating;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
@@ -13,16 +14,20 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
     public class PointToPointSenderConfiguration : 
         Configurer,
         IRepeatMessagesConfigurer,
-        IExpireMessagesConfigurer
+        IExpireMessagesConfigurer,
+        IFilterMessagesConfigurer
     {
         readonly PointToPointSendChannelSchema sendSchema;
-        
+        readonly ISystemTime systemTime;
+
         public PointToPointSenderConfiguration(
             EndpointAddress fromAddress, 
             EndpointAddress toAddress,
-            MessagingConfiguration messagingConfiguration)
+            MessagingConfiguration messagingConfiguration,
+            ISystemTime systemTime)
             : base(messagingConfiguration)
         {
+            this.systemTime = systemTime;
             sendSchema = new PointToPointSendChannelSchema
             {
                 ExpiryStrategy = new PassthroughMessageExpiryStrategy(),
@@ -59,7 +64,7 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
 
         public ExpireMessagesConfiguration<PointToPointSenderConfiguration> ExpireMessages()
         {
-            return new ExpireMessagesConfiguration<PointToPointSenderConfiguration>(this, Resolve<ISystemTime>());
+            return new ExpireMessagesConfiguration<PointToPointSenderConfiguration>(this, systemTime);
         }
 
         public PointToPointSenderConfiguration OnMessagingExpiry(Action toRunOnExpiry)
@@ -74,12 +79,14 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
             return this;
         }
 
-        public PointToPointSenderConfiguration OnlyForMessages(IMessageFilterStrategy toFilterMessagesWith)
+        public FilterMessagesConfiguration<PointToPointSenderConfiguration> OnlyForMessages()
         {
-            Contract.Requires(toFilterMessagesWith != null);
+            return new FilterMessagesConfiguration<PointToPointSenderConfiguration>(this);
+        }
 
-            sendSchema.FilteringStrategy = toFilterMessagesWith;
-            return this;
+        public void SetMessageFilterStrategy(IMessageFilterStrategy strategy)
+        {
+            sendSchema.FilteringStrategy = strategy;
         }
 
         public void SetMessageExpiryStrategy(IMessageExpiryStrategy strategy)
