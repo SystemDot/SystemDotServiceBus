@@ -10,7 +10,7 @@ namespace SystemDot.Messaging.Specifications.expiry
             .UsingInProcessTransport()
             .OpenChannel("ReceiverAddress")
             .ForPointToPointSendingTo("SenderAddress")
-            .WithMessageExpiry(MessageExpiry.ByRepeatAttempt(1))
+            .ExpireMessages().AfterRepeatAttempts(1)
             .Initialise();
 
         Because of = () => Bus.Send(1);

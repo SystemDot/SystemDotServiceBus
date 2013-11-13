@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.expiry_for_request_reply
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                     .ForRequestReplyReceiving()
-                        .WithMessageExpiry(MessageExpiry.ByTime(TimeSpan.FromMinutes(0)))
+                        .ExpireMessages().After(TimeSpan.FromMinutes(0))
                 .Initialise();
 
             GetServer().ReceiveMessage(new MessagePayload().MakeSequencedReceivable(

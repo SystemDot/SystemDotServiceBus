@@ -1,5 +1,4 @@
 using System;
-using SystemDot.Messaging.Configuration;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.expiry_for_request_reply
@@ -9,22 +8,15 @@ namespace SystemDot.Messaging.Specifications.expiry_for_request_reply
     {
         const string ChannelName = "Test";
         const string RecieverAddress = "TestRecieverAddress";
-        
-        static int message;
 
-        Establish context = () =>
-        {
-            Configuration.Configure.Messaging()
-                .UsingInProcessTransport()
-                .OpenChannel(ChannelName)
-                    .ForRequestReplySendingTo(RecieverAddress)
-                    .WithMessageExpiry(MessageExpiry.ByTime(TimeSpan.FromMinutes(0)))
-                .Initialise();
+        Establish context = () => Configuration.Configure.Messaging()
+            .UsingInProcessTransport()
+            .OpenChannel(ChannelName)
+            .ForRequestReplySendingTo(RecieverAddress)
+            .ExpireMessages().After(TimeSpan.FromMinutes(0))
+            .Initialise();
 
-            message = 1;
-        };
-
-        Because of = () => Bus.Send(message);
+        Because of = () => Bus.Send(1);
 
         It should_not_send_the_message = () => GetServer().SentMessages.ShouldBeEmpty();
     }

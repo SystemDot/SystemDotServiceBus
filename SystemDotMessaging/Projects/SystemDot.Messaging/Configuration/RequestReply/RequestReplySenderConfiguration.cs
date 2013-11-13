@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.ExceptionHandling;
+using SystemDot.Messaging.Configuration.Expiry;
 using SystemDot.Messaging.Configuration.Repeating;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
@@ -15,7 +16,8 @@ namespace SystemDot.Messaging.Configuration.RequestReply
 {
     public class RequestReplySenderConfiguration : Configurer, 
         IExceptionHandlingConfigurer,
-        IRepeatMessagesConfigurer
+        IRepeatMessagesConfigurer,
+        IExpireMessagesConfigurer
     {
         readonly RequestSendChannelSchema sendSchema;
         readonly ReplyReceiveChannelSchema receiveSchema;
@@ -77,22 +79,22 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             return this;
         }
 
-        public RequestReplySenderConfiguration WithMessageExpiry(IMessageExpiryStrategy strategy)
+        public ExpireMessagesConfiguration<RequestReplySenderConfiguration> ExpireMessages()
         {
-            Contract.Requires(strategy != null);
+            return new ExpireMessagesConfiguration<RequestReplySenderConfiguration>(this, Resolve<ISystemTime>());
+        }
 
-            sendSchema.ExpiryStrategy = strategy;
+        public RequestReplySenderConfiguration OnMessageExpiry(Action expiryAction)
+        {
+            Contract.Requires(expiryAction != null);
+
+            sendSchema.ExpiryAction = expiryAction;
             return this;
         }
 
-        public RequestReplySenderConfiguration WithMessageExpiry(IMessageExpiryStrategy strategy, Action expiryAction)
+        public void SetMessageExpiryStrategy(IMessageExpiryStrategy strategy)
         {
-            Contract.Requires(strategy != null);
-            Contract.Requires(expiryAction != null);
-
             sendSchema.ExpiryStrategy = strategy;
-            sendSchema.ExpiryAction = expiryAction;
-            return this;
         }
 
         public RepeatMessagesConfiguration<RequestReplySenderConfiguration> RepeatMessages()

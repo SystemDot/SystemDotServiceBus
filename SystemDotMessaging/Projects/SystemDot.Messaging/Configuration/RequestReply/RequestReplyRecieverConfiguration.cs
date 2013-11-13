@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.ExceptionHandling;
+using SystemDot.Messaging.Configuration.Expiry;
 using SystemDot.Messaging.Configuration.Repeating;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
@@ -15,7 +16,8 @@ namespace SystemDot.Messaging.Configuration.RequestReply
 {
     public class RequestReplyRecieverConfiguration : Configurer, 
         IExceptionHandlingConfigurer,
-        IRepeatMessagesConfigurer
+        IRepeatMessagesConfigurer,
+        IExpireMessagesConfigurer
     {
         readonly ReplySendChannelSchema replySchema;
         readonly RequestRecieveChannelSchema requestSchema;
@@ -64,20 +66,21 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             return this;
         }
 
-        public RequestReplyRecieverConfiguration WithMessageExpiry(IMessageExpiryStrategy strategy)
-        {
-            Contract.Requires(strategy != null);
 
+        public void SetMessageExpiryStrategy(IMessageExpiryStrategy strategy)
+        {
             replySchema.ExpiryStrategy = strategy;
-            return this;
         }
 
-        public RequestReplyRecieverConfiguration WithMessageExpiry(IMessageExpiryStrategy strategy, Action expiryAction)
+        public ExpireMessagesConfiguration<RequestReplyRecieverConfiguration> ExpireMessages()
         {
-            Contract.Requires(strategy != null);
+            return new ExpireMessagesConfiguration<RequestReplyRecieverConfiguration>(this, Resolve<ISystemTime>());
+        }
+
+        public RequestReplyRecieverConfiguration OnMessageExpiry(Action expiryAction)
+        {
             Contract.Requires(expiryAction != null);
 
-            replySchema.ExpiryStrategy = strategy;
             replySchema.ExpiryAction = expiryAction;
 
             return this;

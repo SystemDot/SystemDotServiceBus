@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Specifications.expiry_for_request_reply
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForRequestReplySendingTo(RecieverAddress)
-                .WithMessageExpiry(MessageExpiry.ByRepeatAttempt(0))
+                .ExpireMessages().AfterRepeatAttempts(0)
                 .Initialise();
 
             message = 1;

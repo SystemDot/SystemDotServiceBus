@@ -1,5 +1,4 @@
 using System;
-using SystemDot.Messaging.Configuration;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.expiry
@@ -11,7 +10,7 @@ namespace SystemDot.Messaging.Specifications.expiry
             .UsingInProcessTransport()
             .OpenChannel("ReceiverAddress")
             .ForPointToPointSendingTo("SenderAddress")
-            .WithMessageExpiry(MessageExpiry.ByTime(TimeSpan.FromSeconds(4)))
+            .ExpireMessages().After(TimeSpan.FromSeconds(4))
             .Initialise();
 
         Because of = () => Bus.Send(1);

@@ -1,7 +1,5 @@
 using System;
-using SystemDot.Messaging.Configuration;
 using SystemDot.Parallelism;
-using SystemDot.Specifications;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.expiry
@@ -18,7 +16,8 @@ namespace SystemDot.Messaging.Specifications.expiry
                 .UsingInProcessTransport()
                 .OpenChannel("ReceiverAddress")
                 .ForPointToPointSendingTo("SenderAddress")
-                .WithMessageExpiry(MessageExpiry.ByTime(TimeSpan.FromSeconds(3)), () => expiryActionExecuted = true)
+                .ExpireMessages().After(TimeSpan.FromSeconds(3))
+                .OnMessagingExpiry(() => expiryActionExecuted = true)
                 .Initialise();
 
             Bus.Send(1);

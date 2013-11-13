@@ -1,4 +1,3 @@
-using SystemDot.Messaging.Configuration;
 using SystemDot.Parallelism;
 using Machine.Specifications;
 
@@ -13,7 +12,7 @@ namespace SystemDot.Messaging.Specifications.expiry
                 .UsingInProcessTransport()
                 .OpenChannel("ReceiverAddress")
                     .ForPointToPointSendingTo("SenderAddress")
-                    .WithMessageExpiry(MessageExpiry.ByRepeatAttempt(1))
+                    .ExpireMessages().AfterRepeatAttempts(1)
                 .Initialise();
 
             Bus.Send(1);

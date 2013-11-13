@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Configuration.Expiry;
 using SystemDot.Messaging.Configuration.Repeating;
 using SystemDot.Messaging.Expiry;
 using SystemDot.Messaging.Filtering;
@@ -9,8 +10,10 @@ using SystemDot.Messaging.Repeating;
 
 namespace SystemDot.Messaging.Configuration.PointToPoint
 {
-    public class PointToPointSenderConfiguration : Configurer,
-        IRepeatMessagesConfigurer
+    public class PointToPointSenderConfiguration : 
+        Configurer,
+        IRepeatMessagesConfigurer,
+        IExpireMessagesConfigurer
     {
         readonly PointToPointSendChannelSchema sendSchema;
         
@@ -54,17 +57,14 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
             sendSchema.RepeatStrategy = strategy;
         }
 
-        public PointToPointSenderConfiguration WithMessageExpiry(IMessageExpiryStrategy strategy)
+        public ExpireMessagesConfiguration<PointToPointSenderConfiguration> ExpireMessages()
         {
-            sendSchema.ExpiryStrategy = strategy;
-            return this;
+            return new ExpireMessagesConfiguration<PointToPointSenderConfiguration>(this, Resolve<ISystemTime>());
         }
 
-        public PointToPointSenderConfiguration WithMessageExpiry(IMessageExpiryStrategy strategy, Action toRunOnExpiry)
+        public PointToPointSenderConfiguration OnMessagingExpiry(Action toRunOnExpiry)
         {
-            sendSchema.ExpiryStrategy = strategy;
             sendSchema.ExpiryAction = toRunOnExpiry;
-
             return this;
         }
 
@@ -80,6 +80,11 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
 
             sendSchema.FilteringStrategy = toFilterMessagesWith;
             return this;
+        }
+
+        public void SetMessageExpiryStrategy(IMessageExpiryStrategy strategy)
+        {
+            sendSchema.ExpiryStrategy = strategy;
         }
     }
 }

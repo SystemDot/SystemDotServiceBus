@@ -96,6 +96,8 @@
     <Compile Include="Configuration\Direct\DirectChannelConfiguration.cs" />
     <Compile Include="Configuration\Direct\DirectRequestReplyReceiverConfiguration.cs" />
     <Compile Include="Configuration\Direct\DirectRequestReplySenderConfiguration.cs" />
+    <Compile Include="Configuration\Expiry\ExpireMessagesConfiguration.cs" />
+    <Compile Include="Configuration\Expiry\IExpireMessagesConfigurer.cs" />
     <Compile Include="Configuration\HandlerBasedOnConfiguration.cs" />
     <Compile Include="Configuration\ExternalSources\ExternalSourcesConfigurer.cs" />
     <Compile Include="Configuration\ExternalSources\IExternalConfigurationSource.cs" />
@@ -276,7 +278,6 @@
     <Compile Include="Publishing\SubscriptionRequestor.cs" />
     <Compile Include="Configuration\ConfigurationBase.cs" />
     <Compile Include="Configuration\Direct\LocalDirectChannelConfiguration.cs" />
-    <Compile Include="Configuration\MessageExpiry.cs" />
     <Compile Include="Addressing\MessageServer.cs" />
     <Compile Include="Configuration\MessageServerConfiguration.cs" />
     <Compile Include="Configuration\Configurer.cs" />

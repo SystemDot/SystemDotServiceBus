@@ -17,7 +17,8 @@ namespace SystemDot.Messaging.Specifications.expiry_for_request_reply
             .UsingInProcessTransport()
             .OpenChannel(ChannelName)
             .ForRequestReplySendingTo(RecieverAddress)
-            .WithMessageExpiry(MessageExpiry.ByTime(TimeSpan.FromMinutes(0)), () => expiryActionExecuted = true)
+            .ExpireMessages().After(TimeSpan.FromMinutes(0))
+            .OnMessageExpiry(() => expiryActionExecuted = true)
             .Initialise();
 
         Because of = () => Bus.Send(1);
