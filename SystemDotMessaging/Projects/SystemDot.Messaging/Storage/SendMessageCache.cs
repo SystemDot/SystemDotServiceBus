@@ -13,15 +13,9 @@ namespace SystemDot.Messaging.Storage
 {
     public class SendMessageCache : ChangeRoot, IMessageCache
     {
-        readonly ISystemTime systemTime;
         readonly ConcurrentDictionary<Guid, MessagePayload> messages;
+        readonly ISystemTime systemTime;
         volatile int sequence;
-
-        public EndpointAddress Address { get; private set; }
-        
-        public PersistenceUseType UseType { get; private set; }
-        
-        public DateTime FirstItemCachedOn { get; private set; }
 
         public SendMessageCache(ISystemTime systemTime, IChangeStore changeStore, EndpointAddress address, PersistenceUseType useType)
             : base(changeStore)
@@ -35,22 +29,15 @@ namespace SystemDot.Messaging.Storage
             UseType = useType;
             Id = address + "|" + useType;
 
-            this.messages = new ConcurrentDictionary<Guid, MessagePayload>();
-            this.sequence = 1;
+            messages = new ConcurrentDictionary<Guid, MessagePayload>();
+            sequence = 1;
         }
 
-        public override void Initialise()
-        {
-            base.Initialise();
+        public DateTime FirstItemCachedOn { get; private set; }
 
-            GetMessages().ForEach(m =>
-                Messenger.Send(new MessageLoadedToCache
-                {
-                    CacheAddress = Address,
-                    UseType = UseType,
-                    Message = m
-                }));    
-        }
+        public EndpointAddress Address { get; private set; }
+
+        public PersistenceUseType UseType { get; private set; }
 
         public IEnumerable<MessagePayload> GetOrderedMessages()
         {
@@ -59,7 +46,36 @@ namespace SystemDot.Messaging.Storage
 
         public IEnumerable<MessagePayload> GetMessages()
         {
-            return this.messages.Values;
+            return messages.Values;
+        }
+
+        public void Delete(Guid id)
+        {
+            AddChange(new DeleteMessageChange(id));
+
+            Messenger.Send(new MessageRemovedFromCache
+            {
+                MessageId = id,
+                Address = Address,
+                UseType = UseType
+            });
+        }
+
+        public override void Initialise()
+        {
+            base.Initialise();
+
+            GetMessages().ForEach(NotifyMessageLoadedToCache);
+        }
+
+        void NotifyMessageLoadedToCache(MessagePayload m)
+        {
+            Messenger.Send(new MessageLoadedToCache
+            {
+                CacheAddress = Address,
+                UseType = UseType,
+                Message = m
+            });
         }
 
         static int GetMessageSequence(MessagePayload message)
@@ -69,11 +85,15 @@ namespace SystemDot.Messaging.Storage
 
         public void AddMessageAndIncrementSequence(MessagePayload message)
         {
-            if(FirstItemCachedOn == DateTime.MinValue)
-                AddChange(new SetFirstItemCachedOnChange(systemTime.GetCurrentDate()));
+            if (FirstItemCachedOn == DateTime.MinValue) AddChange(new SetFirstItemCachedOnChange(systemTime.GetCurrentDate()));
 
             AddChange(new AddMessageAndIncrementSequenceChange(message, sequence + 1));
 
+            NotifyMessageAddedToCache(message);
+        }
+
+        void NotifyMessageAddedToCache(MessagePayload message)
+        {
             Messenger.Send(new MessageAddedToCache
             {
                 CacheAddress = Address,
@@ -89,55 +109,38 @@ namespace SystemDot.Messaging.Storage
 
         public void ApplyChange(AddMessageAndIncrementSequenceChange change)
         {
-            this.sequence = change.Sequence;
-            this.messages.TryAdd(change.Message.Id, change.Message);
+            sequence = change.Sequence;
+            messages.TryAdd(change.Message.Id, change.Message);
         }
 
         public void UpdateMessage(MessagePayload message)
         {
-            MessagePayload temp;
-            if (this.messages.TryGetValue(message.Id, out temp)) this.messages[message.Id] = message;
+            messages.UpdateIfExists(message.Id, message);
         }
 
         public int GetSequence()
         {
-            return this.sequence;
+            return sequence;
         }
 
-        public void Delete(Guid id)
+        public void ApplyChange(DeleteMessageChange change)
         {
-            AddChange(new DeleteMessageChange(id));
-            
-            Messenger.Send(new MessageRemovedFromCache
-            {
-                MessageId = id,
-                Address = Address,
-                UseType = UseType
-            });
-        }
-
-        public void ApplyChange(DeleteMessageChange change) 
-        {
-            MessagePayload temp;
-            this.messages.TryRemove(change.Id, out temp);
+            messages.Remove(change.Id);
         }
 
         protected override void UrgeCheckPoint()
         {
-            if (this.messages.Count == 0)
-                CheckPoint(new MessageCheckpointChange { Sequence = this.sequence });
+            if (messages.Count == 0) CheckPoint(new MessageCheckpointChange { Sequence = sequence });
         }
 
         public void ApplyChange(MessageCheckpointChange change)
         {
-            this.sequence = change.Sequence;
+            sequence = change.Sequence;
         }
 
         public int GetFirstSequenceInCache()
         {
-            return GetMessages().Any()
-                ? GetMessages().Min(m => m.GetSequence())
-                : 0;
+            return GetMessages().Any() ? GetMessages().Min(m => m.GetSequence()) : 0;
         }
     }
 }
