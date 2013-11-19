@@ -49,13 +49,7 @@ namespace SystemDot.Messaging.Storage
         public void Delete(Guid id)
         {
             AddChange(new DeleteMessageChange(id));
-
-            Messenger.Send(new MessageRemovedFromCache
-            {
-                MessageId = id,
-                Address = Address,
-                UseType = UseType
-            });
+            NotifyMessageRemovedFromCache(id);
         }
 
         public override void Initialise()
@@ -79,6 +73,11 @@ namespace SystemDot.Messaging.Storage
             return message.HasSequence() ? message.GetSequence() : 0;
         }
 
+        public bool ContainsMessage(MessagePayload message)
+        {
+            return messages.ContainsKey(message.Id);
+        }
+
         public void AddMessage(MessagePayload message)
         {
             AddChange(new AddMessageChange(message));
@@ -97,7 +96,17 @@ namespace SystemDot.Messaging.Storage
 
         public void ApplyChange(AddMessageChange change)
         {
-            messages.AddOrUpdate(change.Message.Id, change.Message);
+            AddOrUpdateMessage(change.Message);
+        }
+
+        public void UpdateMessage(MessagePayload message)
+        {
+            AddOrUpdateMessage(message);
+        }
+
+        void AddOrUpdateMessage(MessagePayload message)
+        {
+            messages.AddOrUpdate(message.Id, message);
         }
 
         public int GetSequence()
@@ -151,12 +160,22 @@ namespace SystemDot.Messaging.Storage
 
         protected override void UrgeCheckPoint()
         {
-            if (messages.Count == 0) CheckPoint(new MessageCheckpointChange { Sequence = sequence });
+            if (messages.Count == 0) CheckPoint(CreateCheckPoint());
+        }
+
+        MessageCheckpointChange CreateCheckPoint()
+        {
+            return new MessageCheckpointChange
+            {
+                Sequence = sequence,
+                CachedOn = ResetOn
+            };
         }
 
         public void ApplyChange(MessageCheckpointChange change)
         {
             sequence = change.Sequence;
+            ResetOn = change.CachedOn;
         }
     }
 }

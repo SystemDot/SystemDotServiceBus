@@ -130,12 +130,22 @@ namespace SystemDot.Messaging.Storage
 
         protected override void UrgeCheckPoint()
         {
-            if (messages.Count == 0) CheckPoint(new MessageCheckpointChange { Sequence = sequence });
+            if (messages.Count == 0) CheckPoint(CreateCheckpoint());
+        }
+
+        MessageCheckpointChange CreateCheckpoint()
+        {
+            return new MessageCheckpointChange
+            {
+                Sequence = sequence,
+                CachedOn = FirstItemCachedOn
+            };
         }
 
         public void ApplyChange(MessageCheckpointChange change)
         {
             sequence = change.Sequence;
+            FirstItemCachedOn = change.CachedOn;
         }
 
         public int GetFirstSequenceInCache()

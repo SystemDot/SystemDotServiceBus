@@ -14,7 +14,7 @@ namespace RequestReplyReciever
 
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false })
-                //.UsingFilePersistence()
+                .UsingFilePersistence()
                 .ResolveReferencesWith(container)
                 .RegisterHandlersFromAssemblyOf<Program>()
                     .BasedOn<IMessageConsumer>()
