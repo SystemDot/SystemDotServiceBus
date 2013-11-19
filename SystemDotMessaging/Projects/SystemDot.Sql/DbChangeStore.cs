@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using SystemDot.Logging;
@@ -7,24 +8,23 @@ using SystemDot.Storage.Changes;
 
 namespace SystemDot.Sql
 {
-    public abstract class DbChangeStore : IChangeStore
+    public abstract class DbChangeStore : ChangeStore
     {
         public static string ConnectionString { get; set; }
 
-        readonly ISerialiser serialiser;
-        readonly static object createDbLock = new object();
+        readonly static object CreateDbLock = new object();
 
         protected DbChangeStore(ISerialiser serialiser)
+            : base(serialiser)
         {
-            this.serialiser = serialiser;
         }
 
-        public void StoreChange(string changeRootId, Change change)
+        protected override void StoreChange(string changeRootId, Change change, Func<Change, byte[]> serialiseAction)
         {
             using (var connection = GetConnection())
             {
                 CheckPointIfPossible(connection, changeRootId, change);
-                StoreChange(connection, changeRootId, change);
+                StoreChange(connection, changeRootId, change, serialiseAction);
             }
         }
 
@@ -43,7 +43,7 @@ namespace SystemDot.Sql
                 command => AddParameter(command.Parameters, "@changeRootId", changeRootId));
         }
 
-        void StoreChange(DbConnection connection, string changeRootId, Change change)
+        void StoreChange(DbConnection connection, string changeRootId, Change change, Func<Change, byte[]> serialiseAction)
         {
             Logger.Debug("Storing change in sql for id {0}", changeRootId);
             
@@ -52,11 +52,11 @@ namespace SystemDot.Sql
                 command =>
                 {
                     AddParameter(command.Parameters, "@changeRootId", changeRootId);
-                    AddParameter(command.Parameters, "@change", this.serialiser.Serialise(change));
+                    AddParameter(command.Parameters, "@change", serialiseAction(change));
                 });
         }
 
-        public IEnumerable<Change> GetChanges(string changeRootId)
+        protected override IEnumerable<Change> GetChanges(string changeRootId, Func<byte[], Change> deserialiseAction)
         {
             var messages = new List<Change>();
 
@@ -64,20 +64,15 @@ namespace SystemDot.Sql
             {
                 connection.ExecuteReader(
                     "select change from ChangeStore where changeRootId = '" + changeRootId + "' order by sequence ASC",
-                    reader => messages.Add(DeserialiseChange(reader)));
+                    reader => messages.Add(deserialiseAction(reader.GetBytes(0))));
             }
 
             return messages;
         }
 
-        Change DeserialiseChange(DbDataReader reader)
+        public override void Initialise()
         {
-            return this.serialiser.Deserialise(reader.GetBytes(0)).As<Change>();
-        }
-
-        public void Initialise()
-        {
-            lock (createDbLock)
+            lock (CreateDbLock)
             {
                 using (var connection = GetConnection())
                 {
