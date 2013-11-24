@@ -43,7 +43,7 @@ namespace SystemDot.Messaging.Configuration
         {
             return new HandlerBasedOnConfiguration(
                 this,
-                typeof(TAssemblyOf).GetTypesInAssembly().WhereNonAbstract().WhereNonGeneric().WhereConcrete());
+                typeof(TAssemblyOf).GetTypesInAssembly().WhereNormalConcrete());
         }
 
         public MessageServerConfiguration UsingInProcessTransport()

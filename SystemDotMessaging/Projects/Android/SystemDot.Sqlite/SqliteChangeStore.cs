@@ -1,12 +1,17 @@
 using System.Data.Common;
 using SystemDot.Serialisation;
+using SystemDot.Sql;
+using SystemDot.Storage.Changes.Upcasting;
 using Mono.Data.Sqlite;
 
-namespace SystemDot.Sql
+namespace SystemDot.Sqlite
 {
     public class SqliteChangeStore : DbChangeStore
     {
-        public SqliteChangeStore(ISerialiser serialiser) : base(serialiser) {}
+        public SqliteChangeStore(ISerialiser serialiser, ChangeUpcasterRunner changeUpcasterRunner)
+            : base(serialiser, changeUpcasterRunner)
+        {
+        }
 
         protected override string GetInitialisationSql() 
         {

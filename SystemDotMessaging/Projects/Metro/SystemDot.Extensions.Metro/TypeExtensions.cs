@@ -32,24 +32,29 @@ namespace SystemDot
             return type.GetTypeInfo().ImplementedInterfaces.ToArray();
         }
 
+        public static IEnumerable<Type> WhereNormalConcrete(this IEnumerable<Type> types)
+        {
+            return types.WhereNonAbstract().WhereNonGeneric().WhereConcrete();
+        }
+
         public static IEnumerable<Type> GetNonBaseInterfaces(this Type type)
         {
-            var baseInterfaces = GetBaseInterfaces(type);
+            IEnumerable<Type> baseInterfaces = GetBaseInterfaces(type);
             return type.GetInterfaces().Where(t => !baseInterfaces.Contains(t));
         }
 
         public static IEnumerable<Type> GetBaseInterfaces(this Type type)
         {
             var types = new List<Type>();
-            var baseType = type.GetTypeInfo().BaseType;
+            Type baseType = type.GetTypeInfo().BaseType;
 
-            if (baseType == typeof(MemberInfo)) return types;
+            if (baseType == typeof (MemberInfo)) return types;
 
             while (baseType != null)
             {
                 types.AddRange(baseType.GetInterfaces());
                 baseType = baseType.GetTypeInfo().BaseType;
-                if (baseType == typeof(MemberInfo)) return types;
+                if (baseType == typeof (MemberInfo)) return types;
             }
             return types;
         }
@@ -63,7 +68,7 @@ namespace SystemDot
         {
             return type.GetTypeInfo().Assembly.ExportedTypes;
         }
-        
+
         public static IEnumerable<Type> WhereNonAbstract(this IEnumerable<Type> types)
         {
             return types.Where(t => !t.GetTypeInfo().IsAbstract);
@@ -81,7 +86,11 @@ namespace SystemDot
 
         public static IEnumerable<Type> WhereImplements<TImplemented>(this IEnumerable<Type> types)
         {
-            return types.Where(t => t.GetNonBaseInterfaces().Contains(typeof(TImplemented)) || t.GetBaseInterfaces().Contains(typeof(TImplemented)));
+            return
+                types.Where(
+                    t =>
+                        t.GetNonBaseInterfaces().Contains(typeof (TImplemented)) ||
+                            t.GetBaseInterfaces().Contains(typeof (TImplemented)));
         }
 
         public static IEnumerable<MethodInfo> GetMethodsByName(this Type type, Action genMethod)

@@ -11,7 +11,7 @@ namespace SystemDot.Messaging.Specifications
     {
         readonly List<MessagePayload> messages;
         
-        public TestMessageChangeRebuilder(IChangeStore changeStore, EndpointAddress address, PersistenceUseType useType)
+        public TestMessageChangeRebuilder(ChangeStore changeStore, EndpointAddress address, PersistenceUseType useType)
             : base(changeStore)
         {
             Address = address;

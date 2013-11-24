@@ -3,6 +3,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
+using SystemDot.Storage.Changes.Upcasting;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.restarting_messaging
@@ -16,11 +17,11 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
         const Int64 Request = 1;
         const Int64 Reply = 2;
 
-        static IChangeStore changeStore;
+        static ChangeStore changeStore;
 
         Establish context = () =>
         {
-            changeStore = new InMemoryChangeStore(new JsonSerialiser());
+            changeStore = new InMemoryChangeStore(new JsonSerialiser(), new ChangeUpcasterRunner());
 
             ConfigureAndRegister(changeStore);
 

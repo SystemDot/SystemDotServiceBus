@@ -10,7 +10,7 @@ namespace SystemDot.Messaging.Configuration
         {
             IIocContainer container = configuration.GetInternalIocContainer();
 
-            container.RegisterInstance<IChangeStore, EsentChangeStore>();
+            container.RegisterInstance<ChangeStore, EsentChangeStore>();
 
             return configuration;
         }

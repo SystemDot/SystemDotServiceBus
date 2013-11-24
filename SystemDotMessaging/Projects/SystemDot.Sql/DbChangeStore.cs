@@ -5,6 +5,7 @@ using SystemDot.Logging;
 using SystemDot.Serialisation;
 using SystemDot.Sql.Connections;
 using SystemDot.Storage.Changes;
+using SystemDot.Storage.Changes.Upcasting;
 
 namespace SystemDot.Sql
 {
@@ -14,8 +15,8 @@ namespace SystemDot.Sql
 
         readonly static object CreateDbLock = new object();
 
-        protected DbChangeStore(ISerialiser serialiser)
-            : base(serialiser)
+        protected DbChangeStore(ISerialiser serialiser, ChangeUpcasterRunner changeUpcasterRunner)
+            : base(serialiser, changeUpcasterRunner)
         {
         }
 

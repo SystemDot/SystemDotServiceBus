@@ -102,6 +102,7 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppDomain.cs" />
     <Compile Include="AssemblyExtensions.cs" />
     <Compile Include="HttpListenerException.cs" />
     <Compile Include="Composition\CompositionContainer.cs" />

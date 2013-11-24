@@ -6,6 +6,7 @@ using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 using SystemDot.Specifications;
 using SystemDot.Storage.Changes;
+using SystemDot.Storage.Changes.Upcasting;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.point_to_point
@@ -19,14 +20,14 @@ namespace SystemDot.Messaging.Specifications.point_to_point
         const int Message1 = 1;
         const int Message2 = 2;
 
-        static IChangeStore changeStore;
+        static ChangeStore changeStore;
         static List<MessageLoadedToCache> messagesLoadedToCacheEvents;
 
         Establish context = () =>
         {
             messagesLoadedToCacheEvents = new List<MessageLoadedToCache>();
 
-            changeStore = new InMemoryChangeStore(new JsonSerialiser());
+            changeStore = new InMemoryChangeStore(new JsonSerialiser(), new ChangeUpcasterRunner());
             ConfigureAndRegister(changeStore);
 
             Messaging.Configuration.Configure.Messaging()

@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Storage
         readonly ISystemTime systemTime;
         volatile int sequence;
 
-        public SendMessageCache(ISystemTime systemTime, IChangeStore changeStore, EndpointAddress address, PersistenceUseType useType)
+        public SendMessageCache(ISystemTime systemTime, ChangeStore changeStore, EndpointAddress address, PersistenceUseType useType)
             : base(changeStore)
         {
             Contract.Requires(systemTime != null);

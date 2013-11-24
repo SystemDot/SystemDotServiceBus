@@ -10,7 +10,7 @@ namespace SystemDot.Messaging.Configuration
         {
             DbChangeStore.ConnectionString = connection;
 
-            configuration.GetInternalIocContainer().RegisterInstance<IChangeStore, SqlChangeStore>();
+            configuration.GetInternalIocContainer().RegisterInstance<ChangeStore, SqlChangeStore>();
 
             return configuration;
         }

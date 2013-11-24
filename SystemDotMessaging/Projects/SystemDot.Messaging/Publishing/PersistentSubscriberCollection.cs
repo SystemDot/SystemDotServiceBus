@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Publishing
         readonly ISubscriberSendChannelBuilder builder;
         readonly ConcurrentDictionary<EndpointAddress, Subscriber> subscribers;
 
-        public PersistentSubscriberCollection(EndpointAddress address, IChangeStore changeStore, ISubscriberSendChannelBuilder builder) 
+        public PersistentSubscriberCollection(EndpointAddress address, ChangeStore changeStore, ISubscriberSendChannelBuilder builder) 
             : base(changeStore)
         {
             Contract.Requires(address != null);

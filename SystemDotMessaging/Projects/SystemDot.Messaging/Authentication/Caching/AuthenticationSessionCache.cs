@@ -6,6 +6,7 @@ using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication.Caching.Changes;
 using SystemDot.Messaging.Authentication.Expiry;
 using SystemDot.Storage.Changes;
+using SystemDot.Storage.Changes.Upcasting;
 
 namespace SystemDot.Messaging.Authentication.Caching
 {
@@ -18,7 +19,7 @@ namespace SystemDot.Messaging.Authentication.Caching
         public AuthenticationSessionCache(
             AuthenticationSessionFactory sessionFactory,
             AuthenticationSessionExpirer sessionExpirer,
-            IChangeStore changeStore)
+            ChangeStore changeStore)
             : base(changeStore)
         {
             Contract.Requires(sessionFactory != null);

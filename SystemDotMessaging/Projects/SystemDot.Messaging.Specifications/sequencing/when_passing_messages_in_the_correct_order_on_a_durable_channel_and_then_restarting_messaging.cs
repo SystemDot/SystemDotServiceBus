@@ -4,6 +4,7 @@ using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
+using SystemDot.Storage.Changes.Upcasting;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.sequencing
@@ -15,13 +16,13 @@ namespace SystemDot.Messaging.Specifications.sequencing
         const string ReceiverAddress = "ReceiverAddress";
         const string SenderAddress = "SenderAddress";
 
-        static IChangeStore changeStore;
+        static ChangeStore changeStore;
         static TestMessageHandler<int> handler;
        
         Establish context = () =>
         {
-            changeStore = new InMemoryChangeStore(new JsonSerialiser());
-            ConfigureAndRegister<IChangeStore>(changeStore);
+            changeStore = new InMemoryChangeStore(new JsonSerialiser(), new ChangeUpcasterRunner());
+            ConfigureAndRegister<ChangeStore>(changeStore);
 
             Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
@@ -39,7 +40,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
             Reset();
             ReInitialise();
 
-            ConfigureAndRegister<IChangeStore>(changeStore);
+            ConfigureAndRegister<ChangeStore>(changeStore);
             
             handler.HandledMessages.Clear();
             Resolve<MessageHandlerRouter>().RegisterHandler(handler);

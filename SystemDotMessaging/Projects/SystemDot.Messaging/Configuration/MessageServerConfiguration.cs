@@ -63,7 +63,7 @@ namespace SystemDot.Messaging.Configuration
 
         static void RegisterNullPersistence(IIocContainer container)
         {
-            container.RegisterInstance<IChangeStore, NullChangeStore>();
+            container.RegisterInstance<ChangeStore, NullChangeStore>();
         }
 
         static void RegisterJsonSerialiser(IIocContainer container)

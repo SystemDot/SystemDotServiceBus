@@ -6,6 +6,7 @@ using SystemDot.Messaging.Specifications.authentication;
 using SystemDot.Messaging.Storage;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
+using SystemDot.Storage.Changes.Upcasting;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
@@ -20,14 +21,14 @@ namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
         const long Message = 1;
 
         static TestReplyMessageHandler<long> handler;
-        static IChangeStore changeStore;
+        static ChangeStore changeStore;
         static AuthenticationSession session;
 
         Establish context = () =>
         {
             handler = new TestReplyMessageHandler<long>();
 
-            changeStore = new InMemoryChangeStore(new JsonSerialiser());
+            changeStore = new InMemoryChangeStore(new JsonSerialiser(), new ChangeUpcasterRunner());
             ConfigureAndRegister(changeStore);
 
             Configuration.Configure.Messaging()

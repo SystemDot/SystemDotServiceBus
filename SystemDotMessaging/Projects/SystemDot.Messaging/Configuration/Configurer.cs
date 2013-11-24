@@ -33,7 +33,7 @@ namespace SystemDot.Messaging.Configuration
         public void Initialise()
         {
             Resolve<ITransportBuilder>().Build(GetMessageServer());
-            Resolve<IChangeStore>().Initialise();
+            Resolve<ChangeStore>().Initialise();
 
             Resolve<AuthenticationSessionCache>().Initialise();
 

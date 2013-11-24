@@ -2,6 +2,7 @@ using System;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
+using SystemDot.Storage.Changes.Upcasting;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.repeating_constant
@@ -14,11 +15,11 @@ namespace SystemDot.Messaging.Specifications.repeating_constant
         const string ReceiverAddress = "TestReceiverAddress";
         const Int64 Message = 1;
 
-        static IChangeStore changeStore;
+        static ChangeStore changeStore;
 
         Establish context = () =>
         {
-            changeStore = new InMemoryChangeStore(new JsonSerialiser());
+            changeStore = new InMemoryChangeStore(new JsonSerialiser(), new ChangeUpcasterRunner());
 
             ConfigureAndRegister(changeStore);
             

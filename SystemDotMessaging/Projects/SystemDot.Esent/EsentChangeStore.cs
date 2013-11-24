@@ -5,6 +5,7 @@ using System.Text;
 using SystemDot.Files;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
+using SystemDot.Storage.Changes.Upcasting;
 using Microsoft.Isam.Esent.Interop;
 
 namespace SystemDot.Esent
@@ -17,11 +18,13 @@ namespace SystemDot.Esent
 
         Instance instance;
 
-        public EsentChangeStore(IFileSystem fileSystem, ISerialiser serialiser)
-            : base(serialiser)
+        public EsentChangeStore(
+            IFileSystem fileSystem, 
+            ISerialiser serialiser, 
+            ChangeUpcasterRunner changeUpcasterRunner)
+            : base(serialiser, changeUpcasterRunner)
         {
             Contract.Requires(fileSystem != null);
-
             this.fileSystem = fileSystem;
         }
 

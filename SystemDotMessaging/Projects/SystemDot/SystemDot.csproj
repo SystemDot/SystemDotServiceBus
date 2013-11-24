@@ -36,11 +36,11 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ByteArrayExtensions.cs" />
-    <Compile Include="Storage\Changes\ChangeStore.cs" />
+    <Compile Include="Storage\Changes\Upcasting\ChangeUpcasterRunner.cs" />
+    <Compile Include="Storage\Changes\Upcasting\IUpcaster.cs" />
     <Compile Include="SystemTime.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="Equatable.cs" />
@@ -85,7 +85,7 @@
     <Compile Include="Storage\Changes\Change.cs" />
     <Compile Include="Storage\Changes\ChangeRoot.cs" />
     <Compile Include="Storage\Changes\CheckPointChange.cs" />
-    <Compile Include="Storage\Changes\IChangeStore.cs" />
+    <Compile Include="Storage\Changes\ChangeStore.cs" />
     <Compile Include="Storage\Changes\NullChangeStore.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="ThreadMashalling\IMainThreadMarshaller.cs" />

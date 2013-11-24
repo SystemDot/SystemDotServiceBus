@@ -4,6 +4,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
+using SystemDot.Storage.Changes.Upcasting;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.restarting_messaging
@@ -18,7 +19,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
         const Int64 Message2 = 2;
 
         static TestMessageHandler<Int64> handler;
-        static IChangeStore changeStore;
+        static ChangeStore changeStore;
         static MessagePayload payload1;
         static MessagePayload payload2; 
         static List<MessageLoadedToCache> messagesLoadedToCacheEvents;
@@ -27,8 +28,8 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
         {
             messagesLoadedToCacheEvents = new List<MessageLoadedToCache>();
 
-            changeStore = new InMemoryChangeStore(new JsonSerialiser());
-            ConfigureAndRegister<IChangeStore>(changeStore);
+            changeStore = new InMemoryChangeStore(new JsonSerialiser(), new ChangeUpcasterRunner());
+            ConfigureAndRegister<ChangeStore>(changeStore);
 
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
@@ -65,7 +66,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
             ReInitialise();
             Messenger.Register<MessageLoadedToCache>(e => messagesLoadedToCacheEvents.Add(e));
 
-            ConfigureAndRegister<IChangeStore>(changeStore);
+            ConfigureAndRegister<ChangeStore>(changeStore);
             handler = new TestMessageHandler<Int64>();
         };
 

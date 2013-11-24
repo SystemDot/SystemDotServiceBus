@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Storage
         readonly ConcurrentDictionary<Guid, MessagePayload> messages;
         volatile int sequence;
 
-        public ReceiveMessageCache(IChangeStore changeStore, EndpointAddress address, PersistenceUseType useType)
+        public ReceiveMessageCache(ChangeStore changeStore, EndpointAddress address, PersistenceUseType useType)
             : base(changeStore)
         {
             Contract.Requires(changeStore != null);

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
+using SystemDot.Storage.Changes.Upcasting;
 
 namespace SystemDot.Messaging.Specifications
 {
@@ -12,8 +13,8 @@ namespace SystemDot.Messaging.Specifications
         readonly ConcurrentDictionary<int, ChangeContainer> changes;
         int sequence;
 
-        public InMemoryChangeStore(ISerialiser serialiser)
-            : base(serialiser)
+        public InMemoryChangeStore(ISerialiser serialiser, ChangeUpcasterRunner changeUpcasterRunner)
+            : base(serialiser, changeUpcasterRunner)
         {
             changes = new ConcurrentDictionary<int, ChangeContainer>();
         }
@@ -56,18 +57,18 @@ namespace SystemDot.Messaging.Specifications
 
         class ChangeContainer
         {
-            public int Sequence { get; private set; }
-
-            public string ChangeRootId { get; private set; }
-
-            public byte[] Change { get; private set; }
-
             public ChangeContainer(int sequence, string id, byte[] change)
             {
                 Sequence = sequence;
                 ChangeRootId = id;
                 Change = change;
             }
+
+            public int Sequence { get; private set; }
+
+            public string ChangeRootId { get; private set; }
+
+            public byte[] Change { get; private set; }
         }
     }
 }

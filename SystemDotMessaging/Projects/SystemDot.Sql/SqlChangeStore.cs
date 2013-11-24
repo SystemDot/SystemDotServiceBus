@@ -1,13 +1,14 @@
 ﻿using System.Data.Common;
 using System.Data.SqlClient;
 using SystemDot.Serialisation;
+using SystemDot.Storage.Changes.Upcasting;
 
 namespace SystemDot.Sql
 {
     public class SqlChangeStore : DbChangeStore
     {
-        public SqlChangeStore(ISerialiser serialiser)
-            : base(serialiser) { }
+        public SqlChangeStore(ISerialiser serialiser, ChangeUpcasterRunner changeUpcasterRunner)
+            : base(serialiser, changeUpcasterRunner) { }
 
         protected override string GetInitialisationSql()
         {

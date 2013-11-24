@@ -76,7 +76,7 @@ namespace SystemDot.Ioc
         {
             new AutoRegistrar(this)
                 .Register(typeof(TAssemblyOf)
-                    .GetTypesInAssembly().WhereNonAbstract().WhereNonGeneric().WhereConcrete());
+                    .GetTypesInAssembly().WhereNormalConcrete());
         }
     }
 }

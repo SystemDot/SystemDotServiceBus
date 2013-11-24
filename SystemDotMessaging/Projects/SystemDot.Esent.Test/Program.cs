@@ -3,6 +3,7 @@ using System.Linq;
 using SystemDot.Files;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
+using SystemDot.Storage.Changes.Upcasting;
 
 namespace SystemDot.Esent.Test
 {
@@ -10,7 +11,7 @@ namespace SystemDot.Esent.Test
     {
         static void Main(string[] args)
         {
-            var store = new EsentChangeStore(new FileSystem(), new JsonSerialiser());
+            var store = new EsentChangeStore(new FileSystem(), new JsonSerialiser(), new ChangeUpcasterRunner());
             store.Initialise();
 
             foreach (var c in store.GetChanges("Test"))

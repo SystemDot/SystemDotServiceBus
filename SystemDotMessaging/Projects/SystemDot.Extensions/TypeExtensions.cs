@@ -5,8 +5,13 @@ using System.Reflection;
 
 namespace SystemDot
 {
-    public static class TypeExtensions
+    public static class TypeEnumerableExtensions
     {
+        public static IEnumerable<Type> WhereNormalConcrete(this IEnumerable<Type> types)
+        {
+            return types.WhereNonAbstract().WhereNonGeneric().WhereConcrete();
+        }
+    
         public static IEnumerable<Type> GetNonBaseInterfaces(this Type type)
         {
             var baseInterfaces = GetBaseInterfaces(type);

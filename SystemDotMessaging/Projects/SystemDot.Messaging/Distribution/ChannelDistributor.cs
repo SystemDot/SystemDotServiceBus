@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Threading;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Storage.Changes;
+using SystemDot.Storage.Changes.Upcasting;
 
 namespace SystemDot.Messaging.Distribution
 {
@@ -10,7 +11,7 @@ namespace SystemDot.Messaging.Distribution
     {
         readonly ConcurrentDictionary<EndpointAddress, ChannelContainer> channels;
 
-        protected ChannelDistributor(IChangeStore changeStore)
+        protected ChannelDistributor(ChangeStore changeStore)
             : base(changeStore)
         {
             this.channels = new ConcurrentDictionary<EndpointAddress, ChannelContainer>();
