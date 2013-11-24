@@ -40,7 +40,7 @@
   <ItemGroup>
     <Compile Include="ByteArrayExtensions.cs" />
     <Compile Include="Storage\Changes\Upcasting\ChangeUpcasterRunner.cs" />
-    <Compile Include="Storage\Changes\Upcasting\IUpcaster.cs" />
+    <Compile Include="Storage\Changes\Upcasting\IChangeUpcaster.cs" />
     <Compile Include="SystemTime.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="Equatable.cs" />

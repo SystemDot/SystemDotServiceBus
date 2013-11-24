@@ -2,7 +2,7 @@ using System;
 
 namespace SystemDot.Storage.Changes.Upcasting
 {
-    interface IUpcaster
+    public interface IChangeUpcaster
     {
         Change Upcast(Change toUpcast);
         Type ChangeType { get; }

@@ -4,7 +4,7 @@ using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.external_sources
 {
-    [Subject(point_to_point.SpecificationGroup.Description)]
+    [Subject(SpecificationGroup.Description)]
     public class when_configuring_a_send_channel : WithMessageConfigurationSubject
     {
         const string SenderAddress = "SenderAddress";

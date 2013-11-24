@@ -6,25 +6,25 @@ namespace SystemDot.Storage.Changes.Upcasting
 {
     public class ChangeUpcasterRunner
     {
-        readonly IList<IUpcaster> upcasters;
+        readonly IList<IChangeUpcaster> upcasters;
 
         public ChangeUpcasterRunner()
         {
             upcasters = GetUpcasters();
         }
 
-        IList<IUpcaster> GetUpcasters()
+        IList<IChangeUpcaster> GetUpcasters()
         {
             return GetUpcasterTypes()
                 .Select(Activator.CreateInstance)
-                .Cast<IUpcaster>()
+                .Cast<IChangeUpcaster>()
                 .ToList();
         }
 
         static IEnumerable<Type> GetUpcasterTypes()
         {
             return AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(a => a.GetTypesThatImplement<IUpcaster>())
+                .SelectMany(a => a.GetTypesThatImplement<IChangeUpcaster>())
                 .ToList();
         }
 
@@ -34,7 +34,7 @@ namespace SystemDot.Storage.Changes.Upcasting
             return GetUpcaster(toUpcast).Upcast(toUpcast);
         }
 
-        IUpcaster GetUpcaster(Change toUpcast)
+        IChangeUpcaster GetUpcaster(Change toUpcast)
         {
             return upcasters.Single(u => u.ChangeType == toUpcast.GetType());
         }

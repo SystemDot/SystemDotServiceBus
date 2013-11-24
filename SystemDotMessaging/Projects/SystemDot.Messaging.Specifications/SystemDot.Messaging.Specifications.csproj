@@ -344,6 +344,9 @@
     <Compile Include="publishing\when_publishing_twice_when_the_subscriber_has_subscribed_after_messages_were_published.cs" />
     <Compile Include="publishing\when_publishing_when_the_subscriber_has_subscribed_after_messages_were_published.cs" />
     <Compile Include="filtering_by_name_for_publishing\when_publishing_with_the_wrong_name_on_a_publish_subscribe_channel.cs" />
+    <Compile Include="upcasting_changes\SpecificationGroup.cs" />
+    <Compile Include="upcasting_changes\when_upcasting_message_cache_checkpoint_changes_to_already_at_version_one.cs" />
+    <Compile Include="upcasting_changes\when_upcasting_message_cache_checkpoint_changes_to_version_one.cs" />
     <Compile Include="WithHttpConfigurationSubject.cs" />
     <Compile Include="WithPublisherSubject.cs" />
     <Compile Include="restarting_messaging\when_restarting_messaging_after_handling_a_request_on_a_non_durable_channel_that_fails.cs" />
