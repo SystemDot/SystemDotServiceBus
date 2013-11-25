@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
+using Windows.ApplicationModel;
+using Windows.Storage;
 
 namespace SystemDot
 {
@@ -16,20 +21,30 @@ namespace SystemDot
 
         public Assembly[] GetAssemblies()
         {
-            return GetAssemblyListAsync().Result.ToArray();
+            return GetAssembliesAsync().GetAwaiter().GetResult();
         }
 
-        private async System.Threading.Tasks.Task<IEnumerable<Assembly>> GetAssemblyListAsync()
+        public async Task<Assembly[]> GetAssembliesAsync()
         {
-            var folder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+            var assemblies = new List<Assembly>();
 
-            return (from file in await folder.GetFilesAsync() 
-                    where file.FileType == ".dll" || file.FileType == ".exe" 
-                    select new AssemblyName()
-                    {
-                        Name = file.Name
-                    } into name select Assembly.Load(name)
-                    ).ToList();
+            IEnumerable<StorageFile> files = await Package.Current.InstalledLocation.GetFilesAsync();
+
+            foreach (StorageFile file in files)
+                if (file.FileType == ".dll" || file.FileType == ".exe")
+                    assemblies.Add(LoadAssembly(file));
+                    
+            return assemblies.ToArray();
+        }
+
+        static Assembly LoadAssembly(StorageFile file)
+        {
+            return Assembly.Load(CreateAssemblyName(file));
+        }
+
+        static AssemblyName CreateAssemblyName(StorageFile file)
+        {
+            return new AssemblyName { Name = Path.GetFileNameWithoutExtension(file.Name) };
         }
     }
 }

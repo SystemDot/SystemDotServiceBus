@@ -178,10 +178,22 @@ namespace SystemDot.Esent
 
             if (!Esent.TrySetIndexRange(session, table, SetIndexRangeGrbit.RangeUpperLimit)) return changes;
 
+            AddChangeFromColumn(session, table, deserialiseAction, changes, columns);
+
             while (Esent.TryMoveNext(session, table))
-                changes.Add(deserialiseAction(RetrieveBodyColumnAsBytes(session, table, columns)));
+                AddChangeFromColumn(session, table, deserialiseAction, changes, columns);
 
             return changes;
+        }
+
+        static void AddChangeFromColumn(
+            Session session, 
+            Table table, 
+            Func<byte[], Change> deserialiseAction, 
+            List<Change> changes, 
+            IDictionary<string, JET_COLUMNID> columns)
+        {
+            changes.Add(deserialiseAction(RetrieveBodyColumnAsBytes(session, table, columns)));
         }
 
         static byte[] RetrieveBodyColumnAsBytes(Session session, Table table, IDictionary<string, JET_COLUMNID> columns)
