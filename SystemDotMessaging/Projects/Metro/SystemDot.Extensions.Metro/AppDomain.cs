@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Storage;
@@ -24,17 +24,24 @@ namespace SystemDot
             return GetAssembliesAsync().GetAwaiter().GetResult();
         }
 
-        public async Task<Assembly[]> GetAssembliesAsync()
+        async Task<Assembly[]> GetAssembliesAsync()
         {
-            var assemblies = new List<Assembly>();
+            return 
+                (from file 
+                in await GetAssemblyFiles() 
+                where IsLibraryOrExecutable(file) 
+                select LoadAssembly(file))
+                .ToArray();
+        }
 
-            IEnumerable<StorageFile> files = await Package.Current.InstalledLocation.GetFilesAsync();
+        static bool IsLibraryOrExecutable(StorageFile file)
+        {
+            return file.FileType == ".dll" || file.FileType == ".exe";
+        }
 
-            foreach (StorageFile file in files)
-                if (file.FileType == ".dll" || file.FileType == ".exe")
-                    assemblies.Add(LoadAssembly(file));
-                    
-            return assemblies.ToArray();
+        static ConfiguredTaskAwaitable<IReadOnlyList<StorageFile>> GetAssemblyFiles()
+        {
+            return Package.Current.InstalledLocation.GetFilesAsync().AsTask().ConfigureAwait(false);
         }
 
         static Assembly LoadAssembly(StorageFile file)
