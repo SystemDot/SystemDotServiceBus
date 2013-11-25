@@ -1,76 +1,101 @@
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
+using SystemDot.Storage.Changes.Upcasting;
 
 namespace SystemDot.Messaging.Specifications
 {
-    public class InMemoryChangeStore : IChangeStore
+    public class InMemoryChangeStore : ChangeStore
     {
         readonly ConcurrentDictionary<int, ChangeContainer> changes;
-        readonly ISerialiser serialiser;
         int sequence;
+        readonly ISerialiser serialiser;
 
-        public InMemoryChangeStore(ISerialiser serialiser)
+        public InMemoryChangeStore() : this(new JsonSerialiser())
+        {
+        }
+
+        InMemoryChangeStore(ISerialiser serialiser) : base(serialiser, new ChangeUpcasterRunner())
         {
             this.serialiser = serialiser;
             changes = new ConcurrentDictionary<int, ChangeContainer>();
         }
 
-        public void Initialise()
+        public override void Initialise()
         {
         }
 
-        public void StoreChange(string changeRootId, Change change)
+        public void StoreRawChange(string changeRootId, Change change)
         {
-            if (change is CheckPointChange)
-                CheckPointChanges(changeRootId);
+            AddChange(changeRootId, change, SerialiseChange);
+        }
 
-            var changeContainer = CreateContainer(changeRootId, change);
-            changes.TryAdd(changeContainer.Sequence, changeContainer);
+        byte[] SerialiseChange(Change toSerialise)
+        {
+            return this.serialiser.Serialise(toSerialise);
+        }
+
+        protected override void StoreChange(string changeRootId, Change change, Func<Change, byte[]> serialiseAction)
+        {
+            CheckpointIfPossible(changeRootId, change);
+            AddChange(changeRootId, change, serialiseAction);
+        }
+
+        void CheckpointIfPossible(string changeRootId, Change change)
+        {
+            if (change is CheckPointChange) CheckPointChanges(changeRootId);
         }
 
         void CheckPointChanges(string changeRootId)
         {
             ChangeContainer temp;
 
-            changes.Values
+            this.changes.Values
                 .Where(c => c.ChangeRootId == changeRootId)
                 .Select(c => c.Sequence)
                 .ToList()
-                .ForEach(s => changes.TryRemove(s, out temp));
+                .ForEach(s => this.changes.TryRemove(s, out temp));
         }
 
-        ChangeContainer CreateContainer(string changeRootId, Change change)
+        void AddChange(string changeRootId, Change change, Func<Change, byte[]> serialiseAction)
         {
-            return new ChangeContainer(sequence++, changeRootId, serialiser.Serialise(change));
+            AddChange(CreateChangeContainer(changeRootId, change, serialiseAction));
         }
 
-        public IEnumerable<Change> GetChanges(string changeRootId)
+        void AddChange(ChangeContainer changeContainer)
         {
-            return this.changes.Values
+            this.changes.TryAdd(changeContainer.Sequence, changeContainer);
+        }
+
+        ChangeContainer CreateChangeContainer(string changeRootId, Change change, Func<Change, byte[]> serialiseAction)
+        {
+            return new ChangeContainer(sequence++, changeRootId, serialiseAction(change));
+        }
+
+        protected override IEnumerable<Change> GetChanges(string changeRootId, Func<byte[], Change> deserialiseAction)
+        {
+            return changes.Values
                 .Where(c => c.ChangeRootId == changeRootId)
-                .Select(DerserialiseChange);
-        }
-
-        Change DerserialiseChange(ChangeContainer container)
-        {
-            return this.serialiser.Deserialise(container.Change).As<Change>();
+                .Select(c => deserialiseAction(c.Change));
         }
 
         class ChangeContainer
         {
-            public int Sequence { get; private set; }
-            public string ChangeRootId { get; private set; }
-            public byte[] Change { get; private set; }
-
             public ChangeContainer(int sequence, string id, byte[] change)
             {
                 Sequence = sequence;
                 ChangeRootId = id;
                 Change = change;
             }
+
+            public int Sequence { get; private set; }
+
+            public string ChangeRootId { get; private set; }
+
+            public byte[] Change { get; private set; }
         }
     }
 }

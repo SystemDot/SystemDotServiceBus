@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.RequestReply
         readonly RequestRecieveChannelSchema schema;
 
         public RequestRecieveChannelDistributor(
-            IChangeStore changeStore, 
+            ChangeStore changeStore, 
             RequestRecieveChannelBuilder builder, 
             RequestRecieveChannelSchema schema) 
             : base(changeStore)

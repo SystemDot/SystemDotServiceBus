@@ -14,8 +14,8 @@ namespace SystemDot.Messaging.Sequencing
 
         public override void InputMessage(MessagePayload toInput)
         {
-            if (this.messageCache.ResetOn < toInput.GetSequenceOriginSetOn())
-                this.messageCache.Reset(toInput.GetFirstSequence(), toInput.GetSequenceOriginSetOn());
+            if (messageCache.ResetOn < toInput.GetSequenceOriginSetOn())
+                messageCache.Reset(toInput.GetFirstSequence(), toInput.GetSequenceOriginSetOn());
 
             OnMessageProcessed(toInput);
         }

@@ -4,6 +4,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
+using SystemDot.Storage.Changes.Upcasting;
 using Machine.Specifications;
 using SystemDot.Messaging.Authentication;
 
@@ -18,7 +19,7 @@ namespace SystemDot.Messaging.Specifications.authentication
         const string ReceiverChannel = "ReceiverChannel";
         const int Message = 1;
 
-        static IChangeStore changeStore;
+        static ChangeStore changeStore;
         static MessagePayload payload;
         static TestMessageHandler<long> handler;
 
@@ -26,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.authentication
         {
             handler = new TestMessageHandler<long>();
 
-            changeStore = new InMemoryChangeStore(new JsonSerialiser());
+            changeStore = new InMemoryChangeStore();
             ConfigureAndRegister(changeStore);
 
             Configuration.Configure.Messaging()

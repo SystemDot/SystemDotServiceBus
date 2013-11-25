@@ -1,6 +1,5 @@
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Caching
@@ -17,14 +16,22 @@ namespace SystemDot.Messaging.Caching
 
         public override void InputMessage(MessagePayload toInput)
         {
-            PersistMessage(toInput);
+            StampLocalPersistenceIdOnMessage(toInput);
+            CacheMessage(toInput);
             OnMessageProcessed(toInput);
         }
 
-        void PersistMessage(MessagePayload toInput)
+        void StampLocalPersistenceIdOnMessage(MessagePayload toInput)
         {
-            toInput.SetPersistenceId(this.messageCache.Address, this.messageCache.UseType);
-            this.messageCache.AddMessage(toInput);
+            toInput.SetPersistenceId(messageCache.Address, messageCache.UseType);
+        }
+
+        void CacheMessage(MessagePayload toInput)
+        {
+            if(messageCache.ContainsMessage(toInput))
+                messageCache.UpdateMessage(toInput);
+            else 
+                messageCache.AddMessage(toInput);
         }
     }
 }

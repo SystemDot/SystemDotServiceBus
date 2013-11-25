@@ -5,6 +5,7 @@ using SystemDot.Messaging.Specifications.publishing;
 using SystemDot.Serialisation;
 using SystemDot.Specifications;
 using SystemDot.Storage.Changes;
+using SystemDot.Storage.Changes.Upcasting;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.sequencing
@@ -16,11 +17,11 @@ namespace SystemDot.Messaging.Specifications.sequencing
         const string ReceiverName = "TestReceiver";
 
         static DateTime originDate;
-        static IChangeStore changeStore;
+        static ChangeStore changeStore;
         
         Establish context = () =>
         {
-            changeStore = new InMemoryChangeStore(new JsonSerialiser());
+            changeStore = new InMemoryChangeStore();
             ConfigureAndRegister(changeStore);
 
             SystemTime.AdvanceTime(TimeSpan.FromHours(-1));

@@ -1,5 +1,6 @@
 using System.IO;
 using SystemDot.Sql;
+using SystemDot.Sqlite;
 using SystemDot.Storage.Changes;
 using Mono.Data.Sqlite;
 
@@ -49,7 +50,7 @@ namespace SystemDot.Messaging.Configuration
 
         static void SetupChangeStore(MessagingConfiguration configuration)
         {
-            configuration.GetInternalIocContainer().RegisterInstance<IChangeStore, SqliteChangeStore>();
+            configuration.GetInternalIocContainer().RegisterInstance<ChangeStore, SqliteChangeStore>();
         }
     }
 }

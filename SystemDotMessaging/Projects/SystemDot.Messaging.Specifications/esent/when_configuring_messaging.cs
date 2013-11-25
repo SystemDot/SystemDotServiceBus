@@ -13,6 +13,6 @@ namespace SystemDot.Messaging.Specifications.esent
             .UsingInProcessTransport();
 
         It should_have_registered_the_esent_change_store = () => 
-            Resolve<IChangeStore>().ShouldBeOfType<EsentChangeStore>();  
+            Resolve<ChangeStore>().ShouldBeOfType<EsentChangeStore>();  
     }
 }

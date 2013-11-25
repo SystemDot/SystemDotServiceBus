@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Authentication.Caching
         public AuthenticationSessionCache(
             AuthenticationSessionFactory sessionFactory,
             AuthenticationSessionExpirer sessionExpirer,
-            IChangeStore changeStore)
+            ChangeStore changeStore)
             : base(changeStore)
         {
             Contract.Requires(sessionFactory != null);

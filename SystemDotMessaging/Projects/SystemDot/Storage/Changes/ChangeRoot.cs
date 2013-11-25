@@ -1,16 +1,19 @@
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 
 namespace SystemDot.Storage.Changes
 {
     public abstract class ChangeRoot
     {
-        readonly IChangeStore changeStore;
+        readonly ChangeStore changeStore;
         readonly object checkPointLock = new object();
         volatile int changeCount;
 
-        protected ChangeRoot(IChangeStore changeStore)
+        protected ChangeRoot(ChangeStore changeStore)
         {
+            Contract.Requires(changeStore != null);
+
             this.changeStore = changeStore;
         }
 
@@ -20,15 +23,12 @@ namespace SystemDot.Storage.Changes
         {
             List<Change> changes = changeStore.GetChanges(Id).ToList();
             changeCount = changes.Count;
-
             changes.ForEach(ReplayChange);
         }
 
         protected void AddChange(Change change)
         {
-            if (ShouldCheckPoint())
-                UrgeCheckPoint();
-
+            if (ShouldCheckPoint()) UrgeCheckPoint();
             AddChangeWithoutCheckPoint(change);
         }
 
@@ -62,8 +62,8 @@ namespace SystemDot.Storage.Changes
         void ReplayChange(Change change)
         {
             GetType()
-                .GetMethod("ApplyChange", new[] { change.GetType() })
-                .Invoke(this, new object[] { change });
+                .GetMethod("ApplyChange", new[] {change.GetType()})
+                .Invoke(this, new object[] {change});
         }
     }
 }

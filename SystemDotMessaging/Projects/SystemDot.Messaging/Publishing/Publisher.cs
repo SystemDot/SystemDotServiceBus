@@ -14,7 +14,7 @@ namespace SystemDot.Messaging.Publishing
         
         public event Action<MessagePayload> MessageProcessed;
 
-        public Publisher(EndpointAddress address, ISubscriberSendChannelBuilder builder, IChangeStore changeStore)
+        public Publisher(EndpointAddress address, ISubscriberSendChannelBuilder builder, ChangeStore changeStore)
         {
             Contract.Requires(address != null);
             Contract.Requires(address != EndpointAddress.Empty);

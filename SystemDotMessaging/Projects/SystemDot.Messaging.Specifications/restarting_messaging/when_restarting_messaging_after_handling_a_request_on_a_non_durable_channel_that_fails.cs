@@ -3,6 +3,7 @@ using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
+using SystemDot.Storage.Changes.Upcasting;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.restarting_messaging
@@ -16,12 +17,12 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
         const int Message = 1;
         
         static TestMessageHandler<int> handler;
-        static IChangeStore changeStore;
+        static ChangeStore changeStore;
             
         Establish context = () =>
         {
-            changeStore = new InMemoryChangeStore(new JsonSerialiser());
-            ConfigureAndRegister<IChangeStore>(changeStore);
+            changeStore = new InMemoryChangeStore();
+            ConfigureAndRegister<ChangeStore>(changeStore);
             
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
@@ -40,7 +41,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
             Reset();
             ReInitialise();
 
-            ConfigureAndRegister<IChangeStore>(changeStore);
+            ConfigureAndRegister<ChangeStore>(changeStore);
             handler = new TestMessageHandler<int>();
         };
 

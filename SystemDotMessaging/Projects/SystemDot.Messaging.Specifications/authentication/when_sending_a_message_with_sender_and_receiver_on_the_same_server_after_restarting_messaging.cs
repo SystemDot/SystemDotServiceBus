@@ -4,6 +4,7 @@ using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
+using SystemDot.Storage.Changes.Upcasting;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.authentication
@@ -16,12 +17,12 @@ namespace SystemDot.Messaging.Specifications.authentication
         const string Channel = "Channel";
         const int Message = 1;
 
-        static IChangeStore changeStore;
+        static ChangeStore changeStore;
         static AuthenticationSession session;
 
         Establish context = () =>
         {
-            changeStore = new InMemoryChangeStore(new JsonSerialiser());
+            changeStore = new InMemoryChangeStore();
             ConfigureAndRegister(changeStore);
 
             Configuration.Configure.Messaging()

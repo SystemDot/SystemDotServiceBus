@@ -18,9 +18,4 @@ namespace SystemDot.Messaging.Storage.Changes
             Sequence = sequence;
         }
     }
-
-    public class MessageCheckpointChange : CheckPointChange
-    {
-        public int Sequence { get; set; }
-    }
 }

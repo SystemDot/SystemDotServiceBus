@@ -13,6 +13,6 @@ namespace SystemDot.Messaging.Specifications.sql
             .UsingInProcessTransport();
 
         It should_have_registered_the_sql_change_store = () => 
-            Resolve<IChangeStore>().ShouldBeOfType<SqlChangeStore>();  
+            Resolve<ChangeStore>().ShouldBeOfType<SqlChangeStore>();  
     }
 }

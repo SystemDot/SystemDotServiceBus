@@ -22,7 +22,7 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly MessageCacheFactory messageCacheFactory;
         readonly ISubscriberSendChannelBuilder subscriberChannelBuilder;
         readonly ISystemTime systemTime;
-        readonly IChangeStore changeStore;
+        readonly ChangeStore changeStore;
 
         public PublisherChannelBuilder(
             IPublisherRegistry publisherRegistry, 
@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             MessageCacheFactory messageCacheFactory, 
             ISubscriberSendChannelBuilder subscriberChannelBuilder, 
             ISystemTime systemTime, 
-            IChangeStore changeStore)
+            ChangeStore changeStore)
         {
             Contract.Requires(publisherRegistry != null);
             Contract.Requires(serialiser != null);

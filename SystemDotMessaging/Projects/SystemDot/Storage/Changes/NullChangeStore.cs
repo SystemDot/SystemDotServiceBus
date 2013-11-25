@@ -1,18 +1,26 @@
+using System;
 using System.Collections.Generic;
+using SystemDot.Serialisation;
+using SystemDot.Storage.Changes.Upcasting;
 
 namespace SystemDot.Storage.Changes
 {
-    public class NullChangeStore : IChangeStore
+    public class NullChangeStore : ChangeStore
     {
-        public void Initialise()
-        {            
-        }
-
-        public void StoreChange(string changeRootId, Change change)
+        public NullChangeStore(ISerialiser serialiser, ChangeUpcasterRunner upcasterRunner) 
+            : base(serialiser, upcasterRunner)
         {
         }
 
-        public IEnumerable<Change> GetChanges(string changeRootId)
+        public override void Initialise()
+        {            
+        }
+
+        protected override void StoreChange(string changeRootId, Change change, Func<Change, byte[]> serialiseAction)
+        {
+        }
+
+        protected override IEnumerable<Change> GetChanges(string changeRootId, Func<byte[], Change> deserialiseAction)
         {
             return new List<Change>();
         }

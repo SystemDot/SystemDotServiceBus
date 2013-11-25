@@ -13,7 +13,7 @@ namespace SystemDot.Messaging.RequestReply
         readonly ReplySendChannelSchema schema;
     
         public ReplySendChannelDistributor(
-            IChangeStore changeStore, 
+            ChangeStore changeStore, 
             ReplyAddressLookup replyAddressLookup, 
             ReplySendChannelBuilder builder, 
             ReplySendChannelSchema schema)

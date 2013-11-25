@@ -5,18 +5,21 @@ namespace SystemDot.Messaging.Builders
 {
     class ChangeStoreSelector
     {
-        readonly IChangeStore durableChangeStore;
+        readonly ChangeStore durableChangeStore;
+        readonly NullChangeStore nullChangeStore;
 
-        public ChangeStoreSelector(IChangeStore durableChangeStore)
+        public ChangeStoreSelector(ChangeStore durableChangeStore, NullChangeStore nullChangeStore)
         {
             Contract.Requires(durableChangeStore != null);
+            Contract.Requires(nullChangeStore != null);
 
             this.durableChangeStore = durableChangeStore;
+            this.nullChangeStore = nullChangeStore;
         }
 
-        public IChangeStore SelectChangeStore(IDurableOptionSchema schema)
+        public ChangeStore SelectChangeStore(IDurableOptionSchema schema)
         {
-            return schema.IsDurable ? durableChangeStore : new NullChangeStore();
+            return schema.IsDurable ? durableChangeStore : nullChangeStore;
         }
     }
 }

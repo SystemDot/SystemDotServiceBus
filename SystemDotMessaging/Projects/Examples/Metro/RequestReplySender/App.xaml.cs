@@ -36,7 +36,7 @@ namespace RequestReplySender
         /// search results, and so forth.
         /// </summary>
         /// <param server="args">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs args)
+        protected async override void OnLaunched(LaunchActivatedEventArgs args)
         {
             var container = new IocContainer();
 
