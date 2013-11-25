@@ -12,10 +12,15 @@ namespace SystemDot.Messaging.Specifications
     {
         readonly ConcurrentDictionary<int, ChangeContainer> changes;
         int sequence;
+        readonly ISerialiser serialiser;
 
-        public InMemoryChangeStore(ISerialiser serialiser, ChangeUpcasterRunner changeUpcasterRunner)
-            : base(serialiser, changeUpcasterRunner)
+        public InMemoryChangeStore() : this(new JsonSerialiser())
         {
+        }
+
+        InMemoryChangeStore(ISerialiser serialiser) : base(serialiser, new ChangeUpcasterRunner())
+        {
+            this.serialiser = serialiser;
             changes = new ConcurrentDictionary<int, ChangeContainer>();
         }
 
@@ -23,29 +28,51 @@ namespace SystemDot.Messaging.Specifications
         {
         }
 
-        protected override void StoreChange(string changeRootId, Change change, Func<Change, byte[]> serialiseAction)
+        public void StoreRawChange(string changeRootId, Change change)
         {
-            if (change is CheckPointChange)
-                CheckPointChanges(changeRootId);
-
-            ChangeContainer changeContainer = CreateChangeContainer(changeRootId, change, serialiseAction);
-            changes.TryAdd(changeContainer.Sequence, changeContainer);
+            AddChange(changeRootId, change, SerialiseChange);
         }
 
-        ChangeContainer CreateChangeContainer(string changeRootId, Change change, Func<Change, byte[]> serialiseAction)
+        byte[] SerialiseChange(Change toSerialise)
         {
-            return new ChangeContainer(sequence++, changeRootId, serialiseAction(change));
+            return this.serialiser.Serialise(toSerialise);
+        }
+
+        protected override void StoreChange(string changeRootId, Change change, Func<Change, byte[]> serialiseAction)
+        {
+            CheckpointIfPossible(changeRootId, change);
+            AddChange(changeRootId, change, serialiseAction);
+        }
+
+        void CheckpointIfPossible(string changeRootId, Change change)
+        {
+            if (change is CheckPointChange) CheckPointChanges(changeRootId);
         }
 
         void CheckPointChanges(string changeRootId)
         {
             ChangeContainer temp;
 
-            changes.Values
+            this.changes.Values
                 .Where(c => c.ChangeRootId == changeRootId)
                 .Select(c => c.Sequence)
                 .ToList()
-                .ForEach(s => changes.TryRemove(s, out temp));
+                .ForEach(s => this.changes.TryRemove(s, out temp));
+        }
+
+        void AddChange(string changeRootId, Change change, Func<Change, byte[]> serialiseAction)
+        {
+            AddChange(CreateChangeContainer(changeRootId, change, serialiseAction));
+        }
+
+        void AddChange(ChangeContainer changeContainer)
+        {
+            this.changes.TryAdd(changeContainer.Sequence, changeContainer);
+        }
+
+        ChangeContainer CreateChangeContainer(string changeRootId, Change change, Func<Change, byte[]> serialiseAction)
+        {
+            return new ChangeContainer(sequence++, changeRootId, serialiseAction(change));
         }
 
         protected override IEnumerable<Change> GetChanges(string changeRootId, Func<byte[], Change> deserialiseAction)

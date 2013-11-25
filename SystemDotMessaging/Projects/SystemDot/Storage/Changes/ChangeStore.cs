@@ -24,6 +24,7 @@ namespace SystemDot.Storage.Changes
 
         public void StoreChange(string changeRootId, Change change)
         {
+            change.Version = Change.LatestVersion;
             StoreChange(changeRootId, change, SerialiseChange);
         }
 

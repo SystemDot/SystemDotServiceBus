@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.authentication
         {
             handler = new TestMessageHandler<long>();
 
-            changeStore = new InMemoryChangeStore(new JsonSerialiser(), new ChangeUpcasterRunner());
+            changeStore = new InMemoryChangeStore();
             ConfigureAndRegister(changeStore);
 
             Configuration.Configure.Messaging()

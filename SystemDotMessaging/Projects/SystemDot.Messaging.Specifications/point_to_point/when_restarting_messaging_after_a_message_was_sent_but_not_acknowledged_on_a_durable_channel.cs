@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.point_to_point
         {
             messagesLoadedToCacheEvents = new List<MessageLoadedToCache>();
 
-            changeStore = new InMemoryChangeStore(new JsonSerialiser(), new ChangeUpcasterRunner());
+            changeStore = new InMemoryChangeStore();
             ConfigureAndRegister(changeStore);
 
             Messaging.Configuration.Configure.Messaging()

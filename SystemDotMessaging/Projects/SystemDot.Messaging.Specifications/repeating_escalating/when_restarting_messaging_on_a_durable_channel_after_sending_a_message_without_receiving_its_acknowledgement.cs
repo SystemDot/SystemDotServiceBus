@@ -18,7 +18,7 @@ namespace SystemDot.Messaging.Specifications.repeating_escalating
 
         Establish context = () =>
         {
-            changeStore = new InMemoryChangeStore(new JsonSerialiser(), new ChangeUpcasterRunner());
+            changeStore = new InMemoryChangeStore();
 
             ConfigureAndRegister(changeStore);
             

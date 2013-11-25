@@ -346,7 +346,7 @@
     <Compile Include="filtering_by_name_for_publishing\when_publishing_with_the_wrong_name_on_a_publish_subscribe_channel.cs" />
     <Compile Include="upcasting_changes\SpecificationGroup.cs" />
     <Compile Include="upcasting_changes\when_loading_changes_that_dont_need_upcasting.cs" />
-    <Compile Include="upcasting_changes\when_loading_message_cache_checkpoint_changes_to_already_at_version_one.cs" />
+    <Compile Include="upcasting_changes\when_loading_message_cache_checkpoint_changes_to_already_at_latest_version.cs" />
     <Compile Include="upcasting_changes\when_loading_message_cache_checkpoint_changes_to_version_one.cs" />
     <Compile Include="WithHttpConfigurationSubject.cs" />
     <Compile Include="WithPublisherSubject.cs" />

@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
         {
             messagesLoadedToCacheEvents = new List<MessageLoadedToCache>();
 
-            changeStore = new InMemoryChangeStore(new JsonSerialiser(), new ChangeUpcasterRunner());
+            changeStore = new InMemoryChangeStore();
             ConfigureAndRegister<ChangeStore>(changeStore);
 
             Configuration.Configure.Messaging()

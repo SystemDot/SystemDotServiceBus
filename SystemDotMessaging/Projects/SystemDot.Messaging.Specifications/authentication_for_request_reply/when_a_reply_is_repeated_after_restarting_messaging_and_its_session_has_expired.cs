@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
         {
             handler = new TestReplyMessageHandler<long>();
 
-            changeStore = new InMemoryChangeStore(new JsonSerialiser(), new ChangeUpcasterRunner());
+            changeStore = new InMemoryChangeStore();
             ConfigureAndRegister(changeStore);
 
             Configuration.Configure.Messaging()

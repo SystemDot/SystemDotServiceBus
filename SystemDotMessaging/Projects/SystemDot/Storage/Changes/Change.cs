@@ -5,10 +5,5 @@ namespace SystemDot.Storage.Changes
         public const int LatestVersion = 1;
 
         public int Version { get; set; }
-
-        protected Change()
-        {
-            Version = LatestVersion;
-        }
     }
 }

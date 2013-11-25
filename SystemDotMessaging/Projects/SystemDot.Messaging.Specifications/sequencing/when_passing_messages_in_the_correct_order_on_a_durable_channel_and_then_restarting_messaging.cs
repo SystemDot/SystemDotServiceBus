@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
        
         Establish context = () =>
         {
-            changeStore = new InMemoryChangeStore(new JsonSerialiser(), new ChangeUpcasterRunner());
+            changeStore = new InMemoryChangeStore();
             ConfigureAndRegister<ChangeStore>(changeStore);
 
             Messaging.Configuration.Configure.Messaging()

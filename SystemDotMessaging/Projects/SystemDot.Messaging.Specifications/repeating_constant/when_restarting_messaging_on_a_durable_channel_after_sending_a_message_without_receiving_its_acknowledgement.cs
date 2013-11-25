@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Specifications.repeating_constant
 
         Establish context = () =>
         {
-            changeStore = new InMemoryChangeStore(new JsonSerialiser(), new ChangeUpcasterRunner());
+            changeStore = new InMemoryChangeStore();
 
             ConfigureAndRegister(changeStore);
             

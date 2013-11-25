@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Serialisation;
+using SystemDot.Storage.Changes;
 using SystemDot.Storage.Changes.Upcasting;
 using Machine.Specifications;
 
@@ -13,16 +15,16 @@ namespace SystemDot.Messaging.Specifications.upcasting_changes
         const string ChangeRootId = "ChangeRootId";
 
         static InMemoryChangeStore changeStore;
-        static AddMessageChange change;
+        static IEnumerable<Change> loadedChanges;
 
         Establish context = () =>
         {
-            change = new AddMessageChange { Version = 0 };
-            changeStore = new InMemoryChangeStore(new JsonSerialiser(), new ChangeUpcasterRunner());
+            changeStore = new InMemoryChangeStore();
+            changeStore.StoreRawChange(ChangeRootId, new AddMessageChange { Version = 0 });
         };
 
-        Because of = () => changeStore.StoreChange(ChangeRootId, change);
+        Because of = () => loadedChanges = changeStore.GetChanges(ChangeRootId);
 
-        It should_pass_through_the_change = () => changeStore.GetChanges(ChangeRootId).Count().ShouldEqual(1);
+        It should_pass_through_the_change = () => loadedChanges.Count().ShouldEqual(1);
     }
 }

@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications.authentication
 
         Establish context = () =>
         {
-            changeStore = new InMemoryChangeStore(new JsonSerialiser(), new ChangeUpcasterRunner());
+            changeStore = new InMemoryChangeStore();
             ConfigureAndRegister(changeStore);
 
             Configuration.Configure.Messaging()

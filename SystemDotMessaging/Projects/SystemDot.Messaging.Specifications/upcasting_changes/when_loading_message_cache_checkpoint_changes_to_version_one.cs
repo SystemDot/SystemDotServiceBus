@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Serialisation;
+using SystemDot.Storage.Changes;
 using SystemDot.Storage.Changes.Upcasting;
 using Machine.Specifications;
 
@@ -12,17 +14,18 @@ namespace SystemDot.Messaging.Specifications.upcasting_changes
     {
         const string ChangeRootId = "ChangeRootId";
         static InMemoryChangeStore changeStore;
-        
+        static IEnumerable<Change> loadedChanges;
+
         Establish context = () =>
         {
-            changeStore = new InMemoryChangeStore(new JsonSerialiser(), new ChangeUpcasterRunner());
+            changeStore = new InMemoryChangeStore();
+            changeStore.StoreRawChange(ChangeRootId, new MessageCheckpointChange { Version = 0 });
         };
 
-        Because of = () => changeStore.StoreChange(ChangeRootId, new MessageCheckpointChange { Version = 0 });
+        Because of = () => loadedChanges = changeStore.GetChanges(ChangeRootId);
 
         It should_upcast_the_checkpoint_change_cached_on_to_the_current_date = () => 
-            changeStore.GetChanges(ChangeRootId)
-                .OfType<MessageCheckpointChange>()
-                    .Single().CachedOn.ShouldEqual(new DateTime(2013, 11, 24));
+            loadedChanges.OfType<MessageCheckpointChange>()
+                .Single().CachedOn.ShouldEqual(new DateTime(2013, 11, 24));
     }
 }
