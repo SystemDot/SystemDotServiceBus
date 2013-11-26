@@ -28,7 +28,7 @@ namespace RequestReplySender
 
         private void Button_Click_1(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 this.DataContext.As<MainPageViewModel>().SendMessage(i);                
             }
