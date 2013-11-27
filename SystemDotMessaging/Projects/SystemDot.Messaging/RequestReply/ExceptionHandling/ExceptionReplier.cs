@@ -1,21 +1,18 @@
 using System;
-using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.ExceptionHandling;
 
 namespace SystemDot.Messaging.RequestReply.ExceptionHandling
 {
-    class ExceptionReplier : MessageProcessor
+    class ExceptionReplier : ExceptionHandler
     {
-        public override void InputMessage(MessagePayload toInput)
+        public ExceptionReplier(bool shouldContinueOnException) : base(shouldContinueOnException)
         {
-            try
-            {
-                OnMessageProcessed(toInput);
-            }
-            catch (Exception e)
-            {
-                Bus.Reply(new ExceptionOccured { Message = e.Message });
-                throw;
-            }
+        }
+
+        protected override void OnException(Exception exception)
+        {
+            base.OnException(exception);
+            Bus.Reply(new ExceptionOccured { Message = exception.Message });
         }
     }
 }

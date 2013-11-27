@@ -142,6 +142,8 @@ namespace SystemDot.Esent
 
             if (!Esent.TrySetIndexRange(session, table, SetIndexRangeGrbit.RangeUpperLimit)) return;
 
+            Api.JetDelete(session, table);
+
             while (Esent.TryMoveNext(session, table))
                 Api.JetDelete(session, table);
         }

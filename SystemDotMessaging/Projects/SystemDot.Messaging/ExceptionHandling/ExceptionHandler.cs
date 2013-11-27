@@ -21,10 +21,16 @@ namespace SystemDot.Messaging.ExceptionHandling
             }
             catch (Exception e)
             {
+                OnException(e);
+
                 if (!shouldContinueOnException) throw;
                 
                 Logger.Error(e);
             }
+        }
+
+        protected virtual void OnException(Exception exception)
+        {
         }
     }
 }
