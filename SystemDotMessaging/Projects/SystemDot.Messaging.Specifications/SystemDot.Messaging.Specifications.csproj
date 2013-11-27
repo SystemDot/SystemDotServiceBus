@@ -108,6 +108,7 @@
     <Compile Include="exception_handling_for_request_reply\SpecificationGroup.cs" />
     <Compile Include="exception_handling_for_request_reply\when_failing_the_handling_of_a_reply_with_continue_on_exception_configured.cs" />
     <Compile Include="exception_handling_for_request_reply\when_failing_the_handling_of_a_request_with_continue_on_exception_configured.cs" />
+    <Compile Include="exception_replying_for_request_reply\when_failing_the_handling_of_a_request_with_continue_on_exception_configured.cs" />
     <Compile Include="InMemoryChangeStore.cs" />
     <Compile Include="proxying\when_handling_a_long_poll_request_for_the_same_message_queued_twice.cs" />
     <Compile Include="running_handlers_on_main_thread_for_subscribers\SpecificationGroup.cs" />
