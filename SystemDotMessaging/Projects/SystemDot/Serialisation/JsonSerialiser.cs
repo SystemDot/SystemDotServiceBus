@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using SystemDot.Logging;
 using Newtonsoft.Json;
 
 namespace SystemDot.Serialisation
@@ -12,7 +11,7 @@ namespace SystemDot.Serialisation
 
         public JsonSerialiser()
         {
-            this.typedSerializer = new JsonSerializer
+            typedSerializer = new JsonSerializer
             {
                 TypeNameHandling = TypeNameHandling.All,
                 DefaultValueHandling = DefaultValueHandling.Ignore,
@@ -31,7 +30,7 @@ namespace SystemDot.Serialisation
 
             using (var stringWriter = new StringWriter(stringBuilder))
             using (var textWriter = new JsonTextWriter(stringWriter))
-                this.typedSerializer.Serialize(textWriter, toSerialise);
+                typedSerializer.Serialize(textWriter, toSerialise);
 
             return stringBuilder.ToString();
         }
@@ -46,19 +45,12 @@ namespace SystemDot.Serialisation
         {
             try
             {
-                return DeserialiseFromString(toDeserialise.GetStringFromUtf8());
+                return DeserialiseFromString(DeserialiseToString(toDeserialise));
             }
             catch (Exception e)
             {
                 throw new CannotDeserialiseException(e);
             }
-        }
-
-        object DeserialiseFromString(string toDeserialise)
-        {
-            using (var stringReader = new StringReader(toDeserialise))
-                using (var reader = new JsonTextReader(stringReader))
-                    return this.typedSerializer.Deserialize(reader);
         }
 
         public object Deserialise(Stream toDeserialise)
@@ -68,6 +60,18 @@ namespace SystemDot.Serialisation
                 toDeserialise.CopyTo(ms);
                 return Deserialise(ms.ToArray());
             }
+        }
+
+        public string DeserialiseToString(byte[] toDeserialise)
+        {
+            return toDeserialise.GetStringFromUtf8();
+        }
+
+        object DeserialiseFromString(string toDeserialise)
+        {
+            using (var stringReader = new StringReader(toDeserialise))
+            using (var reader = new JsonTextReader(stringReader))
+                return typedSerializer.Deserialize(reader);
         }
     }
 }

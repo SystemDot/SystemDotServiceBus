@@ -2,9 +2,9 @@ using System;
 using SystemDot.Configuration;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Diagnostics;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Ioc;
-using SystemDot.Messaging.Pipelines;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 using SystemDot.Specifications;
@@ -24,7 +24,7 @@ namespace SystemDot.Messaging.Specifications
         Establish context = () =>
         {
             Reset();
-            MessagePipelineBuilder.BuildSynchronousPipelines = true;
+            Debug.BuildSynchronousPipelines();
             ReInitialise();
         };
 
@@ -83,13 +83,6 @@ namespace SystemDot.Messaging.Specifications
         protected static void Register<T>(IIocContainer container, T concrete) where T : class
         {
             container.RegisterInstance(() => concrete);
-        }
-
-        protected static void Register<TInterface, TConcrete>() 
-            where TInterface : class
-            where TConcrete : class
-        {
-            IocContainerLocator.Locate().RegisterInstance<TInterface, TConcrete>();
         }
 
         protected static T Resolve<T>() where T : class

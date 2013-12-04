@@ -1,3 +1,4 @@
+using SystemDot.Messaging.Diagnostics;
 using SystemDot.Messaging.Distribution;
 using SystemDot.Messaging.Ioc;
 using SystemDot.Parallelism;
@@ -15,7 +16,7 @@ namespace SystemDot.Messaging.Pipelines
 
         public ProcessorBuilder<TOut> Pump()
         {
-            if (MessagePipelineBuilder.BuildSynchronousPipelines) return Pipe();
+            if (Debug.ShouldBuildSynchronousPipelines) return Pipe();
 
             var pump = new Pump<TOut>(GetTaskStarter());
             processor.MessageProcessed += pump.InputMessage;
@@ -25,7 +26,7 @@ namespace SystemDot.Messaging.Pipelines
 
         public ProcessorBuilder<TOut> Queue()
         {
-            if (MessagePipelineBuilder.BuildSynchronousPipelines) return Pipe();
+            if (Debug.ShouldBuildSynchronousPipelines) return Pipe();
  
             var queue = new Queue<TOut>(GetTaskStarter());
             processor.MessageProcessed += queue.InputMessage;

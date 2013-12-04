@@ -1,6 +1,9 @@
-﻿using System.Data.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.SqlClient;
 using SystemDot.Serialisation;
+using SystemDot.Storage.Changes;
 using SystemDot.Storage.Changes.Upcasting;
 
 namespace SystemDot.Sql
@@ -20,7 +23,7 @@ namespace SystemDot.Sql
         Change varbinary(max) NULL)";
         }
 
-        public override void AddParameter(DbParameterCollection collection, string name, object value)
+        protected override void AddParameter(DbParameterCollection collection, string name, object value)
         {
             collection.Add(new SqlParameter(name, value));
         }

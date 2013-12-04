@@ -9,5 +9,6 @@ namespace SystemDot.Serialisation
         void Serialise(Stream toSerialise, object graph);
         object Deserialise(byte[] toDeserialise);
         object Deserialise(Stream toDeserialise);
+        string DeserialiseToString(byte[] toDeserialise);
     }
 }

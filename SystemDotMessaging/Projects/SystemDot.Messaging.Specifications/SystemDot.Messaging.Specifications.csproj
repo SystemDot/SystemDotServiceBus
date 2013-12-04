@@ -100,6 +100,9 @@
     <Compile Include="correlation_for_request_reply\when_replying_to_a_request_with_a_correlation.cs" />
     <Compile Include="correlation_for_request_reply\when_sending_a_request_without_correlation_configured.cs" />
     <Compile Include="correlation_for_request_reply\when_sending_a_request_with_correlation_configured.cs" />
+    <Compile Include="diagnostics\SpecificationGroup.cs" />
+    <Compile Include="diagnostics\when_describing_all_changes_in_the_change_store_with_muliple_changes_stored.cs" />
+    <Compile Include="diagnostics\when_describing_all_changes_in_the_change_store_with_one_change_stored.cs" />
     <Compile Include="exception_handling_for_point_to_point_receiving\SpecificationGroup.cs" />
     <Compile Include="exception_handling_for_point_to_point_receiving\when_failing_the_handling_of_a_request_with_continue_on_exception_configured.cs" />
     <Compile Include="exception_handling_for_subscriptions\SpecificationGroup.cs" />

@@ -57,5 +57,23 @@ namespace SystemDot.Storage.Changes
         protected abstract IEnumerable<Change> GetChanges(
             string changeRootId, 
             Func<byte[], Change> deserialiseAction);
+
+        public IEnumerable<ChangeDescription> DescribeAllChanges()
+        {
+            return GetChangeDescriptions(DeserialiseToDescription);
+        }
+
+        ChangeDescription DeserialiseToDescription(string rootId, long sequence, byte[] change)
+        {
+            return new ChangeDescription
+            {
+                RootId = rootId, 
+                Sequence = sequence, 
+                Change = serialiser.DeserialiseToString(change)
+            };
+        }
+
+        protected abstract IEnumerable<ChangeDescription> GetChangeDescriptions(
+            Func<string, long, byte[], ChangeDescription> descriptionCreator);
     }
 }
