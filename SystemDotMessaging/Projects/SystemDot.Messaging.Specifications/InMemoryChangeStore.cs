@@ -11,11 +11,12 @@ namespace SystemDot.Messaging.Specifications
     public class InMemoryChangeStore : ChangeStore
     {
         readonly ConcurrentDictionary<int, ChangeContainer> changes;
-        int sequence;
         readonly ISerialiser serialiser;
+        int sequence;
 
         public InMemoryChangeStore() : this(new JsonSerialiser())
         {
+            sequence = 1;
         }
 
         InMemoryChangeStore(ISerialiser serialiser) : base(serialiser, new ChangeUpcasterRunner())
@@ -35,7 +36,7 @@ namespace SystemDot.Messaging.Specifications
 
         byte[] SerialiseChange(Change toSerialise)
         {
-            return this.serialiser.Serialise(toSerialise);
+            return serialiser.Serialise(toSerialise);
         }
 
         protected override void StoreChange(string changeRootId, Change change, Func<Change, byte[]> serialiseAction)
@@ -53,11 +54,11 @@ namespace SystemDot.Messaging.Specifications
         {
             ChangeContainer temp;
 
-            this.changes.Values
+            changes.Values
                 .Where(c => c.ChangeRootId == changeRootId)
                 .Select(c => c.Sequence)
                 .ToList()
-                .ForEach(s => this.changes.TryRemove(s, out temp));
+                .ForEach(s => changes.TryRemove(s, out temp));
         }
 
         void AddChange(string changeRootId, Change change, Func<Change, byte[]> serialiseAction)
@@ -67,7 +68,7 @@ namespace SystemDot.Messaging.Specifications
 
         void AddChange(ChangeContainer changeContainer)
         {
-            this.changes.TryAdd(changeContainer.Sequence, changeContainer);
+            changes.TryAdd(changeContainer.Sequence, changeContainer);
         }
 
         ChangeContainer CreateChangeContainer(string changeRootId, Change change, Func<Change, byte[]> serialiseAction)
@@ -80,6 +81,12 @@ namespace SystemDot.Messaging.Specifications
             return changes.Values
                 .Where(c => c.ChangeRootId == changeRootId)
                 .Select(c => deserialiseAction(c.Change));
+        }
+
+        protected override IEnumerable<ChangeDescription> GetChangeDescriptions(
+            Func<string, long, byte[], ChangeDescription> descriptionCreator)
+        {
+            return changes.Values.Select(c => descriptionCreator(c.ChangeRootId, c.Sequence, c.Change));
         }
 
         class ChangeContainer

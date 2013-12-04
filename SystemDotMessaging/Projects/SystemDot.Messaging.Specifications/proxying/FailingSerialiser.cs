@@ -30,5 +30,10 @@ namespace SystemDot.Messaging.Specifications.proxying
         {
             return Deserialise(new byte[0]);
         }
+
+        public string DeserialiseToString(byte[] toDeserialise)
+        {
+            throw new CannotDeserialiseException(new Exception());
+        }
     }
 }
