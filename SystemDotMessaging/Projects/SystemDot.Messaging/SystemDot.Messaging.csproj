@@ -109,6 +109,7 @@
     <Compile Include="Correlation\ReplyCorrelationApplier.cs" />
     <Compile Include="Correlation\ReplyCorrelationLookup.cs" />
     <Compile Include="Correlation\RequestReplyCorrelator.cs" />
+    <Compile Include="Diagnostics\Debug.cs" />
     <Compile Include="Direct\Builders\ReplyReceiverSchema.cs" />
     <Compile Include="Direct\DirectReplyMessageHandlerRouter.cs" />
     <Compile Include="Direct\DirectSendContext.cs" />

@@ -1,13 +1,9 @@
-using SystemDot.Ioc;
-using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Ioc;
 
 namespace SystemDot.Messaging.Pipelines
 {
     public class MessagePipelineBuilder
     {
-        public static bool BuildSynchronousPipelines { get; set; }
-
         public static MessagePipelineBuilder Build()
         {
             return new MessagePipelineBuilder();

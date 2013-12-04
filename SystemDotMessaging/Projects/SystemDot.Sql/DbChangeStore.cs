@@ -59,16 +59,31 @@ namespace SystemDot.Sql
 
         protected override IEnumerable<Change> GetChanges(string changeRootId, Func<byte[], Change> deserialiseAction)
         {
-            var messages = new List<Change>();
+            var changes = new List<Change>();
 
             using (var connection = GetConnection())
             {
                 connection.ExecuteReader(
                     "select change from ChangeStore where changeRootId = '" + changeRootId + "' order by sequence ASC",
-                    reader => messages.Add(deserialiseAction(reader.GetBytes(0))));
+                    reader => changes.Add(deserialiseAction(reader.GetBytes(0))));
             }
 
-            return messages;
+            return changes;
+        }
+
+        protected override IEnumerable<ChangeDescription> GetChangeDescriptions(
+            Func<string, long, byte[], ChangeDescription> descriptionCreator)
+        {
+            var descriptions = new List<ChangeDescription>();
+
+            using (var connection = GetConnection())
+            {
+                connection.ExecuteReader(
+                    "select * from ChangeStore order by sequence ASC",
+                    reader => descriptions.Add(descriptionCreator(reader.GetString(0), reader.GetInt32(1), reader.GetBytes(2))));
+            }
+
+            return descriptions;
         }
 
         public override void Initialise()
@@ -84,9 +99,9 @@ namespace SystemDot.Sql
 
         protected abstract string GetInitialisationSql();
 
-        public abstract void AddParameter(DbParameterCollection collection, string name, object value);
+        protected abstract void AddParameter(DbParameterCollection collection, string name, object value);
 
-        public DbConnection GetConnection()
+        DbConnection GetConnection()
         {
             DbConnection connection = CreateConnection();
             connection.Open();

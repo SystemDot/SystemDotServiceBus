@@ -188,6 +188,12 @@ namespace SystemDot.Esent
             return changes;
         }
 
+        protected override IEnumerable<ChangeDescription> GetChangeDescriptions(
+            Func<string, long, byte[], ChangeDescription> descriptionCreator)
+        {
+            throw new NotImplementedException();
+        }
+
         static void AddChangeFromColumn(
             Session session, 
             Table table, 

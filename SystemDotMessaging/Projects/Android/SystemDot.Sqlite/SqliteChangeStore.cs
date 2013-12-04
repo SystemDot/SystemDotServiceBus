@@ -1,6 +1,8 @@
+using System;
 using System.Data.Common;
 using SystemDot.Serialisation;
 using SystemDot.Sql;
+using SystemDot.Storage.Changes;
 using SystemDot.Storage.Changes.Upcasting;
 using Mono.Data.Sqlite;
 
@@ -8,9 +10,19 @@ namespace SystemDot.Sqlite
 {
     public class SqliteChangeStore : DbChangeStore
     {
+        readonly static object WriteLock = new object();
+
         public SqliteChangeStore(ISerialiser serialiser, ChangeUpcasterRunner changeUpcasterRunner)
             : base(serialiser, changeUpcasterRunner)
         {
+        }
+
+        protected override void StoreChange(string changeRootId, Change change, Func<Change, byte[]> serialiseAction)
+        {
+            lock (WriteLock)
+            {
+                base.StoreChange(changeRootId, change, serialiseAction);
+            }
         }
 
         protected override string GetInitialisationSql() 
@@ -22,7 +34,7 @@ CREATE TABLE IF NOT EXISTS ChangeStore(
     Change varbinary(2147483647) NULL)";
         }
 
-        public override void AddParameter(DbParameterCollection collection, string name, object value)
+        protected override void AddParameter(DbParameterCollection collection, string name, object value)
         {
             collection.Add(new SqliteParameter(name, value));
         }

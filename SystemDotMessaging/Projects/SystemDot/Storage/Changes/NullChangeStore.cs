@@ -24,5 +24,11 @@ namespace SystemDot.Storage.Changes
         {
             return new List<Change>();
         }
+
+        protected override IEnumerable<ChangeDescription> GetChangeDescriptions(
+            Func<string, long, byte[], ChangeDescription> descriptionCreator)
+        {
+            return new List<ChangeDescription>();
+        }
     }
 }
