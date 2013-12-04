@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using SystemDot.Messaging.Storage.Changes;
-using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
-using SystemDot.Storage.Changes.Upcasting;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.upcasting_changes

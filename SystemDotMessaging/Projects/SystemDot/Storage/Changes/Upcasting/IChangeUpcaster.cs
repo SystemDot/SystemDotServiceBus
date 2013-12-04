@@ -6,5 +6,6 @@ namespace SystemDot.Storage.Changes.Upcasting
     {
         Change Upcast(Change toUpcast);
         Type ChangeType { get; }
+        int Version { get; }
     }
 }

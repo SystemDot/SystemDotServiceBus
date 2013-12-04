@@ -352,6 +352,7 @@
     <Compile Include="upcasting_changes\when_loading_changes_that_dont_need_upcasting.cs" />
     <Compile Include="upcasting_changes\when_loading_message_cache_checkpoint_changes_to_already_at_latest_version.cs" />
     <Compile Include="upcasting_changes\when_loading_message_cache_checkpoint_changes_to_version_one.cs" />
+    <Compile Include="upcasting_changes\when_loading_subscriber_changes_to_version_two.cs" />
     <Compile Include="WithHttpConfigurationSubject.cs" />
     <Compile Include="WithPublisherSubject.cs" />
     <Compile Include="restarting_messaging\when_restarting_messaging_after_handling_a_request_on_a_non_durable_channel_that_fails.cs" />

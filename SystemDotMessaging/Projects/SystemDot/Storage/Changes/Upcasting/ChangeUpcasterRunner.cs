@@ -31,14 +31,14 @@ namespace SystemDot.Storage.Changes.Upcasting
         public Change UpcastIfRequired(Change toUpcast)
         {
             if (toUpcast.Version == Change.LatestVersion) return toUpcast;
-            if (!UpcasterExistsFor(toUpcast)) return toUpcast;
+            if (!UpcasterExistsFor(toUpcast, toUpcast.Version)) return toUpcast;
 
             return GetUpcaster(toUpcast).Upcast(toUpcast);
         }
 
-        bool UpcasterExistsFor(Change toUpcast)
+        bool UpcasterExistsFor(Change toUpcast, int version)
         {
-            return upcasters.Any(u => u.ChangeType == toUpcast.GetType());
+            return upcasters.Any(u => u.ChangeType == toUpcast.GetType() && u.Version == version);
         }
 
         IChangeUpcaster GetUpcaster(Change toUpcast)
