@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using SystemDot.Logging;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Sequencing;
@@ -109,6 +110,8 @@ namespace SystemDot.Messaging.Storage
 
         public void ApplyChange(AddMessageAndIncrementSequenceChange change)
         {
+            Logger.Debug("Incrementing cache sequence to {0} on {1}", change.Sequence, Id);
+
             sequence = change.Sequence;
             messages.TryAdd(change.Message.Id, change.Message);
         }
