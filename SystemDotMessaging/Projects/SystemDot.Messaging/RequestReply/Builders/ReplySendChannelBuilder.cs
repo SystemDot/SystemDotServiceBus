@@ -89,7 +89,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
         SendMessageCache CreateCache(ReplySendChannelSchema schema, EndpointAddress senderAddress)
         {
-            return messageCacheFactory.CreateSendCache(PersistenceUseType.ReplySend, senderAddress, schema);
+            return messageCacheFactory.BuildSendCache(PersistenceUseType.ReplySend, senderAddress, schema);
         }
 
         void RegisterCacheWithAcknowledgementHandler(SendMessageCache cache)

@@ -3,6 +3,7 @@ using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Filtering;
 using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Transport;
+using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.RequestReply.Builders
 {
@@ -12,22 +13,26 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly ReplySendChannelBuilder builder;
         readonly ReplyAddressLookup replyAddressLookup;
         readonly ChangeStoreSelector changeStoreSelector;
-        
+        readonly ICheckpointStrategy checkPointStrategy;
+
         public ReplySendDistributionChannelBuilder(
             MessageReceiver messageReceiver,
             ReplySendChannelBuilder builder, 
             ReplyAddressLookup replyAddressLookup,
-            ChangeStoreSelector changeStoreSelector)
+            ChangeStoreSelector changeStoreSelector,
+            ICheckpointStrategy checkPointStrategy)
         {
             Contract.Requires(messageReceiver != null);
             Contract.Requires(builder != null);
             Contract.Requires(replyAddressLookup != null);
             Contract.Requires(changeStoreSelector != null);
+            Contract.Requires(checkPointStrategy != null);
 
             this.messageReceiver = messageReceiver;
             this.builder = builder;
             this.replyAddressLookup = replyAddressLookup;
             this.changeStoreSelector = changeStoreSelector;
+            this.checkPointStrategy = checkPointStrategy;
         }
 
         public void Build(ReplySendChannelSchema schema)
@@ -38,7 +43,8 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 changeStoreSelector.SelectChangeStore(schema), 
                 replyAddressLookup, 
                 builder, 
-                schema);
+                schema,
+                checkPointStrategy);
 
             MessagePipelineBuilder.Build()      
                 .With(messageReceiver)

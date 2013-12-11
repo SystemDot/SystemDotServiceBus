@@ -77,7 +77,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
 
         SendMessageCache CreateCache(PointToPointSendChannelSchema schema)
         {
-            return messageCacheFactory.CreateSendCache(PersistenceUseType.PointToPointSend, schema.FromAddress, schema);
+            return messageCacheFactory.BuildSendCache(PersistenceUseType.PointToPointSend, schema.FromAddress, schema);
         }
 
         void RegisterCacheWithAcknowledgementHandler(SendMessageCache cache)

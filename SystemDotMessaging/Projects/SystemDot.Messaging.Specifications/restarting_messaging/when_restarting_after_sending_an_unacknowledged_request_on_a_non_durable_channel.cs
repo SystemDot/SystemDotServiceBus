@@ -1,13 +1,11 @@
 using System;
-using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
-using SystemDot.Storage.Changes.Upcasting;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.restarting_messaging
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_restarting_messaging_after_sending_an_unacknowledged_request_on_a_non_durable_channel
+    public class when_restarting_after_sending_an_unacknowledged_request_on_a_non_durable_channel
         : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";

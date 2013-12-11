@@ -1,4 +1,5 @@
 using System;
+using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Correlation;
 using SystemDot.Messaging.Ioc;
@@ -113,12 +114,6 @@ namespace SystemDot.Messaging.Specifications
             return payload;
         }
 
-        public static MessagePayload SetToServerAddress(this MessagePayload payload, string toSet)
-        {
-            payload.GetToAddress().Server.Address = new ServerAddress(toSet, false);
-            return payload;
-        }
-
         public static MessagePayload SetChannelType(this MessagePayload payload, PersistenceUseType toSet)
         {
             payload.SetPersistenceId(payload.GetFromAddress(), toSet);
@@ -129,8 +124,13 @@ namespace SystemDot.Messaging.Specifications
 
         public static MessagePayload Sequenced(this MessagePayload payload)
         {
-            payload.SetFirstSequence(1);
-            payload.SetSequence(1);
+            return payload.WithSequenceOf(1);
+        }
+
+        public static MessagePayload WithSequenceOf(this MessagePayload payload, int sequence)
+        {
+            payload.SetFirstSequence(sequence);
+            payload.SetSequence(sequence);
             return payload;
         }
 
@@ -140,7 +140,7 @@ namespace SystemDot.Messaging.Specifications
             return payload;
         }
 
-        public static MessagePayload SetSubscriptionRequest(this MessagePayload payload)
+        public static MessagePayload AsSubscriptionRequest(this MessagePayload payload)
         {
             payload.SetSubscriptionRequest(new SubscriptionSchema
             {
@@ -154,6 +154,13 @@ namespace SystemDot.Messaging.Specifications
             return payload;
         }
 
+        public static MessagePayload AsAcknowlegement(this MessagePayload payload, MessagePersistenceId acknowledgementId)
+        {
+            payload.SetAcknowledgementId(acknowledgementId);
+            return payload;
+        }
+
+        
         static T Resolve<T>() where T : class
         {
             return IocContainerLocator.Locate().Resolve<T>();

@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.publishing_subscription
             request = new MessagePayload()
                 .SetFromChannel(SubscriberAddress)
                 .SetToChannel(PublisherAddress)
-                .SetSubscriptionRequest();
+                .AsSubscriptionRequest();
         };
 
         Because of = () => GetServer().ReceiveMessage(request);

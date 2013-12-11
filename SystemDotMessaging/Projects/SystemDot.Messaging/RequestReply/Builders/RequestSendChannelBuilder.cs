@@ -80,7 +80,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
         SendMessageCache CreateCache(RequestSendChannelSchema schema)
         {
-            return messageCacheFactory.CreateSendCache(PersistenceUseType.RequestSend, schema.FromAddress, schema);
+            return messageCacheFactory.BuildSendCache(PersistenceUseType.RequestSend, schema.FromAddress, schema);
         }
 
         void RegisterCacheWithAcknowledgementHandler(SendMessageCache cache)

@@ -23,7 +23,7 @@ namespace SystemDot.Messaging.Specifications
             return new MessagePayload()
                 .SetFromEndpointAddress(subscriberAddress)
                 .SetToEndpointAddress(publisherAddress)
-                .SetSubscriptionRequest();
+                .AsSubscriptionRequest();
         }
     }
 }

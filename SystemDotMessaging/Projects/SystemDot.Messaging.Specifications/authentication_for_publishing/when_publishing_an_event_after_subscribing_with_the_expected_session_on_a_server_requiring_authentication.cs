@@ -42,7 +42,7 @@ namespace SystemDot.Messaging.Specifications.authentication_for_publishing
                 .SetFromServer(SubscriberServer)
                 .SetToChannel(PublisherChannel)
                 .SetToServer(PublisherServer)
-                .SetSubscriptionRequest();
+                .AsSubscriptionRequest();
 
             subscriptionRequest.SetAuthenticationSession(session);
 

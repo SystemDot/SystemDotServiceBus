@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Specifications.server_addressing
                 .SetFromServerAddress(SubscriberServerAddress)
                 .SetToChannel(PublisherChannel)
                 .SetToServer(PublisherServer)
-                .SetSubscriptionRequest();
+                .AsSubscriptionRequest();
         };
 
         Because of = () => SendMessageToServer(request);

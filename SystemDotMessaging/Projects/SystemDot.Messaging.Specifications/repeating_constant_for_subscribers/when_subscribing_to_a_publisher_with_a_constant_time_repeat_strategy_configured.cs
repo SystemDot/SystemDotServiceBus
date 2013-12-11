@@ -21,7 +21,8 @@ namespace SystemDot.Messaging.Specifications.repeating_constant_for_subscribers
 
         It should_send_the_subscription_request_containing_the_strategy_with_the_expected_repeat_time = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetSubscriptionRequestSchema().RepeatStrategy.As<ConstantTimeRepeatStrategy>()
-                    .RepeatEvery.ShouldEqual(TimeSpan.FromSeconds(RepeatSeconds));
+                .GetSubscriptionRequestSchema()
+                    .RepeatStrategy.As<ConstantTimeRepeatStrategy>()
+                        .RepeatEvery.ShouldEqual(TimeSpan.FromSeconds(RepeatSeconds));
     }
 }

@@ -105,7 +105,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
         ReceiveMessageCache CreateCache(RequestRecieveChannelSchema schema, EndpointAddress senderAddress)
         {
-            return messageCacheFactory.CreateReceiveCache(PersistenceUseType.RequestReceive, senderAddress, schema);
+            return messageCacheFactory.BuildReceiveCache(PersistenceUseType.RequestReceive, senderAddress, schema);
         }
 
         void BuildChannel(MessageProcessor startPoint, RequestRecieveChannelSchema schema, ReceiveMessageCache messageCache)

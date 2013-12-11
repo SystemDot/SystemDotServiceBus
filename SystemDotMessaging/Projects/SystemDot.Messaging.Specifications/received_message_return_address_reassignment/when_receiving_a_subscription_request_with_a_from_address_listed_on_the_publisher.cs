@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.received_message_return_address_rea
                 .SetFromServerAddress("SubscriberServerAddress")
                 .SetToChannel(PublisherChannel)
                 .SetToServer(PublisherServerName)
-                .SetSubscriptionRequest();
+                .AsSubscriptionRequest();
         };
 
         Because of = () => SendMessageToServer(messagePayload);

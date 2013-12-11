@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.Threading;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Storage.Changes;
-using SystemDot.Storage.Changes.Upcasting;
 
 namespace SystemDot.Messaging.Distribution
 {
@@ -11,10 +10,10 @@ namespace SystemDot.Messaging.Distribution
     {
         readonly ConcurrentDictionary<EndpointAddress, ChannelContainer> channels;
 
-        protected ChannelDistributor(ChangeStore changeStore)
-            : base(changeStore)
+        protected ChannelDistributor(ChangeStore changeStore, ICheckpointStrategy checkPointStrategy)
+            : base(changeStore, checkPointStrategy)
         {
-            this.channels = new ConcurrentDictionary<EndpointAddress, ChannelContainer>();
+            channels = new ConcurrentDictionary<EndpointAddress, ChannelContainer>();
         }
 
         public void InputMessage(T toInput)
@@ -24,9 +23,9 @@ namespace SystemDot.Messaging.Distribution
 
         protected abstract void Distribute(T toDistibute);
 
-        public IMessageInputter<T> GetChannel(EndpointAddress address)
+        protected IMessageInputter<T> GetChannel(EndpointAddress address)
         {
-            return this.channels[address].GetChannel();
+            return channels[address].GetChannel();
         }
 
         public void RegisterChannel(EndpointAddress address)
@@ -46,7 +45,7 @@ namespace SystemDot.Messaging.Distribution
         {
             var channelContainer = new ChannelContainer(toRegister);
 
-            if (this.channels.TryAdd(address, channelContainer))
+            if (channels.TryAdd(address, channelContainer))
                 channelContainer.BuildChannel();
         }
 
@@ -56,32 +55,32 @@ namespace SystemDot.Messaging.Distribution
 
         class ChannelContainer
         {
-            readonly object locker;
             readonly Func<IMessageInputter<T>> channelBuilder;
+            readonly object locker;
 
             IMessageInputter<T> channel;
 
             public ChannelContainer(Func<IMessageInputter<T>> channelBuilder)
             {
                 this.channelBuilder = channelBuilder;
-                this.locker = new object();
+                locker = new object();
             }
 
             public void BuildChannel()
             {
-                this.channel = this.channelBuilder.Invoke();
+                channel = channelBuilder.Invoke();
 
-                lock (this.locker) 
-                    Monitor.Pulse(this.locker);
+                lock (locker)
+                    Monitor.Pulse(locker);
             }
 
             public IMessageInputter<T> GetChannel()
             {
-                if (this.channel == null)
-                    lock (this.locker) 
-                        Monitor.Wait(this.locker);
-                
-                return this.channel;
+                if (channel == null)
+                    lock (locker)
+                        Monitor.Wait(locker);
+
+                return channel;
             }
         }
     }

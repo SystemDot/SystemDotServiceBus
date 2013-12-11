@@ -40,6 +40,8 @@
   <ItemGroup>
     <Compile Include="ByteArrayExtensions.cs" />
     <Compile Include="Storage\Changes\ChangeDescription.cs" />
+    <Compile Include="Storage\Changes\CheckPointOn1000ChangesCheckpointStrategy.cs" />
+    <Compile Include="Storage\Changes\ICheckpointStrategy.cs" />
     <Compile Include="Storage\Changes\Upcasting\ChangeUpcasterRunner.cs" />
     <Compile Include="Storage\Changes\Upcasting\IChangeUpcaster.cs" />
     <Compile Include="SystemTime.cs" />

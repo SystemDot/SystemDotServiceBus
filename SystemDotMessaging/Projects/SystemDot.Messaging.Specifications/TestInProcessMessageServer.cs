@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Packaging.Headers;
+using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.Http;
 using SystemDot.Messaging.Transport.InProcess;
 
@@ -34,6 +37,19 @@ namespace SystemDot.Messaging.Specifications
         public void ReplyAfterRequestSentWith(MessagePayload toReplyWith) 
         { 
             ReturnedMessages.Add(toReplyWith);
+        }
+
+        public MessagePayload GetOnlyMessage()
+        {
+            return SentMessages.Single();
+        }
+
+        public void ReceiveAcknowledgementFor(MessagePayload messagePayload)
+        {
+            ReceiveMessage(
+                new MessagePayload()
+                    .AsAcknowlegement(messagePayload.GetPersistenceId())
+                    .SetToChannel(messagePayload.GetFromAddress().Channel));
         }
     }
 }

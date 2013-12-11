@@ -52,7 +52,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\SystemDot.config" />
+    <AndroidAsset Include="Assets\SystemDot.config">
+      <SubType>Designer</SubType>
+    </AndroidAsset>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
   </ItemGroup>

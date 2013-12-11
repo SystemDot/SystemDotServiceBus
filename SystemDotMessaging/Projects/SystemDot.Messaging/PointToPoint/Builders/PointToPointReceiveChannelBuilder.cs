@@ -76,7 +76,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
 
         ReceiveMessageCache CreateCache(PointToPointReceiverChannelSchema schema)
         {
-            return messageCacheFactory.CreateReceiveCache(PersistenceUseType.PointToPointReceive, schema.Address, schema);
+            return messageCacheFactory.BuildReceiveCache(PersistenceUseType.PointToPointReceive, schema.Address, schema);
         }
 
         void BuildPipeline(PointToPointReceiverChannelSchema schema, ReceiveMessageCache messageCache)

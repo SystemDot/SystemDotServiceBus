@@ -23,6 +23,7 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly ISubscriberSendChannelBuilder subscriberChannelBuilder;
         readonly ISystemTime systemTime;
         readonly ChangeStore changeStore;
+        readonly ICheckpointStrategy checkPointStrategy;
 
         public PublisherChannelBuilder(
             IPublisherRegistry publisherRegistry, 
@@ -31,7 +32,8 @@ namespace SystemDot.Messaging.Publishing.Builders
             MessageCacheFactory messageCacheFactory, 
             ISubscriberSendChannelBuilder subscriberChannelBuilder, 
             ISystemTime systemTime, 
-            ChangeStore changeStore)
+            ChangeStore changeStore,
+            ICheckpointStrategy checkPointStrategy)
         {
             Contract.Requires(publisherRegistry != null);
             Contract.Requires(serialiser != null);
@@ -40,6 +42,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             Contract.Requires(subscriberChannelBuilder != null);
             Contract.Requires(systemTime != null);
             Contract.Requires(changeStore != null);
+            Contract.Requires(checkPointStrategy != null);
             
             this.publisherRegistry = publisherRegistry;
             this.serialiser = serialiser;
@@ -48,6 +51,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             this.subscriberChannelBuilder = subscriberChannelBuilder;
             this.systemTime = systemTime;
             this.changeStore = changeStore;
+            this.checkPointStrategy = checkPointStrategy;
         }
 
         public void Build(PublisherChannelSchema schema)
@@ -86,12 +90,12 @@ namespace SystemDot.Messaging.Publishing.Builders
 
         Publisher CreatePublisher(PublisherChannelSchema schema)
         {
-            return new Publisher(schema.FromAddress, subscriberChannelBuilder, changeStore);
+            return new Publisher(schema.FromAddress, subscriberChannelBuilder, changeStore, checkPointStrategy);
         }
 
         SendMessageCache CreateCache(PublisherChannelSchema schema)
         {
-            return messageCacheFactory.CreateSendCache(PersistenceUseType.PublisherSend, schema.FromAddress, schema);
+            return messageCacheFactory.BuildSendCache(PersistenceUseType.PublisherSend, schema.FromAddress, schema);
         }
     }
 }

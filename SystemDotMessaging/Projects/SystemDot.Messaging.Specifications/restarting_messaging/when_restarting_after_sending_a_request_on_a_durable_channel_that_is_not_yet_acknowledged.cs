@@ -1,22 +1,17 @@
 using System;
-using SystemDot.Messaging.Packaging;
-using SystemDot.Messaging.Storage;
-using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
-using SystemDot.Storage.Changes.Upcasting;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.restarting_messaging
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_restarting_messaging_after_sending_a_reply_on_a_durable_channel_that_is_not_yet_acknowledged
+    public class when_restarting_after_sending_a_request_on_a_durable_channel_that_is_not_yet_acknowledged 
         : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";
-        const string SenderAddress = "TestSenderAddress";
+        const string ReceiverAddress = "TestReceiverAddress";
         const Int64 Request = 1;
-        const Int64 Reply = 2;
-
+        
         static ChangeStore changeStore;
 
         Establish context = () =>
@@ -28,18 +23,11 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                .ForRequestReplyReceiving()
+                .ForRequestReplySendingTo(ReceiverAddress)
                 .WithDurability()
                 .Initialise();
 
-            GetServer().ReceiveMessage(
-                new MessagePayload().MakeSequencedReceivable(
-                    Request,
-                    SenderAddress,
-                    ChannelName,
-                    PersistenceUseType.RequestSend));
-
-            Bus.Reply(Reply);
+            Bus.Send(Request);
 
             Reset();
             ReInitialise();
@@ -52,10 +40,10 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
-                .ForRequestReplyReceiving()
+                .ForRequestReplySendingTo(ReceiverAddress)
                 .WithDurability()
                 .Initialise();
 
-        It should_send_the_message_again = () => GetServer().SentMessages.ShouldContain(m => m.DeserialiseTo<Int64>() == Reply);
+        It should_send_the_message_again = () => GetServer().SentMessages.ShouldContain(m => m.DeserialiseTo<Int64>() == Request);
     }
 }

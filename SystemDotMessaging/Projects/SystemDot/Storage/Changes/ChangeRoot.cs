@@ -7,14 +7,17 @@ namespace SystemDot.Storage.Changes
     public abstract class ChangeRoot
     {
         readonly ChangeStore changeStore;
+        readonly ICheckpointStrategy checkpointStrategy;
         readonly object checkPointLock = new object();
         volatile int changeCount;
 
-        protected ChangeRoot(ChangeStore changeStore)
+        protected ChangeRoot(ChangeStore changeStore, ICheckpointStrategy checkpointStrategy)
         {
             Contract.Requires(changeStore != null);
+            Contract.Requires(checkpointStrategy != null);
 
             this.changeStore = changeStore;
+            this.checkpointStrategy = checkpointStrategy;
         }
 
         protected string Id { get; set; }
@@ -39,16 +42,16 @@ namespace SystemDot.Storage.Changes
             lock (checkPointLock)
             {
                 if (!ShouldCheckPoint()) return;
-                
+
                 AddChangeWithoutCheckPoint(change);
-                
+
                 changeCount = 0;
             }
         }
 
         bool ShouldCheckPoint()
         {
-            return changeCount >= 1000;
+            return checkpointStrategy.ShouldCheckPoint(changeCount);
         }
 
         void AddChangeWithoutCheckPoint(Change change)

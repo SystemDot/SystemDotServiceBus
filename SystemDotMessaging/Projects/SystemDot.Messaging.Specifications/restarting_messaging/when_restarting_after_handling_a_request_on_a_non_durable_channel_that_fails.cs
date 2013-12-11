@@ -1,15 +1,12 @@
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
-using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
-using SystemDot.Storage.Changes.Upcasting;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.restarting_messaging
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_restarting_messaging_after_handling_a_request_on_a_non_durable_channel_that_fails 
+    public class when_restarting_after_handling_a_request_on_a_non_durable_channel_that_fails 
         : WithMessageConfigurationSubject
     {
         const string ChannelName = "Test";

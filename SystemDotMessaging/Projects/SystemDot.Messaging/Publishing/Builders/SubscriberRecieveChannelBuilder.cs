@@ -82,7 +82,7 @@ namespace SystemDot.Messaging.Publishing.Builders
 
         ReceiveMessageCache CreateCache(SubscriberRecieveChannelSchema schema)
         {
-            return messageCacheFactory.CreateReceiveCache(PersistenceUseType.SubscriberReceive, schema.Address, schema);
+            return messageCacheFactory.BuildReceiveCache(PersistenceUseType.SubscriberReceive, schema.Address, schema);
         }
 
         void BuildPipeline(SubscriberRecieveChannelSchema schema, ReceiveMessageCache messageCache)

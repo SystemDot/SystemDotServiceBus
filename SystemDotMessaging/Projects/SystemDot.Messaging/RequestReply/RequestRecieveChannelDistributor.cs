@@ -15,9 +15,10 @@ namespace SystemDot.Messaging.RequestReply
 
         public RequestRecieveChannelDistributor(
             ChangeStore changeStore, 
-            RequestRecieveChannelBuilder builder, 
-            RequestRecieveChannelSchema schema) 
-            : base(changeStore)
+            RequestRecieveChannelBuilder builder,
+            RequestRecieveChannelSchema schema,
+            ICheckpointStrategy checkPointStrategy)
+            : base(changeStore, checkPointStrategy)
         {
             Contract.Requires(changeStore != null);
             Contract.Requires(builder != null);

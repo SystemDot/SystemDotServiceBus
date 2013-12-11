@@ -14,14 +14,18 @@ namespace SystemDot.Messaging.Publishing
         
         public event Action<MessagePayload> MessageProcessed;
 
-        public Publisher(EndpointAddress address, ISubscriberSendChannelBuilder builder, ChangeStore changeStore)
+        public Publisher(
+            EndpointAddress address, 
+            ISubscriberSendChannelBuilder builder, 
+            ChangeStore changeStore,
+            ICheckpointStrategy checkPointStrategy)
         {
             Contract.Requires(address != null);
             Contract.Requires(address != EndpointAddress.Empty);
             Contract.Requires(builder != null);
             Contract.Requires(changeStore != null);
 
-            subscribers = new PersistentSubscriberCollection(address, changeStore, builder);
+            subscribers = new PersistentSubscriberCollection(address, changeStore, builder, checkPointStrategy);
         }
 
         public void InputMessage(MessagePayload toInput)

@@ -29,6 +29,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<MessageReceiver, MessageReceiver>();
             container.RegisterInstance<NullChangeStore, NullChangeStore>();
             container.RegisterInstance<ChangeUpcasterRunner, ChangeUpcasterRunner>();
+            container.RegisterInstance<ICheckpointStrategy, CheckpointAfterOneThousandChangesCheckpointStrategy>();
         }
     }
 }

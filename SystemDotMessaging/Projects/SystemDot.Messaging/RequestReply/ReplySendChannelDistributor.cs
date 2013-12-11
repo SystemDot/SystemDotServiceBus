@@ -15,9 +15,10 @@ namespace SystemDot.Messaging.RequestReply
         public ReplySendChannelDistributor(
             ChangeStore changeStore, 
             ReplyAddressLookup replyAddressLookup, 
-            ReplySendChannelBuilder builder, 
-            ReplySendChannelSchema schema)
-            : base(changeStore)
+            ReplySendChannelBuilder builder,
+            ReplySendChannelSchema schema,
+            ICheckpointStrategy checkPointStrategy)
+            : base(changeStore, checkPointStrategy)
         {
             Contract.Requires(replyAddressLookup != null);
             Contract.Requires(builder != null);

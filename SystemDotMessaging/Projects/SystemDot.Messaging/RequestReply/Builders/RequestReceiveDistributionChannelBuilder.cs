@@ -12,11 +12,13 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly MessageReceiver messageReceiver;
         readonly RequestRecieveChannelBuilder builder;
         readonly ChangeStoreSelector changeStoreSelector;
+        readonly ICheckpointStrategy checkPointStrategy;
 
         public RequestReceiveDistributionChannelBuilder(
             MessageReceiver messageReceiver, 
             RequestRecieveChannelBuilder builder,
-            ChangeStoreSelector changeStoreSelector)
+            ChangeStoreSelector changeStoreSelector,
+            ICheckpointStrategy checkPointStrategy)
         {
             Contract.Requires(messageReceiver != null);
             Contract.Requires(builder != null);
@@ -25,13 +27,14 @@ namespace SystemDot.Messaging.RequestReply.Builders
             this.messageReceiver = messageReceiver;
             this.builder = builder;
             this.changeStoreSelector = changeStoreSelector;
+            this.checkPointStrategy = checkPointStrategy;
         }
 
         public void Build(RequestRecieveChannelSchema schema)
         {
             Contract.Requires(schema != null);
 
-            var distributor = new RequestRecieveChannelDistributor(changeStoreSelector.SelectChangeStore(schema), builder, schema);
+            var distributor = new RequestRecieveChannelDistributor(SelectChangeStore(schema), builder, schema, checkPointStrategy);
             
             MessagePipelineBuilder.Build()  
                 .With(messageReceiver)
@@ -44,6 +47,11 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToEndPoint(distributor);
 
             distributor.Initialise();
+        }
+
+        ChangeStore SelectChangeStore(RequestRecieveChannelSchema schema)
+        {
+            return changeStoreSelector.SelectChangeStore(schema);
         }
     }
 }

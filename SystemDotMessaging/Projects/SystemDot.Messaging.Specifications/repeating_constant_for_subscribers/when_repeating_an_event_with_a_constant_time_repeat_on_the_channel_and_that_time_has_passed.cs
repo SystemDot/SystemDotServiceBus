@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.repeating_constant_for_subscribers
                 .SetToServer(PublisherServer)
                 .SetFromChannel("SubscriberChannel")
                 .SetFromServer("SubscriberServer")
-                .SetSubscriptionRequest();
+                .AsSubscriptionRequest();
 
             subscriptionRequest.GetSubscriptionRequestSchema().RepeatStrategy = new ConstantTimeRepeatStrategy { RepeatEvery = TimeSpan.FromSeconds(1) };
 

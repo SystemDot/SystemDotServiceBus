@@ -11,8 +11,12 @@ namespace SystemDot.Messaging.Specifications
     {
         readonly List<MessagePayload> messages;
         
-        public TestMessageChangeRebuilder(ChangeStore changeStore, EndpointAddress address, PersistenceUseType useType)
-            : base(changeStore)
+        public TestMessageChangeRebuilder(
+            ChangeStore changeStore, 
+            EndpointAddress address, 
+            PersistenceUseType useType, 
+            ICheckpointStrategy checkPointStrategy)
+            : base(changeStore, checkPointStrategy)
         {
             Address = address;
             UseType = useType;
@@ -55,8 +59,8 @@ namespace SystemDot.Messaging.Specifications
         {
         }
 
-        public EndpointAddress Address { get; private set; }
-        public PersistenceUseType UseType { get; private set; }
+        EndpointAddress Address { get; set; }
+        PersistenceUseType UseType { get; set; }
         
         protected override void UrgeCheckPoint()
         {

@@ -71,7 +71,7 @@ namespace SystemDot.Messaging.Publishing.Builders
 
         SendMessageCache CreateCache(SubscriberSendChannelSchema schema)
         {
-            return messageCacheFactory.CreateSendCache(PersistenceUseType.SubscriberSend, schema.SubscriberAddress, schema);
+            return messageCacheFactory.BuildSendCache(PersistenceUseType.SubscriberSend, schema.SubscriberAddress, schema);
         }
 
         void RegisterCacheWithAcknowledgementHandler(SendMessageCache cache)
