@@ -31,11 +31,13 @@ namespace SystemDot.Messaging.Authentication.Expiry
 
         void ScheduleDecache(MessageServer server, AuthenticationSession toTrack)
         {
-            taskScheduler.ScheduleTask(GetDecacheTime(toTrack), () =>
-            {
-                Logger.Debug("Expiring authentication session {0}", toTrack.Id);
-                Messenger.Send(new AuthenticationSessionExpired(server, toTrack));
-            });
+            taskScheduler.ScheduleTask(GetDecacheTime(toTrack), () => ExpireSession(server, toTrack));
+        }
+
+        static void ExpireSession(MessageServer server, AuthenticationSession toTrack)
+        {
+            Logger.Debug("Expiring authentication session {0}", toTrack.Id);
+            Messenger.Send(new AuthenticationSessionExpired {Server = server, Session = toTrack});
         }
 
         TimeSpan GetDecacheTime(AuthenticationSession toTrack)
