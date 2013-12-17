@@ -161,6 +161,7 @@
     <Compile Include="Direct\Builders\LocalDirectChannelSchema.cs" />
     <Compile Include="MessageProcessor.cs" />
     <Compile Include="MessagingInitialising.cs" />
+    <Compile Include="NullMessageProcessor.cs" />
     <Compile Include="PointToPoint\Builders\PointToPointReceiveChannelBuilt.cs" />
     <Compile Include="PointToPoint\Builders\PointToPointReceiverChannelSchema.cs" />
     <Compile Include="PointToPoint\Builders\PointToPointSendChannelBuilder.cs" />

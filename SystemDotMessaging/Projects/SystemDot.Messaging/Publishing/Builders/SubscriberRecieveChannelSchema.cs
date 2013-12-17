@@ -30,6 +30,8 @@ namespace SystemDot.Messaging.Publishing.Builders
 
         public bool ContinueOnException { get; set; }
 
+        public bool FlushMessages { get; set; }
+
         public SubscriberRecieveChannelSchema()
         {
             Hooks = new List<IMessageHook<object>>();

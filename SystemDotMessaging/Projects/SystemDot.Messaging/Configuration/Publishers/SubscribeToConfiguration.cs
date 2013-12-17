@@ -126,5 +126,11 @@ namespace SystemDot.Messaging.Configuration.Publishers
         {
             requestSchema.RepeatStrategy = strategy;
         }
+
+        public SubscribeToConfiguration InFlushMessagesMode()
+        {
+            receiveSchema.FlushMessages = true;
+            return this;
+        }
     }
 }

@@ -1,0 +1,486 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2563F726-8DC3-4244-BEA7-F11068EA7AB9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SystemDot.Messaging.Specifications</RootNamespace>
+    <AssemblyName>SystemDot.Messaging.Specifications</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Machine.Fakes">
+      <HintPath>..\..\Dependencies\Mspec\Machine.Fakes.dll</HintPath>
+    </Reference>
+    <Reference Include="Machine.Fakes.Adapters.RhinoMocks">
+      <HintPath>..\..\Dependencies\Mspec\Machine.Fakes.Adapters.RhinoMocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Machine.Specifications, Version=0.4.24.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\Mspec\Machine.Specifications.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="authentication\FailingAuthenticationResponse.cs" />
+    <Compile Include="authentication\MessagePayloadExtensions.cs" />
+    <Compile Include="authentication\TestAuthenticationResponse.cs" />
+    <Compile Include="authentication\when_a_sent_message_is_repeated_after_restarting_messaging_and_its_session_has_expired.cs" />
+    <Compile Include="authentication\when_receiving_a_message_without_first_authenticating.cs" />
+    <Compile Include="authentication\when_receiving_a_message_without_a_session_with_both_sender_and_receiver_on_the_same_server.cs" />
+    <Compile Include="authentication\OtherTestAuthenticationRequest.cs" />
+    <Compile Include="authentication\SpecificationGroup.cs" />
+    <Compile Include="authentication\TestAuthenticationRequest.cs" />
+    <Compile Include="authentication\when_receiving_an_authentication_request.cs" />
+    <Compile Include="authentication\when_receiving_an_authentication_request_that_is_not_accepted_on_the_server.cs" />
+    <Compile Include="authentication\when_receiving_a_message_with_the_correct_session_for_a_server_that_existed_before_restarting_messaging.cs" />
+    <Compile Include="authentication\when_receiving_a_message_with_the_expected_session_from_another_server.cs" />
+    <Compile Include="authentication\when_receiving_a_message_with_the_expected_session.cs" />
+    <Compile Include="authentication\when_replying_to_an_authentication_request.cs" />
+    <Compile Include="authentication\when_replying_to_an_authentication_request_with_a_response_that_wont_authenticate.cs" />
+    <Compile Include="authentication\when_sending_an_authentication_request_to_a_server.cs" />
+    <Compile Include="authentication\when_sending_an_authentication_request_with_two_servers_requiring_authentication.cs" />
+    <Compile Include="authentication\when_sending_a_message_to_a_server_after_authenticating_to_it.cs" />
+    <Compile Include="authentication\when_sending_a_message_to_a_server_after_failing_to_authenticate_to_it.cs" />
+    <Compile Include="authentication\when_sending_a_message_with_both_sender_and_receiver_on_the_same_server.cs" />
+    <Compile Include="authentication\when_sending_a_message_with_sender_and_receiver_on_the_same_server_after_restarting_messaging.cs" />
+    <Compile Include="authentication_expiry\when_a_session_expires_for_a_server_requiring_authentication_with_an_expired_session_action_configured.cs" />
+    <Compile Include="authentication_expiry\SpecificationGroup.cs" />
+    <Compile Include="authentication\when_receiving_a_message_on_a_session_with_whilst_a_new_session_exists_for_that_sender.cs" />
+    <Compile Include="authentication_expiry\when_a_session_expires_with_an_expired_session_action_configured_for_different_server.cs" />
+    <Compile Include="authentication_expiry\when_receiving_a_message_with_an_expired_session.cs" />
+    <Compile Include="authentication_expiry\when_a_session_expires_on_a_server_requiring_authentication_with_an_expired_session_action_configured.cs" />
+    <Compile Include="authentication_expiry\when_replying_to_an_authentication_request_on_a_server_with_session_expiry.cs" />
+    <Compile Include="authentication_expiry\when_sending_a_message_when_the_current_session_is_expired.cs" />
+    <Compile Include="authentication_for_publishing\SpecificationGroup.cs" />
+    <Compile Include="authentication_for_publishing\when_a_subscription_attempt_to_a_server_has_been_repeated_after_authenticating_to_it.cs" />
+    <Compile Include="authentication_for_publishing\when_publishing_an_event_after_subscribing_without_a_session_on_a_server_requiring_authentication.cs" />
+    <Compile Include="authentication_for_publishing\when_publishing_an_event_after_subscribing_with_the_expected_session_on_a_server_requiring_authentication.cs" />
+    <Compile Include="authentication_for_publishing\when_receiving_a_published_event_without_a_session_from_a_server_requiring_authentication.cs" />
+    <Compile Include="authentication_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="authentication_for_request_reply\when_a_reply_is_repeated_after_restarting_messaging_and_its_session_has_expired.cs" />
+    <Compile Include="authentication_for_request_reply\when_receiving_a_request_without_a_session_on_a_server_requiring_authentication.cs" />
+    <Compile Include="authentication_for_request_reply\when_receiving_a_reply_without_a_session_from_a_server_requiring_authentication.cs" />
+    <Compile Include="authentication_for_request_reply\when_replying_to_a_request_on_a_server_requiring_authentication.cs" />
+    <Compile Include="authentication_for_request_reply\when_replying_to_a_request_on_a_previous_session_after_subsequent_authentication.cs" />
+    <Compile Include="authentication_for_request_reply\when_sending_a_message_to_a_server_after_failing_to_authenticate_to_it.cs" />
+    <Compile Include="authentication_for_request_reply\when_sending_a_request_to_a_server_requiring_authentication_after_authenticating_to_it.cs" />
+<<<<<<< HEAD
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="repeating_constant_for_subscribers\SpecificationGroup.cs" />
+    <Compile Include="repeating_constant_for_subscribers\when_repeating_an_event_with_a_constant_time_repeat_on_the_channel_and_that_time_has_passed.cs" />
+=======
+    <Compile Include="flushing_messages_for_subscribers\SpecificationGroup.cs" />
+    <Compile Include="flushing_messages_for_subscribers\when_receiving_a_message_on_a_channel_in_flush_mode.cs" />
+    <Compile Include="flushing_messages_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="flushing_messages_for_request_reply\when_receiving_a_message_on_a_channel_in_flush_mode.cs" />
+>>>>>>> master
+    <Compile Include="correlation_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="correlation_for_request_reply\when_receiving_a_reply_that_correlates_to_a_request_with_correlate_configured.cs" />
+    <Compile Include="correlation_for_request_reply\when_receiving_a_reply_that_does_not_correlate_to_a_request_with_correlate_configured.cs" />
+    <Compile Include="correlation_for_request_reply\when_receiving_a_reply_that_has_no_correlation_with_correlate_configured.cs" />
+    <Compile Include="correlation_for_request_reply\when_receiving_two_replies_that_correlate_with_two_requests_with_correlate_configured.cs" />
+    <Compile Include="correlation_for_request_reply\when_replying_to_a_request_without_a_correlation.cs" />
+    <Compile Include="correlation_for_request_reply\when_replying_to_a_request_with_a_correlation.cs" />
+    <Compile Include="correlation_for_request_reply\when_sending_a_request_without_correlation_configured.cs" />
+    <Compile Include="correlation_for_request_reply\when_sending_a_request_with_correlation_configured.cs" />
+    <Compile Include="diagnostics\SpecificationGroup.cs" />
+    <Compile Include="diagnostics\when_describing_all_changes_in_the_change_store_with_muliple_changes_stored.cs" />
+    <Compile Include="diagnostics\when_describing_all_changes_in_the_change_store_with_one_change_stored.cs" />
+    <Compile Include="exception_handling_for_point_to_point_receiving\SpecificationGroup.cs" />
+    <Compile Include="exception_handling_for_point_to_point_receiving\when_failing_the_handling_of_a_request_with_continue_on_exception_configured.cs" />
+    <Compile Include="exception_handling_for_subscriptions\SpecificationGroup.cs" />
+    <Compile Include="exception_handling_for_subscriptions\when_failing_the_handling_of_an_event_with_continue_on_exception_configured.cs" />
+    <Compile Include="direct_channels_for_request_reply\when_receiving_a_reply_after_sending_a_request_with_a_handler_specified_by_send_direct.cs" />
+    <Compile Include="direct_channels_for_request_reply\when_sending_an_async_request.cs" />
+    <Compile Include="direct_channels_for_request_reply_over_http\when_a_server_error_occurs_when_sending_an_async_request_with_an_error_action_specified.cs" />
+    <Compile Include="exception_handling_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="exception_handling_for_request_reply\when_failing_the_handling_of_a_reply_with_continue_on_exception_configured.cs" />
+    <Compile Include="exception_handling_for_request_reply\when_failing_the_handling_of_a_request_with_continue_on_exception_configured.cs" />
+    <Compile Include="exception_replying_for_request_reply\when_failing_the_handling_of_a_request_with_continue_on_exception_configured.cs" />
+    <Compile Include="flushing_messages\SpecificationGroup.cs" />
+    <Compile Include="flushing_messages\when_receiving_a_message_on_a_channel_in_flush_mode.cs" />
+    <Compile Include="InMemoryChangeStore.cs" />
+    <Compile Include="proxying\when_handling_a_long_poll_request_for_the_same_message_queued_twice.cs" />
+    <Compile Include="repeating_constant_for_subscribers\when_subscribing_to_a_publisher_without_a_repeat_strategy_configured.cs" />
+    <Compile Include="repeating_constant_for_subscribers\when_subscribing_to_a_publisher_with_a_constant_time_repeat_strategy_configured.cs" />
+    <Compile Include="restarting_messaging\CheckpointAfterOneChangeCheckpointStrategy.cs" />
+    <Compile Include="restarting_messaging\when_restarting_on_a_durable_sequenced_channel_after_a_checkpoint_and_then_receiving_a_previous_sequence_request.cs" />
+    <Compile Include="restarting_messaging\when_restarting_on_a_durable_sequenced_channel_after_a_checkpoint_and_then_sending_a_request.cs" />
+    <Compile Include="running_handlers_on_main_thread_for_subscribers\SpecificationGroup.cs" />
+    <Compile Include="running_handlers_on_main_thread_for_subscribers\when_receiving_an_event_on_a_channel_configured_to_handle_on_main_thread.cs" />
+    <Compile Include="direct_channels_for_request_reply_over_http\when_a_server_error_occurs_when_sending_a_request_with_an_error_action_specified.cs" />
+    <Compile Include="filtering_by_name_for_direct_channel_request_reply\SpecificationGroup.cs" />
+    <Compile Include="filtering_by_name_for_direct_channel_request_reply\when_receiving_a_request_with_the_wrong_name_down_a_channel.cs" />
+    <Compile Include="filtering_by_name_for_direct_channel_request_reply\when_sending_a_request_with_the_wrong_name_down_a_channel.cs" />
+    <Compile Include="direct_channels_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="direct_channels_for_request_reply\when_receiving_a_reply_after_sending_a_request_with_a_handler.cs" />
+    <Compile Include="direct_channels_for_request_reply\when_receiving_a_reply_for_a_different_channel_than_the_one_configured.cs" />
+    <Compile Include="direct_channels_for_request_reply\when_receiving_a_request.cs" />
+    <Compile Include="direct_channels_for_request_reply\when_receiving_a_request_and_replying_with_two_direct_channels_configured.cs" />
+    <Compile Include="direct_channels_for_request_reply\when_receiving_a_request_from_a_different_channel.cs" />
+    <Compile Include="direct_channels_for_request_reply\when_receiving_a_request_and_replying.cs" />
+    <Compile Include="direct_channels_for_request_reply\when_sending_a_request.cs" />
+    <Compile Include="direct_channels_for_request_reply\when_sending_a_request_with_to_a_channel_configured_after_configuring_another_receiver.cs" />
+    <Compile Include="direct_channels_for_request_reply\when_sending_a_request_with_to_a_channel_configured_after_configuring_another_sender.cs" />
+    <Compile Include="direct_channels_for_request_reply_over_http\SpecificationGroup.cs" />
+    <Compile Include="direct_channels_for_request_reply_over_http\when_receiving_a_request.cs" />
+    <Compile Include="exception_replying_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="exception_replying_for_request_reply\when_failing_the_handling_of_a_request.cs" />
+    <Compile Include="filtering_by_name\when_receiving_a_request_with_the_wrong_name_down_a_channel.cs" />
+    <Compile Include="filtering_by_name_and_namespace\SpecificationGroup.cs" />
+    <Compile Include="filtering_by_name_and_namespace\TestNameAndNamespaceMessage.cs" />
+    <Compile Include="filtering_by_name_and_namespace\when_sending_a_request_with_the_correct_name_and_incorrect_namespace_down_a_channel.cs" />
+    <Compile Include="filtering_by_name_and_namespace\when_sending_a_request_with_the_correct_name_and_namespace_down_a_channel.cs" />
+    <Compile Include="filtering_by_namespace\SpecificationGroup.cs" />
+    <Compile Include="filtering_by_namespace\TestNamespaceMessage.cs" />
+    <Compile Include="filtering_by_namespace\when_sending_a_request_with_the_correct_namespace_down_a_channel.cs" />
+    <Compile Include="filtering_by_namespace\when_sending_a_request_with_the_wrong_namespace_down_a_channel.cs" />
+    <Compile Include="filtering_by_name\when_sending_a_request_with_the_correct_name_down_a_channel.cs" />
+    <Compile Include="filtering_by_name_and_namespace\when_sending_a_request_with_the_incorrect_name_and_correct_namespace_down_a_channel.cs" />
+    <Compile Include="filtering_by_name_for_publishing\when_receiving_a_published_event_with_the_wrong_name_down_a_channel.cs" />
+    <Compile Include="filtering_by_name_for_request_reply\when_receiving_a_request_with_the_wrong_name_down_a_channel.cs" />
+    <Compile Include="hooks_for_publishing\when_receiving_an_event_on_a_subscriber_channel_with_a_pre_unpackaging_hook.cs" />
+    <Compile Include="hooks_for_publishing\when_publishing_an_event_on_a_publish_channel_with_a_post_packaging_hook.cs" />
+    <Compile Include="hooks_for_publishing\hooks_for_request_reply\when_sending_a_request_on_a_channel_with_a_post_packaging_send_hook.cs" />
+    <Compile Include="request_reply\when_replying_on_a_channel_to_a_message_from_a_different_machine.cs" />
+    <Compile Include="running_handlers_on_main_thread_for_request_reply\when_receiving_a_request_on_a_channel_configured_to_handle_on_main_thread.cs" />
+    <Compile Include="running_handlers_on_main_thread_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="running_handlers_on_main_thread_for_request_reply\when_receiving_a_reply_on_a_channel_not_configured_to_handle_on_main_thread.cs" />
+    <Compile Include="running_handlers_on_main_thread_for_request_reply\when_receiving_a_request_on_a_channel_not_configured_to_handle_on_main_thread.cs" />
+    <Compile Include="running_handlers_on_main_thread_for_subscribers\when_receiving_an_event_on_a_channel_not_configured_to_handle_on_main_thread.cs" />
+    <Compile Include="servers_using_proxies\when_sending_a_message_to_a_server_that_uses_a_proxy.cs" />
+    <Compile Include="StreamEnumerableExtensions.cs" />
+    <Compile Include="TestMainThreadMarshaller.cs" />
+    <Compile Include="running_handlers_on_main_thread_for_request_reply\when_receiving_a_reply_on_a_channel.cs" />
+    <Compile Include="TestInProcessMessageServerFactory.cs" />
+    <Compile Include="TestReplyMessageHandler.cs" />
+    <Compile Include="received_message_return_address_reassignment\when_receiving_a_subscription_request_with_a_from_address_listed_on_the_publisher.cs" />
+    <Compile Include="received_message_return_address_reassignment\when_receiving_an_event_with_a_from_address_listed_on_the_subscriber.cs" />
+    <Compile Include="received_message_return_address_reassignment\when_receiving_a_reply_with_a_from_address_listed_on_the_sender.cs" />
+    <Compile Include="received_message_return_address_reassignment\when_receiving_a_request_with_a_from_address_listed_on_the_receiver.cs" />
+    <Compile Include="received_message_return_address_reassignment\SpecificationGroup.cs" />
+    <Compile Include="TestMessagePayloadProcessorHook.cs" />
+    <Compile Include="hooks_for_publishing\hooks_for_request_reply\when_receiving_a_request_on_a_channel_with_a_pre_unpackaging_receive_hook.cs" />
+    <Compile Include="hooks_for_publishing\SpecificationGroup.cs" />
+    <Compile Include="received_message_return_address_reassignment\when_receiving_a_message_with_a_from_address_listed_on_the_receiver.cs" />
+    <Compile Include="receiving_over_http\when_receiving_a_message_from_a_different_server.cs" />
+    <Compile Include="unitofwork\when_receiving_a_message_with_a_unit_of_work_specified_and_an_exception_occurs.cs" />
+    <Compile Include="unitofwork_for_local_channels\SpecificationGroup.cs" />
+    <Compile Include="logging\SpecificationGroup.cs" />
+    <Compile Include="logging\when_logging_a_message_with_a_logging_mechanism_configured.cs" />
+    <Compile Include="proxying\when_configuring_a_proxy_with_an_address_registered.cs" />
+    <Compile Include="sending_over_http\when_sending_a_message_with_an_empty_local_server_address_registered.cs" />
+    <Compile Include="server_addressing\SpecificationGroup.cs" />
+    <Compile Include="server_addressing\when_receiving_a_message_on_a_point_to_point_channel.cs" />
+    <Compile Include="server_addressing\when_receiving_a_request_on_a_request_reply_channel.cs" />
+    <Compile Include="acknowledgement\SpecificationGroup.cs" />
+    <Compile Include="external_sources_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="external_sources\SpecificationGroup.cs" />
+    <Compile Include="acknowledgement\when_receiving_an_acknowledgement_for_a_message.cs" />
+    <Compile Include="acknowledgement\when_repeating_messages_after_receiving_an_acknowledgement_for_a_message_with_no_channels_configured.cs" />
+    <Compile Include="acknowledgement\when_repeating_messages_after_receiving_an_acknowledgement_with_the_incorrect_channel_for_a_message.cs" />
+    <Compile Include="acknowledgement\when_repeating_messages_after_receiving_an_acknowledgement_with_the_incorrect_use_type_for_a_message.cs" />
+    <Compile Include="batching\SpecificationGroup.cs" />
+    <Compile Include="batching\when_sending_messages_inside_a_batch_without_completing_the_batch.cs" />
+    <Compile Include="batching\when_receiving_messages_inside_a_batch.cs" />
+    <Compile Include="batching\when_sending_messages_inside_a_batch.cs" />
+    <Compile Include="distribution\SpecificationGroup.cs" />
+    <Compile Include="expiry_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="expiry_for_request_reply\when_sending_a_time_expired_request_down_a_channel_with_an_action_to_execute_on_expiry_set.cs" />
+    <Compile Include="expiry\when_repeating_a_message_that_is_not_time_expired_with_an_action_to_execute_on_expiry_set.cs" />
+    <Compile Include="expiry\when_repeating_a_message_that_is_time_expired_with_an_action_to_execute_on_expiry_set.cs" />
+    <Compile Include="filtering_by_name_for_publishing\SpecificationGroup.cs" />
+    <Compile Include="filtering_by_name_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="filtering_by_name\SpecificationGroup.cs" />
+    <Compile Include="filtering_by_name\when_sending_a_request_with_the_wrong_name_down_a_channel.cs" />
+    <Compile Include="handling_with_external_ioc_resolution\SpecificationGroup.cs" />
+    <Compile Include="handling_with_external_ioc_resolution\when_sending_a_message_with_handlers_in_an_assembly_auto_registered_twice.cs" />
+    <Compile Include="handling\SpecificationGroup.cs" />
+    <Compile Include="hooks_for_publishing\hooks_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="hooks_for_publishing\when_publishing_an_event_on_a_publish_channel_with_a_hook.cs" />
+    <Compile Include="hooks_for_publishing\when_receiving_an_event_on_a_subscriber_channel_with_a_hook.cs" />
+    <Compile Include="load_balancing\when_sending_nineteen_messages_that_are_not_yet_acknowledged_and_four_seconds_have_passed.cs" />
+    <Compile Include="load_balancing\when_sending_twenty_messages_that_are_not_yet_acknowledged_and_four_seconds_have_passed.cs" />
+    <Compile Include="load_balancing\SpecificationGroup.cs" />
+    <Compile Include="load_balancing\when_receiving_an_acknowledgement_for_one_of_twenty_one_sent_messages.cs" />
+    <Compile Include="load_balancing\when_receiving_an_acknowledgement_for_one_of_twenty_one_sent_messages_but_on_a_different_address.cs" />
+    <Compile Include="load_balancing\when_receiving_an_acknowledgement_for_one_of_twenty_one_sent_messages_but_on_a_different_channel_use_type.cs" />
+    <Compile Include="load_balancing\when_sending_twenty_one_messages_that_are_not_yet_acknowledged.cs" />
+    <Compile Include="external_sources\when_configuring_a_receive_channel.cs" />
+    <Compile Include="expiry\SpecificationGroup.cs" />
+    <Compile Include="expiry\when_repeating_a_message_that_is_not_time_expired.cs" />
+    <Compile Include="expiry\when_repeating_a_message_that_is_repeat_attempt_expired.cs" />
+    <Compile Include="batching\when_sending_messages_inside_a_batch_and_then_again.cs" />
+    <Compile Include="expiry\when_repeating_a_message_that_is_not_repeat_attempt_expired.cs" />
+    <Compile Include="expiry\when_repeating_a_message_that_is_time_expired.cs" />
+    <Compile Include="restarting_messaging\when_restarting_after_handling_a_message_on_a_durable_channel_that_fails.cs" />
+    <Compile Include="repeating_escalating_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="restarting_messaging\SpecificationGroup.cs" />
+    <Compile Include="restarting_messaging\when_restarting_after_handling_a_reply_on_a_durable_channel_that_fails.cs" />
+    <Compile Include="restarting_messaging\when_restarting_after_handling_a_reply_on_a_non_durable_channel_that_fails.cs" />
+    <Compile Include="restarting_messaging\when_restarting_after_sending_a_message_on_a_non_durable_channel_that_is_not_yet_acknowledged.cs" />
+    <Compile Include="restarting_messaging\when_restarting_after_sending_a_reply_on_a_durable_channel_that_is_not_yet_acknowledged.cs" />
+    <Compile Include="point_to_point\when_restarting_messaging_after_a_message_was_sent_but_not_acknowledged_on_a_durable_channel.cs" />
+    <Compile Include="handling\when_sending_a_message_with_handlers_in_an_assembly_auto_registered_twice.cs" />
+    <Compile Include="handling_with_external_ioc_resolution\when_initialising_with_handlers_auto_registered.cs" />
+    <Compile Include="handling\Fakes\FirstHandlerOfMessage1.cs" />
+    <Compile Include="handling\Fakes\FirstHandlerOfMessage2.cs" />
+    <Compile Include="handling\Fakes\IHandleMessage.cs" />
+    <Compile Include="handling\Fakes\Message1.cs" />
+    <Compile Include="handling\Fakes\Message2.cs" />
+    <Compile Include="handling\Fakes\SecondHandlerOfMessage1.cs" />
+    <Compile Include="handling\Fakes\SecondHandlerOfMessage2.cs" />
+    <Compile Include="point_to_point\when_receiving_on_a_durable_channel.cs" />
+    <Compile Include="repeating_constant\SpecificationGroup.cs" />
+    <Compile Include="repeating_constant\when_restarting_messaging_on_a_durable_channel_after_sending_a_message_without_receiving_its_acknowledgement.cs" />
+    <Compile Include="repeating_escalating_over_http\SpecificationGroup.cs" />
+    <Compile Include="repeating_escalating_over_http\when_repeating_a_message_and_four_seconds_have_passed.cs" />
+    <Compile Include="repeating_escalating\when_restarting_messaging_on_a_durable_channel_after_sending_a_message_without_receiving_its_acknowledgement.cs" />
+    <Compile Include="external_sources\when_configuring_a_send_channel.cs" />
+    <Compile Include="server_addressing\when_receiving_a_subscription_request_message_on_a_subscription_channel.cs" />
+    <Compile Include="receiving_over_http\SpecificationGroup.cs" />
+    <Compile Include="sending_over_http\SpecificationGroup.cs" />
+    <Compile Include="sending_over_http\when_sending_a_message_with_a_local_server_address_registered.cs" />
+    <Compile Include="sending_over_http\when_sending_a_message_without_a_local_server_address_registered.cs" />
+    <Compile Include="sequencing_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="sequencing\when_receiving_a_message_then_restarting_messaging_then_receiving_a_message_from_a_cache_reset_channel.cs" />
+    <Compile Include="sequencing\when_passing_messages_in_the_correct_order_on_a_durable_channel_and_then_restarting_messaging.cs" />
+    <Compile Include="sequencing\when_receiving_a_message_from_a_sequenced_channel_that_has_had_sequencing_reset.cs" />
+    <Compile Include="sequencing\when_receiving_a_message_on_a_sequenced_channel_that_has_had_sequencing_reset.cs" />
+    <Compile Include="sequencing\when_sending_a_message.cs" />
+    <Compile Include="sequencing\when_sending_a_message_on_durable_channel_and_then_restarting_messaging.cs" />
+    <Compile Include="sequencing\when_sending_two_messages.cs" />
+    <Compile Include="TestServerAddressConfigurationReader.cs" />
+    <Compile Include="server_addressing\when_configuring_a_server_with_an_address_registered.cs" />
+    <Compile Include="server_addressing\when_configuring_a_server_with_a_secure_address_registered.cs" />
+    <Compile Include="unitofwork_with_external_ioc_resolution\SpecificationGroup.cs" />
+    <Compile Include="unitofwork_with_external_ioc_resolution\when_receiving_a_message_with_a_unit_of_work_specified.cs" />
+    <Compile Include="unitofwork_for_publishing\SpecificationGroup.cs" />
+    <Compile Include="unitofwork_for_publishing\when_publishing_with_a_unit_of_work_setup.cs" />
+    <Compile Include="unitofwork_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="unitofwork\SpecificationGroup.cs" />
+    <Compile Include="load_balancing_for_publishing\SpecificationGroup.cs" />
+    <Compile Include="load_balancing_for_publishing\when_publishing_twenty_one_messages_that_are_not_yet_acknowledged.cs" />
+    <Compile Include="publishing\when_configuring_a_publisher_channel.cs" />
+    <Compile Include="batching_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="batching_for_request_reply\when_receiving_replies_inside_a_batch.cs" />
+    <Compile Include="batching_for_request_reply\when_receiving_requests_inside_a_batch_and_replying_to_each.cs" />
+    <Compile Include="batching_for_request_reply\when_sending_requests_inside_a_batch.cs" />
+    <Compile Include="sequencing\SpecificationGroup.cs" />
+    <Compile Include="sequencing\when_passing_a_message_without_a_sequence_number_header_on_a_sequenced_channel.cs" />
+    <Compile Include="sequencing\when_passing_a_message_with_a_lower_sequence_than_expected_on_a_sequenced_channel.cs" />
+    <Compile Include="sequencing\when_passing_messages_in_the_correct_order_on_a_sequenced_channel.cs" />
+    <Compile Include="sequencing\when_passing_messages_in_the_incorrect_order_on_a_sequenced_channel.cs" />
+    <Compile Include="load_balancing_for_request_reply_replies\SpecificationGroup.cs" />
+    <Compile Include="load_balancing_for_request_reply_replies\when_sending_twenty_one_replies_that_are_not_yet_acknowledged.cs" />
+    <Compile Include="load_balancing_for_request_reply_requests\SpecificationGroup.cs" />
+    <Compile Include="load_balancing_for_request_reply_requests\when_sending_twenty_one_requests_that_are_not_yet_acknowledged.cs" />
+    <Compile Include="external_sources_for_request_reply\when_configuring_a_request_reply_channel.cs" />
+    <Compile Include="sequencing_for_request_reply\when_receiving_a_reply_from_a_sequenced_channel_that_has_had_sequencing_reset.cs" />
+    <Compile Include="sequencing_for_request_reply\when_receiving_a_request_from_a_sequenced_channel_that_has_had_sequencing_reset.cs" />
+    <Compile Include="request_reply\when_receiving_a_request_on_a_channel_from_one_sender_and_then_from_another.cs" />
+    <Compile Include="sql\SpecificationGroup.cs" />
+    <Compile Include="sql\when_configuring_messaging.cs" />
+    <Compile Include="esent\SpecificationGroup.cs" />
+    <Compile Include="esent\when_configuring_messaging.cs" />
+    <Compile Include="external_sources\TestExternalSourcesConfigurer.cs" />
+    <Compile Include="unitofwork\when_receiving_a_message_with_a_unit_of_work_specified.cs" />
+    <Compile Include="unitofwork\when_receiving_a_message_with_a_unit_of_work_specified_and_the_target_processor_throws_an_exception.cs" />
+    <Compile Include="direct_local_channels\SpecificationGroup.cs" />
+    <Compile Include="direct_local_channels\when_sending_a_local_message.cs" />
+    <Compile Include="direct_local_channels\when_sending_a_local_message_after_configuring_a_channel_and_then_a_local_channel.cs" />
+    <Compile Include="unitofwork_for_local_channels\when_sending_a_local_message_with_a_unit_of_work_setup.cs" />
+    <Compile Include="direct_local_channels\when_sending_a_message_after_configuring_a_channel_and_then_a_local_channel.cs" />
+    <Compile Include="handling\when_sending_a_message_with_handlers_auto_registered.cs" />
+    <Compile Include="external_sources\when_configuring_messaging.cs" />
+    <Compile Include="servers_using_proxies\when_sending_to_a_receiver_on_a_different_machine.cs" />
+    <Compile Include="proxying\when_sending_a_message_with_a_proxy_and_a_client_configured.cs" />
+    <Compile Include="server_addressing\when_configuring_a_server_without_an_address_registered.cs" />
+    <Compile Include="receiving_over_http\when_receiving_a_message.cs" />
+    <Compile Include="sending_over_http\when_sending_to_a_receiver_on_a_different_server.cs" />
+    <Compile Include="repeating_for_subscription_to_publishers\SpecificationGroup.cs" />
+    <Compile Include="repeating_for_subscription_to_publishers\when_repeating_a_request_with_and_ten_seconds_have_passed.cs" />
+    <Compile Include="repeating_constant_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="repeating_constant_for_request_reply\when_repeating_a_reply_with_a_constant_time_repeat_on_the_channel_and_that_time_has_not_passed.cs" />
+    <Compile Include="repeating_constant_for_request_reply\when_repeating_a_reply_with_a_constant_time_repeat_on_the_channel_and_that_time_has_passed.cs" />
+    <Compile Include="repeating_escalating_for_request_reply\when_repeating_a_reply_for_the_third_time_and_sixteen_seconds_have_not_passed.cs" />
+    <Compile Include="repeating_escalating_for_request_reply\when_repeating_a_reply_with_and_four_seconds_have_passed.cs" />
+    <Compile Include="hooks_for_publishing\hooks_for_request_reply\when_replying_on_a_channel_with_a_hook.cs" />
+    <Compile Include="hooks_for_publishing\hooks_for_request_reply\when_receiving_a_request_on_a_channel_with_a_receive_hook.cs" />
+    <Compile Include="request_reply\when_replying_to_a_request_without_configuring_a_request_reply_channel.cs" />
+    <Compile Include="MessagePayloadExtensions.cs" />
+    <Compile Include="point_to_point\when_receiving_on_a_channel.cs" />
+    <Compile Include="repeating_escalating\when_repeating_two_messages_and_four_seconds_have_passed.cs" />
+    <Compile Include="repeating_escalating\SpecificationGroup.cs" />
+    <Compile Include="repeating_escalating\when_repeating_a_message_for_the_fourth_time_and_sixteen_seconds_have_passed.cs" />
+    <Compile Include="repeating_escalating\when_repeating_a_message_for_the_second_time_and_eight_seconds_have_not_passed.cs" />
+    <Compile Include="repeating_escalating\when_repeating_a_message_for_the_second_time_and_eight_seconds_have_passed.cs" />
+    <Compile Include="repeating_escalating\when_repeating_a_message_for_the_third_time_and_sixteen_seconds_have_not_passed.cs" />
+    <Compile Include="repeating_escalating\when_repeating_a_message_for_the_third_time_and_sixteen_seconds_have_passed.cs" />
+    <Compile Include="point_to_point\SpecificationGroup.cs" />
+    <Compile Include="repeating_escalating\when_repeating_a_message_and_four_seconds_have_not_passed.cs" />
+    <Compile Include="repeating_escalating\when_repeating_a_message_and_four_seconds_have_passed.cs" />
+    <Compile Include="repeating_constant\when_repeating_a_message_with_a_time_set_on_the_channel_and_that_time_has_not_passed.cs" />
+    <Compile Include="repeating_constant\when_repeating_a_message_with_a_time_set_on_the_channel_and_that_time_has_passed.cs" />
+    <Compile Include="point_to_point\when_sending_a_message.cs" />
+    <Compile Include="publishing\when_publishing_without_configuring_a_publish_channel.cs" />
+    <Compile Include="publishing\ExclusionMessagePayloadListExtensions.cs" />
+    <Compile Include="publishing_receiving\SpecificationGroup.cs" />
+    <Compile Include="publishing_receiving\when_recieving_on_a_subscriber_channel_with_no_body.cs" />
+    <Compile Include="publishing_receiving\when_recieving_the_first_message_on_a_durable_channel_that_had_subscribed_after_messages_were_published.cs" />
+    <Compile Include="publishing_receiving\when_recieving_the_second_message_on_a_durable_channel_that_had_subscribed_after_messages_were_published.cs" />
+    <Compile Include="publishing\SpecificationGroup.cs" />
+    <Compile Include="publishing\when_publishing_on_a_publish_subscribe_channel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="publishing_receiving\when_recieving_out_of_sequence_on_a_sequenced_subscriber_channel.cs" />
+    <Compile Include="publishing_subscription\SpecificationGroup.cs" />
+    <Compile Include="publishing\when_publishing_on_a_publish_subscribe_channel_with_two_subscribers.cs" />
+    <Compile Include="publishing\when_publishing_twice_when_the_subscriber_has_subscribed_after_messages_were_published.cs" />
+    <Compile Include="publishing\when_publishing_when_the_subscriber_has_subscribed_after_messages_were_published.cs" />
+    <Compile Include="filtering_by_name_for_publishing\when_publishing_with_the_wrong_name_on_a_publish_subscribe_channel.cs" />
+    <Compile Include="upcasting_changes\SpecificationGroup.cs" />
+    <Compile Include="upcasting_changes\when_loading_changes_that_dont_need_upcasting.cs" />
+    <Compile Include="upcasting_changes\when_loading_message_cache_checkpoint_changes_to_already_at_latest_version.cs" />
+    <Compile Include="upcasting_changes\when_loading_message_cache_checkpoint_changes_to_version_one.cs" />
+    <Compile Include="upcasting_changes\when_loading_subscriber_changes_to_version_two.cs" />
+    <Compile Include="WithHttpConfigurationSubject.cs" />
+    <Compile Include="WithPublisherSubject.cs" />
+    <Compile Include="restarting_messaging\when_restarting_after_handling_a_request_on_a_non_durable_channel_that_fails.cs" />
+    <Compile Include="restarting_messaging\when_restarting_after_handling_a_request_on_a_durable_channel_that_fails.cs" />
+    <Compile Include="sequencing_for_request_reply\when_receiving_an_out_of_sequence_request_on_a_sequenced_channel.cs" />
+    <Compile Include="request_reply\when_receiving_a_request_on_a_channel.cs" />
+    <Compile Include="request_reply\when_receiving_a_request_on_a_channel_with_no_body.cs" />
+    <Compile Include="unitofwork_for_request_reply\when_receiving_a_request_with_a_unit_of_work_setup.cs" />
+    <Compile Include="request_reply\when_replying_on_a_channel.cs" />
+    <Compile Include="request_reply\when_replying_on_a_channel_with_another_setup.cs" />
+    <Compile Include="expiry_for_request_reply\when_replying_with_a_time_expired_message_on_a_channel.cs" />
+    <Compile Include="publishing_subscription\when_configuring_a_durable_subscriber_channel.cs" />
+    <Compile Include="publishing_subscription\when_configuring_a_subscriber_channel.cs" />
+    <Compile Include="publishing\when_publishing_on_two_publish_subscribe_channels.cs" />
+    <Compile Include="publishing_subscription\when_receiving_a_non_subscription_request_message_on_a_subscription_channel.cs" />
+    <Compile Include="publishing_subscription\when_recieving_a_subscription_request_message_on_a_subscription_channel.cs" />
+    <Compile Include="repeating_escalating_for_request_reply\when_repeating_a_request_for_the_third_time_and_sixteen_seconds_have_passed.cs" />
+    <Compile Include="repeating_escalating_for_request_reply\when_repeating_a_request_with_and_four_seconds_have_passed.cs" />
+    <Compile Include="repeating_constant_for_request_reply\when_repeating_a_request_with_a_constant_time_repeat_on_the_channel_and_that_time_has_not_passed.cs" />
+    <Compile Include="repeating_constant_for_request_reply\when_repeating_a_request_with_a_constant_time_repeat_on_the_channel_and_that_time_has_passed.cs" />
+    <Compile Include="request_reply\SpecificationGroup.cs" />
+    <Compile Include="sequencing_for_request_reply\when_receiving_an_out_of_sequence_reply_on_a_sequenced_channel.cs" />
+    <Compile Include="request_reply\when_receiving_a_reply_on_a_channel.cs" />
+    <Compile Include="hooks_for_publishing\hooks_for_request_reply\when_receiving_a_reply_on_a_channel_with_a_hook.cs" />
+    <Compile Include="request_reply\when_receiving_a_reply_on_a_channel_with_no_body.cs" />
+    <Compile Include="unitofwork_for_request_reply\when_receiving_a_reply_with_a_unit_of_work_setup.cs" />
+    <Compile Include="restarting_messaging\when_restarting_after_sending_a_request_on_a_durable_channel_that_is_not_yet_acknowledged.cs" />
+    <Compile Include="restarting_messaging\when_restarting_after_sending_an_unacknowledged_request_on_a_non_durable_channel.cs" />
+    <Compile Include="request_reply\when_sending_a_request_down_two_channels.cs" />
+    <Compile Include="expiry_for_request_reply\when_sending_a_repeat_request_attempt_expired_request_down_a_channel.cs" />
+    <Compile Include="request_reply\when_sending_a_request.cs" />
+    <Compile Include="hooks_for_publishing\hooks_for_request_reply\when_sending_a_request_on_a_channel_with_a_hook.cs" />
+    <Compile Include="filtering_by_name_for_request_reply\when_sending_a_request_with_the_wrong_name_down_a_channel.cs" />
+    <Compile Include="expiry_for_request_reply\when_sending_a_time_expired_request_down_a_channel.cs" />
+    <Compile Include="TestEndpointAddressBuilder.cs" />
+    <Compile Include="publishing_receiving\when_recieving_on_a_subscriber_channel.cs" />
+    <Compile Include="sending_over_http\when_sending_to_a_receiver_with_a_different_server_but_with_no_addresses_registered.cs" />
+    <Compile Include="WithConfigurationSubject.cs" />
+    <Compile Include="acknowledgement\when_acknowledging_a_message.cs" />
+    <Compile Include="acknowledgement\when_repeating_messages_after_receiving_an_acknowledgement_for_a_message.cs" />
+    <Compile Include="WithMessageConfigurationSubject.cs" />
+    <Compile Include="FailingMessageHandler.cs" />
+    <Compile Include="TestMessageChangeRebuilder.cs" />
+    <Compile Include="TestMessageHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TestMessageProcessorHook.cs" />
+    <Compile Include="TestInProcessMessageServer.cs" />
+    <Compile Include="filtering_by_name\TestNamePatternMessage.cs" />
+    <Compile Include="TestTaskRepeater.cs" />
+    <Compile Include="unitofwork\TestUnitOfWork.cs" />
+    <Compile Include="unitofwork\TestUnitOfWorkFactory.cs" />
+    <Compile Include="TestHttpServer.cs" />
+    <Compile Include="TestHttpServerBuilder.cs" />
+    <Compile Include="servers_using_proxies\SpecificationGroup.cs" />
+    <Compile Include="proxying\SpecificationGroup.cs" />
+    <Compile Include="proxying\when_configuring_a_proxy_without_an_address_registered.cs" />
+    <Compile Include="proxying\when_handling_request_that_fails_deserialisation.cs" />
+    <Compile Include="WithHttpServerConfigurationSubject.cs" />
+    <Compile Include="proxying\FailingSerialiser.cs" />
+    <Compile Include="servers_using_proxies\when_sending_a_message.cs" />
+    <Compile Include="point_to_point\when_receiving_a_message_that_does_not_have_the_expected_address.cs" />
+    <Compile Include="distribution\when_pumping_an_item.cs" />
+    <Compile Include="distribution\when_pumping_items_on_a_with_no_pushed_item_listener.cs" />
+    <Compile Include="point_to_point\when_receiving_a_message_that_does_not_have_a_body.cs" />
+    <Compile Include="TestTaskStarter.cs" />
+    <Compile Include="sending_over_http\when_sending_a_message.cs" />
+    <Compile Include="servers_using_proxies\when_a_message_recieved_has_been_processed.cs" />
+    <Compile Include="servers_using_proxies\when_two_messages_are_received_by_long_polling.cs" />
+    <Compile Include="servers_using_proxies\when_long_polling_and_messages_only_exist_on_the_server_for_another_client.cs" />
+    <Compile Include="TestWebRequestor.cs" />
+    <Compile Include="handling\when_routing_a_message_to_two_handlers_of_differing_messages.cs" />
+    <Compile Include="handling\when_routing_a_message_to_two_handlers.cs" />
+    <Compile Include="proxying\when_handling_a_request_containing_an_object_other_than_a_message_payload.cs" />
+    <Compile Include="proxying\when_handling_a_long_poll_request_for_with_a_different_address_to_the_queued_message.cs" />
+    <Compile Include="StreamExtensions.cs" />
+    <Compile Include="proxying\when_handling_a_long_poll_request_for_messages_with_two_messages_in_the_queue.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SystemDot.Esent\SystemDot.Esent.csproj">
+      <Project>{C7DBF177-FCDB-4530-A6CA-3B1EFBAD63EB}</Project>
+      <Name>SystemDot.Esent %28Windows\SystemDot.Esent%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemDot.Extensions\SystemDot.Extensions.csproj">
+      <Project>{C68777BE-FC18-47E1-ABAE-7CD6D5D0F7BC}</Project>
+      <Name>SystemDot.Extensions %28Windows\SystemDot.Extensions%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemDot.Messaging\SystemDot.Messaging.csproj">
+      <Project>{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}</Project>
+      <Name>SystemDot.Messaging %28Windows\SystemDot.Messaging%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemDot.Specifications\SystemDot.Specifications.csproj">
+      <Project>{c35328bb-3e59-4dc8-8397-c0a7bb2f2e5e}</Project>
+      <Name>SystemDot.Specifications</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemDot.Sql\SystemDot.Sql.csproj">
+      <Project>{80FFA53E-9C4D-45CE-A7D2-8FE0B6A9FBFB}</Project>
+      <Name>SystemDot.Sql %28Windows\SystemDot.Sql%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemDot\SystemDot.csproj">
+      <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>
+      <Name>SystemDot %28Windows\SystemDot%29</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
