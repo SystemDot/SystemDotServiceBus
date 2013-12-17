@@ -25,6 +25,7 @@ namespace SystemDot.Messaging.Specifications.authentication
                         .AuthenticatesOnReply<TestAuthenticationResponse>()
                 .OpenChannel(ReceiverChannel)
                     .ForPointToPointReceiving()
+                        .OnException().ContinueProcessingMessages()
                 .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
 

@@ -38,6 +38,7 @@ namespace SystemDot.Messaging.Specifications.authentication_expiry
                         .ExpiresAfter(TimeSpan.FromMinutes(ExpiryInMinutes))
                     .OpenChannel(ReceiverChannel)
                         .ForPointToPointReceiving()
+                            .OnException().ContinueProcessingMessages()
                     .RegisterHandlers(r => r.RegisterHandler(new TestReplyMessageHandler<TestAuthenticationRequest, TestAuthenticationResponse>()))
                     .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();

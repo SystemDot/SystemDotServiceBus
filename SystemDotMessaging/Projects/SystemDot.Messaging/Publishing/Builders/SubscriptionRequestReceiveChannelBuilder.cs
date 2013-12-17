@@ -3,6 +3,7 @@ using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Authentication.Caching;
+using SystemDot.Messaging.ExceptionHandling;
 using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Transport;
 
@@ -46,6 +47,7 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .With(messageReceiver)
                 .Pump()
                 .ToProcessor(new SubscriptionRequestFilter())
+                .ToProcessor(new ExceptionHandler(true))
                 .ToProcessor(new ReceiverAuthenticationSessionVerifier(authenticationSessionCache, authenticatedServerRegistry))
                 .ToProcessor(new MessageLocalAddressReassigner(serverAddressRegistry))
                 .ToProcessor(new MessageAcknowledger(acknowledgementSender))

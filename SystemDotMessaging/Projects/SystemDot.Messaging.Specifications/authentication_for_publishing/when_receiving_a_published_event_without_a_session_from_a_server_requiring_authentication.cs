@@ -25,7 +25,9 @@ namespace SystemDot.Messaging.Specifications.authentication_for_publishing
                 .AsAServer(SubscriberServer)
                 .AuthenticateToServer(PublisherServer)
                 .WithRequest<TestAuthenticationRequest>()
-                .OpenChannel(SubscriberChannel).ForSubscribingTo(PublisherChannel + "@" + PublisherServer)
+                .OpenChannel(SubscriberChannel)
+                    .ForSubscribingTo(PublisherChannel + "@" + PublisherServer)
+                        .OnException().ContinueProcessingMessages()
                 .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
 

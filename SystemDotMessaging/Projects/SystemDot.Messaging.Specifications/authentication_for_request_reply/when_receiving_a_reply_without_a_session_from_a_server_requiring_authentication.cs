@@ -27,7 +27,9 @@ namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
                 .AsAServer(SenderServer)
                 .AuthenticateToServer(ReceiverServer)
                 .WithRequest<TestAuthenticationRequest>()
-                .OpenChannel(SenderChannel).ForRequestReplySendingTo(ReceiverChannel + "@" + ReceiverServer)
+                .OpenChannel(SenderChannel)
+                    .ForRequestReplySendingTo(ReceiverChannel + "@" + ReceiverServer)
+                        .OnException().ContinueProcessingMessages()
                 .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
 

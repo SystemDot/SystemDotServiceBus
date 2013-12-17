@@ -49,7 +49,6 @@
     <Compile Include="authentication\FailingAuthenticationResponse.cs" />
     <Compile Include="authentication\MessagePayloadExtensions.cs" />
     <Compile Include="authentication\TestAuthenticationResponse.cs" />
-    <Compile Include="authentication\when_a_sent_message_is_repeated_after_restarting_messaging_and_its_session_has_expired.cs" />
     <Compile Include="authentication\when_receiving_a_message_without_first_authenticating.cs" />
     <Compile Include="authentication\when_receiving_a_message_without_a_session_with_both_sender_and_receiver_on_the_same_server.cs" />
     <Compile Include="authentication\OtherTestAuthenticationRequest.cs" />
@@ -65,7 +64,6 @@
     <Compile Include="authentication\when_sending_an_authentication_request_to_a_server.cs" />
     <Compile Include="authentication\when_sending_an_authentication_request_with_two_servers_requiring_authentication.cs" />
     <Compile Include="authentication\when_sending_a_message_to_a_server_after_authenticating_to_it.cs" />
-    <Compile Include="authentication\when_sending_a_message_to_a_server_after_failing_to_authenticate_to_it.cs" />
     <Compile Include="authentication\when_sending_a_message_with_both_sender_and_receiver_on_the_same_server.cs" />
     <Compile Include="authentication\when_sending_a_message_with_sender_and_receiver_on_the_same_server_after_restarting_messaging.cs" />
     <Compile Include="authentication_expiry\when_a_session_expires_for_a_server_requiring_authentication_with_an_expired_session_action_configured.cs" />
@@ -75,19 +73,16 @@
     <Compile Include="authentication_expiry\when_receiving_a_message_with_an_expired_session.cs" />
     <Compile Include="authentication_expiry\when_a_session_expires_on_a_server_requiring_authentication_with_an_expired_session_action_configured.cs" />
     <Compile Include="authentication_expiry\when_replying_to_an_authentication_request_on_a_server_with_session_expiry.cs" />
-    <Compile Include="authentication_expiry\when_sending_a_message_when_the_current_session_is_expired.cs" />
     <Compile Include="authentication_for_publishing\SpecificationGroup.cs" />
     <Compile Include="authentication_for_publishing\when_a_subscription_attempt_to_a_server_has_been_repeated_after_authenticating_to_it.cs" />
     <Compile Include="authentication_for_publishing\when_publishing_an_event_after_subscribing_without_a_session_on_a_server_requiring_authentication.cs" />
     <Compile Include="authentication_for_publishing\when_publishing_an_event_after_subscribing_with_the_expected_session_on_a_server_requiring_authentication.cs" />
     <Compile Include="authentication_for_publishing\when_receiving_a_published_event_without_a_session_from_a_server_requiring_authentication.cs" />
     <Compile Include="authentication_for_request_reply\SpecificationGroup.cs" />
-    <Compile Include="authentication_for_request_reply\when_a_reply_is_repeated_after_restarting_messaging_and_its_session_has_expired.cs" />
     <Compile Include="authentication_for_request_reply\when_receiving_a_request_without_a_session_on_a_server_requiring_authentication.cs" />
     <Compile Include="authentication_for_request_reply\when_receiving_a_reply_without_a_session_from_a_server_requiring_authentication.cs" />
     <Compile Include="authentication_for_request_reply\when_replying_to_a_request_on_a_server_requiring_authentication.cs" />
     <Compile Include="authentication_for_request_reply\when_replying_to_a_request_on_a_previous_session_after_subsequent_authentication.cs" />
-    <Compile Include="authentication_for_request_reply\when_sending_a_message_to_a_server_after_failing_to_authenticate_to_it.cs" />
     <Compile Include="authentication_for_request_reply\when_sending_a_request_to_a_server_requiring_authentication_after_authenticating_to_it.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="repeating_constant_for_subscribers\SpecificationGroup.cs" />

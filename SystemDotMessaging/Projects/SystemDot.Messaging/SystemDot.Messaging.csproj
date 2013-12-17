@@ -65,7 +65,6 @@
     <Compile Include="Authentication\AuthenticationSessionVerifier.cs" />
     <Compile Include="Authentication\Builders\AuthenticationReceiverBuilder.cs" />
     <Compile Include="Authentication\Builders\AuthenticationSenderBuilder.cs" />
-    <Compile Include="Authentication\Expiry\AuthenticationSessionExpiryStrategy.cs" />
     <Compile Include="Authentication\MessagePayloadExtensions.cs" />
     <Compile Include="Authentication\ReceiverAuthenticationSessionVerifier.cs" />
     <Compile Include="Authentication\RequestReply\ReplyAuthenticationSessionAttacher.cs" />

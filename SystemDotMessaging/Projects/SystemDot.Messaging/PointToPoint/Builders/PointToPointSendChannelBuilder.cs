@@ -100,15 +100,10 @@ namespace SystemDot.Messaging.PointToPoint.Builders
                 .ToProcessor(new SequenceOriginRecorder(cache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()
-                .ToProcessor(new MessageExpirer(schema.ExpiryAction, cache, schema.ExpiryStrategy, CreateSessionExpiryStrategy(schema)))
+                .ToProcessor(new MessageExpirer(schema.ExpiryAction, cache, schema.ExpiryStrategy))
                 .ToProcessor(new LoadBalancer(cache, taskScheduler))
                 .ToProcessor(new LastSentRecorder(systemTime))
                 .ToEndPoint(messageSender);
-        }
-
-        AuthenticationSessionExpiryStrategy CreateSessionExpiryStrategy(PointToPointSendChannelSchema schema)
-        {
-            return new AuthenticationSessionExpiryStrategy(authenticatedServerRegistry, schema.ReceiverAddress.Server, systemTime);
         }
 
         static void NotifyPointToPointSendChannelBuilt(PointToPointSendChannelSchema schema)

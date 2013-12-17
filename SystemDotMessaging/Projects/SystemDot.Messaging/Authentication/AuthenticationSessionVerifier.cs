@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Logging;
 using SystemDot.Messaging.Authentication.Caching;
@@ -20,7 +21,7 @@ namespace SystemDot.Messaging.Authentication
             Logger.Debug("Verifying session for message: {0}", toInput.Id);
                 
             if (ServerRequiresAuthentication(toInput) && !PayloadHasExpectedSession(toInput))
-                return;
+                throw new MessageSessionExpiredException(toInput);
 
             Logger.Debug("Verified session for message: {0}", toInput.Id);
 
@@ -32,6 +33,14 @@ namespace SystemDot.Messaging.Authentication
         bool PayloadHasExpectedSession(MessagePayload toInput)
         {
             return toInput.HasAuthenticationSession() && cache.ContainsSession(toInput.GetAuthenticationSession());
+        }
+    }
+
+    public class MessageSessionExpiredException : Exception
+    {
+        public MessageSessionExpiredException(MessagePayload payload) 
+            : base(String.Format("Message {0} was not handled because its session has expired", payload.Id))
+        {
         }
     }
 }

@@ -119,18 +119,10 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new SequenceOriginRecorder(cache))
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Queue()
-                .ToProcessor(new MessageExpirer(schema.ExpiryAction, cache, schema.ExpiryStrategy, CreateAuthenticationSessionExpiryStrategy(schema)))
+                .ToProcessor(new MessageExpirer(schema.ExpiryAction, cache, schema.ExpiryStrategy))
                 .ToProcessor(new LoadBalancer(cache, taskScheduler))
                 .ToProcessor(new LastSentRecorder(systemTime))
                 .ToEndPoint(messageSender);
-        }
-
-        AuthenticationSessionExpiryStrategy CreateAuthenticationSessionExpiryStrategy(ReplySendChannelSchema schema)
-        {
-            return new AuthenticationSessionExpiryStrategy(
-                authenticatedServerRegistry,
-                schema.FromAddress.Server,
-                systemTime);
         }
 
         static void SendChannelBuiltEvent(ReplySendChannelSchema schema, EndpointAddress senderAddress)
