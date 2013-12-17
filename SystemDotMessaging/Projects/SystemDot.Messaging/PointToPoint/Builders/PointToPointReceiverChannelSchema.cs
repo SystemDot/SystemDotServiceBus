@@ -18,5 +18,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
         public bool IsDurable { get; set; }
 
         public bool ContinueOnException { get; set; }
+
+        public bool FlushMessages { get; set; }
     }
 }

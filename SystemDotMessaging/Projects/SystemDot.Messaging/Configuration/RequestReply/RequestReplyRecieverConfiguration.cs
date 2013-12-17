@@ -142,5 +142,11 @@ namespace SystemDot.Messaging.Configuration.RequestReply
         {
             requestSchema.ContinueOnException = true;
         }
+
+        public RequestReplyRecieverConfiguration InFlushMessagesMode()
+        {
+            requestSchema.FlushMessages = true;
+            return this;
+        }
     }
 }

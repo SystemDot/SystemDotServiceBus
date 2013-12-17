@@ -90,6 +90,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             MessagePipelineBuilder.Build()
                 .With(messageReceiver)
                 .ToProcessor(new BodyMessageFilter(schema.Address))
+                .ToProcessorIf(new NullMessageProcessor(), schema.FlushMessages)
                 .ToProcessor(new SenderAuthenticationSessionVerifier(authenticationSessionCache, authenticatedServerRegistry))
                 .ToProcessor(new MessageLocalAddressReassigner(serverAddressRegistry))
                 .ToProcessor(new MessageSendTimeRemover())

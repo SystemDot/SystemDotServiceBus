@@ -28,6 +28,8 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
         public bool ContinueOnException { get; set; }
 
+        public bool FlushMessages { get; set; }
+
         public RequestRecieveChannelSchema()
         {
             Hooks = new List<IMessageHook<object>>();

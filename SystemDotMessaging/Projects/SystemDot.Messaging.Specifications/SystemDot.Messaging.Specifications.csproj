@@ -89,6 +89,10 @@
     <Compile Include="authentication_for_request_reply\when_replying_to_a_request_on_a_previous_session_after_subsequent_authentication.cs" />
     <Compile Include="authentication_for_request_reply\when_sending_a_message_to_a_server_after_failing_to_authenticate_to_it.cs" />
     <Compile Include="authentication_for_request_reply\when_sending_a_request_to_a_server_requiring_authentication_after_authenticating_to_it.cs" />
+    <Compile Include="flushing_messages_for_subscribers\SpecificationGroup.cs" />
+    <Compile Include="flushing_messages_for_subscribers\when_receiving_a_message_on_a_channel_in_flush_mode.cs" />
+    <Compile Include="flushing_messages_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="flushing_messages_for_request_reply\when_receiving_a_message_on_a_channel_in_flush_mode.cs" />
     <Compile Include="correlation_for_request_reply\SpecificationGroup.cs" />
     <Compile Include="correlation_for_request_reply\when_receiving_a_reply_that_correlates_to_a_request_with_correlate_configured.cs" />
     <Compile Include="correlation_for_request_reply\when_receiving_a_reply_that_does_not_correlate_to_a_request_with_correlate_configured.cs" />
@@ -112,6 +116,8 @@
     <Compile Include="exception_handling_for_request_reply\when_failing_the_handling_of_a_reply_with_continue_on_exception_configured.cs" />
     <Compile Include="exception_handling_for_request_reply\when_failing_the_handling_of_a_request_with_continue_on_exception_configured.cs" />
     <Compile Include="exception_replying_for_request_reply\when_failing_the_handling_of_a_request_with_continue_on_exception_configured.cs" />
+    <Compile Include="flushing_messages\SpecificationGroup.cs" />
+    <Compile Include="flushing_messages\when_receiving_a_message_on_a_channel_in_flush_mode.cs" />
     <Compile Include="InMemoryChangeStore.cs" />
     <Compile Include="proxying\when_handling_a_long_poll_request_for_the_same_message_queued_twice.cs" />
     <Compile Include="running_handlers_on_main_thread_for_subscribers\SpecificationGroup.cs" />

@@ -109,5 +109,11 @@ namespace SystemDot.Messaging.Configuration.Publishers
         {
             receiveSchema.ContinueOnException = true;
         }
+
+        public SubscribeToConfiguration InFlushMessagesMode()
+        {
+            receiveSchema.FlushMessages = true;
+            return this;
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
@@ -84,6 +85,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             MessagePipelineBuilder.Build()
                 .With(messageReceiver)
                 .ToProcessor(new BodyMessageFilter(schema.Address))
+                .ToProcessorIf(new NullMessageProcessor(), schema.FlushMessages)
                 .ToProcessor(new ReceiverAuthenticationSessionVerifier(authenticationSessionCache, authenticatedServerRegistry))
                 .ToProcessor(new MessageLocalAddressReassigner(serverAddressRegistry))
                 .ToProcessor(new SequenceOriginApplier(messageCache))
