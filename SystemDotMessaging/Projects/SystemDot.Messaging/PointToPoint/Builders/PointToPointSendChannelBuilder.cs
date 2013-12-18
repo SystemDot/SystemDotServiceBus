@@ -91,7 +91,6 @@ namespace SystemDot.Messaging.PointToPoint.Builders
                 .WithBusSendTo(new MessageFilter(schema.FilteringStrategy))
                 .ToProcessor(new BatchPackager())
                 .ToConverter(new MessagePayloadPackager(serialiser))
-                .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache, schema.ReceiverAddress))
                 .ToProcessor(new Sequencer(cache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.ReceiverAddress))
                 .ToProcessor(new SendChannelMessageCacher(cache))
@@ -103,6 +102,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
                 .ToProcessor(new MessageExpirer(schema.ExpiryAction, cache, schema.ExpiryStrategy))
                 .ToProcessor(new LoadBalancer(cache, taskScheduler))
                 .ToProcessor(new LastSentRecorder(systemTime))
+                .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache, schema.ReceiverAddress))
                 .ToEndPoint(messageSender);
         }
 

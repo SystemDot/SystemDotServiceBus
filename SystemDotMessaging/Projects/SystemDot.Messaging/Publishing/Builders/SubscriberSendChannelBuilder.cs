@@ -88,7 +88,6 @@ namespace SystemDot.Messaging.Publishing.Builders
         {
             MessagePipelineBuilder.Build()
                 .With(startPoint)
-                .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache, schema.SubscriberAddress))
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToProcessor(new MessageAddresser(schema.FromAddress, schema.SubscriberAddress))
                 .ToProcessor(new SendChannelMessageCacher(cache))
@@ -99,6 +98,7 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .Queue()
                 .ToProcessor(new LoadBalancer(cache, taskScheduler))
                 .ToProcessor(new LastSentRecorder(systemTime))
+                .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache, schema.SubscriberAddress))
                 .ToEndPoint(messageSender);
         }
 

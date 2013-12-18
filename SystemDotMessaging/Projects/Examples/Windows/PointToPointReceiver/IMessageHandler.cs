@@ -1,6 +1,6 @@
 namespace PointToPointReceiver
 {
-    public interface IMessageConsumer
+    public interface IMessageHandler
     {
     }
 }

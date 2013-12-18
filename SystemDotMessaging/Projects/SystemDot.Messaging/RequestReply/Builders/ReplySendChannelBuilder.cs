@@ -3,10 +3,8 @@ using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Authentication.Caching;
-using SystemDot.Messaging.Authentication.Expiry;
 using SystemDot.Messaging.Authentication.RequestReply;
 using SystemDot.Messaging.Batching;
-using SystemDot.Messaging.Builders;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Correlation;
 using SystemDot.Messaging.Distribution;
@@ -109,7 +107,6 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
                 .ToProcessor(new BatchPackager())
                 .ToConverter(new MessagePayloadPackager(serialiser))
-                .ToProcessor(new ReplyAuthenticationSessionAttacher(replyAuthenticationSessionLookup))
                 .ToProcessor(new ReplyCorrelationApplier(correlationLookup))
                 .ToProcessor(new Sequencer(cache))
                 .ToProcessor(new MessageAddresser(schema.FromAddress, senderAddress))
@@ -122,6 +119,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new MessageExpirer(schema.ExpiryAction, cache, schema.ExpiryStrategy))
                 .ToProcessor(new LoadBalancer(cache, taskScheduler))
                 .ToProcessor(new LastSentRecorder(systemTime))
+                .ToProcessor(new ReplyAuthenticationSessionAttacher(replyAuthenticationSessionLookup))
                 .ToEndPoint(messageSender);
         }
 

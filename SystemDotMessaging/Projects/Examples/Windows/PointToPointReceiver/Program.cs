@@ -9,23 +9,12 @@ namespace PointToPointReceiver
     {
         static void Main(string[] args)
         {
-            var container = new IocContainer();
-            container.RegisterFromAssemblyOf<Program>();
-
             Configure.Messaging()
-                .LoggingWith(new ConsoleLoggingMechanism { ShowDebug = false, ShowInfo = false })
-                .UsingFilePersistence()
-                .ResolveReferencesWith(container)
-                .RegisterHandlersFromAssemblyOf<Program>()
-                    .BasedOn<IMessageConsumer>()
-                .UsingFilePersistence()
                 .UsingHttpTransport()
                     .AsAServer("ReceiverServer")
-                .OpenChannel("TestReceive")
-                    .ForPointToPointReceiving()
-                    .WithDurability()
-                    .Sequenced()
-                .Initialise();
+                        .OpenChannel("PointToPointTest").ForPointToPointReceiving()
+                            .RegisterHandlers(r => r.RegisterHandler(new TestMessageHandler()))
+                 .Initialise();
 
             Console.WriteLine("I am the reciever. Press enter to exit");
 

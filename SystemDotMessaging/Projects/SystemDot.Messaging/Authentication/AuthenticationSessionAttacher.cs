@@ -21,14 +21,27 @@ namespace SystemDot.Messaging.Authentication
 
         public override void InputMessage(MessagePayload toInput)
         {
-            if (cache.HasCurrentSessionFor(address.Server))
-            {
-                Logger.Debug("Attaching session {0} for message: {0}", cache.GetCurrentSessionFor(address.Server).Id, toInput.Id);
-            
-                toInput.SetAuthenticationSession(cache.GetCurrentSessionFor(address.Server));
-            }
-
+            if (IsCurrentSessionAvailable()) SetCurrentAuthenticationSessionOnPayload(toInput);
             OnMessageProcessed(toInput);
+        }
+
+        bool IsCurrentSessionAvailable()
+        {
+            return cache.HasCurrentSessionFor(address.Server);
+        }
+
+        void SetCurrentAuthenticationSessionOnPayload(MessagePayload toInput)
+        {
+            PerformLogging(toInput);
+            toInput.SetAuthenticationSession(cache.GetCurrentSessionFor(address.Server));
+        }
+
+        void PerformLogging(MessagePayload toInput)
+        {
+            Logger.Debug(
+                "Attaching session {0} for message: {0}", 
+                cache.GetCurrentSessionFor(address.Server).Id, 
+                toInput.Id);
         }
     }
 }

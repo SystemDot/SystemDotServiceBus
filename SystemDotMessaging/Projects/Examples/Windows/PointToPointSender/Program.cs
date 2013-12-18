@@ -11,13 +11,10 @@ namespace PointToPointSender
         static void Main(string[] args)
         {
             Configure.Messaging()
-                .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false, ShowDebug = false })
-                .UsingFilePersistence()
                 .UsingHttpTransport()
                     .AsAServer("SenderServer")
-                .OpenChannel("TestSend")
-                    .ForPointToPointSendingTo("TestReceive@ReceiverServer")
-                    .WithDurability()
+                .OpenChannel("PointToPointTest")
+                    .ForPointToPointSendingTo("PointToPointTest@ReceiverServer")
                 .Initialise();
 
             do

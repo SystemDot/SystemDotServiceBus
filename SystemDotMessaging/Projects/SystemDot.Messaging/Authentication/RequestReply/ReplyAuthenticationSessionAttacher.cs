@@ -16,13 +16,27 @@ namespace SystemDot.Messaging.Authentication.RequestReply
 
         public override void InputMessage(MessagePayload toInput)
         {
-            if (lookup.HasCurrentSession())
-            {
-                Logger.Debug("Attaching current session: {0} to reply: {1}", lookup.GetCurrentSession().Id, toInput.Id);
-                toInput.SetAuthenticationSession(lookup.GetCurrentSession());
-            }
-
+            if (IsCurrentSessionAvailable()) SetCurrentAuthenticationSessionOnPayload(toInput);
             OnMessageProcessed(toInput);
+        }
+
+        bool IsCurrentSessionAvailable()
+        {
+            return lookup.HasCurrentSession();
+        }
+
+        void SetCurrentAuthenticationSessionOnPayload(MessagePayload toInput)
+        {
+            PerformLogging(toInput);
+            toInput.SetAuthenticationSession(lookup.GetCurrentSession());
+        }
+
+        void PerformLogging(MessagePayload toInput)
+        {
+            Logger.Debug(
+                "Attaching current session: {0} to reply: {1}", 
+                lookup.GetCurrentSession().Id, 
+                toInput.Id);
         }
     }
 }

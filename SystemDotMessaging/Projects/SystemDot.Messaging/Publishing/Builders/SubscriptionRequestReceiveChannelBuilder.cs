@@ -47,9 +47,8 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .With(messageReceiver)
                 .Pump()
                 .ToProcessor(new SubscriptionRequestFilter())
-                .ToProcessor(new ExceptionHandler(true))
                 .ToProcessor(new ReceiverAuthenticationSessionVerifier(authenticationSessionCache, authenticatedServerRegistry))
-                .ToProcessor(new MessageLocalAddressReassigner(serverAddressRegistry))
+                .ToProcessor(new MessageRegisteredAddressReassigner(serverAddressRegistry))
                 .ToProcessor(new MessageAcknowledger(acknowledgementSender))
                 .ToEndPoint(new SubscriptionRequestHandler(publisherRegistry));
         }

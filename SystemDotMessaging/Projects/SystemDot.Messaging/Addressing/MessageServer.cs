@@ -30,6 +30,8 @@ namespace SystemDot.Messaging.Addressing
        
         public ServerAddress Address { get; set; }
 
+        public bool IsUnspecified{ get { return this is NullMessageServer; }}
+
         public MessageServer()
         {
         }

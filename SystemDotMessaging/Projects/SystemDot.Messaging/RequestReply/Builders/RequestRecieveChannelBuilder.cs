@@ -98,9 +98,9 @@ namespace SystemDot.Messaging.RequestReply.Builders
             return startPoint;
         }
 
-        MessageLocalAddressReassigner CreateStartPoint()
+        MessageRegisteredAddressReassigner CreateStartPoint()
         {
-            return new MessageLocalAddressReassigner(serverAddressRegistry);
+            return new MessageRegisteredAddressReassigner(serverAddressRegistry);
         }
 
         ReceiveMessageCache CreateCache(RequestRecieveChannelSchema schema, EndpointAddress senderAddress)
@@ -112,6 +112,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         {
             MessagePipelineBuilder.Build()
                 .With(startPoint)
+                .ToProcessor(new ReceiverAuthenticationSessionVerifier(authenticationSessionCache, authenticatedServerRegistry))
                 .ToProcessorIf(new NullMessageProcessor(), schema.FlushMessages)
                 .ToProcessor(new SequenceOriginApplier(messageCache))
                 .ToProcessor(new MessageSendTimeRemover())
@@ -124,7 +125,6 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new ReplyChannelSelector(replyAddressLookup, correlationLookup))
                 .ToProcessor(new ReplyAuthenticationSessionSelector(replyAuthenticationSessionLookup))
                 .ToProcessor(new ExceptionReplier(schema.ContinueOnException))
-                .ToProcessor(new ReceiverAuthenticationSessionVerifier(authenticationSessionCache, authenticatedServerRegistry))
                 .ToProcessor(new MessageHookRunner<MessagePayload>(schema.PreUnpackagingHooks))
                 .ToConverter(new MessagePayloadUnpackager(serialiser))
                 .ToProcessor(new MessageFilter(schema.FilterStrategy))

@@ -18,6 +18,7 @@ namespace SystemDot.Messaging.Authentication
         public static void SetAuthenticationSession(this MessagePayload payload, AuthenticationSession toSet)
         {
             Contract.Requires(toSet != null);
+            payload.RemoveHeader(typeof(AuthenticationSessionHeader));
             payload.AddHeader(new AuthenticationSessionHeader(toSet));
         }
     }

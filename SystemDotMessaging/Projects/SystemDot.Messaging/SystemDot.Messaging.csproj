@@ -42,7 +42,7 @@
     <Compile Include="Acknowledgement\Builders\AcknowledgementSendChannelBuilder.cs" />
     <Compile Include="Addressing\EndpointAddress.cs" />
     <Compile Include="Addressing\EndpointAddressBuilder.cs" />
-    <Compile Include="Addressing\MessageLocalAddressReassigner.cs" />
+    <Compile Include="Addressing\MessageRegisteredAddressReassigner.cs" />
     <Compile Include="Addressing\NullMessageServer.cs" />
     <Compile Include="Addressing\ServerAddressLoader.cs" />
     <Compile Include="Addressing\ServerAddressRegistry.cs" />

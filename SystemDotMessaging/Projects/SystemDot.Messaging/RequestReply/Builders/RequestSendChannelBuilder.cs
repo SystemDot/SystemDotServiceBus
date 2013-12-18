@@ -95,7 +95,6 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
                 .ToProcessor(new BatchPackager())
                 .ToConverter(new MessagePayloadPackager(serialiser))
-                .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache, schema.ReceiverAddress))
                 .ToProcessorIf(new CorrelationAssigner(correlationLookup), schema.CorrelateReplyToRequest)
                 .ToProcessor(new MessageHookRunner<MessagePayload>(schema.PostPackagingHooks))
                 .ToProcessor(new Sequencer(cache))
@@ -109,6 +108,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new MessageExpirer(schema.ExpiryAction, cache, schema.ExpiryStrategy))
                 .ToProcessor(new LoadBalancer(cache, taskScheduler))
                 .ToProcessor(new LastSentRecorder(systemTime))
+                .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache, schema.ReceiverAddress))
                 .ToEndPoint(messageSender);
         }
 
