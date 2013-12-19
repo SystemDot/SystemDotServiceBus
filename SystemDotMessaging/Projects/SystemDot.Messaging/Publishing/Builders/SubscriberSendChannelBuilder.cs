@@ -98,7 +98,7 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .Queue()
                 .ToProcessor(new LoadBalancer(cache, taskScheduler))
                 .ToProcessor(new LastSentRecorder(systemTime))
-                .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache, schema.SubscriberAddress))
+                .ToProcessor(new SendAuthenticationSessionAttacher(authenticationSessionCache, schema.SubscriberAddress))
                 .ToEndPoint(messageSender);
         }
 

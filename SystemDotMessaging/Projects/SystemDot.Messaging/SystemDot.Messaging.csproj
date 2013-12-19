@@ -68,8 +68,7 @@
     <Compile Include="Authentication\MessagePayloadExtensions.cs" />
     <Compile Include="Authentication\ReceiverAuthenticationSessionVerifier.cs" />
     <Compile Include="Authentication\RequestReply\ReplyAuthenticationSessionAttacher.cs" />
-    <Compile Include="Authentication\RequestReply\ReplyAuthenticationSessionLookup.cs" />
-    <Compile Include="Authentication\RequestReply\ReplyAuthenticationSessionSelector.cs" />
+    <Compile Include="Authentication\SendAuthenticationSessionAttacher.cs" />
     <Compile Include="Authentication\SenderAuthenticationSessionVerifier.cs" />
     <Compile Include="Authentication\Expiry\AuthenticationSessionExpired.cs" />
     <Compile Include="Batching\Batch.cs" />

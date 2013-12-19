@@ -39,7 +39,6 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly IMainThreadMarshaller mainThreadMarshaller;
         readonly AuthenticationSessionCache authenticationSessionCache;
         readonly AuthenticatedServerRegistry authenticatedServerRegistry;
-        readonly ReplyAuthenticationSessionLookup replyAuthenticationSessionLookup;
         readonly ReplyCorrelationLookup correlationLookup;
 
         internal RequestRecieveChannelBuilder(
@@ -54,7 +53,6 @@ namespace SystemDot.Messaging.RequestReply.Builders
             IMainThreadMarshaller mainThreadMarshaller,
             AuthenticationSessionCache authenticationSessionCache,
             AuthenticatedServerRegistry authenticatedServerRegistry,
-            ReplyAuthenticationSessionLookup replyAuthenticationSessionLookup,
             ReplyCorrelationLookup correlationLookup)
         {
             Contract.Requires(replyAddressLookup != null);
@@ -68,7 +66,6 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(mainThreadMarshaller != null);
             Contract.Requires(authenticationSessionCache != null);
             Contract.Requires(authenticatedServerRegistry != null);
-            Contract.Requires(replyAuthenticationSessionLookup != null);
             Contract.Requires(correlationLookup != null);
 
             this.replyAddressLookup = replyAddressLookup;
@@ -82,7 +79,6 @@ namespace SystemDot.Messaging.RequestReply.Builders
             this.mainThreadMarshaller = mainThreadMarshaller;
             this.authenticationSessionCache = authenticationSessionCache;
             this.authenticatedServerRegistry = authenticatedServerRegistry;
-            this.replyAuthenticationSessionLookup = replyAuthenticationSessionLookup;
             this.correlationLookup = correlationLookup;
         }
 
@@ -123,7 +119,6 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .Queue()
                 .ToResequencerIfSequenced(messageCache, schema)
                 .ToProcessor(new ReplyChannelSelector(replyAddressLookup, correlationLookup))
-                .ToProcessor(new ReplyAuthenticationSessionSelector(replyAuthenticationSessionLookup))
                 .ToProcessor(new ExceptionReplier(schema.ContinueOnException))
                 .ToProcessor(new MessageHookRunner<MessagePayload>(schema.PreUnpackagingHooks))
                 .ToConverter(new MessagePayloadUnpackager(serialiser))

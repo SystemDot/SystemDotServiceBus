@@ -31,8 +31,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly MessageCacheFactory messageCacheFactory;
         readonly MessageAcknowledgementHandler acknowledgementHandler;
         readonly ITaskScheduler taskScheduler;
-        readonly ReplyAuthenticationSessionLookup replyAuthenticationSessionLookup;
-        readonly AuthenticatedServerRegistry authenticatedServerRegistry;
+        readonly AuthenticationSessionCache authenticationSessionCache;
         readonly ReplyCorrelationLookup correlationLookup;
 
         public ReplySendChannelBuilder(
@@ -44,8 +43,6 @@ namespace SystemDot.Messaging.RequestReply.Builders
             MessageAcknowledgementHandler acknowledgementHandler,
             ITaskScheduler taskScheduler,
             AuthenticationSessionCache authenticationSessionCache,
-            ReplyAuthenticationSessionLookup replyAuthenticationSessionLookup,
-            AuthenticatedServerRegistry authenticatedServerRegistry,
             ReplyCorrelationLookup correlationLookup)
         {
             Contract.Requires(messageSender != null);
@@ -56,8 +53,6 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(acknowledgementHandler != null);
             Contract.Requires(taskScheduler != null);
             Contract.Requires(authenticationSessionCache != null);
-            Contract.Requires(replyAuthenticationSessionLookup != null);
-            Contract.Requires(authenticatedServerRegistry != null);
             Contract.Requires(correlationLookup != null);
 
             this.messageSender = messageSender;
@@ -67,8 +62,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             this.messageCacheFactory = messageCacheFactory;
             this.acknowledgementHandler = acknowledgementHandler;
             this.taskScheduler = taskScheduler;
-            this.replyAuthenticationSessionLookup = replyAuthenticationSessionLookup;
-            this.authenticatedServerRegistry = authenticatedServerRegistry;
+            this.authenticationSessionCache = authenticationSessionCache;
             this.correlationLookup = correlationLookup;
         }
 
@@ -119,7 +113,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new MessageExpirer(schema.ExpiryAction, cache, schema.ExpiryStrategy))
                 .ToProcessor(new LoadBalancer(cache, taskScheduler))
                 .ToProcessor(new LastSentRecorder(systemTime))
-                .ToProcessor(new ReplyAuthenticationSessionAttacher(replyAuthenticationSessionLookup))
+                .ToProcessor(new ReplyAuthenticationSessionAttacher(authenticationSessionCache))
                 .ToEndPoint(messageSender);
         }
 

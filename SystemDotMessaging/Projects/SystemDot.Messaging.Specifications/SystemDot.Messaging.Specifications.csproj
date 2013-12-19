@@ -63,6 +63,7 @@
     <Compile Include="authentication\when_replying_to_an_authentication_request_with_a_response_that_wont_authenticate.cs" />
     <Compile Include="authentication\when_sending_an_authentication_request_to_a_server.cs" />
     <Compile Include="authentication\when_sending_an_authentication_request_with_two_servers_requiring_authentication.cs" />
+    <Compile Include="authentication\when_sending_a_message_to_an_authenticated_server_without_authenticating_to_it.cs" />
     <Compile Include="authentication\when_sending_a_message_to_a_server_after_authenticating_to_it.cs" />
     <Compile Include="authentication\when_sending_a_message_with_both_sender_and_receiver_on_the_same_server.cs" />
     <Compile Include="authentication\when_sending_a_message_with_sender_and_receiver_on_the_same_server_after_restarting_messaging.cs" />

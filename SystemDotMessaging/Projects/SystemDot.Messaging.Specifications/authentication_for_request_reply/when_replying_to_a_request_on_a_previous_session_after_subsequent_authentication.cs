@@ -32,21 +32,20 @@ namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
-                .AsAServer(ReceiverServer)
-                .RequiresAuthentication()
-                .AcceptsRequest<TestAuthenticationRequest>()
-                .AuthenticatesOnReply<TestAuthenticationResponse>()
-                .OpenChannel(ReceiverChannel)
-                .ForRequestReplyReceiving()
-                .RegisterHandlers(r => r.RegisterHandler(new TestReplyMessageHandler<TestAuthenticationRequest, TestAuthenticationResponse>()))
-                .RegisterHandlers(r => r.RegisterHandler(handler))
+                    .AsAServer(ReceiverServer)
+                        .RequiresAuthentication()
+                        .AcceptsRequest<TestAuthenticationRequest>()
+                        .AuthenticatesOnReply<TestAuthenticationResponse>()
+                        .OpenChannel(ReceiverChannel).ForRequestReplyReceiving()
+                    .RegisterHandlers(r => r.RegisterHandler(new TestReplyMessageHandler<TestAuthenticationRequest, TestAuthenticationResponse>()))
+                    .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
 
-            session = SendMessageToServer(authenticationRequest).First().GetAuthenticationSession();
+            SendMessageToServer(authenticationRequest);
             
             SystemTime.AdvanceTime(TimeSpan.FromSeconds(1));
-            
-            SendMessageToServer(authenticationRequest);
+
+            session = SendMessageToServer(authenticationRequest).First().GetAuthenticationSession();
 
             request = new MessagePayload()
                 .SetMessageBody(Message)

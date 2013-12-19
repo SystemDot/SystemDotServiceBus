@@ -108,7 +108,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new MessageExpirer(schema.ExpiryAction, cache, schema.ExpiryStrategy))
                 .ToProcessor(new LoadBalancer(cache, taskScheduler))
                 .ToProcessor(new LastSentRecorder(systemTime))
-                .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache, schema.ReceiverAddress))
+                .ToProcessor(new SendAuthenticationSessionAttacher(authenticationSessionCache, schema.ReceiverAddress))
                 .ToEndPoint(messageSender);
         }
 

@@ -6,42 +6,52 @@ using SystemDot.Messaging.Packaging;
 
 namespace SystemDot.Messaging.Authentication
 {
-    class AuthenticationSessionAttacher : MessageProcessor
+    abstract class AuthenticationSessionAttacher : MessageProcessor
     {
         readonly AuthenticationSessionCache cache;
-        readonly EndpointAddress address;
-
-        public AuthenticationSessionAttacher(AuthenticationSessionCache cache, EndpointAddress address)
+        
+        protected AuthenticationSessionAttacher(AuthenticationSessionCache cache)
         {
             Contract.Requires(cache != null);
-            Contract.Requires(address != null);
             this.cache = cache;
-            this.address = address;
         }
 
         public override void InputMessage(MessagePayload toInput)
         {
-            if (IsCurrentSessionAvailable()) SetCurrentAuthenticationSessionOnPayload(toInput);
+            if (ServerRequiresAuthentication() && !IsCurrentSessionAvailable()) return;
+            SetCurrentAuthenticationSessionOnPayload(toInput);
             OnMessageProcessed(toInput);
+        }
+
+        bool ServerRequiresAuthentication()
+        {
+            return cache.
         }
 
         bool IsCurrentSessionAvailable()
         {
-            return cache.HasCurrentSessionFor(address.Server);
+            return cache.HasCurrentSessionFor(GetServer());
         }
 
         void SetCurrentAuthenticationSessionOnPayload(MessagePayload toInput)
         {
             PerformLogging(toInput);
-            toInput.SetAuthenticationSession(cache.GetCurrentSessionFor(address.Server));
+            toInput.SetAuthenticationSession(cache.GetCurrentSessionFor(GetServer()));
         }
 
         void PerformLogging(MessagePayload toInput)
         {
             Logger.Debug(
                 "Attaching session {0} for message: {0}", 
-                cache.GetCurrentSessionFor(address.Server).Id, 
+                cache.GetCurrentSessionFor(GetServer()).Id, 
                 toInput.Id);
         }
+
+        MessageServer GetServer()
+        {
+            return GetAddress().Server;
+        }
+
+        protected abstract EndpointAddress GetAddress();
     }
 }

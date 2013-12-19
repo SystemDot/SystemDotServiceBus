@@ -73,7 +73,7 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Pump()
                 .ToProcessor(new LastSentRecorder(systemTime))
-                .ToProcessor(new AuthenticationSessionAttacher(authenticationSessionCache, schema.PublisherAddress))
+                .ToProcessor(new SendAuthenticationSessionAttacher(authenticationSessionCache, schema.PublisherAddress))
                 .ToEndPoint(messageSender);
         }
     }

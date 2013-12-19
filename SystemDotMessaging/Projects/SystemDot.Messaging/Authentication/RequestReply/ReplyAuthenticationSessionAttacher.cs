@@ -1,42 +1,29 @@
-using System.Diagnostics.Contracts;
-using SystemDot.Logging;
+using System.Threading;
+using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Authentication.Caching;
 using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Packaging.Headers;
 
 namespace SystemDot.Messaging.Authentication.RequestReply
 {
-    class ReplyAuthenticationSessionAttacher : MessageProcessor
+    class ReplyAuthenticationSessionAttacher : AuthenticationSessionAttacher
     {
-        readonly ReplyAuthenticationSessionLookup lookup;
+        readonly ThreadLocal<EndpointAddress> address;
 
-        public ReplyAuthenticationSessionAttacher(ReplyAuthenticationSessionLookup lookup)
+        public ReplyAuthenticationSessionAttacher(AuthenticationSessionCache cache) : base(cache)
         {
-            Contract.Requires(lookup != null);
-            this.lookup = lookup;
+            address = new ThreadLocal<EndpointAddress>();
         }
 
         public override void InputMessage(MessagePayload toInput)
         {
-            if (IsCurrentSessionAvailable()) SetCurrentAuthenticationSessionOnPayload(toInput);
-            OnMessageProcessed(toInput);
+            address.Value = toInput.GetToAddress();
+            base.InputMessage(toInput);
         }
 
-        bool IsCurrentSessionAvailable()
+        protected override EndpointAddress GetAddress()
         {
-            return lookup.HasCurrentSession();
-        }
-
-        void SetCurrentAuthenticationSessionOnPayload(MessagePayload toInput)
-        {
-            PerformLogging(toInput);
-            toInput.SetAuthenticationSession(lookup.GetCurrentSession());
-        }
-
-        void PerformLogging(MessagePayload toInput)
-        {
-            Logger.Debug(
-                "Attaching current session: {0} to reply: {1}", 
-                lookup.GetCurrentSession().Id, 
-                toInput.Id);
+            return address.Value;
         }
     }
 }

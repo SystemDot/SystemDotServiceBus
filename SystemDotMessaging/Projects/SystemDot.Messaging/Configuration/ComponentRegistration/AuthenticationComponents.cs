@@ -18,7 +18,6 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<AuthenticatedServerRegistry, AuthenticatedServerRegistry>();
             container.RegisterInstance<AuthenticationSessionExpirer, AuthenticationSessionExpirer>();
             container.RegisterInstance<AuthenticationSessionFactory, AuthenticationSessionFactory>();
-            container.RegisterInstance<ReplyAuthenticationSessionLookup, ReplyAuthenticationSessionLookup>();
         }
     }
 }
