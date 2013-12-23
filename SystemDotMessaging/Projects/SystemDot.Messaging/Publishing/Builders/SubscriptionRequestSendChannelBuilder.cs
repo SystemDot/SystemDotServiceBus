@@ -19,29 +19,29 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
         readonly MessageAcknowledgementHandler acknowledgementHandler;
-        readonly AuthenticationSessionCache authenticationSessionCache;
+        readonly SenderAuthenticationSessionAttacherFactory authenticationSessionAttacherFactory;
         readonly MessageCacheFactory messageCacheFactory;
 
         public SubscriptionRequestSendChannelBuilder(
             MessageSender messageSender, 
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 
-            MessageAcknowledgementHandler acknowledgementHandler, 
-            AuthenticationSessionCache authenticationSessionCache, 
+            MessageAcknowledgementHandler acknowledgementHandler,
+            SenderAuthenticationSessionAttacherFactory authenticationSessionAttacherFactory, 
             MessageCacheFactory messageCacheFactory)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
             Contract.Requires(acknowledgementHandler != null);
-            Contract.Requires(authenticationSessionCache != null);
+            Contract.Requires(authenticationSessionAttacherFactory != null);
             Contract.Requires(messageCacheFactory != null);
 
             this.messageSender = messageSender;
             this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
             this.acknowledgementHandler = acknowledgementHandler;
-            this.authenticationSessionCache = authenticationSessionCache;
+            this.authenticationSessionAttacherFactory = authenticationSessionAttacherFactory;
             this.messageCacheFactory = messageCacheFactory;
         }
 
@@ -73,7 +73,7 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .ToProcessor(new PersistenceSourceRecorder())
                 .Pump()
                 .ToProcessor(new LastSentRecorder(systemTime))
-                .ToProcessor(new SendAuthenticationSessionAttacher(authenticationSessionCache, schema.PublisherAddress))
+                .ToProcessor(authenticationSessionAttacherFactory.Create(schema.PublisherAddress))
                 .ToEndPoint(messageSender);
         }
     }

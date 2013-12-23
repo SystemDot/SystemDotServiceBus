@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Publishing.Builders
         readonly MessageAcknowledgementHandler acknowledgementHandler;
         readonly ISerialiser serialiser;
         readonly ITaskScheduler taskScheduler;
-        readonly AuthenticationSessionCache authenticationSessionCache;
+        readonly SenderAuthenticationSessionAttacherFactory authenticationSessionAttacherFactory;
 
         public SubscriberSendChannelBuilder(
             MessageSender messageSender, 
@@ -35,8 +35,8 @@ namespace SystemDot.Messaging.Publishing.Builders
             ITaskRepeater taskRepeater, 
             MessageAcknowledgementHandler acknowledgementHandler, 
             ISerialiser serialiser, 
-            ITaskScheduler taskScheduler, 
-            AuthenticationSessionCache authenticationSessionCache)
+            ITaskScheduler taskScheduler,
+            SenderAuthenticationSessionAttacherFactory authenticationSessionAttacherFactory)
         {
             Contract.Requires(messageSender != null);
             Contract.Requires(messageCacheFactory != null);
@@ -45,7 +45,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             Contract.Requires(acknowledgementHandler != null);
             Contract.Requires(serialiser != null);
             Contract.Requires(taskScheduler != null);
-            Contract.Requires(authenticationSessionCache != null);
+            Contract.Requires(authenticationSessionAttacherFactory != null);
 
             this.messageSender = messageSender;
             this.messageCacheFactory = messageCacheFactory;
@@ -54,7 +54,7 @@ namespace SystemDot.Messaging.Publishing.Builders
             this.acknowledgementHandler = acknowledgementHandler;
             this.serialiser = serialiser;
             this.taskScheduler = taskScheduler;
-            this.authenticationSessionCache = authenticationSessionCache;
+            this.authenticationSessionAttacherFactory = authenticationSessionAttacherFactory;
         }
 
         public IMessageInputter<MessagePayload> BuildChannel(SubscriberSendChannelSchema schema)
@@ -98,7 +98,7 @@ namespace SystemDot.Messaging.Publishing.Builders
                 .Queue()
                 .ToProcessor(new LoadBalancer(cache, taskScheduler))
                 .ToProcessor(new LastSentRecorder(systemTime))
-                .ToProcessor(new SendAuthenticationSessionAttacher(authenticationSessionCache, schema.SubscriberAddress))
+                .ToProcessor(authenticationSessionAttacherFactory.Create(schema.SubscriberAddress))
                 .ToEndPoint(messageSender);
         }
 

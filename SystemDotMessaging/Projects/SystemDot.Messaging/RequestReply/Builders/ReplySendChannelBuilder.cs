@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly MessageCacheFactory messageCacheFactory;
         readonly MessageAcknowledgementHandler acknowledgementHandler;
         readonly ITaskScheduler taskScheduler;
-        readonly AuthenticationSessionCache authenticationSessionCache;
+        readonly ReplyAuthenticationSessionAttacherFactory authenticationSessionAttacherFactory;
         readonly ReplyCorrelationLookup correlationLookup;
 
         public ReplySendChannelBuilder(
@@ -42,7 +42,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             MessageCacheFactory messageCacheFactory,
             MessageAcknowledgementHandler acknowledgementHandler,
             ITaskScheduler taskScheduler,
-            AuthenticationSessionCache authenticationSessionCache,
+            ReplyAuthenticationSessionAttacherFactory authenticationSessionAttacherFactory,
             ReplyCorrelationLookup correlationLookup)
         {
             Contract.Requires(messageSender != null);
@@ -52,7 +52,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(messageCacheFactory != null);
             Contract.Requires(acknowledgementHandler != null);
             Contract.Requires(taskScheduler != null);
-            Contract.Requires(authenticationSessionCache != null);
+            Contract.Requires(authenticationSessionAttacherFactory != null);
             Contract.Requires(correlationLookup != null);
 
             this.messageSender = messageSender;
@@ -62,7 +62,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             this.messageCacheFactory = messageCacheFactory;
             this.acknowledgementHandler = acknowledgementHandler;
             this.taskScheduler = taskScheduler;
-            this.authenticationSessionCache = authenticationSessionCache;
+            this.authenticationSessionAttacherFactory = authenticationSessionAttacherFactory;
             this.correlationLookup = correlationLookup;
         }
 
@@ -113,7 +113,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new MessageExpirer(schema.ExpiryAction, cache, schema.ExpiryStrategy))
                 .ToProcessor(new LoadBalancer(cache, taskScheduler))
                 .ToProcessor(new LastSentRecorder(systemTime))
-                .ToProcessor(new ReplyAuthenticationSessionAttacher(authenticationSessionCache))
+                .ToProcessor(authenticationSessionAttacherFactory.Create())
                 .ToEndPoint(messageSender);
         }
 

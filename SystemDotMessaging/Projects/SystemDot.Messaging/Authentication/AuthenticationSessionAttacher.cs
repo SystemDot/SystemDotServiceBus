@@ -9,25 +9,33 @@ namespace SystemDot.Messaging.Authentication
     abstract class AuthenticationSessionAttacher : MessageProcessor
     {
         readonly AuthenticationSessionCache cache;
-        
-        protected AuthenticationSessionAttacher(AuthenticationSessionCache cache)
+        readonly AuthenticatedServerRegistry registry;
+
+        protected AuthenticationSessionAttacher(AuthenticationSessionCache cache, AuthenticatedServerRegistry registry)
         {
             Contract.Requires(cache != null);
+            Contract.Requires(registry != null);
+
             this.cache = cache;
+            this.registry = registry;
         }
 
         public override void InputMessage(MessagePayload toInput)
         {
-            if (ServerRequiresAuthentication() && !IsCurrentSessionAvailable()) return;
-            SetCurrentAuthenticationSessionOnPayload(toInput);
+            if (ServerRequiresAuthentication())
+            {
+                if (!IsCurrentSessionAvailable()) return;
+                SetCurrentAuthenticationSessionOnPayload(toInput);
+            }
+            
             OnMessageProcessed(toInput);
         }
 
         bool ServerRequiresAuthentication()
         {
-            return cache.
+            return registry.Contains(GetServer());
         }
-
+        
         bool IsCurrentSessionAvailable()
         {
             return cache.HasCurrentSessionFor(GetServer());

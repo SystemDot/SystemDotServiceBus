@@ -2,8 +2,6 @@ using System.Diagnostics.Contracts;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication;
-using SystemDot.Messaging.Authentication.Caching;
-using SystemDot.Messaging.Authentication.Expiry;
 using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Caching;
 using SystemDot.Messaging.Correlation;
@@ -31,8 +29,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         readonly MessageCacheFactory messageCacheFactory;
         readonly MessageAcknowledgementHandler acknowledgementHandler;
         readonly ITaskScheduler taskScheduler;
-        readonly AuthenticationSessionCache authenticationSessionCache;
-        readonly AuthenticatedServerRegistry authenticatedServerRegistry;
+        readonly SenderAuthenticationSessionAttacherFactory authenticationSessionAttacherFactory;
         readonly CorrelationLookup correlationLookup;
 
         public RequestSendChannelBuilder(
@@ -43,8 +40,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             MessageCacheFactory messageCacheFactory,
             MessageAcknowledgementHandler acknowledgementHandler,
             ITaskScheduler taskScheduler,
-            AuthenticationSessionCache authenticationSessionCache,
-            AuthenticatedServerRegistry authenticatedServerRegistry,
+            SenderAuthenticationSessionAttacherFactory authenticationSessionAttacherFactory,
             CorrelationLookup correlationLookup)
         {
             Contract.Requires(messageSender != null);
@@ -54,8 +50,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(messageCacheFactory != null);
             Contract.Requires(acknowledgementHandler != null);
             Contract.Requires(taskScheduler != null);
-            Contract.Requires(authenticationSessionCache != null);
-            Contract.Requires(authenticatedServerRegistry != null);
+            Contract.Requires(authenticationSessionAttacherFactory != null);
             Contract.Requires(correlationLookup != null);
 
             this.messageSender = messageSender;
@@ -65,8 +60,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             this.messageCacheFactory = messageCacheFactory;
             this.acknowledgementHandler = acknowledgementHandler;
             this.taskScheduler = taskScheduler;
-            this.authenticationSessionCache = authenticationSessionCache;
-            this.authenticatedServerRegistry = authenticatedServerRegistry;
+            this.authenticationSessionAttacherFactory = authenticationSessionAttacherFactory;
             this.correlationLookup = correlationLookup;
         }
 
@@ -108,7 +102,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new MessageExpirer(schema.ExpiryAction, cache, schema.ExpiryStrategy))
                 .ToProcessor(new LoadBalancer(cache, taskScheduler))
                 .ToProcessor(new LastSentRecorder(systemTime))
-                .ToProcessor(new SendAuthenticationSessionAttacher(authenticationSessionCache, schema.ReceiverAddress))
+                .ToProcessor(authenticationSessionAttacherFactory.Create(schema.ReceiverAddress))
                 .ToEndPoint(messageSender);
         }
 

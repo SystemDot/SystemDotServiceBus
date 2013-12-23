@@ -4,11 +4,14 @@ using SystemDot.Messaging.Authentication.Caching;
 
 namespace SystemDot.Messaging.Authentication
 {
-    class SendAuthenticationSessionAttacher : AuthenticationSessionAttacher
+    class SenderAuthenticationSessionAttacher : AuthenticationSessionAttacher
     {
         readonly EndpointAddress address;
 
-        public SendAuthenticationSessionAttacher(AuthenticationSessionCache cache, EndpointAddress address) : base(cache)
+        public SenderAuthenticationSessionAttacher(
+            AuthenticationSessionCache cache, 
+            AuthenticatedServerRegistry registry,
+            EndpointAddress address) : base(cache, registry)
         {
             Contract.Requires(address != null);
             this.address = address;

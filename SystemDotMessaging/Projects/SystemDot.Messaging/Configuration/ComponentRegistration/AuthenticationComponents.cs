@@ -3,8 +3,6 @@ using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Authentication.Builders;
 using SystemDot.Messaging.Authentication.Caching;
 using SystemDot.Messaging.Authentication.Expiry;
-using SystemDot.Messaging.Authentication.RequestReply;
-using SystemDot.Messaging.RequestReply.Builders;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {
@@ -18,6 +16,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<AuthenticatedServerRegistry, AuthenticatedServerRegistry>();
             container.RegisterInstance<AuthenticationSessionExpirer, AuthenticationSessionExpirer>();
             container.RegisterInstance<AuthenticationSessionFactory, AuthenticationSessionFactory>();
+            container.RegisterInstance<SenderAuthenticationSessionAttacherFactory, SenderAuthenticationSessionAttacherFactory>();
         }
     }
 }

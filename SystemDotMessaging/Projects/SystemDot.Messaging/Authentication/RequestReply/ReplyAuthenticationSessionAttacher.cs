@@ -10,7 +10,10 @@ namespace SystemDot.Messaging.Authentication.RequestReply
     {
         readonly ThreadLocal<EndpointAddress> address;
 
-        public ReplyAuthenticationSessionAttacher(AuthenticationSessionCache cache) : base(cache)
+        public ReplyAuthenticationSessionAttacher(
+            AuthenticationSessionCache cache,
+            AuthenticatedServerRegistry registry)
+            : base(cache, registry)
         {
             address = new ThreadLocal<EndpointAddress>();
         }
