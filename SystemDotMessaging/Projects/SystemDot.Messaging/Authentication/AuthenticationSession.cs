@@ -9,22 +9,29 @@ namespace SystemDot.Messaging.Authentication
 
         public DateTime CreatedOn { get; set; }
 
-        public DateTime ExpiresOn { get; set; }
+        public TimeSpan ExpiresAfter { get; set; }
 
         public AuthenticationSession()
         {
         }
 
-        public AuthenticationSession(DateTime expiresOn)
+        public AuthenticationSession(TimeSpan expiresAfter)
         {
             Id = Guid.NewGuid();
             CreatedOn = SystemTime.Current.GetCurrentDate();
-            ExpiresOn = expiresOn;
+            ExpiresAfter = expiresAfter;
         }
 
         public bool NeverExpires()
         {
-            return ExpiresOn == DateTime.MaxValue;
+            return ExpiresAfter == TimeSpan.MaxValue;
+        }
+
+        public DateTime GetExpiresOn()
+        {
+            return ExpiresAfter == TimeSpan.MaxValue
+                ? DateTime.MaxValue
+                : SystemTime.Current.GetCurrentDate().Add(ExpiresAfter);
         }
 
         public override bool Equals(AuthenticationSession other)
@@ -39,12 +46,18 @@ namespace SystemDot.Messaging.Authentication
 
         public override string ToString()
         {
-            return String.Format("Id: {0}, Created on: {1}, Expires on: {2}", Id, CreatedOn, GetExpiresOnToString());
+            return String.Format(
+                "Id: {0}, Created on: {1}, Expiry: {2}", 
+                Id, 
+                CreatedOn, 
+                GetExpiresInToString());
         }
 
-        string GetExpiresOnToString()
+        string GetExpiresInToString()
         {
-            return ExpiresOn == DateTime.MaxValue ? "Never" : ExpiresOn.ToString(CultureInfo.InvariantCulture);
+            return ExpiresAfter == TimeSpan.MaxValue 
+                ? "Never" 
+                : ExpiresAfter.TotalMinutes.ToString(CultureInfo.InvariantCulture) + " minutes";
         }
     }
 }

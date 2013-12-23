@@ -37,7 +37,7 @@ namespace SystemDot.Messaging.Specifications.authentication_expiry
                 .SetAuthenticationSession();
 
             session = authenticationResponse.GetAuthenticationSession();
-            session.ExpiresOn = SystemTime.GetCurrentDate().AddMinutes(ExpiryInMinutes);
+            session.ExpiresAfter = TimeSpan.FromSeconds(ExpiryInMinutes);
 
             WebRequestor.AddMessages(authenticationResponse);
 

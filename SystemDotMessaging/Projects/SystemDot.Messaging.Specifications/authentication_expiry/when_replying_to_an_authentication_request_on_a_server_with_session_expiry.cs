@@ -43,8 +43,6 @@ namespace SystemDot.Messaging.Specifications.authentication_expiry
         Because of = () => returnedMessages = SendMessageToServer(payload);
 
         It should_reply_with_the_specified_authentication_response_containing_the_new_authentication_session_with_the_specified_expiry = () =>
-            returnedMessages.Single().GetAuthenticationSession().ExpiresOn.ShouldEqual(SystemTime.GetCurrentDate().AddMinutes(ExpiryInMinutes));
+            returnedMessages.Single().GetAuthenticationSession().ExpiresAfter.ShouldEqual(TimeSpan.FromMinutes(ExpiryInMinutes));
     }
-
-    
 }

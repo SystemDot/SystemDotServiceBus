@@ -42,7 +42,7 @@ namespace SystemDot.Messaging.Authentication.Expiry
 
         TimeSpan GetDecacheTime(AuthenticationSession toTrack)
         {
-            return toTrack.ExpiresOn.Subtract(systemTime.GetCurrentDate());
+            return toTrack.GetExpiresOn().Subtract(systemTime.GetCurrentDate());
         }
     }
 }
