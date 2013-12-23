@@ -39,6 +39,7 @@ namespace SystemDot.Messaging.Authentication
 
         void CacheSession(MessagePayload toInput)
         {
+            toInput.GetAuthenticationSession().RecalculateExpiresOn();
             cache.CacheSessionFor(toInput.GetAuthenticationSession(), toInput.GetFromAddress().Server);
         }
     }

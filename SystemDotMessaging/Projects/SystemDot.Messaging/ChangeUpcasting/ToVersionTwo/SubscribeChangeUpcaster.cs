@@ -1,9 +1,10 @@
 using System;
+using SystemDot.Messaging.Publishing;
 using SystemDot.Messaging.Repeating;
 using SystemDot.Storage.Changes;
 using SystemDot.Storage.Changes.Upcasting;
 
-namespace SystemDot.Messaging.Publishing.ChangeUpcasting.ToVersionTwo
+namespace SystemDot.Messaging.ChangeUpcasting.ToVersionTwo
 {
     public class SubscribeChangeUpcaster : IChangeUpcaster
     {

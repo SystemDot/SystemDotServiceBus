@@ -32,11 +32,11 @@ namespace SystemDot.Messaging.Specifications.authentication_expiry
                 .SetMessageBody(new TestAuthenticationRequest())
                 .SetFromServer(ReceiverServerName)
                 .SetToServer(SenderServer)
-                .SetAuthenticationSession();
+                .SetAuthenticationSession(TimeSpan.FromSeconds(ExpiryInMinutes));
 
             session = authenticationResponse.GetAuthenticationSession();
-            session.ExpiresAfter = TimeSpan.FromSeconds(ExpiryInMinutes);
-
+            SystemTime.AdvanceTime(TimeSpan.FromDays(1));
+            
             WebRequestor.AddMessages(authenticationResponse);
 
             Bus.SendDirect(new TestAuthenticationRequest(), new TestMessageHandler<TestAuthenticationResponse>(), e => { });

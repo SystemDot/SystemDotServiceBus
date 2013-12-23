@@ -1,8 +1,9 @@
 ﻿using System;
+using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Storage.Changes;
 using SystemDot.Storage.Changes.Upcasting;
 
-namespace SystemDot.Messaging.Storage.Changes.Upcasting.ToVersionOne
+namespace SystemDot.Messaging.ChangeUpcasting.ToVersionOne
 {
     public class MessageCheckpointChangeUpcaster : IChangeUpcaster
     {

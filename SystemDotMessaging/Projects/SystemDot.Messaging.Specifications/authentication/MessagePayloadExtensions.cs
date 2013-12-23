@@ -21,7 +21,14 @@ namespace SystemDot.Messaging.Specifications.authentication
 
         public static MessagePayload SetAuthenticationSession(this MessagePayload payload)
         {
-            payload.SetAuthenticationSession(new AuthenticationSession(TimeSpan.MaxValue));
+            payload.SetAuthenticationSession(TimeSpan.MaxValue);
+
+            return payload;
+        }
+        
+        public static MessagePayload SetAuthenticationSession(this MessagePayload payload, TimeSpan toSet)
+        {
+            payload.SetAuthenticationSession(new AuthenticationSession(toSet));
 
             return payload;
         }

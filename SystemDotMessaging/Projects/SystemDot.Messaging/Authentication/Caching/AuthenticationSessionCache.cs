@@ -76,7 +76,7 @@ namespace SystemDot.Messaging.Authentication.Caching
 
         public void ApplyChange(AuthenticationSessionCachedChange change)
         {
-            if (change.Session.GetExpiresOn() < SystemTime.Current.GetCurrentDate()) return;
+            if (change.Session.ExpiresOn < SystemTime.Current.GetCurrentDate()) return;
 
             sessions.TryAdd(change.Session.Id, new ServerSession(change.Server, change.Session));
             sessionExpirer.Track(change.Server, change.Session);

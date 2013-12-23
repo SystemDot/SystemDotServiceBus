@@ -11,6 +11,8 @@ namespace SystemDot.Messaging.Authentication
 
         public TimeSpan ExpiresAfter { get; set; }
 
+        public DateTime ExpiresOn { get; set; }
+
         public AuthenticationSession()
         {
         }
@@ -20,6 +22,7 @@ namespace SystemDot.Messaging.Authentication
             Id = Guid.NewGuid();
             CreatedOn = SystemTime.Current.GetCurrentDate();
             ExpiresAfter = expiresAfter;
+            RecalculateExpiresOn();
         }
 
         public bool NeverExpires()
@@ -27,9 +30,9 @@ namespace SystemDot.Messaging.Authentication
             return ExpiresAfter == TimeSpan.MaxValue;
         }
 
-        public DateTime GetExpiresOn()
+        internal void RecalculateExpiresOn()
         {
-            return ExpiresAfter == TimeSpan.MaxValue
+            ExpiresOn = ExpiresAfter == TimeSpan.MaxValue
                 ? DateTime.MaxValue
                 : SystemTime.Current.GetCurrentDate().Add(ExpiresAfter);
         }
