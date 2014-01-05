@@ -160,9 +160,9 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             requestSchema.ContinueOnException = true;
         }
 
-        public RequestReplyRecieverConfiguration InFlushMessagesMode()
+        public RequestReplyRecieverConfiguration InBlockMessagesMode()
         {
-            requestSchema.FlushMessages = true;
+            requestSchema.BlockMessages = true;
             return this;
         }
     }

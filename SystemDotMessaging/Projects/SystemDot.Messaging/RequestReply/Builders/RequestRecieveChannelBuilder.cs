@@ -108,8 +108,8 @@ namespace SystemDot.Messaging.RequestReply.Builders
         {
             MessagePipelineBuilder.Build()
                 .With(startPoint)
+                .ToProcessorIf(new NullMessageProcessor(), schema.BlockMessages)
                 .ToProcessor(new ReceiverAuthenticationSessionVerifier(authenticationSessionCache, authenticatedServerRegistry))
-                .ToProcessorIf(new NullMessageProcessor(), schema.FlushMessages)
                 .ToProcessor(new SequenceOriginApplier(messageCache))
                 .ToProcessor(new MessageSendTimeRemover())
                 .ToProcessor(new ReceiveChannelMessageCacher(messageCache))

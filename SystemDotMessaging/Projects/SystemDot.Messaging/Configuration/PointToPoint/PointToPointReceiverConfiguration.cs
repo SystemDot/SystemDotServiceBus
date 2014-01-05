@@ -85,9 +85,9 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
             schema.ContinueOnException = true;
         }
 
-        public PointToPointReceiverConfiguration InFlushMessagesMode()
+        public PointToPointReceiverConfiguration InBlockMessagesMode()
         {
-            schema.FlushMessages = true;
+            schema.BlockMessages = true;
             return this;
         }
     }

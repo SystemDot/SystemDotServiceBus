@@ -1,12 +1,11 @@
-using System;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.flushing_messages
+namespace SystemDot.Messaging.Specifications.blocking_messages
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_a_message_on_a_channel_in_flush_mode : WithMessageConfigurationSubject
+    public class when_receiving_a_message_on_a_channel_in_block_mode : WithMessageConfigurationSubject
     {
         const string ReceiverChannel = "ReceiverChannel";
         static TestMessageHandler<long> handler;
@@ -17,7 +16,7 @@ namespace SystemDot.Messaging.Specifications.flushing_messages
 
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel(ReceiverChannel).ForPointToPointReceiving().InFlushMessagesMode()
+                .OpenChannel(ReceiverChannel).ForPointToPointReceiving().InBlockMessagesMode()
                 .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
         };

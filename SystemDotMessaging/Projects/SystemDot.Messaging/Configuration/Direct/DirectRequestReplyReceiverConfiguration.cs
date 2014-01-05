@@ -59,6 +59,12 @@ namespace SystemDot.Messaging.Configuration.Direct
             sendSchema.Hooks.Add(hook);
             return this;
         }
+
+        public DirectRequestReplyReceiverConfiguration InBlockMessagesMode()
+        {
+            receiveSchema.BlockMessagesMode = true;
+            return this;
+        }
     }
 
     
