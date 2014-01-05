@@ -56,6 +56,11 @@ namespace SystemDot.Messaging.Configuration.Direct
             sendSchema.Hooks.Add(hook);
             return this;
         }
+
+        public DirectRequestReplyReceiverConfiguration InFlushMessagesMode()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
     

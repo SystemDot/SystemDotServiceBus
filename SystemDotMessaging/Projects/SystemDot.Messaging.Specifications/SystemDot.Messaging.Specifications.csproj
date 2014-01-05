@@ -89,6 +89,8 @@
     <Compile Include="authentication_for_request_reply\when_replying_to_a_request_on_a_previous_session_after_subsequent_authentication.cs" />
     <Compile Include="authentication_for_request_reply\when_sending_a_message_to_a_server_after_failing_to_authenticate_to_it.cs" />
     <Compile Include="authentication_for_request_reply\when_sending_a_request_to_a_server_requiring_authentication_after_authenticating_to_it.cs" />
+    <Compile Include="flushing_messages_for_direct_channels\SpecificationGroup.cs" />
+    <Compile Include="flushing_messages_for_direct_channels\when_receiving_a_message_on_a_channel_in_flush_mode.cs" />
     <Compile Include="flushing_messages_for_subscribers\SpecificationGroup.cs" />
     <Compile Include="flushing_messages_for_subscribers\when_receiving_a_message_on_a_channel_in_flush_mode.cs" />
     <Compile Include="flushing_messages_for_request_reply\SpecificationGroup.cs" />
