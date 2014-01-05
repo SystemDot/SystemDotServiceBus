@@ -57,9 +57,10 @@ namespace SystemDot.Messaging.Configuration.Direct
             return this;
         }
 
-        public DirectRequestReplyReceiverConfiguration InFlushMessagesMode()
+        public DirectRequestReplyReceiverConfiguration InBlockMessagesMode()
         {
-            throw new System.NotImplementedException();
+            receiveSchema.BlockMessagesMode = true;
+            return this;
         }
     }
 

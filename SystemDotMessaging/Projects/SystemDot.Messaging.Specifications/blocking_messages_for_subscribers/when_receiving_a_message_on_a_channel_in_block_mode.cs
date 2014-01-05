@@ -2,10 +2,10 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.flushing_messages_for_subscribers
+namespace SystemDot.Messaging.Specifications.blocking_messages_for_subscribers
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_a_message_on_a_channel_in_flush_mode : WithMessageConfigurationSubject
+    public class when_receiving_a_message_on_a_channel_in_block_mode : WithMessageConfigurationSubject
     {
         const string SubscriberChannel = "SubscriberChannel";
         const string PublisherChannel = "PublisherChannel";
@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Specifications.flushing_messages_for_subscribers
 
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel(SubscriberChannel).ForSubscribingTo(PublisherChannel).InFlushMessagesMode()
+                .OpenChannel(SubscriberChannel).ForSubscribingTo(PublisherChannel).InBlockMessagesMode()
                 .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
 

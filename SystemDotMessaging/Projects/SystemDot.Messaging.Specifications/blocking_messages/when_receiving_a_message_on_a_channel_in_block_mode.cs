@@ -2,10 +2,10 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 
-namespace SystemDot.Messaging.Specifications.flushing_messages_for_request_reply
+namespace SystemDot.Messaging.Specifications.blocking_messages
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_a_message_on_a_channel_in_flush_mode : WithMessageConfigurationSubject
+    public class when_receiving_a_message_on_a_channel_in_block_mode : WithMessageConfigurationSubject
     {
         const string ReceiverChannel = "ReceiverChannel";
         static TestMessageHandler<long> handler;
@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Specifications.flushing_messages_for_request_reply
 
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel(ReceiverChannel).ForRequestReplyReceiving().InFlushMessagesMode()
+                .OpenChannel(ReceiverChannel).ForPointToPointReceiving().InBlockMessagesMode()
                 .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
         };
@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Specifications.flushing_messages_for_request_reply
                 .SetMessageBody(1)
                 .SetToChannel(ReceiverChannel)
                 .SetFromChannel("SenderChannel")
-                .SetChannelType(PersistenceUseType.RequestSend)
+                .SetChannelType(PersistenceUseType.PointToPointSend)
                 .Sequenced());
 
         It should_not_handle_the_message = () => handler.LastHandledMessage.ShouldNotEqual(1);

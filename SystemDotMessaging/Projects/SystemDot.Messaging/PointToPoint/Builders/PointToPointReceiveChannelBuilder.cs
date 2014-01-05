@@ -85,7 +85,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             MessagePipelineBuilder.Build()
                 .With(messageReceiver)
                 .ToProcessor(new BodyMessageFilter(schema.Address))
-                .ToProcessorIf(new NullMessageProcessor(), schema.FlushMessages)
+                .ToProcessorIf(new NullMessageProcessor(), schema.BlockMessages)
                 .ToProcessor(new ReceiverAuthenticationSessionVerifier(authenticationSessionCache, authenticatedServerRegistry))
                 .ToProcessor(new MessageLocalAddressReassigner(serverAddressRegistry))
                 .ToProcessor(new SequenceOriginApplier(messageCache))

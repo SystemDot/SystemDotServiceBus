@@ -31,6 +31,7 @@ namespace SystemDot.Messaging.Direct.Builders
 
             MessagePipelineBuilder.Build()
                 .With(messageReceiver)
+                .ToProcessorIf(new NullMessageProcessor(), schema.BlockMessagesMode)
                 .ToProcessor(new BodyMessageFilter(schema.Address))
                 .ToConverter(new MessagePayloadUnpackager(serialiser))
                 .ToProcessor(new MessageFilter(schema.FilterStrategy))

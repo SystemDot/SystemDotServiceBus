@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
         public bool ContinueOnException { get; set; }
 
-        public bool FlushMessages { get; set; }
+        public bool BlockMessages { get; set; }
 
         public RequestRecieveChannelSchema()
         {
