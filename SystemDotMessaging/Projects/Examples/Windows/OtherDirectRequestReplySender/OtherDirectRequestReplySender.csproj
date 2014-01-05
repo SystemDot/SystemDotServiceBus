@@ -58,7 +58,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DirectSender.cs" />
+    <Compile Include="IMessageConsumer.cs" />
+    <Compile Include="MessageConsumer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
