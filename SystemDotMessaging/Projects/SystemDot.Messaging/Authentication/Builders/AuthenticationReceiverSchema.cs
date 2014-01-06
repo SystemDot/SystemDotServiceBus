@@ -6,5 +6,6 @@ namespace SystemDot.Messaging.Authentication.Builders
     {
         public TimeSpan ExpiresAfter { get; set; }
         public Action<AuthenticationSession> ToRunOnExpiry { get; set; }
+        public bool BlockMessages { get; set; }
     }
 }

@@ -47,5 +47,11 @@ namespace SystemDot.Messaging.Configuration.Authentication
             schema.ToRunOnExpiry = toRunOnExpiry;
             return this;
         }
+
+        public AuthenticatesOnReplyConfiguration<TAuthenticationRequest, TAuthenticationResponse> BlockMessagesIf(bool shouldBlock)
+        {
+            schema.BlockMessages = shouldBlock;
+            return this;
+        }
     }
 }

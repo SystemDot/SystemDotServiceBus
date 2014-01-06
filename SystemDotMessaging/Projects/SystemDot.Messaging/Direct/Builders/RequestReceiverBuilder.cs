@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Direct.Builders
             MessagePipelineBuilder.Build()
                 .With(messageReceiver)
                 .ToProcessor(new BodyMessageFilter(schema.Address))
-                .ToProcessorIf(new NullMessageProcessor(), schema.BlockMessagesMode)
+                .ToProcessorIf(new NullMessageProcessor(), schema.BlockMessages])
                 .ToConverter(new MessagePayloadUnpackager(serialiser))
                 .ToProcessor(new MessageFilter(schema.FilterStrategy))
                 .ToEndPoint(messageHandlerRouter);

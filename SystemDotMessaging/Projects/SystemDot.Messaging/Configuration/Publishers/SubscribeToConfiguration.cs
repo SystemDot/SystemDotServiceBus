@@ -127,9 +127,9 @@ namespace SystemDot.Messaging.Configuration.Publishers
             requestSchema.RepeatStrategy = strategy;
         }
 
-        public SubscribeToConfiguration InBlockMessagesMode()
+        public SubscribeToConfiguration BlockMessagesIf(bool shouldBlock)
         {
-            receiveSchema.BlockMessages = true;
+            receiveSchema.BlockMessages = shouldBlock;
             return this;
         }
     }

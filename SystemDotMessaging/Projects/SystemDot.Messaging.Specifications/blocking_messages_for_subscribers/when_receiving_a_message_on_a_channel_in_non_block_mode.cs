@@ -5,7 +5,7 @@ using Machine.Specifications;
 namespace SystemDot.Messaging.Specifications.blocking_messages_for_subscribers
 {
     [Subject(SpecificationGroup.Description)]
-    public class when_receiving_a_message_on_a_channel_in_block_mode : WithMessageConfigurationSubject
+    public class when_receiving_a_message_on_a_channel_in_non_block_mode : WithMessageConfigurationSubject
     {
         const string SubscriberChannel = "SubscriberChannel";
         const string PublisherChannel = "PublisherChannel";
@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Specifications.blocking_messages_for_subscribers
 
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel(SubscriberChannel).ForSubscribingTo(PublisherChannel).BlockMessagesIf(true)
+                .OpenChannel(SubscriberChannel).ForSubscribingTo(PublisherChannel).BlockMessagesIf(false)
                 .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
 
@@ -32,8 +32,6 @@ namespace SystemDot.Messaging.Specifications.blocking_messages_for_subscribers
                 .SetChannelType(PersistenceUseType.SubscriberReceive)
                 .Sequenced());
 
-        It should_not_handle_the_message = () => handler.LastHandledMessage.ShouldNotEqual(1);
-
-        It should_not_send_an_acknowledgement = () => GetServer().SentMessages.ShouldBeEmpty();
+        It should_handle_the_message = () => handler.LastHandledMessage.ShouldEqual(1);
     }
 }
