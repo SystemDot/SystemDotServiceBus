@@ -241,7 +241,6 @@
     <Compile Include="restarting_messaging\when_restarting_after_sending_a_message_on_a_non_durable_channel_that_is_not_yet_acknowledged.cs" />
     <Compile Include="restarting_messaging\when_restarting_after_sending_a_reply_on_a_durable_channel_that_is_not_yet_acknowledged.cs" />
     <Compile Include="point_to_point\when_restarting_messaging_after_a_message_was_sent_but_not_acknowledged_on_a_durable_channel.cs" />
-    <Compile Include="handling\when_sending_a_message_with_handlers_in_an_assembly_auto_registered_twice.cs" />
     <Compile Include="handling_with_external_ioc_resolution\when_initialising_with_handlers_auto_registered.cs" />
     <Compile Include="handling\Fakes\FirstHandlerOfMessage1.cs" />
     <Compile Include="handling\Fakes\FirstHandlerOfMessage2.cs" />

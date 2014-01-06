@@ -29,6 +29,11 @@ namespace SystemDot.Ioc
             return components.ContainsKey(typeof(TPlugin));
         }
 
+        public IEnumerable<Type> GetAllRegisteredTypes()
+        {
+            return components.Select(c => c.Value.ObjectType);
+        }
+
         public TPlugin Resolve<TPlugin>() where TPlugin : class
         {
             return (TPlugin)Resolve(typeof(TPlugin));

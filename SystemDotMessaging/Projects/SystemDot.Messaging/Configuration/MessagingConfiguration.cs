@@ -38,11 +38,11 @@ namespace SystemDot.Messaging.Configuration
             return this;
         }
 
-        public HandlerBasedOnConfiguration RegisterHandlersFromAssemblyOf<TAssemblyOf>()
+        public HandlerBasedOnConfiguration RegisterHandlersFromContainer()
         {
             return new HandlerBasedOnConfiguration(
                 this,
-                typeof(TAssemblyOf).GetTypesInAssembly().WhereNormalConcrete());
+                ExternalResolver.GetAllRegisteredTypes().WhereNormalConcrete());
         }
 
         public MessageServerConfiguration UsingInProcessTransport()

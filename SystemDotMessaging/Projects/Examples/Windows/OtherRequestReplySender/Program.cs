@@ -17,10 +17,9 @@ namespace OtherRequestReplySender
 
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false, ShowDebug = false })
-                //.UsingFilePersistence()
+                .UsingFilePersistence()
                 .ResolveReferencesWith(container)
-                .RegisterHandlersFromAssemblyOf<Program>()
-                    .BasedOn<IMessageConsumer>()
+                .RegisterHandlersFromContainer().BasedOn<IMessageConsumer>()
                 .UsingHttpTransport()
                     .AsAServer("OtherSenderServer")
                 .OpenChannel("OtherTestRequest")

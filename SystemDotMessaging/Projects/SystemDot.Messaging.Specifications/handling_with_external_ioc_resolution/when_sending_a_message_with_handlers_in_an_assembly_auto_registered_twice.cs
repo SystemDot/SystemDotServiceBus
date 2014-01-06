@@ -1,5 +1,4 @@
 using SystemDot.Ioc;
-using SystemDot.Messaging.Specifications.handling;
 using SystemDot.Messaging.Specifications.handling.Fakes;
 using Machine.Specifications;
 
@@ -17,12 +16,11 @@ namespace SystemDot.Messaging.Specifications.handling_with_external_ioc_resoluti
 
             messageHandler = new FirstHandlerOfMessage1();
             Register(container, messageHandler);
-            Register(container, new SecondHandlerOfMessage1() );
+            Register(container, new SecondHandlerOfMessage1());
 
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .ResolveReferencesWith(container)
-                .RegisterHandlersFromAssemblyOf<when_sending_a_message_with_handlers_in_an_assembly_auto_registered_twice>()
-                    .BasedOn<IHandleMessage>()
+                .RegisterHandlersFromContainer().BasedOn<IHandleMessage>()
                 .UsingInProcessTransport()
                 .OpenDirectChannel()
                 .Initialise();

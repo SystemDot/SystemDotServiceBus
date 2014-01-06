@@ -22,8 +22,7 @@ namespace SystemDot.Messaging.Specifications.handling_with_external_ioc_resoluti
         Because of = () => 
             Configuration.Configure.Messaging()
                 .ResolveReferencesWith(container)
-                .RegisterHandlersFromAssemblyOf<when_initialising_with_handlers_auto_registered>()
-                    .BasedOn<IHandleMessage>()
+                .RegisterHandlersFromContainer().BasedOn<IHandleMessage>()
                 .UsingInProcessTransport()
                 .OpenDirectChannel()
                 .Initialise();
