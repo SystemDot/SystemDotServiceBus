@@ -31,7 +31,7 @@ namespace SystemDot.Ioc
 
         public IEnumerable<Type> GetAllRegisteredTypes()
         {
-            return components.Select(c => c.Value.ObjectType);
+            return components.Keys;
         }
 
         public TPlugin Resolve<TPlugin>() where TPlugin : class
