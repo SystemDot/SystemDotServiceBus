@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Specifications.blocking_messages_for_request_reply
 
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
-                .OpenChannel(ReceiverChannel).ForRequestReplyReceiving().InBlockMessagesMode()
+                .OpenChannel(ReceiverChannel).ForRequestReplyReceiving().BlockMessagesIf(true)
                 .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
         };

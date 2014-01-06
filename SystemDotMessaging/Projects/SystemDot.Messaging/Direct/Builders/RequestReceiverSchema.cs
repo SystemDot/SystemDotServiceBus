@@ -7,6 +7,6 @@ namespace SystemDot.Messaging.Direct.Builders
     {
         public EndpointAddress Address { get; set; }
         public IMessageFilterStrategy FilterStrategy { get; set; }
-        public bool BlockMessagesMode { get; set; }
+        public bool BlockMessages { get; set; }
     }
 }

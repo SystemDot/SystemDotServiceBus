@@ -44,6 +44,7 @@ namespace SystemDot.Messaging.Authentication.Builders
                 .ForRequestReplyReceiving()
                 .OnlyForMessages(FilteredBy.Type<TAuthenticationRequest>())
                 .WithReplyHook(new AuthenticationResponseHook<TAuthenticationResponse>(serialiser, cache, schema.ExpiresAfter))
+                .BlockMessagesIf(schema.BlockMessages)
                 .Build();
         }
 

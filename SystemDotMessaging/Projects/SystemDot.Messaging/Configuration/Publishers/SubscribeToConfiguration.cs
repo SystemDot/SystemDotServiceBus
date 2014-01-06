@@ -110,9 +110,9 @@ namespace SystemDot.Messaging.Configuration.Publishers
             receiveSchema.ContinueOnException = true;
         }
 
-        public SubscribeToConfiguration InBlockMessagesMode()
+        public SubscribeToConfiguration BlockMessagesIf(bool shouldBlock)
         {
-            receiveSchema.BlockMessages = true;
+            receiveSchema.BlockMessages = shouldBlock;
             return this;
         }
     }

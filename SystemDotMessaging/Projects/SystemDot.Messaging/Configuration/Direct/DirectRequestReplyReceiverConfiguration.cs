@@ -57,9 +57,9 @@ namespace SystemDot.Messaging.Configuration.Direct
             return this;
         }
 
-        public DirectRequestReplyReceiverConfiguration InBlockMessagesMode()
+        public DirectRequestReplyReceiverConfiguration BlockMessagesIf(bool shouldBlock)
         {
-            receiveSchema.BlockMessagesMode = true;
+            receiveSchema.BlockMessages = shouldBlock;
             return this;
         }
     }

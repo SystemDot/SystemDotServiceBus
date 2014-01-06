@@ -80,7 +80,7 @@ namespace SystemDot.Messaging.Configuration.PointToPoint
             schema.ContinueOnException = true;
         }
 
-        public PointToPointReceiverConfiguration InBlockMessagesMode()
+        public PointToPointReceiverConfiguration BlockMessagesIf(bool shouldBlock)
         {
             schema.BlockMessages = true;
             return this;

@@ -143,9 +143,9 @@ namespace SystemDot.Messaging.Configuration.RequestReply
             requestSchema.ContinueOnException = true;
         }
 
-        public RequestReplyRecieverConfiguration InBlockMessagesMode()
+        public RequestReplyRecieverConfiguration BlockMessagesIf(bool shouldBlock)
         {
-            requestSchema.BlockMessages = true;
+            requestSchema.BlockMessages = shouldBlock;
             return this;
         }
     }
