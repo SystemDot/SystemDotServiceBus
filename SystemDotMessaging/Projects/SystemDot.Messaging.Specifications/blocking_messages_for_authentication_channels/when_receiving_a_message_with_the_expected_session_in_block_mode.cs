@@ -35,7 +35,7 @@ namespace SystemDot.Messaging.Specifications.blocking_messages_for_authenticatio
                 .Initialise();
         };
 
-        Because of = () => SendMessagesToServer(payload);
+        Because of = () => SendMessageToServer(payload);
 
         It should_not_handle_the_message_in_the_registered_handler = () => handler.LastHandledMessage.ShouldBeNull();
     }
