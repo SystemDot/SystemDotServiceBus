@@ -99,17 +99,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <ProjectReference Include="..\SystemDot.Extensions.Metro\SystemDot.Extensions.Metro.csproj">
-      <Project>{4a01b283-9022-4549-b9ea-34782b3e25a3}</Project>
-      <Name>SystemDot.Extensions.Metro</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SystemDot\SystemDot.csproj">
-      <Project>{e9433834-d592-4a4a-8219-3ea48b5a2bcc}</Project>
-      <Name>SystemDot %28Metro\SystemDot%29</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="..\..\SystemDot.Messaging\*.cs">
       <Link>%(RecursiveDir)%(FileName)</Link>
     </Compile>
@@ -128,6 +117,16 @@
     <Compile Include="..\..\SystemDot.Messaging\*\*\*\*\*\*.cs">
       <Link>%(RecursiveDir)%(FileName)</Link>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SystemDot.Extensions.Metro\SystemDot.Extensions.Metro.csproj">
+      <Project>{4a01b283-9022-4549-b9ea-34782b3e25a3}</Project>
+      <Name>SystemDot.Extensions.Metro</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemDot\SystemDot.csproj">
+      <Project>{e9433834-d592-4a4a-8219-3ea48b5a2bcc}</Project>
+      <Name>SystemDot %28Metro\SystemDot%29</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
