@@ -362,11 +362,10 @@
       <Name>SystemDot.Extensions %28Windows\SystemDot.Extensions%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\SystemDot\SystemDot.csproj">
-      <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>
+      <Project>{ded30506-f4ec-4528-b535-8fa9373c5b52}</Project>
       <Name>SystemDot %28Windows\SystemDot%29</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
