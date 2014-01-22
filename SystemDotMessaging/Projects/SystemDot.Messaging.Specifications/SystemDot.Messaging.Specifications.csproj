@@ -367,6 +367,7 @@
     <Compile Include="upcasting_changes\SpecificationGroup.cs" />
     <Compile Include="upcasting_changes\when_loading_authentication_session_changes_to_version_two.cs" />
     <Compile Include="upcasting_changes\when_loading_authentication_session_changes_that_never_expire_to_version_two.cs" />
+    <Compile Include="upcasting_changes\when_loading_authentication_session_changes_to_version_two_from_version_zero.cs" />
     <Compile Include="upcasting_changes\when_loading_changes_that_dont_need_upcasting.cs" />
     <Compile Include="upcasting_changes\when_loading_message_cache_checkpoint_changes_to_already_at_latest_version.cs" />
     <Compile Include="upcasting_changes\when_loading_message_cache_checkpoint_changes_to_version_one.cs" />
