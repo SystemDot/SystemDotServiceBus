@@ -95,6 +95,8 @@ namespace SystemDot.Messaging.Storage
 
             AddChange(new AddMessageAndIncrementSequenceChange(message, sequence + 1));
 
+            Logger.Debug("Incrementing cache sequence to {0} on {1}", sequence, Id);
+
             NotifyMessageAddedToCache(message);
         }
 
@@ -115,8 +117,6 @@ namespace SystemDot.Messaging.Storage
 
         public void ApplyChange(AddMessageAndIncrementSequenceChange change)
         {
-            Logger.Debug("Incrementing cache sequence to {0} on {1}", change.Sequence, Id);
-
             sequence = change.Sequence;
             messages.TryAdd(change.Message.Id, change.Message);
         }
