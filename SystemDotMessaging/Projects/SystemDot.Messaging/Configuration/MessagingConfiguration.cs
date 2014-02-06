@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SystemDot.Configuration.Reading;
 using SystemDot.Core;
+using SystemDot.Environment;
+using SystemDot.Http;
 using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Addressing;
@@ -22,6 +24,7 @@ namespace SystemDot.Messaging.Configuration
         public MessagingConfiguration()
         {
             Components.Register();
+            ServerAddress.SetLocalMachine(Resolve<ILocalMachine>());
             LoadConfigurationFromFile();
 
             BuildActions = new List<Action>();

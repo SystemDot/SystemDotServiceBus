@@ -67,8 +67,7 @@ namespace SystemDot.Messaging.Configuration
 
         static void RegisterJsonSerialiser(IIocContainer container)
         {
-            throw new Exception();
-            //container.RegisterInstance<ISerialiser, JsonSerialiser>();
+            container.RegisterInstance<ISerialiser, JsonSerialiser>();
         }
     }
 }

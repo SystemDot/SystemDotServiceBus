@@ -1,5 +1,7 @@
+using SystemDot.Environment;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
+using SystemDot.Storage.Changes.Upcasting;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.blocking_messages_for_subscribers
@@ -15,6 +17,8 @@ namespace SystemDot.Messaging.Specifications.blocking_messages_for_subscribers
         {
             handler = new TestMessageHandler<long>();
 
+            var x = new ChangeUpcasterRunner(new Application());
+            
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(SubscriberChannel).ForSubscribingTo(PublisherChannel).BlockMessagesIf(true)

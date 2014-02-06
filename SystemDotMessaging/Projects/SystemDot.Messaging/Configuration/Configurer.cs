@@ -3,6 +3,8 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using SystemDot.Core;
 using SystemDot.Core.Collections;
+using SystemDot.Environment;
+using SystemDot.Http;
 using SystemDot.Messaging.Acknowledgement.Builders;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication.Caching;

@@ -34,6 +34,14 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Machine.Fakes, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\Machine.Fakes.2.0.0\lib\net40\Machine.Fakes.dll</HintPath>
+    </Reference>
+    <Reference Include="Machine.Fakes.Adapters.RhinoMocks, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\Machine.Fakes.RhinoMocks.2.0.0\lib\net40\Machine.Fakes.Adapters.RhinoMocks.dll</HintPath>
+    </Reference>
     <Reference Include="Machine.Specifications, Version=0.6.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Solutions\packages\Machine.Specifications.0.6.2\lib\net45\Machine.Specifications.dll</HintPath>
@@ -44,72 +52,74 @@
     <Reference Include="Machine.Specifications.Should">
       <HintPath>..\..\Solutions\packages\Machine.Specifications.0.6.2\lib\net45\Machine.Specifications.Should.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="SystemDot.Configuration">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Configuration.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Core">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Core.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Core.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Environment">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Environment.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Environment.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Environment.Windows">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Environment.Windows.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Environment.Windows.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Files">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Files.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Files.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Files.Windows">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Files.Windows.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Files.Windows.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Http">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Http.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Http.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Http.Windows">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Http.Windows.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Http.Windows.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Ioc">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Ioc.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Ioc.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Logging">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Logging.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Logging.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Logging.Windows">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Logging.Windows.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Logging.Windows.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Messaging.Handling">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Messaging.Handling.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Messaging.Handling.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Messaging.Simple">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Messaging.Simple.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Messaging.Simple.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Parallelism">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Parallelism.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Parallelism.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Parallelism.Windows">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Parallelism.Windows.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Parallelism.Windows.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Serialisation">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Serialisation.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Serialisation.Windows">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Serialisation.Windows.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Serialisation.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Storage">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Storage.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Storage.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.ThreadMarshalling">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.ThreadMarshalling.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.ThreadMarshalling.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.ThreadMarshalling.Windows">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.ThreadMarshalling.Windows.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.ThreadMarshalling.Windows.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

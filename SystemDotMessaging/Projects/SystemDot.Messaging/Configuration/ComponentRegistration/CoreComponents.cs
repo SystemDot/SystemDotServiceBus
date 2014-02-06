@@ -3,6 +3,7 @@ using SystemDot.Core;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Transport;
+using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
 using SystemDot.Storage.Changes.Upcasting;
 
@@ -12,7 +13,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
     {
         public static void Register(IIocContainer container)
         {
-            container.RegisterInstance<IIocContainer>(() => container);
+            container.RegisterInstance<IIocContainer>(() => container); 
             container.RegisterInstance<EndpointAddressBuilder, EndpointAddressBuilder>();
             container.RegisterInstance<MessageServerBuilder, MessageServerBuilder>();
             container.RegisterInstance<ISystemTime>(() => SystemTime.Current);

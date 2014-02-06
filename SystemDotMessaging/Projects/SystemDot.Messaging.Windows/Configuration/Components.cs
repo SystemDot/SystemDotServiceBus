@@ -4,7 +4,6 @@ using SystemDot.Http.Builders;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Ioc;
 using SystemDot.Parallelism;
-using SystemDot.Serialisation.Configuration;
 using SystemDot.ThreadMarshalling;
 
 namespace SystemDot.Messaging.Configuration
@@ -17,7 +16,6 @@ namespace SystemDot.Messaging.Configuration
 
             container.RegisterEnvironment();
             container.RegisterFileSystem();
-            container.RegisterJsonSerialisation();
             container.RegisterInstance<IHttpServerBuilder, HttpServerBuilder>();
             container.RegisterInstance<ITaskScheduler, TaskScheduler>();
             container.RegisterInstance<IMainThreadMarshaller, MainThreadMarshaller>();

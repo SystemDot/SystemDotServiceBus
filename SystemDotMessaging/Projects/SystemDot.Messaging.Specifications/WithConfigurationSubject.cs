@@ -1,5 +1,4 @@
 using System;
-using SystemDot.Configuration;
 using SystemDot.Configuration.Reading;
 using SystemDot.Core;
 using SystemDot.Ioc;
@@ -11,11 +10,12 @@ using SystemDot.Messaging.Simple;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 using SystemDot.ThreadMarshalling;
+using Machine.Fakes;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications
 {
-    public class WithConfigurationSubject
+    public class WithConfigurationSubject : WithSubject<object>
     {
         protected static TestTaskRepeater TaskRepeater;
         protected static TestServerAddressConfigurationReader ServerAddressConfiguration;
@@ -63,26 +63,24 @@ namespace SystemDot.Messaging.Specifications
 
         Cleanup after = () => IocContainerLocator.SetContainer(null);
 
-        protected static T The<T>()
+        protected static void ConfigureAndRegister<T>() where T : class
         {
-            return Resolve<T>();
-        }
-
-        protected static void ConfigureAndRegister<T>() where T : class, new()
-        {
-            ConfigureAndRegister(new T());
+            ConfigureAndRegister(The<T>());
         }
 
         protected static void ConfigureAndRegister<T>(T toSet) where T : class
         {
-            Register(toSet);
+            Configure(toSet);
+            var concrete = The<T>();
+
+            Register(concrete);
         }
 
         protected static void Register<T>(T concrete) where T : class
         {
             Register<T>(IocContainerLocator.Locate(), concrete);
         }
-        
+
         protected static void Register<T>(IIocContainer container, T concrete) where T : class
         {
             container.RegisterInstance(() => concrete);
