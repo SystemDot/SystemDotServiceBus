@@ -1,6 +1,7 @@
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Publishing.Builders;
+using SystemDot.Messaging.Simple;
 using Machine.Specifications;
 using SystemDot.Messaging.Storage;
 
@@ -18,7 +19,7 @@ namespace SystemDot.Messaging.Specifications.publishing_subscription
         
         Establish context = () =>
         {
-            Messenger.Register<SubscriberSendChannelBuilt>(e => channelBuiltEvent = e);
+            Messenger.RegisterHandler<SubscriberSendChannelBuilt>(e => channelBuiltEvent = e);
             
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()

@@ -1,6 +1,7 @@
+using System.Threading.Tasks;
 using SystemDot.Ioc;
 using SystemDot.Parallelism;
-using SystemDot.ThreadMashalling;
+using SystemDot.ThreadMarshalling;
 
 namespace SystemDot.Messaging.Configuration.ComponentRegistration
 {
@@ -11,8 +12,6 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<ITaskStarter, TaskStarter>();
             container.RegisterInstance<ITaskScheduler, TaskScheduler>();
             container.RegisterInstance<ITaskRepeater, TaskRepeater>();
-            container.RegisterInstance<MainThreadDispatcher, MainThreadDispatcher>();
-            container.RegisterInstance<IMainThreadMarshaller, MainThreadMarshaller>();
         }
     }
 }

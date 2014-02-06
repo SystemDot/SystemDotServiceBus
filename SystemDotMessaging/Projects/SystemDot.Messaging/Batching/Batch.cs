@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using SystemDot.Core;
 
 namespace SystemDot.Messaging.Batching
 {

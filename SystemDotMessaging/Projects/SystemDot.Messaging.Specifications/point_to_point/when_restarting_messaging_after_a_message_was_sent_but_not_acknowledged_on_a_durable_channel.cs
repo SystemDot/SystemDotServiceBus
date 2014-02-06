@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Storage;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
-using SystemDot.Specifications;
 using SystemDot.Storage.Changes;
 using SystemDot.Storage.Changes.Upcasting;
 using Machine.Specifications;
@@ -45,7 +45,7 @@ namespace SystemDot.Messaging.Specifications.point_to_point
             ConfigureAndRegister(changeStore);
             SystemTime.AdvanceTime(TimeSpan.FromDays(1));
 
-            Messenger.Register<MessageLoadedToCache>(e => messagesLoadedToCacheEvents.Add(e));
+            Messenger.RegisterHandler<MessageLoadedToCache>(e => messagesLoadedToCacheEvents.Add(e));
         };
 
         Because of = () =>

@@ -5,6 +5,7 @@ using SystemDot.Messaging.Authentication.Caching;
 using SystemDot.Messaging.Authentication.Expiry;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Configuration.Authentication;
+using SystemDot.Messaging.Simple;
 using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Authentication.Builders
@@ -50,7 +51,7 @@ namespace SystemDot.Messaging.Authentication.Builders
 
         void RunActionOnExpiry(Action<AuthenticationSession> toRunOnExpiry)
         {
-            Messenger.Register<AuthenticationSessionExpired>(e => toRunOnExpiry(e.Session));
+            Messenger.RegisterHandler<AuthenticationSessionExpired>(e => toRunOnExpiry(e.Session));
         }
 
         void RegisterAuthenticatedServer(MessageServer server)

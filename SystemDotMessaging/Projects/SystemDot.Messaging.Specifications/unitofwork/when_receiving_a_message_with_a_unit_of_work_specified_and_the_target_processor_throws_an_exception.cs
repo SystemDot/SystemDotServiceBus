@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Specifications.unitofwork
                 .Initialise();
 
             handler = new FailingMessageHandler<int>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
 
             payload = new MessagePayload().MakeSequencedReceivable(
                 Message,

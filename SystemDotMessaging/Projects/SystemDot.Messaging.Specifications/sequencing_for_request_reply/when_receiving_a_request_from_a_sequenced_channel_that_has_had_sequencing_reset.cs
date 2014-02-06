@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.sequencing_for_request_reply
                 .MakeSequencedReceivable(Message1, SenderAddress, ReceiverAddress, PersistenceUseType.RequestSend);
 
             handler = new TestMessageHandler<Int64>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
 
             GetServer().ReceiveMessage(messagePayload);
 

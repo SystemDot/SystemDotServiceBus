@@ -1,4 +1,6 @@
 using System;
+using SystemDot.Core;
+using SystemDot.Http;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Correlation;
@@ -110,7 +112,7 @@ namespace SystemDot.Messaging.Specifications
 
         public static MessagePayload SetToMachineLocal(this MessagePayload payload)
         {
-            payload.GetToAddress().Server.MachineName = Environment.MachineName;
+            payload.GetToAddress().Server.MachineName = System.Environment.MachineName;
             return payload;
         }
 

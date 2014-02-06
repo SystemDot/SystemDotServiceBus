@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Concurrent;
+using SystemDot.Core.Collections;
 using SystemDot.Logging;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Storage;
 using SystemDot.Parallelism;
 
@@ -22,7 +24,7 @@ namespace SystemDot.Messaging.LoadBalancing
             unsentMessages = new ConcurrentQueue<MessagePayload>();
             sentMessages = new ConcurrentDictionary<Guid, MessagePayload>();
             
-            Messenger.Register<MessageRemovedFromCache>(m => FreeUpSlot(m.MessageId, m.Address, m.UseType));
+            Messenger.RegisterHandler<MessageRemovedFromCache>(m => FreeUpSlot(m.MessageId, m.Address, m.UseType));
 
             SendFeelerMessages();
         }

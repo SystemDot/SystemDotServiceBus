@@ -3,6 +3,7 @@ using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.RequestReply.Builders;
+using SystemDot.Messaging.Simple;
 using Machine.Specifications;
 using SystemDot.Messaging.Storage;
 
@@ -29,11 +30,11 @@ namespace SystemDot.Messaging.Specifications.request_reply
                     .ForRequestReplyReceiving()
                 .Initialise();
 
-            Messenger.Register<ReplySendChannelBuilt>(m => replySendChannelBuiltEvent = m);
-            Messenger.Register<RequestReceiveChannelBuilt>(m => requestReceiveChannelBuiltEvent = m);
+            Messenger.RegisterHandler<ReplySendChannelBuilt>(m => replySendChannelBuiltEvent = m);
+            Messenger.RegisterHandler<RequestReceiveChannelBuilt>(m => requestReceiveChannelBuiltEvent = m);
 
             handler = new TestMessageHandler<Int64>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
 
             payload = new MessagePayload().MakeSequencedReceivable(
                 Message, 

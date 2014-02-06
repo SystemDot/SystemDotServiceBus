@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Core;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication;
@@ -14,6 +15,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.Sequencing;
+using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
@@ -26,7 +28,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
         readonly MessageReceiver messageReceiver;
         readonly ISerialiser serialiser;
         readonly AcknowledgementSender acknowledgementSender;
-        readonly MessageHandlerRouter messageHandlerRouter;
+        readonly MessageHandlingEndpoint messageHandlingEndpoint;
         readonly MessageCacheFactory messageCacheFactory;
         readonly ISystemTime systemTime;
         readonly ITaskRepeater taskRepeater;
@@ -37,8 +39,8 @@ namespace SystemDot.Messaging.PointToPoint.Builders
         internal PointToPointReceiveChannelBuilder(
             MessageReceiver messageReceiver, 
             ISerialiser serialiser, 
-            AcknowledgementSender acknowledgementSender, 
-            MessageHandlerRouter messageHandlerRouter,
+            AcknowledgementSender acknowledgementSender,
+            MessageHandlingEndpoint messageHandlingEndpoint,
             MessageCacheFactory messageCacheFactory, 
             ISystemTime systemTime, 
             ITaskRepeater taskRepeater, 
@@ -49,7 +51,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             Contract.Requires(messageReceiver != null);
             Contract.Requires(serialiser != null);
             Contract.Requires(acknowledgementSender != null);
-            Contract.Requires(messageHandlerRouter != null);
+            Contract.Requires(messageHandlingEndpoint != null);
             Contract.Requires(messageCacheFactory != null);
             Contract.Requires(systemTime != null);
             Contract.Requires(taskRepeater != null);
@@ -60,7 +62,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
             this.messageReceiver = messageReceiver;
             this.serialiser = serialiser;
             this.acknowledgementSender = acknowledgementSender;
-            this.messageHandlerRouter = messageHandlerRouter;
+            this.messageHandlingEndpoint = messageHandlingEndpoint;
             this.messageCacheFactory = messageCacheFactory;
             this.systemTime = systemTime;
             this.taskRepeater = taskRepeater;
@@ -101,7 +103,7 @@ namespace SystemDot.Messaging.PointToPoint.Builders
                 .ToProcessor(new MessageFilter(schema.FilterStrategy))
                 .ToProcessor(schema.UnitOfWorkRunnerCreator())
                 .ToProcessor(new BatchUnpackager())
-                .ToEndPoint(messageHandlerRouter);
+                .ToEndPoint(messageHandlingEndpoint);
         }
 
         static void NotifyPointToPointReceiveChannelBuilt(PointToPointReceiverChannelSchema schema)

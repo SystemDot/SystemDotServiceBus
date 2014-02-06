@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Specifications.point_to_point
             payload.RemoveHeader(typeof(BodyHeader));
 
             handler = new TestMessageHandler<int>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
         };
 
         Because of = () => GetServer().ReceiveMessage(payload);

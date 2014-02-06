@@ -1,4 +1,5 @@
 using SystemDot.Messaging.RequestReply.Builders;
+using SystemDot.Messaging.Simple;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.external_sources_for_request_reply
@@ -14,8 +15,8 @@ namespace SystemDot.Messaging.Specifications.external_sources_for_request_reply
 
         Establish context = () =>
         {
-            Messenger.Register<ReplyReceiveChannelBuilt>(m => replyReceiveChannelBuiltEvent = m);
-            Messenger.Register<RequestSendChannelBuilt>(m => requestSendChannelBuiltEvent = m);
+            Messenger.RegisterHandler<ReplyReceiveChannelBuilt>(m => replyReceiveChannelBuiltEvent = m);
+            Messenger.RegisterHandler<RequestSendChannelBuilt>(m => requestSendChannelBuiltEvent = m);
         };
 
         Because of = () => Configuration.Configure.Messaging()

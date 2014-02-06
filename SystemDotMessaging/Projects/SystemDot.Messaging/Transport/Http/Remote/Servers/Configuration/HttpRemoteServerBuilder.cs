@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Core;
 using SystemDot.Http;
 using SystemDot.Http.Builders;
 using SystemDot.Messaging.Addressing;

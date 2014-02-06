@@ -1,5 +1,8 @@
 using System.Diagnostics.Contracts;
+using SystemDot.Core;
+using SystemDot.Core.Collections;
 using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Repeating
@@ -20,7 +23,7 @@ namespace SystemDot.Messaging.Repeating
             this.systemTime = systemTime;
             this.messageCache = messageCache;
 
-            Messenger.Register<MessagingInitialising>(_ => FirstRepeat());
+            Messenger.RegisterHandler<MessagingInitialising>(_ => FirstRepeat());
         }
 
         void FirstRepeat()

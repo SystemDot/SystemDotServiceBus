@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
             messagePayload.SetSequenceOriginSetOn(DateTime.Today);
 
             handler = new TestMessageHandler<int>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
         };
 
         Because of = () => GetServer().ReceiveMessage(messagePayload);

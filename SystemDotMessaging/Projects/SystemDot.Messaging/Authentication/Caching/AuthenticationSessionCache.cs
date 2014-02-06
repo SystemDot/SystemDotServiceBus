@@ -2,9 +2,11 @@ using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using SystemDot.Core;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication.Caching.Changes;
 using SystemDot.Messaging.Authentication.Expiry;
+using SystemDot.Messaging.Simple;
 using SystemDot.Storage.Changes;
 
 namespace SystemDot.Messaging.Authentication.Caching
@@ -30,7 +32,7 @@ namespace SystemDot.Messaging.Authentication.Caching
             this.sessionExpirer = sessionExpirer;
             sessions = new ConcurrentDictionary<Guid, ServerSession>();
 
-            Messenger.Register<AuthenticationSessionExpired>(e => DecacheSession(e.Session));
+            Messenger.RegisterHandler<AuthenticationSessionExpired>(e => DecacheSession(e.Session));
 
             Id = "AuthenticationSessions";
         }

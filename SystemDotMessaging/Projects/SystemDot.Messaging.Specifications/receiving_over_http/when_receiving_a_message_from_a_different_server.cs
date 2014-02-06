@@ -34,7 +34,7 @@ namespace SystemDot.Messaging.Specifications.receiving_over_http
                 .Sequenced();
 
             handler = new TestMessageHandler<Int64>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
         };
 
         Because of = () => SendMessageToServer(messagePayload);

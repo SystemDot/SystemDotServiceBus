@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
                 .MakeSequencedReceivable(Message1, SenderAddress, ReceiverAddress, PersistenceUseType.PointToPointSend);
 
             handler = new TestMessageHandler<Int64>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
 
             GetServer().ReceiveMessage(messagePayload);
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Storage;
 using SystemDot.Storage.Changes;
 using Machine.Specifications;
@@ -62,7 +63,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
 
             Reset();
             ReInitialise();
-            Messenger.Register<MessageLoadedToCache>(e => messagesLoadedToCacheEvents.Add(e));
+            Messenger.RegisterHandler<MessageLoadedToCache>(e => messagesLoadedToCacheEvents.Add(e));
 
             ConfigureAndRegister<ChangeStore>(changeStore);
             handler = new TestMessageHandler<Int64>();

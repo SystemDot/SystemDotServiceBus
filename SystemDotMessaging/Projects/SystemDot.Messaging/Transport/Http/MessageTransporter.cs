@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using SystemDot.Core;
 using SystemDot.Http;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;

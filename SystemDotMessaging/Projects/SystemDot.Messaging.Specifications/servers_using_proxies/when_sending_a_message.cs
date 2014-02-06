@@ -44,6 +44,6 @@ namespace SystemDot.Messaging.Specifications.servers_using_proxies
             WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetFromAddress().Server.Name.ShouldEqual(Server);
 
         It should_send_a_message_with_the_from_address_server_machine_name_set_correctly = () =>
-            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetFromAddress().Server.MachineName.ShouldEqual(Environment.MachineName);
+            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetFromAddress().Server.MachineName.ShouldEqual(System.Environment.MachineName);
     }
 }

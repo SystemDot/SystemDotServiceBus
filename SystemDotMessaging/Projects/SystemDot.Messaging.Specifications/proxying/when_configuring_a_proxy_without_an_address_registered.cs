@@ -16,6 +16,6 @@ namespace SystemDot.Messaging.Specifications.proxying
         It should_use_the_correct_long_poll_time = () => SystemTime.LastTimeSpanRequested.ShouldEqual(TimeSpan.FromSeconds(30));
 
         It should_listen_on_the_correct_url = () =>
-            TestHttpServer.Instance.Url.ShouldEqual(String.Concat("http://", Environment.MachineName, "/", RemoteServerName + "/"));
+            TestHttpServer.Instance.Url.ShouldEqual(String.Concat("http://", System.Environment.MachineName, "/", RemoteServerName + "/"));
     }
 }

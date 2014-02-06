@@ -40,7 +40,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
             messagePayload2.SetSequenceOriginSetOn(DateTime.Today);
 
             handler = new TestMessageHandler<Int64>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
         };
 
         Because of = () =>

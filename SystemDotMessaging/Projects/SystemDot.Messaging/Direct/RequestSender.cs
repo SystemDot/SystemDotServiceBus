@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using SystemDot.Core.Collections;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Transport;
-using SystemDot.ThreadMashalling;
+using SystemDot.ThreadMarshalling;
 
 namespace SystemDot.Messaging.Direct
 {

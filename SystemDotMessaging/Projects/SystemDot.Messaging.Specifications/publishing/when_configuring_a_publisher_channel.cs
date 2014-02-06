@@ -1,4 +1,5 @@
 using SystemDot.Messaging.Publishing.Builders;
+using SystemDot.Messaging.Simple;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.publishing
@@ -12,7 +13,7 @@ namespace SystemDot.Messaging.Specifications.publishing
 
         Because of = () =>
         {
-            Messenger.Register<PublisherChannelBuilt>(e => channelBuiltEvent = e);
+            Messenger.RegisterHandler<PublisherChannelBuilt>(e => channelBuiltEvent = e);
 
             Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()

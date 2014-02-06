@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Specifications.direct_local_channels
             message = 1;
 
             handler = new TestMessageHandler<int>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
         };
 
         Because of = () => Bus.SendDirect(message);

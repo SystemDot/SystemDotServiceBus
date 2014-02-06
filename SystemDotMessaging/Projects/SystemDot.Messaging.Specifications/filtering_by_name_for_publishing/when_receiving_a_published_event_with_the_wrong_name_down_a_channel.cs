@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Specifications.filtering_by_name_for_publishing
                 PersistenceUseType.SubscriberReceive);
 
             handler = new TestMessageHandler<TestNamePatternMessage>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
         };
 
         Because of = () => GetServer().ReceiveMessage(payload);

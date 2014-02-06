@@ -3,8 +3,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using System.Xml;
-using SystemDot.Configuration;
+using System.Xml.Linq;
+using SystemDot.Configuration.Reading;
+using SystemDot.Http;
 
 namespace SystemDot.Messaging.Addressing
 {
@@ -26,29 +27,29 @@ namespace SystemDot.Messaging.Addressing
                     .ToDictionary(GetNameValue, GetServerAddress));
         }
 
-        IEnumerable<XmlNode> GetAddressSettingsSection()
+        IEnumerable<XElement> GetAddressSettingsSection()
         {
             return this.configurationReader.GetSettingsInSection("ServerAddresses");
         }
 
-        static ServerAddress GetServerAddress(XmlNode node)
+        static ServerAddress GetServerAddress(XElement node)
         {
             return new ServerAddress(GetAddressValue(node), GetIsSecureValue(node));
         }
 
-        static string GetNameValue(XmlNode node)
+        static string GetNameValue(XElement node)
         {
-            return node.Attributes["name"].Value;
+            return node.Attributes("name").Single().Value;
         }
 
-        static string GetAddressValue(XmlNode node)
+        static string GetAddressValue(XElement node)
         {
-            return node.Attributes["address"].Value;
+            return node.Attributes("address").Single().Value;
         }
 
-        static bool GetIsSecureValue(XmlNode node)
+        static bool GetIsSecureValue(XElement node)
         {
-            return Boolean.Parse(node.Attributes["isSecure"].Value);
+            return Boolean.Parse(node.Attributes("isSecure").Single().Value);
         }
     }
 }

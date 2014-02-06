@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using SystemDot.Core;
+using SystemDot.Core.Collections;
+using SystemDot.Ioc;
 using SystemDot.Messaging.Handling;
 
 namespace SystemDot.Messaging.Configuration
@@ -17,16 +20,15 @@ namespace SystemDot.Messaging.Configuration
 
         public MessagingConfiguration BasedOn<TMessageHandler>()
         {
-            GetMessageHandlerTypes<TMessageHandler>()
-                .ForEach(type => this.configuration.BuildActions.Add(
-                    () => Resolve<MessageHandlerRouter>().RegisterHandler(type, this.configuration.ExternalResolver)));
+            Resolve<MessageHandlingEndpoint>()
+                .RegisterHandlersFromContainer<TMessageHandler>(configuration.ExternalResolver.As<IIocContainer>());
 
-            return this.configuration;
+            return configuration;
         }
 
         IEnumerable<Type> GetMessageHandlerTypes<TMessageHandler>()
         {
-            return this.typesFromAssembly.WhereImplements<TMessageHandler>();
+            return typesFromAssembly.WhereImplements<TMessageHandler>();
         }
     }
 }

@@ -1,6 +1,7 @@
 using System.Linq;
 using SystemDot.Messaging.Publishing;
 using SystemDot.Messaging.Publishing.Builders;
+using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 
@@ -16,7 +17,7 @@ namespace SystemDot.Messaging.Specifications.publishing_subscription
         
         Because of = () =>
         {
-            Messenger.Register<SubscriberReceiveChannelBuilt>(e => channelBuiltEvent = e);
+            Messenger.RegisterHandler<SubscriberReceiveChannelBuilt>(e => channelBuiltEvent = e);
 
             Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()

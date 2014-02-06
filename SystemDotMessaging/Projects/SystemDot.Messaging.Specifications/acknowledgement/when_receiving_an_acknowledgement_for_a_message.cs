@@ -2,6 +2,7 @@ using System.Linq;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
+using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
@@ -16,7 +17,7 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
 
         Establish context = () =>
         {
-            Messenger.Register<MessageRemovedFromCache>(e => @event = e);
+            Messenger.RegisterHandler<MessageRemovedFromCache>(e => @event = e);
             
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()

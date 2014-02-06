@@ -1,20 +1,21 @@
 using System;
 using SystemDot.Configuration;
+using SystemDot.Configuration.Reading;
+using SystemDot.Core;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Diagnostics;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Ioc;
+using SystemDot.Messaging.Simple;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
-using SystemDot.Specifications;
-using SystemDot.ThreadMashalling;
-using Machine.Fakes;
+using SystemDot.ThreadMarshalling;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications
 {
-    public class WithConfigurationSubject : WithSubject<object>
+    public class WithConfigurationSubject
     {
         protected static TestTaskRepeater TaskRepeater;
         protected static TestServerAddressConfigurationReader ServerAddressConfiguration;
@@ -48,7 +49,7 @@ namespace SystemDot.Messaging.Specifications
             TaskRepeater = new TestTaskRepeater();
             ConfigureAndRegister<ITaskRepeater>(TaskRepeater);
 
-            ConfigureAndRegister(new MessageHandlerRouter());
+            ConfigureAndRegister(new MessageHandlingEndpoint());
 
             ServerAddressConfiguration = new TestServerAddressConfigurationReader();
             ConfigureAndRegister<IConfigurationReader>(ServerAddressConfiguration);
@@ -61,18 +62,20 @@ namespace SystemDot.Messaging.Specifications
         }
 
         Cleanup after = () => IocContainerLocator.SetContainer(null);
-        
-        protected static void ConfigureAndRegister<T>() where T : class
+
+        protected static T The<T>()
         {
-            ConfigureAndRegister(The<T>());
+            return Resolve<T>();
+        }
+
+        protected static void ConfigureAndRegister<T>() where T : class, new()
+        {
+            ConfigureAndRegister(new T());
         }
 
         protected static void ConfigureAndRegister<T>(T toSet) where T : class
         {
-            Configure(toSet);
-            var concrete = The<T>();
-
-            Register(concrete);
+            Register(toSet);
         }
 
         protected static void Register<T>(T concrete) where T : class

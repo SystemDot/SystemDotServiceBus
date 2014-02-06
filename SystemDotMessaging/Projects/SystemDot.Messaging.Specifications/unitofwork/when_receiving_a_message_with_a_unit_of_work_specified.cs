@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Specifications.unitofwork
                 .Initialise();
 
             handler = new TestMessageHandler<Int64>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
 
             payload = new MessagePayload().MakeSequencedReceivable(
                 Message,

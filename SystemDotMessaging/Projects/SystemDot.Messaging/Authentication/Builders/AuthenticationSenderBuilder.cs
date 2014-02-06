@@ -4,6 +4,7 @@ using SystemDot.Messaging.Authentication.Caching;
 using SystemDot.Messaging.Authentication.Expiry;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Configuration.Authentication;
+using SystemDot.Messaging.Simple;
 
 namespace SystemDot.Messaging.Authentication.Builders
 {
@@ -52,7 +53,7 @@ namespace SystemDot.Messaging.Authentication.Builders
 
         void RunActionOnExpiry(AuthenticationSenderSchema schema)
         {
-            Messenger.Register<AuthenticationSessionExpired>(e =>
+            Messenger.RegisterHandler<AuthenticationSessionExpired>(e =>
             {
                 if (schema.Server == e.Server.Name) schema.ToRunOnExpiry(e.Session);
             });

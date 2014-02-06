@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Specifications.point_to_point
                  PersistenceUseType.PointToPointReceive);
 
             handler = new TestMessageHandler<int>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
         };
 
         Because of = () => GetServer().ReceiveMessage(payload);

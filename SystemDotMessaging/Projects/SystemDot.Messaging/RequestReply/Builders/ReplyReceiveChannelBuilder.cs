@@ -1,4 +1,5 @@
 using System.Diagnostics.Contracts;
+using SystemDot.Core;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication;
@@ -15,19 +16,20 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.Sequencing;
+using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.ThreadMarshalling;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
-using SystemDot.ThreadMashalling;
+using SystemDot.ThreadMarshalling;
 
 namespace SystemDot.Messaging.RequestReply.Builders
 {
     class ReplyReceiveChannelBuilder
     {
         readonly ISerialiser serialiser;
-        readonly MessageHandlerRouter messageHandlerRouter;
+        readonly MessageHandlingEndpoint messageHandlingEndpoint;
         readonly MessageReceiver messageReceiver;
         readonly AcknowledgementSender acknowledgementSender;
         readonly MessageCacheFactory messageCacheFactory;
@@ -41,7 +43,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
         internal ReplyReceiveChannelBuilder(
             ISerialiser serialiser,
-            MessageHandlerRouter messageHandlerRouter,
+            MessageHandlingEndpoint messageHandlingEndpoint,
             MessageReceiver messageReceiver,
             AcknowledgementSender acknowledgementSender,
             MessageCacheFactory messageCacheFactory,
@@ -54,7 +56,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             CorrelationLookup correlationLookup)
         {
             Contract.Requires(serialiser != null);
-            Contract.Requires(messageHandlerRouter != null);
+            Contract.Requires(messageHandlingEndpoint != null);
             Contract.Requires(messageReceiver != null);
             Contract.Requires(acknowledgementSender != null);
             Contract.Requires(messageCacheFactory != null);
@@ -67,7 +69,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
             Contract.Requires(correlationLookup != null);
 
             this.serialiser = serialiser;
-            this.messageHandlerRouter = messageHandlerRouter;
+            this.messageHandlingEndpoint = messageHandlingEndpoint;
             this.messageReceiver = messageReceiver;
             this.acknowledgementSender = acknowledgementSender;
             this.messageCacheFactory = messageCacheFactory;
@@ -113,7 +115,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new BatchUnpackager())
                 .ToProcessorIf(new MainThreadMessageMashaller(mainThreadMarshaller), schema.HandleRepliesOnMainThread)
                 .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
-                .ToEndPoint(messageHandlerRouter);
+                .ToEndPoint(messageHandlingEndpoint);
         }
 
         static void NotifyReplyReceiveChannelBuilt(ReplyReceiveChannelSchema schema)

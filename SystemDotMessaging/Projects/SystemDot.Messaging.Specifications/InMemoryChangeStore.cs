@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using SystemDot.Environment;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
 using SystemDot.Storage.Changes.Upcasting;
@@ -19,7 +20,7 @@ namespace SystemDot.Messaging.Specifications
             sequence = 1;
         }
 
-        InMemoryChangeStore(ISerialiser serialiser) : base(serialiser, new ChangeUpcasterRunner())
+        InMemoryChangeStore(ISerialiser serialiser) : base(serialiser, new ChangeUpcasterRunner(new Application()))
         {
             this.serialiser = serialiser;
             changes = new ConcurrentDictionary<int, ChangeContainer>();

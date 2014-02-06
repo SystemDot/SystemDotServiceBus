@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SystemDot.Messaging.Specifications</RootNamespace>
     <AssemblyName>SystemDot.Messaging.Specifications</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,21 +31,86 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Machine.Fakes">
-      <HintPath>..\..\Dependencies\Mspec\Machine.Fakes.dll</HintPath>
-    </Reference>
-    <Reference Include="Machine.Fakes.Adapters.RhinoMocks">
-      <HintPath>..\..\Dependencies\Mspec\Machine.Fakes.Adapters.RhinoMocks.dll</HintPath>
-    </Reference>
-    <Reference Include="Machine.Specifications, Version=0.4.24.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Machine.Specifications, Version=0.6.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\Mspec\Machine.Specifications.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\Machine.Specifications.0.6.2\lib\net45\Machine.Specifications.dll</HintPath>
+    </Reference>
+    <Reference Include="Machine.Specifications.Clr4">
+      <HintPath>..\..\Solutions\packages\Machine.Specifications.0.6.2\lib\net45\Machine.Specifications.Clr4.dll</HintPath>
+    </Reference>
+    <Reference Include="Machine.Specifications.Should">
+      <HintPath>..\..\Solutions\packages\Machine.Specifications.0.6.2\lib\net45\Machine.Specifications.Should.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="SystemDot.Configuration">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Core">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Environment">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Environment.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Environment.Windows">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Environment.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Files">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Files.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Files.Windows">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Files.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Http">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Http.Windows">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Http.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Ioc">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Ioc.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Logging">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Logging.Windows">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Logging.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Messaging.Handling">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Messaging.Handling.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Messaging.Simple">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Messaging.Simple.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Parallelism">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Parallelism.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Parallelism.Windows">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Parallelism.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Serialisation">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Serialisation.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Serialisation.Windows">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Serialisation.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Storage">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.ThreadMarshalling">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.ThreadMarshalling.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.ThreadMarshalling.Windows">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.0\lib\net\SystemDot.ThreadMarshalling.Windows.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="authentication\FailingAuthenticationResponse.cs" />
@@ -190,10 +257,11 @@
     <Compile Include="hooks_for_publishing\SpecificationGroup.cs" />
     <Compile Include="received_message_return_address_reassignment\when_receiving_a_message_with_a_from_address_listed_on_the_receiver.cs" />
     <Compile Include="receiving_over_http\when_receiving_a_message_from_a_different_server.cs" />
+    <Compile Include="TestSystemTime.cs" />
+    <Compile Include="TestSystemTimeAdvanced.cs" />
+    <Compile Include="TestTaskScheduler.cs" />
     <Compile Include="unitofwork\when_receiving_a_message_with_a_unit_of_work_specified_and_an_exception_occurs.cs" />
     <Compile Include="unitofwork_for_local_channels\SpecificationGroup.cs" />
-    <Compile Include="logging\SpecificationGroup.cs" />
-    <Compile Include="logging\when_logging_a_message_with_a_logging_mechanism_configured.cs" />
     <Compile Include="proxying\when_configuring_a_proxy_with_an_address_registered.cs" />
     <Compile Include="sending_over_http\when_sending_a_message_with_an_empty_local_server_address_registered.cs" />
     <Compile Include="server_addressing\SpecificationGroup.cs" />
@@ -452,32 +520,26 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\SystemDot.Esent\SystemDot.Esent.csproj">
-      <Project>{C7DBF177-FCDB-4530-A6CA-3B1EFBAD63EB}</Project>
-      <Name>SystemDot.Esent %28Windows\SystemDot.Esent%29</Name>
+      <Project>{c7dbf177-fcdb-4530-a6ca-3b1efbad63eb}</Project>
+      <Name>SystemDot.Esent</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SystemDot.Extensions\SystemDot.Extensions.csproj">
-      <Project>{C68777BE-FC18-47E1-ABAE-7CD6D5D0F7BC}</Project>
-      <Name>SystemDot.Extensions %28Windows\SystemDot.Extensions%29</Name>
+    <ProjectReference Include="..\SystemDot.Messaging.Windows\SystemDot.Messaging.Windows.csproj">
+      <Project>{ab9eb1c5-2718-4e74-9335-8d3fd9ec6f33}</Project>
+      <Name>SystemDot.Messaging.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\SystemDot.Messaging\SystemDot.Messaging.csproj">
-      <Project>{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}</Project>
-      <Name>SystemDot.Messaging %28Windows\SystemDot.Messaging%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SystemDot.Specifications\SystemDot.Specifications.csproj">
-      <Project>{c35328bb-3e59-4dc8-8397-c0a7bb2f2e5e}</Project>
-      <Name>SystemDot.Specifications</Name>
+      <Project>{46655363-a75e-47a6-bef0-175ef5f92db5}</Project>
+      <Name>SystemDot.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\SystemDot.Sql\SystemDot.Sql.csproj">
-      <Project>{80FFA53E-9C4D-45CE-A7D2-8FE0B6A9FBFB}</Project>
-      <Name>SystemDot.Sql %28Windows\SystemDot.Sql%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SystemDot\SystemDot.csproj">
-      <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>
-      <Name>SystemDot %28Windows\SystemDot%29</Name>
+      <Project>{80ffa53e-9c4d-45ce-a7d2-8fe0b6a9fbfb}</Project>
+      <Name>SystemDot.Sql</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

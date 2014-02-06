@@ -3,6 +3,7 @@ using System.Linq;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Repeating;
+using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Specifications.publishing;
 using Machine.Specifications;
 using SystemDot.Messaging.Storage;
@@ -21,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.point_to_point
         
         Establish context = () =>
         {
-            Messenger.Register<MessageAddedToCache>(e => messageAddedToCacheEvent = e);
+            Messenger.RegisterHandler<MessageAddedToCache>(e => messageAddedToCacheEvent = e);
 
             Messaging.Configuration.Configure.Messaging()
                 .UsingInProcessTransport()

@@ -36,7 +36,7 @@ namespace SystemDot.Messaging.Specifications.batching
                 PersistenceUseType.PointToPointSend);
 
             handler = new TestMessageHandler<Int64>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
         };
 
         Because of = () => GetServer().ReceiveMessage(messagePayload);

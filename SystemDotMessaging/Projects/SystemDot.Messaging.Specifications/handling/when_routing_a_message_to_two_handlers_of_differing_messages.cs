@@ -25,10 +25,10 @@ namespace SystemDot.Messaging.Specifications.handling
                 .Initialise();
 
             handler1 = new TestMessageHandler<string>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler1);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler1);
 
             handler2 = new TestMessageHandler<int>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler2);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler2);
 
             payload = new MessagePayload().MakeSequencedReceivable(
                 Message,

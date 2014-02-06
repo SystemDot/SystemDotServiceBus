@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using SystemDot.Messaging.PointToPoint.Builders;
+using SystemDot.Messaging.Simple;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.external_sources
@@ -15,7 +16,7 @@ namespace SystemDot.Messaging.Specifications.external_sources
         Establish context = () =>
         {
             channelBuiltEvents = new List<PointToPointSendChannelBuilt>();
-            Messenger.Register<PointToPointSendChannelBuilt>(m => channelBuiltEvents.Add(m));
+            Messenger.RegisterHandler<PointToPointSendChannelBuilt>(m => channelBuiltEvents.Add(m));
         };
 
         Because of = () => Messaging.Configuration.Configure.Messaging()

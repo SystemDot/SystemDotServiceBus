@@ -1,23 +1,27 @@
 using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Environment;
+using SystemDot.Http;
 
 namespace SystemDot.Messaging.Addressing
 {
     public class MessageServerBuilder
     {
         readonly ServerAddressRegistry serverAddressRegistry;
+        readonly ILocalMachine localMachine;
 
-        public MessageServerBuilder(ServerAddressRegistry serverAddressRegistry)
+        public MessageServerBuilder(ServerAddressRegistry serverAddressRegistry, ILocalMachine localMachine)
         {
             Contract.Requires(serverAddressRegistry != null);
             this.serverAddressRegistry = serverAddressRegistry;
+            this.localMachine = localMachine;
         }
 
         public MessageServer BuildMultipoint(string server)
         {
             Contract.Requires(!string.IsNullOrEmpty(server));
             
-            return MessageServer.NamedMultipoint(server, UniqueMachineNameProvider.GetUniqueName(), GetAddress(server));
+            return MessageServer.NamedMultipoint(server, localMachine.GetName(), GetAddress(server));
         }
 
         public MessageServer Build(string server)

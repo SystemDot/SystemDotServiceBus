@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply
                 .Initialise();
 
             handler = new TestMessageHandler<long>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
         };
 
         Because of = () => GetServer().ReceiveMessage(payload);

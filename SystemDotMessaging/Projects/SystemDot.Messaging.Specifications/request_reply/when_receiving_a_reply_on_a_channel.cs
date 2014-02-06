@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Specifications.request_reply
                 .Initialise();
 
             handler = new TestMessageHandler<Int64>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
 
             message = 1;
             payload = new MessagePayload().MakeSequencedReceivable(

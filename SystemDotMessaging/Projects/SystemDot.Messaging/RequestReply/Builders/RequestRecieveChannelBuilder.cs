@@ -1,4 +1,5 @@
 using System.Diagnostics.Contracts;
+using SystemDot.Core;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication;
@@ -18,11 +19,12 @@ using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.RequestReply.ExceptionHandling;
 using SystemDot.Messaging.Sequencing;
+using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.ThreadMarshalling;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
-using SystemDot.ThreadMashalling;
+using SystemDot.ThreadMarshalling;
 
 namespace SystemDot.Messaging.RequestReply.Builders
 {
@@ -30,7 +32,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
     {
         readonly ReplyAddressLookup replyAddressLookup;
         readonly ISerialiser serialiser;
-        readonly MessageHandlerRouter messageHandlerRouter;
+        readonly MessageHandlingEndpoint messageHandlingEndpoint;
         readonly AcknowledgementSender acknowledgementSender;
         readonly MessageCacheFactory messageCacheFactory;
         readonly ISystemTime systemTime;
@@ -44,7 +46,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         internal RequestRecieveChannelBuilder(
             ReplyAddressLookup replyAddressLookup,
             ISerialiser serialiser,
-            MessageHandlerRouter messageHandlerRouter,
+            MessageHandlingEndpoint messageHandlingEndpoint,
             AcknowledgementSender acknowledgementSender,
             MessageCacheFactory messageCacheFactory,
             ISystemTime systemTime,
@@ -57,7 +59,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
         {
             Contract.Requires(replyAddressLookup != null);
             Contract.Requires(serialiser != null);
-            Contract.Requires(messageHandlerRouter != null);
+            Contract.Requires(messageHandlingEndpoint != null);
             Contract.Requires(acknowledgementSender != null);
             Contract.Requires(messageCacheFactory != null);
             Contract.Requires(systemTime != null);
@@ -70,7 +72,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
 
             this.replyAddressLookup = replyAddressLookup;
             this.serialiser = serialiser;
-            this.messageHandlerRouter = messageHandlerRouter;
+            this.messageHandlingEndpoint = messageHandlingEndpoint;
             this.acknowledgementSender = acknowledgementSender;
             this.messageCacheFactory = messageCacheFactory;
             this.systemTime = systemTime;
@@ -127,7 +129,7 @@ namespace SystemDot.Messaging.RequestReply.Builders
                 .ToProcessor(new BatchUnpackager())
                 .ToProcessorIf(new MainThreadMessageMashaller(mainThreadMarshaller), schema.HandleRequestsOnMainThread)
                 .ToProcessor(new MessageHookRunner<object>(schema.Hooks))
-                .ToEndPoint(messageHandlerRouter);
+                .ToEndPoint(messageHandlingEndpoint);
         }
 
         static void SendChannelBuiltEvent(RequestRecieveChannelSchema schema, EndpointAddress senderAddress)

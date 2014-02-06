@@ -1,4 +1,6 @@
 using System;
+using SystemDot.Core;
+using SystemDot.Core.Collections;
 
 namespace SystemDot.Messaging.Batching
 {

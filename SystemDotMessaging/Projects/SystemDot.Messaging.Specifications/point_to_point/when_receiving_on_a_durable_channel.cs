@@ -1,6 +1,7 @@
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
+using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
 
@@ -19,7 +20,7 @@ namespace SystemDot.Messaging.Specifications.point_to_point
 
         Establish context = () =>
         {
-            Messenger.Register<MessageRemovedFromCache>(e => @event = e);
+            Messenger.RegisterHandler<MessageRemovedFromCache>(e => @event = e);
 
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
@@ -29,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.point_to_point
                 .Initialise();
 
             handler = new TestMessageHandler<int>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
 
             message = 1;
 

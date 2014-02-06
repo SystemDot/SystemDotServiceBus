@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.sequencing_for_request_reply
                 .Initialise();
 
             handler = new TestMessageHandler<int>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
 
             message = 1;
 

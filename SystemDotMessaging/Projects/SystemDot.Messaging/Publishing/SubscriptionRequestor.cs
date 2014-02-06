@@ -3,6 +3,7 @@ using System.Diagnostics.Contracts;
 using SystemDot.Logging;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Publishing.Builders;
+using SystemDot.Messaging.Simple;
 
 namespace SystemDot.Messaging.Publishing
 {
@@ -16,7 +17,7 @@ namespace SystemDot.Messaging.Publishing
         {
             Contract.Requires(schema != null);
             this.schema = schema;
-            Messenger.Register<MessagingInitialised>(_ => Start());
+            Messenger.RegisterHandler<MessagingInitialised>(_ => Start());
         }
 
         void Start()

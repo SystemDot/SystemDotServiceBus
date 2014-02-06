@@ -38,7 +38,7 @@ namespace SystemDot.Messaging.Specifications.servers_using_proxies
                  PersistenceUseType.PointToPointSend);
 
             handler = new TestMessageHandler<int>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
         };
 
         Because of = () =>

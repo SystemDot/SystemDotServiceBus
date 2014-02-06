@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Specifications.publishing_receiving
                 .Initialise();
 
             handler = new TestMessageHandler<Int64>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
 
             payload = new MessagePayload().MakeReceivable(1, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
             payload.SetFirstSequence(2);

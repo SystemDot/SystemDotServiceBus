@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+using System.Xml.Linq;
 using SystemDot.Configuration;
+using SystemDot.Configuration.Reading;
 
 namespace SystemDot.Messaging.Specifications
 {
@@ -49,11 +52,12 @@ namespace SystemDot.Messaging.Specifications
             this.isLoaded = (fileName == "SystemDot.config");
         }
 
-        public IEnumerable<XmlNode> GetSettingsInSection(string section)
+        public IEnumerable<XElement> GetSettingsInSection(string section)
         {
-            return section == "ServerAddresses" && this.isLoaded
-                ? this.document.FirstChild.ChildNodes.OfType<XmlNode>()
-                : new List<XmlNode>();
+            throw new Exception();
+            //return section == "ServerAddresses" && this.isLoaded
+            //    ? this.document.FirstChild.ChildNodes.OfType<XmlNode>()
+            //    : new List<XmlNode>();
         }
     }
 

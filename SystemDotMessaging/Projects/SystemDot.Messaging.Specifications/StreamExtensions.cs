@@ -1,4 +1,5 @@
 using System.IO;
+using SystemDot.Core;
 using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Specifications

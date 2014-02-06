@@ -1,3 +1,4 @@
+using SystemDot.Core;
 using SystemDot.Messaging.Transport.InProcess;
 using Machine.Specifications;
 

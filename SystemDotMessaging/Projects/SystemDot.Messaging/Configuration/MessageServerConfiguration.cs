@@ -1,9 +1,9 @@
+using System;
 using System.Diagnostics.Contracts;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.Authentication;
 using SystemDot.Messaging.Configuration.Direct;
-using SystemDot.Messaging.Configuration.ExternalSources;
 using SystemDot.Messaging.Ioc;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
@@ -27,7 +27,6 @@ namespace SystemDot.Messaging.Configuration
 
             RegisterNullPersistence(container);
             RegisterJsonSerialiser(container);
-            ConfigureExternalSources(container);
         }
 
         public RequiresAuthenticationConfiguration RequiresAuthentication()
@@ -68,12 +67,8 @@ namespace SystemDot.Messaging.Configuration
 
         static void RegisterJsonSerialiser(IIocContainer container)
         {
-            container.RegisterInstance<ISerialiser, JsonSerialiser>();
-        }
-
-        void ConfigureExternalSources(IIocContainer container)
-        {
-            container.Resolve<IExternalSourcesConfigurer>().Configure(messagingConfiguration, this);
+            throw new Exception();
+            //container.RegisterInstance<ISerialiser, JsonSerialiser>();
         }
     }
 }

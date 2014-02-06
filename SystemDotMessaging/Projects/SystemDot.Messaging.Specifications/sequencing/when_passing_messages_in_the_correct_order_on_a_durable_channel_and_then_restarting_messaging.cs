@@ -33,7 +33,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
                 .MakeSequencedReceivable(1, SenderAddress, ReceiverAddress, PersistenceUseType.PointToPointSend);
            
             handler = new TestMessageHandler<int>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
 
             GetServer().ReceiveMessage(messagePayload);
 
@@ -43,7 +43,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
             ConfigureAndRegister<ChangeStore>(changeStore);
             
             handler.HandledMessages.Clear();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
         };
 
         Because of = () => Messaging.Configuration.Configure.Messaging()

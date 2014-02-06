@@ -1,4 +1,5 @@
 using System.Diagnostics.Contracts;
+using SystemDot.Core;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication;
@@ -12,6 +13,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.Sequencing;
+using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport;
 using SystemDot.Parallelism;

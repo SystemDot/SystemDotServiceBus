@@ -33,7 +33,7 @@ namespace SystemDot.Messaging.Specifications.batching_for_request_reply
                 .MakeSequencedReceivable(aggregateMessage, ReceiverAddress, SenderAddress, PersistenceUseType.ReplyReceive);
 
             handler = new TestMessageHandler<Int64>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
         };
 
         Because of = () => GetServer().ReceiveMessage(messagePayload1);

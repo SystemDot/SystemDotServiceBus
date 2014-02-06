@@ -29,7 +29,7 @@ namespace SystemDot.Messaging.Specifications.filtering_by_name
                 PersistenceUseType.PointToPointReceive);
 
             handler = new TestMessageHandler<TestNamePatternMessage>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
         };
 
         Because of = () => GetServer().ReceiveMessage(payload);

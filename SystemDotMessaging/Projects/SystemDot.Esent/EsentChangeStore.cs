@@ -35,7 +35,7 @@ namespace SystemDot.Esent
             instance.Init();
 
             using (var session = new Session(instance))
-                if (!fileSystem.FileExists(GetDatabaseFileName()))
+                if (!fileSystem.FileExists(GetDatabaseFileName(), FileLocation.InstallLocation))
                     CreateDatabaseAndTables(session, GetDatabaseFileName());
         }
 
