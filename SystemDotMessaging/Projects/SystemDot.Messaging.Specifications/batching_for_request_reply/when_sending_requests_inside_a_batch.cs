@@ -28,8 +28,12 @@ namespace SystemDot.Messaging.Specifications.batching_for_request_reply
             }
         };
 
-        It should_send_a_batch_containing_both_messages = () =>
+        It should_send_a_batch_containing_the_first_messages = () =>
             GetServer().SentMessages.Single().DeserialiseTo<BatchMessage>()
-                .Messages.Should().Contain(m => m.As<int>() == Message1 && m.As<int>() == Message2);
+                .Messages.Should().Contain(m => m.As<long>() == Message1);
+     
+        It should_send_a_batch_containing_the_second_message = () =>
+            GetServer().SentMessages.Single().DeserialiseTo<BatchMessage>()
+                .Messages.Should().Contain(m => m.As<long>() == Message2);
     }
 }

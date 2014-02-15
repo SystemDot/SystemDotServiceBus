@@ -6,7 +6,7 @@ namespace SystemDot.Messaging.Specifications
 {
     public class TestApplication : IApplication
     {
-        public IEnumerable<Type> GetAllTypesInAllAssembliesThatImplement<T>()
+        public IEnumerable<Type> GetAllTypes()
         {
             yield break;
         }

@@ -40,8 +40,12 @@ namespace SystemDot.Messaging.Specifications.batching_for_request_reply
 
         Because of = () => GetServer().ReceiveMessage(messagePayload);
 
-        It should_send_a_batch_containing_both_replied_messages = () =>
+        It should_send_a_batch_containing_the_first_replied_messages = () =>
             GetServer().SentMessages.ExcludeAcknowledgements().Single().DeserialiseTo<BatchMessage>()
-                .Messages.Should().Contain(m => m.As<int>() == Message1 && m.As<int>() == Message2);
+                .Messages.Should().Contain(m => m.As<long>() == Message2);
+    
+        It should_send_a_batch_containing_the_second_replied_messages = () =>
+            GetServer().SentMessages.ExcludeAcknowledgements().Single().DeserialiseTo<BatchMessage>()
+                .Messages.Should().Contain(m => m.As<long>() == Message2);
     }
 }

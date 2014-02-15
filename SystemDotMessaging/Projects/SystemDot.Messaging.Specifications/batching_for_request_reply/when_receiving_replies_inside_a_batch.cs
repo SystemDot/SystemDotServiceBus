@@ -38,7 +38,10 @@ namespace SystemDot.Messaging.Specifications.batching_for_request_reply
 
         Because of = () => GetServer().ReceiveMessage(messagePayload1);
 
-        It should_pass_both_the_messages_from_the_aggregation_through_seperately = () =>
-            handler.HandledMessages.Should().Contain(m => m == Message1 && m == Message2);
+        It should_pass_the_first_message_from_the_aggregation_through_seperately = () =>
+            handler.HandledMessages.Should().Contain(m => m == Message1);
+
+        It should_pass_the_second_message_from_the_aggregation_through_seperately = () =>
+            handler.HandledMessages.Should().Contain(m => m == Message2);
     }
 }
