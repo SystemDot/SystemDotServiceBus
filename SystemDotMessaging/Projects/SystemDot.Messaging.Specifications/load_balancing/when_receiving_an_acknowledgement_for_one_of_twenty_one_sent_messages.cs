@@ -5,7 +5,8 @@ using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;using FluentAssertions;
+using Machine.Specifications;
+using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.load_balancing
 {

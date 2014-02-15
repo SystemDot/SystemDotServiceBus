@@ -49,6 +49,8 @@ namespace SystemDot.Messaging.Specifications.sequencing
             GetServer().ReceiveMessage(messagePayload2);
         };
 
-        It should_pass_the_messages_through = () => handler.HandledMessages.Should().Contain(m => m == Message1 && m == Message2);
+        It should_pass_the_first_message_through = () => handler.HandledMessages.Should().Contain(m => m == Message1);
+
+        It should_pass_the_second_message_through = () => handler.HandledMessages.Should().Contain(m => m == Message2);
     }
 }

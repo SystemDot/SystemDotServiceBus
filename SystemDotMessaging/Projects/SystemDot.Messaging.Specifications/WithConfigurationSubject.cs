@@ -8,6 +8,7 @@ using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Diagnostics;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Ioc;
+using SystemDot.Messaging.Simple;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 using SystemDot.ThreadMarshalling;
@@ -63,6 +64,7 @@ namespace SystemDot.Messaging.Specifications
         protected static void Reset()
         {
             IocContainerLocator.SetContainer(new IocContainer());
+            Messenger.Reset();
         }
 
         Cleanup after = () => IocContainerLocator.SetContainer(null);

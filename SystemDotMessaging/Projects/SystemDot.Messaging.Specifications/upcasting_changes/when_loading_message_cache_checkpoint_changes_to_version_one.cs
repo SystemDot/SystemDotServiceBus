@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Storage.Changes;
-using Machine.Specifications;using FluentAssertions;
+using Machine.Specifications;
+using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.upcasting_changes
 {

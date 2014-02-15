@@ -4,7 +4,8 @@ using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.authentication;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;using FluentAssertions;
+using Machine.Specifications;
+using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.authentication_expiry
 {

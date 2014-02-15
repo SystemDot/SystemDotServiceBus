@@ -8,7 +8,7 @@ namespace SystemDot.Messaging.Specifications
     {
         public IEnumerable<Type> GetAllTypes()
         {
-            yield break;
+            return typeof (MessageBus).Assembly.ExportedTypes;
         }
     }
 }

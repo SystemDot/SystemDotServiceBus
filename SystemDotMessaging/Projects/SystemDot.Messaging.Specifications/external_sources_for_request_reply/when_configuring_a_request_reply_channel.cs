@@ -32,7 +32,7 @@ namespace SystemDot.Messaging.Specifications.external_sources_for_request_reply
                 && m.SenderAddress == BuildAddress(SenderAddress));
 
         It should_notify_that_the_request_send_channel_was_built = () =>
-           requestSendChannelBuiltEvent.Should().Match<ReplyReceiveChannelBuilt>(m =>
+           requestSendChannelBuiltEvent.Should().Match<RequestSendChannelBuilt>(m =>
                m.CacheAddress == BuildAddress(SenderAddress)
                && m.SenderAddress == BuildAddress(SenderAddress)
                && m.ReceiverAddress == BuildAddress(ReceiverAddress));

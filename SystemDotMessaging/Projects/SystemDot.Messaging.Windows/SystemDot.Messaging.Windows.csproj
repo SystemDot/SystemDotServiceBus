@@ -124,7 +124,6 @@
     <Compile Include="Configuration\Configure.cs" />
     <Compile Include="Configuration\ExternalSources\ExternalSourcesConfigurer.cs" />
     <Compile Include="Configuration\ExternalSources\IExternalConfigurationSource.cs" />
-    <Compile Include="Configuration\ExternalSources\IExternalSourcesConfigurer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

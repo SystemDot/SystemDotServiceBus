@@ -10,16 +10,18 @@ namespace SystemDot.Messaging.Specifications
     {
         readonly TestSystemTime systemTime;
         readonly List<Task> tasks;
-        int schedulesExecuted;
-
-        public int SchedulesPermitted { get; set; }
 
         public TestTaskScheduler(TestSystemTime systemTime)
         {
             this.systemTime = systemTime;
             tasks = new List<Task>();
 
-            Messenger.RegisterHandler<TestSystemTimeAdvanced>(_ => RunAwaitingTasks());
+            Messenger.RegisterHandler(this);
+        }
+
+        public void Handle(TestSystemTimeAdvanced message)
+        {
+            RunAwaitingTasks();
         }
 
         void RunAwaitingTasks()
@@ -29,14 +31,11 @@ namespace SystemDot.Messaging.Specifications
                 .ToList()
                 .ForEach(t => t.Run());
 
-            tasks
-                .RemoveAll(t => t.ExecuteAt <= systemTime.GetCurrentDate());
+            tasks.RemoveAll(t => t.ExecuteAt <= systemTime.GetCurrentDate());
         }
 
         public void ScheduleTask(TimeSpan delay, Action task)
         {
-            if (SchedulesPermitted > 0 && ++schedulesExecuted > SchedulesPermitted) return;
-
             tasks.Add(new Task(task, systemTime.GetCurrentDate().Add(delay)));
         }
 

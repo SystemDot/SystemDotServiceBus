@@ -173,6 +173,7 @@
     <Compile Include="Expiry\PassthroughMessageExpiryStrategy.cs" />
     <Compile Include="Expiry\RepeatAttemptMessageExpiryStrategy.cs" />
     <Compile Include="Expiry\TimeMessageExpiryStrategy.cs" />
+    <Compile Include="Configuration\ExternalSources\IExternalSourcesConfigurer.cs" />
     <Compile Include="Filtering\BodyMessageFilter.cs" />
     <Compile Include="Filtering\IMessageFilterStrategy.cs" />
     <Compile Include="Filtering\MessageFilter.cs" />

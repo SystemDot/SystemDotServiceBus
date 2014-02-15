@@ -5,7 +5,8 @@ using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Authentication.Caching.Changes;
 using SystemDot.Storage.Changes;
-using Machine.Specifications;using FluentAssertions;
+using Machine.Specifications;
+using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.upcasting_changes
 {

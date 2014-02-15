@@ -38,13 +38,11 @@ namespace SystemDot.Messaging.Specifications.authentication_expiry
                 .Initialise();
 
             session = SendMessageToServer(authenticationRequestPayload).Single().GetAuthenticationSession();
+            
+            SystemTime.AdvanceTime(TimeSpan.FromMinutes(ExpiryInMinutes));
         };
 
-        Because of = () =>
-        {
-            SystemTime.AdvanceTime(TimeSpan.FromMinutes(ExpiryInMinutes));
-            SystemTime.AdvanceTime(TimeSpan.FromTicks(1));
-        };
+        Because of = () => SystemTime.AdvanceTime(TimeSpan.FromTicks(1));
 
         It should_run_the_action = () => sessionReceivedInExpiryAction.Should().Be(session);
     }
