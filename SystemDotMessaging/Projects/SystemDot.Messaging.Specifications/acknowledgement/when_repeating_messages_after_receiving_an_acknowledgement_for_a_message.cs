@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
             GetServer().SentMessages.Clear();
         };
 
-        Because of = () => The<ITaskRepeater>().Start();
+        Because of = () => Resolve<ITaskRepeater>().Start();
 
         It should_not_have_repeated_the_message = () => GetServer().SentMessages.ShouldBeEmpty();
     }

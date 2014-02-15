@@ -1,6 +1,8 @@
 using System;
 using SystemDot.Configuration.Reading;
 using SystemDot.Core;
+using SystemDot.Environment;
+using SystemDot.Http;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Diagnostics;
@@ -36,6 +38,8 @@ namespace SystemDot.Messaging.Specifications
 
         static void RegisterComponents()
         {
+            ServerAddress.SetLocalMachine(new LocalMachine());
+
             SystemTime = new TestSystemTime(DateTime.Now);
             ConfigureAndRegister<ISystemTime>(SystemTime);
 
@@ -57,7 +61,6 @@ namespace SystemDot.Messaging.Specifications
 
         protected static void Reset()
         {
-            Messenger.Reset();
             IocContainerLocator.SetContainer(new IocContainer());
         }
 

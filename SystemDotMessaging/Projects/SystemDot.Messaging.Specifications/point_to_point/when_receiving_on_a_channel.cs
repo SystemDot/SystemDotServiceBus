@@ -23,15 +23,15 @@ namespace SystemDot.Messaging.Specifications.point_to_point
 
         Establish context = () =>
         {
-            Messenger.RegisterHandler<MessageAddedToCache>(e => messageAddedToCacheEvent = e);
-            Messenger.RegisterHandler<MessageRemovedFromCache>(e => messageRemovedFromCacheEvent = e);
-            
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                     .OpenChannel(ChannelName)
                     .ForPointToPointReceiving()
                 .Initialise();
 
+            Messenger.RegisterHandler<MessageAddedToCache>(e => messageAddedToCacheEvent = e);
+            Messenger.RegisterHandler<MessageRemovedFromCache>(e => messageRemovedFromCacheEvent = e);
+            
             handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
 

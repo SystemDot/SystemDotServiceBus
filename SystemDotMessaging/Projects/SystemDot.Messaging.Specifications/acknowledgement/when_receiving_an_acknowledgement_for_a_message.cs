@@ -16,7 +16,6 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
 
         Establish context = () =>
         {
-            Messenger.RegisterHandler<MessageRemovedFromCache>(e => @event = e);
             
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
@@ -24,7 +23,9 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
                 .Initialise();
 
             Bus.Send(1);
-             
+
+            Messenger.RegisterHandler<MessageRemovedFromCache>(e => @event = e);
+            
             acknowledgement = new MessagePayload();
             acknowledgement.SetAcknowledgementId(GetServer().SentMessages.First().GetPersistenceId());
             acknowledgement.SetToAddress(GetServer().SentMessages.First().GetFromAddress());

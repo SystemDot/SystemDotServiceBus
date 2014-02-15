@@ -15,7 +15,7 @@ namespace SystemDot.Messaging.Specifications.publishing
         {
             Messenger.RegisterHandler<PublisherChannelBuilt>(e => channelBuiltEvent = e);
 
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(PublisherAddress).ForPublishing()
                 .Initialise();

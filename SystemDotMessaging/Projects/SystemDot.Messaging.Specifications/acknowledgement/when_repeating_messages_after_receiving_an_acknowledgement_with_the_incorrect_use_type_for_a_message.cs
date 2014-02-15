@@ -3,6 +3,7 @@ using System.Linq;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
+using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Storage;
 using SystemDot.Parallelism;
 using Machine.Specifications;

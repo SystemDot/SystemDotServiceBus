@@ -20,14 +20,14 @@ namespace SystemDot.Messaging.Specifications.point_to_point
 
         Establish context = () =>
         {
-            Messenger.RegisterHandler<MessageRemovedFromCache>(e => @event = e);
-
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ReceiverAddress)
                 .ForPointToPointReceiving()
                 .WithDurability()
                 .Initialise();
+
+            Messenger.RegisterHandler<MessageRemovedFromCache>(e => @event = e);
 
             handler = new TestMessageHandler<int>();
             Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);

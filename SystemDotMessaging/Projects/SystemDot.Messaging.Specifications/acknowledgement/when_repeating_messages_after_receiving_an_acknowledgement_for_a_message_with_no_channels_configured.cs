@@ -16,7 +16,7 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
         
         Establish context = () =>
         {
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenDirectChannel()
                 .Initialise();
