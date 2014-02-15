@@ -8,7 +8,6 @@ using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Diagnostics;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Ioc;
-using SystemDot.Messaging.Simple;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 using SystemDot.ThreadMarshalling;
@@ -57,6 +56,8 @@ namespace SystemDot.Messaging.Specifications
 
             ServerAddressConfiguration = new TestServerAddressConfigurationReader();
             ConfigureAndRegister<IConfigurationReader>(ServerAddressConfiguration);
+
+            ConfigureAndRegister<IApplication>(new TestApplication());
         }
 
         protected static void Reset()

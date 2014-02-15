@@ -3,7 +3,7 @@ using SystemDot.Messaging.Configuration;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
 using SystemDot.Storage.Changes.Upcasting;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.repeating_constant
 {
@@ -50,6 +50,6 @@ namespace SystemDot.Messaging.Specifications.repeating_constant
                 .Initialise();
 
         It should_send_the_message_again = () =>
-            GetServer().SentMessages.ShouldContain(m => m.DeserialiseTo<Int64>() == Message);
+            GetServer().SentMessages.Should().Contain(m => m.DeserialiseTo<Int64>() == Message);
     }
 }

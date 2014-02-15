@@ -6,7 +6,7 @@ using SystemDot.Messaging.Storage;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
 using SystemDot.Storage.Changes.Upcasting;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.sequencing
 {
@@ -68,7 +68,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
         Because of = () => GetServer().ReceiveMessage(messagePayload);
 
         It should_have_cleared_the_messages_from_before_the_reset_from_persistence = () =>
-            handler.HandledMessages.ShouldContainOnly(Message);
+            handler.HandledMessages.Should().OnlyContain(m => m == Message);
        
     }
 }

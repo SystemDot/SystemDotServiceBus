@@ -1,5 +1,5 @@
 using System;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.request_reply
 {
@@ -18,6 +18,6 @@ namespace SystemDot.Messaging.Specifications.request_reply
 
         Because of = () => exception = Catch.Exception(() => Bus.Reply(new object()));
 
-        It should_not_fail = () => exception.ShouldBeNull();
+        It should_not_fail = () => exception.Should().BeNull();
     }
 }

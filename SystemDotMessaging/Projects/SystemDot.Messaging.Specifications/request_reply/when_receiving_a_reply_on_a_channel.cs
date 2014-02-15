@@ -2,7 +2,7 @@ using System;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Specifications.request_reply
@@ -38,9 +38,9 @@ namespace SystemDot.Messaging.Specifications.request_reply
 
         Because of = () => GetServer().ReceiveMessage(payload);
 
-        It should_push_the_message_to_any_registered_handlers = () => handler.LastHandledMessage.ShouldEqual(message);
+        It should_push_the_message_to_any_registered_handlers = () => handler.LastHandledMessage.ShouldBeEquivalentTo(message);
 
         It should_send_an_acknowledgement_for_the_message = () =>
-            GetServer().SentMessages.ShouldContain(a => a.GetAcknowledgementId() == payload.GetSourcePersistenceId());
+            GetServer().SentMessages.Should().Contain(a => a.GetAcknowledgementId() == payload.GetSourcePersistenceId());
     }
 }

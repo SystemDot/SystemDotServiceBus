@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.hooks_for_publishing.hooks_for_request_reply
 {
@@ -32,6 +32,6 @@ namespace SystemDot.Messaging.Specifications.hooks_for_publishing.hooks_for_requ
 
         Because of = () => Bus.Reply(Message);
 
-        It should_run_the_message_through_the_hook = () => hook.Message.ShouldEqual(Message);
+        It should_run_the_message_through_the_hook = () => hook.Message.ShouldBeEquivalentTo(Message);
     }
 }

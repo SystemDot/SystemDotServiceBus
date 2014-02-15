@@ -2,7 +2,7 @@ using System;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.sequencing
 {
@@ -30,6 +30,6 @@ namespace SystemDot.Messaging.Specifications.sequencing
             exception = Catch.Exception(() => GetServer().ReceiveMessage(messagePayload));
         };
 
-        It should_not_fail = () => exception.ShouldBeNull();
+        It should_not_fail = () => exception.Should().BeNull();
     }
 }

@@ -2,7 +2,8 @@ using System;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using FluentAssertions;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.unitofwork
 {
@@ -40,10 +41,10 @@ namespace SystemDot.Messaging.Specifications.unitofwork
 
         Because of = () => GetServer().ReceiveMessage(payload);
 
-        It should_begin_the_unit_of_work = () => unitOfWork.HasBegun().ShouldBeTrue();
+        It should_begin_the_unit_of_work = () => unitOfWork.HasBegun().Should().BeTrue();
 
-        It should_process_the_message = () => handler.LastHandledMessage.ShouldEqual(Message);
+        It should_process_the_message = () => handler.LastHandledMessage.ShouldBeEquivalentTo(Message);
 
-        It should_end_the_unit_of_work = () => unitOfWork.HasEnded().ShouldBeTrue();
+        It should_end_the_unit_of_work = () => unitOfWork.HasEnded().Should().BeTrue();
     }
 }

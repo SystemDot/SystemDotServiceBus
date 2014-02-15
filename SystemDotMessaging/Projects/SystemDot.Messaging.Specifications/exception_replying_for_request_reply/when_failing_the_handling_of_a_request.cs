@@ -4,7 +4,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.RequestReply.ExceptionHandling;
 using SystemDot.Messaging.Specifications.publishing;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.exception_replying_for_request_reply
 {
@@ -34,6 +34,6 @@ namespace SystemDot.Messaging.Specifications.exception_replying_for_request_repl
 
         It should_reply_with_an_exception_occurred_message = () =>
             GetServer().SentMessages.ExcludeAcknowledgements()
-                .First().DeserialiseTo<ExceptionOccured>().Message.ShouldEqual(exception.Message);
+                .First().DeserialiseTo<ExceptionOccured>().Message.ShouldBeEquivalentTo(exception.Message);
     }
 }

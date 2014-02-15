@@ -1,7 +1,8 @@
 using System;
 using SystemDot.Messaging.Packaging;
 using SystemDot.ThreadMarshalling;
-using Machine.Specifications;
+using FluentAssertions;
+using Machine.Specifications;using FluentAssertions;
 using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Specifications.running_handlers_on_main_thread_for_request_reply
@@ -33,6 +34,6 @@ namespace SystemDot.Messaging.Specifications.running_handlers_on_main_thread_for
 
         Because of = () => GetServer().ReceiveMessage(payload);
 
-        It should_switch_to_the_main_thread_to_handle_the_message = () => MainThreadMarshaller.WasRunThrough.ShouldBeTrue();
+        It should_switch_to_the_main_thread_to_handle_the_message = () => MainThreadMarshaller.WasRunThrough.Should().BeTrue();
     }
 }

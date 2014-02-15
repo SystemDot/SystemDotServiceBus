@@ -1,7 +1,7 @@
 using SystemDot.Messaging.Configuration;
 using SystemDot.Sql;
 using SystemDot.Storage.Changes;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.sql
 {
@@ -13,6 +13,6 @@ namespace SystemDot.Messaging.Specifications.sql
             .UsingInProcessTransport();
 
         It should_have_registered_the_sql_change_store = () => 
-            Resolve<ChangeStore>().ShouldBeOfType<SqlChangeStore>();  
+            Resolve<ChangeStore>().Should().BeOfType<SqlChangeStore>();  
     }
 }

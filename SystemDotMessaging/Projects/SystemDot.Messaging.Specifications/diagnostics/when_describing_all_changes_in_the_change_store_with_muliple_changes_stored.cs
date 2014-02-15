@@ -3,7 +3,8 @@ using System.Linq;
 using SystemDot.Messaging.Diagnostics;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Storage.Changes;
-using Machine.Specifications;
+using FluentAssertions;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.diagnostics
 {
@@ -24,6 +25,6 @@ namespace SystemDot.Messaging.Specifications.diagnostics
 
         Because of = () => changes = Debug.DescribeAllChangeStoreChanges();
 
-        It should_return_the_changes = () => changes.Count().ShouldEqual(2);
+        It should_return_the_changes = () => changes.Count().ShouldBeEquivalentTo(2);
     }
 }

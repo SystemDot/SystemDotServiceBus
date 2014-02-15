@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using SystemDot.Messaging.Direct;
 using SystemDot.Messaging.Packaging;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 using SystemDot.Messaging.Packaging.Headers;
 
 namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply
@@ -37,8 +37,8 @@ namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply
 
         Because of = () => GetServer().ReceiveMessage(messagePayload);
 
-        It should_send_a_reply_with_the_correct_content = () => GetServer().ReturnedMessages.Single().DeserialiseTo<Int64>().ShouldEqual(Reply);
+        It should_send_a_reply_with_the_correct_content = () => GetServer().ReturnedMessages.Single().DeserialiseTo<Int64>().ShouldBeEquivalentTo(Reply);
 
-        It should_send_a_reply_with_the_correct_to_address = () => GetServer().ReturnedMessages.Single().GetToAddress().Channel.ShouldEqual(Sender);
+        It should_send_a_reply_with_the_correct_to_address = () => GetServer().ReturnedMessages.Single().GetToAddress().Channel.ShouldBeEquivalentTo(Sender);
     }
 }

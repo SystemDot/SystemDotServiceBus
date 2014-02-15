@@ -5,7 +5,8 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Storage;
 using SystemDot.Parallelism;
-using Machine.Specifications;
+using FluentAssertions;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.acknowledgement
 {
@@ -44,6 +45,6 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_have_repeated_the_message = () => GetServer().SentMessages.ShouldNotBeEmpty();
+        It should_have_repeated_the_message = () => GetServer().SentMessages.Should().NotBeEmpty();
     }
 }

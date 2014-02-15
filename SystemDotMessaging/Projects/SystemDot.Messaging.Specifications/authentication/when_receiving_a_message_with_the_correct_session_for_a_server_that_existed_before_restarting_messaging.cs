@@ -5,7 +5,7 @@ using SystemDot.Messaging.Storage;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
 using SystemDot.Storage.Changes.Upcasting;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 using SystemDot.Messaging.Authentication;
 
 namespace SystemDot.Messaging.Specifications.authentication
@@ -80,6 +80,6 @@ namespace SystemDot.Messaging.Specifications.authentication
 
         Because of = () => SendMessageToServer(payload);
 
-        It should_handle_the_message_in_the_registered_handler = () => handler.HandledMessages.Count.ShouldEqual(1);
+        It should_handle_the_message_in_the_registered_handler = () => handler.HandledMessages.Count.ShouldBeEquivalentTo(1);
     }
 }

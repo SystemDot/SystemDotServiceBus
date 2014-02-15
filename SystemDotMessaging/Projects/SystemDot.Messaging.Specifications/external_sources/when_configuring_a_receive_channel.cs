@@ -2,7 +2,7 @@
 using System.Linq;
 using SystemDot.Messaging.PointToPoint.Builders;
 using SystemDot.Messaging.Simple;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.external_sources
 {
@@ -26,6 +26,6 @@ namespace SystemDot.Messaging.Specifications.external_sources
                 .Initialise();
 
         It should_notify_that_the_channel_was_built = () =>
-            channelBuiltEvents.First().Address.ShouldEqual(BuildAddress(ReceiverAddress));
+            channelBuiltEvents.First().Address.ShouldBeEquivalentTo(BuildAddress(ReceiverAddress));
     }
 }

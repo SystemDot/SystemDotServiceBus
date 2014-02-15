@@ -1,6 +1,7 @@
 using System.Linq;
 using SystemDot.Parallelism;
-using Machine.Specifications;
+using FluentAssertions;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply
 {
@@ -24,9 +25,9 @@ namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply
 
         Because of = () => Bus.SendDirectAsync(Message);
 
-        It should_send_asynchronously = () => taskStarter.InvocationCount.ShouldEqual(1);
+        It should_send_asynchronously = () => taskStarter.InvocationCount.ShouldBeEquivalentTo(1);
 
         It should_send_the_message_with_the_correct_payload = () =>
-            GetServer().SentMessages.Single().DeserialiseTo<long>().ShouldEqual(Message);
+            GetServer().SentMessages.Single().DeserialiseTo<long>().ShouldBeEquivalentTo(Message);
     }
 }

@@ -3,7 +3,7 @@ using System.IO;
 using SystemDot.Http.Builders;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Serialisation;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications
 {

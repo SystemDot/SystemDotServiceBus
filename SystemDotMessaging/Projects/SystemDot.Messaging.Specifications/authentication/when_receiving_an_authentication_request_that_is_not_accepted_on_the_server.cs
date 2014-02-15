@@ -1,5 +1,5 @@
 using SystemDot.Messaging.Packaging;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.authentication
 {
@@ -32,6 +32,6 @@ namespace SystemDot.Messaging.Specifications.authentication
 
         Because of = () => SendMessageToServer(payload);
 
-        It should_not_handle_the_request_in_the_handler_configured = () => handler.HandledMessages.ShouldBeEmpty();
+        It should_not_handle_the_request_in_the_handler_configured = () => handler.HandledMessages.Should().BeEmpty();
     }
 }

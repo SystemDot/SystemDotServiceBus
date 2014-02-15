@@ -7,7 +7,7 @@ using SystemDot.Parallelism;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
 using SystemDot.Storage.Changes.Upcasting;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.point_to_point
 {
@@ -56,13 +56,13 @@ namespace SystemDot.Messaging.Specifications.point_to_point
                 .Initialise();
 
         It should_notify_that_the_first_sent_message_was_loaded_into_the_cache = () =>
-            messagesLoadedToCacheEvents.ShouldContain(m =>
+            messagesLoadedToCacheEvents.Should().Contain(m =>
                 m.CacheAddress == BuildAddress(SenderAddress)
                 && m.UseType == PersistenceUseType.PointToPointSend
                 && m.Message == GetServer().SentMessages.First());
 
         It should_notify_that_the_second_sent_message_was_loaded_into_the_cache = () =>
-            messagesLoadedToCacheEvents.ShouldContain(m =>
+            messagesLoadedToCacheEvents.Should().Contain(m =>
                 m.CacheAddress == BuildAddress(SenderAddress)
                 && m.UseType == PersistenceUseType.PointToPointSend
                 && m.Message == GetServer().SentMessages.ElementAt(1));

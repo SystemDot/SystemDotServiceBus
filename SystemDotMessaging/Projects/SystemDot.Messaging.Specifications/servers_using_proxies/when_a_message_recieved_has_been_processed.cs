@@ -3,7 +3,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.Http.Remote.Clients;
 using SystemDot.Parallelism;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.servers_using_proxies
 {
@@ -41,6 +41,6 @@ namespace SystemDot.Messaging.Specifications.servers_using_proxies
         It should_poll_again = () => 
             WebRequestor.RequestsMade
                 .DeserialiseToPayloads()
-                .Count(p => p.HasHeader<LongPollRequestHeader>()).ShouldEqual(2);
+                .Count(p => p.HasHeader<LongPollRequestHeader>()).ShouldBeEquivalentTo(2);
     }
 }

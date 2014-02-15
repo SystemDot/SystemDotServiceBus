@@ -1,6 +1,6 @@
 using System;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.publishing
 {
@@ -16,6 +16,6 @@ namespace SystemDot.Messaging.Specifications.publishing
 
         Because of = () => exception = Catch.Exception(() => Bus.Publish(1));
 
-        It should_not_fail = () => exception.ShouldBeNull();
+        It should_not_fail = () => exception.Should().BeNull();
     }
 }

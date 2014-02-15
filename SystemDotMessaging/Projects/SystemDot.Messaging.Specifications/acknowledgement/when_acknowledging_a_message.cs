@@ -3,7 +3,7 @@ using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.acknowledgement
 {
@@ -31,9 +31,9 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
         Because of = () => GetServer().ReceiveMessage(messagePayload);
 
         It should_send_an_acknowledgement_for_the_message_for_the_correct_message_id = () =>
-            GetServer().SentMessages.First().GetAcknowledgementId().ShouldEqual(messagePayload.GetSourcePersistenceId());
+            GetServer().SentMessages.First().GetAcknowledgementId().ShouldBeEquivalentTo(messagePayload.GetSourcePersistenceId());
 
         It should_send_an_acknowledgement_for_the_message_to_the_message_from_address = () =>
-            GetServer().SentMessages.First().GetToAddress().ShouldEqual(messagePayload.GetFromAddress());
+            GetServer().SentMessages.First().GetToAddress().ShouldBeEquivalentTo(messagePayload.GetFromAddress());
     }
 }

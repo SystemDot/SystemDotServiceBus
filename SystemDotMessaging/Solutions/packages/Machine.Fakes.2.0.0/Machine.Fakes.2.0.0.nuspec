@@ -3,7 +3,6 @@
   <metadata>
     <id>Machine.Fakes</id>
     <version>2.0.0</version>
-    <title>Machine.Fakes</title>
     <authors>The machine project</authors>
     <owners>The machine project</owners>
     <licenseUrl>https://github.com/machine/machine.fakes/raw/master/License.txt</licenseUrl>
@@ -13,7 +12,6 @@
     <description>Machine.Fakes attempts to simplify the usage of such frameworks on top of Machine.Specifications by helping to reduce a lot of the typical fake framwork related clutter code in specifications. If you choose so, Machine.Fakes even helps you to stay mostly independent of a concrete fake framework by providing a little wrapper API and a provider model for fake frameworks.</description>
     <summary>A framework for faking dependencies on top of Machine.Specifications.</summary>
     <releaseNotes>See https://github.com/machine/machine.fakes/blob/master/changelog.markdown</releaseNotes>
-    <copyright />
     <language>en-US</language>
     <tags>tdd bdd testing unittest fakes mocks mspec mfakes</tags>
     <dependencies>

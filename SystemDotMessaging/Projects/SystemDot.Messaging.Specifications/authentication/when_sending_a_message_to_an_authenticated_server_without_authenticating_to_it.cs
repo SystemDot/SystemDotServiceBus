@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Packaging;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.authentication
 {
@@ -25,6 +25,6 @@ namespace SystemDot.Messaging.Specifications.authentication
 
         Because of = () => Bus.Send(1);
 
-        It should_not_send_the_message = () => WebRequestor.RequestsMade.ShouldBeEmpty();
+        It should_not_send_the_message = () => WebRequestor.RequestsMade.Should().BeEmpty();
     }
 }

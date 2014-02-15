@@ -2,7 +2,7 @@
 using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.authentication;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.authentication_expiry
 {
@@ -52,6 +52,6 @@ namespace SystemDot.Messaging.Specifications.authentication_expiry
             SystemTime.AdvanceTime(TimeSpan.FromTicks(1));
         };
 
-        It should_not_run_the_action = () => sessionReceivedInExpiryAction.ShouldBeNull();
+        It should_not_run_the_action = () => sessionReceivedInExpiryAction.Should().BeNull();
     }
 }

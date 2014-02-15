@@ -5,7 +5,7 @@ using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.publishing;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.batching_for_request_reply
 {
@@ -41,6 +41,7 @@ namespace SystemDot.Messaging.Specifications.batching_for_request_reply
         Because of = () => GetServer().ReceiveMessage(messagePayload);
 
         It should_send_a_batch_containing_both_replied_messages = () =>
-            GetServer().SentMessages.ExcludeAcknowledgements().Single().DeserialiseTo<BatchMessage>().Messages.ShouldContain(Message1, Message2);
+            GetServer().SentMessages.ExcludeAcknowledgements().Single().DeserialiseTo<BatchMessage>()
+                .Messages.Should().Contain(m => m.As<int>() == Message1 && m.As<int>() == Message2);
     }
 }

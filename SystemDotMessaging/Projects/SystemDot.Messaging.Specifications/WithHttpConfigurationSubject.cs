@@ -1,7 +1,7 @@
 using SystemDot.Http;
 using SystemDot.Http.Builders;
 using SystemDot.Serialisation;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications
 {

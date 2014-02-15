@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.authentication;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.blocking_messages_for_authentication_channels
 {
@@ -37,6 +37,6 @@ namespace SystemDot.Messaging.Specifications.blocking_messages_for_authenticatio
 
         Because of = () => SendMessageToServer(payload);
 
-        It should_not_handle_the_message_in_the_registered_handler = () => handler.LastHandledMessage.ShouldBeNull();
+        It should_not_handle_the_message_in_the_registered_handler = () => handler.LastHandledMessage.Should().BeNull();
     }
 }

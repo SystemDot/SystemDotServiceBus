@@ -3,7 +3,7 @@ using SystemDot.Messaging.Correlation;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.publishing;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.correlation_for_request_reply
 {
@@ -36,6 +36,6 @@ namespace SystemDot.Messaging.Specifications.correlation_for_request_reply
         Because of = () => Bus.Reply(1);
 
         It should_reply_with_a_message_with_the_same_correlation_as_the_request = () =>
-            GetServer().SentMessages.ExcludeAcknowledgements().First().GetCorrelationId().ShouldEqual(messagePayload.GetCorrelationId());
+            GetServer().SentMessages.ExcludeAcknowledgements().First().GetCorrelationId().ShouldBeEquivalentTo(messagePayload.GetCorrelationId());
     }
 }

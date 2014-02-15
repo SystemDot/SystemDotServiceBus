@@ -5,7 +5,7 @@ using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.load_balancing
 {
@@ -36,6 +36,6 @@ namespace SystemDot.Messaging.Specifications.load_balancing
         Because of = () => GetServer().ReceiveMessage(acknowledgement);
 
         It should_send_the_twenty_first_message = () => 
-            GetServer().SentMessages.ElementAt(20).DeserialiseTo<Int64>().ShouldEqual(21);
+            GetServer().SentMessages.ElementAt(20).DeserialiseTo<Int64>().ShouldBeEquivalentTo(21);
     }
 }

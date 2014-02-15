@@ -1,7 +1,7 @@
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.authentication;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
 {
@@ -54,6 +54,6 @@ namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
 
         Because of = () => SendMessageToServer(payload);
 
-        It should_not_handle_the_message_in_the_registered_handler = () => handler.HandledMessages.ShouldBeEmpty();
+        It should_not_handle_the_message_in_the_registered_handler = () => handler.HandledMessages.Should().BeEmpty();
     }
 }

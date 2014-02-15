@@ -2,7 +2,7 @@ using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.handling
 {
@@ -40,6 +40,6 @@ namespace SystemDot.Messaging.Specifications.handling
         Because of = () => GetServer().ReceiveMessage(payload);
 
         It should_handle_the_message_only_in_the_handler_for_the_message_type = () => 
-            handler1.LastHandledMessage.ShouldEqual(Message);
+            handler1.LastHandledMessage.ShouldBeEquivalentTo(Message);
     }
 }

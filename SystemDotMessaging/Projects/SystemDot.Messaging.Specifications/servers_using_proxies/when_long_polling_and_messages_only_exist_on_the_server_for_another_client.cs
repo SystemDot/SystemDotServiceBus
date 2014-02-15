@@ -2,7 +2,7 @@ using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Parallelism;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.servers_using_proxies
 {
@@ -47,6 +47,6 @@ namespace SystemDot.Messaging.Specifications.servers_using_proxies
             taskStarter.UnPause();
         };
 
-        It should_not_receive_any_messages = () => handler.LastHandledMessage.ShouldEqual(0);
+        It should_not_receive_any_messages = () => handler.LastHandledMessage.ShouldBeEquivalentTo(0);
     }
 }

@@ -1,7 +1,7 @@
 using SystemDot.Esent;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Storage.Changes;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.esent
 {
@@ -13,6 +13,6 @@ namespace SystemDot.Messaging.Specifications.esent
             .UsingInProcessTransport();
 
         It should_have_registered_the_esent_change_store = () => 
-            Resolve<ChangeStore>().ShouldBeOfType<EsentChangeStore>();  
+            Resolve<ChangeStore>().Should().BeOfType<EsentChangeStore>();  
     }
 }

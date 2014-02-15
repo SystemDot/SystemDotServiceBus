@@ -4,7 +4,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Storage;
 using SystemDot.Storage.Changes;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.restarting_messaging
 {
@@ -79,13 +79,13 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
                 .Initialise();
 
         It should_notify_that_the_first_sent_message_was_loaded_into_the_cache = () =>
-            messagesLoadedToCacheEvents.ShouldContain(m =>
+            messagesLoadedToCacheEvents.Should().Contain(m =>
                 m.CacheAddress == BuildAddress(ReceiverName)
                     && m.UseType == PersistenceUseType.PointToPointReceive
                     && m.Message == payload1);
 
         It should_notify_that_the_second_sent_message_was_loaded_into_the_cache = () =>
-            messagesLoadedToCacheEvents.ShouldContain(m =>
+            messagesLoadedToCacheEvents.Should().Contain(m =>
                 m.CacheAddress == BuildAddress(ReceiverName)
                     && m.UseType == PersistenceUseType.PointToPointReceive
                     && m.Message == payload2);

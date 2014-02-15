@@ -1,6 +1,7 @@
 using System.Linq;
 using SystemDot.Messaging.Publishing;
-using Machine.Specifications;
+using FluentAssertions;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.publishing_subscription
 {
@@ -16,6 +17,6 @@ namespace SystemDot.Messaging.Specifications.publishing_subscription
             .Initialise();
 
         It should_send_a_request_for_non_persistent_subscriber_channel = () =>
-            GetServer().SentMessages.Single().GetSubscriptionRequestSchema().IsDurable.ShouldBeTrue();
+            GetServer().SentMessages.Single().GetSubscriptionRequestSchema().IsDurable.Should().BeTrue();
     }
 }

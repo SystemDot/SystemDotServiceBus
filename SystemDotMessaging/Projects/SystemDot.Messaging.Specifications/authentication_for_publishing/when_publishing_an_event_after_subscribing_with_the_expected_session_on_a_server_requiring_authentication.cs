@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.authentication;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 using SystemDot.Messaging.Authentication;
 
 namespace SystemDot.Messaging.Specifications.authentication_for_publishing
@@ -53,6 +53,6 @@ namespace SystemDot.Messaging.Specifications.authentication_for_publishing
         Because of = () => Bus.Publish(1);
 
         It should_publish_the_event_to_the_subscriber_along_with_the_session_in_the_payload_headers = () => 
-            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetAuthenticationSession().ShouldEqual(session);
+            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetAuthenticationSession().ShouldBeEquivalentTo(session);
     }
 }

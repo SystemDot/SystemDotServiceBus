@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SystemDot.Core;
 using SystemDot.Messaging.Publishing;
 using SystemDot.Messaging.Repeating;
 using SystemDot.Storage.Changes;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.upcasting_changes
 {
@@ -35,6 +34,6 @@ namespace SystemDot.Messaging.Specifications.upcasting_changes
             loadedChanges.OfType<SubscribeChange>()
                 .Single().Schema.RepeatStrategy
                     .As<ConstantTimeRepeatStrategy>()
-                    .RepeatEvery.ShouldEqual(TimeSpan.FromSeconds(10));
+                    .RepeatEvery.ShouldBeEquivalentTo(TimeSpan.FromSeconds(10));
     }
 }

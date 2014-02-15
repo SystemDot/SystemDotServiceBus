@@ -5,6 +5,7 @@ using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
+using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.acknowledgement
 {
@@ -35,8 +36,8 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
 
         Because of = () => GetServer().ReceiveMessage(acknowledgement);
 
-        It should_notify_that_the_message_was_removed_from_the_cache = () => 
-            @event.ShouldMatch(e => e.MessageId == acknowledgement.GetAcknowledgementId().MessageId
+        It should_notify_that_the_message_was_removed_from_the_cache = () =>
+            @event.Should().Match<MessageRemovedFromCache>(e => e.MessageId == acknowledgement.GetAcknowledgementId().MessageId
                 && e.Address == acknowledgement.GetAcknowledgementId().Address
                 && e.UseType == acknowledgement.GetAcknowledgementId().UseType);
         

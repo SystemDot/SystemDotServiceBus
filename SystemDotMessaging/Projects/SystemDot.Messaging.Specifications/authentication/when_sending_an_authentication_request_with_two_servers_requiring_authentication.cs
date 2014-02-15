@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.authentication
 {
@@ -20,6 +20,6 @@ namespace SystemDot.Messaging.Specifications.authentication
         Because of = () => Bus.SendDirect(new OtherTestAuthenticationRequest());
 
         It should_only_send_the_request_down_the_authentication_channel_for_which_it_is_associated = () =>
-            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetToAddress().Server.Name.ShouldEqual(OtherReceiverServerName);
+            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetToAddress().Server.Name.ShouldBeEquivalentTo(OtherReceiverServerName);
     }
 }

@@ -1,5 +1,5 @@
 using System;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.hooks_for_publishing
 {
@@ -25,6 +25,6 @@ namespace SystemDot.Messaging.Specifications.hooks_for_publishing
         Because of = () => Bus.Publish(Message);
 
         It should_run_the_message_through_the_hook = () => 
-            hook.Message.DeserialiseTo<Int64>().ShouldEqual(Message);
+            hook.Message.DeserialiseTo<Int64>().ShouldBeEquivalentTo(Message);
     }
 }

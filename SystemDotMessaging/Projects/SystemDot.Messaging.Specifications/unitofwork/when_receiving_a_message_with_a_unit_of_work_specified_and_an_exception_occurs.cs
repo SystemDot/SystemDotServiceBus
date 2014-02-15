@@ -4,7 +4,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.UnitOfWork;
 using SystemDot.Serialisation;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.unitofwork
 {
@@ -41,7 +41,7 @@ namespace SystemDot.Messaging.Specifications.unitofwork
         Because of = () => exception = Catch.Exception(() => GetServer().ReceiveMessage(payload));
 
         It should_throw_a_unit_of_work_exception_containing_the_correct_exception_text = 
-            () => exception.Message.ShouldContain("Unit of work failed for message: " 
+            () => exception.Message.Should().Contain("Unit of work failed for message: " 
                 + new JsonSerialiser().SerialiseToString(Message));
     }
 }

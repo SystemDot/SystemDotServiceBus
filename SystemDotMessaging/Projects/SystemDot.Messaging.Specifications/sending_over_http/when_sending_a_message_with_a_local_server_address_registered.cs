@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.sending_over_http
 {
@@ -26,6 +26,6 @@ namespace SystemDot.Messaging.Specifications.sending_over_http
 
         It should_send_a_message_with_a_from_server_address_set_to_the_address_registered_for_the_server = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetFromAddress().Server.Address.Path.ShouldEqual(ServerAddress);
+                .GetFromAddress().Server.Address.Path.ShouldBeEquivalentTo(ServerAddress);
     }
 }

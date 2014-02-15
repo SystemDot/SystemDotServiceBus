@@ -1,7 +1,7 @@
 using System;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.request_reply
 {
@@ -27,6 +27,6 @@ namespace SystemDot.Messaging.Specifications.request_reply
 
         Because of = () => exception = Catch.Exception(() => GetServer().ReceiveMessage(payload));
 
-        It should_not_fail = () => exception.ShouldBeNull();
+        It should_not_fail = () => exception.Should().BeNull();
     }
 }

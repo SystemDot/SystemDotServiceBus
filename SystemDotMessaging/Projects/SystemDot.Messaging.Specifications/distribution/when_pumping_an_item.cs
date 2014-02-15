@@ -1,5 +1,5 @@
 ﻿using SystemDot.Messaging.Distribution;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.distribution
 {
@@ -20,6 +20,6 @@ namespace SystemDot.Messaging.Specifications.distribution
 
         Because of = () => pump.InputMessage(item);
 
-        It should_pump_the_item = () => pushedItem.ShouldBeTheSameAs(item);
+        It should_pump_the_item = () => pushedItem.Should().BeSameAs(item);
     }
 }

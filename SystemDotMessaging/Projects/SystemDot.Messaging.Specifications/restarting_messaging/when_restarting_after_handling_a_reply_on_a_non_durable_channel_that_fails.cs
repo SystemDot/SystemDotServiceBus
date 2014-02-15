@@ -1,7 +1,7 @@
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Storage.Changes;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.restarting_messaging
 {
@@ -50,6 +50,6 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
                 .RegisterHandlers(r => r.RegisterHandler(handler))
                 .Initialise();
 
-        It should_repeat_the_message_when_restarted = () => handler.LastHandledMessage.ShouldNotEqual(Message);
+        It should_repeat_the_message_when_restarted = () => handler.LastHandledMessage.Should().NotBe(Message);
     }
 }

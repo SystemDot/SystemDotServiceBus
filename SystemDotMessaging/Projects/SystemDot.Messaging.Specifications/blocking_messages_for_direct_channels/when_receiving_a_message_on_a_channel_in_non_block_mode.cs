@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Direct;
 using SystemDot.Messaging.Packaging;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.blocking_messages_for_direct_channels
 {
@@ -31,6 +31,6 @@ namespace SystemDot.Messaging.Specifications.blocking_messages_for_direct_channe
 
         Because of = () => GetServer().ReceiveMessage(messagePayload);
 
-        It should_handle_the_message = () => handler.LastHandledMessage.ShouldEqual(1);
+        It should_handle_the_message = () => handler.LastHandledMessage.ShouldBeEquivalentTo(1);
     }
 }

@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.received_message_return_address_reassignment
 {
@@ -37,6 +37,6 @@ namespace SystemDot.Messaging.Specifications.received_message_return_address_rea
 
         It should_send_the_acknoweldgement_to_the_local_address_listed = () => 
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetToAddress().Server.Address.Path.ShouldEqual(LocalPublisherServerAddress);
+                .GetToAddress().Server.Address.Path.ShouldBeEquivalentTo(LocalPublisherServerAddress);
     }
 }

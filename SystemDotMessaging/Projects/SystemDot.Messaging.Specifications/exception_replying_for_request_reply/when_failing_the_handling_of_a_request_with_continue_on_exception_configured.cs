@@ -4,7 +4,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.RequestReply.ExceptionHandling;
 using SystemDot.Messaging.Specifications.publishing;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.exception_replying_for_request_reply
 {
@@ -32,6 +32,6 @@ namespace SystemDot.Messaging.Specifications.exception_replying_for_request_repl
                 .Sequenced());
 
         It should_reply_with_an_exception_occurred_message = () =>
-            GetServer().SentMessages.ExcludeAcknowledgements().First().DeserialiseTo<ExceptionOccured>().ShouldNotBeNull();
+            GetServer().SentMessages.ExcludeAcknowledgements().First().DeserialiseTo<ExceptionOccured>().Should().NotBeNull();
     }
 }

@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Configuration.ExternalSources;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.external_sources
 {
@@ -24,9 +24,9 @@ namespace SystemDot.Messaging.Specifications.external_sources
         };
 
         It should_run_any_external_configurations_with_the_correct_configuration = () =>
-            externalSourcesConfigurer.Configuration.ShouldBeTheSameAs(config);
+            externalSourcesConfigurer.Configuration.Should().BeSameAs(config);
         
         It should_run_any_external_configurations_with_the_correct_server_configuration = () =>
-            externalSourcesConfigurer.ServerConfiguration.ShouldBeTheSameAs(serverConfig);   
+            externalSourcesConfigurer.ServerConfiguration.Should().BeSameAs(serverConfig);   
     }
 }

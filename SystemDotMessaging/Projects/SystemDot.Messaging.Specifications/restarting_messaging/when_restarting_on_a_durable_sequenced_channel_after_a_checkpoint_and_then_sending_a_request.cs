@@ -1,7 +1,7 @@
 using System;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Storage.Changes;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.restarting_messaging
 {
@@ -56,6 +56,6 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
         Because of = () => Bus.Send(Message);
 
         It should_not_reset_the_message_sequence = () => 
-            GetServer().GetOnlyMessage().GetSequenceOriginSetOn().ShouldNotEqual(SystemTime.GetCurrentDate());
+            GetServer().GetOnlyMessage().GetSequenceOriginSetOn().Should().NotBe(SystemTime.GetCurrentDate());
     }
 }

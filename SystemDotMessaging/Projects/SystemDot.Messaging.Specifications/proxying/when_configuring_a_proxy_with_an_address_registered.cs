@@ -1,5 +1,5 @@
 using System;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.proxying
 {
@@ -18,6 +18,6 @@ namespace SystemDot.Messaging.Specifications.proxying
 
         It should_listen_on_the_correct_url = () =>
             TestHttpServer.Instance
-                .Url.ShouldEqual(String.Concat("http://", RemoteServerAddress, "/", RemoteServerName + "/"));
+                .Url.ShouldBeEquivalentTo(String.Concat("http://", RemoteServerAddress, "/", RemoteServerName + "/"));
     }
 }

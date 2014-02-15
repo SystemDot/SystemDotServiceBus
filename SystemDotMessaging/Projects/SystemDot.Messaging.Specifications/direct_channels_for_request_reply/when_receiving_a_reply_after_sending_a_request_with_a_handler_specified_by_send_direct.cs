@@ -1,5 +1,5 @@
 using SystemDot.Messaging.Packaging;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply
 {
@@ -25,6 +25,6 @@ namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply
 
         Because of = () => Bus.SendDirect(Message, handler, exception => { });
 
-        It should_push_the_reply_to_any_registered_handlers = () => handler.LastHandledMessage.ShouldEqual(Message);
+        It should_push_the_reply_to_any_registered_handlers = () => handler.LastHandledMessage.ShouldBeEquivalentTo(Message);
     }
 }

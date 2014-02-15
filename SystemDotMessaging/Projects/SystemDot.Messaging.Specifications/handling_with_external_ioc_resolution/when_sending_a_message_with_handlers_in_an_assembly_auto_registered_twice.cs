@@ -1,6 +1,6 @@
 using SystemDot.Ioc;
 using SystemDot.Messaging.Specifications.handling.Fakes;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.handling_with_external_ioc_resolution
 {
@@ -29,6 +29,6 @@ namespace SystemDot.Messaging.Specifications.handling_with_external_ioc_resoluti
 
         Because of = () => Bus.SendDirect(message);
 
-        It should_send_the_message_to_its_handler = () => messageHandler.LastHandledMessage.ShouldBeTheSameAs(message);
+        It should_send_the_message_to_its_handler = () => messageHandler.LastHandledMessage.Should().BeSameAs(message);
     }
 }

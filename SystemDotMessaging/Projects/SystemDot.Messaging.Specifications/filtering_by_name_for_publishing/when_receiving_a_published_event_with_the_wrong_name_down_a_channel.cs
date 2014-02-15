@@ -3,7 +3,7 @@ using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.filtering_by_name;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.filtering_by_name_for_publishing
 {
@@ -37,6 +37,6 @@ namespace SystemDot.Messaging.Specifications.filtering_by_name_for_publishing
 
         Because of = () => GetServer().ReceiveMessage(payload);
 
-        It should_not_pass_the_message_through = () => handler.HandledMessages.ShouldBeEmpty();
+        It should_not_pass_the_message_through = () => handler.HandledMessages.Should().BeEmpty();
     }
 }

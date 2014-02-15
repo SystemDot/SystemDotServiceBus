@@ -1,7 +1,7 @@
 using System.Linq;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.publishing
 {
@@ -31,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.publishing
         Because of = () => Bus.Publish(message);
 
         It should_mark_the_first_sequence_number_in_the_subscriber_as_two = () =>
-            GetServer().SentMessages.ExcludeAcknowledgements().First().GetFirstSequence().ShouldEqual(2);
+            GetServer().SentMessages.ExcludeAcknowledgements().First().GetFirstSequence().ShouldBeEquivalentTo(2);
 
     }
 }

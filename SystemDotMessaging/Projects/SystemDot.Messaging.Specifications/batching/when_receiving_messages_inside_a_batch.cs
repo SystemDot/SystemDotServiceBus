@@ -4,7 +4,7 @@ using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.batching
 {
@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Specifications.batching
         
         Establish context = () =>
         {
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ReceiverAddress).ForPointToPointReceiving()
                 .Initialise();
@@ -41,7 +41,10 @@ namespace SystemDot.Messaging.Specifications.batching
 
         Because of = () => GetServer().ReceiveMessage(messagePayload);
 
-        It should_pass_both_the_messages_from_the_aggregation_through_seperately = () => 
-            handler.HandledMessages.ShouldContain(Message1, Message2);
+        It should_pass_the_first_message_from_the_aggregation_through_seperately = () =>
+            handler.HandledMessages.Should().Contain(m => m == Message1);
+
+        It should_pass_the_second_message_from_the_aggregation_through_seperately = () =>
+            handler.HandledMessages.Should().Contain(m => m == Message2);
     }
 }

@@ -2,7 +2,8 @@
 using System.Linq;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Storage.Changes;
-using Machine.Specifications;
+using FluentAssertions;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.upcasting_changes
 {
@@ -22,6 +23,6 @@ namespace SystemDot.Messaging.Specifications.upcasting_changes
 
         Because of = () => loadedChanges = changeStore.GetChanges(ChangeRootId);
 
-        It should_pass_through_the_change = () => loadedChanges.Count().ShouldEqual(1);
+        It should_pass_through_the_change = () => loadedChanges.Count().ShouldBeEquivalentTo(1);
     }
 }

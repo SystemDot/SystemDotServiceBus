@@ -1,7 +1,7 @@
 ﻿using System;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.exception_handling_for_subscriptions
 {
@@ -30,6 +30,6 @@ namespace SystemDot.Messaging.Specifications.exception_handling_for_subscription
                     .SetChannelType(PersistenceUseType.PublisherSend)
                     .Sequenced()));
 
-        It should_not_throw_an_exception = () => exception.ShouldBeNull();
+        It should_not_throw_an_exception = () => exception.Should().BeNull();
     }
 }

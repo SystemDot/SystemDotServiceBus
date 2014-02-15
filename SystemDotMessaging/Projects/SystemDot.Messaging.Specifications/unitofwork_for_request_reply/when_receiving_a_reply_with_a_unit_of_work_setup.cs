@@ -2,7 +2,8 @@ using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.unitofwork;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using FluentAssertions;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.unitofwork_for_request_reply
 {
@@ -36,6 +37,6 @@ namespace SystemDot.Messaging.Specifications.unitofwork_for_request_reply
 
         Because of = () => GetServer().ReceiveMessage(payload);
 
-        It should_begin_the_unit_of_work = () => unitOfWork.HasBegun().ShouldBeTrue();
+        It should_begin_the_unit_of_work = () => unitOfWork.HasBegun().Should().BeTrue();
     }
 }

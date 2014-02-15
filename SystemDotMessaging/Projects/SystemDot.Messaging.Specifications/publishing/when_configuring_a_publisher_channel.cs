@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Publishing.Builders;
 using SystemDot.Messaging.Simple;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.publishing
 {
@@ -22,6 +22,6 @@ namespace SystemDot.Messaging.Specifications.publishing
         };
 
         It should_notify_that_the_channel_was_built = () => 
-            channelBuiltEvent.Address.ShouldEqual(BuildAddress(PublisherAddress));
+            channelBuiltEvent.Address.ShouldBeEquivalentTo(BuildAddress(PublisherAddress));
     }
 }

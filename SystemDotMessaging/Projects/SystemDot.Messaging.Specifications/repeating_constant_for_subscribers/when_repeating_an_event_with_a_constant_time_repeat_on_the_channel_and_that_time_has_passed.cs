@@ -3,7 +3,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Publishing;
 using SystemDot.Messaging.Repeating;
 using SystemDot.Parallelism;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.repeating_constant_for_subscribers
 {
@@ -43,6 +43,6 @@ namespace SystemDot.Messaging.Specifications.repeating_constant_for_subscribers
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_repeat_the_message = () => WebRequestor.RequestsMade.Count.ShouldEqual(1);
+        It should_repeat_the_message = () => WebRequestor.RequestsMade.Count.ShouldBeEquivalentTo(1);
     }
 }

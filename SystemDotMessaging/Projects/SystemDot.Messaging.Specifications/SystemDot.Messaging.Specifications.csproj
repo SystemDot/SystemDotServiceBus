@@ -34,6 +34,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentAssertions">
+      <HintPath>..\..\Solutions\packages\FluentAssertions.2.2.0.0\lib\net45\FluentAssertions.dll</HintPath>
+    </Reference>
     <Reference Include="Machine.Fakes, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Solutions\packages\Machine.Fakes.2.0.0\lib\net40\Machine.Fakes.dll</HintPath>
@@ -42,15 +45,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Solutions\packages\Machine.Fakes.RhinoMocks.2.0.0\lib\net40\Machine.Fakes.Adapters.RhinoMocks.dll</HintPath>
     </Reference>
-    <Reference Include="Machine.Specifications, Version=0.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Machine.Specifications, Version=0.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\Machine.Specifications.0.6.2\lib\net45\Machine.Specifications.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\Machine.Specifications.0.7.0\lib\net45\Machine.Specifications.dll</HintPath>
     </Reference>
-    <Reference Include="Machine.Specifications.Clr4">
-      <HintPath>..\..\Solutions\packages\Machine.Specifications.0.6.2\lib\net45\Machine.Specifications.Clr4.dll</HintPath>
-    </Reference>
-    <Reference Include="Machine.Specifications.Should">
-      <HintPath>..\..\Solutions\packages\Machine.Specifications.0.6.2\lib\net45\Machine.Specifications.Should.dll</HintPath>
+    <Reference Include="Machine.Specifications.Clr4, Version=0.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\Machine.Specifications.0.7.0\lib\net45\Machine.Specifications.Clr4.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -64,62 +65,81 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="SystemDot.Configuration">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Configuration.dll</HintPath>
+    <Reference Include="SystemDot.Configuration, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.2\lib\net\SystemDot.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Core">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Core.dll</HintPath>
+    <Reference Include="SystemDot.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.2\lib\net\SystemDot.Core.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Environment">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Environment.dll</HintPath>
+    <Reference Include="SystemDot.Environment, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.2\lib\net\SystemDot.Environment.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Environment.Windows">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Environment.Windows.dll</HintPath>
+    <Reference Include="SystemDot.Environment.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.2\lib\net\SystemDot.Environment.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Files">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Files.dll</HintPath>
+    <Reference Include="SystemDot.Files, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.2\lib\net\SystemDot.Files.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Files.Windows">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Files.Windows.dll</HintPath>
+    <Reference Include="SystemDot.Files.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.2\lib\net\SystemDot.Files.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Http">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Http.dll</HintPath>
+    <Reference Include="SystemDot.Http, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.2\lib\net\SystemDot.Http.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Http.Windows">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Http.Windows.dll</HintPath>
+    <Reference Include="SystemDot.Http.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.2\lib\net\SystemDot.Http.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Ioc">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Ioc.dll</HintPath>
+    <Reference Include="SystemDot.Ioc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.2\lib\net\SystemDot.Ioc.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Logging">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Logging.dll</HintPath>
+    <Reference Include="SystemDot.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.2\lib\net\SystemDot.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Logging.Windows">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Logging.Windows.dll</HintPath>
+    <Reference Include="SystemDot.Logging.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.2\lib\net\SystemDot.Logging.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Messaging.Handling">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Messaging.Handling.dll</HintPath>
+    <Reference Include="SystemDot.Messaging.Handling, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.2\lib\net\SystemDot.Messaging.Handling.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Messaging.Simple">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Messaging.Simple.dll</HintPath>
+    <Reference Include="SystemDot.Messaging.Simple, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.2\lib\net\SystemDot.Messaging.Simple.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Parallelism">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Parallelism.dll</HintPath>
+    <Reference Include="SystemDot.Parallelism, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.2\lib\net\SystemDot.Parallelism.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Parallelism.Windows">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Parallelism.Windows.dll</HintPath>
+    <Reference Include="SystemDot.Parallelism.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.2\lib\net\SystemDot.Parallelism.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Serialisation">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Serialisation.dll</HintPath>
+    <Reference Include="SystemDot.Serialisation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.2\lib\net\SystemDot.Serialisation.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Storage">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.Storage.dll</HintPath>
+    <Reference Include="SystemDot.Storage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.2\lib\net\SystemDot.Storage.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.ThreadMarshalling">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.ThreadMarshalling.dll</HintPath>
+    <Reference Include="SystemDot.ThreadMarshalling, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.2\lib\net\SystemDot.ThreadMarshalling.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.ThreadMarshalling.Windows">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.1\lib\net\SystemDot.ThreadMarshalling.Windows.dll</HintPath>
+    <Reference Include="SystemDot.ThreadMarshalling.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.2\lib\net\SystemDot.ThreadMarshalling.Windows.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -253,6 +273,7 @@
     <Compile Include="running_handlers_on_main_thread_for_subscribers\when_receiving_an_event_on_a_channel_not_configured_to_handle_on_main_thread.cs" />
     <Compile Include="servers_using_proxies\when_sending_a_message_to_a_server_that_uses_a_proxy.cs" />
     <Compile Include="StreamEnumerableExtensions.cs" />
+    <Compile Include="TestApplication.cs" />
     <Compile Include="TestMainThreadMarshaller.cs" />
     <Compile Include="running_handlers_on_main_thread_for_request_reply\when_receiving_a_reply_on_a_channel.cs" />
     <Compile Include="TestInProcessMessageServerFactory.cs" />

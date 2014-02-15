@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.sending_over_http
 {
@@ -29,14 +29,14 @@ namespace SystemDot.Messaging.Specifications.sending_over_http
 
         It should_send_a_message_with_the_correct_to_address_channel_name = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetToAddress().Channel.ShouldEqual(ReceiverChannelName);
+                .GetToAddress().Channel.ShouldBeEquivalentTo(ReceiverChannelName);
 
         It should_send_a_message_with_the_correct_to_address_server_name = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetToAddress().Server.Name.ShouldEqual(ReceiverServerName);
+                .GetToAddress().Server.Name.ShouldBeEquivalentTo(ReceiverServerName);
 
         It should_send_a_message_with_the_correct_to_address_server_address = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetToAddress().Server.Address.Path.ShouldEqual(ReceiverServerAddress);
+                .GetToAddress().Server.Address.Path.ShouldBeEquivalentTo(ReceiverServerAddress);
     }
 }

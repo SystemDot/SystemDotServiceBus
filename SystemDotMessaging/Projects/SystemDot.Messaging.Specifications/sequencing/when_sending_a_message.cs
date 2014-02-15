@@ -2,7 +2,8 @@ using System;
 using System.Linq;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Specifications.publishing;
-using Machine.Specifications;
+using FluentAssertions;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.sequencing
 {
@@ -30,12 +31,12 @@ namespace SystemDot.Messaging.Specifications.sequencing
         Because of = () => Bus.Send(message);
 
         It should_mark_the_message_with_the_sequence = () =>
-            GetServer().SentMessages.ExcludeAcknowledgements().First().GetSequence().ShouldEqual(1);
+            GetServer().SentMessages.ExcludeAcknowledgements().First().GetSequence().ShouldBeEquivalentTo(1);
 
         It should_mark_the_message_with_first_sequence = () =>
-            GetServer().SentMessages.ExcludeAcknowledgements().First().GetFirstSequence().ShouldEqual(1);
+            GetServer().SentMessages.ExcludeAcknowledgements().First().GetFirstSequence().ShouldBeEquivalentTo(1);
 
         It should_mark_the_message_with_sequence_origin_date = () =>
-            GetServer().SentMessages.ExcludeAcknowledgements().First().GetSequenceOriginSetOn().ShouldEqual(originDate);
+            GetServer().SentMessages.ExcludeAcknowledgements().First().GetSequenceOriginSetOn().ShouldBeEquivalentTo(originDate);
     }
 }

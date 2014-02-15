@@ -2,7 +2,7 @@
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.receiving_over_http
 {
@@ -37,6 +37,6 @@ namespace SystemDot.Messaging.Specifications.receiving_over_http
 
         Because of = () => SendMessageToServer(messagePayload);
 
-        It should_receive_the_message_down_the_channel = () => handler.LastHandledMessage.ShouldEqual(Message);
+        It should_receive_the_message_down_the_channel = () => handler.LastHandledMessage.ShouldBeEquivalentTo(Message);
     }
 }

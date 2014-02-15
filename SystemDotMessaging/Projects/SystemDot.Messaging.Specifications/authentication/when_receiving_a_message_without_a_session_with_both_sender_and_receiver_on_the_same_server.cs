@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.authentication
 {
@@ -43,6 +43,6 @@ namespace SystemDot.Messaging.Specifications.authentication
 
         Because of = () => SendMessageToServer(payload);
 
-        It should_not_handle_the_event = () => handler.HandledMessages.ShouldBeEmpty();
+        It should_not_handle_the_event = () => handler.HandledMessages.Should().BeEmpty();
     }
 }

@@ -4,7 +4,7 @@ using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.authentication;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
 {
@@ -62,6 +62,6 @@ namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
         Because of = () => SendMessageToServer(request);
 
         It should_send_the_reply_in_a_payload_with_the_correct_authentication_session = () =>
-            WebRequestor.RequestsMade.DeserialiseToPayloads().Last().GetAuthenticationSession().ShouldEqual(session);
+            WebRequestor.RequestsMade.DeserialiseToPayloads().Last().GetAuthenticationSession().ShouldBeEquivalentTo(session);
     }
 }

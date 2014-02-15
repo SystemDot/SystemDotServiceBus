@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Packaging;
-using Machine.Specifications;
+using FluentAssertions;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.authentication
 {
@@ -39,6 +40,6 @@ namespace SystemDot.Messaging.Specifications.authentication
         Because of = () => returnedMessages = SendMessageToServer(payload);
 
         It should_reply_with_a_response_that_does_not_contain_the_authentication_session_in_the_headers = () =>
-            returnedMessages.Single().HasAuthenticationSession().ShouldBeFalse();
+            returnedMessages.Single().HasAuthenticationSession().Should().BeFalse();
     }
 }

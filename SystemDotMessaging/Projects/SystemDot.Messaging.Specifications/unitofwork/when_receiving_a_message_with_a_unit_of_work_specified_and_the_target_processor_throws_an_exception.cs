@@ -3,7 +3,7 @@ using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.unitofwork
 {
@@ -44,6 +44,6 @@ namespace SystemDot.Messaging.Specifications.unitofwork
         Because of = () => thrownException = Catch.Exception(() => GetServer().ReceiveMessage(payload));
 
         It should_pass_the_exception_to_end_of_the_unit_of_work = () => 
-            thrownException.ShouldBeTheSameAs(unitOfWork.GetException());
+            thrownException.Should().BeSameAs(unitOfWork.GetException());
     }
 }

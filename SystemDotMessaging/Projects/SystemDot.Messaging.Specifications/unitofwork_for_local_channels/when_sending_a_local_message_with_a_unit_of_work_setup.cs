@@ -1,4 +1,5 @@
 using SystemDot.Messaging.Specifications.unitofwork;
+using FluentAssertions;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.unitofwork_for_local_channels
@@ -23,6 +24,6 @@ namespace SystemDot.Messaging.Specifications.unitofwork_for_local_channels
 
         Because of = () => Bus.SendDirect(new object());
 
-        It should_begin_the_unit_of_work = () => unitOfWork.HasBegun().ShouldBeTrue();
+        It should_begin_the_unit_of_work = () => unitOfWork.HasBegun().Should().BeTrue();
     }
 }

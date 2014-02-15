@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using SystemDot.Messaging.Direct;
 using SystemDot.Messaging.Packaging;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply
 {
@@ -37,6 +37,6 @@ namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply
 
         Because of = () => GetServer().ReceiveMessage(messagePayload);
 
-        It should_send_reply_with_only_the_message_from_the_expected_channel = () => GetServer().ReturnedMessages.Count().ShouldEqual(1);
+        It should_send_reply_with_only_the_message_from_the_expected_channel = () => GetServer().ReturnedMessages.Count().ShouldBeEquivalentTo(1);
     }
 }

@@ -3,7 +3,7 @@ using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.publishing;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.expiry_for_request_reply
 {
@@ -35,6 +35,6 @@ namespace SystemDot.Messaging.Specifications.expiry_for_request_reply
 
         Because of = () => Bus.Reply(message);
 
-        It should_not_send_the_message = () => GetServer().SentMessages.ExcludeAcknowledgements().ShouldBeEmpty();
+        It should_not_send_the_message = () => GetServer().SentMessages.ExcludeAcknowledgements().Should().BeEmpty();
     }
 }

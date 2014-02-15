@@ -1,7 +1,7 @@
 using System;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.request_reply
 {
@@ -40,6 +40,6 @@ namespace SystemDot.Messaging.Specifications.request_reply
         
         Because of = () => Bus.Reply(Reply);
 
-        It should_reply_with_a_message = () =>  WebRequestor.DeserialiseSingleRequest<MessagePayload>().ShouldNotBeNull();
+        It should_reply_with_a_message = () =>  WebRequestor.DeserialiseSingleRequest<MessagePayload>().Should().NotBeNull();
     }
 }

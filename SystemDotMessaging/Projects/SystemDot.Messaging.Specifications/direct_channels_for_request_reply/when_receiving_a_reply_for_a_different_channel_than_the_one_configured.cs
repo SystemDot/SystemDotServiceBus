@@ -1,5 +1,6 @@
 using SystemDot.Messaging.Packaging;
-using Machine.Specifications;
+using FluentAssertions;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply
 {
@@ -25,6 +26,6 @@ namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply
 
         Because of = () => Bus.Send(Message);
 
-        It should_not_push_the_reply_to_any_handlers = () => handler.HandledMessages.Count.ShouldEqual(0);
+        It should_not_push_the_reply_to_any_handlers = () => handler.HandledMessages.Count.ShouldBeEquivalentTo(0);
     }
 }

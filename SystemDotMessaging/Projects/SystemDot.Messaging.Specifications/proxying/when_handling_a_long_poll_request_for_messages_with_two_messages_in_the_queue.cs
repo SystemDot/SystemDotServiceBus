@@ -3,7 +3,7 @@ using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Transport.Http.Remote.Clients;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.proxying
 {
@@ -39,8 +39,8 @@ namespace SystemDot.Messaging.Specifications.proxying
 
         Because of = () => returnedMessages = SendMessageToServer(longPollRequest);
 
-        It should_put_the_first_message_in_the_response = () => returnedMessages.ShouldContain(sentMessageInQueue1);
+        It should_put_the_first_message_in_the_response = () => returnedMessages.Should().Contain(sentMessageInQueue1);
 
-        It should_put_the_second_message_in_the_response = () => returnedMessages.ShouldContain(sentMessageInQueue2);
+        It should_put_the_second_message_in_the_response = () => returnedMessages.Should().Contain(sentMessageInQueue2);
     }
 }

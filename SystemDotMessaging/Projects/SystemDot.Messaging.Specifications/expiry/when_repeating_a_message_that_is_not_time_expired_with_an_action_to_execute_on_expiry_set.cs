@@ -1,4 +1,5 @@
 using System;
+using FluentAssertions;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.expiry
@@ -19,8 +20,8 @@ namespace SystemDot.Messaging.Specifications.expiry
 
         Because of = () => Bus.Send(1);
 
-        It should_not_execute_the_expiry_action = () => expiryActionExecuted.ShouldBeFalse();
+        It should_not_execute_the_expiry_action = () => expiryActionExecuted.Should().BeFalse();
 
-        It should_pass_the_message_through = () => GetServer().SentMessages.ShouldNotBeEmpty();
+        It should_pass_the_message_through = () => GetServer().SentMessages.Should().NotBeEmpty();
     }
 }

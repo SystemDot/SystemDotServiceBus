@@ -1,5 +1,5 @@
 using System;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.proxying
 {
@@ -16,6 +16,6 @@ namespace SystemDot.Messaging.Specifications.proxying
 
         Because of = () => exception = Catch.Exception(() => SendObjectToServer(new object()));
 
-        It should_not_fail = () => exception.ShouldBeNull();         
+        It should_not_fail = () => exception.Should().BeNull();         
     }
 }

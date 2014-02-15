@@ -4,7 +4,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.sequencing
 {
@@ -48,6 +48,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
             GetServer().ReceiveMessage(messagePayload2);
         };
 
-        It should_not_pass_the_messages_through = () => handler.HandledMessages.ShouldNotContain(Message1, Message2);
+        It should_not_pass_the_messages_through = () => 
+            handler.HandledMessages.Should().NotContain(m => m == Message1 || m == Message2);
     }
 }

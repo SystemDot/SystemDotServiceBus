@@ -1,7 +1,7 @@
 using SystemDot.Ioc;
 using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Specifications.handling.Fakes;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.handling
 {
@@ -49,15 +49,15 @@ namespace SystemDot.Messaging.Specifications.handling
         };
 
         It should_send_the_first_message_to_its_first_handler =
-            () => firstHandlerOfMessage1.LastHandledMessage.ShouldEqual(message1);
+            () => firstHandlerOfMessage1.LastHandledMessage.ShouldBeEquivalentTo(message1);
 
         It should_send_the_first_message_to_its_second_handler =
-            () => secondHandlerOfMessage1.LastHandledMessage.ShouldEqual(message1);
+            () => secondHandlerOfMessage1.LastHandledMessage.ShouldBeEquivalentTo(message1);
 
         It should_send_the_second_message_to_its_first_handler =
-            () => firstHandlerOfMessage2.LastHandledMessage.ShouldEqual(message2);
+            () => firstHandlerOfMessage2.LastHandledMessage.ShouldBeEquivalentTo(message2);
 
         It should_send_the_second_message_to_its_second_handler =
-            () => secondHandlerOfMessage2.LastHandledMessage.ShouldEqual(message2);
+            () => secondHandlerOfMessage2.LastHandledMessage.ShouldBeEquivalentTo(message2);
     }
 }

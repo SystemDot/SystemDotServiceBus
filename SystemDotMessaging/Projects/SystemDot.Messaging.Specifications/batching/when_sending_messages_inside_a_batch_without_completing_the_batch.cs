@@ -1,5 +1,5 @@
 using SystemDot.Messaging.Transport.InProcess.Configuration;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.batching
 {
@@ -22,6 +22,6 @@ namespace SystemDot.Messaging.Specifications.batching
         };
 
         It should_not_send_a_batch_containing_messages = () =>
-            GetServer().SentMessages.ShouldBeEmpty();
+            GetServer().SentMessages.Should().BeEmpty();
     }
 }

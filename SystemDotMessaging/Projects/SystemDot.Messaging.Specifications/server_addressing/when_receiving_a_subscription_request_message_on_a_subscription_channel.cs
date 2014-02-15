@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Packaging;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.server_addressing
 {

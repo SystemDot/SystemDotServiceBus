@@ -1,6 +1,6 @@
 using SystemDot.Messaging.RequestReply.Builders;
 using SystemDot.Messaging.Simple;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.external_sources_for_request_reply
 {
@@ -26,13 +26,13 @@ namespace SystemDot.Messaging.Specifications.external_sources_for_request_reply
                 .Initialise();
 
         It should_notify_that_the_reply_receive_channel_was_built = () =>
-            replyReceiveChannelBuiltEvent.ShouldMatch(m => 
+            replyReceiveChannelBuiltEvent.Should().Match<ReplyReceiveChannelBuilt>(m => 
                 m.CacheAddress == BuildAddress(SenderAddress)
                 && m.ReceiverAddress == BuildAddress(ReceiverAddress)
                 && m.SenderAddress == BuildAddress(SenderAddress));
 
         It should_notify_that_the_request_send_channel_was_built = () =>
-           requestSendChannelBuiltEvent.ShouldMatch(m =>
+           requestSendChannelBuiltEvent.Should().Match<ReplyReceiveChannelBuilt>(m =>
                m.CacheAddress == BuildAddress(SenderAddress)
                && m.SenderAddress == BuildAddress(SenderAddress)
                && m.ReceiverAddress == BuildAddress(ReceiverAddress));

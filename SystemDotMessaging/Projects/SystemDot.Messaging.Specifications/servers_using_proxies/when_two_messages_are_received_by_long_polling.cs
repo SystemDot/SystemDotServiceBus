@@ -4,7 +4,7 @@ using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Parallelism;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.servers_using_proxies
 {
@@ -65,8 +65,8 @@ namespace SystemDot.Messaging.Specifications.servers_using_proxies
             taskStarter.UnPause();
         };
 
-        It should_output_the_first_recieved_message = () => handler.HandledMessages.First().ShouldEqual(Message1);
+        It should_output_the_first_recieved_message = () => handler.HandledMessages.First().ShouldBeEquivalentTo(Message1);
 
-        It should_output_the_second_recieved_message = () => handler.HandledMessages.Last().ShouldEqual(Message2);
+        It should_output_the_second_recieved_message = () => handler.HandledMessages.Last().ShouldBeEquivalentTo(Message2);
     }
 }

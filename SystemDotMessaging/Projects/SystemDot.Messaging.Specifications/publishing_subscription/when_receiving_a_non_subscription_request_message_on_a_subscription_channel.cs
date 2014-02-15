@@ -1,7 +1,7 @@
 using System;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.publishing_subscription
 {
@@ -27,6 +27,6 @@ namespace SystemDot.Messaging.Specifications.publishing_subscription
 
         Because of = () => exception = Catch.Exception(() => GetServer().ReceiveMessage(nonRequest));
 
-        It should_not_fail = () => exception.ShouldBeNull();
+        It should_not_fail = () => exception.Should().BeNull();
     }
 }

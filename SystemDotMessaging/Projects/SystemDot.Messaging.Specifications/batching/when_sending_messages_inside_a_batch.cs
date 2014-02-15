@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using SystemDot.Messaging.Batching;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.batching
 {
@@ -26,7 +26,12 @@ namespace SystemDot.Messaging.Specifications.batching
             }
         };
 
-        It should_send_a_batch_containing_both_messages = () =>
-            GetServer().SentMessages.Single().DeserialiseTo<BatchMessage>().Messages.ShouldContain(Message1, Message2);
+        It should_send_a_batch_containing_the_first_message = () =>
+            GetServer().SentMessages.Single().DeserialiseTo<BatchMessage>()
+                .Messages.Should().Contain(m => m.As<long>() == Message1);
+
+        It should_send_a_batch_containing_the_second_message = () =>
+            GetServer().SentMessages.Single().DeserialiseTo<BatchMessage>()
+                .Messages.Should().Contain(m => m.As<long>() == Message2);
     }
 }

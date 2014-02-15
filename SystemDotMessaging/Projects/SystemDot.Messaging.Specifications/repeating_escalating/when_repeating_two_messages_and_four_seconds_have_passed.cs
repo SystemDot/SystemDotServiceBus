@@ -1,6 +1,7 @@
 using System;
 using SystemDot.Parallelism;
-using Machine.Specifications;
+using FluentAssertions;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.repeating_escalating
 {
@@ -27,6 +28,6 @@ namespace SystemDot.Messaging.Specifications.repeating_escalating
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_repeat_the_messages = () => GetServer().SentMessages.Count.ShouldEqual(4);
+        It should_repeat_the_messages = () => GetServer().SentMessages.Count.ShouldBeEquivalentTo(4);
     }
 }

@@ -2,7 +2,8 @@
 using System.Linq;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 using SystemDot.Parallelism;
-using Machine.Specifications;
+using FluentAssertions;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.load_balancing
 {
@@ -25,6 +26,6 @@ namespace SystemDot.Messaging.Specifications.load_balancing
 
         Because of = () => SystemTime.AdvanceTime(TimeSpan.FromSeconds(4));
 
-        It should_only_send_nineteen_messages = () => GetServer().SentMessages.Count.ShouldEqual(19);
+        It should_only_send_nineteen_messages = () => GetServer().SentMessages.Count.ShouldBeEquivalentTo(19);
     }
 }

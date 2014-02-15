@@ -3,7 +3,8 @@ using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.unitofwork;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using FluentAssertions;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.unitofwork_with_external_ioc_resolution
 {
@@ -43,6 +44,6 @@ namespace SystemDot.Messaging.Specifications.unitofwork_with_external_ioc_resolu
 
         Because of = () => GetServer().ReceiveMessage(payload);
 
-        It should_use_the_unit_of_work = () => unitOfWork.HasBegun().ShouldBeTrue();
+        It should_use_the_unit_of_work = () => unitOfWork.HasBegun().Should().BeTrue();
     }
 }

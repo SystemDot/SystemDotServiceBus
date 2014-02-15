@@ -1,5 +1,6 @@
 using SystemDot.Ioc;
 using SystemDot.Messaging.Specifications.handling.Fakes;
+using FluentAssertions;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.handling_with_external_ioc_resolution
@@ -27,6 +28,6 @@ namespace SystemDot.Messaging.Specifications.handling_with_external_ioc_resoluti
                 .OpenDirectChannel()
                 .Initialise();
 
-        It should_not_resolve_any_message_handlers = () => wasAnythingResolvedFromIoc.ShouldBeFalse();
+        It should_not_resolve_any_message_handlers = () => wasAnythingResolvedFromIoc.Should().BeFalse();
     }
 }

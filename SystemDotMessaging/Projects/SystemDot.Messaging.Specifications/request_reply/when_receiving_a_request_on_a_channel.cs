@@ -4,7 +4,7 @@ using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.RequestReply.Builders;
 using SystemDot.Messaging.Simple;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Specifications.request_reply
@@ -45,21 +45,21 @@ namespace SystemDot.Messaging.Specifications.request_reply
 
         Because of = () => GetServer().ReceiveMessage(payload);
 
-        It should_push_the_message_to_any_registered_handlers = () => handler.LastHandledMessage.ShouldEqual(Message);
+        It should_push_the_message_to_any_registered_handlers = () => handler.LastHandledMessage.ShouldBeEquivalentTo(Message);
 
         It should_notify_that_the_request_receive_channel_was_built = () => requestReceiveChannelBuiltEvent
-            .ShouldMatch(m => 
+            .Should().Match<RequestReceiveChannelBuilt>(m => 
                 m.CacheAddress == BuildAddress(SenderAddress)
                 && m.SenderAddress == BuildAddress(SenderAddress)
                 && m.ReceiverAddress == BuildAddress(ReceiverAddress));
 
         It should_notify_that_the_reply_send_channel_was_built = () => replySendChannelBuiltEvent
-            .ShouldMatch(m =>
+            .Should().Match<ReplySendChannelBuilt>(m =>
                 m.CacheAddress == BuildAddress(SenderAddress)
                 && m.ReceiverAddress == BuildAddress(ReceiverAddress)
                 && m.SenderAddress == BuildAddress(SenderAddress));
 
         It should_send_an_acknowledgement_for_the_message = () =>
-            GetServer().SentMessages.ShouldContain(a => a.GetAcknowledgementId() == payload.GetSourcePersistenceId());
+            GetServer().SentMessages.Should().Contain(a => a.GetAcknowledgementId() == payload.GetSourcePersistenceId());
     }
 }

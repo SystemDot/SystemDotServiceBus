@@ -1,7 +1,7 @@
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.authentication;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.authentication_for_publishing
 {
@@ -53,6 +53,6 @@ namespace SystemDot.Messaging.Specifications.authentication_for_publishing
 
         Because of = () => SendMessageToServer(publishedEvent);
 
-        It should_not_handle_the_message = () => handler.HandledMessages.ShouldBeEmpty();
+        It should_not_handle_the_message = () => handler.HandledMessages.Should().BeEmpty();
     }
 }
