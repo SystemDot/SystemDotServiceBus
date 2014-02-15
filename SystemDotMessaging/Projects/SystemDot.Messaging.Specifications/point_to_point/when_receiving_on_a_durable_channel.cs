@@ -1,4 +1,5 @@
 using SystemDot.Messaging.Handling;
+using SystemDot.Messaging.Handling.Actions;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Simple;
@@ -17,6 +18,7 @@ namespace SystemDot.Messaging.Specifications.point_to_point
         static MessagePayload payload;
         static TestMessageHandler<int> handler;
         static MessageRemovedFromCache @event;
+        static ActionSubscriptionToken<MessageRemovedFromCache> token;
 
         Establish context = () =>
         {
@@ -27,7 +29,7 @@ namespace SystemDot.Messaging.Specifications.point_to_point
                 .WithDurability()
                 .Initialise();
 
-            Messenger.RegisterHandler<MessageRemovedFromCache>(e => @event = e);
+            token = Messenger.RegisterHandler<MessageRemovedFromCache>(e => @event = e);
 
             handler = new TestMessageHandler<int>();
             Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);

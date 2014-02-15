@@ -1,3 +1,4 @@
+using SystemDot.Messaging.Handling.Actions;
 using SystemDot.Messaging.Publishing.Builders;
 using SystemDot.Messaging.Simple;
 using Machine.Specifications;using FluentAssertions;
@@ -10,10 +11,11 @@ namespace SystemDot.Messaging.Specifications.publishing
         const string PublisherAddress = "PublisherAddress";
 
         static PublisherChannelBuilt channelBuiltEvent;
+        static ActionSubscriptionToken<PublisherChannelBuilt> token;
 
         Because of = () =>
         {
-            Messenger.RegisterHandler<PublisherChannelBuilt>(e => channelBuiltEvent = e);
+            token = Messenger.RegisterHandler<PublisherChannelBuilt>(e => channelBuiltEvent = e);
 
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()

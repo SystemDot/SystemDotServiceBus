@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using SystemDot.Messaging.Handling.Actions;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Storage;
@@ -20,8 +21,9 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
         static TestMessageHandler<Int64> handler;
         static ChangeStore changeStore;
         static MessagePayload payload1;
-        static MessagePayload payload2; 
+        static MessagePayload payload2;
         static List<MessageLoadedToCache> messagesLoadedToCacheEvents;
+        static ActionSubscriptionToken<MessageLoadedToCache> token;
 
         Establish context = () =>
         {
@@ -63,7 +65,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
 
             Reset();
             ReInitialise();
-            Messenger.RegisterHandler<MessageLoadedToCache>(e => messagesLoadedToCacheEvents.Add(e));
+            token = Messenger.RegisterHandler<MessageLoadedToCache>(e => messagesLoadedToCacheEvents.Add(e));
 
             ConfigureAndRegister<ChangeStore>(changeStore);
             handler = new TestMessageHandler<Int64>();

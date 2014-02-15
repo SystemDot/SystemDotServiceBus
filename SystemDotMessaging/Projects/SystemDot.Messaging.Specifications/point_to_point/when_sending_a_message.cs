@@ -1,12 +1,13 @@
 using System;
 using System.Linq;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Handling.Actions;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Specifications.publishing;
 using FluentAssertions;
-using Machine.Specifications;using FluentAssertions;
+using Machine.Specifications;
 using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Specifications.point_to_point
@@ -18,14 +19,14 @@ namespace SystemDot.Messaging.Specifications.point_to_point
         const string ReceiverAddress = "ReceiverAddress";
 
         static MessageAddedToCache messageAddedToCacheEvent;
-
         static Int64 message;
-        
+        static ActionSubscriptionToken<MessageAddedToCache> token;
+
         Establish context = () =>
         {
-            Messenger.RegisterHandler<MessageAddedToCache>(e => messageAddedToCacheEvent = e);
+            token = Messenger.RegisterHandler<MessageAddedToCache>(e => messageAddedToCacheEvent = e);
 
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(SenderAddress).ForPointToPointSendingTo(ReceiverAddress)
                 .Initialise();

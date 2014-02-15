@@ -1,10 +1,12 @@
 using System;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Handling;
+using SystemDot.Messaging.Handling.Actions;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Simple;
-using Machine.Specifications;using FluentAssertions;
+using Machine.Specifications;
+using FluentAssertions;
 using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Specifications.point_to_point
@@ -20,6 +22,8 @@ namespace SystemDot.Messaging.Specifications.point_to_point
         static TestMessageHandler<Int64> handler;
         static MessageAddedToCache messageAddedToCacheEvent;
         static MessageRemovedFromCache messageRemovedFromCacheEvent;
+        static ActionSubscriptionToken<MessageAddedToCache> addToken;
+        static ActionSubscriptionToken<MessageRemovedFromCache> removedToken;
 
         Establish context = () =>
         {
@@ -29,8 +33,8 @@ namespace SystemDot.Messaging.Specifications.point_to_point
                     .ForPointToPointReceiving()
                 .Initialise();
 
-            Messenger.RegisterHandler<MessageAddedToCache>(e => messageAddedToCacheEvent = e);
-            Messenger.RegisterHandler<MessageRemovedFromCache>(e => messageRemovedFromCacheEvent = e);
+            addToken = Messenger.RegisterHandler<MessageAddedToCache>(e => messageAddedToCacheEvent = e);
+            removedToken = Messenger.RegisterHandler<MessageRemovedFromCache>(e => messageRemovedFromCacheEvent = e);
             
             handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);

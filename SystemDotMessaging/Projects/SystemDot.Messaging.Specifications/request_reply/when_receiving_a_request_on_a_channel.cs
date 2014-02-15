@@ -1,10 +1,12 @@
 using System;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Handling;
+using SystemDot.Messaging.Handling.Actions;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.RequestReply.Builders;
 using SystemDot.Messaging.Simple;
-using Machine.Specifications;using FluentAssertions;
+using Machine.Specifications;
+using FluentAssertions;
 using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Specifications.request_reply
@@ -18,9 +20,11 @@ namespace SystemDot.Messaging.Specifications.request_reply
 
         static MessagePayload payload;
         static TestMessageHandler<Int64> handler;
-        
+
         static RequestReceiveChannelBuilt requestReceiveChannelBuiltEvent;
         static ReplySendChannelBuilt replySendChannelBuiltEvent;
+        static ActionSubscriptionToken<ReplySendChannelBuilt> replyToken;
+        static ActionSubscriptionToken<RequestReceiveChannelBuilt> requestToken;
 
         Establish context = () =>
         {
@@ -30,8 +34,8 @@ namespace SystemDot.Messaging.Specifications.request_reply
                     .ForRequestReplyReceiving()
                 .Initialise();
 
-            Messenger.RegisterHandler<ReplySendChannelBuilt>(m => replySendChannelBuiltEvent = m);
-            Messenger.RegisterHandler<RequestReceiveChannelBuilt>(m => requestReceiveChannelBuiltEvent = m);
+            replyToken = Messenger.RegisterHandler<ReplySendChannelBuilt>(m => replySendChannelBuiltEvent = m);
+            requestToken = Messenger.RegisterHandler<RequestReceiveChannelBuilt>(m => requestReceiveChannelBuiltEvent = m);
 
             handler = new TestMessageHandler<Int64>();
             Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);

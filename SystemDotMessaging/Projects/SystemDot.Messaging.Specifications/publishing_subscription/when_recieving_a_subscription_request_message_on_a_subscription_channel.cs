@@ -1,8 +1,10 @@
 using SystemDot.Messaging.Acknowledgement;
+using SystemDot.Messaging.Handling.Actions;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Publishing.Builders;
 using SystemDot.Messaging.Simple;
-using Machine.Specifications;using FluentAssertions;
+using Machine.Specifications;
+using FluentAssertions;
 using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Specifications.publishing_subscription
@@ -16,10 +18,11 @@ namespace SystemDot.Messaging.Specifications.publishing_subscription
 
         static MessagePayload request;
         static SubscriberSendChannelBuilt channelBuiltEvent;
-        
+        static ActionSubscriptionToken<SubscriberSendChannelBuilt> token;
+
         Establish context = () =>
         {
-            Messenger.RegisterHandler<SubscriberSendChannelBuilt>(e => channelBuiltEvent = e);
+            token = Messenger.RegisterHandler<SubscriberSendChannelBuilt>(e => channelBuiltEvent = e);
             
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()

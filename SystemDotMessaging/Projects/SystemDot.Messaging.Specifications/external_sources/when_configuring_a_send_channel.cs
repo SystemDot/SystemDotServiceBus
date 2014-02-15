@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SystemDot.Messaging.Handling.Actions;
 using SystemDot.Messaging.PointToPoint.Builders;
 using SystemDot.Messaging.Simple;
 using Machine.Specifications;using FluentAssertions;
@@ -12,11 +13,12 @@ namespace SystemDot.Messaging.Specifications.external_sources
         const string ReceiverAddress = "ReceiverAddress";
 
         static List<PointToPointSendChannelBuilt> channelBuiltEvents;
+        static ActionSubscriptionToken<PointToPointSendChannelBuilt> token;
 
         Establish context = () =>
         {
             channelBuiltEvents = new List<PointToPointSendChannelBuilt>();
-            Messenger.RegisterHandler<PointToPointSendChannelBuilt>(m => channelBuiltEvents.Add(m));
+            token = Messenger.RegisterHandler<PointToPointSendChannelBuilt>(m => channelBuiltEvents.Add(m));
         };
 
         Because of = () => Messaging.Configuration.Configure.Messaging()

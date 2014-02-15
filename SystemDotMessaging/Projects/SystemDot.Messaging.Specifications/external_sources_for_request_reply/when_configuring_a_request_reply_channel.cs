@@ -1,3 +1,4 @@
+using SystemDot.Messaging.Handling.Actions;
 using SystemDot.Messaging.RequestReply.Builders;
 using SystemDot.Messaging.Simple;
 using Machine.Specifications;using FluentAssertions;
@@ -12,11 +13,13 @@ namespace SystemDot.Messaging.Specifications.external_sources_for_request_reply
 
         static RequestSendChannelBuilt requestSendChannelBuiltEvent;
         static ReplyReceiveChannelBuilt replyReceiveChannelBuiltEvent;
+        static ActionSubscriptionToken<ReplyReceiveChannelBuilt> replyToken;
+        static ActionSubscriptionToken<RequestSendChannelBuilt> requestToken;
 
         Establish context = () =>
         {
-            Messenger.RegisterHandler<ReplyReceiveChannelBuilt>(m => replyReceiveChannelBuiltEvent = m);
-            Messenger.RegisterHandler<RequestSendChannelBuilt>(m => requestSendChannelBuiltEvent = m);
+            replyToken = Messenger.RegisterHandler<ReplyReceiveChannelBuilt>(m => replyReceiveChannelBuiltEvent = m);
+            requestToken = Messenger.RegisterHandler<RequestSendChannelBuilt>(m => requestSendChannelBuiltEvent = m);
         };
 
         Because of = () => Configuration.Configure.Messaging()

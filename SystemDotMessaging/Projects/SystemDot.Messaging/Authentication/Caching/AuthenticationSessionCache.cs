@@ -6,6 +6,7 @@ using SystemDot.Core;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication.Caching.Changes;
 using SystemDot.Messaging.Authentication.Expiry;
+using SystemDot.Messaging.Handling.Actions;
 using SystemDot.Messaging.Simple;
 using SystemDot.Storage.Changes;
 
@@ -16,6 +17,7 @@ namespace SystemDot.Messaging.Authentication.Caching
         readonly ConcurrentDictionary<Guid, ServerSession> sessions;
         readonly AuthenticationSessionFactory sessionFactory;
         readonly AuthenticationSessionExpirer sessionExpirer;
+        ActionSubscriptionToken<AuthenticationSessionExpired> token;
 
         public AuthenticationSessionCache(
             AuthenticationSessionFactory sessionFactory,
@@ -32,7 +34,7 @@ namespace SystemDot.Messaging.Authentication.Caching
             this.sessionExpirer = sessionExpirer;
             sessions = new ConcurrentDictionary<Guid, ServerSession>();
 
-            Messenger.RegisterHandler<AuthenticationSessionExpired>(e => DecacheSession(e.Session));
+            token = Messenger.RegisterHandler<AuthenticationSessionExpired>(e => DecacheSession(e.Session));
 
             Id = "AuthenticationSessions";
         }

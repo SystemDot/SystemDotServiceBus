@@ -1,11 +1,11 @@
 using System.Linq;
+using SystemDot.Messaging.Handling.Actions;
 using SystemDot.Messaging.Publishing;
 using SystemDot.Messaging.Publishing.Builders;
-using SystemDot.Messaging.RequestReply.Builders;
 using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Storage;
 using FluentAssertions;
-using Machine.Specifications;using FluentAssertions;
+using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.publishing_subscription
 {
@@ -16,12 +16,13 @@ namespace SystemDot.Messaging.Specifications.publishing_subscription
         const string PublisherAddress = "PublisherAddress";
         
         static SubscriberReceiveChannelBuilt channelBuiltEvent;
-        
+        static ActionSubscriptionToken<SubscriberReceiveChannelBuilt> token;
+
         Because of = () =>
         {
-            Messenger.RegisterHandler<SubscriberReceiveChannelBuilt>(e => channelBuiltEvent = e);
+            token = Messenger.RegisterHandler<SubscriberReceiveChannelBuilt>(e => channelBuiltEvent = e);
 
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(SubscriberAddress).ForSubscribingTo(PublisherAddress)
                 .Initialise();

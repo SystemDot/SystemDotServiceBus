@@ -1,5 +1,6 @@
 using System.Linq;
 using SystemDot.Messaging.Acknowledgement;
+using SystemDot.Messaging.Handling.Actions;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Simple;
@@ -14,6 +15,7 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
     {
         static MessagePayload acknowledgement;
         static MessageRemovedFromCache @event;
+        static ActionSubscriptionToken<MessageRemovedFromCache> token;
 
         Establish context = () =>
         {
@@ -25,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
 
             Bus.Send(1);
 
-            Messenger.RegisterHandler<MessageRemovedFromCache>(e => @event = e);
+            token = Messenger.RegisterHandler<MessageRemovedFromCache>(e => @event = e);
             
             acknowledgement = new MessagePayload();
             acknowledgement.SetAcknowledgementId(GetServer().SentMessages.First().GetPersistenceId());
