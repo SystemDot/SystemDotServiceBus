@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CC3FA1BD-C143-415B-941A-A903CE5AE8DF}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SystemDot.Messaging</RootNamespace>
+    <AssemblyName>SystemDot.Messaging.Android</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Build\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Build\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Android" />
+    <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\Newtonsoft.Json.6.0.1\lib\portable-net40+sl5+wp80+win8+monotouch+monoandroid\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+    <Reference Include="SystemDot.Configuration, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Environment, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Environment.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Environment.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Environment.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Files, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Files.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Files.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Files.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Http, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Http.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Http.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Ioc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Ioc.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Logging.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Logging.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Messaging.Handling, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Messaging.Handling.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Messaging.Simple, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Messaging.Simple.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Parallelism, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Parallelism.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Parallelism.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Parallelism.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Serialisation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Serialisation.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Storage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.ThreadMarshalling, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.ThreadMarshalling.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.ThreadMarshalling.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.ThreadMarshalling.Android.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\Components.cs" />
+    <Compile Include="Configuration\Configure.cs" />
+    <Compile Include="Configuration\ExternalSources\ExternalSourcesConfigurer.cs" />
+    <Compile Include="Resources\Resource.Designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Resources\AboutResources.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\Values\Strings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SystemDot.Messaging\SystemDot.Messaging.csproj">
+      <Project>{46655363-A75E-47A6-BEF0-175EF5F92DB5}</Project>
+      <Name>SystemDot.Messaging</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

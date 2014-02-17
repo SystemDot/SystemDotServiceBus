@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>SystemDotServiceBus</id>
+        <version>1.0.0</version>
+        <title>SystemDotDomain</title>
+        <authors>Chris Sampson,James Goodenough</authors>
+        <owners>Chris Sampson,James Goodenough</owners>
+        <projectUrl>https://github.com/SystemDot/SystemDotServiceBus</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Service bus for cross platform development on iOS, Android, WinRT and Windows</description>
+        <summary>Service bus for cross platform development on iOS, Android, WinRT and Windows</summary>
+        <copyright>SystemDot 2014</copyright>
+        <language>en-GB</language>
+        <tags>ServiceBus, Bus, DDD, DDDD, Messaging, Cross Platform</tags>
+        <dependencies>
+            <dependency id="SystemDotCore" version="1.0.0" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="Build\SystemDot.Messaging.dll" target="lib\MonoAndroid\SystemDot.Messaging.dll" />
+        <file src="Build\SystemDot.Messaging.Android.dll" target="lib\MonoAndroid\SystemDot.Messaging.Android.dll" />
+        <file src="Build\SystemDot.Messaging.dll" target="lib\MonoTouch\SystemDot.Messaging.dll" />
+        <file src="Build\SystemDot.Messaging.iOS.dll" target="lib\MonoTouch\SystemDot.Messaging.iOS.dll" />
+        <file src="Build\SystemDot.Messaging.dll" target="lib\net\SystemDot.Messaging.dll" />
+        <file src="Build\SystemDot.Messaging.Windows.dll" target="lib\net\SystemDot.Messaging.Windows.dll" />
+        <file src="Build\SystemDot.Messaging.dll" target="lib\netcore\SystemDot.Messaging.dll" />
+        <file src="Build\SystemDot.Messaging.WindowsStore.dll" target="lib\netcore\SystemDot.Messaging.WindowsStore.dll" />
+        <file src="Build\SystemDot.Messaging.dll" target="lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Messaging.dll" />
+   </files>
+</package>

@@ -356,43 +356,43 @@
       <HintPath>..\..\Solutions\packages\Newtonsoft.Json.6.0.1\lib\portable-net40+sl5+wp80+win8+monotouch+monoandroid\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Configuration">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.7\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Configuration.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Core">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.7\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Core.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Core.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Environment">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.7\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Environment.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Environment.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Files">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.7\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Files.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Files.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Http">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.7\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Http.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Http.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Ioc">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.7\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Ioc.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Logging">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.7\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Logging.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Logging.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Messaging.Handling">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.7\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Messaging.Handling.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Messaging.Handling.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Messaging.Simple">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.7\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Messaging.Simple.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Messaging.Simple.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Parallelism">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.7\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Parallelism.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Parallelism.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Serialisation">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.7\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Serialisation.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Serialisation.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Storage">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.7\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Storage.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.Storage.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.ThreadMarshalling">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.7\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.ThreadMarshalling.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.ThreadMarshalling.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

@@ -1,13 +1,10 @@
 ﻿using System;
-using SystemDot;
 using SystemDot.Ioc;
+using SystemDot.ThreadMarshalling;
 using SystemDot.Messaging.Configuration;
-using SystemDot.ThreadMashalling;
 using RequestReplySender.Handlers;
-using RequestReplySender.ViewModels;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -26,8 +23,8 @@ namespace RequestReplySender
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            InitializeComponent();
+            Suspending += OnSuspending;
         }
 
         /// <summary>
@@ -40,14 +37,14 @@ namespace RequestReplySender
         {
             var container = new IocContainer();
 
-            container.RegisterInstance(() => new ObservableLoggingMechanism(new MainThreadDispatcher()) { ShowInfo = true, ShowDebug = true });
+            container.RegisterInstance(() => new ObservableLoggingMechanism(new MainThreadMarshaller()) { ShowInfo = true, ShowDebug = true });
             container.RegisterFromAssemblyOf<ResponseHandler>();
             
             Configure.Messaging()
                 .LoggingWith(container.Resolve<ObservableLoggingMechanism>())
                 .ResolveReferencesWith(container)
                 .RegisterHandlersFromContainer().BasedOn<IMessageConsumer>()
-                .UsingFilePersistence()
+                //.UsingFilePersistence()
                 .UsingHttpTransport()
                     .AsAServerUsingAProxy("SenderServer")
                 .OpenChannel("TestMetroRequest")

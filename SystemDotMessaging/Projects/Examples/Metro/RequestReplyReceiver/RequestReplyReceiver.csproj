@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Solutions\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,6 +43,63 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="SystemDot.Configuration">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\net\SystemDot.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Core">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\net\SystemDot.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Environment">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\net\SystemDot.Environment.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Environment.Windows">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\net\SystemDot.Environment.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Files">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\net\SystemDot.Files.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Files.Windows">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\net\SystemDot.Files.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Http">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\net\SystemDot.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Http.Windows">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\net\SystemDot.Http.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Ioc">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\net\SystemDot.Ioc.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Logging">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\net\SystemDot.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Logging.Windows">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\net\SystemDot.Logging.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Messaging.Handling">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\net\SystemDot.Messaging.Handling.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Messaging.Simple">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\net\SystemDot.Messaging.Simple.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Parallelism">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\net\SystemDot.Parallelism.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Parallelism.Windows">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\net\SystemDot.Parallelism.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Serialisation">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\net\SystemDot.Serialisation.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Storage">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\net\SystemDot.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.ThreadMarshalling">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\net\SystemDot.ThreadMarshalling.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.ThreadMarshalling.Windows">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\net\SystemDot.ThreadMarshalling.Windows.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IMessageConsumer.cs" />
@@ -48,19 +109,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\SystemDot.Esent\SystemDot.Esent.csproj">
-      <Project>{C7DBF177-FCDB-4530-A6CA-3B1EFBAD63EB}</Project>
-      <Name>SystemDot.Esent %28Windows\SystemDot.Esent%29</Name>
+      <Project>{c7dbf177-fcdb-4530-a6ca-3b1efbad63eb}</Project>
+      <Name>SystemDot.Esent</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\SystemDot.Messaging.Windows\SystemDot.Messaging.Windows.csproj">
+      <Project>{ab9eb1c5-2718-4e74-9335-8d3fd9ec6f33}</Project>
+      <Name>SystemDot.Messaging.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\SystemDot.Messaging\SystemDot.Messaging.csproj">
-      <Project>{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}</Project>
-      <Name>SystemDot.Messaging %28Windows\SystemDot.Messaging%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\SystemDot\SystemDot.csproj">
-      <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>
-      <Name>SystemDot %28Windows\SystemDot%29</Name>
+      <Project>{46655363-A75E-47A6-BEF0-175EF5F92DB5}</Project>
+      <Name>SystemDot.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Windows\Messages\Messages.csproj">
       <Project>{EAABD53D-7507-4F76-A538-0264D7294422}</Project>

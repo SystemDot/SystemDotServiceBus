@@ -1,40 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="910c796d-310c-4343-adbe-2ae385a173b4" Publisher="CN=Chris" Version="1.0.0.0" />
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
+
+  <Identity Name="0689de2f-4f1b-43a4-9327-ab0282d67485"
+            Publisher="CN=Chris"
+            Version="1.0.0.0" />
+
   <Properties>
-    <DisplayName>SystemDot.Messaging.TestSubscriber</DisplayName>
+    <DisplayName>RequestReplySender</DisplayName>
     <PublisherDisplayName>Chris</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
+
   <Prerequisites>
-    <OSMinVersion>6.2.0</OSMinVersion>
-    <OSMaxVersionTested>6.2.0</OSMaxVersionTested>
+    <OSMinVersion>6.3.0</OSMinVersion>
+    <OSMaxVersionTested>6.3.0</OSMaxVersionTested>
   </Prerequisites>
+
   <Resources>
-    <Resource Language="x-generate" />
+    <Resource Language="x-generate"/>
   </Resources>
+
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="SystemDot.Messaging.TestSubscriber.App">
-      <VisualElements DisplayName="SystemDot.Messaging.TestSubscriber" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="SystemDot.Messaging.TestSubscriber" ForegroundText="light" BackgroundColor="#464646">
-        <DefaultTile ShowName="allLogos" />
-        <SplashScreen Image="Assets\SplashScreen.png" />
-      </VisualElements>
+    <Application Id="App"
+        Executable="$targetnametoken$.exe"
+        EntryPoint="RequestReplySender.App">
+        <m2:VisualElements
+            DisplayName="RequestReplySender"
+            Square150x150Logo="Assets\Logo.png"
+            Square30x30Logo="Assets\SmallLogo.png"
+            Description="RequestReplySender"
+            ForegroundText="light"
+            BackgroundColor="#464646">
+            <m2:SplashScreen Image="Assets\SplashScreen.png" />
+        </m2:VisualElements>
     </Application>
   </Applications>
   <Capabilities>
-    <Capability Name="videosLibrary" />
-    <Capability Name="sharedUserCertificates" />
-    <Capability Name="removableStorage" />
-    <Capability Name="picturesLibrary" />
-    <Capability Name="musicLibrary" />
-    <Capability Name="privateNetworkClientServer" />
-    <Capability Name="enterpriseAuthentication" />
-    <Capability Name="internetClientServer" />
     <Capability Name="internetClient" />
-    <DeviceCapability Name="location" />
-    <DeviceCapability Name="microphone" />
-    <DeviceCapability Name="proximity" />
-    <DeviceCapability Name="sms" />
-    <DeviceCapability Name="webcam" />
   </Capabilities>
 </Package>

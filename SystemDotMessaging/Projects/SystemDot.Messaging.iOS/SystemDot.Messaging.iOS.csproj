@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{19AAA342-67EE-4741-87B4-A596931F98C4}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>SystemDot.Messaging</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>SystemDot.Messaging.iOS</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Build\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchDebug>true</MtouchDebug>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Build\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\Components.cs" />
+    <Compile Include="Configuration\Configure.cs" />
+    <Compile Include="Configuration\ExternalSources\ExternalSourcesConfigurer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SystemDot.Messaging\SystemDot.Messaging.csproj">
+      <Project>{46655363-a75e-47a6-bef0-175ef5f92db5}</Project>
+      <Name>SystemDot.Messaging</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\Newtonsoft.Json.6.0.1\lib\portable-net40+sl5+wp80+win8+monotouch+monoandroid\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="monotouch" />
+    <Reference Include="SystemDot.Configuration, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoTouch\SystemDot.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoTouch\SystemDot.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Environment, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoTouch\SystemDot.Environment.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Environment.iOS">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoTouch\SystemDot.Environment.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Files, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoTouch\SystemDot.Files.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Files.iOS">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoTouch\SystemDot.Files.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Http, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoTouch\SystemDot.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Http.iOS">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoTouch\SystemDot.Http.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Ioc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoTouch\SystemDot.Ioc.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoTouch\SystemDot.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Logging.iOS">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoTouch\SystemDot.Logging.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Messaging.Handling, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoTouch\SystemDot.Messaging.Handling.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Messaging.Simple, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoTouch\SystemDot.Messaging.Simple.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Parallelism, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoTouch\SystemDot.Parallelism.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Parallelism.iOS">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoTouch\SystemDot.Parallelism.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Serialisation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoTouch\SystemDot.Serialisation.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Storage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoTouch\SystemDot.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.ThreadMarshalling, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoTouch\SystemDot.ThreadMarshalling.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.ThreadMarshalling.iOS">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoTouch\SystemDot.ThreadMarshalling.iOS.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+</Project>

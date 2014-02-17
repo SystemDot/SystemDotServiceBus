@@ -17,7 +17,7 @@ namespace OtherRequestReplySender
 
             Configure.Messaging()
                 .LoggingWith(new ConsoleLoggingMechanism { ShowInfo = false, ShowDebug = false })
-                .UsingFilePersistence()
+                //.UsingFilePersistence()
                 .ResolveReferencesWith(container)
                 .RegisterHandlersFromContainer().BasedOn<IMessageConsumer>()
                 .UsingHttpTransport()
