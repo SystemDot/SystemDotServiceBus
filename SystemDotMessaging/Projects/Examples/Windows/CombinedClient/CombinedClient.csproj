@@ -55,10 +55,6 @@
       <Project>{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}</Project>
       <Name>SystemDot.Messaging %28Windows\SystemDot.Messaging%29</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\SystemDot\SystemDot.csproj">
-      <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>
-      <Name>SystemDot %28Windows\SystemDot%29</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Messages\Messages.csproj">
       <Project>{EAABD53D-7507-4F76-A538-0264D7294422}</Project>
       <Name>Messages %28Windows\Examples\Messages%29</Name>
