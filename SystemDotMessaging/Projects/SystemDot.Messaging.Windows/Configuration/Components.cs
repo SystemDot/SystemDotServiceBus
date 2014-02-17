@@ -1,5 +1,6 @@
 using SystemDot.Environment.Configuration;
 using SystemDot.Files.Configuration;
+using SystemDot.Http;
 using SystemDot.Http.Builders;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Configuration.ExternalSources;
@@ -17,6 +18,7 @@ namespace SystemDot.Messaging.Configuration
 
             container.RegisterEnvironment();
             container.RegisterFileSystem();
+            container.RegisterInstance<IWebRequestor, WebRequestor>();
             container.RegisterInstance<IHttpServerBuilder, HttpServerBuilder>();
             container.RegisterInstance<IExternalSourcesConfigurer, ExternalSourcesConfigurer>();
             container.RegisterInstance<ITaskScheduler, TaskScheduler>();
