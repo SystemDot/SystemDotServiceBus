@@ -45,79 +45,85 @@
     <Reference Include="System.Xml" />
     <Reference Include="SystemDot.Configuration, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Configuration.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Core.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Core.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Environment, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Environment.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Environment.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Environment.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Environment.Android.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Environment.Android.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Files, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Files.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Files.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Files.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Files.Android.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Files.Android.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Http, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Http.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Http.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Http.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Http.Android.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Http.Android.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Ioc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Ioc.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Ioc.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Logging.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Logging.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Logging.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Logging.Android.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Logging.Android.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Messaging.Handling, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Messaging.Handling.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Messaging.Handling.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Messaging.Simple, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Messaging.Simple.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Messaging.Simple.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Parallelism, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Parallelism.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Parallelism.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Parallelism.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Parallelism.Android.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Parallelism.Android.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Serialisation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Serialisation.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Serialisation.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Storage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.Storage.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Storage.Changes.Sql.Android">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Storage.Changes.Sql.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Storage.Changes.Sqlite.Android">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Storage.Changes.Sqlite.Android.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.ThreadMarshalling, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.ThreadMarshalling.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.ThreadMarshalling.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.ThreadMarshalling.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\MonoAndroid\SystemDot.ThreadMarshalling.Android.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.ThreadMarshalling.Android.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
-using SystemDot.Esent;
 using SystemDot.Ioc;
 using SystemDot.Storage.Changes;
+using SystemDot.Storage.Changes.Esent;
 
 namespace SystemDot.Messaging.Configuration
 {

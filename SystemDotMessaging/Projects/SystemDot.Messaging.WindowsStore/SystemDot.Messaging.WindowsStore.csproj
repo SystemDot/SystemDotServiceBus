@@ -21,7 +21,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\Build\</OutputPath>
     <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -29,7 +29,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\Build\</OutputPath>
     <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -114,84 +114,90 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Esent.Interop">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\netcore\Esent.Interop.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\Solutions\packages\Newtonsoft.Json.6.0.1\lib\netcore45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Configuration, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\netcore\SystemDot.Configuration.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\netcore\SystemDot.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\netcore\SystemDot.Core.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\netcore\SystemDot.Core.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Environment, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\netcore\SystemDot.Environment.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\netcore\SystemDot.Environment.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Environment.WinRT, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\netcore\SystemDot.Environment.WinRT.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\netcore\SystemDot.Environment.WinRT.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Files, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\netcore\SystemDot.Files.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\netcore\SystemDot.Files.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Files.WinRT, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\netcore\SystemDot.Files.WinRT.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\netcore\SystemDot.Files.WinRT.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Http, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\netcore\SystemDot.Http.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\netcore\SystemDot.Http.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Http.WinRT, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\netcore\SystemDot.Http.WinRT.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\netcore\SystemDot.Http.WinRT.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Ioc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\netcore\SystemDot.Ioc.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\netcore\SystemDot.Ioc.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\netcore\SystemDot.Logging.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\netcore\SystemDot.Logging.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Logging.WinRT, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\netcore\SystemDot.Logging.WinRT.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\netcore\SystemDot.Logging.WinRT.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Messaging.Handling, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\netcore\SystemDot.Messaging.Handling.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\netcore\SystemDot.Messaging.Handling.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Messaging.Simple, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\netcore\SystemDot.Messaging.Simple.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\netcore\SystemDot.Messaging.Simple.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Parallelism, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\netcore\SystemDot.Parallelism.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\netcore\SystemDot.Parallelism.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Parallelism.WinRT, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\netcore\SystemDot.Parallelism.WinRT.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\netcore\SystemDot.Parallelism.WinRT.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Serialisation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\netcore\SystemDot.Serialisation.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\netcore\SystemDot.Serialisation.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Storage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\netcore\SystemDot.Storage.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\netcore\SystemDot.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Storage.Changes.Esent.WindowsStore">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\netcore\SystemDot.Storage.Changes.Esent.WindowsStore.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.ThreadMarshalling, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\netcore\SystemDot.ThreadMarshalling.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\netcore\SystemDot.ThreadMarshalling.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.ThreadMarshalling.WinRT, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.0.9\lib\netcore\SystemDot.ThreadMarshalling.WinRT.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\netcore\SystemDot.ThreadMarshalling.WinRT.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
