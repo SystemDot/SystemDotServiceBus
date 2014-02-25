@@ -44,68 +44,18 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
-    <Reference Include="SystemDot.Configuration">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Configuration.dll</HintPath>
+    <Reference Include="SystemDot, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.2\lib\MonoAndroid\SystemDot.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Core">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Environment">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Environment.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Environment.Android">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Environment.Android.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Files">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Files.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Files.Android">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Files.Android.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Http">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Http.Android">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Http.Android.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Ioc">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Ioc.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Logging">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Logging.Android">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Logging.Android.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Messaging.Handling">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Messaging.Handling.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Messaging.Simple">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Messaging.Simple.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Parallelism">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Parallelism.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Parallelism.Android">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Parallelism.Android.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Serialisation">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Serialisation.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Storage">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Storage.dll</HintPath>
+    <Reference Include="SystemDot.Android">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.2\lib\MonoAndroid\SystemDot.Android.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Storage.Changes.Sql.Android">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Storage.Changes.Sql.Android.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.2\lib\MonoAndroid\SystemDot.Storage.Changes.Sql.Android.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Storage.Changes.Sqlite.Android">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.Storage.Changes.Sqlite.Android.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.ThreadMarshalling">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.ThreadMarshalling.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.ThreadMarshalling.Android">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoAndroid\SystemDot.ThreadMarshalling.Android.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.2\lib\MonoAndroid\SystemDot.Storage.Changes.Sqlite.Android.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

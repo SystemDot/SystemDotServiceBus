@@ -54,87 +54,18 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
-    <Reference Include="SystemDot.Configuration, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SystemDot, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoTouch\SystemDot.Configuration.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.2\lib\MonoTouch\SystemDot.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoTouch\SystemDot.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Environment, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoTouch\SystemDot.Environment.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Environment.iOS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoTouch\SystemDot.Environment.iOS.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Files, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoTouch\SystemDot.Files.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Files.iOS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoTouch\SystemDot.Files.iOS.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Http, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoTouch\SystemDot.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Http.iOS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoTouch\SystemDot.Http.iOS.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Ioc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoTouch\SystemDot.Ioc.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoTouch\SystemDot.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Logging.iOS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoTouch\SystemDot.Logging.iOS.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Messaging.Handling, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoTouch\SystemDot.Messaging.Handling.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Messaging.Simple, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoTouch\SystemDot.Messaging.Simple.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Parallelism, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoTouch\SystemDot.Parallelism.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Parallelism.iOS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoTouch\SystemDot.Parallelism.iOS.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Serialisation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoTouch\SystemDot.Serialisation.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Storage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoTouch\SystemDot.Storage.dll</HintPath>
+    <Reference Include="SystemDot.iOS">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.2\lib\MonoTouch\SystemDot.iOS.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Storage.Changes.Sql.iOS">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoTouch\SystemDot.Storage.Changes.Sql.iOS.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.2\lib\MonoTouch\SystemDot.Storage.Changes.Sql.iOS.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Storage.Changes.Sqlite.iOS">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoTouch\SystemDot.Storage.Changes.Sqlite.iOS.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.ThreadMarshalling, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoTouch\SystemDot.ThreadMarshalling.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.ThreadMarshalling.iOS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.0\lib\MonoTouch\SystemDot.ThreadMarshalling.iOS.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.2\lib\MonoTouch\SystemDot.Storage.Changes.Sqlite.iOS.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
