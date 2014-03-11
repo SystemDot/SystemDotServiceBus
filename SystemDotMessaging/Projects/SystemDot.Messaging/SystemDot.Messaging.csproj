@@ -356,7 +356,7 @@
       <HintPath>..\..\Solutions\packages\Newtonsoft.Json.6.0.1\lib\portable-net40+sl5+wp80+win8+monotouch+monoandroid\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.3\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.5\lib\portable-win+net45+MonoAndroid+MonoTouch+win8\SystemDot.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

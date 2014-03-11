@@ -1,5 +1,4 @@
-
-using SystemDot.Environment;
+using SystemDot.Messaging.Ioc;
 
 namespace SystemDot.Messaging.Configuration
 {
@@ -7,7 +6,10 @@ namespace SystemDot.Messaging.Configuration
     {
         public static MessagingConfiguration Messaging()
         {
-            Components.Register();
+            SystemDot.Configuration.Configure.SystemDot()
+                .ResolveReferencesWith(IocContainerLocator.Locate())
+                .Initialise();
+
             return new MessagingConfiguration();
         }
     }
