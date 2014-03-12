@@ -151,6 +151,12 @@
     <Compile Include="Filtering\TypeMessageFilterStrategy.cs" />
     <Compile Include="Handling\BasicMessageHandlerRouter.cs" />
     <Compile Include="Handling\TypeExtensions.cs" />
+    <Compile Include="Hooks\External\ExternalHook.cs" />
+    <Compile Include="Hooks\External\ExternalHookContainer.cs" />
+    <Compile Include="Hooks\External\ExternalHooker.cs" />
+    <Compile Include="Hooks\External\ExternalHookLoader.cs" />
+    <Compile Include="Hooks\External\IExternalHook.cs" />
+    <Compile Include="Hooks\External\IExternalHookLoader.cs" />
     <Compile Include="Hooks\IMessageHook.cs" />
     <Compile Include="Hooks\MessageHookRunner.cs" />
     <Compile Include="MessagingInitialised.cs" />
