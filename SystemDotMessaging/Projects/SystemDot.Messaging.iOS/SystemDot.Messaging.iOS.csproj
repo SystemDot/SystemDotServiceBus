@@ -34,7 +34,7 @@
     <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Configuration\Components.cs" />
+    <Compile Include="Configuration\ConfigurationBuilderComponent.cs" />
     <Compile Include="Configuration\Configure.cs" />
     <Compile Include="Configuration\ExternalSources\ExternalSourcesConfigurer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

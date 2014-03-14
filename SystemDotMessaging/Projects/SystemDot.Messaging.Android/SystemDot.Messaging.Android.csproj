@@ -61,7 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\Components.cs" />
+    <Compile Include="Configuration\ConfigurationBuilderComponent.cs" />
     <Compile Include="Configuration\Configure.cs" />
     <Compile Include="Configuration\ExternalSources\ExternalSourcesConfigurer.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />

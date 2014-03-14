@@ -57,8 +57,6 @@ namespace SystemDot.Messaging.Specifications
 
             ServerAddressConfiguration = new TestServerAddressConfigurationReader();
             ConfigureAndRegister<IConfigurationReader>(ServerAddressConfiguration);
-
-            ConfigureAndRegister<IApplication>(new TestApplication());
         }
 
         protected static void Reset()

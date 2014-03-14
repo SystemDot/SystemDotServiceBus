@@ -36,7 +36,7 @@
   <ItemGroup>
     <Reference Include="Esent.Interop, Version=1.8.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.5\lib\net\Esent.Interop.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.8\lib\net\Esent.Interop.dll</HintPath>
     </Reference>
     <Reference Include="FluentAssertions">
       <HintPath>..\..\Solutions\packages\FluentAssertions.2.2.0.0\lib\net45\FluentAssertions.dll</HintPath>
@@ -71,23 +71,19 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="SystemDot, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.5\lib\net\SystemDot.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.8\lib\net\SystemDot.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Storage.Changes.Esent.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.5\lib\net\SystemDot.Storage.Changes.Esent.Windows.dll</HintPath>
+    <Reference Include="SystemDot.Storage.Changes.Esent.Windows">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.8\lib\net\SystemDot.Storage.Changes.Esent.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Storage.Changes.Sql.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.5\lib\net\SystemDot.Storage.Changes.Sql.Windows.dll</HintPath>
+    <Reference Include="SystemDot.Storage.Changes.Sql.Windows">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.8\lib\net\SystemDot.Storage.Changes.Sql.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Storage.Changes.SqlServer.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.5\lib\net\SystemDot.Storage.Changes.SqlServer.Windows.dll</HintPath>
+    <Reference Include="SystemDot.Storage.Changes.SqlServer.Windows">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.8\lib\net\SystemDot.Storage.Changes.SqlServer.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.5\lib\net\SystemDot.Windows.dll</HintPath>
+    <Reference Include="SystemDot.Windows">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.8\lib\net\SystemDot.Windows.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +129,18 @@
     <Compile Include="blocking_messages_for_authentication_channels\SpecificationGroup.cs" />
     <Compile Include="blocking_messages_for_authentication_channels\when_receiving_a_message_with_the_expected_session_in_block_mode.cs" />
     <Compile Include="blocking_messages_for_authentication_channels\when_receiving_a_message_with_the_expected_session_in_non_block_mode.cs" />
+    <Compile Include="external_hooks\SpecificationGroup.cs" />
+    <Compile Include="external_hooks\TestExternalHook.cs" />
+    <Compile Include="external_hooks\TestExternalHookLoader.cs" />
+    <Compile Include="external_hooks\when_receiving_a_reply_on_a_channel_with_some_external_hooks_setup.cs" />
+    <Compile Include="external_hooks\when_receiving_a_reply_on_a_channel_with_some_external_hooks_setup_for_a_different_message_type.cs" />
+    <Compile Include="hooks_for_request_reply\SpecificationGroup.cs" />
+    <Compile Include="hooks_for_request_reply\when_receiving_a_reply_on_a_channel_with_a_hook.cs" />
+    <Compile Include="hooks_for_request_reply\when_receiving_a_request_on_a_channel_with_a_pre_unpackaging_receive_hook.cs" />
+    <Compile Include="hooks_for_request_reply\when_receiving_a_request_on_a_channel_with_a_receive_hook.cs" />
+    <Compile Include="hooks_for_request_reply\when_replying_on_a_channel_with_a_hook.cs" />
+    <Compile Include="hooks_for_request_reply\when_sending_a_request_on_a_channel_with_a_hook.cs" />
+    <Compile Include="hooks_for_request_reply\when_sending_a_request_on_a_channel_with_a_post_packaging_send_hook.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="repeating_constant_for_subscribers\SpecificationGroup.cs" />
     <Compile Include="repeating_constant_for_subscribers\when_repeating_an_event_with_a_constant_time_repeat_on_the_channel_and_that_time_has_passed.cs" />
@@ -212,7 +220,6 @@
     <Compile Include="filtering_by_name_for_request_reply\when_receiving_a_request_with_the_wrong_name_down_a_channel.cs" />
     <Compile Include="hooks_for_publishing\when_receiving_an_event_on_a_subscriber_channel_with_a_pre_unpackaging_hook.cs" />
     <Compile Include="hooks_for_publishing\when_publishing_an_event_on_a_publish_channel_with_a_post_packaging_hook.cs" />
-    <Compile Include="hooks_for_publishing\hooks_for_request_reply\when_sending_a_request_on_a_channel_with_a_post_packaging_send_hook.cs" />
     <Compile Include="request_reply\when_replying_on_a_channel_to_a_message_from_a_different_machine.cs" />
     <Compile Include="running_handlers_on_main_thread_for_request_reply\when_receiving_a_request_on_a_channel_configured_to_handle_on_main_thread.cs" />
     <Compile Include="running_handlers_on_main_thread_for_request_reply\SpecificationGroup.cs" />
@@ -221,7 +228,6 @@
     <Compile Include="running_handlers_on_main_thread_for_subscribers\when_receiving_an_event_on_a_channel_not_configured_to_handle_on_main_thread.cs" />
     <Compile Include="servers_using_proxies\when_sending_a_message_to_a_server_that_uses_a_proxy.cs" />
     <Compile Include="StreamEnumerableExtensions.cs" />
-    <Compile Include="TestApplication.cs" />
     <Compile Include="TestMainThreadMarshaller.cs" />
     <Compile Include="running_handlers_on_main_thread_for_request_reply\when_receiving_a_reply_on_a_channel.cs" />
     <Compile Include="TestInProcessMessageServerFactory.cs" />
@@ -232,7 +238,6 @@
     <Compile Include="received_message_return_address_reassignment\when_receiving_a_request_with_a_from_address_listed_on_the_receiver.cs" />
     <Compile Include="received_message_return_address_reassignment\SpecificationGroup.cs" />
     <Compile Include="TestMessagePayloadProcessorHook.cs" />
-    <Compile Include="hooks_for_publishing\hooks_for_request_reply\when_receiving_a_request_on_a_channel_with_a_pre_unpackaging_receive_hook.cs" />
     <Compile Include="hooks_for_publishing\SpecificationGroup.cs" />
     <Compile Include="received_message_return_address_reassignment\when_receiving_a_message_with_a_from_address_listed_on_the_receiver.cs" />
     <Compile Include="receiving_over_http\when_receiving_a_message_from_a_different_server.cs" />
@@ -269,7 +274,6 @@
     <Compile Include="handling_with_external_ioc_resolution\SpecificationGroup.cs" />
     <Compile Include="handling_with_external_ioc_resolution\when_sending_a_message_with_handlers_in_an_assembly_auto_registered_twice.cs" />
     <Compile Include="handling\SpecificationGroup.cs" />
-    <Compile Include="hooks_for_publishing\hooks_for_request_reply\SpecificationGroup.cs" />
     <Compile Include="hooks_for_publishing\when_publishing_an_event_on_a_publish_channel_with_a_hook.cs" />
     <Compile Include="hooks_for_publishing\when_receiving_an_event_on_a_subscriber_channel_with_a_hook.cs" />
     <Compile Include="load_balancing\when_sending_nineteen_messages_that_are_not_yet_acknowledged_and_four_seconds_have_passed.cs" />
@@ -373,8 +377,6 @@
     <Compile Include="repeating_constant_for_request_reply\when_repeating_a_reply_with_a_constant_time_repeat_on_the_channel_and_that_time_has_passed.cs" />
     <Compile Include="repeating_escalating_for_request_reply\when_repeating_a_reply_for_the_third_time_and_sixteen_seconds_have_not_passed.cs" />
     <Compile Include="repeating_escalating_for_request_reply\when_repeating_a_reply_with_and_four_seconds_have_passed.cs" />
-    <Compile Include="hooks_for_publishing\hooks_for_request_reply\when_replying_on_a_channel_with_a_hook.cs" />
-    <Compile Include="hooks_for_publishing\hooks_for_request_reply\when_receiving_a_request_on_a_channel_with_a_receive_hook.cs" />
     <Compile Include="request_reply\when_replying_to_a_request_without_configuring_a_request_reply_channel.cs" />
     <Compile Include="MessagePayloadExtensions.cs" />
     <Compile Include="point_to_point\when_receiving_on_a_channel.cs" />
@@ -438,7 +440,6 @@
     <Compile Include="request_reply\SpecificationGroup.cs" />
     <Compile Include="sequencing_for_request_reply\when_receiving_an_out_of_sequence_reply_on_a_sequenced_channel.cs" />
     <Compile Include="request_reply\when_receiving_a_reply_on_a_channel.cs" />
-    <Compile Include="hooks_for_publishing\hooks_for_request_reply\when_receiving_a_reply_on_a_channel_with_a_hook.cs" />
     <Compile Include="request_reply\when_receiving_a_reply_on_a_channel_with_no_body.cs" />
     <Compile Include="unitofwork_for_request_reply\when_receiving_a_reply_with_a_unit_of_work_setup.cs" />
     <Compile Include="restarting_messaging\when_restarting_after_sending_a_request_on_a_durable_channel_that_is_not_yet_acknowledged.cs" />
@@ -446,7 +447,6 @@
     <Compile Include="request_reply\when_sending_a_request_down_two_channels.cs" />
     <Compile Include="expiry_for_request_reply\when_sending_a_repeat_request_attempt_expired_request_down_a_channel.cs" />
     <Compile Include="request_reply\when_sending_a_request.cs" />
-    <Compile Include="hooks_for_publishing\hooks_for_request_reply\when_sending_a_request_on_a_channel_with_a_hook.cs" />
     <Compile Include="filtering_by_name_for_request_reply\when_sending_a_request_with_the_wrong_name_down_a_channel.cs" />
     <Compile Include="expiry_for_request_reply\when_sending_a_time_expired_request_down_a_channel.cs" />
     <Compile Include="TestEndpointAddressBuilder.cs" />

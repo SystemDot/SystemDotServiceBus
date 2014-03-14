@@ -1,3 +1,4 @@
+using SystemDot.Configuration;
 using SystemDot.Messaging.Ioc;
 
 namespace SystemDot.Messaging.Configuration
