@@ -72,12 +72,12 @@
     <Compile Include="Configuration\Configure.cs" />
     <Compile Include="Configuration\ExternalSources\ExternalSourcesConfigurer.cs" />
     <Compile Include="Configuration\ExternalSources\IExternalConfigurationSource.cs" />
-    <Compile Include="Hooks\External\ExternalHook.cs" />
-    <Compile Include="Hooks\External\ExternalHookContainer.cs" />
-    <Compile Include="Hooks\External\ExternalHooker.cs" />
-    <Compile Include="Hooks\External\ExternalHookLoader.cs" />
-    <Compile Include="Hooks\External\IExternalHook.cs" />
-    <Compile Include="Hooks\External\IExternalHookLoader.cs" />
+    <Compile Include="Hooks\External\ExternalInspectorContainer.cs" />
+    <Compile Include="Hooks\External\ExternalInspector.cs" />
+    <Compile Include="Hooks\External\ExternalInspectorHook.cs" />
+    <Compile Include="Hooks\External\ExternalInspectorLoader.cs" />
+    <Compile Include="Hooks\External\IExternalInspector.cs" />
+    <Compile Include="Hooks\External\IExternalInspectorLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

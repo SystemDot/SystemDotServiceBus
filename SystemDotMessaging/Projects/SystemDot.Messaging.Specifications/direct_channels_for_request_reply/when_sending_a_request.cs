@@ -1,6 +1,6 @@
 using System.Linq;
 using FluentAssertions;
-using Machine.Specifications;using FluentAssertions;
+using Machine.Specifications;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Direct;
 

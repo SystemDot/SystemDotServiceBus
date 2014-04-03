@@ -125,8 +125,8 @@
       <Name>SystemDot.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Windows\Messages\Messages.csproj">
-      <Project>{EAABD53D-7507-4F76-A538-0264D7294422}</Project>
-      <Name>Messages %28Windows\Examples\Messages%29</Name>
+      <Project>{eaabd53d-7507-4f76-a538-0264d7294422}</Project>
+      <Name>Messages</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

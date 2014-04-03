@@ -2,7 +2,7 @@ using SystemDot.Messaging.Hooks.External;
 
 namespace SystemDot.Messaging.Specifications.external_hooks
 {
-    class TestExternalHook<T> : ExternalHook<T>
+    class TestExternalInspector<T> : ExternalInspector<T>
     {
         public T Message { get; private set; }
 

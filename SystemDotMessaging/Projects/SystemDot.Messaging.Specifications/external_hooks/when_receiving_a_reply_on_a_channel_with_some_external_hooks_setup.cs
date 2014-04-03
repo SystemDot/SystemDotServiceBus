@@ -15,27 +15,27 @@ namespace SystemDot.Messaging.Specifications.external_hooks
 
         static Int64 message;
         static MessagePayload payload;
-        static TestExternalHook<long> hook1;
-        static TestExternalHook<long> hook2;
-        static TestExternalHookLoader hookLoader;
+        static TestExternalInspector<long> hook1;
+        static TestExternalInspector<long> hook2;
+        static TestExternalInspectorLoader inspectorLoader;
 
         Establish context = () =>
         {
-            hookLoader = new TestExternalHookLoader();
+            inspectorLoader = new TestExternalInspectorLoader();
             
-            hook1 = new TestExternalHook<long>();
-            hookLoader.AddHook(hook1);
+            hook1 = new TestExternalInspector<long>();
+            inspectorLoader.AddHook(hook1);
             
-            hook2 = new TestExternalHook<long>();
-            hookLoader.AddHook(hook2);
+            hook2 = new TestExternalInspector<long>();
+            inspectorLoader.AddHook(hook2);
 
-            Register<IExternalHookLoader>(hookLoader);
+            Register<IExternalInspectorLoader>(inspectorLoader);
 
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForRequestReplySendingTo(RecieverAddress)
-                .WithReceiveHook(ExternalHooker.LoadUp())
+                .WithReceiveHook(ExternalInspectorHook.LoadUp())
                 .Initialise();
 
             message = 1;

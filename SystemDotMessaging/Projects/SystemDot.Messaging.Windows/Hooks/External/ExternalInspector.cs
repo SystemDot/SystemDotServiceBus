@@ -3,7 +3,7 @@ using SystemDot.Core;
 
 namespace SystemDot.Messaging.Hooks.External
 {
-    public abstract class ExternalHook<T> : IExternalHook
+    public abstract class ExternalInspector<T> : IExternalInspector
     {
         public Type MessageType
         {

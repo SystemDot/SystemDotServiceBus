@@ -6,13 +6,13 @@ using SystemDot.Core;
 
 namespace SystemDot.Messaging.Hooks.External
 {
-    public class ExternalHookLoader : IExternalHookLoader
+    public class ExternalInspectorLoader : IExternalInspectorLoader
     {       
-        public IEnumerable<IExternalHook> GetHooks()
+        public IEnumerable<IExternalInspector> GetHooks()
         {
             var catalog = new DirectoryCatalog(GetPath(), "*.ExternalHooks.dll");
             var container = new CompositionContainer(catalog);
-            var externalHookContainer = new ExternalHookContainer();
+            var externalHookContainer = new ExternalInspectorContainer();
 
             container.ComposeParts(externalHookContainer);
 
@@ -21,7 +21,7 @@ namespace SystemDot.Messaging.Hooks.External
 
         static string GetPath()
         {
-            return Path.GetDirectoryName(typeof(IExternalHook).GetAssembly().Location);
+            return Path.GetDirectoryName(typeof(IExternalInspector).GetAssembly().Location);
         }
     }
 }

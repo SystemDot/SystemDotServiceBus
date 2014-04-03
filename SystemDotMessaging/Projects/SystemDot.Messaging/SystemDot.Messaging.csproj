@@ -49,6 +49,7 @@
     <Compile Include="Addressing\NullMessageServer.cs" />
     <Compile Include="Addressing\ServerAddressLoader.cs" />
     <Compile Include="Addressing\ServerAddressRegistry.cs" />
+    <Compile Include="ApplicationTypeActivator.cs" />
     <Compile Include="Authentication\AuthenticatedServerRegistry.cs" />
     <Compile Include="Authentication\AuthenticationReceiveHook.cs" />
     <Compile Include="Authentication\AuthenticationResponseHook.cs" />
@@ -185,6 +186,9 @@
     <Compile Include="Handling\MessageHandlingEndpoint.cs" />
     <Compile Include="Hooks\IMessageHook.cs" />
     <Compile Include="Hooks\MessageHookRunner.cs" />
+    <Compile Include="Hooks\Upgrading\IMessageUpgrader.cs" />
+    <Compile Include="Hooks\Upgrading\MessageUpgrader.cs" />
+    <Compile Include="Hooks\Upgrading\UpgradeMessageHook.cs" />
     <Compile Include="IBus.cs" />
     <Compile Include="IMessageInputter.cs" />
     <Compile Include="IMessageProcessor.cs" />

@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Packaging;
 using FluentAssertions;
-using Machine.Specifications;using FluentAssertions;
+using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply
 {

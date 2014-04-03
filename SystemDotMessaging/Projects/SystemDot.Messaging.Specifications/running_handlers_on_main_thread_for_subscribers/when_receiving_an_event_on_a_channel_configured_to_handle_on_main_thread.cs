@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Packaging;
 using FluentAssertions;
-using Machine.Specifications;using FluentAssertions;
+using Machine.Specifications;
 using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Specifications.running_handlers_on_main_thread_for_subscribers
