@@ -5,9 +5,9 @@ using System.IO;
 
 namespace SystemDot.Messaging.Hooks.External
 {
-    public class ExternalHookLoader : IExternalHookLoader
+    public class ExternalInspectorLoader : IExternalInspectorLoader
     {       
-        public IEnumerable<IExternalHook> GetHooks()
+        public IEnumerable<IExternalInspector> GetHooks()
         {
             var catalog = new DirectoryCatalog(GetPath(), "*.ExternalHooks.dll");
             var container = new CompositionContainer(catalog);
@@ -20,7 +20,7 @@ namespace SystemDot.Messaging.Hooks.External
 
         static string GetPath()
         {
-            return Path.GetDirectoryName(typeof(IExternalHook).GetAssembly().GetLocation());
+            return Path.GetDirectoryName(typeof(IExternalInspector).GetAssembly().GetLocation());
         }
     }
 }

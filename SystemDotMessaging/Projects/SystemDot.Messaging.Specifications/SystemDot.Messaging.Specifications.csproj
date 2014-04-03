@@ -101,8 +101,8 @@
     <Compile Include="blocking_messages_for_authentication_channels\when_receiving_a_message_with_the_expected_session_in_block_mode.cs" />
     <Compile Include="blocking_messages_for_authentication_channels\when_receiving_a_message_with_the_expected_session_in_non_block_mode.cs" />
     <Compile Include="external_hooks\SpecificationGroup.cs" />
-    <Compile Include="external_hooks\TestExternalHook.cs" />
-    <Compile Include="external_hooks\TestExternalHookLoader.cs" />
+    <Compile Include="external_hooks\TestExternalInspector.cs" />
+    <Compile Include="external_hooks\TestExternalInspectorLoader.cs" />
     <Compile Include="external_hooks\when_receiving_a_reply_on_a_channel_with_some_external_hooks_setup.cs" />
     <Compile Include="external_hooks\when_receiving_a_reply_on_a_channel_with_some_external_hooks_setup_for_a_different_message_type.cs" />
     <Compile Include="Properties\Annotations.cs" />
@@ -389,6 +389,15 @@
     <Compile Include="upcasting_changes\when_loading_message_cache_checkpoint_changes_to_already_at_latest_version.cs" />
     <Compile Include="upcasting_changes\when_loading_message_cache_checkpoint_changes_to_version_one.cs" />
     <Compile Include="upcasting_changes\when_loading_subscriber_changes_to_version_two.cs" />
+    <Compile Include="upgrade_hooks\AnotherMessage.cs" />
+    <Compile Include="upgrade_hooks\AnotherOriginalMessageMessageUpgrader.cs" />
+    <Compile Include="upgrade_hooks\AnotherUpgradedMessage.cs" />
+    <Compile Include="upgrade_hooks\OriginalMessage.cs" />
+    <Compile Include="upgrade_hooks\OriginalMessageMessageUpgrader.cs" />
+    <Compile Include="upgrade_hooks\SpecificationGroup.cs" />
+    <Compile Include="upgrade_hooks\UpgradedMessage.cs" />
+    <Compile Include="upgrade_hooks\when_sending_another_message_through_upgrade_hooks.cs" />
+    <Compile Include="upgrade_hooks\when_sending_a_message_through_upgrade_hooks.cs" />
     <Compile Include="WithHttpConfigurationSubject.cs" />
     <Compile Include="WithPublisherSubject.cs" />
     <Compile Include="restarting_messaging\when_restarting_after_handling_a_request_on_a_non_durable_channel_that_fails.cs" />
@@ -497,6 +506,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

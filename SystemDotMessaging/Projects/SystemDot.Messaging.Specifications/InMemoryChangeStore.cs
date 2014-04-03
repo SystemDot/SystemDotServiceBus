@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Specifications
             sequence = 1;
         }
 
-        InMemoryChangeStore(ISerialiser serialiser) : base(serialiser, new ChangeUpcasterRunner())
+        InMemoryChangeStore(ISerialiser serialiser) : base(serialiser, new ChangeUpcasterRunner(new ApplicationTypeActivator()))
         {
             this.serialiser = serialiser;
             changes = new ConcurrentDictionary<int, ChangeContainer>();

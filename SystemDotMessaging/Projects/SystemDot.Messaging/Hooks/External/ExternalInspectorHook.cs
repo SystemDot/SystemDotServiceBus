@@ -5,23 +5,18 @@ using SystemDot.Messaging.Ioc;
 
 namespace SystemDot.Messaging.Hooks.External
 {
-    public class ExternalHooker : IMessageHook<object>
+    public class ExternalInspectorHook : IMessageHook<object>
     {
-        readonly IEnumerable<IExternalHook> hooks;
+        readonly IEnumerable<IExternalInspector> hooks;
 
         public static IMessageHook<object> LoadUp()
         {
-            return new ExternalHooker(GetLoader().GetHooks());
+            return IocContainerLocator.Locate().Resolve<ExternalInspectorHook>();
         }
 
-        static IExternalHookLoader GetLoader()
+        public ExternalInspectorHook(IExternalInspectorLoader loader)
         {
-            return IocContainerLocator.Locate().Resolve<IExternalHookLoader>();
-        }
-
-        ExternalHooker(IEnumerable<IExternalHook> hooks)
-        {
-            this.hooks = hooks;
+            hooks = loader.GetHooks();
         }
 
         public void ProcessMessage(object toInput, Action<object> toPerformOnOutput)
@@ -35,7 +30,7 @@ namespace SystemDot.Messaging.Hooks.External
             return toInput;
         }
 
-        IEnumerable<IExternalHook> GetHooks(Type messageType)
+        IEnumerable<IExternalInspector> GetHooks(Type messageType)
         {
             return hooks.Where(h => h.MessageType == messageType );
         }

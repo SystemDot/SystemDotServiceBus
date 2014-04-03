@@ -14,6 +14,7 @@ namespace SystemDot.Messaging.Packaging.Headers
         public static void SetBody(this MessagePayload payload, byte[] body)
         {
             Contract.Requires(body != null);
+            payload.RemoveHeader(typeof(BodyHeader));
             payload.AddHeader(new BodyHeader(body));
         }
 

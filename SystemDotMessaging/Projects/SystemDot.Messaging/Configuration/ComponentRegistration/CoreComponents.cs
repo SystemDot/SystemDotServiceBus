@@ -4,6 +4,8 @@ using SystemDot.Http;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Configuration.ExternalSources;
+using SystemDot.Messaging.Hooks.External;
+using SystemDot.Messaging.Hooks.Upgrading;
 using SystemDot.Messaging.Transport;
 using SystemDot.Storage.Changes;
 using SystemDot.Storage.Changes.Upcasting;
@@ -29,6 +31,9 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<NullChangeStore, NullChangeStore>();
             container.RegisterInstance<ChangeUpcasterRunner, ChangeUpcasterRunner>();
             container.RegisterInstance<ICheckpointStrategy, CheckpointAfterOneThousandChangesCheckpointStrategy>();
+            container.RegisterInstance<UpgradeMessageHook, UpgradeMessageHook>();
+            container.RegisterInstance<ApplicationTypeActivator, ApplicationTypeActivator>();
+            container.RegisterInstance<ExternalInspectorHook, ExternalInspectorHook>();
         }
     }
 }

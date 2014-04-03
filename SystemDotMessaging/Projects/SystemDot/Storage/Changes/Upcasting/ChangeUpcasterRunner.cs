@@ -8,24 +8,9 @@ namespace SystemDot.Storage.Changes.Upcasting
     {
         readonly IList<IChangeUpcaster> upcasters;
 
-        public ChangeUpcasterRunner()
+        public ChangeUpcasterRunner(ApplicationTypeActivator activator)
         {
-            upcasters = GetUpcasters();
-        }
-
-        IList<IChangeUpcaster> GetUpcasters()
-        {
-            return GetUpcasterTypes()
-                .Select(Activator.CreateInstance)
-                .Cast<IChangeUpcaster>()
-                .ToList();
-        }
-
-        static IEnumerable<Type> GetUpcasterTypes()
-        {
-            return AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(a => a.GetTypesThatImplement<IChangeUpcaster>())
-                .ToList();
+            upcasters = activator.InstantiateTypesOf<IChangeUpcaster>();
         }
 
         public Change UpcastIfRequired(Change toUpcast)

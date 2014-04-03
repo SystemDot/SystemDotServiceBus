@@ -14,23 +14,23 @@ namespace SystemDot.Messaging.Specifications.external_hooks
 
         static Int64 message;
         static MessagePayload payload;
-        static TestExternalHook<string> hook;
-        static TestExternalHookLoader hookLoader;
+        static TestExternalInspector<string> inspector;
+        static TestExternalInspectorLoader inspectorLoader;
 
         Establish context = () =>
         {
-            hookLoader = new TestExternalHookLoader();
+            inspectorLoader = new TestExternalInspectorLoader();
 
-            hook = new TestExternalHook<string>();
-            hookLoader.AddHook(hook);
+            inspector = new TestExternalInspector<string>();
+            inspectorLoader.AddHook(inspector);
 
-            Register<IExternalHookLoader>(hookLoader);
+            Register<IExternalInspectorLoader>(inspectorLoader);
 
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ChannelName)
                 .ForRequestReplySendingTo(RecieverAddress)
-                .WithReceiveHook(ExternalHooker.LoadUp())
+                .WithReceiveHook(ExternalInspectorHook.LoadUp())
                 .Initialise();
 
             message = 1;
@@ -44,6 +44,6 @@ namespace SystemDot.Messaging.Specifications.external_hooks
 
         Because of = () => GetServer().ReceiveMessage(payload);
 
-        It should_not_run_the_message_through_the_hook = () => hook.Message.ShouldBeNull();
+        It should_not_run_the_message_through_the_hook = () => inspector.Message.ShouldBeNull();
     }
 }
