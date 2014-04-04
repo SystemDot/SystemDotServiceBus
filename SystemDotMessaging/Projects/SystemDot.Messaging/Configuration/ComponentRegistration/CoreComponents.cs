@@ -34,6 +34,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
             container.RegisterInstance<UpgradeMessageHook, UpgradeMessageHook>();
             container.RegisterInstance<ApplicationTypeActivator, ApplicationTypeActivator>();
             container.RegisterInstance<ExternalInspectorHook, ExternalInspectorHook>();
+            container.RegisterInstance<IExternalInspectorLoader, ExternalInspectorLoader>();
         }
     }
 }
