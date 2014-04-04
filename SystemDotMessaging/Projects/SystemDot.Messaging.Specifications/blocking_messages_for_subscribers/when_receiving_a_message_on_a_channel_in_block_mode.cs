@@ -17,7 +17,7 @@ namespace SystemDot.Messaging.Specifications.blocking_messages_for_subscribers
         {
             handler = new TestMessageHandler<long>();
 
-            var x = new ChangeUpcasterRunner(new Application());
+            var x = new ChangeUpcasterRunner(new ApplicationTypeActivator(new Application()));
             
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()

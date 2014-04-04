@@ -48,7 +48,7 @@
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\Newtonsoft.Json.6.0.1\lib\portable-net40+sl5+wp80+win8+monotouch+monoandroid\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\Newtonsoft.Json.6.0.2\lib\portable-net40+sl5+wp80+win8+monotouch+monoandroid\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
@@ -56,19 +56,18 @@
     <Reference Include="monotouch" />
     <Reference Include="SystemDot, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.5\lib\MonoTouch\SystemDot.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.1\lib\MonoTouch\SystemDot.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.iOS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.5\lib\MonoTouch\SystemDot.iOS.dll</HintPath>
+    <Reference Include="SystemDot.iOS">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.1\lib\MonoTouch\SystemDot.iOS.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Storage.Changes.Sql.iOS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.5\lib\MonoTouch\SystemDot.Storage.Changes.Sql.iOS.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.1\lib\MonoTouch\SystemDot.Storage.Changes.Sql.iOS.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Storage.Changes.Sqlite.iOS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.5\lib\MonoTouch\SystemDot.Storage.Changes.Sqlite.iOS.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.1\lib\MonoTouch\SystemDot.Storage.Changes.Sqlite.iOS.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

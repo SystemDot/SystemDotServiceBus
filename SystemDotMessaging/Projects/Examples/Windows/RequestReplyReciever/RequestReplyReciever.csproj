@@ -59,33 +59,31 @@
   <ItemGroup>
     <Reference Include="Esent.Interop, Version=1.8.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.1.8\lib\net\Esent.Interop.dll</HintPath>
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.2.1\lib\net\Esent.Interop.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Solutions\packages\Newtonsoft.Json.6.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\..\..\Solutions\packages\Newtonsoft.Json.6.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="SystemDot, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.1.8\lib\net\SystemDot.dll</HintPath>
+    <Reference Include="SystemDot">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.2.1\lib\net\SystemDot.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Storage.Changes.Esent.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.1.8\lib\net\SystemDot.Storage.Changes.Esent.Windows.dll</HintPath>
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.2.1\lib\net\SystemDot.Storage.Changes.Esent.Windows.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Storage.Changes.Sql.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.1.8\lib\net\SystemDot.Storage.Changes.Sql.Windows.dll</HintPath>
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.2.1\lib\net\SystemDot.Storage.Changes.Sql.Windows.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Storage.Changes.SqlServer.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.1.8\lib\net\SystemDot.Storage.Changes.SqlServer.Windows.dll</HintPath>
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.2.1\lib\net\SystemDot.Storage.Changes.SqlServer.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.1.8\lib\net\SystemDot.Windows.dll</HintPath>
+    <Reference Include="SystemDot.Windows">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.2.1\lib\net\SystemDot.Windows.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

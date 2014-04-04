@@ -36,30 +36,30 @@
   <ItemGroup>
     <Reference Include="Esent.Interop, Version=1.8.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.8\lib\net\Esent.Interop.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.1\lib\net\Esent.Interop.dll</HintPath>
     </Reference>
     <Reference Include="FluentAssertions">
       <HintPath>..\..\Solutions\packages\FluentAssertions.2.2.0.0\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
-    <Reference Include="Machine.Fakes, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Machine.Fakes, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\Machine.Fakes.2.1.0\lib\net40\Machine.Fakes.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\Machine.Fakes.2.2.0\lib\net40\Machine.Fakes.dll</HintPath>
     </Reference>
-    <Reference Include="Machine.Fakes.Adapters.RhinoMocks, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Machine.Fakes.Adapters.RhinoMocks, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\Machine.Fakes.RhinoMocks.2.1.0\lib\net40\Machine.Fakes.Adapters.RhinoMocks.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\Machine.Fakes.RhinoMocks.2.2.0\lib\net40\Machine.Fakes.Adapters.RhinoMocks.dll</HintPath>
     </Reference>
-    <Reference Include="Machine.Specifications, Version=0.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Machine.Specifications, Version=0.8.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\Machine.Specifications.0.7.0\lib\net45\Machine.Specifications.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\Machine.Specifications.0.8.1\lib\net45\Machine.Specifications.dll</HintPath>
     </Reference>
-    <Reference Include="Machine.Specifications.Clr4, Version=0.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Machine.Specifications.Clr4, Version=0.8.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\Machine.Specifications.0.7.0\lib\net45\Machine.Specifications.Clr4.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\Machine.Specifications.0.8.1\lib\net45\Machine.Specifications.Clr4.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\Newtonsoft.Json.6.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -71,19 +71,22 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="SystemDot, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.8\lib\net\SystemDot.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.1\lib\net\SystemDot.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Storage.Changes.Esent.Windows">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.8\lib\net\SystemDot.Storage.Changes.Esent.Windows.dll</HintPath>
+    <Reference Include="SystemDot.Storage.Changes.Esent.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.1\lib\net\SystemDot.Storage.Changes.Esent.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Storage.Changes.Sql.Windows">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.8\lib\net\SystemDot.Storage.Changes.Sql.Windows.dll</HintPath>
+    <Reference Include="SystemDot.Storage.Changes.Sql.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.1\lib\net\SystemDot.Storage.Changes.Sql.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="SystemDot.Storage.Changes.SqlServer.Windows">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.8\lib\net\SystemDot.Storage.Changes.SqlServer.Windows.dll</HintPath>
+    <Reference Include="SystemDot.Storage.Changes.SqlServer.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.1\lib\net\SystemDot.Storage.Changes.SqlServer.Windows.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Windows">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.1.8\lib\net\SystemDot.Windows.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.1\lib\net\SystemDot.Windows.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
