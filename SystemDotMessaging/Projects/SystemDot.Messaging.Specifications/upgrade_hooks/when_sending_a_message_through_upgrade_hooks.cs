@@ -9,11 +9,11 @@ namespace SystemDot.Messaging.Specifications.upgrade_hooks
     public class when_sending_a_message_through_upgrade_hooks : WithHttpConfigurationSubject
     {
         const string ServerName = "ServerName";
-        static OriginalMessage message;
+        static Message message;
 
         Establish context = () =>
         {
-            message = new OriginalMessage();
+            message = new Message { Field = MessageMessageUpgrader.OriginalText };
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
@@ -28,6 +28,6 @@ namespace SystemDot.Messaging.Specifications.upgrade_hooks
 
         It should_send_it_as_the_upgraded_message = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .DeserialiseTo<UpgradedMessage>().Should().NotBeNull();
+                .DeserialiseTo<Message>().Field.ShouldEqual(MessageMessageUpgrader.UpgradedText);
     }
 }

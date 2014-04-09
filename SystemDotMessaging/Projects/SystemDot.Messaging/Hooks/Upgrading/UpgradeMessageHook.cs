@@ -39,8 +39,14 @@ namespace SystemDot.Messaging.Hooks.Upgrading
         byte[] UpgradeBody(IMessageUpgrader upgrader, byte[] toUpgrade)
         {
             return upgrader
-                .Upgrade(serialiser.DeserialiseToString(toUpgrade))
+                .Upgrade(FromString(toUpgrade))
+                .ToString()
                 .ToBytes();
+        }
+
+        RawMessageBuilder FromString(byte[] toUpgrade)
+        {
+            return RawMessageBuilder.Parse(serialiser.DeserialiseToString(toUpgrade));
         }
     }
 }

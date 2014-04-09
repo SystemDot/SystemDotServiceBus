@@ -187,6 +187,10 @@
     <Compile Include="Hooks\MessageHookRunner.cs" />
     <Compile Include="Hooks\Upgrading\IMessageUpgrader.cs" />
     <Compile Include="Hooks\Upgrading\MessageUpgrader.cs" />
+    <Compile Include="Hooks\Upgrading\NumericRawMessageToken.cs" />
+    <Compile Include="Hooks\Upgrading\RawMessageBuilder.cs" />
+    <Compile Include="Hooks\Upgrading\RawMessageToken.cs" />
+    <Compile Include="Hooks\Upgrading\RawMessageTokenReplaceBuilder.cs" />
     <Compile Include="Hooks\Upgrading\UpgradeMessageHook.cs" />
     <Compile Include="IBus.cs" />
     <Compile Include="IMessageInputter.cs" />
