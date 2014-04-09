@@ -27,6 +27,6 @@ namespace SystemDot.Messaging.Specifications.upgrade_hooks
 
         It should_send_it_as_the_upgraded_message = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .DeserialiseTo<AnotherUpgradedMessage>().ShouldNotBeNull();
+                .DeserialiseTo<AnotherMessage>().Field.ShouldBeTrue();
     }
 }

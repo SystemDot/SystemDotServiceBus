@@ -2,6 +2,6 @@
 {
     public interface IMessageUpgrader
     {
-        string Upgrade(string message);
+        RawMessageBuilder Upgrade(RawMessageBuilder message);
     }
 }

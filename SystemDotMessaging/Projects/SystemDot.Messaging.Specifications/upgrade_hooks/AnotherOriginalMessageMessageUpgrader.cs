@@ -4,9 +4,11 @@ namespace SystemDot.Messaging.Specifications.upgrade_hooks
 {
     public class AnotherOriginalMessageMessageUpgrader : MessageUpgrader<AnotherMessage>
     {
-        protected override string UpgradeForSpecifiedType(string message)
+        protected override RawMessageBuilder UpgradeForSpecifiedType(RawMessageBuilder message)
         {
-            return message.Replace("AnotherMessage", "AnotherUpgradedMessage");
+            return message
+                .ReplaceToken(new AnotherMessageRawMessageToken(false))
+                .With(new AnotherMessageRawMessageToken(true));
         }
     }
 }

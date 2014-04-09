@@ -390,12 +390,12 @@
     <Compile Include="upcasting_changes\when_loading_message_cache_checkpoint_changes_to_version_one.cs" />
     <Compile Include="upcasting_changes\when_loading_subscriber_changes_to_version_two.cs" />
     <Compile Include="upgrade_hooks\AnotherMessage.cs" />
+    <Compile Include="upgrade_hooks\AnotherMessageRawMessageToken.cs" />
     <Compile Include="upgrade_hooks\AnotherOriginalMessageMessageUpgrader.cs" />
-    <Compile Include="upgrade_hooks\AnotherUpgradedMessage.cs" />
-    <Compile Include="upgrade_hooks\OriginalMessage.cs" />
-    <Compile Include="upgrade_hooks\OriginalMessageMessageUpgrader.cs" />
+    <Compile Include="upgrade_hooks\Message.cs" />
+    <Compile Include="upgrade_hooks\MessageMessageUpgrader.cs" />
     <Compile Include="upgrade_hooks\SpecificationGroup.cs" />
-    <Compile Include="upgrade_hooks\UpgradedMessage.cs" />
+    <Compile Include="upgrade_hooks\MessageRawMessageToken.cs" />
     <Compile Include="upgrade_hooks\when_sending_another_message_through_upgrade_hooks.cs" />
     <Compile Include="upgrade_hooks\when_sending_a_message_through_upgrade_hooks.cs" />
     <Compile Include="WithHttpConfigurationSubject.cs" />
