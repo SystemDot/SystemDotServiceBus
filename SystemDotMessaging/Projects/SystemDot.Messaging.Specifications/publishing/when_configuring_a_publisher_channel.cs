@@ -1,5 +1,7 @@
+using SystemDot.Messaging.Handling.Actions;
 using SystemDot.Messaging.Publishing.Builders;
-using Machine.Specifications;
+using SystemDot.Messaging.Simple;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.publishing
 {
@@ -9,18 +11,19 @@ namespace SystemDot.Messaging.Specifications.publishing
         const string PublisherAddress = "PublisherAddress";
 
         static PublisherChannelBuilt channelBuiltEvent;
+        static ActionSubscriptionToken<PublisherChannelBuilt> token;
 
         Because of = () =>
         {
-            Messenger.Register<PublisherChannelBuilt>(e => channelBuiltEvent = e);
+            token = Messenger.RegisterHandler<PublisherChannelBuilt>(e => channelBuiltEvent = e);
 
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(PublisherAddress).ForPublishing()
                 .Initialise();
         };
 
         It should_notify_that_the_channel_was_built = () => 
-            channelBuiltEvent.Address.ShouldEqual(BuildAddress(PublisherAddress));
+            channelBuiltEvent.Address.ShouldBeEquivalentTo(BuildAddress(PublisherAddress));
     }
 }

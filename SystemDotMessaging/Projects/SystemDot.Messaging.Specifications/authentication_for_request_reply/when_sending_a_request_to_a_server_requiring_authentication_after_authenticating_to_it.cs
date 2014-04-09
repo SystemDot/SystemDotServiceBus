@@ -1,7 +1,7 @@
 using System;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.authentication;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 using SystemDot.Messaging.Authentication;
 
 namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
@@ -42,6 +42,6 @@ namespace SystemDot.Messaging.Specifications.authentication_for_request_reply
 
         It should_send_the_message_in_a_payload_containing_the_expected_authentication_session_for_the_server = () => 
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .GetAuthenticationSession().Id.ShouldEqual(authenticationResponse.GetAuthenticationSession().Id);
+                .GetAuthenticationSession().Id.ShouldBeEquivalentTo(authenticationResponse.GetAuthenticationSession().Id);
     }
 }

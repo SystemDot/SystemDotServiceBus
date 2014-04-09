@@ -70,22 +70,6 @@
     <AndroidResource Include="Resources\Drawable\Icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Android\SystemDot.Extensions.Android\SystemDot.Extensions.Android.csproj">
-      <Project>{34f8b744-4d0b-4151-ae4c-5530479342aa}</Project>
-      <Name>SystemDot.Extensions.Android</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Android\SystemDot.Messaging\SystemDot.Messaging.csproj">
-      <Project>{b50abbab-9cca-4307-9a82-54e6793e63a8}</Project>
-      <Name>SystemDot.Messaging %28Android\SystemDot.Messaging%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Android\SystemDot.Sqlite\SystemDot.Sqlite.csproj">
-      <Project>{10261535-b476-4da8-a3d0-b88b9dcb870e}</Project>
-      <Name>SystemDot.Sqlite %28Android\SystemDot.Sqlite%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Android\SystemDot\SystemDot.csproj">
-      <Project>{00de20f1-75ad-48f8-b882-66bd2d9f0f8b}</Project>
-      <Name>SystemDot %28Android\SystemDot%29</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Messages\Messages.csproj">
       <Project>{560ee1bb-135b-491d-80ce-69530da14480}</Project>
       <Name>Messages %28Android\Examples\Messages%29</Name>

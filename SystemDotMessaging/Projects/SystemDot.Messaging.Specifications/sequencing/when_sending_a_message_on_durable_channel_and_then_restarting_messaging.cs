@@ -3,10 +3,9 @@ using System.Linq;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Specifications.publishing;
 using SystemDot.Serialisation;
-using SystemDot.Specifications;
 using SystemDot.Storage.Changes;
 using SystemDot.Storage.Changes.Upcasting;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.sequencing
 {
@@ -51,6 +50,6 @@ namespace SystemDot.Messaging.Specifications.sequencing
         Because of = () => Bus.Send(new object());
 
         It should_mark_the_message_with_the_initial_sequence_origin_date = () =>
-            GetServer().SentMessages.ExcludeAcknowledgements().First().GetSequenceOriginSetOn().ShouldEqual(originDate);
+            GetServer().SentMessages.ExcludeAcknowledgements().First().GetSequenceOriginSetOn().ShouldBeEquivalentTo(originDate);
     }
 }

@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using SystemDot;
 using SystemDot.Logging;
-using Windows.UI.Core;
+using SystemDot.ThreadMarshalling;
 
 namespace RequestReplySender
 {
     public class ObservableLoggingMechanism : ILoggingMechanism
     {
-        private readonly MainThreadDispatcher dispatcher;
+        private readonly IMainThreadMarshaller dispatcher;
 
         public ObservableCollection<string> Messages { get; private set; }
         
         public bool ShowInfo { get; set; }
         public bool ShowDebug { get; set; }
 
-        public ObservableLoggingMechanism(MainThreadDispatcher dispatcher)
+        public ObservableLoggingMechanism(IMainThreadMarshaller dispatcher)
         {
             this.dispatcher = dispatcher;
-            this.Messages = new ObservableCollection<string>();
+            Messages = new ObservableCollection<string>();
         }
 
         public void Info(string message)
@@ -38,7 +37,7 @@ namespace RequestReplySender
 
         private async void SendMessageToUiCollection(string message)
         {
-            this.dispatcher.Dispatch(() => Messages.Add(message));
+            this.dispatcher.RunOnMainThread(() => Messages.Add(message));
         }
     }
 }

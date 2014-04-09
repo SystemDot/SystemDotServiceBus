@@ -1,6 +1,10 @@
 using System;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using SystemDot.Core;
+using SystemDot.Core.Collections;
+using SystemDot.Environment;
+using SystemDot.Http;
 using SystemDot.Messaging.Acknowledgement.Builders;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Authentication.Caching;
@@ -8,6 +12,7 @@ using SystemDot.Messaging.Configuration.Authentication;
 using SystemDot.Messaging.Configuration.Direct;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Publishing.Builders;
+using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Transport;
 using SystemDot.Messaging.UnitOfWork;
 using SystemDot.Parallelism;
@@ -74,9 +79,9 @@ namespace SystemDot.Messaging.Configuration
             return new DirectChannelConfiguration(new EndpointAddress(name, GetMessageServer()), messagingConfiguration);
         }
 
-        public Configurer RegisterHandlers(Action<MessageHandlerRouter> registrationAction)
+        public Configurer RegisterHandlers(Action<MessageHandlingEndpoint> registrationAction)
         {
-            registrationAction(Resolve<MessageHandlerRouter>());
+            registrationAction(Resolve<MessageHandlingEndpoint>());
             return this;
         }
 

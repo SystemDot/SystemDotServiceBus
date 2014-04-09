@@ -1,7 +1,7 @@
 using System.Linq;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.publishing
 {
@@ -36,6 +36,6 @@ namespace SystemDot.Messaging.Specifications.publishing
                 .First()
                 .Headers.Values.OfType<AddressHeader>()
                 .Count()
-                .ShouldEqual(2);
+                .ShouldBeEquivalentTo(2);
     }
 }

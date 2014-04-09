@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using SystemDot.Core.Collections;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Transport.Http;
 

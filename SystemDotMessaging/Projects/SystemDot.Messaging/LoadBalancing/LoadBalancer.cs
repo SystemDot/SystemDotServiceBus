@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Concurrent;
+using SystemDot.Core.Collections;
 using SystemDot.Logging;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Handling.Actions;
 using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Storage;
 using SystemDot.Parallelism;
 
@@ -14,6 +17,7 @@ namespace SystemDot.Messaging.LoadBalancing
         readonly ConcurrentQueue<MessagePayload> unsentMessages;
         readonly ConcurrentDictionary<Guid, MessagePayload> sentMessages;
         readonly ITaskScheduler taskScheduler;
+        ActionSubscriptionToken<MessageRemovedFromCache> token;
 
         public LoadBalancer(SendMessageCache cache, ITaskScheduler taskScheduler)
         {
@@ -22,8 +26,8 @@ namespace SystemDot.Messaging.LoadBalancing
             unsentMessages = new ConcurrentQueue<MessagePayload>();
             sentMessages = new ConcurrentDictionary<Guid, MessagePayload>();
             
-            Messenger.Register<MessageRemovedFromCache>(m => FreeUpSlot(m.MessageId, m.Address, m.UseType));
-
+            token = Messenger.RegisterHandler<MessageRemovedFromCache>(m => FreeUpSlot(m.MessageId, m.Address, m.UseType));
+            
             SendFeelerMessages();
         }
 

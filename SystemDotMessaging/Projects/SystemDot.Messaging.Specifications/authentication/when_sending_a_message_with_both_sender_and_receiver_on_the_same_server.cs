@@ -1,5 +1,5 @@
 using SystemDot.Messaging.Packaging;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.authentication
 {
@@ -31,6 +31,6 @@ namespace SystemDot.Messaging.Specifications.authentication
 
         Because of = () => SendMessageToServer(WebRequestor.DeserialiseSingleRequest<MessagePayload>());
 
-        It should_handle_the_event = () => handler.LastHandledMessage.ShouldEqual(1);
+        It should_handle_the_event = () => handler.LastHandledMessage.ShouldBeEquivalentTo(1);
     }
 }

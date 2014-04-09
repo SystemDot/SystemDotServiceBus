@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.blocking_messages_for_request_reply
 {
@@ -29,6 +29,6 @@ namespace SystemDot.Messaging.Specifications.blocking_messages_for_request_reply
                 .SetChannelType(PersistenceUseType.RequestSend)
                 .Sequenced());
 
-        It should_handle_the_message = () => handler.LastHandledMessage.ShouldEqual(1);
+        It should_handle_the_message = () => handler.LastHandledMessage.ShouldBeEquivalentTo(1);
     }
 }

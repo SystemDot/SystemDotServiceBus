@@ -1,5 +1,7 @@
 using System;
 using System.Diagnostics.Contracts;
+using SystemDot.Core;
+using SystemDot.Http;
 
 namespace SystemDot.Messaging.Addressing
 {

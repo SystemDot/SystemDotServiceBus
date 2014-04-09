@@ -11,17 +11,20 @@ namespace SystemDot.Messaging.Direct.Builders
     class RequestReceiverBuilder
     {
         readonly MessageReceiver messageReceiver;
-        readonly MessageHandlerRouter messageHandlerRouter;
+        readonly MessageHandlingEndpoint messageHandlingEndpoint;
         readonly ISerialiser serialiser;
 
-        public RequestReceiverBuilder(MessageReceiver messageReceiver, MessageHandlerRouter messageHandlerRouter, ISerialiser serialiser)
+        public RequestReceiverBuilder(
+            MessageReceiver messageReceiver, 
+            MessageHandlingEndpoint messageHandlingEndpoint, 
+            ISerialiser serialiser)
         {
             Contract.Requires(messageReceiver != null);
-            Contract.Requires(messageHandlerRouter != null);
+            Contract.Requires(messageHandlingEndpoint != null);
             Contract.Requires(serialiser != null);
 
             this.messageReceiver = messageReceiver;
-            this.messageHandlerRouter = messageHandlerRouter;
+            this.messageHandlingEndpoint = messageHandlingEndpoint;
             this.serialiser = serialiser;
         }
 
@@ -35,7 +38,7 @@ namespace SystemDot.Messaging.Direct.Builders
                 .ToProcessorIf(new NullMessageProcessor(), schema.BlockMessages)
                 .ToConverter(new MessagePayloadUnpackager(serialiser))
                 .ToProcessor(new MessageFilter(schema.FilterStrategy))
-                .ToEndPoint(messageHandlerRouter);
+                .ToEndPoint(messageHandlingEndpoint);
         }
     }
 }

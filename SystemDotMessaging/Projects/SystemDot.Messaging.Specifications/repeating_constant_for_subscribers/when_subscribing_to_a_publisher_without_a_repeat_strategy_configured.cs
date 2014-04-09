@@ -1,7 +1,8 @@
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Publishing;
 using SystemDot.Messaging.Repeating;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
+using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.repeating_constant_for_subscribers
 {
@@ -18,16 +19,16 @@ namespace SystemDot.Messaging.Specifications.repeating_constant_for_subscribers
         It should_send_the_subscription_request_containing_the_escalating_repeat_strategy_with_the_default_start = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
                 .GetSubscriptionRequestSchema().RepeatStrategy.As<EscalatingTimeRepeatStrategy>()
-                    .ToStartAt.ShouldEqual(4);
+                    .ToStartAt.ShouldBeEquivalentTo(4);
 
         It should_send_the_subscription_request_containing_the_escalating_repeat_strategy_with_the_default_multiplier = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
                 .GetSubscriptionRequestSchema().RepeatStrategy.As<EscalatingTimeRepeatStrategy>()
-                    .Multiplier.ShouldEqual(2);
+                    .Multiplier.ShouldBeEquivalentTo(2);
 
         It should_send_the_subscription_request_containing_the_escalating_repeat_strategy_with_the_default_peak = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
                 .GetSubscriptionRequestSchema().RepeatStrategy.As<EscalatingTimeRepeatStrategy>()
-                    .Peak.ShouldEqual(16);
+                    .Peak.ShouldBeEquivalentTo(16);
     }
 }

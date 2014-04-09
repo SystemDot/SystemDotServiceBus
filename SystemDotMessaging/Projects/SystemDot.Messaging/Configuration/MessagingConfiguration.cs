@@ -1,16 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using SystemDot.Configuration.Reading;
+using SystemDot.Core;
+using SystemDot.Environment;
+using SystemDot.Http;
 using SystemDot.Ioc;
 using SystemDot.Logging;
 using SystemDot.Messaging.Addressing;
+using SystemDot.Messaging.Configuration.ComponentRegistration;
 using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Transport.Http.Configuration;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
 
 namespace SystemDot.Messaging.Configuration
 {
-    public class MessagingConfiguration
+    public class MessagingConfiguration : ConfigurationBase
     {
         public List<Action> BuildActions { get; private set; }
 
@@ -18,8 +23,17 @@ namespace SystemDot.Messaging.Configuration
 
         public MessagingConfiguration()
         {
+            Components.Register();
+            ServerAddress.SetLocalMachine(Resolve<ILocalMachine>());
+            LoadConfigurationFromFile();
+
             BuildActions = new List<Action>();
             ExternalResolver = GetInternalIocContainer();
+        }
+
+        static void LoadConfigurationFromFile()
+        {
+            Resolve<IConfigurationReader>().Load("SystemDot.config");
         }
 
         public MessagingConfiguration LoggingWith(ILoggingMechanism toLogWith)
@@ -53,13 +67,12 @@ namespace SystemDot.Messaging.Configuration
 
         public HttpTransportConfiguration UsingHttpTransport()
         {
-            HttpTransportComponents.Register(IocContainerLocator.Locate());
             return new HttpTransportConfiguration(this);
         }
 
         public IIocContainer GetInternalIocContainer()
         {
-            return IocContainerLocator.Locate();
+            return GetContainer();
         }
     }
 }

@@ -2,7 +2,7 @@ using System;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Publishing;
 using SystemDot.Messaging.Repeating;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.repeating_constant_for_subscribers
 {
@@ -23,6 +23,6 @@ namespace SystemDot.Messaging.Specifications.repeating_constant_for_subscribers
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
                 .GetSubscriptionRequestSchema()
                     .RepeatStrategy.As<ConstantTimeRepeatStrategy>()
-                        .RepeatEvery.ShouldEqual(TimeSpan.FromSeconds(RepeatSeconds));
+                        .RepeatEvery.ShouldBeEquivalentTo(TimeSpan.FromSeconds(RepeatSeconds));
     }
 }

@@ -3,7 +3,7 @@ using System.Linq;
 using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.authentication;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.authentication_expiry
 {
@@ -38,15 +38,13 @@ namespace SystemDot.Messaging.Specifications.authentication_expiry
                 .Initialise();
 
             session = SendMessageToServer(authenticationRequestPayload).Single().GetAuthenticationSession();
-        };
-
-        Because of = () =>
-        {
+            
             SystemTime.AdvanceTime(TimeSpan.FromMinutes(ExpiryInMinutes));
-            SystemTime.AdvanceTime(TimeSpan.FromTicks(1));
         };
 
-        It should_run_the_action = () => sessionReceivedInExpiryAction.ShouldEqual(session);
+        Because of = () => SystemTime.AdvanceTime(TimeSpan.FromTicks(1));
+
+        It should_run_the_action = () => sessionReceivedInExpiryAction.Should().Be(session);
     }
 
 

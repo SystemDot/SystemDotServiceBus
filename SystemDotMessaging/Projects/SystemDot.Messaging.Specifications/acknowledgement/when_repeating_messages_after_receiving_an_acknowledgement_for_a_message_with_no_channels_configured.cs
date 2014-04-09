@@ -3,8 +3,7 @@ using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.acknowledgement
 {
@@ -17,7 +16,7 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
         
         Establish context = () =>
         {
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenDirectChannel()
                 .Initialise();
@@ -37,6 +36,6 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
 
         Because of = () => exception = Catch.Exception(() => GetServer().ReceiveMessage(acknowledgement));
 
-        It should_not_fail = () => exception.ShouldBeNull();
+        It should_not_fail = () => exception.Should().BeNull();
     }
 }

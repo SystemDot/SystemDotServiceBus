@@ -1,11 +1,9 @@
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
-using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
-using SystemDot.Storage.Changes.Upcasting;
 using Machine.Specifications;
+using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.sequencing
 {
@@ -24,7 +22,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
             changeStore = new InMemoryChangeStore();
             ConfigureAndRegister<ChangeStore>(changeStore);
 
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ReceiverAddress).ForPointToPointReceiving().WithDurability()
                 .Initialise();
@@ -33,7 +31,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
                 .MakeSequencedReceivable(1, SenderAddress, ReceiverAddress, PersistenceUseType.PointToPointSend);
            
             handler = new TestMessageHandler<int>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
 
             GetServer().ReceiveMessage(messagePayload);
 
@@ -43,7 +41,7 @@ namespace SystemDot.Messaging.Specifications.sequencing
             ConfigureAndRegister<ChangeStore>(changeStore);
             
             handler.HandledMessages.Clear();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
         };
 
         Because of = () => Messaging.Configuration.Configure.Messaging()
@@ -51,6 +49,6 @@ namespace SystemDot.Messaging.Specifications.sequencing
             .OpenChannel(ReceiverAddress).ForPointToPointReceiving().WithDurability()
             .Initialise();
 
-        It should_have_removed_the_message_from_persistence = () => handler.HandledMessages.ShouldBeEmpty();
+        It should_have_removed_the_message_from_persistence = () => handler.HandledMessages.Should().BeEmpty();
     }
 }

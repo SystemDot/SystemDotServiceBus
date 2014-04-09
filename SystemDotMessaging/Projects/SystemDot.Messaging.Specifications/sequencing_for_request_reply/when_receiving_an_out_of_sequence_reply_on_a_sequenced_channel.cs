@@ -3,7 +3,7 @@ using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.sequencing_for_request_reply
 {
@@ -28,7 +28,7 @@ namespace SystemDot.Messaging.Specifications.sequencing_for_request_reply
                 .Initialise();
 
             handler = new TestMessageHandler<int>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
 
             message = 1;
             payload = new MessagePayload()
@@ -40,6 +40,6 @@ namespace SystemDot.Messaging.Specifications.sequencing_for_request_reply
 
         Because of = () => GetServer().ReceiveMessage(payload);
 
-        It should_not_push_the_message_to_any_registered_handlers = () => handler.LastHandledMessage.ShouldEqual(0);
+        It should_not_push_the_message_to_any_registered_handlers = () => handler.LastHandledMessage.ShouldBeEquivalentTo(0);
     }
 }

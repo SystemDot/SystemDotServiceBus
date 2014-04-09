@@ -1,18 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E6C4ACD0-A177-45C9-9743-664B27109936}</ProjectGuid>
+    <ProjectGuid>{F4BD0EE3-2260-4F06-B950-5BCBE706A3F8}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RequestReplySender</RootNamespace>
     <AssemblyName>RequestReplySender</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformVersion>8.1</TargetPlatformVersion>
+    <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>SystemDot.Messaging.TestSubscriber_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>RequestReplySender_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -83,7 +85,7 @@
     <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
@@ -94,43 +96,29 @@
     <Optimize>true</Optimize>
     <NoWarn>;2008</NoWarn>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <ProjectReference Include="..\..\..\Metro\SystemDot.Esent\SystemDot.Esent.csproj">
-      <Project>{096A9E92-D753-4A6C-BB61-31E0EAB4425C}</Project>
-      <Name>SystemDot.Esent %28Metro\SystemDot.Esent%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Metro\SystemDot.Extensions.Metro\SystemDot.Extensions.Metro.csproj">
-      <Project>{4A01B283-9022-4549-B9EA-34782B3E25A3}</Project>
-      <Name>SystemDot.Extensions.Metro</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Messages\Messages.csproj">
-      <Project>{0D0FA9C5-9BDD-4192-978D-BE82EE49AA81}</Project>
-      <Name>Messages %28Metro\Examples\Messages%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Metro\SystemDot.Messaging\SystemDot.Messaging.csproj">
-      <Project>{6a4f976c-fb85-4d3d-a145-d43626605212}</Project>
-      <Name>SystemDot.Messaging %28Metro\SystemDot.Messaging%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Metro\SystemDot\SystemDot.csproj">
-      <Project>{e9433834-d592-4a4a-8219-3ea48b5a2bcc}</Project>
-      <Name>SystemDot %28Metro\SystemDot%29</Name>
-    </ProjectReference>
+    <Page Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Handlers\IMessageConsumer.cs" />
-    <Compile Include="Handlers\ResponseHandler.cs" />
+    <Compile Include="App.xaml.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\IMessageConsumer.cs" />
+    <Compile Include="Handlers\ResponseHandler.cs" />
     <Compile Include="ObservableLoggingMechanism.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModelLocator.cs" />
@@ -140,30 +128,87 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="SystemDot.Messaging.TestSubscriber_TemporaryKey.pfx" />
+    <None Include="packages.config" />
+    <None Include="RequestReplySender_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Logo.png" />
-    <Content Include="Assets\SmallLogo.png" />
-    <Content Include="Assets\SplashScreen.png" />
-    <Content Include="Assets\StoreLogo.png" />
+    <ProjectReference Include="..\..\..\SystemDot.Messaging.WindowsStore\SystemDot.Messaging.WindowsStore.csproj">
+      <Project>{d651317a-3b02-4a20-b2ee-35666b82d8be}</Project>
+      <Name>SystemDot.Messaging.WindowsStore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\SystemDot.Messaging\SystemDot.Messaging.csproj">
+      <Project>{46655363-A75E-47A6-BEF0-175EF5F92DB5}</Project>
+      <Name>SystemDot.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Messages\Messages.csproj">
+      <Project>{6B86A1EC-E26C-451F-B6D6-208D9D4A41E7}</Project>
+      <Name>Messages</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Page Include="Common\StandardStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\Solutions\packages\Newtonsoft.Json.6.0.1\lib\netcore45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Configuration">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\netcore\SystemDot.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Core">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\netcore\SystemDot.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Environment">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\netcore\SystemDot.Environment.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Environment.WinRT">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\netcore\SystemDot.Environment.WinRT.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Files">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\netcore\SystemDot.Files.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Files.WinRT">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\netcore\SystemDot.Files.WinRT.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Http">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\netcore\SystemDot.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Http.WinRT">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\netcore\SystemDot.Http.WinRT.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Ioc">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\netcore\SystemDot.Ioc.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Logging">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\netcore\SystemDot.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Logging.WinRT">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\netcore\SystemDot.Logging.WinRT.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Messaging.Handling">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\netcore\SystemDot.Messaging.Handling.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Messaging.Simple">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\netcore\SystemDot.Messaging.Simple.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Parallelism">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\netcore\SystemDot.Parallelism.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Parallelism.WinRT">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\netcore\SystemDot.Parallelism.WinRT.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Serialisation">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\netcore\SystemDot.Serialisation.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Storage">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\netcore\SystemDot.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.ThreadMarshalling">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\netcore\SystemDot.ThreadMarshalling.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.ThreadMarshalling.WinRT">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.0.8\lib\netcore\SystemDot.ThreadMarshalling.WinRT.dll</HintPath>
+    </Reference>
   </ItemGroup>
-  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
-    <VisualStudioVersion>11.0</VisualStudioVersion>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
+    <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -2,7 +2,7 @@ using System;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Sequencing;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.publishing_receiving
 {
@@ -29,6 +29,6 @@ namespace SystemDot.Messaging.Specifications.publishing_receiving
 
         Because of = () => exception = Catch.Exception(() => GetServer().ReceiveMessage(payload));
 
-        It should_not_fail = () => exception.ShouldBeNull();
+        It should_not_fail = () => exception.Should().BeNull();
     }
 }

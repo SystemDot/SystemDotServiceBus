@@ -4,6 +4,7 @@ using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
+using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.authentication
 {
@@ -56,6 +57,6 @@ namespace SystemDot.Messaging.Specifications.authentication
 
         Because of = () => SendMessageToServer(payload);
 
-        It should_handle_the_message_in_the_registered_handler = () => handler.LastHandledMessage.ShouldEqual(Message);
+        It should_handle_the_message_in_the_registered_handler = () => handler.LastHandledMessage.ShouldBeEquivalentTo(Message);
     }
 }

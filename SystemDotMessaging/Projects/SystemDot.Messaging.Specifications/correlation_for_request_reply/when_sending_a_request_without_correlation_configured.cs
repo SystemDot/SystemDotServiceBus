@@ -1,6 +1,7 @@
 using System.Linq;
 using SystemDot.Messaging.Correlation;
-using Machine.Specifications;
+using FluentAssertions;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.correlation_for_request_reply
 {
@@ -16,6 +17,6 @@ namespace SystemDot.Messaging.Specifications.correlation_for_request_reply
         Because of = () => Bus.Send(1);
 
         It should_send_a_request_without_a_correlation = () =>
-            GetServer().SentMessages.First().HasCorrelationId().ShouldBeFalse();
+            GetServer().SentMessages.First().HasCorrelationId().Should().BeFalse();
     }
 }

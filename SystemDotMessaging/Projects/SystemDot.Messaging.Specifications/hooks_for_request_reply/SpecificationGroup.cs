@@ -1,4 +1,4 @@
-namespace SystemDot.Messaging.Specifications.hooks_for_request_reply
+namespace SystemDot.Messaging.Specifications.hooks_for_publishing.hooks_for_request_reply
 {
     public static class SpecificationGroup
     {

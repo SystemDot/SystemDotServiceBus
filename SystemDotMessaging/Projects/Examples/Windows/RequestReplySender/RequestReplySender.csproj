@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RequestReplySender</RootNamespace>
     <AssemblyName>RequestReplySender</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -33,6 +34,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -42,6 +44,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>bin\Release\</OutputPath>
@@ -51,10 +54,37 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Esent.Interop, Version=1.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.2.1\lib\net\Esent.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Solutions\packages\Newtonsoft.Json.6.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="SystemDot">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.2.1\lib\net\SystemDot.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Storage.Changes.Esent.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.2.1\lib\net\SystemDot.Storage.Changes.Esent.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Storage.Changes.Sql.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.2.1\lib\net\SystemDot.Storage.Changes.Sql.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Storage.Changes.SqlServer.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.2.1\lib\net\SystemDot.Storage.Changes.SqlServer.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Windows">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.2.1\lib\net\SystemDot.Windows.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IMessageConsumer.cs" />
@@ -64,24 +94,25 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\SystemDot.Esent\SystemDot.Esent.csproj">
-      <Project>{C7DBF177-FCDB-4530-A6CA-3B1EFBAD63EB}</Project>
-      <Name>SystemDot.Esent %28Windows\SystemDot.Esent%29</Name>
+      <Project>{c7dbf177-fcdb-4530-a6ca-3b1efbad63eb}</Project>
+      <Name>SystemDot.Esent</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\SystemDot\SystemDot.csproj">
-      <Project>{DED30506-F4EC-4528-B535-8FA9373C5B52}</Project>
-      <Name>SystemDot %28Windows\SystemDot%29</Name>
+    <ProjectReference Include="..\..\..\SystemDot.Messaging.Windows\SystemDot.Messaging.Windows.csproj">
+      <Project>{ab9eb1c5-2718-4e74-9335-8d3fd9ec6f33}</Project>
+      <Name>SystemDot.Messaging.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\SystemDot.Messaging\SystemDot.Messaging.csproj">
-      <Project>{0CDFED39-1AA2-464B-8F6A-3B8E19BA6842}</Project>
-      <Name>SystemDot.Messaging %28Windows\SystemDot.Messaging%29</Name>
+      <Project>{46655363-A75E-47A6-BEF0-175EF5F92DB5}</Project>
+      <Name>SystemDot.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\Messages\Messages.csproj">
       <Project>{EAABD53D-7507-4F76-A538-0264D7294422}</Project>
-      <Name>Messages %28Windows\Examples\Messages%29</Name>
+      <Name>Messages</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

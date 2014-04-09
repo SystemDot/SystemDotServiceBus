@@ -1,3 +1,4 @@
+using SystemDot.Http;
 using SystemDot.Messaging.Addressing;
 
 namespace SystemDot.Messaging.Specifications

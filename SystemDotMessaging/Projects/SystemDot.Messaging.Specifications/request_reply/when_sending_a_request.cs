@@ -5,7 +5,8 @@ using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Specifications.publishing;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using FluentAssertions;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.request_reply
 {
@@ -30,13 +31,13 @@ namespace SystemDot.Messaging.Specifications.request_reply
         Because of = () => Bus.Send(message);
 
         It should_send_a_message_with_the_correct_to_address = () =>
-            GetServer().SentMessages.First().GetToAddress().ShouldEqual(BuildAddress(RecieverAddress));
+            GetServer().SentMessages.First().GetToAddress().ShouldBeEquivalentTo(BuildAddress(RecieverAddress));
 
         It should_send_a_message_with_the_correct_from_address = () =>
-            GetServer().SentMessages.First().GetFromAddress().ShouldEqual(BuildAddress(ChannelName));
+            GetServer().SentMessages.First().GetFromAddress().ShouldBeEquivalentTo(BuildAddress(ChannelName));
 
         It should_send_a_message_with_the_correct_content = () =>
-            GetServer().SentMessages.First().DeserialiseTo<Int64>().ShouldEqual(message);
+            GetServer().SentMessages.First().DeserialiseTo<Int64>().ShouldBeEquivalentTo(message);
 
         It should_mark_the_message_with_the_persistence_id = () =>
             GetServer().SentMessages.First()
@@ -44,20 +45,20 @@ namespace SystemDot.Messaging.Specifications.request_reply
 
         It should_set_original_persistence_id_to_the_persistence_id_of_the_message_with_the_persistence_id = () =>
            GetServer().SentMessages.First().GetSourcePersistenceId()
-               .ShouldEqual(GetServer().SentMessages.First().GetPersistenceId());
+               .ShouldBeEquivalentTo(GetServer().SentMessages.First().GetPersistenceId());
 
         It should_mark_the_message_with_the_time_the_message_is_sent = () =>
-            GetServer().SentMessages.First().GetLastTimeSent().ShouldBeGreaterThan(DateTime.MinValue);
+            GetServer().SentMessages.First().GetLastTimeSent().Should().BeOnOrAfter(DateTime.MinValue);
 
         It should_mark_the_message_with_the_amount_of_times_the_message_has_been_sent = () =>
-            GetServer().SentMessages.First().GetAmountSent().ShouldEqual(1);
+            GetServer().SentMessages.First().GetAmountSent().ShouldBeEquivalentTo(1);
 
         It should_mark_the_message_with_the_sequence = () =>
-            GetServer().SentMessages.First().GetSequence().ShouldEqual(1);
+            GetServer().SentMessages.First().GetSequence().ShouldBeEquivalentTo(1);
 
         It should_mark_the_message_with_first_sequence = () =>
-            GetServer().SentMessages.ExcludeAcknowledgements().First().GetFirstSequence().ShouldEqual(1);
+            GetServer().SentMessages.ExcludeAcknowledgements().First().GetFirstSequence().ShouldBeEquivalentTo(1);
 
-        It should_start_the_task_repeater = () => TaskRepeater.Started.ShouldBeTrue();
+        It should_start_the_task_repeater = () => TaskRepeater.Started.Should().BeTrue();
     }
 }

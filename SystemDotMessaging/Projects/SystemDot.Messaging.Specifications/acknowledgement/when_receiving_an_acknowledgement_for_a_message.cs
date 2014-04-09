@@ -1,10 +1,12 @@
 using System.Linq;
 using SystemDot.Messaging.Acknowledgement;
+using SystemDot.Messaging.Handling.Actions;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
+using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Storage;
-using SystemDot.Messaging.Transport.InProcess.Configuration;
 using Machine.Specifications;
+using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.acknowledgement
 {
@@ -13,10 +15,10 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
     {
         static MessagePayload acknowledgement;
         static MessageRemovedFromCache @event;
+        static ActionSubscriptionToken<MessageRemovedFromCache> token;
 
         Establish context = () =>
         {
-            Messenger.Register<MessageRemovedFromCache>(e => @event = e);
             
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
@@ -24,7 +26,9 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
                 .Initialise();
 
             Bus.Send(1);
-             
+
+            token = Messenger.RegisterHandler<MessageRemovedFromCache>(e => @event = e);
+            
             acknowledgement = new MessagePayload();
             acknowledgement.SetAcknowledgementId(GetServer().SentMessages.First().GetPersistenceId());
             acknowledgement.SetToAddress(GetServer().SentMessages.First().GetFromAddress());
@@ -34,8 +38,8 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
 
         Because of = () => GetServer().ReceiveMessage(acknowledgement);
 
-        It should_notify_that_the_message_was_removed_from_the_cache = () => 
-            @event.ShouldMatch(e => e.MessageId == acknowledgement.GetAcknowledgementId().MessageId
+        It should_notify_that_the_message_was_removed_from_the_cache = () =>
+            @event.Should().Match<MessageRemovedFromCache>(e => e.MessageId == acknowledgement.GetAcknowledgementId().MessageId
                 && e.Address == acknowledgement.GetAcknowledgementId().Address
                 && e.UseType == acknowledgement.GetAcknowledgementId().UseType);
         

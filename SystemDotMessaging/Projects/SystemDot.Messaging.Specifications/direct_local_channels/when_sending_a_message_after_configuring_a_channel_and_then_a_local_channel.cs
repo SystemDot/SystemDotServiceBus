@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.direct_local_channels
 {
@@ -24,6 +24,6 @@ namespace SystemDot.Messaging.Specifications.direct_local_channels
         Because of = () => Bus.Send(message);
 
         It should_send_the_message_down_the_channel = () =>
-            GetServer().SentMessages.First().DeserialiseTo<Int64>().ShouldEqual(message);
+            GetServer().SentMessages.First().DeserialiseTo<Int64>().ShouldBeEquivalentTo(message);
     }
 }

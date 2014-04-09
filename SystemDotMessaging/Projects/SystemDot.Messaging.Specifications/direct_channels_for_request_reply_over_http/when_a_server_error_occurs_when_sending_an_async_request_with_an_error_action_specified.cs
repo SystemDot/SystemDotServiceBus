@@ -1,6 +1,7 @@
 using System;
 using SystemDot.Parallelism;
-using Machine.Specifications;
+using FluentAssertions;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply_over_http
 {
@@ -31,10 +32,10 @@ namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply_o
 
         Because of = () => Bus.SendDirectAsync(Message, e => exception = e);
 
-        It should_send_asynchronously = () => taskStarter.InvocationCount.ShouldEqual(1);
+        It should_send_asynchronously = () => taskStarter.InvocationCount.ShouldBeEquivalentTo(1);
 
-        It should_run_the_server_error_action = () => exception.ShouldEqual(expectedException);
+        It should_run_the_server_error_action = () => exception.ShouldBeEquivalentTo(expectedException);
 
-        It should_switch_to_the_main_thread_to_handle_the_error = () => MainThreadMarshaller.WasRunThrough.ShouldBeTrue();
+        It should_switch_to_the_main_thread_to_handle_the_error = () => MainThreadMarshaller.WasRunThrough.Should().BeTrue();
     }
 }

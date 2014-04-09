@@ -1,6 +1,7 @@
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
+using FluentAssertions;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.point_to_point
@@ -26,11 +27,11 @@ namespace SystemDot.Messaging.Specifications.point_to_point
                  PersistenceUseType.PointToPointReceive);
 
             handler = new TestMessageHandler<int>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
         };
 
         Because of = () => GetServer().ReceiveMessage(payload);
 
-        It should_not_handle_the_message = () => handler.LastHandledMessage.ShouldEqual(0);
+        It should_not_handle_the_message = () => handler.LastHandledMessage.ShouldBeEquivalentTo(0);
     }
 }

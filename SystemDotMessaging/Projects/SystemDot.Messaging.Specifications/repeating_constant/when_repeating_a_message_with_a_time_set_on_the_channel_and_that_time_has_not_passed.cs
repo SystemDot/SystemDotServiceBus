@@ -1,7 +1,7 @@
 using System;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Parallelism;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.repeating_constant
 {
@@ -33,6 +33,6 @@ namespace SystemDot.Messaging.Specifications.repeating_constant
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_not_repeat_the_message = () => GetServer().SentMessages.Count.ShouldEqual(1);
+        It should_not_repeat_the_message = () => GetServer().SentMessages.Count.ShouldBeEquivalentTo(1);
     }
 }

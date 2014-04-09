@@ -2,6 +2,7 @@ using System;
 using SystemDot.Messaging.Hooks.External;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
+using FluentAssertions;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.external_hooks
@@ -48,8 +49,8 @@ namespace SystemDot.Messaging.Specifications.external_hooks
 
         Because of = () => GetServer().ReceiveMessage(payload);
 
-        It should_run_the_message_through_the_first_hook = () => hook1.Message.ShouldEqual(message);
+        It should_run_the_message_through_the_first_hook = () => hook1.Message.Should().Be(message);
 
-        It should_run_the_message_through_the_second_hook = () => hook2.Message.ShouldEqual(message);
+        It should_run_the_message_through_the_second_hook = () => hook2.Message.Should().Be(message);
     }
 }

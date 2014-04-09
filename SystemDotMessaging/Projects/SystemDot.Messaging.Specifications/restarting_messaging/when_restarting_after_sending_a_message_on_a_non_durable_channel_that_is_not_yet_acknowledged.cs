@@ -3,6 +3,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Storage.Changes;
 using Machine.Specifications;
+using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.restarting_messaging
 {
@@ -52,6 +53,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
                 .ForRequestReplyReceiving()
                 .Initialise();
 
-        It should_not_send_the_message_again = () => GetServer().SentMessages.ShouldNotContain(m => m.DeserialiseTo<int>() == Reply);
+        It should_not_send_the_message_again = () => 
+            GetServer().SentMessages.Should().NotContain(m => m.DeserialiseTo<int>() == Reply);
     }
 }

@@ -5,7 +5,7 @@ using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.publishing;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.batching_for_request_reply
 {
@@ -35,12 +35,17 @@ namespace SystemDot.Messaging.Specifications.batching_for_request_reply
                 .MakeSequencedReceivable(aggregateMessage, SenderAddress, ReceiverAddress, PersistenceUseType.RequestReceive);
 
             handler = new TestReplyMessageHandler<Int64>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
         };
 
         Because of = () => GetServer().ReceiveMessage(messagePayload);
 
-        It should_send_a_batch_containing_both_replied_messages = () =>
-            GetServer().SentMessages.ExcludeAcknowledgements().Single().DeserialiseTo<BatchMessage>().Messages.ShouldContain(Message1, Message2);
+        It should_send_a_batch_containing_the_first_replied_messages = () =>
+            GetServer().SentMessages.ExcludeAcknowledgements().Single().DeserialiseTo<BatchMessage>()
+                .Messages.Should().Contain(m => m.As<long>() == Message2);
+    
+        It should_send_a_batch_containing_the_second_replied_messages = () =>
+            GetServer().SentMessages.ExcludeAcknowledgements().Single().DeserialiseTo<BatchMessage>()
+                .Messages.Should().Contain(m => m.As<long>() == Message2);
     }
 }

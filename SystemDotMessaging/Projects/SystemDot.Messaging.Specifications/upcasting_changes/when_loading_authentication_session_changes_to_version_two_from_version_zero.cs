@@ -6,6 +6,7 @@ using SystemDot.Messaging.Authentication;
 using SystemDot.Messaging.Authentication.Caching.Changes;
 using SystemDot.Storage.Changes;
 using Machine.Specifications;
+using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.upcasting_changes
 {
@@ -42,6 +43,6 @@ namespace SystemDot.Messaging.Specifications.upcasting_changes
             loadedChanges
                 .OfType<AuthenticationSessionCachedChange>()
                 .Single().Session
-                .ExpiresAfter.ShouldEqual(change.Session.ExpiresOn.Subtract(change.Session.CreatedOn));
+                .ExpiresAfter.ShouldBeEquivalentTo(change.Session.ExpiresOn.Subtract(change.Session.CreatedOn));
     }
 }

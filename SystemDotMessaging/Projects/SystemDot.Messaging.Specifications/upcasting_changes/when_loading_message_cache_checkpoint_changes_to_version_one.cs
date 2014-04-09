@@ -4,6 +4,7 @@ using System.Linq;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Storage.Changes;
 using Machine.Specifications;
+using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.upcasting_changes
 {
@@ -24,6 +25,6 @@ namespace SystemDot.Messaging.Specifications.upcasting_changes
 
         It should_upcast_the_checkpoint_change_cached_on_to_the_current_date = () => 
             loadedChanges.OfType<MessageCheckpointChange>()
-                .Single().CachedOn.ShouldEqual(new DateTime(2013, 11, 24));
+                .Single().CachedOn.ShouldBeEquivalentTo(new DateTime(2013, 11, 24));
     }
 }

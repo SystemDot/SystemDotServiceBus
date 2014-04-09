@@ -1,6 +1,6 @@
 ﻿using System;
 using SystemDot.Messaging.Distribution;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.distribution
 {
@@ -20,6 +20,6 @@ namespace SystemDot.Messaging.Specifications.distribution
 
         Because of = () => exception = Catch.Exception(() => pump.InputMessage(message));
 
-        It should_not_fail = () => exception.ShouldBeNull();
+        It should_not_fail = () => exception.Should().BeNull();
     }
 }

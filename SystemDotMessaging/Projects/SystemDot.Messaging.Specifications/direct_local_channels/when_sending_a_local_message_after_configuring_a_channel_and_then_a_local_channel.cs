@@ -1,4 +1,5 @@
 using SystemDot.Messaging.Handling;
+using FluentAssertions;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.direct_local_channels
@@ -21,12 +22,12 @@ namespace SystemDot.Messaging.Specifications.direct_local_channels
             message = 1;
 
             handler = new TestMessageHandler<int>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
         };
 
         Because of = () => Bus.SendDirect(message);
 
         It should_send_the_message_to_any_handlers_registered_for_that_message = () => 
-            handler.LastHandledMessage.ShouldEqual(message);
+            handler.LastHandledMessage.ShouldBeEquivalentTo(message);
     }
 }

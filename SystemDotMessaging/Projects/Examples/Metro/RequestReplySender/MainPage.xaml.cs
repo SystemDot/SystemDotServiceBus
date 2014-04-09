@@ -1,9 +1,10 @@
 ﻿using SystemDot;
-using RequestReplySender.ViewModels;
+using SystemDot.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
+using RequestReplySender.ViewModels;
 
 namespace RequestReplySender
 {
@@ -30,7 +31,7 @@ namespace RequestReplySender
         {
             for (int i = 0; i < 100; i++)
             {
-                this.DataContext.As<MainPageViewModel>().SendMessage(i);                
+                this.DataContext.As<MainPageViewModel>().SendMessage(i);
             }
         }
 

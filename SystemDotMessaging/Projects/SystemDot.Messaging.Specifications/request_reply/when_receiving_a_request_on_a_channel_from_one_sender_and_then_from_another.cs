@@ -2,7 +2,7 @@ using System;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.request_reply
 {
@@ -27,7 +27,7 @@ namespace SystemDot.Messaging.Specifications.request_reply
                 .Initialise();
 
             handler = new TestMessageHandler<Int64>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
 
             payload1 = new MessagePayload().MakeSequencedReceivable(
                 Message,
@@ -47,6 +47,6 @@ namespace SystemDot.Messaging.Specifications.request_reply
         Because of = () => GetServer().ReceiveMessage(payload2);
 
         It should_only_handle_the_requests_for_each_sender_once = () => 
-            handler.HandledMessages.Count.ShouldEqual(2);
+            handler.HandledMessages.Count.ShouldBeEquivalentTo(2);
     }
 }

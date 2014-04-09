@@ -1,4 +1,5 @@
 using System;
+using SystemDot.Http;
 using SystemDot.Messaging.Acknowledgement;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Correlation;
@@ -10,7 +11,7 @@ using SystemDot.Messaging.Repeating;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
 using SystemDot.Serialisation;
-using Machine.Specifications;
+using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications
 {
@@ -110,7 +111,7 @@ namespace SystemDot.Messaging.Specifications
 
         public static MessagePayload SetToMachineLocal(this MessagePayload payload)
         {
-            payload.GetToAddress().Server.MachineName = Environment.MachineName;
+            payload.GetToAddress().Server.MachineName = System.Environment.MachineName;
             return payload;
         }
 
@@ -191,7 +192,7 @@ namespace SystemDot.Messaging.Specifications
             EndpointAddress address,
             PersistenceUseType persistenceUseType)
         {
-            payload.GetPersistenceId().ShouldEqual(new MessagePersistenceId(payload.Id, address, persistenceUseType));
+            payload.GetPersistenceId().ShouldBeEquivalentTo(new MessagePersistenceId(payload.Id, address, persistenceUseType));
         }
     }
 }

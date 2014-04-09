@@ -1,5 +1,5 @@
 using System;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.server_addressing
 {
@@ -16,6 +16,6 @@ namespace SystemDot.Messaging.Specifications.server_addressing
 
         It should_listen_a_url_based_on_the_machine_name = () =>
             TestHttpServer.Instance
-                .Url.ShouldEqual(String.Concat("http://", Environment.MachineName, "/", ServerName, "/"));
+                .Url.ShouldBeEquivalentTo(String.Concat("http://", System.Environment.MachineName, "/", ServerName, "/"));
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using SystemDot.Messaging.Handling.Actions;
 using SystemDot.Messaging.PointToPoint.Builders;
-using Machine.Specifications;
+using SystemDot.Messaging.Simple;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.external_sources
 {
@@ -11,11 +13,12 @@ namespace SystemDot.Messaging.Specifications.external_sources
         const string ReceiverAddress = "ReceiverAddress";
 
         static List<PointToPointReceiveChannelBuilt> channelBuiltEvents;
+        static ActionSubscriptionToken<PointToPointReceiveChannelBuilt> token;
 
         Establish context = () =>
         {
             channelBuiltEvents = new List<PointToPointReceiveChannelBuilt>();
-            Messenger.Register<PointToPointReceiveChannelBuilt>(m => channelBuiltEvents.Add(m));
+            token = Messenger.RegisterHandler<PointToPointReceiveChannelBuilt>(m => channelBuiltEvents.Add(m));
         };
 
         Because of = () => Configuration.Configure.Messaging()
@@ -25,6 +28,6 @@ namespace SystemDot.Messaging.Specifications.external_sources
                 .Initialise();
 
         It should_notify_that_the_channel_was_built = () =>
-            channelBuiltEvents.First().Address.ShouldEqual(BuildAddress(ReceiverAddress));
+            channelBuiltEvents.First().Address.ShouldBeEquivalentTo(BuildAddress(ReceiverAddress));
     }
 }

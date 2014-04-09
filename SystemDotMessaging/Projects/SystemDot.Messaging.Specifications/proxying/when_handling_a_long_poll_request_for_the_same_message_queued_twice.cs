@@ -4,7 +4,7 @@ using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Transport.Http.Remote.Clients;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.proxying
 {
@@ -37,6 +37,6 @@ namespace SystemDot.Messaging.Specifications.proxying
 
         Because of = () => returnedMessages = SendMessageToServer(longPollRequest);
 
-        It should_only_return_the_first_copy_of_the_message = () => returnedMessages.Count().ShouldEqual(1);
+        It should_only_return_the_first_copy_of_the_message = () => returnedMessages.Count().ShouldBeEquivalentTo(1);
     }
 }

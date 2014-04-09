@@ -6,12 +6,12 @@ namespace SystemDot.Messaging.Direct.Builders
 {
     class LocalDirectChannelBuilder
     {
-        readonly MessageHandlerRouter messageHandlerRouter;
+        readonly MessageHandlingEndpoint messageHandlingEndpoint;
         
-        public LocalDirectChannelBuilder(MessageHandlerRouter messageHandlerRouter)
+        public LocalDirectChannelBuilder(MessageHandlingEndpoint messageHandlingEndpoint)
         {
-            Contract.Requires(messageHandlerRouter != null);
-            this.messageHandlerRouter = messageHandlerRouter;
+            Contract.Requires(messageHandlingEndpoint != null);
+            this.messageHandlingEndpoint = messageHandlingEndpoint;
         }
 
         public void Build(LocalDirectChannelSchema schema)
@@ -19,7 +19,7 @@ namespace SystemDot.Messaging.Direct.Builders
             MessagePipelineBuilder
                 .Build()
                 .WithBusSendDirectTo(schema.UnitOfWorkRunner)
-                .ToEndPoint(messageHandlerRouter);
+                .ToEndPoint(messageHandlingEndpoint);
         }
     }
 }

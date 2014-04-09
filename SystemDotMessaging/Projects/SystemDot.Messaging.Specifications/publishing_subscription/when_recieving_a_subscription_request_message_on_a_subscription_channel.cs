@@ -1,7 +1,10 @@
 using SystemDot.Messaging.Acknowledgement;
+using SystemDot.Messaging.Handling.Actions;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Publishing.Builders;
+using SystemDot.Messaging.Simple;
 using Machine.Specifications;
+using FluentAssertions;
 using SystemDot.Messaging.Storage;
 
 namespace SystemDot.Messaging.Specifications.publishing_subscription
@@ -15,10 +18,11 @@ namespace SystemDot.Messaging.Specifications.publishing_subscription
 
         static MessagePayload request;
         static SubscriberSendChannelBuilt channelBuiltEvent;
-        
+        static ActionSubscriptionToken<SubscriberSendChannelBuilt> token;
+
         Establish context = () =>
         {
-            Messenger.Register<SubscriberSendChannelBuilt>(e => channelBuiltEvent = e);
+            token = Messenger.RegisterHandler<SubscriberSendChannelBuilt>(e => channelBuiltEvent = e);
             
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
@@ -34,12 +38,12 @@ namespace SystemDot.Messaging.Specifications.publishing_subscription
         Because of = () => GetServer().ReceiveMessage(request);
 
         It should_notify_that_the_channel_was_built = () =>
-           channelBuiltEvent.ShouldMatch(m =>
+           channelBuiltEvent.Should().Match<SubscriberSendChannelBuilt>(m =>
                m.CacheAddress == BuildAddress(SubscriberAddress)
                && m.SubscriberAddress == BuildAddress(SubscriberAddress)
                && m.PublisherAddress == BuildAddress(PublisherAddress));
 
         It should_send_an_acknowledgement_for_the_request = () => 
-            GetServer().SentMessages.ShouldContain(a => a.GetAcknowledgementId() == request.GetPersistenceId());
+            GetServer().SentMessages.Should().Contain(a => a.GetAcknowledgementId() == request.GetPersistenceId());
     }
 }

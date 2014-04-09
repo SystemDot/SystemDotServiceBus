@@ -5,6 +5,8 @@ using SystemDot.Messaging.Authentication.Caching;
 using SystemDot.Messaging.Authentication.Expiry;
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Configuration.Authentication;
+using SystemDot.Messaging.Handling.Actions;
+using SystemDot.Messaging.Simple;
 using SystemDot.Serialisation;
 
 namespace SystemDot.Messaging.Authentication.Builders
@@ -14,6 +16,7 @@ namespace SystemDot.Messaging.Authentication.Builders
         readonly AuthenticatedServerRegistry serverRegistry;
         readonly AuthenticationSessionCache cache;
         readonly ISerialiser serialiser;
+        ActionSubscriptionToken<AuthenticationSessionExpired> token;
 
         public AuthenticationReceiverBuilder(AuthenticationSessionCache cache, ISerialiser serialiser, AuthenticatedServerRegistry serverRegistry)
         {
@@ -50,7 +53,7 @@ namespace SystemDot.Messaging.Authentication.Builders
 
         void RunActionOnExpiry(Action<AuthenticationSession> toRunOnExpiry)
         {
-            Messenger.Register<AuthenticationSessionExpired>(e => toRunOnExpiry(e.Session));
+            token = Messenger.RegisterHandler<AuthenticationSessionExpired>(e => toRunOnExpiry(e.Session));
         }
 
         void RegisterAuthenticatedServer(MessageServer server)

@@ -1,59 +1,54 @@
 using System.Collections.Generic;
-using System.Linq;
-using System.Xml;
-using SystemDot.Configuration;
+using System.Xml.Linq;
+using SystemDot.Configuration.Reading;
 
 namespace SystemDot.Messaging.Specifications
 {
     public class TestServerAddressConfigurationReader : IConfigurationReader
     {
-        readonly XmlDocument document;
+        readonly XElement rootNode;
         bool isLoaded;
 
         public TestServerAddressConfigurationReader()
         {
-            this.document = new XmlDocument();
-            this.document.AppendChild(this.document.CreateElement("xml"));
+            rootNode = new XElement("xml");
         }
-
+        
         public void AddAddress(string serverName, string serverAddress)
         {
-            this.document.FirstChild.AppendChild(CreateServerAddressNode(serverName, serverAddress, false));
+            rootNode.Add(CreateServerAddressNode(serverName, serverAddress, false));
         }
 
         public void AddSecureAddress(string serverName, string serverAddress)
         {
-            this.document.FirstChild.AppendChild(CreateServerAddressNode(serverName, serverAddress, true));
+            rootNode.Add(CreateServerAddressNode(serverName, serverAddress, true));
         }
 
-        XmlElement CreateServerAddressNode(string serverName, string serverAddress, bool isSecure)
+        XElement CreateServerAddressNode(string serverName, string serverAddress, bool isSecure)
         {
-            XmlElement node = this.document.CreateElement("ServerAddress");
-            node.Attributes.Append((CreateAttribute("name", serverName)));
-            node.Attributes.Append(CreateAttribute("address", serverAddress));
-            node.Attributes.Append(CreateAttribute("isSecure", isSecure.ToString()));              
+            var node = new XElement("ServerAddress");
+            node.Add(CreateAttribute("name", serverName));
+            node.Add(CreateAttribute("address", serverAddress));
+            node.Add(CreateAttribute("isSecure", isSecure.ToString()));              
          
             return node;
         }
 
-        XmlAttribute CreateAttribute(string name, string value)
+        XAttribute CreateAttribute(string name, string value)
         {
-            XmlAttribute attribute = this.document.CreateAttribute(name);
-            attribute.Value = value;
- 
-            return attribute;
+            return new XAttribute(name, value);
         }
 
         public void Load(string fileName)
         {
-            this.isLoaded = (fileName == "SystemDot.config");
+            isLoaded = (fileName == "SystemDot.config");
         }
 
-        public IEnumerable<XmlNode> GetSettingsInSection(string section)
+        public IEnumerable<XElement> GetSettingsInSection(string section)
         {
-            return section == "ServerAddresses" && this.isLoaded
-                ? this.document.FirstChild.ChildNodes.OfType<XmlNode>()
-                : new List<XmlNode>();
+            return section == "ServerAddresses" && isLoaded
+                ? rootNode.Descendants()
+                : new List<XElement>();
         }
     }
 

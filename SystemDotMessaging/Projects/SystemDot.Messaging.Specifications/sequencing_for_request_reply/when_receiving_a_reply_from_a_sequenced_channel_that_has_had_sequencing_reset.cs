@@ -3,7 +3,7 @@ using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.sequencing_for_request_reply
 {
@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.sequencing_for_request_reply
                 .MakeSequencedReceivable(Message1, ReceiverAddress, SenderAddress, PersistenceUseType.ReplySend);
 
             handler = new TestMessageHandler<Int64>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
 
             GetServer().ReceiveMessage(messagePayload);
 
@@ -43,6 +43,6 @@ namespace SystemDot.Messaging.Specifications.sequencing_for_request_reply
 
         Because of = () => GetServer().ReceiveMessage(messagePayload);
 
-        It should_pass_the_message_after_the_reset_through = () => handler.HandledMessages.ShouldContain(Message2);
+        It should_pass_the_message_after_the_reset_through = () => handler.HandledMessages.Should().Contain(Message2);
     }
 }

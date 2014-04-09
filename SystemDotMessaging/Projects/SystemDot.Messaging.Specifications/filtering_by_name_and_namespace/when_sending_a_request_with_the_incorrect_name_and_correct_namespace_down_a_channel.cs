@@ -1,5 +1,5 @@
 using SystemDot.Messaging.Configuration;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.filtering_by_name_and_namespace
 {
@@ -17,6 +17,6 @@ namespace SystemDot.Messaging.Specifications.filtering_by_name_and_namespace
 
         Because of = () => Bus.Send(new TestNameAndNamespaceMessage());
 
-        It should_not_pass_the_message_through = () => GetServer().SentMessages.ShouldBeEmpty();
+        It should_not_pass_the_message_through = () => GetServer().SentMessages.Should().BeEmpty();
     }
 }

@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
-using Machine.Specifications;
+using FluentAssertions;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.load_balancing
 {
@@ -24,6 +25,6 @@ namespace SystemDot.Messaging.Specifications.load_balancing
 
         Because of = () => messages.ForEach(m => Bus.Send(m));
 
-        It should_not_send_the_twenty_first_message = () => GetServer().SentMessages.Count.ShouldEqual(20);
+        It should_not_send_the_twenty_first_message = () => GetServer().SentMessages.Count.ShouldBeEquivalentTo(20);
     }
 }

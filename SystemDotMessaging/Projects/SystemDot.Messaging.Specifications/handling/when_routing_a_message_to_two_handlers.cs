@@ -2,7 +2,7 @@ using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.handling
 {
@@ -24,10 +24,10 @@ namespace SystemDot.Messaging.Specifications.handling
                 .Initialise();
 
             handler1 = new TestMessageHandler<string>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler1); 
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler1); 
             
             handler2 = new TestMessageHandler<string>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler2);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler2);
 
             payload = new MessagePayload().MakeSequencedReceivable(
                 Message,
@@ -38,8 +38,8 @@ namespace SystemDot.Messaging.Specifications.handling
 
         Because of = () => GetServer().ReceiveMessage(payload);
 
-        It should_handle_the_message_in_the_first_handler = () => handler1.LastHandledMessage.ShouldEqual(Message);
+        It should_handle_the_message_in_the_first_handler = () => handler1.LastHandledMessage.ShouldBeEquivalentTo(Message);
 
-        It should_handle_the_message_in_the_second_handler = () => handler2.LastHandledMessage.ShouldEqual(Message);
+        It should_handle_the_message_in_the_second_handler = () => handler2.LastHandledMessage.ShouldBeEquivalentTo(Message);
     }
 }

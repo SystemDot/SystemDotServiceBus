@@ -1,7 +1,7 @@
 using System.Linq;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.publishing
 {
@@ -35,7 +35,7 @@ namespace SystemDot.Messaging.Specifications.publishing
         };
 
         It should_mark_the_first_sequence_number_as_the_sequence_of_the_first_mesage_through_the_channel = () =>
-            GetServer().SentMessages.ExcludeAcknowledgements().Last().GetFirstSequence().ShouldEqual(2);
+            GetServer().SentMessages.ExcludeAcknowledgements().Last().GetFirstSequence().ShouldBeEquivalentTo(2);
 
     }
 }

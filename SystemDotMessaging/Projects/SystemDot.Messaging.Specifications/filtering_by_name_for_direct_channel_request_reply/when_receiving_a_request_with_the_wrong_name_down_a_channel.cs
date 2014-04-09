@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.filtering_by_name;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 using SystemDot.Messaging.Direct;
 
 namespace SystemDot.Messaging.Specifications.filtering_by_name_for_direct_channel_request_reply
@@ -34,6 +34,6 @@ namespace SystemDot.Messaging.Specifications.filtering_by_name_for_direct_channe
 
         Because of = () => GetServer().ReceiveMessage(payload);
 
-        It should_not_pass_the_message_through = () => handler.HandledMessages.ShouldBeEmpty();
+        It should_not_pass_the_message_through = () => handler.HandledMessages.Should().BeEmpty();
     }
 }

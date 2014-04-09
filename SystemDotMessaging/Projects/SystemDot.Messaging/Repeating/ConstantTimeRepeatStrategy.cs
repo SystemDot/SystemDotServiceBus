@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using SystemDot.Core;
+using SystemDot.Core.Collections;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
 

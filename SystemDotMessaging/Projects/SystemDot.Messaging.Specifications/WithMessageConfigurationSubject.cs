@@ -1,5 +1,6 @@
 using SystemDot.Messaging.Transport.InProcess;
 using Machine.Specifications;
+using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications
 {

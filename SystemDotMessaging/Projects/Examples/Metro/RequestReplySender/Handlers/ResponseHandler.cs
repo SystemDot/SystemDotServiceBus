@@ -1,5 +1,5 @@
-﻿using RequestReplySender.ViewModels;
-using Messages;
+﻿using Messages;
+using RequestReplySender.ViewModels;
 
 namespace RequestReplySender.Handlers
 {

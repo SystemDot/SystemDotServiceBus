@@ -2,6 +2,7 @@ using System;
 using SystemDot.Messaging.Hooks.External;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
+using FluentAssertions;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.external_hooks
@@ -44,6 +45,6 @@ namespace SystemDot.Messaging.Specifications.external_hooks
 
         Because of = () => GetServer().ReceiveMessage(payload);
 
-        It should_not_run_the_message_through_the_hook = () => inspector.Message.ShouldBeNull();
+        It should_not_run_the_message_through_the_hook = () => inspector.Message.Should().BeNull();
     }
 }

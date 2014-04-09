@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using SystemDot.Messaging.Handling.Actions;
 using SystemDot.Messaging.Packaging;
+using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Storage;
 using SystemDot.Storage.Changes;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.restarting_messaging
 {
@@ -19,8 +21,9 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
         static TestMessageHandler<Int64> handler;
         static ChangeStore changeStore;
         static MessagePayload payload1;
-        static MessagePayload payload2; 
+        static MessagePayload payload2;
         static List<MessageLoadedToCache> messagesLoadedToCacheEvents;
+        static ActionSubscriptionToken<MessageLoadedToCache> token;
 
         Establish context = () =>
         {
@@ -62,7 +65,7 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
 
             Reset();
             ReInitialise();
-            Messenger.Register<MessageLoadedToCache>(e => messagesLoadedToCacheEvents.Add(e));
+            token = Messenger.RegisterHandler<MessageLoadedToCache>(e => messagesLoadedToCacheEvents.Add(e));
 
             ConfigureAndRegister<ChangeStore>(changeStore);
             handler = new TestMessageHandler<Int64>();
@@ -78,13 +81,13 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
                 .Initialise();
 
         It should_notify_that_the_first_sent_message_was_loaded_into_the_cache = () =>
-            messagesLoadedToCacheEvents.ShouldContain(m =>
+            messagesLoadedToCacheEvents.Should().Contain(m =>
                 m.CacheAddress == BuildAddress(ReceiverName)
                     && m.UseType == PersistenceUseType.PointToPointReceive
                     && m.Message == payload1);
 
         It should_notify_that_the_second_sent_message_was_loaded_into_the_cache = () =>
-            messagesLoadedToCacheEvents.ShouldContain(m =>
+            messagesLoadedToCacheEvents.Should().Contain(m =>
                 m.CacheAddress == BuildAddress(ReceiverName)
                     && m.UseType == PersistenceUseType.PointToPointReceive
                     && m.Message == payload2);

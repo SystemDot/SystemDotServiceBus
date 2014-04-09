@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using SystemDot.Core.Collections;
 using SystemDot.Messaging.Ioc;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;

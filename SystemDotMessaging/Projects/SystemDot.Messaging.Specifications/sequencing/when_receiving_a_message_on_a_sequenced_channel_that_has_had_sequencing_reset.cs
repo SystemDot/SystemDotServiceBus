@@ -3,7 +3,7 @@ using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.sequencing
 {
@@ -31,11 +31,11 @@ namespace SystemDot.Messaging.Specifications.sequencing
             messagePayload.SetFirstSequence(2);
 
             handler = new TestMessageHandler<Int64>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
         };
 
         Because of = () => GetServer().ReceiveMessage(messagePayload);
 
-        It should_pass_the_message_through = () => handler.HandledMessages.ShouldContain(Message);
+        It should_pass_the_message_through = () => handler.HandledMessages.Should().Contain(Message);
     }
 }

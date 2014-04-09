@@ -1,5 +1,5 @@
 using System;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply_over_http
 {
@@ -25,6 +25,6 @@ namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply_o
 
         Because of = () => Bus.SendDirect(Message, e => exception = e);
 
-        It should_run_the_server_error_action = () => exception.ShouldEqual(expectedException);
+        It should_run_the_server_error_action = () => exception.ShouldBeEquivalentTo(expectedException);
     }
 }

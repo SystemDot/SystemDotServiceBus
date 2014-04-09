@@ -2,7 +2,7 @@ using System.Linq;
 using SystemDot.Messaging.Correlation;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.correlation_for_request_reply
 {
@@ -59,6 +59,6 @@ namespace SystemDot.Messaging.Specifications.correlation_for_request_reply
             GetServer().ReceiveMessage(messagePayload2);
         };
 
-        It should_handle_the_requests = () => handler.HandledMessages.Count.ShouldEqual(2);
+        It should_handle_the_requests = () => handler.HandledMessages.Count.ShouldBeEquivalentTo(2);
     }
 }

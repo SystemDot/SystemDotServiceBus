@@ -6,7 +6,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Pipelines;
 using SystemDot.Messaging.Transport;
 using SystemDot.Serialisation;
-using SystemDot.ThreadMashalling;
+using SystemDot.ThreadMarshalling;
 
 namespace SystemDot.Messaging.Direct.Builders
 {
@@ -15,23 +15,23 @@ namespace SystemDot.Messaging.Direct.Builders
         readonly MessageReceiver messageReceiver;
         readonly ISerialiser serialiser;
         readonly IMainThreadMarshaller mainThreadMarshaller;
-        readonly MessageHandlerRouter router;
+        readonly MessageHandlingEndpoint handlingEndpoint;
 
         public ReplyReceiverBuilder(
             MessageReceiver messageReceiver,
             ISerialiser serialiser,
             IMainThreadMarshaller mainThreadMarshaller,
-            MessageHandlerRouter router)
+            MessageHandlingEndpoint handlingEndpoint)
         {
             Contract.Requires(messageReceiver != null);
             Contract.Requires(serialiser != null);
             Contract.Requires(mainThreadMarshaller != null);
-            Contract.Requires(router != null);
+            Contract.Requires(handlingEndpoint != null);
 
             this.messageReceiver = messageReceiver;
             this.serialiser = serialiser;
             this.mainThreadMarshaller = mainThreadMarshaller;
-            this.router = router;
+            this.handlingEndpoint = handlingEndpoint;
         }
 
         public void Build(ReplyReceiverSchema schema)
@@ -43,7 +43,7 @@ namespace SystemDot.Messaging.Direct.Builders
                 .ToProcessor(new BodyMessageFilter(schema.Address))
                 .ToProcessor(new MessageHookRunner<MessagePayload>(schema.Hooks))
                 .ToConverter(new MessagePayloadUnpackager(serialiser))
-                .ToEndPoint(new DirectReplyMessageHandlerRouter(mainThreadMarshaller, router));
+                .ToEndPoint(new DirectReplyMessageHandlingEndpoint(mainThreadMarshaller, handlingEndpoint));
         }
     }
 }

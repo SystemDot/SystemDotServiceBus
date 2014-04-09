@@ -3,7 +3,7 @@ using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Sequencing;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.publishing_receiving
 {
@@ -26,7 +26,7 @@ namespace SystemDot.Messaging.Specifications.publishing_receiving
                 .Initialise();
 
             handler = new TestMessageHandler<Int64>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
 
             payload = new MessagePayload().MakeReceivable(1, PublisherName, ChannelName, PersistenceUseType.SubscriberSend);
             payload.SetFirstSequence(2);
@@ -44,6 +44,6 @@ namespace SystemDot.Messaging.Specifications.publishing_receiving
 
         Because of = () => GetServer().ReceiveMessage(payload);
 
-        It should_push_the_message_to_any_registered_handlers = () => handler.LastHandledMessage.ShouldEqual(message);
+        It should_push_the_message_to_any_registered_handlers = () => handler.LastHandledMessage.ShouldBeEquivalentTo(message);
     }
 }

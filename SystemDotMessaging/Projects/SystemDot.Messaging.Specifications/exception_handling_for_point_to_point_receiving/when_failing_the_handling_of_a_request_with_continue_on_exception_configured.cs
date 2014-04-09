@@ -1,7 +1,7 @@
 ﻿using System;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.exception_handling_for_point_to_point_receiving
 {
@@ -29,6 +29,6 @@ namespace SystemDot.Messaging.Specifications.exception_handling_for_point_to_poi
                     .SetChannelType(PersistenceUseType.PointToPointReceive)
                     .Sequenced()));
 
-        It should_not_throw_an_exception = () => exception.ShouldBeNull();
+        It should_not_throw_an_exception = () => exception.Should().BeNull();
     }
 }

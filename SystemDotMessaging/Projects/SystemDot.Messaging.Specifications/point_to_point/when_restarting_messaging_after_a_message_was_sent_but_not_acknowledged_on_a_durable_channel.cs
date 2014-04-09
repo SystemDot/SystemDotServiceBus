@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SystemDot.Messaging.Handling.Actions;
+using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Storage;
-using SystemDot.Parallelism;
-using SystemDot.Serialisation;
-using SystemDot.Specifications;
 using SystemDot.Storage.Changes;
-using SystemDot.Storage.Changes.Upcasting;
 using Machine.Specifications;
+using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.point_to_point
 {
@@ -22,6 +21,7 @@ namespace SystemDot.Messaging.Specifications.point_to_point
 
         static ChangeStore changeStore;
         static List<MessageLoadedToCache> messagesLoadedToCacheEvents;
+        static ActionSubscriptionToken<MessageLoadedToCache> token;
 
         Establish context = () =>
         {
@@ -30,7 +30,7 @@ namespace SystemDot.Messaging.Specifications.point_to_point
             changeStore = new InMemoryChangeStore();
             ConfigureAndRegister(changeStore);
 
-            Messaging.Configuration.Configure.Messaging()
+            Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(SenderAddress)
                 .ForPointToPointSendingTo(ReceiverAddress).WithDurability()
@@ -45,7 +45,7 @@ namespace SystemDot.Messaging.Specifications.point_to_point
             ConfigureAndRegister(changeStore);
             SystemTime.AdvanceTime(TimeSpan.FromDays(1));
 
-            Messenger.Register<MessageLoadedToCache>(e => messagesLoadedToCacheEvents.Add(e));
+            token = Messenger.RegisterHandler<MessageLoadedToCache>(e => messagesLoadedToCacheEvents.Add(e));
         };
 
         Because of = () =>
@@ -56,13 +56,13 @@ namespace SystemDot.Messaging.Specifications.point_to_point
                 .Initialise();
 
         It should_notify_that_the_first_sent_message_was_loaded_into_the_cache = () =>
-            messagesLoadedToCacheEvents.ShouldContain(m =>
+            messagesLoadedToCacheEvents.Should().Contain(m =>
                 m.CacheAddress == BuildAddress(SenderAddress)
                 && m.UseType == PersistenceUseType.PointToPointSend
                 && m.Message == GetServer().SentMessages.First());
 
         It should_notify_that_the_second_sent_message_was_loaded_into_the_cache = () =>
-            messagesLoadedToCacheEvents.ShouldContain(m =>
+            messagesLoadedToCacheEvents.Should().Contain(m =>
                 m.CacheAddress == BuildAddress(SenderAddress)
                 && m.UseType == PersistenceUseType.PointToPointSend
                 && m.Message == GetServer().SentMessages.ElementAt(1));

@@ -1,7 +1,8 @@
 using System;
 using SystemDot.Messaging.Specifications.publishing;
 using SystemDot.Parallelism;
-using Machine.Specifications;
+using FluentAssertions;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.repeating_for_subscription_to_publishers
 {
@@ -23,6 +24,6 @@ namespace SystemDot.Messaging.Specifications.repeating_for_subscription_to_publi
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_repeat_the_message = () => GetServer().SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(2);
+        It should_repeat_the_message = () => GetServer().SentMessages.ExcludeAcknowledgements().Count.ShouldBeEquivalentTo(2);
     }
 }

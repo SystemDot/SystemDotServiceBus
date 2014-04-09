@@ -1,5 +1,7 @@
+using SystemDot.Messaging.Handling.Actions;
 using SystemDot.Messaging.RequestReply.Builders;
-using Machine.Specifications;
+using SystemDot.Messaging.Simple;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.external_sources_for_request_reply
 {
@@ -11,11 +13,13 @@ namespace SystemDot.Messaging.Specifications.external_sources_for_request_reply
 
         static RequestSendChannelBuilt requestSendChannelBuiltEvent;
         static ReplyReceiveChannelBuilt replyReceiveChannelBuiltEvent;
+        static ActionSubscriptionToken<ReplyReceiveChannelBuilt> replyToken;
+        static ActionSubscriptionToken<RequestSendChannelBuilt> requestToken;
 
         Establish context = () =>
         {
-            Messenger.Register<ReplyReceiveChannelBuilt>(m => replyReceiveChannelBuiltEvent = m);
-            Messenger.Register<RequestSendChannelBuilt>(m => requestSendChannelBuiltEvent = m);
+            replyToken = Messenger.RegisterHandler<ReplyReceiveChannelBuilt>(m => replyReceiveChannelBuiltEvent = m);
+            requestToken = Messenger.RegisterHandler<RequestSendChannelBuilt>(m => requestSendChannelBuiltEvent = m);
         };
 
         Because of = () => Configuration.Configure.Messaging()
@@ -25,13 +29,13 @@ namespace SystemDot.Messaging.Specifications.external_sources_for_request_reply
                 .Initialise();
 
         It should_notify_that_the_reply_receive_channel_was_built = () =>
-            replyReceiveChannelBuiltEvent.ShouldMatch(m => 
+            replyReceiveChannelBuiltEvent.Should().Match<ReplyReceiveChannelBuilt>(m => 
                 m.CacheAddress == BuildAddress(SenderAddress)
                 && m.ReceiverAddress == BuildAddress(ReceiverAddress)
                 && m.SenderAddress == BuildAddress(SenderAddress));
 
         It should_notify_that_the_request_send_channel_was_built = () =>
-           requestSendChannelBuiltEvent.ShouldMatch(m =>
+           requestSendChannelBuiltEvent.Should().Match<RequestSendChannelBuilt>(m =>
                m.CacheAddress == BuildAddress(SenderAddress)
                && m.SenderAddress == BuildAddress(SenderAddress)
                && m.ReceiverAddress == BuildAddress(ReceiverAddress));

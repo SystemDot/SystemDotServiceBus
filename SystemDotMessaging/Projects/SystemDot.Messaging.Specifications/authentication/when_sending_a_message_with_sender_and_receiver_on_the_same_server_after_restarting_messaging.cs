@@ -5,7 +5,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
 using SystemDot.Storage.Changes.Upcasting;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.authentication
 {
@@ -67,6 +67,6 @@ namespace SystemDot.Messaging.Specifications.authentication
         Because of = () => Bus.Send(Message);
 
         It should_send_the_message_along_with_the_original_session_created_before_the_reset = () => 
-            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetAuthenticationSession().ShouldEqual(session);
+            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetAuthenticationSession().ShouldBeEquivalentTo(session);
     }
 }

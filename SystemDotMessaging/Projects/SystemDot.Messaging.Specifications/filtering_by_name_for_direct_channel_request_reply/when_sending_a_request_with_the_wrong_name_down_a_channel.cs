@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Configuration;
 using SystemDot.Messaging.Specifications.filtering_by_name;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.filtering_by_name_for_direct_channel_request_reply
 {
@@ -17,6 +17,6 @@ namespace SystemDot.Messaging.Specifications.filtering_by_name_for_direct_channe
          
         Because of = () => Bus.Send(new TestNamePatternMessage());
 
-        It should_not_pass_the_message_through = () => GetServer().SentMessages.ShouldBeEmpty();
+        It should_not_pass_the_message_through = () => GetServer().SentMessages.Should().BeEmpty();
     }
 }

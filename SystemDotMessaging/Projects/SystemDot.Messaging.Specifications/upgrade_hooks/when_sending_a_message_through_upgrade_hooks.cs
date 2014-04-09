@@ -1,5 +1,6 @@
 ﻿using SystemDot.Messaging.Hooks.Upgrading;
 using SystemDot.Messaging.Packaging;
+using FluentAssertions;
 using Machine.Specifications;
 
 namespace SystemDot.Messaging.Specifications.upgrade_hooks
@@ -27,6 +28,6 @@ namespace SystemDot.Messaging.Specifications.upgrade_hooks
 
         It should_send_it_as_the_upgraded_message = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .DeserialiseTo<UpgradedMessage>().ShouldNotBeNull();
+                .DeserialiseTo<UpgradedMessage>().Should().NotBeNull();
     }
 }

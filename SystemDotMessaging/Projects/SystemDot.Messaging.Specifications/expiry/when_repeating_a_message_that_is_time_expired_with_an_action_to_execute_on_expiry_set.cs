@@ -1,6 +1,7 @@
 using System;
 using SystemDot.Parallelism;
-using Machine.Specifications;
+using FluentAssertions;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.expiry
 {
@@ -28,8 +29,8 @@ namespace SystemDot.Messaging.Specifications.expiry
 
         Because of = () => The<ITaskRepeater>().Start();
 
-        It should_execute_the_expiry_action = () => expiryActionExecuted.ShouldBeTrue();
+        It should_execute_the_expiry_action = () => expiryActionExecuted.Should().BeTrue();
 
-        It should_pass_the_message_through = () => GetServer().SentMessages.ShouldBeEmpty();
+        It should_pass_the_message_through = () => GetServer().SentMessages.Should().BeEmpty();
     }
 }

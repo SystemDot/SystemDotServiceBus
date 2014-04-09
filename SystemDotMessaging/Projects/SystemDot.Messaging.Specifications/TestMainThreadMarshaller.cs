@@ -1,5 +1,5 @@
 using System;
-using SystemDot.ThreadMashalling;
+using SystemDot.ThreadMarshalling;
 
 namespace SystemDot.Messaging.Specifications
 {

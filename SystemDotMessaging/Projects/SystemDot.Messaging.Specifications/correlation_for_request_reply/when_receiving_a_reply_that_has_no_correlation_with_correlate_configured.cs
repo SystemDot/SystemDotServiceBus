@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.correlation_for_request_reply
 {
@@ -38,6 +38,6 @@ namespace SystemDot.Messaging.Specifications.correlation_for_request_reply
 
         Because of = () => GetServer().ReceiveMessage(messagePayload);
 
-        It should_handle_the_request = () => handler.LastHandledMessage.ShouldEqual(Message);
+        It should_handle_the_request = () => handler.LastHandledMessage.ShouldBeEquivalentTo(Message);
     }
 }

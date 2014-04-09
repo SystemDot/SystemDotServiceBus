@@ -1,7 +1,7 @@
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.publishing;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.request_reply
 {
@@ -32,6 +32,6 @@ namespace SystemDot.Messaging.Specifications.request_reply
         Because of = () => Bus.Reply(1);
 
         It should_only_send_the_message_to_the_correct_channel = () =>
-            GetServer().SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(1);
+            GetServer().SentMessages.ExcludeAcknowledgements().Count.ShouldBeEquivalentTo(1);
     }
 }

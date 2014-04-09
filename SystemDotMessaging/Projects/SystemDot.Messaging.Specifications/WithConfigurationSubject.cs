@@ -1,14 +1,17 @@
 using System;
-using SystemDot.Configuration;
+using SystemDot.Configuration.Reading;
+using SystemDot.Core;
+using SystemDot.Environment;
+using SystemDot.Http;
 using SystemDot.Ioc;
 using SystemDot.Messaging.Addressing;
 using SystemDot.Messaging.Diagnostics;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Ioc;
+using SystemDot.Messaging.Simple;
 using SystemDot.Parallelism;
 using SystemDot.Serialisation;
-using SystemDot.Specifications;
-using SystemDot.ThreadMashalling;
+using SystemDot.ThreadMarshalling;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -35,6 +38,8 @@ namespace SystemDot.Messaging.Specifications
 
         static void RegisterComponents()
         {
+            ServerAddress.SetLocalMachine(new LocalMachine());
+
             SystemTime = new TestSystemTime(DateTime.Now);
             ConfigureAndRegister<ISystemTime>(SystemTime);
 
@@ -48,7 +53,7 @@ namespace SystemDot.Messaging.Specifications
             TaskRepeater = new TestTaskRepeater();
             ConfigureAndRegister<ITaskRepeater>(TaskRepeater);
 
-            ConfigureAndRegister(new MessageHandlerRouter());
+            ConfigureAndRegister(new MessageHandlingEndpoint());
 
             ServerAddressConfiguration = new TestServerAddressConfigurationReader();
             ConfigureAndRegister<IConfigurationReader>(ServerAddressConfiguration);
@@ -56,12 +61,12 @@ namespace SystemDot.Messaging.Specifications
 
         protected static void Reset()
         {
-            Messenger.Reset();
             IocContainerLocator.SetContainer(new IocContainer());
+            Messenger.Reset();
         }
 
         Cleanup after = () => IocContainerLocator.SetContainer(null);
-        
+
         protected static void ConfigureAndRegister<T>() where T : class
         {
             ConfigureAndRegister(The<T>());
@@ -79,7 +84,7 @@ namespace SystemDot.Messaging.Specifications
         {
             Register<T>(IocContainerLocator.Locate(), concrete);
         }
-        
+
         protected static void Register<T>(IIocContainer container, T concrete) where T : class
         {
             container.RegisterInstance(() => concrete);

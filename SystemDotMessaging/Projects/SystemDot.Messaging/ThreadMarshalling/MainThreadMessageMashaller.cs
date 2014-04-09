@@ -1,6 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
-using SystemDot.ThreadMashalling;
+using SystemDot.ThreadMarshalling;
 
 namespace SystemDot.Messaging.ThreadMarshalling
 {

@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using SystemDot.Messaging.Specifications.publishing;
-using Machine.Specifications;
+using FluentAssertions;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.load_balancing_for_publishing
 {
@@ -26,6 +27,6 @@ namespace SystemDot.Messaging.Specifications.load_balancing_for_publishing
 
         Because of = () => messages.ForEach(m => Bus.Publish(m));
 
-        It should_not_send_the_twenty_first_message = () => GetServer().SentMessages.ExcludeAcknowledgements().Count.ShouldEqual(20);
+        It should_not_send_the_twenty_first_message = () => GetServer().SentMessages.ExcludeAcknowledgements().Count.ShouldBeEquivalentTo(20);
     }
 }

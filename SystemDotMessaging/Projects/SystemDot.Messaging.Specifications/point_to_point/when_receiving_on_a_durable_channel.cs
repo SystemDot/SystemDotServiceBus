@@ -1,8 +1,10 @@
 using SystemDot.Messaging.Handling;
+using SystemDot.Messaging.Handling.Actions;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
+using SystemDot.Messaging.Simple;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.point_to_point
 {
@@ -16,11 +18,10 @@ namespace SystemDot.Messaging.Specifications.point_to_point
         static MessagePayload payload;
         static TestMessageHandler<int> handler;
         static MessageRemovedFromCache @event;
+        static ActionSubscriptionToken<MessageRemovedFromCache> token;
 
         Establish context = () =>
         {
-            Messenger.Register<MessageRemovedFromCache>(e => @event = e);
-
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(ReceiverAddress)
@@ -28,8 +29,10 @@ namespace SystemDot.Messaging.Specifications.point_to_point
                 .WithDurability()
                 .Initialise();
 
+            token = Messenger.RegisterHandler<MessageRemovedFromCache>(e => @event = e);
+
             handler = new TestMessageHandler<int>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
 
             message = 1;
 
@@ -43,7 +46,7 @@ namespace SystemDot.Messaging.Specifications.point_to_point
         Because of = () => GetServer().ReceiveMessage(payload);
 
         It should_notify_that_the_message_was_removed_from_the_cache = () =>
-            @event.ShouldMatch(e => e.MessageId == payload.Id
+            @event.Should().Match<MessageRemovedFromCache>(e => e.MessageId == payload.Id
                 && e.Address == payload.GetToAddress()
                 && e.UseType == PersistenceUseType.PointToPointReceive);
     }

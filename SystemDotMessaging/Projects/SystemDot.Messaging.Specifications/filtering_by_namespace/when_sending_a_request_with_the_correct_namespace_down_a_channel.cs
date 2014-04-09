@@ -1,5 +1,5 @@
 using System.Linq;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.filtering_by_namespace
 {
@@ -18,6 +18,6 @@ namespace SystemDot.Messaging.Specifications.filtering_by_namespace
         Because of = () => Bus.Send(new TestNamespaceMessage());
 
         It should_pass_the_message_through = () =>
-            GetServer().SentMessages.First().DeserialiseTo<TestNamespaceMessage>().ShouldNotBeNull();
+            GetServer().SentMessages.First().DeserialiseTo<TestNamespaceMessage>().Should().NotBeNull();
     }
 }

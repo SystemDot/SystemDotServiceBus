@@ -5,7 +5,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Storage;
 using SystemDot.Storage.Changes;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.restarting_messaging
 {
@@ -68,6 +68,6 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
                 .WithSequenceOf(1));
 
         It should_not_handle_the_message_with_the_lower_sequence = () => 
-            handler.LastHandledMessage.ShouldNotEqual(MessageWithLowerSequence);
+            handler.LastHandledMessage.Should().NotBe(MessageWithLowerSequence);
     }
 }

@@ -2,7 +2,7 @@
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Parallelism;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.servers_using_proxies
 {
@@ -24,9 +24,9 @@ namespace SystemDot.Messaging.Specifications.servers_using_proxies
         Because of = () => Bus.Send(1);
 
         It should_send_a_message_with_the_to_address_server_name_set_correctly = () =>
-            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetToAddress().Server.Name.ShouldEqual("ReceiverServer");
+            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetToAddress().Server.Name.ShouldBeEquivalentTo("ReceiverServer");
 
         It should_send_a_message_with_the_from_address_server_machine_name_set_correctly = () =>
-            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetToAddress().Server.MachineName.ShouldEqual("MachineName");
+            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetToAddress().Server.MachineName.ShouldBeEquivalentTo("MachineName");
     }
 }

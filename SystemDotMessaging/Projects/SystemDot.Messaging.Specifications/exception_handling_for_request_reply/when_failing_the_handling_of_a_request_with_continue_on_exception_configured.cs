@@ -6,7 +6,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.RequestReply.ExceptionHandling;
 using SystemDot.Messaging.Specifications.publishing;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.exception_handling_for_request_reply
 {
@@ -34,9 +34,9 @@ namespace SystemDot.Messaging.Specifications.exception_handling_for_request_repl
                     .SetChannelType(PersistenceUseType.RequestSend)
                     .Sequenced()));
 
-        It should_not_throw_an_exception = () => exception.ShouldBeNull();
+        It should_not_throw_an_exception = () => exception.Should().BeNull();
 
         It should_reply_with_an_exception_occurred_message = () =>
-            GetServer().SentMessages.ExcludeAcknowledgements().First().DeserialiseTo<ExceptionOccured>().Message.ShouldNotBeEmpty();
+            GetServer().SentMessages.ExcludeAcknowledgements().First().DeserialiseTo<ExceptionOccured>().Message.Should().NotBeEmpty();
     }
 }

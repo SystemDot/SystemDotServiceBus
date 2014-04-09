@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Direct;
 using SystemDot.Messaging.Packaging;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.authentication
 {
@@ -36,6 +36,7 @@ namespace SystemDot.Messaging.Specifications.authentication
 
         Because of = () => SendMessageToServer(payload);
 
-        It should_handle_the_request_in_the_handler_configured = () => handler.LastHandledMessage.ShouldBeOfType<TestAuthenticationRequest>();
+        It should_handle_the_request_in_the_handler_configured = () => 
+            handler.LastHandledMessage.Should().BeOfType<TestAuthenticationRequest>();
     }
 }

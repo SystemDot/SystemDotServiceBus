@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
+using SystemDot.Core;
 using SystemDot.Http;
 using SystemDot.Logging;
 using SystemDot.Messaging.Packaging;

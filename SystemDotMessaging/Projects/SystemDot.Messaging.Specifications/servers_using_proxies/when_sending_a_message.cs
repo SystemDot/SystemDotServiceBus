@@ -2,7 +2,7 @@
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Parallelism;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.servers_using_proxies
 {
@@ -29,21 +29,21 @@ namespace SystemDot.Messaging.Specifications.servers_using_proxies
         Because of = () => Bus.Send(Message);
 
         It should_serialise_the_message_and_send_it_as_a_put_request_to_the_message_server = () =>
-            WebRequestor.DeserialiseSingleRequest<MessagePayload>().DeserialiseTo<Int64>().ShouldEqual(Message);
+            WebRequestor.DeserialiseSingleRequest<MessagePayload>().DeserialiseTo<Int64>().ShouldBeEquivalentTo(Message);
 
         It should_send_a_message_with_the_to_address_channel_name_set_correctly = () =>
-            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetToAddress().Channel.ShouldEqual(ReceiverChannel);
+            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetToAddress().Channel.ShouldBeEquivalentTo(ReceiverChannel);
 
         It should_send_a_message_with_the_to_address_server_name_set_correctly = () =>
-            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetToAddress().Server.Name.ShouldEqual(Server);
+            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetToAddress().Server.Name.ShouldBeEquivalentTo(Server);
 
         It should_send_a_message_with_the_from_address_channel_name_set_correctly = () =>
-            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetFromAddress().Channel.ShouldEqual(SenderChannel);
+            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetFromAddress().Channel.ShouldBeEquivalentTo(SenderChannel);
 
         It should_send_a_message_with_the_from_address_server_name_set_correctly = () =>
-            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetFromAddress().Server.Name.ShouldEqual(Server);
+            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetFromAddress().Server.Name.ShouldBeEquivalentTo(Server);
 
         It should_send_a_message_with_the_from_address_server_machine_name_set_correctly = () =>
-            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetFromAddress().Server.MachineName.ShouldEqual(Environment.MachineName);
+            WebRequestor.DeserialiseSingleRequest<MessagePayload>().GetFromAddress().Server.MachineName.ShouldBeEquivalentTo(System.Environment.MachineName);
     }
 }

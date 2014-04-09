@@ -1,6 +1,6 @@
 using System;
 using SystemDot.Storage.Changes;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.restarting_messaging
 {
@@ -44,6 +44,6 @@ namespace SystemDot.Messaging.Specifications.restarting_messaging
                 .WithDurability()
                 .Initialise();
 
-        It should_send_the_message_again = () => GetServer().SentMessages.ShouldContain(m => m.DeserialiseTo<Int64>() == Request);
+        It should_send_the_message_again = () => GetServer().SentMessages.Should().Contain(m => m.DeserialiseTo<Int64>() == Request);
     }
 }

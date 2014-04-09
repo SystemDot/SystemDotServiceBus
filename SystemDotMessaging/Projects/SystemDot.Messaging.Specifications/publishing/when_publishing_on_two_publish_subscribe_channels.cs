@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using SystemDot.Messaging.Transport.InProcess.Configuration;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.publishing
 {
@@ -34,6 +34,6 @@ namespace SystemDot.Messaging.Specifications.publishing
 
         It should_publish_a_message_with_the_correct_content_through_both_channels = () =>
             GetServer().SentMessages.ExcludeAcknowledgements()
-                .Count(m => m.DeserialiseTo<Int64>() == message).ShouldEqual(2);
+                .Count(m => m.DeserialiseTo<Int64>() == message).ShouldBeEquivalentTo(2);
     }
 }

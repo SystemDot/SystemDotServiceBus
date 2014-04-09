@@ -1,6 +1,6 @@
 using System.Linq;
 using SystemDot.Messaging.Configuration;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.filtering_by_name
 {
@@ -19,6 +19,6 @@ namespace SystemDot.Messaging.Specifications.filtering_by_name
         Because of = () => Bus.Send(new TestNamePatternMessage());
 
         It should_pass_the_message_through = () => 
-           GetServer().SentMessages.First().DeserialiseTo<TestNamePatternMessage>().ShouldNotBeNull();
+           GetServer().SentMessages.First().DeserialiseTo<TestNamePatternMessage>().Should().NotBeNull();
     }
 }

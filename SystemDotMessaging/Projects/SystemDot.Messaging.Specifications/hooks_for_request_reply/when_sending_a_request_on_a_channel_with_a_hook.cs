@@ -1,7 +1,7 @@
 using System;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
-namespace SystemDot.Messaging.Specifications.hooks_for_request_reply
+namespace SystemDot.Messaging.Specifications.hooks_for_publishing.hooks_for_request_reply
 {
     [Subject(SpecificationGroup.Description)]
     public class when_sending_a_request_on_a_channel_with_a_hook : WithMessageConfigurationSubject
@@ -23,6 +23,6 @@ namespace SystemDot.Messaging.Specifications.hooks_for_request_reply
 
         Because of = () => Bus.Send(Message);
 
-        It should_run_the_message_through_the_hook = () => hook.Message.ShouldEqual(Message);
+        It should_run_the_message_through_the_hook = () => hook.Message.ShouldBeEquivalentTo(Message);
     }
 }

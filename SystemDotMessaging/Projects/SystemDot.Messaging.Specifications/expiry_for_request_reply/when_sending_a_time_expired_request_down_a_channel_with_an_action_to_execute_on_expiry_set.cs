@@ -1,6 +1,7 @@
 using System;
 using SystemDot.Messaging.Configuration;
-using Machine.Specifications;
+using FluentAssertions;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.expiry_for_request_reply
 {
@@ -23,8 +24,8 @@ namespace SystemDot.Messaging.Specifications.expiry_for_request_reply
 
         Because of = () => Bus.Send(1);
 
-        It should_execute_the_expiry_action = () => expiryActionExecuted.ShouldBeTrue();
+        It should_execute_the_expiry_action = () => expiryActionExecuted.Should().BeTrue();
 
-        It should_not_send_the_message = () => GetServer().SentMessages.ShouldBeEmpty();
+        It should_not_send_the_message = () => GetServer().SentMessages.Should().BeEmpty();
     }
 }

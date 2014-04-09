@@ -3,7 +3,7 @@ using SystemDot.Messaging.Batching;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.batching_for_request_reply
 {
@@ -33,12 +33,15 @@ namespace SystemDot.Messaging.Specifications.batching_for_request_reply
                 .MakeSequencedReceivable(aggregateMessage, ReceiverAddress, SenderAddress, PersistenceUseType.ReplyReceive);
 
             handler = new TestMessageHandler<Int64>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
         };
 
         Because of = () => GetServer().ReceiveMessage(messagePayload1);
 
-        It should_pass_both_the_messages_from_the_aggregation_through_seperately = () => 
-            handler.HandledMessages.ShouldContain(Message1, Message2);
+        It should_pass_the_first_message_from_the_aggregation_through_seperately = () =>
+            handler.HandledMessages.Should().Contain(m => m == Message1);
+
+        It should_pass_the_second_message_from_the_aggregation_through_seperately = () =>
+            handler.HandledMessages.Should().Contain(m => m == Message2);
     }
 }

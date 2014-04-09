@@ -1,5 +1,5 @@
 using System;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.expiry_for_request_reply
 {
@@ -18,6 +18,6 @@ namespace SystemDot.Messaging.Specifications.expiry_for_request_reply
 
         Because of = () => Bus.Send(1);
 
-        It should_not_send_the_message = () => GetServer().SentMessages.ShouldBeEmpty();
+        It should_not_send_the_message = () => GetServer().SentMessages.Should().BeEmpty();
     }
 }

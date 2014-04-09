@@ -1,5 +1,5 @@
 using System;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.proxying
 {
@@ -13,9 +13,9 @@ namespace SystemDot.Messaging.Specifications.proxying
             .AsAProxyFor(RemoteServerName)
             .Initialise();
 
-        It should_use_the_correct_long_poll_time = () => SystemTime.LastTimeSpanRequested.ShouldEqual(TimeSpan.FromSeconds(30));
+        It should_use_the_correct_long_poll_time = () => SystemTime.LastTimeSpanRequested.ShouldBeEquivalentTo(TimeSpan.FromSeconds(30));
 
         It should_listen_on_the_correct_url = () =>
-            TestHttpServer.Instance.Url.ShouldEqual(String.Concat("http://", Environment.MachineName, "/", RemoteServerName + "/"));
+            TestHttpServer.Instance.Url.ShouldBeEquivalentTo(String.Concat("http://", System.Environment.MachineName, "/", RemoteServerName + "/"));
     }
 }

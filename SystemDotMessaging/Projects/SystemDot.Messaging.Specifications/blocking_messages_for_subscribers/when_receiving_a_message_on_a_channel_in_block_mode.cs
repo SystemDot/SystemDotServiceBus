@@ -1,6 +1,8 @@
+using SystemDot.Environment;
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Storage;
-using Machine.Specifications;
+using SystemDot.Storage.Changes.Upcasting;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.blocking_messages_for_subscribers
 {
@@ -15,6 +17,8 @@ namespace SystemDot.Messaging.Specifications.blocking_messages_for_subscribers
         {
             handler = new TestMessageHandler<long>();
 
+            var x = new ChangeUpcasterRunner(new ApplicationTypeActivator(new Application()));
+            
             Configuration.Configure.Messaging()
                 .UsingInProcessTransport()
                 .OpenChannel(SubscriberChannel).ForSubscribingTo(PublisherChannel).BlockMessagesIf(true)
@@ -32,8 +36,8 @@ namespace SystemDot.Messaging.Specifications.blocking_messages_for_subscribers
                 .SetChannelType(PersistenceUseType.SubscriberReceive)
                 .Sequenced());
 
-        It should_not_handle_the_message = () => handler.LastHandledMessage.ShouldNotEqual(1);
+        It should_not_handle_the_message = () => handler.LastHandledMessage.Should().NotBe(1);
 
-        It should_not_send_an_acknowledgement = () => GetServer().SentMessages.ShouldBeEmpty();
+        It should_not_send_an_acknowledgement = () => GetServer().SentMessages.Should().BeEmpty();
     }
 }

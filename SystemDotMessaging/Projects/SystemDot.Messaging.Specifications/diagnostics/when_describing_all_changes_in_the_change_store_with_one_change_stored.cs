@@ -4,7 +4,7 @@ using SystemDot.Messaging.Diagnostics;
 using SystemDot.Messaging.Storage.Changes;
 using SystemDot.Serialisation;
 using SystemDot.Storage.Changes;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.diagnostics
 {
@@ -28,10 +28,10 @@ namespace SystemDot.Messaging.Specifications.diagnostics
 
         Because of = () => changes = Debug.DescribeAllChangeStoreChanges();
 
-        It should_return_the_change_root_id_for_the_change = () => changes.Single().RootId.ShouldEqual(ChangeRootId);
+        It should_return_the_change_root_id_for_the_change = () => changes.Single().RootId.ShouldBeEquivalentTo(ChangeRootId);
 
-        It should_return_the_sequence_of_the_change = () => changes.Single().Sequence.ShouldEqual(1);
+        It should_return_the_sequence_of_the_change = () => changes.Single().Sequence.ShouldBeEquivalentTo(1);
 
-        It should_return_the_change_as_text = () => changes.Single().Change.ShouldEqual(Resolve<ISerialiser>().SerialiseToString(change));
+        It should_return_the_change_as_text = () => changes.Single().Change.ShouldBeEquivalentTo(Resolve<ISerialiser>().SerialiseToString(change));
     }
 }

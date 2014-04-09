@@ -1,6 +1,6 @@
 using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.authentication;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.authentication_for_publishing
 {
@@ -45,6 +45,6 @@ namespace SystemDot.Messaging.Specifications.authentication_for_publishing
 
         Because of = () => Bus.Publish(1);
 
-        It should_not_publish_the_event_to_the_subscriber = () => WebRequestor.RequestsMade.ShouldBeEmpty();
+        It should_not_publish_the_event_to_the_subscriber = () => WebRequestor.RequestsMade.Should().BeEmpty();
     }
 }

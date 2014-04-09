@@ -1,7 +1,7 @@
 using SystemDot.Messaging.Direct;
 using SystemDot.Messaging.Handling;
 using SystemDot.Messaging.Packaging;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply
 {
@@ -28,11 +28,11 @@ namespace SystemDot.Messaging.Specifications.direct_channels_for_request_reply
                 .Initialise();
 
             handler = new TestMessageHandler<long>();
-            Resolve<MessageHandlerRouter>().RegisterHandler(handler);
+            Resolve<MessageHandlingEndpoint>().RegisterHandler(handler);
         };
 
         Because of = () => GetServer().ReceiveMessage(payload);
 
-        It should_push_the_message_to_any_registered_handlers = () => handler.LastHandledMessage.ShouldEqual(0);
+        It should_push_the_message_to_any_registered_handlers = () => handler.LastHandledMessage.ShouldBeEquivalentTo(0);
     }
 }

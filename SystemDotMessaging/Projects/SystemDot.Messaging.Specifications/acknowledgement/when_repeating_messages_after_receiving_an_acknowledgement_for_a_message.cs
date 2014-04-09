@@ -5,7 +5,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Packaging.Headers;
 using SystemDot.Messaging.Storage;
 using SystemDot.Parallelism;
-using Machine.Specifications;
+using Machine.Specifications;using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.acknowledgement
 {
@@ -31,8 +31,8 @@ namespace SystemDot.Messaging.Specifications.acknowledgement
             GetServer().SentMessages.Clear();
         };
 
-        Because of = () => The<ITaskRepeater>().Start();
+        Because of = () => Resolve<ITaskRepeater>().Start();
 
-        It should_not_have_repeated_the_message = () => GetServer().SentMessages.ShouldBeEmpty();
+        It should_not_have_repeated_the_message = () => GetServer().SentMessages.Should().BeEmpty();
     }
 }

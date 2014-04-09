@@ -5,6 +5,7 @@ using SystemDot.Messaging.Packaging;
 using SystemDot.Messaging.Specifications.authentication;
 using SystemDot.Messaging.Storage;
 using Machine.Specifications;
+using FluentAssertions;
 
 namespace SystemDot.Messaging.Specifications.authentication_expiry
 {
@@ -62,6 +63,6 @@ namespace SystemDot.Messaging.Specifications.authentication_expiry
 
         Because of = () => SendMessageToServer(payload);
 
-        It should_not_handle_the_message_in_the_registered_handler = () => handler.HandledMessages.Count.ShouldEqual(0);
+        It should_not_handle_the_message_in_the_registered_handler = () => handler.HandledMessages.Count.ShouldBeEquivalentTo(0);
     }
 }
