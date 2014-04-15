@@ -13,7 +13,7 @@ namespace SystemDot.Messaging.Specifications.upgrade_hooks
 
         Establish context = () =>
         {
-            message = new AnotherMessage();
+            message = new AnotherMessage{ Field = true };
 
             Configuration.Configure.Messaging()
                 .UsingHttpTransport()
@@ -28,6 +28,6 @@ namespace SystemDot.Messaging.Specifications.upgrade_hooks
 
         It should_send_it_as_the_upgraded_message = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .DeserialiseTo<AnotherMessage>().Field.ShouldBeTrue();
+                .DeserialiseTo<AnotherMessage>().Field.Should().BeFalse();
     }
 }

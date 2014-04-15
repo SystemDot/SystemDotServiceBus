@@ -57,9 +57,9 @@ namespace SystemDot.Messaging
             return GetBus().BatchSend();
         }
 
-        static IBus GetBus()
+        static IMessageBus GetBus()
         {
-            return IocContainerLocator.Locate().Resolve<IBus>();
+            return IocContainerLocator.Locate().Resolve<IMessageBus>();
         }
     }
 }

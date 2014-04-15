@@ -13,7 +13,7 @@ namespace SystemDot.Messaging.Configuration.ComponentRegistration
     {
         public static void Register(IIocContainer container)
         {
-            container.RegisterInstance<IBus, MessageBus>();
+            container.RegisterInstance<IMessageBus, MessageBus>();
             container.RegisterInstance<MessageHandlingEndpoint, MessageHandlingEndpoint>();
             container.RegisterInstance<LocalDirectChannelBuilder, LocalDirectChannelBuilder>();
             container.RegisterInstance<AcknowledgementSendChannelBuilder, AcknowledgementSendChannelBuilder>();

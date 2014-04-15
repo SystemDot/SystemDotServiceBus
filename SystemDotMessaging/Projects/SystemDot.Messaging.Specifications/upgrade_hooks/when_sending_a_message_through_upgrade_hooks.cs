@@ -28,6 +28,6 @@ namespace SystemDot.Messaging.Specifications.upgrade_hooks
 
         It should_send_it_as_the_upgraded_message = () =>
             WebRequestor.DeserialiseSingleRequest<MessagePayload>()
-                .DeserialiseTo<Message>().Field.ShouldEqual(MessageMessageUpgrader.UpgradedText);
+                .DeserialiseTo<Message>().Field.Should().Be(MessageMessageUpgrader.UpgradedText);
     }
 }

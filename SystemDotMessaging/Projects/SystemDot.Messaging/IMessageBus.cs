@@ -4,14 +4,13 @@ using SystemDot.Messaging.Batching;
 
 namespace SystemDot.Messaging
 {
-    public interface IBus
+    public interface IMessageBus : IBus
     {
         event Action<object> MessageSent;
         event Action<object> MessageSentDirect;
         event Action<object> MessagePublished;
         event Action<object> MessageReplied;
 
-        void Send(object message);
         void SendDirect(object message);
         Task SendDirectAsync(object message);
         void SendDirect(object message, Action<Exception> onServerError);
@@ -20,7 +19,6 @@ namespace SystemDot.Messaging
         Task SendDirectAsync(object message, object handleReplyWith, Action<Exception> onServerError);
 
         void Reply(object message);
-        void Publish(object message);
         Batch BatchSend();
     }
 

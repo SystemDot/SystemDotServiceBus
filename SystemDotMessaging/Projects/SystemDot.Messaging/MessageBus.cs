@@ -8,7 +8,7 @@ using SystemDot.Parallelism;
 
 namespace SystemDot.Messaging
 {
-    public class MessageBus : IBus
+    public class MessageBus : IMessageBus
     {
         readonly ITaskStarter taskStarter;
 
