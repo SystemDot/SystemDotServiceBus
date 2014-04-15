@@ -10,6 +10,7 @@ namespace SystemDot.Messaging.Configuration
         {
             builder.RegisterBuildAction(c => c.RegisterInstance<IExternalSourcesConfigurer, ExternalSourcesConfigurer>());
             builder.RegisterBuildAction(c => c.RegisterInstance<ExternalInspectorHook, ExternalInspectorHook>());
+            builder.RegisterBuildAction(c => c.RegisterInstance<IExternalInspectorLoader, ExternalInspectorLoader>());
         }
     }
 }
