@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -12,8 +12,6 @@
     <RootNamespace>SystemDot.Esent</RootNamespace>
     <AssemblyName>SystemDot.Esent.WindowsStore</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
-    <TargetPlatformVersion>8.1</TargetPlatformVersion>
-    <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
@@ -80,7 +78,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\..\Build\</OutputPath>
+    <OutputPath>bin\x86\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
@@ -90,7 +88,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>..\..\Build\</OutputPath>
+    <OutputPath>bin\x86\Release\</OutputPath>
     <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>;2008</NoWarn>
@@ -101,52 +99,37 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\SystemDot.Esent\*.cs">
-      <Link>%(RecursiveDir)%(FileName)</Link>
-    </Compile>
-    <Compile Include="..\SystemDot.Esent\*\*.cs">
-      <Link>%(RecursiveDir)%(FileName)</Link>
-    </Compile>
-    <Compile Include="..\SystemDot.Esent\*\*\*.cs">
-      <Link>%(RecursiveDir)%(FileName)</Link>
-    </Compile>
-    <Compile Include="..\SystemDot.Esent\*\*\*\*.cs">
-      <Link>%(RecursiveDir)%(FileName)</Link>
-    </Compile>
+    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <ProjectReference Include="..\SystemDot.Messaging\SystemDot.Messaging.csproj">
+      <Project>{46655363-a75e-47a6-bef0-175ef5f92db5}</Project>
+      <Name>SystemDot.Messaging</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Esent.Interop, Version=1.8.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.3\lib\netcore\Esent.Interop.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\Newtonsoft.Json.6.0.2\lib\netcore45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.3\lib\netcore\SystemDot.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Storage.Changes.Esent.WindowsStore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.3\lib\netcore\SystemDot.Storage.Changes.Esent.WindowsStore.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.WindowsStore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.3\lib\netcore\SystemDot.WindowsStore.dll</HintPath>
-    </Reference>
+    <Compile Include="..\SystemDot.Esent\EsentMessagingConfigurationExtensions.cs">
+      <Link>EsentMessagingConfigurationExtensions.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SystemDot.Messaging\SystemDot.Messaging.csproj">
-      <Project>{46655363-A75E-47A6-BEF0-175EF5F92DB5}</Project>
-      <Name>SystemDot.Messaging</Name>
-    </ProjectReference>
+    <Reference Include="Esent.Interop">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.4\lib\netcore\Esent.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.4\lib\netcore\SystemDot.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Storage.Changes.Esent.WindowsStore">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.4\lib\netcore\SystemDot.Storage.Changes.Esent.WindowsStore.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.WindowsStore">
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.4\lib\netcore\SystemDot.WindowsStore.dll</HintPath>
+    </Reference>
   </ItemGroup>
-  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
-    <VisualStudioVersion>12.0</VisualStudioVersion>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
+    <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
