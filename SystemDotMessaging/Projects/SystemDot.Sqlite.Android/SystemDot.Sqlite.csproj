@@ -47,19 +47,19 @@
     <Reference Include="System.Xml" />
     <Reference Include="SystemDot, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.4\lib\MonoAndroid\SystemDot.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.5\lib\MonoAndroid\SystemDot.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.4\lib\MonoAndroid\SystemDot.Android.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.5\lib\MonoAndroid\SystemDot.Android.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Storage.Changes.Sql.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.4\lib\MonoAndroid\SystemDot.Storage.Changes.Sql.Android.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.5\lib\MonoAndroid\SystemDot.Storage.Changes.Sql.Android.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Storage.Changes.Sqlite.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.4\lib\MonoAndroid\SystemDot.Storage.Changes.Sqlite.Android.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.5\lib\MonoAndroid\SystemDot.Storage.Changes.Sqlite.Android.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

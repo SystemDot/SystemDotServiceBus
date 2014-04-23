@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
 
-  <Identity Name="0689de2f-4f1b-43a4-9327-ab0282d67485"
-            Publisher="CN=Chris"
+  <Identity Name="eb33d1a9-4a1d-425f-b41a-6490f2cc2414"
+            Publisher="CN=cjs1"
             Version="1.0.0.0" />
 
   <Properties>
     <DisplayName>RequestReplySender</DisplayName>
-    <PublisherDisplayName>Chris</PublisherDisplayName>
+    <PublisherDisplayName>cjs1</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
   <Prerequisites>
-    <OSMinVersion>6.3.0</OSMinVersion>
-    <OSMaxVersionTested>6.3.0</OSMaxVersionTested>
+    <OSMinVersion>6.2.1</OSMinVersion>
+    <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
   </Prerequisites>
 
   <Resources>
@@ -24,15 +24,16 @@
     <Application Id="App"
         Executable="$targetnametoken$.exe"
         EntryPoint="RequestReplySender.App">
-        <m2:VisualElements
+        <VisualElements
             DisplayName="RequestReplySender"
-            Square150x150Logo="Assets\Logo.png"
-            Square30x30Logo="Assets\SmallLogo.png"
+            Logo="Assets\Logo.png"
+            SmallLogo="Assets\SmallLogo.png"
             Description="RequestReplySender"
             ForegroundText="light"
             BackgroundColor="#464646">
-            <m2:SplashScreen Image="Assets\SplashScreen.png" />
-        </m2:VisualElements>
+            <DefaultTile ShowName="allLogos" />
+            <SplashScreen Image="Assets\SplashScreen.png" />
+        </VisualElements>
     </Application>
   </Applications>
   <Capabilities>

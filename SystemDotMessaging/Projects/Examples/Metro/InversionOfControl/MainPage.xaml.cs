@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SystemDot;
+using SystemDot.Core.Collections;
 using SystemDot.Ioc;
 using InversionOfControl.Types;
 using Windows.UI.Popups;
