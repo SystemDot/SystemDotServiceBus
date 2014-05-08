@@ -135,20 +135,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Esent.Interop">
-      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.2.5\lib\netcore\Esent.Interop.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot">
-      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.2.5\lib\netcore\SystemDot.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Storage.Changes.Esent.WindowsStore">
-      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.2.5\lib\netcore\SystemDot.Storage.Changes.Esent.WindowsStore.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.WindowsStore">
-      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.2.5\lib\netcore\SystemDot.WindowsStore.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\SystemDot.Messaging.WindowsStore\SystemDot.Messaging.WindowsStore.csproj">
       <Project>{d651317a-3b02-4a20-b2ee-35666b82d8be}</Project>
       <Name>SystemDot.Messaging.WindowsStore</Name>
@@ -167,6 +153,20 @@
     <Content Include="Assets\SmallLogo.png" />
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Esent.Interop">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.2.7\lib\netcore\Esent.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.2.7\lib\netcore\SystemDot.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Storage.Changes.Esent.WindowsStore">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.2.7\lib\netcore\SystemDot.Storage.Changes.Esent.WindowsStore.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.WindowsStore">
+      <HintPath>..\..\..\..\Solutions\packages\SystemDotCore.1.2.7\lib\netcore\SystemDot.WindowsStore.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>

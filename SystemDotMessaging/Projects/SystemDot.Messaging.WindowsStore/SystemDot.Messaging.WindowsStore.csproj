@@ -111,21 +111,29 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <Reference Include="Esent.Interop, Version=1.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.7\lib\netcore\Esent.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\Newtonsoft.Json.6.0.2\lib\netcore45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.7\lib\netcore\SystemDot.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.Storage.Changes.Esent.WindowsStore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.7\lib\netcore\SystemDot.Storage.Changes.Esent.WindowsStore.dll</HintPath>
+    </Reference>
+    <Reference Include="SystemDot.WindowsStore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.7\lib\netcore\SystemDot.WindowsStore.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Esent.Interop">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.5\lib\netcore\Esent.Interop.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.5\lib\netcore\SystemDot.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.Storage.Changes.Esent.WindowsStore">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.5\lib\netcore\SystemDot.Storage.Changes.Esent.WindowsStore.dll</HintPath>
-    </Reference>
-    <Reference Include="SystemDot.WindowsStore">
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.5\lib\netcore\SystemDot.WindowsStore.dll</HintPath>
-    </Reference>
+    <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
