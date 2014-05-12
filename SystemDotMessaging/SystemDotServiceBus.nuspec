@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>SystemDotServiceBus</id>
-        <version>1.1.8</version>
+        <version>1.1.9</version>
         <title>SystemDotServiceBus</title>
         <authors>Chris Sampson,James Goodenough</authors>
         <owners>Chris Sampson,James Goodenough</owners>
@@ -14,7 +14,7 @@
         <language>en-GB</language>
         <tags>ServiceBus, Bus, DDD, DDDD, Messaging, Cross Platform</tags>
         <dependencies>
-            <dependency id="SystemDotCore" version="1.2.8" />
+            <dependency id="SystemDotCore" version="1.2.9" />
         </dependencies>
     </metadata>
     <files>
