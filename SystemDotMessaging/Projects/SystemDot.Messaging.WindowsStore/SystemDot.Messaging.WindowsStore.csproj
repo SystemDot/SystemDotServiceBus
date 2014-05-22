@@ -113,7 +113,7 @@
   <ItemGroup>
     <Reference Include="Esent.Interop, Version=1.8.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.9\lib\netcore\Esent.Interop.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.3.1\lib\netcore\Esent.Interop.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -121,15 +121,15 @@
     </Reference>
     <Reference Include="SystemDot, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.9\lib\netcore\SystemDot.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.3.1\lib\netcore\SystemDot.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.Storage.Changes.Esent.WindowsStore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.9\lib\netcore\SystemDot.Storage.Changes.Esent.WindowsStore.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.3.1\lib\netcore\SystemDot.Storage.Changes.Esent.WindowsStore.dll</HintPath>
     </Reference>
     <Reference Include="SystemDot.WindowsStore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Solutions\packages\SystemDotCore.1.2.9\lib\netcore\SystemDot.WindowsStore.dll</HintPath>
+      <HintPath>..\..\Solutions\packages\SystemDotCore.1.3.1\lib\netcore\SystemDot.WindowsStore.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
